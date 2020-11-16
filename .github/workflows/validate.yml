@@ -5,7 +5,7 @@ on:
     branches: [main, dev]
 
 jobs:
-  validate:
+  lint:
     runs-on: ubuntu-latest
 
     steps:
@@ -17,3 +17,27 @@ jobs:
       - run: npm i -g npm@6.14.5
       - run: npm ci
       - run: npm run lint
+
+  'test:node':
+    runs-on: ubuntu-latest
+
+    services:
+      backend:
+        image: gravwell/gravwell:latest
+        env:
+          GRAVWELL_INGEST_SECRET: MyIngestSecret
+          GRAVWELL_INGEST_AUTH: MyIngestSecret 
+          GRAVWELL_CONTROL_AUTH: MyControlSecret 
+          GRAVWELL_SEARCHAGENT_AUTH: MySearchAgentAuth
+        ports:
+          - 80:80
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js 10.20.1
+        uses: actions/setup-node@v1
+        with:
+          node-version: '10.20.1'
+      - run: npm i -g npm@6.14.5
+      - run: npm ci
+      - run: npm run test:node
