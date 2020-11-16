@@ -1,5 +1,5 @@
 {
-	"name": "gravwell-browser-client",
+	"name": "gravwell",
 	"version": "0.0.0",
 	"description": "",
 	"main": "dist/node/main.js",
@@ -13,6 +13,7 @@
 		"build:node": "scripts/build --nodeOnly",
 		"lint": "scripts/lint",
 		"format": "scripts/format",
+		"prepublishOnly": "npm ci && npm run format && npm run lint && npm run build",
 		"prepare": "npm run build"
 	},
 	"husky": {
@@ -21,10 +22,9 @@
 			"pre-push": "npm run lint && npm run test:node"
 		}
 	},
-	"private": true,
 	"repository": {
 		"type": "git",
-		"url": "git@git.gravwell.io:gravwell/gravwell-browser-client.git"
+		"url": "git+https://github.com/gravwell/js-client.git"
 	},
 	"dependencies": {
 		"@lucaspaganini/value-objects": "^1.2.1",
