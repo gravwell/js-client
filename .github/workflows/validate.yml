@@ -26,8 +26,8 @@ jobs:
         image: gravwell/gravwell:latest
         env:
           GRAVWELL_INGEST_SECRET: MyIngestSecret
-          GRAVWELL_INGEST_AUTH: MyIngestSecret 
-          GRAVWELL_CONTROL_AUTH: MyControlSecret 
+          GRAVWELL_INGEST_AUTH: MyIngestSecret
+          GRAVWELL_CONTROL_AUTH: MyControlSecret
           GRAVWELL_SEARCHAGENT_AUTH: MySearchAgentAuth
         ports:
           - 80:80
