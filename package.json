@@ -1,0 +1,80 @@
+{
+	"name": "gravwell-browser-client",
+	"version": "0.0.0",
+	"description": "",
+	"main": "dist/node/main.js",
+	"browser": "dist/browsers/main.js",
+	"scripts": {
+		"test": "npm run test:node && npm run test:browsers",
+		"test:browsers": "scripts/test-browsers",
+		"test:node": "scripts/test-node",
+		"build": "scripts/build",
+		"build:browsers": "scripts/build --browsersOnly",
+		"build:node": "scripts/build --nodeOnly",
+		"lint": "scripts/lint",
+		"format": "scripts/format",
+		"prepare": "npm run build"
+	},
+	"husky": {
+		"hooks": {
+			"pre-commit": "npm run lint && npm run test:node",
+			"pre-push": "npm run lint && npm run test:node"
+		}
+	},
+	"private": true,
+	"repository": {
+		"type": "git",
+		"url": "git@git.gravwell.io:gravwell/gravwell-browser-client.git"
+	},
+	"dependencies": {
+		"@lucaspaganini/value-objects": "^1.2.1",
+		"base-64": "^0.1.0",
+		"date-fns": "^2.16.1",
+		"form-data": "^3.0.0",
+		"isomorphic-ws": "^4.0.1",
+		"lodash": "^4.17.15",
+		"node-fetch": "^2.6.0",
+		"utf8": "^3.0.0",
+		"ws": "^7.3.1"
+	},
+	"peerDependencies": {
+		"rxjs": "^6"
+	},
+	"devDependencies": {
+		"@types/base-64": "^0.1.3",
+		"@types/jasmine": "^3.5.10",
+		"@types/lodash": "^4.14.152",
+		"@types/node": "^14.0.19",
+		"@types/node-fetch": "^2.5.7",
+		"@types/utf8": "^2.1.6",
+		"@types/ws": "^7.2.6",
+		"@typescript-eslint/eslint-plugin": "^2.34.0",
+		"@typescript-eslint/parser": "^2.34.0",
+		"copyfiles": "^2.3.0",
+		"dotenv": "^8.2.0",
+		"eslint": "^7.0.0",
+		"eslint-config-prettier": "^6.11.0",
+		"expect-type": "^0.7.9",
+		"husky": "^4.2.5",
+		"jasmine": "^3.5.0",
+		"jasmine-core": "^3.5.0",
+		"jasmine-spec-reporter": "^5.0.2",
+		"karma": "^5.1.0",
+		"karma-chrome-launcher": "^3.1.0",
+		"karma-env-preprocessor": "^0.1.1",
+		"karma-firefox-launcher": "^1.3.0",
+		"karma-jasmine": "^3.3.1",
+		"karma-jasmine-html-reporter": "^1.5.4",
+		"karma-safari-launcher": "^1.0.0",
+		"karma-webpack": "^4.0.2",
+		"license-check-and-add": "^3.0.4",
+		"prettier": "^2.0.5",
+		"rename-cli": "^6.2.1",
+		"rimraf": "^3.0.2",
+		"rxjs": "6.0.0",
+		"ts-node": "^9.0.0",
+		"typescript": "^3.9.6",
+		"webpack": "^4.43.0",
+		"yargs": "^15.4.1"
+	}
+}

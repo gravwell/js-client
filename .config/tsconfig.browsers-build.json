@@ -1,0 +1,9 @@
+{
+	"extends": "./tsconfig.base.json",
+	"compilerOptions": {
+		"types": [],
+		"lib": ["ES2020", "DOM"]
+	},
+	"include": ["../src-tsc/**/*"],
+	"exclude": ["../src-tsc/**/*.spec.ts", "../src-tsc/tests/**/*", "../src-tsc/**/*.node.*"]
+}

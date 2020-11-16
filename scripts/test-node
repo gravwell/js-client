@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+# Build node including specs and assets
+scripts/build --nodeOnly --tests --assets &&
+
+# Run tests with jasmine
+scripts/jasmine &&
+
+# Clean the build
+npx rimraf dist

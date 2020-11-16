@@ -1,0 +1,32 @@
+/*************************************************************************
+ * Copyright 2020 Gravwell, Inc. All rights reserved.
+ * Contact: <legal@gravwell.io>
+ *
+ * This software may be modified and distributed under the terms of the
+ * MIT license. See the LICENSE file for details.
+ **************************************************************************/
+
+export interface RawBroadcastedNotification {
+	Sender: number; // 0 for undefined
+	Type: number;
+	Broadcast: true;
+	Sent: string;
+	Expires: string;
+	IgnoreUntil: string;
+	Msg: string;
+	Origin: string;
+}
+
+export interface BroadcastedNotification {
+	id: string;
+	customID?: string;
+	type: 'broadcasted';
+	message: string;
+
+	sentDate: string; // Timestamp eg. '2019-04-22T21:44:01.776942432Z'
+	expirationDate: string; // Timestamp eg. '2019-04-23T03:44:01.776918756-06:00'
+	ignoreUntilDate: string; // Timestamp eg. '0001-01-01T00:00:00Z'
+
+	origin: string;
+	senderID: string;
+}

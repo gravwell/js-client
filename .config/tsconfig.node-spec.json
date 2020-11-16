@@ -1,0 +1,8 @@
+{
+	"extends": "./tsconfig.base.json",
+	"compilerOptions": {
+		"types": ["node", "jasmine"]
+	},
+	"include": ["../src-tsc/**/*"],
+	"exclude": ["../src-tsc/**/*.browsers.*"]
+}

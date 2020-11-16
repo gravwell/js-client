@@ -1,0 +1,9 @@
+{
+	"files": [],
+	"references": [
+		{ "path": "./.config/tsconfig.node-build.json" },
+		{ "path": "./.config/tsconfig.browsers-build.json" },
+		{ "path": "./.config/tsconfig.node-spec.json" },
+		{ "path": "./.config/tsconfig.browsers-spec.json" }
+	]
+}

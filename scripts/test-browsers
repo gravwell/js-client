@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+# Build browsers including specs and assets
+scripts/build --browsersOnly --tests --assets &&
+
+# Run tests with karma
+npx karma start $@ .config/karma.conf.js &&
+
+# Clean the build
+npx rimraf dist

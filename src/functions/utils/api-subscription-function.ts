@@ -1,0 +1,18 @@
+/*************************************************************************
+ * Copyright 2020 Gravwell, Inc. All rights reserved.
+ * Contact: <legal@gravwell.io>
+ *
+ * This software may be modified and distributed under the terms of the
+ * MIT license. See the LICENSE file for details.
+ **************************************************************************/
+
+import { APISubscription } from './api-subscription';
+
+export interface APISubscriptionFunction<R, S> {
+	// (sessionToken: string | null): Promise<APISubscription<R, S>>;
+	// (sessionToken: string | null, one: any): Promise<APISubscription<R, S>>;
+	// (sessionToken: string | null, one: any, two: any): Promise<APISubscription<R, S>>;
+	// (sessionToken: string | null, one: any, two: any, three: any): Promise<APISubscription<R, S>>;
+	// (sessionToken: string | null, one: any, two: any, three: any, four: any): Promise<APISubscription<R, S>>;
+	(sessionToken: string | null, one: any, two: any, three: any, four: any, five: any): Promise<APISubscription<R, S>>;
+}

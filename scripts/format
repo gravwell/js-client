@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+npx license-check-and-add add -f ./.config/license-header.json &&
+npx eslint -c .config/.eslintrc.js --fix "src/**/*.ts" &&
+npx prettier --write .

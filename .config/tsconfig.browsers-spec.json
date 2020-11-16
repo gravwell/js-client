@@ -1,0 +1,9 @@
+{
+	"extends": "./tsconfig.base.json",
+	"compilerOptions": {
+		"types": ["jasmine"],
+		"lib": ["ES2020", "DOM"]
+	},
+	"include": ["../src-tsc/**/*"],
+	"exclude": ["../src-tsc/**/*.node.*"]
+}

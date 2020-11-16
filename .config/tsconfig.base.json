@@ -1,0 +1,22 @@
+{
+	"compilerOptions": {
+		"alwaysStrict": true,
+		"noImplicitAny": true,
+		"noImplicitReturns": true,
+		"noEmitOnError": true,
+		"forceConsistentCasingInFileNames": true,
+		"strictNullChecks": true,
+		"strictPropertyInitialization": true,
+		"strictFunctionTypes": true,
+		"module": "commonjs",
+		"moduleResolution": "node",
+		"sourceMap": true,
+		"declaration": true,
+		"downlevelIteration": true,
+		"target": "ES5",
+		"lib": ["ES2020"],
+		"baseUrl": "..",
+		"rootDir": "../src-tsc",
+		"outDir": "../dist-tsc"
+	}
+}

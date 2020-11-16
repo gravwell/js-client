@@ -1,0 +1,2 @@
+This is file A
+It's a test file that might be used in some integration tests

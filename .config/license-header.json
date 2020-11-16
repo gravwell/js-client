@@ -1,0 +1,18 @@
+{
+	"ignore": [".config", "scripts", "**/*/assets", ".git", "*"],
+	"license": ".config/license-header.txt",
+	"licenseFormats": {
+		"ts|js": {
+			"prepend": "/*************************************************************************",
+			"append": " **************************************************************************/\n",
+			"eachLine": {
+				"prepend": " * "
+			}
+		}
+	},
+	"defaultFormat": {
+		"prepend": "/*",
+		"append": "*/"
+	},
+	"trailingWhitespace": "TRIM"
+}
