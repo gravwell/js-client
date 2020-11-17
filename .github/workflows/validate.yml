@@ -38,10 +38,10 @@ jobs:
           LICENSE: ${{ secrets.TEST_LICENSE }}
         run: |
           [[ "$(echo "$LICENSE" | base64 -d | md5sum)" == "e1fd9a7a78a5ddd27e3443f2144a6de3  -" ]]
-          echo "$LICENSE" | base64 -d | curl --form 'file=@-;filename=license' http://localhost:8080/license
-          while curl --fail http://localhost:8080/license/status ; do sleep 1; done
+          echo "$LICENSE" | base64 -d | curl --silent --form 'file=@-;filename=license' http://localhost:8080/license
+          while curl --silent --fail http://localhost:8080/license/status ; do sleep 1; done
           sleep 5
-          curl --fail http://localhost:8080/api/test
+          curl --silent --fail http://localhost:8080/api/test
       - uses: actions/checkout@v2
       - name: Use Node.js 10.20.1
         uses: actions/setup-node@v1
