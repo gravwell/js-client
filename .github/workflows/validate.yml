@@ -31,7 +31,7 @@ jobs:
             -e GRAVWELL_CONTROL_AUTH=MyControlSecret \
             -e GRAVWELL_SEARCHAGENT_AUTH=MySearchAgentAuth \
             --name gravwell \
-            -v ${GITHUB_WORKSPACE}/src/tests/backend-config/etc:/opt/gravwell/etc \
+            -v ${GITHUB_WORKSPACE}/test-config/etc:/opt/gravwell/etc \
             gravwell/gravwell:latest
       - shell: bash
         env:
