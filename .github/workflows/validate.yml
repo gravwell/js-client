@@ -94,8 +94,6 @@ jobs:
           UNIT_TESTS: true
         run: |
           export TEST_AUTH_TOKEN="$(curl --silent --header "Content-Type:  application/json" --request POST --data '{"User":"admin","Pass":"changeme"}' http://localhost:8080/api/login | jq -r .JWT)"
-          sudo apt-get update
-          sudo apt-get install -y firefox 2>&1 >/dev/null
           npm run test:browsers -- --browsers=FirefoxHeadlessCI
 
   test-chrome:
@@ -135,11 +133,5 @@ jobs:
           UNIT_TESTS: true
         run: |
           export TEST_AUTH_TOKEN="$(curl --silent --header "Content-Type:  application/json" --request POST --data '{"User":"admin","Pass":"changeme"}' http://localhost:8080/api/login | jq -r .JWT)"
-          sudo apt-get update
-          sudo apt-get install -y wget gnupg ca-certificates 2>&1 >/dev/null
-          wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
-          sudo echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list
-          sudo apt-get update
-          sudo apt-get install -y google-chrome-stable 2>&1 >/dev/null
           export CHROME_BIN=$(which google-chrome-stable)
           npm run test:browsers -- --browsers=ChromeHeadlessCI
