@@ -21,18 +21,18 @@ jobs:
   test-node:
     runs-on: ubuntu-latest
 
-    services:
-      backend:
-        image: gravwell/gravwell:latest
-        env:
-          GRAVWELL_INGEST_SECRET: MyIngestSecret
-          GRAVWELL_INGEST_AUTH: MyIngestSecret
-          GRAVWELL_CONTROL_AUTH: MyControlSecret
-          GRAVWELL_SEARCHAGENT_AUTH: MySearchAgentAuth
-        ports:
-          - 8080:80
-
     steps:
+      - uses: actions/checkout@v2
+      - shell: bash
+        run: |
+          docker run -p 8080:80 -d \
+            -e GRAVWELL_INGEST_SECRET=MyIngestSecret \
+            -e GRAVWELL_INGEST_AUTH=MyIngestSecret \
+            -e GRAVWELL_CONTROL_AUTH=MyControlSecret \
+            -e GRAVWELL_SEARCHAGENT_AUTH=MySearchAgentAuth \
+            --name gravwell \
+            -v ${GITHUB_WORKSPACE}/src/tests/backend-config/etc:/opt/gravwell/etc \
+            gravwell/gravwell:latest
       - shell: bash
         env:
           LICENSE: ${{ secrets.TEST_LICENSE }}
@@ -42,11 +42,16 @@ jobs:
           while curl --silent --fail http://localhost:8080/license/status ; do sleep 1; done
           sleep 5
           curl --silent --fail http://localhost:8080/api/test
-      - uses: actions/checkout@v2
       - name: Use Node.js 10.20.1
         uses: actions/setup-node@v1
         with:
           node-version: '10.20.1'
       - run: npm i -g npm@6.14.5
       - run: npm ci
-      - run: npm run test:node
+      - shell: bash
+        env:
+          INTEGRATION_TESTS: true
+          UNIT_TESTS: true
+        run: |
+          export TEST_AUTH_TOKEN="$(curl --silent --header "Content-Type:  application/json" --request POST --data '{"User":"admin","Pass":"changeme"}' http://localhost:8080/api/login | jq -r .JWT)"
+          npm run test:node

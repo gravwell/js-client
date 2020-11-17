@@ -1,5 +1,5 @@
 {
-	"ignore": [".config", "scripts", "**/*/assets", ".git", ".github", "*"],
+	"ignore": [".config", "scripts", "**/*/assets", ".git", ".github", "*", "**/*/backend-config"],
 	"license": ".config/license-header.txt",
 	"licenseFormats": {
 		"ts|js": {
