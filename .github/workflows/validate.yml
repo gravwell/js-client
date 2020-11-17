@@ -95,7 +95,7 @@ jobs:
         run: |
           export TEST_AUTH_TOKEN="$(curl --silent --header "Content-Type:  application/json" --request POST --data '{"User":"admin","Pass":"changeme"}' http://localhost:8080/api/login | jq -r .JWT)"
           sudo apt-get update
-          sudo apt-get install -y firefox-esr 2>&1 >/dev/null
+          sudo apt-get install -y firefox 2>&1 >/dev/null
           npm run test:browsers -- --browsers=FirefoxHeadlessCI
 
   test-chrome:
