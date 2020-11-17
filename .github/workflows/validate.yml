@@ -31,7 +31,7 @@ jobs:
             -e GRAVWELL_CONTROL_AUTH=MyControlSecret \
             -e GRAVWELL_SEARCHAGENT_AUTH=MySearchAgentAuth \
             --name gravwell \
-            -v ${GITHUB_WORKSPACE}/test-config/etc:/opt/gravwell/etc \
+            -v ${GITHUB_WORKSPACE}/.config/test-config/etc:/opt/gravwell/etc \
             gravwell/gravwell:latest
       - shell: bash
         env:
@@ -70,7 +70,7 @@ jobs:
             -e GRAVWELL_CONTROL_AUTH=MyControlSecret \
             -e GRAVWELL_SEARCHAGENT_AUTH=MySearchAgentAuth \
             --name gravwell \
-            -v ${GITHUB_WORKSPACE}/test-config/etc:/opt/gravwell/etc \
+            -v ${GITHUB_WORKSPACE}/.config/test-config/etc:/opt/gravwell/etc \
             gravwell/gravwell:latest
       - shell: bash
         env:
@@ -109,7 +109,7 @@ jobs:
             -e GRAVWELL_CONTROL_AUTH=MyControlSecret \
             -e GRAVWELL_SEARCHAGENT_AUTH=MySearchAgentAuth \
             --name gravwell \
-            -v ${GITHUB_WORKSPACE}/test-config/etc:/opt/gravwell/etc \
+            -v ${GITHUB_WORKSPACE}/.config/test-config/etc:/opt/gravwell/etc \
             gravwell/gravwell:latest
       - shell: bash
         env:
