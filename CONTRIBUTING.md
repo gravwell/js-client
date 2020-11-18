@@ -4,12 +4,12 @@ Before starting any work, make sure there's a github issue describing what will 
 
 With an existing issue associated with your work, create a branch for your work using the following convention:
 
-- `fix/{issue}` for fixes and hotfixes
+- `hotfix/{issue}` for hotfixes
+- `fix/{issue}` for fixes
 - `feature/{issue}` for features
 
 Other branch conventions are:
 
-- `{version}` for versions
 - `dev` for the latest development version
 - `master` for the latest general released version
 
@@ -22,6 +22,14 @@ Once your work is done and [conforms with our style conventions](#style-conventi
 5. Assign yourself as the responsible for the PR
 6. Assign at least one developer to review you work
 7. Once all reviewers approve it, it can be merged by anyone with access.
+
+## Commands
+
+- `npm ci` for a clean install.
+- `npm test` to execute the tests.
+- `npm run build` to build the project for production. The build artifacts will be stored in the `dist/` directory.
+- `npm run lint` to lint the codebase with Prettier and ESLint.
+- `npm run format` to automatically apply some style conventions.
 
 ## Style conventions
 
