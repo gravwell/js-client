@@ -21,10 +21,25 @@
 			"pre-push": "npm run lint && npm run test:node"
 		}
 	},
+	"keywords": [
+		"Gravwell",
+		"client",
+		"API",
+		"SDK",
+		"Node",
+		"browser",
+		"typescript"
+	],
+	"author": "Gravwell <code@gravwell.io> (https://www.gravwell.io/)",
+	"license": "MIT",
 	"repository": {
 		"type": "git",
 		"url": "git+https://github.com/gravwell/js-client.git"
 	},
+	"bugs": {
+		"url": "https://github.com/gravwell/js-client/issues"
+	},
+	"homepage": "https://github.com/gravwell/js-client#readme",
 	"dependencies": {
 		"@lucaspaganini/value-objects": "^1.2.1",
 		"base-64": "^0.1.0",

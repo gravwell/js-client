@@ -1,6 +1,10 @@
 # Gravwell JavaScript Client
 
-This package provides an abstraction layer between a browser and the Gravwell Web Server API. Works on Node and browsers.
+Wrapper for the [Gravwell Web API](https://docs.gravwell.io/#!api/api.md).
+
+- Exported in ES5
+- Works on Node and browsers
+- Full TypeScript coverage
 
 Install it with NPM
 
