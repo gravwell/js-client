@@ -5,7 +5,7 @@ on:
     branches: [main, dev]
 
 jobs:
-  validate:
+  lint:
     runs-on: ubuntu-latest
 
     steps:
@@ -17,3 +17,121 @@ jobs:
       - run: npm i -g npm@6.14.5
       - run: npm ci
       - run: npm run lint
+
+  test-node:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - shell: bash
+        run: |
+          docker run -p 8080:80 -d \
+            -e GRAVWELL_INGEST_SECRET=MyIngestSecret \
+            -e GRAVWELL_INGEST_AUTH=MyIngestSecret \
+            -e GRAVWELL_CONTROL_AUTH=MyControlSecret \
+            -e GRAVWELL_SEARCHAGENT_AUTH=MySearchAgentAuth \
+            --name gravwell \
+            -v ${GITHUB_WORKSPACE}/.config/test-config/etc:/opt/gravwell/etc \
+            gravwell/gravwell:latest
+      - shell: bash
+        env:
+          LICENSE: ${{ secrets.TEST_LICENSE }}
+        run: |
+          [[ "$(echo "$LICENSE" | base64 -d | md5sum)" == "e1fd9a7a78a5ddd27e3443f2144a6de3  -" ]]
+          echo "$LICENSE" | base64 -d | curl --silent --form 'file=@-;filename=license' http://localhost:8080/license
+          sleep 5
+          while curl --silent --fail http://localhost:8080/license/status ; do sleep 1; done
+          sleep 10
+          curl --silent --fail http://localhost:8080/api/test
+      - name: Use Node.js 10.20.1
+        uses: actions/setup-node@v1
+        with:
+          node-version: '10.20.1'
+      - run: npm i -g npm@6.14.5
+      - run: npm ci
+      - shell: bash
+        env:
+          INTEGRATION_TESTS: true
+          UNIT_TESTS: true
+        run: |
+          export TEST_AUTH_TOKEN="$(curl --silent --header "Content-Type:  application/json" --request POST --data '{"User":"admin","Pass":"changeme"}' http://localhost:8080/api/login | jq -r .JWT)"
+          npm run test:node
+
+  test-firefox:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - shell: bash
+        run: |
+          docker run -p 8080:80 -d \
+            -e GRAVWELL_INGEST_SECRET=MyIngestSecret \
+            -e GRAVWELL_INGEST_AUTH=MyIngestSecret \
+            -e GRAVWELL_CONTROL_AUTH=MyControlSecret \
+            -e GRAVWELL_SEARCHAGENT_AUTH=MySearchAgentAuth \
+            --name gravwell \
+            -v ${GITHUB_WORKSPACE}/.config/test-config/etc:/opt/gravwell/etc \
+            gravwell/gravwell:latest
+      - shell: bash
+        env:
+          LICENSE: ${{ secrets.TEST_LICENSE }}
+        run: |
+          [[ "$(echo "$LICENSE" | base64 -d | md5sum)" == "e1fd9a7a78a5ddd27e3443f2144a6de3  -" ]]
+          echo "$LICENSE" | base64 -d | curl --silent --form 'file=@-;filename=license' http://localhost:8080/license
+          sleep 5
+          while curl --silent --fail http://localhost:8080/license/status ; do sleep 1; done
+          sleep 10
+          curl --silent --fail http://localhost:8080/api/test
+      - name: Use Node.js 10.20.1
+        uses: actions/setup-node@v1
+        with:
+          node-version: '10.20.1'
+      - run: npm i -g npm@6.14.5
+      - run: npm ci
+      - shell: bash
+        env:
+          INTEGRATION_TESTS: true
+          UNIT_TESTS: true
+        run: |
+          export TEST_AUTH_TOKEN="$(curl --silent --header "Content-Type:  application/json" --request POST --data '{"User":"admin","Pass":"changeme"}' http://localhost:8080/api/login | jq -r .JWT)"
+          npm run test:browsers -- --browsers=FirefoxHeadlessCI
+
+  test-chrome:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - shell: bash
+        run: |
+          docker run -p 8080:80 -d \
+            -e GRAVWELL_INGEST_SECRET=MyIngestSecret \
+            -e GRAVWELL_INGEST_AUTH=MyIngestSecret \
+            -e GRAVWELL_CONTROL_AUTH=MyControlSecret \
+            -e GRAVWELL_SEARCHAGENT_AUTH=MySearchAgentAuth \
+            --name gravwell \
+            -v ${GITHUB_WORKSPACE}/.config/test-config/etc:/opt/gravwell/etc \
+            gravwell/gravwell:latest
+      - shell: bash
+        env:
+          LICENSE: ${{ secrets.TEST_LICENSE }}
+        run: |
+          [[ "$(echo "$LICENSE" | base64 -d | md5sum)" == "e1fd9a7a78a5ddd27e3443f2144a6de3  -" ]]
+          echo "$LICENSE" | base64 -d | curl --silent --form 'file=@-;filename=license' http://localhost:8080/license
+          sleep 5
+          while curl --silent --fail http://localhost:8080/license/status ; do sleep 1; done
+          sleep 10
+          curl --silent --fail http://localhost:8080/api/test
+      - name: Use Node.js 10.20.1
+        uses: actions/setup-node@v1
+        with:
+          node-version: '10.20.1'
+      - run: npm i -g npm@6.14.5
+      - run: npm ci
+      - shell: bash
+        env:
+          INTEGRATION_TESTS: true
+          UNIT_TESTS: true
+        run: |
+          export TEST_AUTH_TOKEN="$(curl --silent --header "Content-Type:  application/json" --request POST --data '{"User":"admin","Pass":"changeme"}' http://localhost:8080/api/login | jq -r .JWT)"
+          export CHROME_BIN=$(which google-chrome-stable)
+          npm run test:browsers -- --browsers=ChromeHeadlessCI
