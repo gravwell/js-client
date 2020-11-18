@@ -13,8 +13,7 @@
 		"build:node": "scripts/build --nodeOnly",
 		"lint": "scripts/lint",
 		"format": "scripts/format",
-		"prepublishOnly": "npm ci && npm run format && npm run lint && npm run build",
-		"prepare": "npm run build"
+		"prepublishOnly": "npm ci && npm run format && npm run lint && npm run build"
 	},
 	"husky": {
 		"hooks": {
