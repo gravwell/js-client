@@ -6,7 +6,8 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { NumericID, RawNumericID, RawUUID, UUID } from '../value-objects';
+import { NumericID, UUID } from '../../value-objects';
+import { RawAutoExtractorModule } from './raw-auto-extractor';
 
 export interface AutoExtractor {
 	id: UUID;
@@ -46,53 +47,4 @@ export interface AutoExtractor {
 	arguments: string | null;
 }
 
-export type RawAutoExtractorModule = 'csv' | 'fields' | 'regex' | 'slice';
 export type AutoExtractorModule = RawAutoExtractorModule;
-
-export interface RawAutoExtractor {
-	UUID: RawUUID;
-
-	UID: RawNumericID;
-	GIDs: Array<RawNumericID> | null;
-
-	Name: string;
-	Desc: string;
-	Labels: Array<string> | null;
-
-	Global: boolean;
-	LastUpdated: string; // Timestamp
-
-	Tag: string;
-	Module: RawAutoExtractorModule;
-	Params: string;
-	Args?: string;
-	Accelerated: '';
-}
-
-export const toAutoExtractor = (raw: RawAutoExtractor): AutoExtractor => ({
-	id: raw.UUID,
-
-	userID: raw.UID.toString(),
-	groupIDs: raw.GIDs?.map(id => id.toString()) ?? [],
-
-	name: raw.Name,
-	description: raw.Desc,
-	labels: raw.Labels ?? [],
-
-	isGlobal: raw.Global,
-	lastUpdateDate: new Date(raw.LastUpdated),
-
-	tag: raw.Tag,
-	module: raw.Module,
-	parameters: raw.Params,
-	arguments: raw.Args ?? null,
-});
-
-export const isAutoExtractor = (value: any): value is AutoExtractor => {
-	try {
-		const ae = <AutoExtractor>value;
-		return !!ae;
-	} catch {
-		return false;
-	}
-};
