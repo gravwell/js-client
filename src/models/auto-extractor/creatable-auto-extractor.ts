@@ -6,10 +6,19 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-export * from './auto-extractor';
-export * from './creatable-auto-extractor';
-export * from './is-auto-extractor';
-export * from './raw-auto-extractor';
-export * from './raw-creatable-auto-extractor';
-export * from './to-auto-extractor';
-export * from './to-raw-creatable-auto-extractor';
+import { NumericID } from '../../value-objects';
+import { AutoExtractorModule } from './auto-extractor';
+
+export interface CreatableAutoExtractor {
+	groupIDs?: Array<NumericID>;
+
+	name: string;
+	description: string;
+	labels?: Array<string>;
+	isGlobal?: boolean;
+
+	tag: string;
+	module: AutoExtractorModule;
+	parameters: string;
+	arguments?: string | null;
+}
