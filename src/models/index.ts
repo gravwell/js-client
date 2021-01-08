@@ -34,4 +34,5 @@ export * from './template';
 export * from './timeframe';
 export * from './user';
 export * from './user-preferences';
+export * from './user-sessions';
 export * from './version';
