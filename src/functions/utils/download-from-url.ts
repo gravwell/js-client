@@ -6,7 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-export type DownloadReturn = void;
+export type DownloadReturn = string;
 
 export const downloadFromURL = async (url: string, fileName: string): Promise<DownloadReturn> => {
 	const anchorEl = document.createElement('a');
@@ -15,5 +15,8 @@ export const downloadFromURL = async (url: string, fileName: string): Promise<Do
 
 	document.body.appendChild(anchorEl);
 	anchorEl.click();
-	setTimeout(() => document.body.removeChild(anchorEl), 300);
+	await new Promise(res => setTimeout(res, 300));
+
+	document.body.removeChild(anchorEl);
+	return '';
 };
