@@ -6,4 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-export type File = any;
+import type { ReadStream } from 'fs';
+
+type _File = File | ReadStream;
+export { _File as File };

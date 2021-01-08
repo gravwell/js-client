@@ -8,11 +8,10 @@
 
 import { fetch } from './fetch';
 
-export type DownloadReturn = Buffer;
+export type DownloadReturn = string;
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const downloadFromURL = async (url: string, fileName: string): Promise<DownloadReturn> => {
 	const res = await fetch(url);
-	const buffer = await res.buffer();
-	return buffer;
+	return await res.text();
 };
