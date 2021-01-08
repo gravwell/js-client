@@ -6,4 +6,4 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-export const getEnvVar: (key: string) => string | undefined;
+export const TEST_ASSETS_PATH: string | null = null;

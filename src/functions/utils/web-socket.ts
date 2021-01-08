@@ -6,5 +6,5 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-const _WebSocket: any = {};
+const _WebSocket = window.WebSocket;
 export { _WebSocket as WebSocket };

@@ -33,9 +33,6 @@ const buildNode = async (): Promise<void> => {
 	debug('Copying TypeScript files to src-tsc');
 	await execAsync('npx copyfiles --up=1 "src/**/*.ts" src-tsc');
 
-	debug('Deleting non Node TypeScript files');
-	await execAsync('npx rimraf src-tsc/**/*.d.ts src-tsc/**/*.browsers.ts');
-
 	debug('Replacing original files for *.node.* ones');
 	await execAsync('npx rename -f "src-tsc/**/*.node.*" "{{f|replace|.node|}}"');
 
@@ -63,10 +60,7 @@ const buildBrowsers = async (): Promise<void> => {
 	await execAsync('npx copyfiles --up=1 "src/**/*.ts" src-tsc');
 
 	debug('Deleting non browser TypeScript files');
-	await execAsync('npx rimraf src-tsc/**/*.d.ts src-tsc/**/*.node.ts');
-
-	debug('Replacing original files for *.browsers.* ones');
-	await execAsync('npx rename -f "src-tsc/**/*.browsers.*" "{{f|replace|.browsers|}}"');
+	await execAsync('npx rimraf src-tsc/**/*.node.ts');
 
 	debug('Transpiling TypeScript files');
 	const tsconfig = '.config/tsconfig.' + (INCLUDE_TESTS ? 'browsers-spec' : 'browsers-build') + '.json';
