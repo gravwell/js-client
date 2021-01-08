@@ -15,12 +15,6 @@
 		"format": "scripts/format",
 		"prepublishOnly": "npm ci && npm run format && npm run lint && npm run build"
 	},
-	"husky": {
-		"hooks": {
-			"pre-commit": "npm run lint && npm run test:node",
-			"pre-push": "npm run lint && npm run test:node"
-		}
-	},
 	"keywords": [
 		"Gravwell",
 		"client",
@@ -69,7 +63,6 @@
 		"eslint": "^7.0.0",
 		"eslint-config-prettier": "^6.11.0",
 		"expect-type": "^0.7.9",
-		"husky": "^4.2.5",
 		"jasmine": "^3.5.0",
 		"jasmine-core": "^3.5.0",
 		"jasmine-spec-reporter": "^5.0.2",
