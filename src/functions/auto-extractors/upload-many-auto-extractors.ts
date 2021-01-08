@@ -8,7 +8,7 @@
 
 import * as FormData from 'form-data';
 import { isString } from 'lodash';
-import { AutoExtractor } from '../../models';
+import { AutoExtractor, UpdatableAutoExtractor } from '../../models';
 import { NumericID, RawUUID } from '../../value-objects';
 import {
 	APIFunctionMakerOptions,
@@ -20,7 +20,7 @@ import {
 	parseJSONResponse,
 } from '../utils';
 import { makeGetAllAutoExtractors } from './get-all-auto-extractors';
-import { makeUpdateOneAutoExtractor, UpdatableAutoExtractor } from './update-one-auto-extractor';
+import { makeUpdateOneAutoExtractor } from './update-one-auto-extractor';
 
 export const makeUploadManyAutoExtractors = (makerOptions: APIFunctionMakerOptions) => {
 	const getAllAutoExtractors = makeGetAllAutoExtractors(makerOptions);

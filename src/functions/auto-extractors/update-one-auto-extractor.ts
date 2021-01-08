@@ -6,15 +6,13 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { isUndefined } from 'lodash';
 import {
 	AutoExtractor,
-	AutoExtractorModule,
 	RawAutoExtractor,
-	RawAutoExtractorModule,
 	toAutoExtractor,
+	toRawUpdatableAutoExtractor,
+	UpdatableAutoExtractor,
 } from '../../models';
-import { NumericID, RawNumericID, RawUUID, toRawNumericID } from '../../value-objects';
 import {
 	APIFunctionMakerOptions,
 	buildHTTPRequest,
@@ -51,53 +49,3 @@ export const makeUpdateOneAutoExtractor = (makerOptions: APIFunctionMakerOptions
 		}
 	};
 };
-
-export interface UpdatableAutoExtractor {
-	id: NumericID;
-	groupIDs?: Array<NumericID>;
-
-	name?: string;
-	description?: string;
-	labels?: Array<string>;
-
-	isGlobal?: boolean;
-
-	tag?: string;
-	module?: AutoExtractorModule;
-	parameters?: string;
-	arguments?: string | null;
-}
-
-interface RawUpdatableAutoExtractor {
-	UUID: RawUUID;
-	GIDs: Array<RawNumericID>;
-
-	Name: string;
-	Desc: string;
-	Labels: Array<string>;
-
-	Global: boolean;
-
-	Tag: string;
-	Module: RawAutoExtractorModule;
-	Params: string;
-	Args: string; // Empty string is null
-}
-
-const toRawUpdatableAutoExtractor = (
-	updatable: UpdatableAutoExtractor,
-	current: AutoExtractor,
-): RawUpdatableAutoExtractor => ({
-	UUID: current.id,
-	GIDs: (updatable.groupIDs ?? current.groupIDs).map(toRawNumericID),
-
-	Name: updatable.name ?? current.name,
-	Desc: updatable.description ?? current.description,
-	Labels: updatable.labels ?? current.labels,
-	Global: updatable.isGlobal ?? current.isGlobal,
-
-	Tag: updatable.tag ?? current.tag,
-	Module: updatable.module ?? current.module,
-	Params: updatable.parameters ?? current.parameters,
-	Args: (isUndefined(updatable.arguments) ? current.arguments : updatable.arguments) ?? '',
-});

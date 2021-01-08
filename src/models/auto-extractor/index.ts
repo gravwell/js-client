@@ -11,5 +11,8 @@ export * from './creatable-auto-extractor';
 export * from './is-auto-extractor';
 export * from './raw-auto-extractor';
 export * from './raw-creatable-auto-extractor';
+export * from './raw-updatable-auto-extractor';
 export * from './to-auto-extractor';
 export * from './to-raw-creatable-auto-extractor';
+export * from './to-raw-updatable-auto-extractor';
+export * from './updatable-auto-extractor';
