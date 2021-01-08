@@ -4,6 +4,7 @@
 	"description": "",
 	"main": "dist/node/main.js",
 	"browser": "dist/browsers/main.js",
+	"types": "dist/browsers/main.d.ts",
 	"scripts": {
 		"test": "npm run test:node && npm run test:browsers",
 		"test:browsers": "scripts/test-browsers",
