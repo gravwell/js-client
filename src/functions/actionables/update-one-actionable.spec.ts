@@ -7,14 +7,14 @@
  **************************************************************************/
 
 import { omit } from 'lodash';
-import { Actionable, ActionableAction, isActionable } from '../../models';
+import { Actionable, ActionableAction, CreatableActionable, isActionable, UpdatableActionable } from '../../models';
 import { integrationTest } from '../../tests';
 import { TEST_AUTH_TOKEN, TEST_HOST } from '../../tests/config';
 import { omitUndefinedShallow } from '../utils';
-import { CreatableActionable, makeCreateOneActionable } from './create-one-actionable';
+import { makeCreateOneActionable } from './create-one-actionable';
 import { makeDeleteOneActionable } from './delete-one-actionable';
 import { makeGetOneActionable } from './get-one-actionable';
-import { makeUpdateOneActionable, UpdatableActionable } from './update-one-actionable';
+import { makeUpdateOneActionable } from './update-one-actionable';
 
 describe('updateOneActionable()', () => {
 	const createOneActionable = makeCreateOneActionable({ host: TEST_HOST, useEncryption: false });

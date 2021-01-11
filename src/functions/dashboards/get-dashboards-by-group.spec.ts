@@ -7,12 +7,12 @@
  **************************************************************************/
 
 import { random } from 'lodash';
-import { CreatableDashboard, isDashboard, User } from '../../models';
+import { CreatableDashboard, CreatableGroup, isDashboard, User } from '../../models';
 import { integrationTest } from '../../tests';
 import { TEST_AUTH_TOKEN, TEST_HOST } from '../../tests/config';
 import { makeLoginOneUser } from '../auth/login-one-user';
 import { makeAddOneUserToManyGroups } from '../groups/add-one-user-to-many-groups';
-import { CreatableGroup, makeCreateOneGroup } from '../groups/create-one-group';
+import { makeCreateOneGroup } from '../groups/create-one-group';
 import { CreatableUser, makeCreateOneUser, makeGetMyUser, makeGetOneUser } from '../users';
 import { makeCreateOneDashboard } from './create-one-dashboard';
 import { makeDeleteOneDashboard } from './delete-one-dashboard';

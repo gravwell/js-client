@@ -7,12 +7,12 @@
  **************************************************************************/
 
 import { random } from 'lodash';
-import { isMacro, User } from '../../models';
+import { CreatableGroup, isMacro, User } from '../../models';
 import { integrationTest } from '../../tests';
 import { TEST_AUTH_TOKEN, TEST_HOST } from '../../tests/config';
 import { makeLoginOneUser } from '../auth/login-one-user';
 import { makeAddOneUserToManyGroups } from '../groups/add-one-user-to-many-groups';
-import { CreatableGroup, makeCreateOneGroup } from '../groups/create-one-group';
+import { makeCreateOneGroup } from '../groups/create-one-group';
 import { CreatableUser, makeCreateOneUser, makeGetMyUser, makeGetOneUser } from '../users';
 import { CreatableMacro, makeCreateOneMacro } from './create-one-macro';
 import { makeDeleteOneMacro } from './delete-one-macro';

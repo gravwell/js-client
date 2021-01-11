@@ -8,9 +8,10 @@
 
 import { createReadStream } from 'fs';
 import { join } from 'path';
+import { CreatableFile } from '../../models';
 import { integrationTest } from '../../tests';
 import { TEST_ASSETS_PATH, TEST_AUTH_TOKEN, TEST_HOST } from '../../tests/config';
-import { CreatableFile, makeCreateOneFile } from './create-one-file';
+import { makeCreateOneFile } from './create-one-file';
 import { makeDeleteOneFile } from './delete-one-file';
 import { makeGetAllFiles } from './get-all-files';
 import { makeGetOneFile } from './get-one-file';
