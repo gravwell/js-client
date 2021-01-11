@@ -6,15 +6,13 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { isNull } from 'lodash';
-import { NumericID } from '../../value-objects';
+import { toRawUpdatableGroup, UpdatableGroup } from '../../models';
 import {
 	APIFunctionMakerOptions,
 	buildHTTPRequest,
 	buildURL,
 	fetch,
 	HTTPRequestOptions,
-	omitUndefinedShallow,
 	parseJSONResponse,
 } from '../utils';
 
@@ -38,21 +36,3 @@ export const makeUpdateOneGroup = (makerOptions: APIFunctionMakerOptions) => {
 		}
 	};
 };
-
-export interface UpdatableGroup {
-	id: NumericID;
-	name?: string;
-	description?: string | null;
-}
-
-interface RawUpdatableGroup {
-	Name?: string;
-	Desc?: string;
-}
-
-const toRawUpdatableGroup = (data: UpdatableGroup): RawUpdatableGroup =>
-	omitUndefinedShallow({
-		Name: data.name,
-		// TODO: If we send an empty string, it'll be ignored, that's why we need that space
-		Desc: isNull(data.description) ? ' ' : data.description,
-	});

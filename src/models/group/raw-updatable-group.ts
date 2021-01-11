@@ -6,13 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-export * from './creatable-group';
-export * from './group';
-export * from './is-group';
-export * from './raw-creatable-group';
-export * from './raw-group';
-export * from './raw-updatable-group';
-export * from './to-group';
-export * from './to-raw-creatable-group';
-export * from './to-raw-updatable-group';
-export * from './updatable-group';
+export interface RawUpdatableGroup {
+	Name?: string;
+	Desc?: string;
+}
