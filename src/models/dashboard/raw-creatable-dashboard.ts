@@ -1,6 +1,6 @@
 import { RawNumericID, RawUUID } from '../../value-objects';
 import { RawTimeframe } from '../timeframe';
-import { RendererOptions } from './dashboard-renderer-options';
+import { DashboardRendererOptions } from './dashboard-renderer-options';
 
 export type RawCreatableDashboardSearch = RawCreatableDashboard['Data']['searches'][number];
 export type RawCreatableDashboardTile = RawCreatableDashboard['Data']['tiles'][number];
@@ -40,7 +40,7 @@ export interface RawCreatableDashboard {
 			renderer: string;
 			span: { col: number; row: number; x: number; y: number };
 			searchesIndex: number;
-			rendererOptions: RendererOptions;
+			rendererOptions: DashboardRendererOptions;
 		}>;
 		timeframe: RawTimeframe;
 		version: 2;

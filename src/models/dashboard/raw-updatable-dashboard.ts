@@ -2,27 +2,20 @@ import { RawNumericID, RawUUID } from '../../value-objects';
 import { RawTimeframe } from '../timeframe';
 import { DashboardRendererOptions } from './dashboard-renderer-options';
 
-export interface RawDashboard {
-	ID: RawNumericID;
-	GUID: RawUUID;
-
-	UID: RawNumericID;
-	GIDs: Array<RawNumericID> | null;
+export interface RawUpdatableDashboard {
+	GIDs: Array<RawNumericID>;
 
 	Name: string;
-	Description: string; // empty string is null
-	Labels: Array<string> | null;
-
-	Created: string; // Timestamp
-	Updated: string; // Timestamp
+	Description: string; // Use empty string for null
+	Labels: Array<string>;
 
 	Data: {
 		liveUpdateInterval?: number; // 0 is undefined
 		linkZooming?: boolean;
 
 		grid?: {
-			gutter?: string | number | null; // string is a number
-			margin?: string | number | null; // string is a number
+			gutter?: number; // string is a number
+			margin?: number; // string is a number
 		};
 
 		searches: Array<{
@@ -47,7 +40,7 @@ export interface RawDashboard {
 			rendererOptions: DashboardRendererOptions;
 		}>;
 		timeframe: RawTimeframe;
-		version?: 1 | 2;
+		version?: number;
 		lastDataUpdate?: string; // Timestamp
 	};
 }

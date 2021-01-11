@@ -1,4 +1,4 @@
-export interface RendererOptions {
+export interface DashboardRendererOptions {
 	XAxisSplitLine?: 'no';
 	YAxisSplitLine?: 'no';
 	IncludeOther?: 'yes';

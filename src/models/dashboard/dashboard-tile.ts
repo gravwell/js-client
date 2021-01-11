@@ -1,5 +1,5 @@
 import { NumericID } from '../../value-objects';
-import { RendererOptions } from './dashboard-renderer-options';
+import { DashboardRendererOptions } from './dashboard-renderer-options';
 
 export interface DashboardTile {
 	id: NumericID;
@@ -11,7 +11,7 @@ export interface DashboardTile {
 	searchIndex: number;
 
 	renderer: string;
-	rendererOptions: RendererOptions;
+	rendererOptions: DashboardRendererOptions;
 
 	dimensions: {
 		columns: number;
