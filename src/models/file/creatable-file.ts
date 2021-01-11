@@ -6,10 +6,18 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-export * from './creatable-file';
-export * from './file-metadata';
-export * from './is-file-metadata';
-export * from './raw-creatable-file';
-export * from './raw-file-metadata';
-export * from './to-file-metadata';
-export * from './to-raw-creatable-file';
+import { File } from '../../functions/utils';
+import { NumericID, UUID } from '../../value-objects';
+
+export interface CreatableFile {
+	globalID?: UUID;
+
+	groupIDs?: Array<NumericID>;
+	isGlobal?: boolean;
+
+	name: string;
+	description?: string | null;
+	labels?: Array<string>;
+
+	file: File;
+}
