@@ -6,13 +6,15 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-export * from './creatable-macro';
-export * from './is-macro';
-export * from './macro';
-export * from './raw-creatable-macro';
-export * from './raw-macro';
-export * from './raw-updatable-macro';
-export * from './to-macro';
-export * from './to-raw-creatable-macro';
-export * from './to-raw-updatable-macro';
-export * from './updatable-macro';
+import { NumericID } from '../../value-objects';
+
+export interface UpdatableMacro {
+	id: NumericID;
+	groupIDs?: Array<NumericID>;
+
+	name?: string;
+	description?: string | null;
+	labels?: Array<string>;
+
+	expansion?: string;
+}
