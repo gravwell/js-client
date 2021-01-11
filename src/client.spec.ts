@@ -12,7 +12,6 @@ import { GravwellClient } from './client';
 import {
 	AutoExtractorsFilter,
 	CreatableBroadcastNotification,
-	CreatableMacro,
 	CreatablePlaybook,
 	CreatableResource,
 	CreatableSavedQuery,
@@ -60,6 +59,7 @@ import {
 	CreatableFile,
 	CreatableGroup,
 	CreatableJSONEntry,
+	CreatableMacro,
 	CreatableMultiLineEntry,
 	Dashboard,
 	FileMetadata,
