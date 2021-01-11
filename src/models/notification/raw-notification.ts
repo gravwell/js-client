@@ -6,8 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { BroadcastedNotification, RawBroadcastedNotification } from './broadcasted-notification';
-import { RawTargetedNotification, TargetedNotification } from './targeted-notification';
+import { RawBroadcastedNotification } from './raw-broadcasted-notification';
+import { RawTargetedNotification } from './raw-targeted-notification';
 
-export type Notification = BroadcastedNotification | TargetedNotification;
 export type RawNotification = RawBroadcastedNotification | RawTargetedNotification;

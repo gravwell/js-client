@@ -6,19 +6,6 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-export interface RawTargetedNotification {
-	UID: number; // 0 for undefined
-	GID: number; // 0 for undefined
-	Sender: number; // 0 for undefined
-	Type: number;
-	Broadcast: false;
-	Sent: string;
-	Expires: string;
-	IgnoreUntil: string;
-	Msg: string;
-	Origin: string;
-}
-
 export type TargetedNotification = MyselfTargetedNotification | GroupTargetedNotification | UserTargetedNotification;
 
 export interface MyselfTargetedNotification extends BaseTargetedNotification {
