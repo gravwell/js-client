@@ -1,0 +1,33 @@
+import { isUndefined } from 'lodash';
+import { omitUndefinedShallow } from '../../functions/utils';
+import { toRawNumericID } from '../../value-objects';
+import { toRawTimeframe } from '../timeframe';
+import { CreatableDashboard } from './creatable-dashboard';
+import { RawCreatableDashboard } from './raw-creatable-dashboard';
+import { toRawCreatableDashboardSearch } from './to-raw-creatable-dashboard-search';
+import { toRawCreatableDashboardTile } from './to-raw-creatable-dashboard-tile';
+
+export const toRawCreatableDashboard = (creatable: CreatableDashboard): RawCreatableDashboard => ({
+	GIDs: creatable.groupIDs?.map(toRawNumericID) ?? [],
+
+	Name: creatable.name.trim(),
+	Description: creatable.description?.trim() ?? null,
+	Labels: creatable.labels ?? [],
+
+	Data: omitUndefinedShallow({
+		timeframe: toRawTimeframe(creatable.timeframe),
+		searches: creatable.searches.map(toRawCreatableDashboardSearch),
+		tiles: creatable.tiles.map(toRawCreatableDashboardTile),
+
+		liveUpdateInterval: creatable.liveUpdate?.interval ?? undefined,
+		linkZooming: creatable.updateOnZoom ?? false,
+		grid: (() => {
+			if (isUndefined(creatable.gridOptions)) return undefined;
+			return omitUndefinedShallow({
+				gutter: creatable.gridOptions?.gutter ?? undefined,
+				margin: creatable.gridOptions?.margin ?? undefined,
+			});
+		})(),
+		version: 2,
+	}),
+});
