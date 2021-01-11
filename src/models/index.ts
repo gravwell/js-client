@@ -10,6 +10,7 @@ export * from './actionable';
 export * from './auto-extractor';
 export * from './broadcasted-notification';
 export * from './dashboard';
+export * from './entry';
 export * from './file';
 export * from './group';
 export * from './jwt';
