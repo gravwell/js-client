@@ -11,7 +11,6 @@ import { attempt } from 'lodash';
 import { GravwellClient } from './client';
 import {
 	AutoExtractorsFilter,
-	CreatableBroadcastNotification,
 	CreatablePlaybook,
 	CreatableResource,
 	CreatableSavedQuery,
@@ -54,6 +53,7 @@ import {
 	BuildableKit,
 	CreatableActionable,
 	CreatableAutoExtractor,
+	CreatableBroadcastNotification,
 	CreatableDashboard,
 	CreatableFile,
 	CreatableGroup,

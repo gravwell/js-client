@@ -6,11 +6,9 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { integrationTest, TEST_HOST, TEST_AUTH_TOKEN } from '../../tests';
-import {
-	makeCreateOneBroadcastedNotification,
-	CreatableBroadcastNotification,
-} from './create-one-broadcasted-notification';
+import { CreatableBroadcastNotification } from '../../models';
+import { integrationTest, TEST_AUTH_TOKEN, TEST_HOST } from '../../tests';
+import { makeCreateOneBroadcastedNotification } from './create-one-broadcasted-notification';
 
 describe('createOneBroadcastedNotification', () => {
 	const createOneBroadcastedNotification = makeCreateOneBroadcastedNotification({
