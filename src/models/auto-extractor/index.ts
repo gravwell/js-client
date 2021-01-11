@@ -16,3 +16,4 @@ export * from './to-auto-extractor';
 export * from './to-raw-creatable-auto-extractor';
 export * from './to-raw-updatable-auto-extractor';
 export * from './updatable-auto-extractor';
+export * from './uploadable-auto-extractor';

@@ -8,8 +8,8 @@
 
 import * as FormData from 'form-data';
 import { isString } from 'lodash';
-import { AutoExtractor, UpdatableAutoExtractor } from '../../models';
-import { NumericID, RawUUID } from '../../value-objects';
+import { AutoExtractor, UpdatableAutoExtractor, UploadableAutoExtractor } from '../../models';
+import { RawUUID } from '../../value-objects';
 import {
 	APIFunctionMakerOptions,
 	buildHTTPRequest,
@@ -58,14 +58,6 @@ export const makeUploadManyAutoExtractors = (makerOptions: APIFunctionMakerOptio
 		}
 	};
 };
-
-export interface UploadableAutoExtractor {
-	file: File;
-
-	groupIDs?: Array<NumericID>;
-	labels?: Array<string>;
-	isGlobal?: boolean;
-}
 
 const toFormData = (file: File): FormData => {
 	const formData = new FormData();
