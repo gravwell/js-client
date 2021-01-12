@@ -7,30 +7,7 @@
  **************************************************************************/
 
 import { isBoolean, isString } from 'lodash';
-
-export interface RawRenderModule {
-	Name: string;
-	Description: string;
-	Examples: Array<string>;
-
-	SortRequired: boolean;
-}
-
-export interface RenderModule {
-	name: string;
-	description: string;
-	examples: Array<string>;
-
-	sortingRequired: boolean;
-}
-
-export const toRenderModule = (raw: RawRenderModule): RenderModule => ({
-	name: raw.Name,
-	description: raw.Description,
-	examples: raw.Examples,
-
-	sortingRequired: raw.SortRequired,
-});
+import { RenderModule } from './render-module';
 
 export const isRenderModule = (value: any): value is RenderModule => {
 	try {
