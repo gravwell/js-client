@@ -8,14 +8,14 @@
 
 import { createReadStream, ReadStream } from 'fs';
 import { join } from 'path';
-import { FileMetadata, isFileMetadata } from '../../models';
+import { CreatableFile, FileMetadata, isFileMetadata, UpdatableFile } from '../../models';
 import { integrationTest, myCustomMatchers } from '../../tests';
 import { TEST_ASSETS_PATH, TEST_AUTH_TOKEN, TEST_HOST } from '../../tests/config';
-import { CreatableFile, makeCreateOneFile } from './create-one-file';
+import { makeCreateOneFile } from './create-one-file';
 import { makeDeleteOneFile } from './delete-one-file';
 import { makeGetAllFiles } from './get-all-files';
 import { makeGetOneFileContent } from './get-one-file-content';
-import { makeUpdateOneFile, UpdatableFile } from './update-one-file';
+import { makeUpdateOneFile } from './update-one-file';
 
 describe('updateOneFile()', () => {
 	const createOneFile = makeCreateOneFile({ host: TEST_HOST, useEncryption: false });

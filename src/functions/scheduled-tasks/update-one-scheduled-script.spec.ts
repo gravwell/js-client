@@ -6,13 +6,12 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { isScheduledScript, ScheduledScript } from '../../models';
+import { isScheduledScript, ScheduledScript, UpdatableScheduledScript } from '../../models';
 import { integrationTest, myCustomMatchers } from '../../tests';
 import { TEST_AUTH_TOKEN, TEST_HOST } from '../../tests/config';
 import { makeCreateOneScheduledScript } from './create-one-scheduled-script';
 import { makeDeleteAllScheduledScripts } from './delete-all-scheduled-scripts';
 import { makeUpdateOneScheduledScript } from './update-one-scheduled-script';
-import { UpdatableScheduledScript } from './update-one-scheduled-task';
 
 describe('updateOneScheduledScript()', () => {
 	const createOneScheduledScript = makeCreateOneScheduledScript({ host: TEST_HOST, useEncryption: false });

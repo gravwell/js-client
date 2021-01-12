@@ -6,6 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
+import { RawSearchMessageReceived, RawSearchMessageSent } from '../../../models';
 import {
 	APIFunctionMakerOptions,
 	APISubscription,
@@ -13,8 +14,6 @@ import {
 	buildURL,
 	WebSocket,
 } from '../../utils';
-import { RawSearchMessageReceived } from './raw-search-message-received';
-import { RawSearchMessageSent } from './raw-search-message-sent';
 
 export const makeSubscribeToOneRawSearch = (makerOptions: APIFunctionMakerOptions) => {
 	const templatePath = '/api/ws/search';

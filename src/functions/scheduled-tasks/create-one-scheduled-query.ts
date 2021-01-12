@@ -6,9 +6,9 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { ScheduledQuery } from '../../models';
+import { CreatableScheduledQuery, ScheduledQuery } from '../../models';
 import { APIFunctionMakerOptions } from '../utils';
-import { CreatableScheduledQuery, makeCreateOneScheduledTask } from './create-one-scheduled-task';
+import { makeCreateOneScheduledTask } from './create-one-scheduled-task';
 
 export const makeCreateOneScheduledQuery = (makerOptions: APIFunctionMakerOptions) => {
 	const createOneScheduledTask = makeCreateOneScheduledTask(makerOptions);

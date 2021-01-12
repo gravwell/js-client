@@ -6,6 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
+import { CreatableGroup, toRawCreatableGroup } from '../../models';
 import { NumericID } from '../../value-objects';
 import {
 	APIFunctionMakerOptions,
@@ -37,18 +38,3 @@ export const makeCreateOneGroup = (makerOptions: APIFunctionMakerOptions) => {
 		}
 	};
 };
-
-export interface CreatableGroup {
-	name: string;
-	description?: string;
-}
-
-interface RawCreatableGroup {
-	Name: string;
-	Desc: string;
-}
-
-const toRawCreatableGroup = (creatable: CreatableGroup): RawCreatableGroup => ({
-	Name: creatable.name,
-	Desc: creatable.description ?? '',
-});

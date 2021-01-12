@@ -8,8 +8,8 @@
 
 export * from './actionable';
 export * from './auto-extractor';
-export * from './broadcasted-notification';
 export * from './dashboard';
+export * from './entry';
 export * from './file';
 export * from './group';
 export * from './jwt';
@@ -26,12 +26,11 @@ export * from './scheduled-task';
 export * from './script';
 export * from './search';
 export * from './search-module';
-export * from './search2';
 export * from './system-settings';
 export * from './tag';
-export * from './targeted-notification';
 export * from './template';
 export * from './timeframe';
 export * from './user';
 export * from './user-preferences';
+export * from './user-sessions';
 export * from './version';

@@ -10,7 +10,7 @@ import { isUndefined } from 'lodash';
 import { BehaviorSubject } from 'rxjs';
 import * as f from './functions';
 import { APIFunctionMakerOptions, DropFirst, lazyFirst } from './functions/utils';
-import { Search } from './models';
+import { CreatableJSONEntry, Search } from './models';
 import { Host, NumericID } from './value-objects';
 
 type SimplifiedFunction<F extends (authToken: string | null, ...args: Array<any>) => any> = (
@@ -140,7 +140,7 @@ export class GravwellClient {
 	};
 
 	public readonly ingestors = {
-		ingestOneJSON: (entry: f.CreatableJSONEntry) => this._simplifyFunction(f.makeIngestJSONEntries)([entry]),
+		ingestOneJSON: (entry: CreatableJSONEntry) => this._simplifyFunction(f.makeIngestJSONEntries)([entry]),
 		ingestManyJSON: this._simplifyFunction(f.makeIngestJSONEntries),
 		ingestByLine: this._simplifyFunction(f.makeIngestMultiLineEntry),
 	};

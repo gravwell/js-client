@@ -7,7 +7,14 @@
  **************************************************************************/
 
 import { Observable, Subject } from 'rxjs';
-import { ID, NumericID, Percentage, RawNumericID, RawPercentage, toNumericID } from '../../value-objects';
+import {
+	InstallableKit,
+	KitInstallationStatus,
+	RawKitInstallationStatus,
+	toKitInstallationStatus,
+	toRawInstallableKit,
+} from '../../models';
+import { ID, NumericID, RawNumericID, toNumericID } from '../../value-objects';
 import {
 	APIFunctionMakerOptions,
 	APISubscription,
@@ -90,45 +97,6 @@ const makeGetOneKitInstallationStatus = (makerOptions: APIFunctionMakerOptions) 
 	};
 };
 
-const toKitInstallationStatus = (raw: RawKitInstallationStatus): KitInstallationStatus => ({
-	id: toNumericID(raw.InstallID),
-	userID: toNumericID(raw.Owner),
-
-	percentage: Percentage.from(raw.Percentage),
-	isDone: raw.Done,
-
-	logs: raw.Log.split('\n')
-		.map(l => l.trim())
-		.filter(l => l.length > 0),
-	error: raw.Error === '' ? null : raw.Error,
-
-	lastUpdateDate: new Date(raw.Updated),
-});
-
-export interface KitInstallationStatus {
-	id: NumericID;
-	userID: ID;
-
-	percentage: Percentage;
-	isDone: boolean;
-
-	logs: Array<string>;
-	error: string | null;
-
-	lastUpdateDate: Date;
-}
-
-interface RawKitInstallationStatus {
-	CurrentStep: string; // The last line in .Log
-	Done: boolean;
-	Error: string; // '' is null
-	InstallID: RawNumericID;
-	Log: string; // Has line breaks using "\n"
-	Owner: RawNumericID;
-	Percentage: RawPercentage; // 1 is 100%
-	Updated: string; // timestamp
-}
-
 const makeQueueOneKitForInstallation = (makerOptions: APIFunctionMakerOptions) => {
 	return async (authToken: string | null, data: InstallableKit): Promise<NumericID> => {
 		const templatePath = '/api/kits/{kitID}';
@@ -150,51 +118,3 @@ const makeQueueOneKitForInstallation = (makerOptions: APIFunctionMakerOptions) =
 		}
 	};
 };
-
-export interface InstallableKit {
-	labels?: Array<string>;
-	isGlobal?: boolean;
-
-	overwriteExisting?: boolean;
-	allowUnsigned?: boolean;
-	allowExternalResource?: boolean;
-
-	settings?: Array<{
-		type: 'macro value';
-		name: string;
-		description: string;
-		defaultValue: string;
-		value: string | null;
-		valueType: 'tag' | 'string';
-	}>;
-}
-
-export interface RawInstallableKit {
-	Labels: Array<string>;
-	Global: boolean;
-	OverwriteExisting: boolean;
-	AllowUnsigned: boolean;
-	AllowExternalResource: boolean;
-	ConfigMacros: Array<{
-		DefaultValue: string;
-		Description: string;
-		MacroName: string;
-		Value: string | null;
-		Type: 'TAG' | 'STRING';
-	}>;
-}
-
-export const toRawInstallableKit = (data: InstallableKit): RawInstallableKit => ({
-	Labels: data.labels ?? [],
-	Global: data.isGlobal ?? false,
-	OverwriteExisting: data.overwriteExisting ?? false,
-	AllowUnsigned: data.allowUnsigned ?? false,
-	AllowExternalResource: data.allowExternalResource ?? false,
-	ConfigMacros: (data.settings ?? []).map(s => ({
-		DefaultValue: s.defaultValue,
-		Description: s.description,
-		MacroName: s.name,
-		Value: s.value,
-		Type: s.valueType === 'tag' ? 'TAG' : 'STRING',
-	})),
-});

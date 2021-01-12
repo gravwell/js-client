@@ -6,7 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { Script } from '../../models';
+import { RawValidatedScript, Script, toValidatedScript, ValidatedScript } from '../../models';
 import {
 	APIFunctionMakerOptions,
 	buildHTTPRequest,
@@ -31,38 +31,4 @@ export const makeValidateOneScript = (makerOptions: APIFunctionMakerOptions) => 
 		const rawRes = await parseJSONResponse<RawValidatedScript>(raw);
 		return toValidatedScript(rawRes);
 	};
-};
-
-interface RawValidatedScript {
-	OK: boolean;
-	Error?: string;
-	ErrorLine: number; // -1 is null
-	ErrorColumn: number; // -1 is null
-}
-
-interface ScriptError {
-	message: string;
-	line: number | null;
-	column: number | null;
-}
-
-export type ValidatedScript = { isValid: true; error: null } | { isValid: false; error: ScriptError };
-
-const toValidatedScript = (raw: RawValidatedScript): ValidatedScript => {
-	switch (raw.OK) {
-		case true:
-			return {
-				isValid: true,
-				error: null,
-			};
-		case false:
-			return {
-				isValid: false,
-				error: {
-					message: raw.Error ?? 'Unknown error',
-					line: raw.ErrorLine === -1 ? null : raw.ErrorLine,
-					column: raw.ErrorColumn === -1 ? null : raw.ErrorColumn,
-				},
-			};
-	}
 };

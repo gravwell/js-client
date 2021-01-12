@@ -6,16 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { isNull, isUndefined } from 'lodash';
-import {
-	CreatableTimeframe,
-	RawSavedQuery,
-	RawTimeframe,
-	SavedQuery,
-	toRawTimeframe,
-	toSavedQuery,
-} from '../../models';
-import { NumericID, RawNumericID, RawUUID, toRawNumericID, UUID } from '../../value-objects';
+import { RawSavedQuery, SavedQuery, toRawUpdatableSavedQuery, toSavedQuery, UpdatableSavedQuery } from '../../models';
 import {
 	APIFunctionMakerOptions,
 	buildHTTPRequest,
@@ -49,57 +40,5 @@ export const makeUpdateOneSavedQuery = (makerOptions: APIFunctionMakerOptions) =
 			if (err instanceof Error) throw err;
 			throw Error('Unknown error');
 		}
-	};
-};
-
-export interface UpdatableSavedQuery {
-	id: UUID;
-	globalID?: UUID;
-
-	groupIDs?: Array<NumericID>;
-	isGlobal?: boolean;
-
-	name?: string;
-	description?: string | null;
-	labels?: Array<string>;
-
-	query?: string;
-	defaultTimeframe?: CreatableTimeframe | null;
-}
-
-interface RawUpdatableSavedQuery {
-	ThingUUID: RawUUID; // gravwell/gravwell#2524
-	GUID?: RawUUID;
-
-	GIDs: Array<RawNumericID>;
-	Global: boolean;
-
-	Name: string;
-	Description: string; // Empty is null
-	Labels: Array<string>;
-
-	Query: string;
-	Metadata: { timeframe: RawTimeframe | null };
-}
-
-const toRawUpdatableSavedQuery = (updatable: UpdatableSavedQuery, current: SavedQuery): RawUpdatableSavedQuery => {
-	const defaultTimeframe = isUndefined(updatable.defaultTimeframe)
-		? current.defaultTimeframe
-		: updatable.defaultTimeframe;
-	const rawTimeframe = isNull(defaultTimeframe) ? null : toRawTimeframe(defaultTimeframe);
-
-	return {
-		ThingUUID: current.id,
-		GUID: updatable.globalID ?? current.globalID,
-
-		GIDs: (updatable.groupIDs ?? current.groupIDs).map(toRawNumericID),
-		Global: updatable.isGlobal ?? current.isGlobal,
-
-		Name: updatable.name ?? current.name,
-		Description: (isUndefined(updatable.description) ? current.description : updatable.description) ?? '',
-		Labels: updatable.labels ?? current.labels,
-
-		Query: updatable.query ?? current.query,
-		Metadata: { timeframe: rawTimeframe },
 	};
 };

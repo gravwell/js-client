@@ -7,10 +7,10 @@
  **************************************************************************/
 
 import { sortBy } from 'lodash';
-import { AutoExtractor } from '../../models';
+import { AutoExtractor, CreatableAutoExtractor } from '../../models';
 import { integrationTest, myCustomMatchers } from '../../tests';
 import { TEST_AUTH_TOKEN, TEST_HOST } from '../../tests/config';
-import { CreatableAutoExtractor, makeCreateOneAutoExtractor } from './create-one-auto-extractor';
+import { makeCreateOneAutoExtractor } from './create-one-auto-extractor';
 import { makeDeleteOneAutoExtractor } from './delete-one-auto-extractor';
 import { makeDownloadManyAutoExtractors } from './download-many-auto-extractors';
 import { makeGetAllAutoExtractors } from './get-all-auto-extractors';

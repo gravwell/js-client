@@ -7,14 +7,12 @@
  **************************************************************************/
 
 import { isUndefined } from 'lodash';
-import { RawResource, Resource, toResource } from '../../models';
-import { NumericID, RawNumericID, toRawNumericID, UUID } from '../../value-objects';
+import { RawResource, Resource, toRawUpdatableResourceMetadata, toResource, UpdatableResource } from '../../models';
 import {
 	APIFunctionMakerOptions,
 	buildHTTPRequest,
 	buildURL,
 	fetch,
-	File,
 	HTTPRequestOptions,
 	parseJSONResponse,
 } from '../utils';
@@ -42,7 +40,7 @@ export const makeUpdateOneResource = (makerOptions: APIFunctionMakerOptions) => 
 
 			const baseRequestOptions: HTTPRequestOptions = {
 				headers: { Authorization: authToken ? `Bearer ${authToken}` : undefined },
-				body: JSON.stringify(toRawUpdatableResource(data, current)),
+				body: JSON.stringify(toRawUpdatableResourceMetadata(data, current)),
 			};
 			const req = buildHTTPRequest(baseRequestOptions);
 
@@ -65,36 +63,3 @@ export const makeUpdateOneResource = (makerOptions: APIFunctionMakerOptions) => 
 		}
 	};
 };
-
-export interface UpdatableResource {
-	id: UUID;
-	groupIDs?: Array<NumericID>;
-
-	name?: string;
-	description?: string;
-	labels?: Array<string>;
-
-	body?: File;
-
-	isGlobal?: boolean;
-}
-
-interface RawUpdatableResourceMetadata {
-	ResourceName: string;
-	Description: string;
-
-	GroupACL: Array<RawNumericID>;
-
-	Global: boolean;
-	Labels: Array<string>;
-}
-
-const toRawUpdatableResource = (creatable: UpdatableResource, current: Resource): RawUpdatableResourceMetadata => ({
-	GroupACL: (creatable.groupIDs ?? current.groupIDs).map(id => toRawNumericID(id)),
-
-	Global: creatable.isGlobal ?? current.isGlobal,
-	Labels: creatable.labels ?? current.labels,
-
-	ResourceName: creatable.name ?? current.name,
-	Description: creatable.description ?? current.description,
-});

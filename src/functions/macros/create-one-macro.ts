@@ -6,8 +6,8 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { Macro } from '../../models';
-import { NumericID, RawNumericID, toNumericID, toRawNumericID } from '../../value-objects';
+import { CreatableMacro, Macro, toRawCreatableMacro } from '../../models';
+import { RawNumericID, toNumericID } from '../../value-objects';
 import {
 	APIFunctionMakerOptions,
 	buildHTTPRequest,
@@ -42,34 +42,3 @@ export const makeCreateOneMacro = (makerOptions: APIFunctionMakerOptions) => {
 		}
 	};
 };
-
-export interface CreatableMacro {
-	groupIDs?: Array<NumericID>;
-
-	/**
-	 * All uppercase and no spaces.
-	 */
-	name: string;
-	description?: string | null;
-	labels?: Array<string>;
-
-	expansion: string;
-}
-
-interface RawCreatableMacro {
-	GIDs: Array<RawNumericID>;
-	Name: string;
-	Description: string | null;
-	Expansion: string;
-	Labels: Array<string>;
-}
-
-const toRawCreatableMacro = (creatable: CreatableMacro): RawCreatableMacro => ({
-	GIDs: creatable.groupIDs?.map(toRawNumericID) ?? [],
-
-	Name: creatable.name.trim(),
-	Description: creatable.description?.trim() ?? null,
-	Labels: creatable.labels ?? [],
-
-	Expansion: creatable.expansion,
-});

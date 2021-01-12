@@ -6,11 +6,11 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { isTemplate } from '../../models';
+import { CreatableTemplate, isTemplate } from '../../models';
 import { integrationTest } from '../../tests';
 import { TEST_AUTH_TOKEN, TEST_HOST } from '../../tests/config';
 import { UUID } from '../../value-objects';
-import { CreatableTemplate, makeCreateOneTemplate } from './create-one-template';
+import { makeCreateOneTemplate } from './create-one-template';
 import { makeDeleteOneTemplate } from './delete-one-template';
 import { makeGetOneTemplate } from './get-one-template';
 

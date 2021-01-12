@@ -6,13 +6,12 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { isScheduledQuery, ScheduledQuery } from '../../models';
+import { isScheduledQuery, ScheduledQuery, UpdatableScheduledQuery } from '../../models';
 import { integrationTest, myCustomMatchers } from '../../tests';
 import { TEST_AUTH_TOKEN, TEST_HOST } from '../../tests/config';
 import { makeCreateOneScheduledQuery } from './create-one-scheduled-query';
 import { makeDeleteAllScheduledQueries } from './delete-all-scheduled-queries';
 import { makeUpdateOneScheduledQuery } from './update-one-scheduled-query';
-import { UpdatableScheduledQuery } from './update-one-scheduled-task';
 
 describe('updateOneScheduledQuery()', () => {
 	const createOneScheduledQuery = makeCreateOneScheduledQuery({ host: TEST_HOST, useEncryption: false });

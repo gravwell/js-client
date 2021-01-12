@@ -7,6 +7,7 @@
  **************************************************************************/
 
 import * as FormData from 'form-data';
+import { CreatableMultiLineEntry } from '../../models';
 import {
 	APIFunctionMakerOptions,
 	buildHTTPRequest,
@@ -36,28 +37,6 @@ export const makeIngestMultiLineEntry = (makerOptions: APIFunctionMakerOptions) 
 		}
 	};
 };
-
-export interface CreatableMultiLineEntry {
-	/**
-	 * The string tag to be used (e.g. "syslog")
-	 */
-	tag: string;
-
-	/**
-	 *  The lines to be ingested
-	 */
-	data: string;
-
-	/**
-	 * Setting this to "true" will force entries to be ingested with the current timestamp rather than attempting to parse one from each entry.
-	 */
-	skipTimestampParsing?: boolean;
-
-	/**
-	 * Setting this to "true" means timestamps extracted from entries will assume to be in the local timezone (instead of UTC) if the timezone is not explicitly specified.
-	 */
-	assumeLocalTimezone?: boolean;
-}
 
 const toFormData = (creatable: CreatableMultiLineEntry): FormData => {
 	const formData = new FormData();

@@ -6,13 +6,13 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { CreatableDashboard, Dashboard, isDashboard, toVersion } from '../../models';
+import { CreatableDashboard, Dashboard, isDashboard, toVersion, UpdatableDashboard } from '../../models';
 import { integrationTest, myCustomMatchers } from '../../tests';
 import { TEST_AUTH_TOKEN, TEST_HOST } from '../../tests/config';
 import { makeCreateOneDashboard } from './create-one-dashboard';
 import { makeDeleteOneDashboard } from './delete-one-dashboard';
 import { makeGetAllDashboards } from './get-all-dashboards';
-import { makeUpdateOneDashboard, UpdatableDashboard } from './update-one-dashboard';
+import { makeUpdateOneDashboard } from './update-one-dashboard';
 
 describe('updateOneDashboard()', () => {
 	const createOneDashboard = makeCreateOneDashboard({ host: TEST_HOST, useEncryption: false });

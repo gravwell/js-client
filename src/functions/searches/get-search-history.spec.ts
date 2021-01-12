@@ -7,11 +7,11 @@
  **************************************************************************/
 
 import { random } from 'lodash';
-import { isValidSearch, User } from '../../models';
+import { CreatableUser, isValidSearch, User } from '../../models';
 import { integrationTest } from '../../tests';
 import { TEST_AUTH_TOKEN, TEST_HOST } from '../../tests/config';
 import { makeLoginOneUser } from '../auth/login-one-user';
-import { CreatableUser, makeCreateOneUser, makeGetMyUser, makeGetOneUser } from '../users';
+import { makeCreateOneUser, makeGetMyUser, makeGetOneUser } from '../users';
 import { makeGetSearchHistory } from './get-search-history';
 
 describe('getSearchHistory()', () => {

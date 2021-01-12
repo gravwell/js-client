@@ -6,8 +6,8 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { AutoExtractor, AutoExtractorModule, RawAutoExtractorModule } from '../../models';
-import { NumericID, RawNumericID, toNumericID, toRawNumericID } from '../../value-objects';
+import { AutoExtractor, CreatableAutoExtractor, toRawCreatableAutoExtractor } from '../../models';
+import { RawNumericID, toNumericID } from '../../value-objects';
 import {
 	APIFunctionMakerOptions,
 	buildHTTPRequest,
@@ -45,47 +45,3 @@ export const makeCreateOneAutoExtractor = (makerOptions: APIFunctionMakerOptions
 		}
 	};
 };
-
-export interface CreatableAutoExtractor {
-	groupIDs?: Array<NumericID>;
-
-	name: string;
-	description: string;
-	labels?: Array<string>;
-	isGlobal?: boolean;
-
-	tag: string;
-	module: AutoExtractorModule;
-	parameters: string;
-	arguments?: string | null;
-}
-
-export interface RawCreatableAutoExtractor {
-	GIDs: Array<RawNumericID>;
-
-	Name: string;
-	Desc: string;
-	Labels: Array<string>;
-
-	Global: boolean;
-
-	Tag: string;
-	Module: RawAutoExtractorModule;
-	Params: string;
-	Args: string; // empty string is null
-}
-
-export const toRawCreatableAutoExtractor = (data: CreatableAutoExtractor): RawCreatableAutoExtractor => ({
-	GIDs: (data.groupIDs ?? []).map(toRawNumericID),
-
-	Name: data.name,
-	Desc: data.description,
-	Labels: data.labels ?? [],
-
-	Global: data.isGlobal ?? false,
-
-	Tag: data.tag,
-	Module: data.module,
-	Params: data.parameters,
-	Args: data.arguments ?? '',
-});

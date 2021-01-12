@@ -7,13 +7,13 @@
  **************************************************************************/
 
 import { omit } from 'lodash';
-import { isMacro, Macro } from '../../models';
+import { CreatableMacro, isMacro, Macro, UpdatableMacro } from '../../models';
 import { integrationTest } from '../../tests';
 import { TEST_AUTH_TOKEN, TEST_HOST } from '../../tests/config';
-import { CreatableMacro, makeCreateOneMacro } from './create-one-macro';
+import { makeCreateOneMacro } from './create-one-macro';
 import { makeDeleteOneMacro } from './delete-one-macro';
 import { makeGetAllMacros } from './get-all-macros';
-import { makeUpdateOneMacro, UpdatableMacro } from './update-one-macro';
+import { makeUpdateOneMacro } from './update-one-macro';
 
 describe('updateOneMacro()', () => {
 	const createOneMacro = makeCreateOneMacro({ host: TEST_HOST, useEncryption: false });

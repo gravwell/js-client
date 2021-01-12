@@ -6,13 +6,13 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { isGroup, User } from '../../models';
+import { CreatableGroup, CreatableUser, isGroup, User } from '../../models';
 import { integrationTest } from '../../tests';
 import { TEST_AUTH_TOKEN, TEST_HOST } from '../../tests/config';
 import { NumericID } from '../../value-objects';
-import { CreatableUser, makeCreateOneUser, makeDeleteOneUser, makeGetOneUser } from '../users';
+import { makeCreateOneUser, makeDeleteOneUser, makeGetOneUser } from '../users';
 import { makeAddOneUserToManyGroups } from './add-one-user-to-many-groups';
-import { CreatableGroup, makeCreateOneGroup } from './create-one-group';
+import { makeCreateOneGroup } from './create-one-group';
 import { makeDeleteOneGroup } from './delete-one-group';
 import { makeGetAllGroups } from './get-all-groups';
 import { makeGetGroupsByUser } from './get-groups-by-user';

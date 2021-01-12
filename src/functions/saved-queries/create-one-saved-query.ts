@@ -6,16 +6,13 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { isNil } from 'lodash';
-import { RawSavedQuery, RawTimeframe, SavedQuery, Timeframe, toRawTimeframe, toSavedQuery } from '../../models';
-import { NumericID, RawNumericID, RawUUID, toRawNumericID, UUID } from '../../value-objects';
+import { CreatableSavedQuery, RawSavedQuery, SavedQuery, toRawCreatableSavedQuery, toSavedQuery } from '../../models';
 import {
 	APIFunctionMakerOptions,
 	buildHTTPRequest,
 	buildURL,
 	fetch,
 	HTTPRequestOptions,
-	omitUndefinedShallow,
 	parseJSONResponse,
 } from '../utils';
 
@@ -40,46 +37,3 @@ export const makeCreateOneSavedQuery = (makerOptions: APIFunctionMakerOptions) =
 		}
 	};
 };
-
-export interface CreatableSavedQuery {
-	globalID?: UUID;
-
-	groupIDs?: Array<NumericID>;
-	isGlobal?: boolean;
-
-	name: string;
-	description?: string | null;
-	labels?: Array<string>;
-
-	query: string;
-	defaultTimeframe?: Timeframe | null;
-}
-
-interface RawCreatableSavedQuery {
-	GUID?: RawUUID;
-
-	GIDs: Array<RawNumericID>;
-	Global: boolean;
-
-	Name: string;
-	Description: string; // Empty is null
-	Labels: Array<string>;
-
-	Query: string;
-	Metadata: { timeframe: RawTimeframe | null };
-}
-
-export const toRawCreatableSavedQuery = (data: CreatableSavedQuery): RawCreatableSavedQuery =>
-	omitUndefinedShallow<RawCreatableSavedQuery>({
-		GUID: data.globalID,
-
-		GIDs: (data.groupIDs ?? []).map(toRawNumericID),
-		Global: data.isGlobal ?? false,
-
-		Name: data.name,
-		Description: data.description ?? '',
-		Labels: data.labels ?? [],
-
-		Query: data.query,
-		Metadata: { timeframe: isNil(data.defaultTimeframe) ? null : toRawTimeframe(data.defaultTimeframe) },
-	});
