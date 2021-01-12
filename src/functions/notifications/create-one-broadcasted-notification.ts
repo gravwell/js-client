@@ -6,14 +6,13 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { toRawNumericID } from '../../value-objects';
+import { CreatableBroadcastNotification, toRawCreatableBroadcastedNotification } from '../../models';
 import {
 	APIFunctionMakerOptions,
 	buildHTTPRequest,
 	buildURL,
 	fetch,
 	HTTPRequestOptions,
-	omitUndefinedShallow,
 	parseJSONResponse,
 } from '../utils';
 
@@ -25,7 +24,7 @@ export const makeCreateOneBroadcastedNotification = (makerOptions: APIFunctionMa
 		try {
 			const baseRequestOptions: HTTPRequestOptions = {
 				headers: { Authorization: authToken ? `Bearer ${authToken}` : undefined },
-				body: JSON.stringify(toCreatableRaw(creatable)),
+				body: JSON.stringify(toRawCreatableBroadcastedNotification(creatable)),
 			};
 			const req = buildHTTPRequest(baseRequestOptions);
 
@@ -37,32 +36,3 @@ export const makeCreateOneBroadcastedNotification = (makerOptions: APIFunctionMa
 		}
 	};
 };
-
-export interface CreatableBroadcastNotification {
-	message: string;
-	customID?: string;
-
-	sentDate?: string; // Timestamp eg. '2019-04-22T21:44:01.776942432Z'
-	expirationDate?: string; // Timestamp eg. '2019-04-23T03:44:01.776918756-06:00'
-	ignoreUntilDate?: string; // Timestamp eg. '0001-01-01T00:00:00Z'
-}
-
-interface RawCreatableBroadcastedNotification {
-	Type?: number;
-	Broadcast: true;
-	Sent?: string; // Timestamp eg. '2019-04-22T21:44:01.776942432Z'
-	Expires?: string; // Timestamp eg. '2019-04-23T03:44:01.776918756-06:00'
-	IgnoreUntil?: string; // Timestamp eg. '0001-01-01T00:00:00Z'
-	Msg: string;
-}
-
-const toCreatableRaw = (creatable: CreatableBroadcastNotification): RawCreatableBroadcastedNotification =>
-	omitUndefinedShallow({
-		Msg: creatable.message,
-		Type: creatable.customID === undefined ? undefined : toRawNumericID(creatable.customID),
-		Broadcast: true,
-
-		Sent: creatable.sentDate,
-		Expires: creatable.expirationDate,
-		IgnoreUntil: creatable.ignoreUntilDate,
-	});

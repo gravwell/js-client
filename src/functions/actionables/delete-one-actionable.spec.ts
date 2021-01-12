@@ -6,11 +6,11 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { isActionable } from '../../models';
+import { CreatableActionable, isActionable } from '../../models';
 import { integrationTest } from '../../tests';
 import { TEST_AUTH_TOKEN, TEST_HOST } from '../../tests/config';
 import { isUUID } from '../../value-objects';
-import { CreatableActionable, makeCreateOneActionable } from './create-one-actionable';
+import { makeCreateOneActionable } from './create-one-actionable';
 import { makeDeleteOneActionable } from './delete-one-actionable';
 import { makeGetOneActionable } from './get-one-actionable';
 

@@ -6,8 +6,14 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { ScheduledQuery, ScheduledScript, ScheduledTask } from '../../models';
-import { NumericID, RawNumericID, toNumericID, toRawNumericID } from '../../value-objects';
+import {
+	CreatableScheduledTask,
+	ScheduledQuery,
+	ScheduledScript,
+	ScheduledTask,
+	toRawCreatableScheduledTask,
+} from '../../models';
+import { RawNumericID, toNumericID } from '../../value-objects';
 import {
 	APIFunctionMakerOptions,
 	buildHTTPRequest,
@@ -48,96 +54,4 @@ export const makeCreateOneScheduledTask = (makerOptions: APIFunctionMakerOptions
 			throw Error('Unknown error');
 		}
 	};
-};
-
-interface CreatableScheduledTaskBase {
-	groupIDs?: Array<NumericID>;
-
-	name: string;
-	description: string;
-	labels?: Array<string>;
-
-	oneShot?: boolean;
-	isDisabled?: boolean;
-
-	schedule: string;
-	timezone?: string | null;
-}
-
-export type CreatableScheduledTask = TaggedCreatableScheduledQuery | TaggedCreatableScheduledScript;
-
-export interface CreatableScheduledQuery extends CreatableScheduledTaskBase {
-	query: string;
-	searchSince: { lastRun: true; secondsAgo?: number } | { lastRun?: false; secondsAgo: number };
-}
-
-interface TaggedCreatableScheduledQuery extends CreatableScheduledQuery {
-	type: 'query';
-}
-
-export interface CreatableScheduledScript extends CreatableScheduledTaskBase {
-	script: string;
-	isDebugging?: boolean;
-}
-
-interface TaggedCreatableScheduledScript extends CreatableScheduledScript {
-	type: 'script';
-}
-
-interface RawCreatableScheduledTask {
-	Groups: Array<RawNumericID>;
-
-	Name: string;
-	Description: string;
-	Labels: Array<string>;
-
-	OneShot: boolean;
-	Disabled: boolean;
-
-	Schedule: string; // cron job format
-	Timezone: string; // empty string is null
-
-	// *START - Standard search properties
-	SearchString?: string; //empty string is null
-	Duration?: number; // In seconds, displayed in the GUI as a human friendly "Timeframe"
-	SearchSinceLastRun?: boolean;
-	// *END - Standard search properties
-
-	// *START - Script search properties
-	Script?: string; // empty string is null
-	DebugMode: boolean;
-	// *END - Script search properties
-}
-
-export const toRawCreatableScheduledTask = (data: CreatableScheduledTask): RawCreatableScheduledTask => {
-	const base = {
-		Groups: (data.groupIDs ?? []).map(toRawNumericID),
-
-		Name: data.name,
-		Description: data.description,
-		Labels: data.labels ?? [],
-
-		OneShot: data.oneShot ?? false,
-		Disabled: data.isDisabled ?? false,
-
-		Schedule: data.schedule,
-		Timezone: data.timezone ?? '',
-	};
-
-	switch (data.type) {
-		case 'query':
-			return {
-				...base,
-				SearchString: data.query,
-				Duration: -Math.abs(data.searchSince.secondsAgo ?? 0),
-				SearchSinceLastRun: data.searchSince.lastRun ?? false,
-				DebugMode: false,
-			};
-		case 'script':
-			return {
-				...base,
-				Script: data.script,
-				DebugMode: data.isDebugging ?? false,
-			};
-	}
 };

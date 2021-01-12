@@ -6,9 +6,9 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
+import { CreatableAutoExtractor } from '../../models';
 import { integrationTest } from '../../tests';
 import { TEST_AUTH_TOKEN, TEST_HOST } from '../../tests/config';
-import { CreatableAutoExtractor } from './create-one-auto-extractor';
 import { makeIsValidAutoExtractorSyntax } from './is-valid-auto-extractor-syntax';
 
 describe('isValidAutoExtractorSyntax()', () => {

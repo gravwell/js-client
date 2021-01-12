@@ -4,5 +4,5 @@
 		"types": ["node"]
 	},
 	"include": ["../src-tsc/**/*"],
-	"exclude": ["../src-tsc/**/*.spec.ts", "../src-tsc/tests/**/*", "../src-tsc/**/*.browsers.*"]
+	"exclude": ["../src-tsc/**/*.spec.ts", "../src-tsc/tests/**/*"]
 }

@@ -6,12 +6,12 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { isSavedQuery } from '../../models';
+import { CreatableSavedQuery, isSavedQuery } from '../../models';
 import { integrationTest, myCustomMatchers } from '../../tests';
 import { TEST_AUTH_TOKEN, TEST_HOST } from '../../tests/config';
 import { NumericID } from '../../value-objects';
 import { makeCreateOneGroup } from '../groups/create-one-group';
-import { CreatableSavedQuery, makeCreateOneSavedQuery } from './create-one-saved-query';
+import { makeCreateOneSavedQuery } from './create-one-saved-query';
 
 describe('createOneSavedQuery()', () => {
 	const createOneSavedQuery = makeCreateOneSavedQuery({ host: TEST_HOST, useEncryption: false });

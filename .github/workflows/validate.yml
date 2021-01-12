@@ -18,6 +18,19 @@ jobs:
       - run: npm ci
       - run: npm run lint
 
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js 10.20.1
+        uses: actions/setup-node@v1
+        with:
+          node-version: '10.20.1'
+      - run: npm i -g npm@6.14.5
+      - run: npm ci
+      - run: npm run build
+
   test-node:
     runs-on: ubuntu-latest
 

@@ -7,15 +7,15 @@
  **************************************************************************/
 
 import { random } from 'lodash';
-import { isValidUser, User } from '../../models';
+import { CreatableUser, isValidUser, User } from '../../models';
 import { integrationTest } from '../../tests';
 import { TEST_AUTH_TOKEN, TEST_HOST } from '../../tests/config';
-import { CreatableUser, makeCreateOneUser } from './create-one-user';
+import { makeLoginOneUser } from '../auth';
+import { makeCreateOneUser } from './create-one-user';
 import { makeDeleteOneUser } from './delete-one-user';
+import { makeGetMyUser } from './get-my-user';
 import { makeGetOneUser } from './get-one-user';
 import { makeUpdateOneUser } from './update-one-user';
-import { makeGetMyUser } from './get-my-user';
-import { makeLoginOneUser } from '../auth';
 
 describe('updateOneUser()', () => {
 	const updateOneUser = makeUpdateOneUser({ host: TEST_HOST, useEncryption: false });

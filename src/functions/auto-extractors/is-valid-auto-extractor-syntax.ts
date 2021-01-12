@@ -6,6 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
+import { CreatableAutoExtractor, toRawCreatableAutoExtractor } from '../../models';
 import {
 	APIFunctionMakerOptions,
 	buildHTTPRequest,
@@ -14,7 +15,6 @@ import {
 	HTTPRequestOptions,
 	parseJSONResponse,
 } from '../utils';
-import { CreatableAutoExtractor, toRawCreatableAutoExtractor } from './create-one-auto-extractor';
 
 export const makeIsValidAutoExtractorSyntax = (makerOptions: APIFunctionMakerOptions) => {
 	const templatePath = '/api/autoextractors';

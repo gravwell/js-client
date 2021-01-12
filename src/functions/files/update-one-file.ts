@@ -7,15 +7,12 @@
  **************************************************************************/
 
 import * as FormData from 'form-data';
-import { isUndefined } from 'lodash';
-import { FileMetadata, RawBaseFileMetadata } from '../../models';
-import { NumericID, RawNumericID, toRawNumericID, UUID } from '../../value-objects';
+import { FileMetadata, RawBaseFileMetadata, toRawUpdatableFile, UpdatableFile } from '../../models';
 import {
 	APIFunctionMakerOptions,
 	buildHTTPRequest,
 	buildURL,
 	fetch,
-	File,
 	HTTPRequestOptions,
 	parseJSONResponse,
 } from '../utils';
@@ -80,39 +77,3 @@ export const makeUpdateOneFile = (makerOptions: APIFunctionMakerOptions) => {
 		}
 	};
 };
-
-export interface UpdatableFile {
-	id: UUID;
-	globalID?: UUID;
-
-	groupIDs?: Array<NumericID>;
-	isGlobal?: boolean;
-
-	name?: string;
-	description?: string | null;
-	labels?: Array<string>;
-
-	file?: File;
-}
-
-interface RawUpdatableFile {
-	GUID?: string;
-
-	GIDs: Array<RawNumericID>;
-	Global: boolean;
-
-	Name: string;
-	Desc: string; // Use empty string for null
-	Labels: Array<string>;
-}
-
-const toRawUpdatableFile = (updatable: UpdatableFile, current: FileMetadata): RawUpdatableFile => ({
-	GUID: updatable.globalID ?? current.globalID,
-
-	GIDs: (updatable.groupIDs ?? current.groupIDs).map(toRawNumericID),
-	Global: updatable.isGlobal ?? current.isGlobal,
-
-	Name: updatable.name ?? current.name,
-	Desc: (isUndefined(updatable.description) ? current.description : updatable.description) ?? '',
-	Labels: updatable.labels ?? current.labels,
-});

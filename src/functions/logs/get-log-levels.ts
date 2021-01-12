@@ -6,7 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { LogLevel, RawLogLevel, toLogLevel } from '../../models';
+import { LogLevels, RawLogLevels, toLogLevels } from '../../models';
 import {
 	APIFunctionMakerOptions,
 	buildHTTPRequest,
@@ -20,29 +20,14 @@ export const makeGetLogLevels = (makerOptions: APIFunctionMakerOptions) => {
 	const templatePath = '/api/logging';
 	const url = buildURL(templatePath, { ...makerOptions, protocol: 'http' });
 
-	return async (authToken: string | null): Promise<GetLogLevelsResponse> => {
+	return async (authToken: string | null): Promise<LogLevels> => {
 		const baseRequestOptions: HTTPRequestOptions = {
 			headers: { Authorization: authToken ? `Bearer ${authToken}` : undefined },
 		};
 		const req = buildHTTPRequest(baseRequestOptions);
 
 		const raw = await fetch(url, { ...req, method: 'GET' });
-		const rawRes = await parseJSONResponse<GetLogLevelsRawResponse>(raw);
-		return toResponse(rawRes);
+		const rawRes = await parseJSONResponse<RawLogLevels>(raw);
+		return toLogLevels(rawRes);
 	};
 };
-
-export interface GetLogLevelsResponse {
-	current: LogLevel | 'off';
-	available: Array<LogLevel | 'off'>;
-}
-
-interface GetLogLevelsRawResponse {
-	Current: RawLogLevel | 'Off';
-	Levels: Array<RawLogLevel | 'Off'>;
-}
-
-const toResponse = (raw: GetLogLevelsRawResponse): GetLogLevelsResponse => ({
-	current: raw.Current === 'Off' ? 'off' : toLogLevel(raw.Current),
-	available: raw.Levels.map(l => (l === 'Off' ? 'off' : toLogLevel(l))),
-});

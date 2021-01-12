@@ -8,12 +8,12 @@
 
 import { createReadStream } from 'fs';
 import { join } from 'path';
-import { isFileMetadata } from '../../models';
+import { CreatableFile, isFileMetadata } from '../../models';
 import { integrationTest, myCustomMatchers } from '../../tests';
 import { TEST_ASSETS_PATH, TEST_AUTH_TOKEN, TEST_HOST } from '../../tests/config';
 import { NumericID } from '../../value-objects';
 import { makeCreateOneGroup } from '../groups/create-one-group';
-import { CreatableFile, makeCreateOneFile } from './create-one-file';
+import { makeCreateOneFile } from './create-one-file';
 
 describe('createOneFile()', () => {
 	const createOneFile = makeCreateOneFile({ host: TEST_HOST, useEncryption: false });

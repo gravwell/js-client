@@ -7,18 +7,12 @@
  **************************************************************************/
 
 import { random } from 'lodash';
-import { isValidUser } from '../../models';
+import { CreatableGroup, CreatableUser, isValidUser } from '../../models';
 import { integrationTest } from '../../tests';
 import { TEST_AUTH_TOKEN, TEST_HOST } from '../../tests/config';
 import { NumericID } from '../../value-objects';
-import {
-	CreatableGroup,
-	makeAddOneUserToManyGroups,
-	makeCreateOneGroup,
-	makeDeleteOneGroup,
-	makeGetAllGroups,
-} from '../groups';
-import { CreatableUser, makeCreateOneUser } from './create-one-user';
+import { makeAddOneUserToManyGroups, makeCreateOneGroup, makeDeleteOneGroup, makeGetAllGroups } from '../groups';
+import { makeCreateOneUser } from './create-one-user';
 import { makeDeleteOneUser } from './delete-one-user';
 import { makeGetUsersByGroup } from './get-users-by-group';
 

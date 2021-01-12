@@ -6,11 +6,12 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
+import { CreatableResource } from '../../models';
 import { isNull } from 'lodash';
 import { integrationTest } from '../../tests';
 import { TEST_AUTH_TOKEN, TEST_HOST } from '../../tests/config';
 import { UUID } from '../../value-objects';
-import { CreatableResource, makeCreateOneResource } from './create-one-resource';
+import { makeCreateOneResource } from './create-one-resource';
 import { makeDeleteOneResource } from './delete-one-resource';
 import { makeGetOneResourceContent } from './get-one-resource-content';
 import { makePreviewOneResourceContent } from './preview-one-resource-content';

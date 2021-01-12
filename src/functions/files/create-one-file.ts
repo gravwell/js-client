@@ -8,16 +8,13 @@
 
 import * as FormData from 'form-data';
 import { isString, pick } from 'lodash';
-import { FileMetadata, RawBaseFileMetadata } from '../../models';
-import { NumericID, RawUUID, UUID } from '../../value-objects';
+import { CreatableFile, FileMetadata, RawBaseFileMetadata, toRawCreatableFile } from '../../models';
 import {
 	APIFunctionMakerOptions,
 	buildHTTPRequest,
 	buildURL,
 	fetch,
-	File,
 	HTTPRequestOptions,
-	omitUndefinedShallow,
 	parseJSONResponse,
 } from '../utils';
 import { makeGetOneFile } from './get-one-file';
@@ -54,49 +51,6 @@ export const makeCreateOneFile = (makerOptions: APIFunctionMakerOptions) => {
 		}
 	};
 };
-
-export interface CreatableFile {
-	globalID?: UUID;
-
-	groupIDs?: Array<NumericID>;
-	isGlobal?: boolean;
-
-	name: string;
-	description?: string | null;
-	labels?: Array<string>;
-
-	file: File;
-}
-
-export interface RawCreatableFile {
-	/**
-	 * Optional global ID for this file. If not set, one will be generated.
-	 */
-	guid?: RawUUID;
-
-	/**
-	 * Body of the file.
-	 */
-	file: File;
-
-	/**
-	 * Name of the file.
-	 */
-	name: string;
-
-	/**
-	 * Description of the file.
-	 */
-	desc: string;
-}
-
-export const toRawCreatableFile = (data: CreatableFile): RawCreatableFile =>
-	omitUndefinedShallow<RawCreatableFile>({
-		guid: data.globalID,
-		name: data.name,
-		desc: data.description ?? '',
-		file: data.file,
-	});
 
 const toFormData = (data: CreatableFile): FormData => {
 	const raw = toRawCreatableFile(data);

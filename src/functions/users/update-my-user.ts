@@ -7,9 +7,10 @@
  **************************************************************************/
 
 import { isString, isUndefined } from 'lodash';
+import { UpdatableUser } from '../../models';
 import { APIFunctionMakerOptions } from '../utils';
 import { makeGetMyUser } from './get-my-user';
-import { makeUpdateOneUser, UpdatableUser } from './update-one-user';
+import { makeUpdateOneUser } from './update-one-user';
 
 export const makeUpdateMyUser = (makerOptions: APIFunctionMakerOptions) => {
 	const getMyUser = makeGetMyUser(makerOptions);

@@ -6,13 +6,13 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { AutoExtractor, isAutoExtractor } from '../../models';
+import { AutoExtractor, CreatableAutoExtractor, isAutoExtractor, UpdatableAutoExtractor } from '../../models';
 import { integrationTest, myCustomMatchers } from '../../tests';
 import { TEST_AUTH_TOKEN, TEST_HOST } from '../../tests/config';
-import { CreatableAutoExtractor, makeCreateOneAutoExtractor } from './create-one-auto-extractor';
+import { makeCreateOneAutoExtractor } from './create-one-auto-extractor';
 import { makeDeleteOneAutoExtractor } from './delete-one-auto-extractor';
 import { makeGetAllAutoExtractors } from './get-all-auto-extractors';
-import { makeUpdateOneAutoExtractor, UpdatableAutoExtractor } from './update-one-auto-extractor';
+import { makeUpdateOneAutoExtractor } from './update-one-auto-extractor';
 
 describe('updateOneAutoExtractor()', () => {
 	const createOneAutoExtractor = makeCreateOneAutoExtractor({ host: TEST_HOST, useEncryption: false });

@@ -6,8 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { encode as base64Encode } from 'base-64';
-import { encode as utf8Encode } from 'utf8';
+import { CreatableJSONEntry, toRawCreatableJSONEntry } from '../../models';
 import {
 	APIFunctionMakerOptions,
 	buildHTTPRequest,
@@ -25,7 +24,7 @@ export const makeIngestJSONEntries = (makerOptions: APIFunctionMakerOptions) => 
 		try {
 			const baseRequestOptions: HTTPRequestOptions = {
 				headers: { Authorization: authToken ? `Bearer ${authToken}` : undefined },
-				body: JSON.stringify(entries.map(toCreatableRaw)),
+				body: JSON.stringify(entries.map(toRawCreatableJSONEntry)),
 			};
 			const req = buildHTTPRequest(baseRequestOptions);
 
@@ -37,43 +36,3 @@ export const makeIngestJSONEntries = (makerOptions: APIFunctionMakerOptions) => 
 		}
 	};
 };
-
-export interface CreatableJSONEntry {
-	/**
-	 * A timestamp (e.g. "2018-02-12T11:06:44.215431364-07:00")
-	 */
-	timestamp?: string;
-
-	/**
-	 * The string tag to be used (e.g. "syslog")
-	 */
-	tag: string;
-
-	/**
-	 *  Data in string UTF-8 format
-	 */
-	data: string;
-}
-
-export interface RawCreatableJSONEntry {
-	/**
-	 * A timestamp (e.g. "2018-02-12T11:06:44.215431364-07:00")
-	 */
-	TS: string;
-
-	/**
-	 * The string tag to be used (e.g. "syslog")
-	 */
-	Tag: string;
-
-	/**
-	 *  base64-encoded bytes (e.g. "Zm9vCg==")
-	 */
-	Data: string;
-}
-
-const toCreatableRaw = (creatable: CreatableJSONEntry): RawCreatableJSONEntry => ({
-	TS: creatable.timestamp ?? new Date().toISOString(),
-	Tag: creatable.tag,
-	Data: base64Encode(utf8Encode(creatable.data)),
-});

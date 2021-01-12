@@ -6,13 +6,13 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { UUID } from '../../value-objects';
-import { isActionable } from '../../models';
+import { CreatableActionable, isActionable } from '../../models';
 import { integrationTest } from '../../tests';
 import { TEST_AUTH_TOKEN, TEST_HOST } from '../../tests/config';
-import { CreatableActionable, makeCreateOneActionable } from './create-one-actionable';
-import { makeGetAllActionables } from './get-all-actionables';
+import { UUID } from '../../value-objects';
+import { makeCreateOneActionable } from './create-one-actionable';
 import { makeDeleteOneActionable } from './delete-one-actionable';
+import { makeGetAllActionables } from './get-all-actionables';
 
 describe('getAllActionables()', () => {
 	const getAllActionables = makeGetAllActionables({ host: TEST_HOST, useEncryption: false });

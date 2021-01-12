@@ -7,11 +7,11 @@
  **************************************************************************/
 
 import { random } from 'lodash';
-import { CreatableDashboard, isDashboard, User } from '../../models';
+import { CreatableUser, CreatableDashboard, isDashboard, User } from '../../models';
 import { integrationTest } from '../../tests';
 import { TEST_AUTH_TOKEN, TEST_HOST } from '../../tests/config';
 import { makeLoginOneUser } from '../auth/login-one-user';
-import { CreatableUser, makeCreateOneUser, makeGetOneUser } from '../users';
+import { makeCreateOneUser, makeGetOneUser } from '../users';
 import { makeCreateOneDashboard } from './create-one-dashboard';
 import { makeDeleteOneDashboard } from './delete-one-dashboard';
 import { makeGetAllDashboards } from './get-all-dashboards';

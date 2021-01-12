@@ -6,10 +6,10 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { isAutoExtractor } from '../../models';
+import { CreatableAutoExtractor, isAutoExtractor } from '../../models';
 import { integrationTest } from '../../tests';
 import { TEST_AUTH_TOKEN, TEST_HOST } from '../../tests/config';
-import { CreatableAutoExtractor, makeCreateOneAutoExtractor } from './create-one-auto-extractor';
+import { makeCreateOneAutoExtractor } from './create-one-auto-extractor';
 import { makeDeleteOneAutoExtractor } from './delete-one-auto-extractor';
 import { makeGetAllAutoExtractors } from './get-all-auto-extractors';
 
