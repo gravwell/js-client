@@ -7,8 +7,7 @@
  **************************************************************************/
 
 import { isBoolean, isString, isUndefined, negate } from 'lodash';
-import { isValidUserRole, UserRole } from '../../models';
-import { NumericID } from '../../value-objects';
+import { isValidUserRole, UpdatableUser } from '../../models';
 import { APIFunctionMakerOptions } from '../utils';
 import { makeUpdateOneUserInformation } from './update-one-user-information';
 import { makeUpdateOneUserLockedState } from './update-one-user-locked-state';
@@ -46,16 +45,3 @@ export const makeUpdateOneUser = (makerOptions: APIFunctionMakerOptions) => {
 		}
 	};
 };
-
-export interface UpdatableUser {
-	id: NumericID;
-	username?: string;
-	name?: string;
-	email?: string;
-
-	password?: string;
-	currentPassword?: string;
-
-	role?: UserRole;
-	locked?: boolean;
-}

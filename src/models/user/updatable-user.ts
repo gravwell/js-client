@@ -6,11 +6,18 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-export * from './creatable-user';
-export * from './is-valid-user';
-export * from './raw-creatable-user';
-export * from './raw-user';
-export * from './to-raw-creatable-user';
-export * from './to-user';
-export * from './updatable-user';
-export * from './user';
+import { NumericID } from '../../value-objects';
+import { UserRole } from './user';
+
+export interface UpdatableUser {
+	id: NumericID;
+	username?: string;
+	name?: string;
+	email?: string;
+
+	password?: string;
+	currentPassword?: string;
+
+	role?: UserRole;
+	locked?: boolean;
+}
