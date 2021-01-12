@@ -30,4 +30,3 @@ export * from './get-scheduled-queries-authorized-to-me';
 export * from './get-scheduled-scripts-authorized-to-me';
 export * from './update-one-scheduled-query';
 export * from './update-one-scheduled-script';
-export { UpdatableScheduledQuery, UpdatableScheduledScript } from './update-one-scheduled-task';

@@ -6,8 +6,20 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { ScheduledScript } from './scheduled-script';
-import { ScheduledQuery } from './scheduled-query';
+import { NumericID } from '../../value-objects';
 
-export type ScheduledTask = ScheduledQuery | ScheduledScript;
-export type ScheduledTaskType = ScheduledTask['type'];
+export interface UpdatableScheduledTaskBase {
+	id: NumericID;
+
+	groupIDs?: Array<NumericID>;
+
+	name?: string;
+	description?: string;
+	labels?: Array<string>;
+
+	oneShot?: boolean;
+	isDisabled?: boolean;
+
+	schedule?: string;
+	timezone?: string | null;
+}

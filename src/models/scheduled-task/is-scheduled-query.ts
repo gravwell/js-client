@@ -8,7 +8,7 @@
 
 import { isBoolean, isNumber, isString } from 'lodash';
 import { isScheduledTaskBase } from './is-scheduled-task-base';
-import { ScheduledQuery } from './squeduled-query';
+import { ScheduledQuery } from './scheduled-query';
 
 export const isScheduledQuery = (value: any): value is ScheduledQuery => {
 	try {
