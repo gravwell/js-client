@@ -6,6 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
+import { RawResourceContentPreview, ResourceContentPreview, toResourceContentPreview } from '../../models';
 import { UUID } from '../../value-objects';
 import {
 	APIFunctionMakerOptions,
@@ -15,7 +16,6 @@ import {
 	HTTPRequestOptions,
 	parseJSONResponse,
 } from '../utils';
-import { decode as base64Decode } from 'base-64';
 
 export const makePreviewOneResourceContent = (makerOptions: APIFunctionMakerOptions) => {
 	return async (
@@ -41,18 +41,3 @@ export const makePreviewOneResourceContent = (makerOptions: APIFunctionMakerOpti
 		return toResourceContentPreview(rawPreview);
 	};
 };
-
-interface RawResourceContentPreview {
-	ContentType: string; // eg. 'text/plain; charset=utf-8'
-	Body: string; // base 64 encoded string
-}
-
-export interface ResourceContentPreview {
-	contentType: string;
-	body: string;
-}
-
-const toResourceContentPreview = (raw: RawResourceContentPreview): ResourceContentPreview => ({
-	contentType: raw.ContentType,
-	body: base64Decode(raw.Body),
-});
