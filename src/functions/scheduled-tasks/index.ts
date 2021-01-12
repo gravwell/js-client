@@ -14,7 +14,6 @@ export * from './create-many-scheduled-queries';
 export * from './create-many-scheduled-scripts';
 export * from './create-one-scheduled-query';
 export * from './create-one-scheduled-script';
-export { CreatableScheduledQuery, CreatableScheduledScript } from './create-one-scheduled-task';
 export * from './delete-all-scheduled-queries';
 export * from './delete-all-scheduled-scripts';
 export * from './delete-many-scheduled-queries';

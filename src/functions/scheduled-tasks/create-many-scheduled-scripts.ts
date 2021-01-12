@@ -6,10 +6,9 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { ScheduledScript } from '../../models';
+import { CreatableScheduledScript, ScheduledScript } from '../../models';
 import { APIFunctionMakerOptions } from '../utils';
 import { makeCreateOneScheduledScript } from './create-one-scheduled-script';
-import { CreatableScheduledScript } from './create-one-scheduled-task';
 
 export const makeCreateManyScheduledScripts = (makerOptions: APIFunctionMakerOptions) => {
 	const createOneScheduledScript = makeCreateOneScheduledScript(makerOptions);

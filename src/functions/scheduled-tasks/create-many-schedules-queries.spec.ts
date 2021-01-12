@@ -6,13 +6,12 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { isScheduledQuery } from '../../models';
+import { CreatableScheduledQuery, isScheduledQuery } from '../../models';
 import { integrationTest, myCustomMatchers } from '../../tests';
 import { TEST_AUTH_TOKEN, TEST_HOST } from '../../tests/config';
 import { NumericID } from '../../value-objects';
 import { makeCreateOneGroup } from '../groups/create-one-group';
 import { makeCreateManyScheduledQueries } from './create-many-scheduled-queries';
-import { CreatableScheduledQuery } from './create-one-scheduled-task';
 import { makeDeleteAllScheduledQueries } from './delete-all-scheduled-queries';
 
 describe('createManyScheduledQueries()', () => {
