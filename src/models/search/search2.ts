@@ -6,11 +6,15 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-export * from './is-search2';
-export * from './is-valid-search';
-export * from './raw-search';
-export * from './raw-search2';
-export * from './search';
-export * from './search2';
-export * from './to-search';
-export * from './to-search2';
+import { NumericID } from '../../value-objects';
+
+export interface Search2 {
+	id: NumericID;
+	userID: NumericID;
+	groupID?: NumericID;
+	states: Array<'active' | 'dormant' | 'backgrounded' | 'saved' | 'attached' | 'saving'>;
+	attachedClients: number;
+	storedData: number;
+}
+
+export type Search2State = Search2['states'][number];

@@ -26,7 +26,6 @@ export * from './scheduled-task';
 export * from './script';
 export * from './search';
 export * from './search-module';
-export * from './search2';
 export * from './system-settings';
 export * from './tag';
 export * from './template';

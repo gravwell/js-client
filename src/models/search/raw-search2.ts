@@ -6,11 +6,13 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-export * from './is-search2';
-export * from './is-valid-search';
-export * from './raw-search';
-export * from './raw-search2';
-export * from './search';
-export * from './search2';
-export * from './to-search';
-export * from './to-search2';
+export interface RawSearch2 {
+	ID: string;
+	UID: number;
+	GID: number; // zero is undefined
+	State: string; // RawSearch2State or RawSearch2State/RawSearch2State eg. 'ACTIVE' or 'SAVED/BACKGROUNDED'
+	AttachedClients: number;
+	StoredData: number;
+}
+
+export type RawSearch2State = 'ACTIVE' | 'DORMANT' | 'SAVED' | 'BACKGROUNDED' | 'ATTACHED' | 'SAVING';
