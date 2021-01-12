@@ -7,11 +7,11 @@
  **************************************************************************/
 
 import { omit } from 'lodash';
-import { isTemplate, Template } from '../../models';
+import { CreatableTemplate, isTemplate, Template } from '../../models';
 import { integrationTest } from '../../tests';
 import { TEST_AUTH_TOKEN, TEST_HOST } from '../../tests/config';
 import { omitUndefinedShallow } from '../utils';
-import { CreatableTemplate, makeCreateOneTemplate } from './create-one-template';
+import { makeCreateOneTemplate } from './create-one-template';
 import { makeDeleteOneTemplate } from './delete-one-template';
 import { makeGetOneTemplate } from './get-one-template';
 import { makeUpdateOneTemplate, UpdatableTemplate } from './update-one-template';

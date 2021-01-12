@@ -11,7 +11,6 @@ import { attempt } from 'lodash';
 import { GravwellClient } from './client';
 import {
 	AutoExtractorsFilter,
-	CreatableTemplate,
 	DashboardsFilter,
 	GetAPIVersionResponse,
 	IsValidAutoExtractorSyntaxResponse,
@@ -48,6 +47,7 @@ import {
 	CreatableScheduledQuery,
 	CreatableScheduledScript,
 	CreatableTargetedNotification,
+	CreatableTemplate,
 	CreatableUser,
 	Dashboard,
 	FileMetadata,
