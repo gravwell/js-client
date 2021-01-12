@@ -23,7 +23,6 @@ import {
 	SystemStatusCategory,
 	SystemStatusMessageReceived,
 	SystemStatusMessageSent,
-	UpdatableTemplate,
 	ValidatedQuery,
 } from './functions';
 import { APISubscription, downloadFromURL, DownloadReturn, File } from './functions/utils';
@@ -87,6 +86,7 @@ import {
 	UpdatableSavedQuery,
 	UpdatableScheduledQuery,
 	UpdatableScheduledScript,
+	UpdatableTemplate,
 	UpdatableUser,
 	UploadableAutoExtractor,
 	User,
