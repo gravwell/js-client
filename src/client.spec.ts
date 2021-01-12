@@ -11,7 +11,6 @@ import { attempt } from 'lodash';
 import { GravwellClient } from './client';
 import {
 	AutoExtractorsFilter,
-	CreatableResource,
 	CreatableSavedQuery,
 	CreatableScheduledQuery,
 	CreatableScheduledScript,
@@ -56,6 +55,7 @@ import {
 	CreatableMacro,
 	CreatableMultiLineEntry,
 	CreatablePlaybook,
+	CreatableResource,
 	CreatableTargetedNotification,
 	Dashboard,
 	FileMetadata,

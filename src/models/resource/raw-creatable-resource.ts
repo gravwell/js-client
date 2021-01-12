@@ -6,11 +6,14 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-export * from './creatable-resource';
-export * from './is-blank-raw-resource';
-export * from './is-resource';
-export * from './raw-creatable-resource';
-export * from './raw-resource';
-export * from './resource';
-export * from './to-raw-creatable-resource';
-export * from './to-resource';
+import { RawNumericID } from '../../value-objects';
+
+export interface RawCreatableResource {
+	ResourceName: string;
+	Description: string;
+
+	GroupACL: Array<RawNumericID>;
+
+	Global: boolean;
+	Labels: Array<string>;
+}

@@ -6,10 +6,10 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { isResource, Resource } from '../../models';
+import { CreatableResource, isResource, Resource } from '../../models';
 import { integrationTest } from '../../tests';
 import { TEST_AUTH_TOKEN, TEST_HOST } from '../../tests/config';
-import { CreatableResource, makeCreateOneResource } from './create-one-resource';
+import { makeCreateOneResource } from './create-one-resource';
 import { makeDeleteOneResource } from './delete-one-resource';
 import { makeGetOneResourceContent } from './get-one-resource-content';
 import { makeSetOneResourceContent } from './set-one-resource-content';

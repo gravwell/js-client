@@ -6,8 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { RawResource, Resource, toResource } from '../../models';
-import { NumericID, RawNumericID, toRawNumericID } from '../../value-objects';
+import { CreatableResource, RawResource, Resource, toRawCreatableResource, toResource } from '../../models';
 import {
 	APIFunctionMakerOptions,
 	buildHTTPRequest,
@@ -38,33 +37,3 @@ export const makeCreateOneResource = (makerOptions: APIFunctionMakerOptions) => 
 		}
 	};
 };
-
-export interface CreatableResource {
-	groupIDs?: Array<NumericID>;
-
-	name: string;
-	description: string;
-	labels?: Array<string>;
-
-	isGlobal?: boolean;
-}
-
-interface RawCreatableResource {
-	ResourceName: string;
-	Description: string;
-
-	GroupACL: Array<RawNumericID>;
-
-	Global: boolean;
-	Labels: Array<string>;
-}
-
-const toRawCreatableResource = (creatable: CreatableResource): RawCreatableResource => ({
-	GroupACL: creatable.groupIDs?.map(id => toRawNumericID(id)) ?? [],
-
-	Global: creatable.isGlobal ?? false,
-	Labels: creatable.labels ?? [],
-
-	ResourceName: creatable.name,
-	Description: creatable.description,
-});
