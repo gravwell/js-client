@@ -6,15 +6,14 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
+import { CreatableUser, toRawCreatableUser } from '../../models';
 import { NumericID } from '../../value-objects';
-import { UserRole } from '../../models';
 import {
 	APIFunctionMakerOptions,
 	buildHTTPRequest,
 	buildURL,
 	fetch,
 	HTTPRequestOptions,
-	omitUndefinedShallow,
 	parseJSONResponse,
 } from '../utils';
 
@@ -39,28 +38,3 @@ export const makeCreateOneUser = (makerOptions: APIFunctionMakerOptions) => {
 		}
 	};
 };
-
-export interface CreatableUser {
-	user: string;
-	password: string;
-	name: string;
-	email: string;
-	role: UserRole;
-}
-
-interface RawCreatableUser {
-	User: string;
-	Pass: string;
-	Name: string;
-	Email: string;
-	Admin: boolean;
-}
-
-const toRawCreatableUser = (creatable: CreatableUser): RawCreatableUser =>
-	omitUndefinedShallow({
-		User: creatable.user,
-		Pass: creatable.password,
-		Name: creatable.name,
-		Email: creatable.email,
-		Admin: creatable.role === 'admin',
-	});

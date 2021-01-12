@@ -6,10 +6,10 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-export * from './creatable-user';
-export * from './is-valid-user';
-export * from './raw-creatable-user';
-export * from './raw-user';
-export * from './to-raw-creatable-user';
-export * from './to-user';
-export * from './user';
+export interface RawCreatableUser {
+	User: string;
+	Pass: string;
+	Name: string;
+	Email: string;
+	Admin: boolean;
+}

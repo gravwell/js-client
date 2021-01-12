@@ -7,11 +7,11 @@
  **************************************************************************/
 
 import { random, sortBy } from 'lodash';
-import { CreatableMacro, isMacro, Macro, User } from '../../models';
+import { CreatableMacro, CreatableUser, isMacro, Macro, User } from '../../models';
 import { integrationTest } from '../../tests';
 import { TEST_AUTH_TOKEN, TEST_HOST } from '../../tests/config';
 import { makeLoginOneUser } from '../auth/login-one-user';
-import { CreatableUser, makeCreateOneUser, makeGetOneUser } from '../users';
+import { makeCreateOneUser, makeGetOneUser } from '../users';
 import { makeCreateOneMacro } from './create-one-macro';
 import { makeDeleteOneMacro } from './delete-one-macro';
 import { makeGetAllMacros } from './get-all-macros';

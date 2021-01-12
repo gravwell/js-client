@@ -12,7 +12,6 @@ import { GravwellClient } from './client';
 import {
 	AutoExtractorsFilter,
 	CreatableTemplate,
-	CreatableUser,
 	DashboardsFilter,
 	GetAPIVersionResponse,
 	IsValidAutoExtractorSyntaxResponse,
@@ -50,6 +49,7 @@ import {
 	CreatableScheduledQuery,
 	CreatableScheduledScript,
 	CreatableTargetedNotification,
+	CreatableUser,
 	Dashboard,
 	FileMetadata,
 	Group,

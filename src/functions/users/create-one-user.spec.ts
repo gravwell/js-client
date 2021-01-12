@@ -7,10 +7,10 @@
  **************************************************************************/
 
 import { random } from 'lodash';
-import { isValidUser } from '../../models';
+import { CreatableUser, isValidUser } from '../../models';
 import { integrationTest } from '../../tests';
 import { TEST_AUTH_TOKEN, TEST_HOST } from '../../tests/config';
-import { CreatableUser, makeCreateOneUser } from './create-one-user';
+import { makeCreateOneUser } from './create-one-user';
 import { makeGetOneUser } from './get-one-user';
 
 describe('createOneUser()', () => {

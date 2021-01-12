@@ -7,11 +7,11 @@
  **************************************************************************/
 
 import { random, sortBy } from 'lodash';
-import { AutoExtractor, CreatableAutoExtractor, isAutoExtractor, User } from '../../models';
+import { CreatableUser, AutoExtractor, CreatableAutoExtractor, isAutoExtractor, User } from '../../models';
 import { integrationTest } from '../../tests';
 import { TEST_AUTH_TOKEN, TEST_HOST } from '../../tests/config';
 import { makeLoginOneUser } from '../auth/login-one-user';
-import { CreatableUser, makeCreateOneUser, makeGetOneUser } from '../users';
+import { makeCreateOneUser, makeGetOneUser } from '../users';
 import { makeCreateOneAutoExtractor } from './create-one-auto-extractor';
 import { makeDeleteOneAutoExtractor } from './delete-one-auto-extractor';
 import { makeGetAllAutoExtractors } from './get-all-auto-extractors';

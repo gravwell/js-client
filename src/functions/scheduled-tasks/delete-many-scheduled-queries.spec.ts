@@ -7,11 +7,11 @@
  **************************************************************************/
 
 import { random } from 'lodash';
-import { User } from '../../models';
+import { CreatableUser, User } from '../../models';
 import { integrationTest } from '../../tests';
 import { TEST_AUTH_TOKEN, TEST_HOST } from '../../tests/config';
 import { makeLoginOneUser } from '../auth/login-one-user';
-import { CreatableUser, makeCreateOneUser, makeGetOneUser } from '../users';
+import { makeCreateOneUser, makeGetOneUser } from '../users';
 import { makeCreateManyScheduledQueries } from './create-many-scheduled-queries';
 import { makeDeleteAllScheduledQueries } from './delete-all-scheduled-queries';
 import { makeDeleteManyScheduledQueries } from './delete-many-scheduled-queries';
