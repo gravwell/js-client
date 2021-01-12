@@ -6,10 +6,19 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-export * from './creatable-saved-query';
-export * from './is-saved-query';
-export * from './raw-creatable-saved-query';
-export * from './raw-saved-query';
-export * from './saved-query';
-export * from './to-raw-creatable-saved-query';
-export * from './to-saved-query';
+import { RawNumericID, RawUUID } from '../../value-objects';
+import { RawTimeframe } from '../timeframe';
+
+export interface RawCreatableSavedQuery {
+	GUID?: RawUUID;
+
+	GIDs: Array<RawNumericID>;
+	Global: boolean;
+
+	Name: string;
+	Description: string; // Empty is null
+	Labels: Array<string>;
+
+	Query: string;
+	Metadata: { timeframe: RawTimeframe | null };
+}
