@@ -7,32 +7,7 @@
  **************************************************************************/
 
 import { isBoolean, isInteger, isString } from 'lodash';
-
-export interface RawSystemSettings {
-	DisableMapTileProxy: boolean;
-	DistributedWebservers: boolean;
-	MapTileUrl: string;
-	MaxFileSize: number;
-	MaxResourceSize: number;
-}
-
-export interface SystemSettings {
-	mapTileURL: string;
-	disableMapTileProxy: boolean;
-
-	webServerIsDistributed: boolean;
-
-	maxFileSize: number;
-	maxResourceSize: number;
-}
-
-export const toSystemSettings = (raw: RawSystemSettings): SystemSettings => ({
-	mapTileURL: raw.MapTileUrl,
-	disableMapTileProxy: raw.DisableMapTileProxy,
-	webServerIsDistributed: raw.DistributedWebservers,
-	maxFileSize: raw.MaxFileSize,
-	maxResourceSize: raw.MaxResourceSize,
-});
+import { SystemSettings } from './system-settings';
 
 export const isSystemSettings = (value: any): value is SystemSettings => {
 	try {
