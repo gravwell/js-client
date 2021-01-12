@@ -12,5 +12,8 @@ export * from './playbook';
 export * from './raw-creatable-playbook';
 export * from './raw-playbook';
 export * from './raw-playbook-decoded-metadata';
+export * from './raw-updatable-playbook';
 export * from './to-playbook';
 export * from './to-raw-creatable-playbook';
+export * from './to-raw-updatable-playbook';
+export * from './updatable-playbook';
