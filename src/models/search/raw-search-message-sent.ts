@@ -6,7 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { RawQuery } from '../../../models';
+import { RawQuery } from '../query';
 import { SEARCH_MESSAGE_COMMANDS } from './search-message-commands';
 
 export interface RawInformSubscriptionsMessageSent {

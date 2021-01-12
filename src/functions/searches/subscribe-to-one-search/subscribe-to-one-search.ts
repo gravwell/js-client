@@ -10,22 +10,24 @@ import { decode as base64Decode } from 'base-64';
 import { isArray, isBoolean, isEqual, isNull, isUndefined } from 'lodash';
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import { distinctUntilChanged, filter, first, map } from 'rxjs/operators';
-import { Query, SearchEntries, SearchFilter, SearchStats, SearchSubscription } from '../../../models';
-import { Percentage, toNumericID } from '../../../value-objects';
-import { APIFunctionMakerOptions, promiseProgrammatically } from '../../utils';
 import {
 	isRawTableEntries,
+	Query,
+	RawAcceptSearchMessageSent,
+	RawInitiateSearchMessageSent,
+	RawRequestSearchEntriesWithinRangeMessageSent,
 	RawResponseForSearchDetailsMessageReceived,
 	RawResponseForSearchEntriesWithinRangeMessageReceived,
 	RawResponseForSearchStatsMessageReceived,
 	RawSearchInitiatedMessageReceived,
-} from './raw-search-message-received';
-import {
-	RawAcceptSearchMessageSent,
-	RawInitiateSearchMessageSent,
-	RawRequestSearchEntriesWithinRangeMessageSent,
-} from './raw-search-message-sent';
-import { SEARCH_MESSAGE_COMMANDS } from './search-message-commands';
+	SearchEntries,
+	SearchFilter,
+	SearchStats,
+	SearchSubscription,
+	SEARCH_MESSAGE_COMMANDS,
+} from '../../../models';
+import { Percentage, toNumericID } from '../../../value-objects';
+import { APIFunctionMakerOptions, promiseProgrammatically } from '../../utils';
 import { makeSubscribeToOneRawSearch } from './subscribe-to-one-raw-search';
 
 export const makeSubscribeToOneSearch = (makerOptions: APIFunctionMakerOptions) => {

@@ -7,8 +7,8 @@
  **************************************************************************/
 
 import { isArray, isString } from 'lodash';
-import { RawQuery } from '../../../models';
-import { RawNumericID } from '../../../value-objects';
+import { RawNumericID } from '../../value-objects';
+import { RawQuery } from '../query';
 import { SEARCH_MESSAGE_COMMANDS } from './search-message-commands';
 
 export interface RawSearchInitiatedMessageReceived {
