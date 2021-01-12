@@ -6,6 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
+export type TargetedNotificationTargetType = TargetedNotification['targetType'];
 export type TargetedNotification = MyselfTargetedNotification | GroupTargetedNotification | UserTargetedNotification;
 
 export interface MyselfTargetedNotification extends BaseTargetedNotification {
