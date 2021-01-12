@@ -7,11 +7,11 @@
  **************************************************************************/
 
 import { omit } from 'lodash';
-import { isPlaybook, Playbook } from '../../models';
+import { CreatablePlaybook, isPlaybook, Playbook } from '../../models';
 import { integrationTest } from '../../tests';
 import { TEST_AUTH_TOKEN, TEST_HOST } from '../../tests/config';
 import { omitUndefinedShallow } from '../utils';
-import { CreatablePlaybook, makeCreateOnePlaybook } from './create-one-playbook';
+import { makeCreateOnePlaybook } from './create-one-playbook';
 import { makeDeleteOnePlaybook } from './delete-one-playbook';
 import { makeGetOnePlaybook } from './get-one-playbook';
 import { makeUpdateOnePlaybook, UpdatablePlaybook } from './update-one-playbook';

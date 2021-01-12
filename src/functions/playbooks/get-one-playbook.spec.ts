@@ -6,11 +6,11 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { isPlaybook } from '../../models';
+import { CreatablePlaybook, isPlaybook } from '../../models';
 import { integrationTest } from '../../tests';
 import { TEST_AUTH_TOKEN, TEST_HOST } from '../../tests/config';
 import { UUID } from '../../value-objects';
-import { CreatablePlaybook, makeCreateOnePlaybook } from './create-one-playbook';
+import { makeCreateOnePlaybook } from './create-one-playbook';
 import { makeDeleteOnePlaybook } from './delete-one-playbook';
 import { makeGetOnePlaybook } from './get-one-playbook';
 

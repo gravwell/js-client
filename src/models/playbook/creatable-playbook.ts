@@ -6,11 +6,18 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-export * from './creatable-playbook';
-export * from './is-playbook';
-export * from './playbook';
-export * from './raw-creatable-playbook';
-export * from './raw-playbook';
-export * from './raw-playbook-decoded-metadata';
-export * from './to-playbook';
-export * from './to-raw-creatable-playbook';
+import { Markdown, NumericID, UUID } from '../../value-objects';
+
+export interface CreatablePlaybook {
+	userID?: NumericID;
+	groupIDs?: Array<NumericID>;
+
+	name: string;
+	description?: string | null;
+	labels?: Array<string>;
+
+	isGlobal?: boolean;
+
+	body: Markdown;
+	coverImageFileGUID?: UUID | null;
+}
