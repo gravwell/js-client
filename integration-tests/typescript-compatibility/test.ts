@@ -1,28 +1,57 @@
 import { execSync } from 'child_process';
+import { DebugStyle, makeDebug } from '../../scripts/utils';
 
-const typescriptVersions = ['3.5', '3.6', '3.7', '3.8', '3.9', '4.0', '4.1'];
+const TYPESCRIPT_VERSIONS = ['3.5', '3.6', '3.7', '3.8', '3.9', '4.0', '4.1'];
 
-const testVersionCompatibility = (version: string) => {
+const { debug, startDebugContext, endDebugContext } = makeDebug();
+
+const testVersionCompatibility = (version: string, color: DebugStyle = 'blue'): boolean => {
+	let isCompatible = false;
+
 	try {
-		console.log(`Will test package usage with TypeScript v${version}`);
-		console.log(`TS v${version} will install`);
-		execSync('npm i -D typescript@' + version);
-		console.log(`TS v${version} installed`);
-		console.log(`TS v${version} will compile`);
-		execSync('npx tsc');
-		console.log(`TS v${version} compiled`);
+		startDebugContext(`v${version}`, [color]);
 
-		console.log(`TS v${version} SUCCESS`);
+		debug(`Installing`);
+		execSync('npm i -D typescript@' + version, { stdio: 'ignore' });
+
+		debug(`Compiling`);
+		execSync('npx tsc', { stdio: 'ignore' });
+
+		debug(`✅ SUCCESS`);
+		isCompatible = true;
 	} catch {
-		console.log(`TS v${version} FAILED`);
+		debug(`❌ FAILED`);
+		isCompatible = false;
 	} finally {
-		console.log(`TS v${version} will uninstall`);
-		execSync('npm uninstall typescript');
-		console.log(`TS v${version} uninstalled`);
+		debug(`Uninstalling`);
+		execSync('npm uninstall typescript', { stdio: 'ignore' });
+
+		endDebugContext();
+		return isCompatible;
 	}
 };
 
-for (const version of typescriptVersions) {
-	execSync('npm ci');
-	testVersionCompatibility(version);
-}
+(() => {
+	startDebugContext('Typescript compatibility test', ['cyan', 'bold']);
+
+	const formattedVersions = TYPESCRIPT_VERSIONS.map(v => `v${v}`).join(', ');
+	debug(`Will test with ${formattedVersions}`);
+	execSync('npm ci', { stdio: 'ignore' });
+
+	const versionColors: Array<DebugStyle> = ['blue', 'magenta', 'yellow'];
+	const versionsCompatibility = TYPESCRIPT_VERSIONS.map((version, i) => ({
+		version,
+		isCompatible: testVersionCompatibility(version, versionColors[i % versionColors.length]),
+	}));
+	const allCompatible = versionsCompatibility.every(v => v.isCompatible);
+
+	startDebugContext('Report', allCompatible ? ['green', 'bold'] : ['red', 'bold']);
+	for (const v of versionsCompatibility)
+		if (v.isCompatible) debug(`✅ v${v.version} compatible`);
+		else debug(`❌ v${v.version} not compatible`);
+	endDebugContext();
+
+	endDebugContext();
+
+	process.exit(allCompatible ? 0 : 1);
+})();
