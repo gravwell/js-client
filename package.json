@@ -1,6 +1,6 @@
 {
 	"name": "gravwell",
-	"version": "0.0.1",
+	"version": "0.0.0-PLACEHOLDER",
 	"description": "",
 	"main": "dist/node/main.js",
 	"browser": "dist/browsers/main.js",
