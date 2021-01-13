@@ -2,9 +2,11 @@
 	"main": "index.js",
 	"private": true,
 	"scripts": {
-		"test": "node test.js"
+		"test": "npx ts-node --skip-project test.ts"
 	},
-	"devDependencies": {},
+	"devDependencies": {
+		"ts-node": "^9.1.1"
+	},
 	"dependencies": {
 		"gravwell": "file:../..",
 		"rxjs": "^6.6.3"

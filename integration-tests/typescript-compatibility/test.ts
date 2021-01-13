@@ -1,12 +1,8 @@
-const { execSync } = require('child_process');
+import { execSync } from 'child_process';
 
 const typescriptVersions = ['3.5', '3.6', '3.7', '3.8', '3.9', '4.0', '4.1'];
 
-/**
- * @param {string} version
- * @returns {void}
- */
-const testVersionCompatibility = version => {
+const testVersionCompatibility = (version: string) => {
 	try {
 		console.log(`Will test package usage with TypeScript v${version}`);
 		console.log(`TS v${version} will install`);
