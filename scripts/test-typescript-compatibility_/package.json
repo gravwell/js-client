@@ -1,9 +1,5 @@
 {
-	"main": "index.js",
 	"private": true,
-	"scripts": {
-		"test": "npx ts-node --skip-project test.ts"
-	},
 	"devDependencies": {
 		"ts-node": "^9.1.1"
 	},

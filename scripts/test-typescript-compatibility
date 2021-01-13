@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+( cd scripts/test-typescript-compatibility_ ; npx ts-node --skip-project run.ts )
+

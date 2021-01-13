@@ -1,5 +1,5 @@
 import { execSync } from 'child_process';
-import { DebugStyle, makeDebug } from '../../scripts/utils';
+import { DebugStyle, makeDebug } from '../utils';
 
 const TYPESCRIPT_VERSIONS = ['3.5', '3.6', '3.7', '3.8', '3.9', '4.0', '4.1'];
 
