@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+# Build
+scripts/build &&
+
+( cd scripts/test-typescript-compatibility_ ; npx ts-node --skip-project run.ts )
+
