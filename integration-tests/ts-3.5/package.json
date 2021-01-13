@@ -1,0 +1,14 @@
+{
+	"main": "index.js",
+	"private": true,
+	"scripts": {
+		"test": "npm ci && tsc"
+	},
+	"devDependencies": {
+		"typescript": "^3.5.3"
+	},
+	"dependencies": {
+		"gravwell": "file:../..",
+		"rxjs": "^6.6.3"
+	}
+}
