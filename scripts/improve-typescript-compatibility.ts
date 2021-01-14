@@ -44,8 +44,13 @@ const processFile = async (file: ProcessableFile): Promise<ProcessableFile> => {
 		// TS<3.8 - Replace "import type {x} from 'x'" with "import {x} from 'x'"
 		.replace(/import type/g, 'import')
 		// TS<3.7 - Replace get/set x for "x: T"
-		.replace(/set (\w+)\(\w+\: [\w\s\|\<\>]+\);\n\s*get \w+\(\): ([\w\s\|\<\>]+);/g, '$1:$2;')
-		// TS<3.5 - Replace class initializers e.g. "message = 'test';" for "message: 'test';"
+		.replace(/set (\w+)\(\w+\: [\w\s\|\<\>]+\);\n\s*get \w+\(\): ([\w\s\|\<\>]+);/g, '$1: $2; // TSCompatibility')
+		// TS<3.7 - Replace get x for "readonly x: T"
+		.replace(
+			/(?<!set \w+\(\w+\: [\w\s\|\<\>]+\);\n\s*)get (\w+)\(\): ([\w\s\|\<\>]+);/g,
+			'readonly $1: $2; // TSCompatibility',
+		)
+		// TS<3.7 - Replace class initializers e.g. "message = 'test';" for "message: 'test';"
 		.replace(/readonly (.+) =/g, 'readonly $1:');
 	return { ...file, data };
 };
