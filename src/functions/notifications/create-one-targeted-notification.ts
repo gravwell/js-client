@@ -23,9 +23,7 @@ import {
 } from '../utils';
 
 export const makeCreateOneTargetedNotification = (context: APIContext) => {
-	// Had to curry that function so that the correct CreatableTargetedNotification wouldn't be lost
-	// when I lazyfirst() the auth token in the client
-	return () => async <TargetType extends TargetedNotificationTargetType>(
+	return async <TargetType extends TargetedNotificationTargetType>(
 		targetType: TargetType,
 		creatable: Omit<CreatableTargetedNotificationByTargetType<TargetType>, 'targetType'>,
 	): Promise<void> => {

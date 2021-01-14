@@ -13,25 +13,22 @@ import { APIContext, APISubscription, apiSubscriptionFromWebSocket, buildURL, We
 
 export const makeValidateOneQuery = (context: APIContext) => {
 	const subscribeToOneQueryValidation = makeSubscribeToOneQueryValidation(context);
+	let querySubP: ReturnType<typeof subscribeToOneQueryValidation> | null = null;
 
-	return () => {
-		let querySubP: ReturnType<typeof subscribeToOneQueryValidation> | null = null;
+	return async (query: Query): Promise<ValidatedQuery> => {
+		if (isNull(querySubP)) querySubP = subscribeToOneQueryValidation();
+		const querySub = await querySubP;
+		const id = SEARCH_SOCKET_ID_GENERATOR.generate();
 
-		return async (query: Query): Promise<ValidatedQuery> => {
-			if (isNull(querySubP)) querySubP = subscribeToOneQueryValidation();
-			const querySub = await querySubP;
-			const id = SEARCH_SOCKET_ID_GENERATOR.generate();
-
-			const validationP = querySub.received$
-				.pipe(
-					filter(msg => msg.id === id),
-					map(msg => pick(msg, ['isValid', 'error']) as ValidatedQuery),
-					first(),
-				)
-				.toPromise();
-			querySub.send({ id, query });
-			return validationP;
-		};
+		const validationP = querySub.received$
+			.pipe(
+				filter(msg => msg.id === id),
+				map(msg => pick(msg, ['isValid', 'error']) as ValidatedQuery),
+				first(),
+			)
+			.toPromise();
+		querySub.send({ id, query });
+		return validationP;
 	};
 };
 

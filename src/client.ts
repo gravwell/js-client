@@ -9,7 +9,7 @@
 import { isUndefined } from 'lodash';
 import { BehaviorSubject } from 'rxjs';
 import * as f from './functions';
-import { APIContext, lazyFirst } from './functions/utils';
+import { APIContext } from './functions/utils';
 import { CreatableJSONEntry, Search } from './models';
 import { Host, NumericID } from './value-objects';
 
@@ -104,9 +104,7 @@ export class GravwellClient {
 
 	public readonly notifications = {
 		createOneBroadcasted: this._makeFunction(f.makeCreateOneBroadcastedNotification),
-		createOneTargeted: lazyExec(
-			lazyFirst(() => this.authToken)(this._makeFunction(f.makeCreateOneTargetedNotification)),
-		),
+		createOneTargeted: this._makeFunction(f.makeCreateOneTargetedNotification),
 		getMine: this._makeFunction(f.makeGetMyNotifications),
 		subscribeToMine: this._makeFunction(f.makeSubscribeToMyNotifications),
 		updateOne: this._makeFunction(f.makeUpdateOneNotification),
@@ -199,8 +197,6 @@ export class GravwellClient {
 		getUserHistory: (userID: string): Promise<Array<Search>> =>
 			this._makeFunction(f.makeGetSearchHistory)({ target: 'user', userID }),
 
-		tt: this._makeFunction(f.makeGetSearchHistory),
-
 		/**
 		 * Returns all searches that a specific user has access to. Be it because
 		 * he made the search or because he's in the group that owns the search.
@@ -229,7 +225,7 @@ export class GravwellClient {
 		},
 
 		create: {
-			one: lazyExec(lazyFirst(() => this.authToken)(this._makeFunction(f.makeSubscribeToOneSearch))),
+			one: this._makeFunction(f.makeSubscribeToOneSearch),
 		},
 	};
 
@@ -529,7 +525,7 @@ export class GravwellClient {
 
 	public readonly queries = {
 		validate: {
-			one: lazyExec(lazyFirst(() => this.authToken)(this._makeFunction(f.makeValidateOneQuery))),
+			one: this._makeFunction(f.makeValidateOneQuery),
 		},
 	};
 
@@ -575,10 +571,3 @@ export class GravwellClient {
 		},
 	};
 }
-
-const lazyExec = <ReturnF extends (...args: Array<any>) => any>(f: () => ReturnF): ReturnF => {
-	const returnF = (...args: Parameters<ReturnF>): ReturnType<ReturnF> => {
-		return f()(...args);
-	};
-	return returnF as any;
-};
