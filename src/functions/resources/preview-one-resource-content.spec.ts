@@ -6,8 +6,8 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { CreatableResource } from '../../models';
 import { isNull } from 'lodash';
+import { CreatableResource } from '../../models';
 import { integrationTest } from '../../tests';
 import { TEST_AUTH_TOKEN, TEST_HOST } from '../../tests/config';
 import { UUID } from '../../value-objects';

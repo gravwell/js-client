@@ -6,7 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { ScheduledTask, RawScheduledTask, toScheduledTask } from '../../models';
+import { RawScheduledTask, ScheduledTask, toScheduledTask } from '../../models';
 import { NumericID } from '../../value-objects';
 import {
 	APIFunctionMakerOptions,

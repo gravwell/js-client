@@ -7,7 +7,7 @@
  **************************************************************************/
 
 import { random } from 'lodash';
-import { CreatableUser, CreatableDashboard, isDashboard, User } from '../../models';
+import { CreatableDashboard, CreatableUser, isDashboard, User } from '../../models';
 import { integrationTest } from '../../tests';
 import { TEST_AUTH_TOKEN, TEST_HOST } from '../../tests/config';
 import { makeLoginOneUser } from '../auth/login-one-user';

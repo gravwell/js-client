@@ -6,8 +6,8 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { ScheduledScript } from './scheduled-script';
 import { ScheduledQuery } from './scheduled-query';
+import { ScheduledScript } from './scheduled-script';
 
 export type ScheduledTask = ScheduledQuery | ScheduledScript;
 export type ScheduledTaskType = ScheduledTask['type'];

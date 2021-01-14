@@ -6,7 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { SavedQuery, RawSavedQuery, toSavedQuery } from '../../models';
+import { RawSavedQuery, SavedQuery, toSavedQuery } from '../../models';
 import { NumericID } from '../../value-objects';
 import {
 	APIFunctionMakerOptions,
