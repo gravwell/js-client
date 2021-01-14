@@ -6,17 +6,17 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { APIFunctionMakerOptions } from '../utils';
+import { APIContext } from '../utils';
 import { makeDeleteOneScheduledQuery } from './delete-one-scheduled-query';
 import { makeGetAllScheduledQueries } from './get-all-scheduled-queries';
 
-export const makeDeleteAllScheduledQueries = (makerOptions: APIFunctionMakerOptions) => {
-	const deleteOneScheduledQuery = makeDeleteOneScheduledQuery(makerOptions);
-	const getAllScheduledQueries = makeGetAllScheduledQueries(makerOptions);
+export const makeDeleteAllScheduledQueries = (context: APIContext) => {
+	const deleteOneScheduledQuery = makeDeleteOneScheduledQuery(context);
+	const getAllScheduledQueries = makeGetAllScheduledQueries(context);
 
-	return async (authToken: string | null): Promise<void> => {
-		const queries = await getAllScheduledQueries(authToken);
-		const deletePs = queries.map(q => deleteOneScheduledQuery(authToken, q.id));
+	return async (): Promise<void> => {
+		const queries = await getAllScheduledQueries();
+		const deletePs = queries.map(q => deleteOneScheduledQuery(q.id));
 		await Promise.all(deletePs);
 	};
 };

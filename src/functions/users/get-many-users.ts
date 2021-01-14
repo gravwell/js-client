@@ -8,16 +8,16 @@
 
 import { User } from '../../models';
 import { isNumericID, NumericID } from '../../value-objects';
-import { APIFunctionMakerOptions } from '../utils';
+import { APIContext } from '../utils';
 import { makeGetAllUsers } from './get-all-users';
 import { makeGetUsersByGroup } from './get-users-by-group';
 
-export const makeGetManyUsers = (makerOptions: APIFunctionMakerOptions) => {
-	const getUsersByGroup = makeGetUsersByGroup(makerOptions);
-	const getAllUsers = makeGetAllUsers(makerOptions);
+export const makeGetManyUsers = (context: APIContext) => {
+	const getUsersByGroup = makeGetUsersByGroup(context);
+	const getAllUsers = makeGetAllUsers(context);
 
-	return async (authToken: string | null, userFilter: { groupID?: NumericID } = {}): Promise<Array<User>> => {
-		if (isNumericID(userFilter.groupID)) return getUsersByGroup(authToken, userFilter.groupID);
-		return getAllUsers(authToken);
+	return async (userFilter: { groupID?: NumericID } = {}): Promise<Array<User>> => {
+		if (isNumericID(userFilter.groupID)) return getUsersByGroup(userFilter.groupID);
+		return getAllUsers();
 	};
 };

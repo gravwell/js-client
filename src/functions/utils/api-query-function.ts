@@ -6,4 +6,4 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-export type APIQueryFunction<T> = (sessionToken: string | null, ...args: Array<any>) => Promise<T>;
+export type APIQueryFunction<T> = (authToken: string | null, ...args: Array<any>) => Promise<T>;

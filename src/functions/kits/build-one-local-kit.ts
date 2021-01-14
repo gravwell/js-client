@@ -8,23 +8,16 @@
 
 import { BuildableKit, toRawBuildableKit } from '../../models';
 import { RawNumericID, RawUUID, UUID } from '../../value-objects';
-import {
-	APIFunctionMakerOptions,
-	buildHTTPRequest,
-	buildURL,
-	fetch,
-	HTTPRequestOptions,
-	parseJSONResponse,
-} from '../utils';
+import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 
-export const makeBuildOneLocalKit = (makerOptions: APIFunctionMakerOptions) => {
+export const makeBuildOneLocalKit = (context: APIContext) => {
 	const templatePath = '/api/kits/build';
-	const url = buildURL(templatePath, { ...makerOptions, protocol: 'http' });
+	const url = buildURL(templatePath, { ...context, protocol: 'http' });
 
-	return async (authToken: string | null, data: BuildableKit): Promise<UUID> => {
+	return async (data: BuildableKit): Promise<UUID> => {
 		try {
 			const baseRequestOptions: HTTPRequestOptions = {
-				headers: { Authorization: authToken ? `Bearer ${authToken}` : undefined },
+				headers: { Authorization: context.authToken ? `Bcontext.authTokenontext.authToken}` : undefined },
 				body: JSON.stringify(toRawBuildableKit(data)),
 			};
 			const req = buildHTTPRequest(baseRequestOptions);

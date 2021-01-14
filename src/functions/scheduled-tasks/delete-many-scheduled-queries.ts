@@ -7,23 +7,23 @@
  **************************************************************************/
 
 import { isNil } from 'lodash';
-import { APIFunctionMakerOptions } from '../utils';
+import { APIContext } from '../utils';
 import { makeDeleteOneScheduledQuery } from './delete-one-scheduled-query';
 import { makeGetAllScheduledQueries } from './get-all-scheduled-queries';
 import { ScheduledTasksFilter } from './get-many-scheduled-tasks';
 
-export const makeDeleteManyScheduledQueries = (makerOptions: APIFunctionMakerOptions) => {
-	const deleteOneScheduledQuery = makeDeleteOneScheduledQuery(makerOptions);
-	const getAllScheduledQueries = makeGetAllScheduledQueries(makerOptions);
+export const makeDeleteManyScheduledQueries = (context: APIContext) => {
+	const deleteOneScheduledQuery = makeDeleteOneScheduledQuery(context);
+	const getAllScheduledQueries = makeGetAllScheduledQueries(context);
 
-	return async (authToken: string | null, filter: ScheduledTasksFilter = {}): Promise<void> => {
-		const queries = await getAllScheduledQueries(authToken);
+	return async (filter: ScheduledTasksFilter = {}): Promise<void> => {
+		const queries = await getAllScheduledQueries();
 		const filtered = queries.filter(q => {
 			if (isNil(filter.userID)) return true;
 			return q.userID === filter.userID;
 		});
 
-		const deletePs = filtered.map(q => deleteOneScheduledQuery(authToken, q.id));
+		const deletePs = filtered.map(q => deleteOneScheduledQuery(q.id));
 		await Promise.all(deletePs);
 	};
 };

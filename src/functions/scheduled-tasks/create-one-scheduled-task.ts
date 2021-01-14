@@ -14,31 +14,23 @@ import {
 	toRawCreatableScheduledTask,
 } from '../../models';
 import { RawNumericID, toNumericID } from '../../value-objects';
-import {
-	APIFunctionMakerOptions,
-	buildHTTPRequest,
-	buildURL,
-	fetch,
-	HTTPRequestOptions,
-	parseJSONResponse,
-} from '../utils';
+import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 import { makeGetOneScheduledTask } from './get-one-scheduled-task';
 
-export const makeCreateOneScheduledTask = (makerOptions: APIFunctionMakerOptions) => {
-	const getOneScheduledTask = makeGetOneScheduledTask(makerOptions);
+export const makeCreateOneScheduledTask = (context: APIContext) => {
+	const getOneScheduledTask = makeGetOneScheduledTask(context);
 
 	const templatePath = '/api/scheduledsearches';
-	const url = buildURL(templatePath, { ...makerOptions, protocol: 'http' });
+	const url = buildURL(templatePath, { ...context, protocol: 'http' });
 
 	return async <D extends CreatableScheduledTask>(
-		authToken: string | null,
 		data: D,
 	): Promise<
 		D['type'] extends 'query' ? ScheduledQuery : D['type'] extends 'script' ? ScheduledScript : ScheduledTask
 	> => {
 		try {
 			const baseRequestOptions: HTTPRequestOptions = {
-				headers: { Authorization: authToken ? `Bearer ${authToken}` : undefined },
+				headers: { Authorization: context.authToken ? `Bearer ${context.authToken}` : undefined },
 				body: JSON.stringify(toRawCreatableScheduledTask(data)),
 			};
 			const req = buildHTTPRequest(baseRequestOptions);
@@ -47,7 +39,7 @@ export const makeCreateOneScheduledTask = (makerOptions: APIFunctionMakerOptions
 			const rawID = await parseJSONResponse<RawNumericID>(raw);
 			const scheduledTaskID = toNumericID(rawID);
 
-			const task: ScheduledTask = await getOneScheduledTask(authToken, scheduledTaskID);
+			const task: ScheduledTask = await getOneScheduledTask(scheduledTaskID);
 			return task as any;
 		} catch (err) {
 			if (err instanceof Error) throw err;

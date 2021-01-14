@@ -15,33 +15,25 @@ import {
 	toScheduledTask,
 	UpdatableScheduledTask,
 } from '../../models';
-import {
-	APIFunctionMakerOptions,
-	buildHTTPRequest,
-	buildURL,
-	fetch,
-	HTTPRequestOptions,
-	parseJSONResponse,
-} from '../utils';
+import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 import { makeGetOneScheduledTask } from './get-one-scheduled-task';
 
-export const makeUpdateOneScheduledTask = (makerOptions: APIFunctionMakerOptions) => {
-	const getOneScheduledTask = makeGetOneScheduledTask(makerOptions);
+export const makeUpdateOneScheduledTask = (context: APIContext) => {
+	const getOneScheduledTask = makeGetOneScheduledTask(context);
 
 	return async <D extends UpdatableScheduledTask>(
-		authToken: string | null,
 		data: D,
 	): Promise<
 		D['type'] extends 'query' ? ScheduledQuery : D['type'] extends 'script' ? ScheduledScript : ScheduledTask
 	> => {
 		const templatePath = '/api/scheduledsearches/{scheduledTaskID}';
-		const url = buildURL(templatePath, { ...makerOptions, protocol: 'http', pathParams: { scheduledTaskID: data.id } });
+		const url = buildURL(templatePath, { ...context, protocol: 'http', pathParams: { scheduledTaskID: data.id } });
 
 		try {
-			const current = await getOneScheduledTask(authToken, data.id);
+			const current = await getOneScheduledTask(data.id);
 
 			const baseRequestOptions: HTTPRequestOptions = {
-				headers: { Authorization: authToken ? `Bearer ${authToken}` : undefined },
+				headers: { Authorization: context.authToken ? `Bearer ${context.authToken}` : undefined },
 				body: JSON.stringify(toRawUpdatableScheduledTask(data, current)),
 			};
 			const req = buildHTTPRequest(baseRequestOptions);

@@ -7,22 +7,15 @@
  **************************************************************************/
 
 import { ID } from '../../value-objects';
-import {
-	APIFunctionMakerOptions,
-	buildHTTPRequest,
-	buildURL,
-	fetch,
-	HTTPRequestOptions,
-	parseJSONResponse,
-} from '../utils';
+import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 
-export const makeUninstallOneKit = (makerOptions: APIFunctionMakerOptions) => {
-	return async (authToken: string | null, kitID: ID): Promise<void> => {
+export const makeUninstallOneKit = (context: APIContext) => {
+	return async (kitID: ID): Promise<void> => {
 		const path = '/api/kits/{kitID}';
-		const url = buildURL(path, { ...makerOptions, protocol: 'http', pathParams: { kitID } });
+		const url = buildURL(path, { ...context, protocol: 'http', pathParams: { kitID } });
 
 		const baseRequestOptions: HTTPRequestOptions = {
-			headers: { Authorization: authToken ? `Bearer ${authToken}` : undefined },
+			headers: { Authorization: context.authToken ? `Bearer ${context.authToken}` : undefined },
 		};
 		const req = buildHTTPRequest(baseRequestOptions);
 

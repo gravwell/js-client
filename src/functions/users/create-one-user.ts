@@ -8,23 +8,16 @@
 
 import { CreatableUser, toRawCreatableUser } from '../../models';
 import { NumericID } from '../../value-objects';
-import {
-	APIFunctionMakerOptions,
-	buildHTTPRequest,
-	buildURL,
-	fetch,
-	HTTPRequestOptions,
-	parseJSONResponse,
-} from '../utils';
+import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 
-export const makeCreateOneUser = (makerOptions: APIFunctionMakerOptions) => {
+export const makeCreateOneUser = (context: APIContext) => {
 	const templatePath = '/api/users';
-	const url = buildURL(templatePath, { ...makerOptions, protocol: 'http' });
+	const url = buildURL(templatePath, { ...context, protocol: 'http' });
 
-	return async (authToken: string | null, data: CreatableUser): Promise<NumericID> => {
+	return async (data: CreatableUser): Promise<NumericID> => {
 		try {
 			const baseRequestOptions: HTTPRequestOptions = {
-				headers: { Authorization: authToken ? `Bearer ${authToken}` : undefined },
+				headers: { Authorization: context.authToken ? `Bearer ${context.authToken}` : undefined },
 				body: JSON.stringify(toRawCreatableUser(data)),
 			};
 			const req = buildHTTPRequest(baseRequestOptions);

@@ -7,22 +7,15 @@
  **************************************************************************/
 
 import { LogLevel, toRawLogLevel } from '../../models';
-import {
-	APIFunctionMakerOptions,
-	buildHTTPRequest,
-	buildURL,
-	fetch,
-	HTTPRequestOptions,
-	parseJSONResponse,
-} from '../utils';
+import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 
-export const makeSetLogLevel = (makerOptions: APIFunctionMakerOptions) => {
+export const makeSetLogLevel = (context: APIContext) => {
 	const templatePath = '/api/logging';
-	const url = buildURL(templatePath, { ...makerOptions, protocol: 'http' });
+	const url = buildURL(templatePath, { ...context, protocol: 'http' });
 
-	return async (authToken: string | null, level: LogLevel | 'off'): Promise<void> => {
+	return async (level: LogLevel | 'off'): Promise<void> => {
 		const baseRequestOptions: HTTPRequestOptions = {
-			headers: { Authorization: authToken ? `Bearer ${authToken}` : undefined },
+			headers: { Authorization: context.authToken ? `Bearer ${context.authToken}` : undefined },
 			body: JSON.stringify({ Level: level === 'off' ? 'Off' : toRawLogLevel(level) }),
 		};
 		const req = buildHTTPRequest(baseRequestOptions);

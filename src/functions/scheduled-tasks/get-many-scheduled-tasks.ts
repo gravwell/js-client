@@ -8,18 +8,18 @@
 
 import { ScheduledTask } from '../../models';
 import { isNumericID, NumericID } from '../../value-objects';
-import { APIFunctionMakerOptions } from '../utils';
+import { APIContext } from '../utils';
 import { makeGetAllScheduledTasks } from './get-all-scheduled-tasks';
 import { makeGetScheduledTasksByUser } from './get-scheduled-tasks-by-user';
 
-export const makeGetManyScheduledTasks = (makerOptions: APIFunctionMakerOptions) => {
-	const getScheduledTasksByUser = makeGetScheduledTasksByUser(makerOptions);
-	const getAllScheduledTasks = makeGetAllScheduledTasks(makerOptions);
+export const makeGetManyScheduledTasks = (context: APIContext) => {
+	const getScheduledTasksByUser = makeGetScheduledTasksByUser(context);
+	const getAllScheduledTasks = makeGetAllScheduledTasks(context);
 
-	return async (authToken: string | null, filter: ScheduledTasksFilter = {}): Promise<Array<ScheduledTask>> => {
-		if (isNumericID(filter.userID)) return getScheduledTasksByUser(authToken, filter.userID);
+	return async (filter: ScheduledTasksFilter = {}): Promise<Array<ScheduledTask>> => {
+		if (isNumericID(filter.userID)) return getScheduledTasksByUser(filter.userID);
 
-		return getAllScheduledTasks(authToken);
+		return getAllScheduledTasks();
 	};
 };
 

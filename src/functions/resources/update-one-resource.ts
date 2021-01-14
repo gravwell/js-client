@@ -8,25 +8,18 @@
 
 import { isUndefined } from 'lodash';
 import { RawResource, Resource, toRawUpdatableResourceMetadata, toResource, UpdatableResource } from '../../models';
-import {
-	APIFunctionMakerOptions,
-	buildHTTPRequest,
-	buildURL,
-	fetch,
-	HTTPRequestOptions,
-	parseJSONResponse,
-} from '../utils';
+import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 import { makeGetOneResource } from './get-one-resource';
 import { makeSetOneResourceContent } from './set-one-resource-content';
 
-export const makeUpdateOneResource = (makerOptions: APIFunctionMakerOptions) => {
-	const getOneResource = makeGetOneResource(makerOptions);
-	const setOneResourceContent = makeSetOneResourceContent(makerOptions);
+export const makeUpdateOneResource = (context: APIContext) => {
+	const getOneResource = makeGetOneResource(context);
+	const setOneResourceContent = makeSetOneResourceContent(context);
 
-	return async (authToken: string | null, data: UpdatableResource): Promise<Resource> => {
+	return async (data: UpdatableResource): Promise<Resource> => {
 		try {
 			// TODO: We shouldn't have to query the current object before updating
-			const current = await getOneResource(authToken, data.id);
+			const current = await getOneResource(data.id);
 
 			// The resources will be inserted in order and we'll return the last one inserted because that's the most updated one
 			const resources: Array<Resource> = [current];
@@ -36,10 +29,10 @@ export const makeUpdateOneResource = (makerOptions: APIFunctionMakerOptions) => 
 			};
 
 			const resourcePath = '/api/resources/{resourceID}';
-			const url = buildURL(resourcePath, { ...makerOptions, protocol: 'http', pathParams: { resourceID: data.id } });
+			const url = buildURL(resourcePath, { ...context, protocol: 'http', pathParams: { resourceID: data.id } });
 
 			const baseRequestOptions: HTTPRequestOptions = {
-				headers: { Authorization: authToken ? `Bearer ${authToken}` : undefined },
+				headers: { Authorization: context.authToken ? `Bcontext.authTokenontext.authToken}` : undefined },
 				body: JSON.stringify(toRawUpdatableResourceMetadata(data, current)),
 			};
 			const req = buildHTTPRequest(baseRequestOptions);
@@ -51,7 +44,7 @@ export const makeUpdateOneResource = (makerOptions: APIFunctionMakerOptions) => 
 
 			const contentP: Promise<void | Resource> = isUndefined(data.body)
 				? Promise.resolve()
-				: setOneResourceContent(authToken, data.id, data.body).then(insertResource);
+				: setOneResourceContent(data.id, data.body).then(insertResource);
 
 			await Promise.all([metadataP, contentP]);
 

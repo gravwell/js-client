@@ -7,33 +7,26 @@
  **************************************************************************/
 
 import { Playbook, RawPlaybook, toPlaybook, toRawUpdatablePlaybook, UpdatablePlaybook } from '../../models';
-import {
-	APIFunctionMakerOptions,
-	buildHTTPRequest,
-	buildURL,
-	fetch,
-	HTTPRequestOptions,
-	parseJSONResponse,
-} from '../utils';
+import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 import { makeGetOnePlaybook } from './get-one-playbook';
 
-export const makeUpdateOnePlaybook = (makerOptions: APIFunctionMakerOptions) => {
-	const getOnePlaybook = makeGetOnePlaybook(makerOptions);
+export const makeUpdateOnePlaybook = (context: APIContext) => {
+	const getOnePlaybook = makeGetOnePlaybook(context);
 
-	return async (authToken: string | null, data: UpdatablePlaybook): Promise<Playbook> => {
+	return async (data: UpdatablePlaybook): Promise<Playbook> => {
 		try {
 			// TODO: We shouldn't have to query the current object before updating
-			const current = await getOnePlaybook(authToken, data.uuid);
+			const current = await getOnePlaybook(data.uuid);
 
 			const playbookPath = '/api/playbooks/{playbookID}';
 			const url = buildURL(playbookPath, {
-				...makerOptions,
+				...context,
 				protocol: 'http',
 				pathParams: { playbookID: data.uuid },
 			});
 
 			const baseRequestOptions: HTTPRequestOptions = {
-				headers: { Authorization: authToken ? `Bearer ${authToken}` : undefined },
+				headers: { Authorization: context.authToken ? `Bearer ${context.authToken}` : undefined },
 				body: JSON.stringify(toRawUpdatablePlaybook(data, current)),
 			};
 			const req = buildHTTPRequest(baseRequestOptions);

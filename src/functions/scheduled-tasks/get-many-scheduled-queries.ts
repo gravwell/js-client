@@ -8,16 +8,16 @@
 
 import { ScheduledQuery, ScheduledTask } from '../../models';
 import { NumericID } from '../../value-objects';
-import { APIFunctionMakerOptions } from '../utils';
+import { APIContext } from '../utils';
 import { makeGetManyScheduledTasks } from './get-many-scheduled-tasks';
 
 const isScheduledQuery = (s: ScheduledTask): s is ScheduledQuery => s.type === 'query';
 
-export const makeGetManyScheduledQueries = (makerOptions: APIFunctionMakerOptions) => {
-	const getManyScheduledTasks = makeGetManyScheduledTasks(makerOptions);
+export const makeGetManyScheduledQueries = (context: APIContext) => {
+	const getManyScheduledTasks = makeGetManyScheduledTasks(context);
 
-	return async (authToken: string | null, filter: ScheduledQueriesFilter = {}): Promise<Array<ScheduledQuery>> => {
-		const tasks = await getManyScheduledTasks(authToken, filter);
+	return async (filter: ScheduledQueriesFilter = {}): Promise<Array<ScheduledQuery>> => {
+		const tasks = await getManyScheduledTasks(filter);
 		return tasks.filter(isScheduledQuery);
 	};
 };

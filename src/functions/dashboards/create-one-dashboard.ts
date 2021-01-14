@@ -8,26 +8,19 @@
 
 import { CreatableDashboard, Dashboard, toRawCreatableDashboard } from '../../models';
 import { RawNumericID, toNumericID } from '../../value-objects';
-import {
-	APIFunctionMakerOptions,
-	buildHTTPRequest,
-	buildURL,
-	fetch,
-	HTTPRequestOptions,
-	parseJSONResponse,
-} from '../utils';
+import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 import { makeGetOneDashboard } from './get-one-dashboard';
 
-export const makeCreateOneDashboard = (makerOptions: APIFunctionMakerOptions) => {
-	const getOneDashboard = makeGetOneDashboard(makerOptions);
+export const makeCreateOneDashboard = (context: APIContext) => {
+	const getOneDashboard = makeGetOneDashboard(context);
 
 	const templatePath = '/api/dashboards';
-	const url = buildURL(templatePath, { ...makerOptions, protocol: 'http' });
+	const url = buildURL(templatePath, { ...context, protocol: 'http' });
 
-	return async (authToken: string | null, data: CreatableDashboard): Promise<Dashboard> => {
+	return async (data: CreatableDashboard): Promise<Dashboard> => {
 		try {
 			const baseRequestOptions: HTTPRequestOptions = {
-				headers: { Authorization: authToken ? `Bearer ${authToken}` : undefined },
+				headers: { Authorization: context.authToken ? `Bearer ${context.authToken}` : undefined },
 				body: JSON.stringify(toRawCreatableDashboard(data)),
 			};
 			const req = buildHTTPRequest(baseRequestOptions);
@@ -35,7 +28,7 @@ export const makeCreateOneDashboard = (makerOptions: APIFunctionMakerOptions) =>
 			const raw = await fetch(url, { ...req, method: 'POST' });
 			const rawRes = await parseJSONResponse<RawNumericID>(raw);
 			const dashboardID = toNumericID(rawRes);
-			return getOneDashboard(authToken, dashboardID);
+			return getOneDashboard(dashboardID);
 		} catch (err) {
 			if (err instanceof Error) throw err;
 			throw Error('Unknown error');

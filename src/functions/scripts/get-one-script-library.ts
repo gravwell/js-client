@@ -7,30 +7,19 @@
  **************************************************************************/
 
 import { Script } from '../../models';
-import {
-	APIFunctionMakerOptions,
-	buildHTTPRequest,
-	buildURL,
-	fetch,
-	HTTPRequestOptions,
-	parseJSONResponse,
-} from '../utils';
+import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 
-export const makeGetOneScriptLibrary = (makerOptions: APIFunctionMakerOptions) => {
-	return async (
-		authToken: string | null,
-		path: string,
-		options: { repository?: string; commitID?: string } = {},
-	): Promise<Script> => {
+export const makeGetOneScriptLibrary = (context: APIContext) => {
+	return async (path: string, options: { repository?: string; commitID?: string } = {}): Promise<Script> => {
 		const templatePath = '/api/libs';
 		const url = buildURL(templatePath, {
-			...makerOptions,
+			...context,
 			protocol: 'http',
 			queryParams: { path, repo: options.repository, commit: options.commitID },
 		});
 
 		const baseRequestOptions: HTTPRequestOptions = {
-			headers: { Authorization: authToken ? `Bearer ${authToken}` : undefined },
+			headers: { Authorization: context.authToken ? `Bcontext.authTokenontext.authToken}` : undefined },
 		};
 		const req = buildHTTPRequest(baseRequestOptions);
 

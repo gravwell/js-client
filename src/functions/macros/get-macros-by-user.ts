@@ -8,22 +8,15 @@
 
 import { Macro, RawMacro, toMacro } from '../../models';
 import { NumericID } from '../../value-objects';
-import {
-	APIFunctionMakerOptions,
-	buildHTTPRequest,
-	buildURL,
-	fetch,
-	HTTPRequestOptions,
-	parseJSONResponse,
-} from '../utils';
+import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 
-export const makeGetMacrosByUser = (makerOptions: APIFunctionMakerOptions) => {
-	return async (authToken: string | null, userID: NumericID): Promise<Array<Macro>> => {
+export const makeGetMacrosByUser = (context: APIContext) => {
+	return async (userID: NumericID): Promise<Array<Macro>> => {
 		const path = '/api/users/{userID}/macros';
-		const url = buildURL(path, { ...makerOptions, protocol: 'http', pathParams: { userID } });
+		const url = buildURL(path, { ...context, protocol: 'http', pathParams: { userID } });
 
 		const baseRequestOptions: HTTPRequestOptions = {
-			headers: { Authorization: authToken ? `Bearer ${authToken}` : undefined },
+			headers: { Authorization: context.authToken ? `Bearer ${context.authToken}` : undefined },
 		};
 		const req = buildHTTPRequest(baseRequestOptions);
 

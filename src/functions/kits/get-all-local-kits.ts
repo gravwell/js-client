@@ -7,22 +7,15 @@
  **************************************************************************/
 
 import { LocalKit, RawLocalKit, toLocalKit } from '../../models';
-import {
-	APIFunctionMakerOptions,
-	buildHTTPRequest,
-	buildURL,
-	fetch,
-	HTTPRequestOptions,
-	parseJSONResponse,
-} from '../utils';
+import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 
-export const makeGetAllLocalKits = (makerOptions: APIFunctionMakerOptions) => {
+export const makeGetAllLocalKits = (context: APIContext) => {
 	const path = '/api/kits';
-	const url = buildURL(path, { ...makerOptions, protocol: 'http' });
+	const url = buildURL(path, { ...context, protocol: 'http' });
 
-	return async (authToken: string | null): Promise<Array<LocalKit>> => {
+	return async (): Promise<Array<LocalKit>> => {
 		const baseRequestOptions: HTTPRequestOptions = {
-			headers: { Authorization: authToken ? `Bearer ${authToken}` : undefined },
+			headers: { Authorization: context.authToken ? `Bearer ${context.authToken}` : undefined },
 		};
 		const req = buildHTTPRequest(baseRequestOptions);
 
