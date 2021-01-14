@@ -25,5 +25,7 @@ export type DropLast<Args extends Array<any>> = TupleLength<Required<Args>> exte
 	: Array<any>;
 
 type TupleLength<Tuple extends Array<any>> = Tuple extends { length: infer L } ? L : never;
-type Prev<Index extends number> = [0, 0, 1, 2, 3, 4, 5][Index];
-export type GetLast<Args extends Array<any>> = Args[Prev<TupleLength<Required<Args>>>];
+
+// *NOTE: The code below is useful but not used. Also, it doesn't work with ts<3.8, so I'm commenting it out to avoid compilation issues
+// type Prev<Index extends number> = [0, 0, 1, 2, 3, 4, 5][Index];
+// export type GetLast<Args extends Array<any>> = Args[Prev<TupleLength<Required<Args>>>];

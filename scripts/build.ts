@@ -1,5 +1,6 @@
 import { exec } from 'child_process';
 import { argv } from 'yargs';
+import { improveTypescriptCompatibility } from './improve-typescript-compatibility';
 import { makeDebug } from './utils';
 
 const QUIET: boolean = !!argv.quiet || !!argv.q;
@@ -82,4 +83,7 @@ const buildBrowsers = async (): Promise<void> => {
 
 	if (BUILD_ENVIRONMENTS.includes('Node')) await buildNode();
 	if (BUILD_ENVIRONMENTS.includes('Browsers')) await buildBrowsers();
+
+	debug(`Improving typescript compatibility`);
+	await improveTypescriptCompatibility('dist');
 })();

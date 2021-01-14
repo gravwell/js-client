@@ -1,14 +1,15 @@
 {
 	"name": "gravwell",
-	"version": "0.0.1",
+	"version": "0.0.0-PLACEHOLDER",
 	"description": "",
 	"main": "dist/node/main.js",
 	"browser": "dist/browsers/main.js",
 	"types": "dist/browsers/main.d.ts",
 	"scripts": {
-		"test": "npm run test:node && npm run test:browsers",
+		"test": "npm run test:node && npm run test:browsers && npm run test:ts-compatibility",
 		"test:browsers": "scripts/test-browsers",
 		"test:node": "scripts/test-node",
+		"test:ts-compatibility": "scripts/test-typescript-compatibility",
 		"build": "scripts/build",
 		"build:browsers": "scripts/build --browsersOnly",
 		"build:node": "scripts/build --nodeOnly",
