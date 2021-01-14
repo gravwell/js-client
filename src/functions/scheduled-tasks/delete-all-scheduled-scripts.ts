@@ -14,9 +14,9 @@ export const makeDeleteAllScheduledScripts = (context: APIContext) => {
 	const deleteOneScheduledScript = makeDeleteOneScheduledScript(context);
 	const getAllScheduledScripts = makeGetAllScheduledScripts(context);
 
-	return async (authToken: string | null): Promise<void> => {
-		const scripts = await getAllScheduledScripts(authToken);
-		const deletePs = scripts.map(s => deleteOneScheduledScript(authToken, s.id));
+	return async (): Promise<void> => {
+		const scripts = await getAllScheduledScripts();
+		const deletePs = scripts.map(s => deleteOneScheduledScript(s.id));
 		await Promise.all(deletePs);
 	};
 };

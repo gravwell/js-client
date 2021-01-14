@@ -11,12 +11,12 @@ import { UUID } from '../../value-objects';
 import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 
 export const makeGetOnePlaybook = (context: APIContext) => {
-	return async (authToken: string | null, playbookID: UUID): Promise<Playbook> => {
+	return async (playbookID: UUID): Promise<Playbook> => {
 		const playbookPath = '/api/playbooks/{playbookID}';
 		const url = buildURL(playbookPath, { ...context, protocol: 'http', pathParams: { playbookID } });
 
 		const baseRequestOptions: HTTPRequestOptions = {
-			headers: { Authorization: authToken ? `Bearer ${authToken}` : undefined },
+			headers: { Authorization: context.authToken ? `Bearer ${context.authToken}` : undefined },
 		};
 		const req = buildHTTPRequest(baseRequestOptions);
 

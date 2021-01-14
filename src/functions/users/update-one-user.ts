@@ -20,23 +20,22 @@ export const makeUpdateOneUser = (context: APIContext) => {
 	const updateOneUserRole = makeUpdateOneUserRole(context);
 	const updateOneUserPassword = makeUpdateOneUserPassword(context);
 
-	return async (authToken: string | null, data: UpdatableUser): Promise<void> => {
+	return async (data: UpdatableUser): Promise<void> => {
 		try {
 			const promises: Array<Promise<void>> = [];
 
 			// Update .locked
-			if (isBoolean(data.locked)) promises.push(updateOneUserLockedState(authToken, data.id, data.locked));
+			if (isBoolean(data.locked)) promises.push(updateOneUserLockedState(data.id, data.locked));
 
 			// Update .role
-			if (isValidUserRole(data.role)) promises.push(updateOneUserRole(authToken, data.id, data.role));
+			if (isValidUserRole(data.role)) promises.push(updateOneUserRole(data.id, data.role));
 
 			// Update .username .name or .email
 			if ([data.username, data.name, data.email].some(negate(isUndefined)))
-				promises.push(updateOneUserInformation(authToken, data));
+				promises.push(updateOneUserInformation(data));
 
 			// Update password
-			if (isString(data.password))
-				promises.push(updateOneUserPassword(authToken, data.id, data.password, data.currentPassword));
+			if (isString(data.password)) promises.push(updateOneUserPassword(data.id, data.password, data.currentPassword));
 
 			await Promise.all(promises);
 		} catch (err) {

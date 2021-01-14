@@ -14,9 +14,9 @@ export const makeDeleteAllScheduledQueries = (context: APIContext) => {
 	const deleteOneScheduledQuery = makeDeleteOneScheduledQuery(context);
 	const getAllScheduledQueries = makeGetAllScheduledQueries(context);
 
-	return async (authToken: string | null): Promise<void> => {
-		const queries = await getAllScheduledQueries(authToken);
-		const deletePs = queries.map(q => deleteOneScheduledQuery(authToken, q.id));
+	return async (): Promise<void> => {
+		const queries = await getAllScheduledQueries();
+		const deletePs = queries.map(q => deleteOneScheduledQuery(q.id));
 		await Promise.all(deletePs);
 	};
 };

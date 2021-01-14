@@ -9,13 +9,13 @@
 import { NumericID } from '../../value-objects';
 import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 
-export const makeDeleteOneResource = (makerOptions: APIContext) => {
-	return async (authToken: string | null, resourceID: NumericID): Promise<void> => {
+export const makeDeleteOneResource = (context: APIContext) => {
+	return async (resourceID: NumericID): Promise<void> => {
 		const resourcePath = '/api/resources/{resourceID}';
-		const url = buildURL(resourcePath, { ...makerOptions, protocol: 'http', pathParams: { resourceID } });
+		const url = buildURL(resourcePath, { ...context, protocol: 'http', pathParams: { resourceID } });
 
 		const baseRequestOptions: HTTPRequestOptions = {
-			headers: { Authorization: authToken ? `Bearer ${authToken}` : undefined },
+			headers: { Authorization: context.authToken ? `Bearer ${context.authToken}` : undefined },
 		};
 		const req = buildHTTPRequest(baseRequestOptions);
 

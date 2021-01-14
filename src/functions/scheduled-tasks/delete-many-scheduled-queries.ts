@@ -16,14 +16,14 @@ export const makeDeleteManyScheduledQueries = (context: APIContext) => {
 	const deleteOneScheduledQuery = makeDeleteOneScheduledQuery(context);
 	const getAllScheduledQueries = makeGetAllScheduledQueries(context);
 
-	return async (authToken: string | null, filter: ScheduledTasksFilter = {}): Promise<void> => {
-		const queries = await getAllScheduledQueries(authToken);
+	return async (filter: ScheduledTasksFilter = {}): Promise<void> => {
+		const queries = await getAllScheduledQueries();
 		const filtered = queries.filter(q => {
 			if (isNil(filter.userID)) return true;
 			return q.userID === filter.userID;
 		});
 
-		const deletePs = filtered.map(q => deleteOneScheduledQuery(authToken, q.id));
+		const deletePs = filtered.map(q => deleteOneScheduledQuery(q.id));
 		await Promise.all(deletePs);
 	};
 };

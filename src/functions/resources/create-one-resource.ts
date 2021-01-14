@@ -13,10 +13,10 @@ export const makeCreateOneResource = (context: APIContext) => {
 	const resourcePath = '/api/resources';
 	const url = buildURL(resourcePath, { ...context, protocol: 'http' });
 
-	return async (authToken: string | null, data: CreatableResource): Promise<Resource> => {
+	return async (data: CreatableResource): Promise<Resource> => {
 		try {
 			const baseRequestOptions: HTTPRequestOptions = {
-				headers: { Authorization: authToken ? `Bearer ${authToken}` : undefined },
+				headers: { Authorization: context.authToken ? `Bearer ${context.authToken}` : undefined },
 				body: JSON.stringify(toRawCreatableResource(data)),
 			};
 			const req = buildHTTPRequest(baseRequestOptions);

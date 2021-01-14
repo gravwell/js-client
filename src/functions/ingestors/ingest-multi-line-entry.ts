@@ -14,10 +14,10 @@ export const makeIngestMultiLineEntry = (context: APIContext) => {
 	const templatePath = '/api/ingest/lines';
 	const url = buildURL(templatePath, { ...context, protocol: 'http' });
 
-	return async (authToken: string | null, entry: CreatableMultiLineEntry): Promise<number> => {
+	return async (entry: CreatableMultiLineEntry): Promise<number> => {
 		try {
 			const baseRequestOptions: HTTPRequestOptions = {
-				headers: { Authorization: authToken ? `Bearer ${authToken}` : undefined },
+				headers: { Authorization: context.authToken ? `Bearer ${context.authToken}` : undefined },
 				body: toFormData(entry) as any,
 			};
 			const req = buildHTTPRequest(baseRequestOptions);

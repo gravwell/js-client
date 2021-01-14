@@ -13,9 +13,9 @@ export const makeGetAllPlaybooksRelatedToMe = (context: APIContext) => {
 	const playbookPath = '/api/playbooks';
 	const url = buildURL(playbookPath, { ...context, protocol: 'http' });
 
-	return async (authToken: string | null): Promise<Array<Omit<Playbook, 'body'>>> => {
+	return async (): Promise<Array<Omit<Playbook, 'body'>>> => {
 		const baseRequestOptions: HTTPRequestOptions = {
-			headers: { Authorization: authToken ? `Bearer ${authToken}` : undefined },
+			headers: { Authorization: context.authToken ? `Bearer ${context.authToken}` : undefined },
 		};
 		const req = buildHTTPRequest(baseRequestOptions);
 

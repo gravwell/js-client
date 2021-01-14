@@ -13,9 +13,9 @@ export const makeGetAllRemoteKits = (context: APIContext) => {
 	const path = '/api/kits/remote/list';
 	const url = buildURL(path, { ...context, protocol: 'http' });
 
-	return async (authToken: string | null): Promise<Array<RemoteKit>> => {
+	return async (): Promise<Array<RemoteKit>> => {
 		const baseRequestOptions: HTTPRequestOptions = {
-			headers: { Authorization: authToken ? `Bearer ${authToken}` : undefined },
+			headers: { Authorization: context.authToken ? `Bearer ${context.authToken}` : undefined },
 		};
 		const req = buildHTTPRequest(baseRequestOptions);
 

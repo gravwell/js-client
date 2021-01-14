@@ -13,15 +13,15 @@ import { makeGetOneMacro } from './get-one-macro';
 export const makeUpdateOneMacro = (context: APIContext) => {
 	const getOneMacro = makeGetOneMacro(context);
 
-	return async (authToken: string | null, data: UpdatableMacro): Promise<Macro> => {
+	return async (data: UpdatableMacro): Promise<Macro> => {
 		const templatePath = '/api/macros/{macroID}';
 		const url = buildURL(templatePath, { ...context, protocol: 'http', pathParams: { macroID: data.id } });
 
 		try {
-			const current = await getOneMacro(authToken, data.id);
+			const current = await getOneMacro(data.id);
 
 			const baseRequestOptions: HTTPRequestOptions = {
-				headers: { Authorization: authToken ? `Bearer ${authToken}` : undefined },
+				headers: { Authorization: context.authToken ? `Bearer ${context.authToken}` : undefined },
 				body: JSON.stringify(toRawUpdatableMacro(data, current)),
 			};
 			const req = buildHTTPRequest(baseRequestOptions);

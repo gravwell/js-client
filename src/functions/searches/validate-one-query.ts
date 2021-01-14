@@ -14,11 +14,11 @@ import { APIContext, APISubscription, apiSubscriptionFromWebSocket, buildURL, We
 export const makeValidateOneQuery = (context: APIContext) => {
 	const subscribeToOneQueryValidation = makeSubscribeToOneQueryValidation(context);
 
-	return (authToken: string | null) => {
+	return () => {
 		let querySubP: ReturnType<typeof subscribeToOneQueryValidation> | null = null;
 
 		return async (query: Query): Promise<ValidatedQuery> => {
-			if (isNull(querySubP)) querySubP = subscribeToOneQueryValidation(authToken);
+			if (isNull(querySubP)) querySubP = subscribeToOneQueryValidation();
 			const querySub = await querySubP;
 			const id = SEARCH_SOCKET_ID_GENERATOR.generate();
 
@@ -47,10 +47,8 @@ const makeSubscribeToOneQueryValidation = (context: APIContext) => {
 	const templatePath = '/api/ws/search';
 	const url = buildURL(templatePath, { ...context, protocol: 'ws' });
 
-	return async (
-		authToken: string | null,
-	): Promise<APISubscription<ValidatedQuery & { id: number }, { id: number; query: Query }>> => {
-		const socket = new WebSocket(url, authToken ?? undefined);
+	return async (): Promise<APISubscription<ValidatedQuery & { id: number }, { id: number; query: Query }>> => {
+		const socket = new WebSocket(url, context.authToken ?? undefined);
 		const rawSubscription = apiSubscriptionFromWebSocket<
 			RawQueryValidationMessageReceived,
 			RawQueryValidationMessageSent

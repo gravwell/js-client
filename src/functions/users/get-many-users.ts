@@ -16,8 +16,8 @@ export const makeGetManyUsers = (context: APIContext) => {
 	const getUsersByGroup = makeGetUsersByGroup(context);
 	const getAllUsers = makeGetAllUsers(context);
 
-	return async (authToken: string | null, userFilter: { groupID?: NumericID } = {}): Promise<Array<User>> => {
-		if (isNumericID(userFilter.groupID)) return getUsersByGroup(authToken, userFilter.groupID);
-		return getAllUsers(authToken);
+	return async (userFilter: { groupID?: NumericID } = {}): Promise<Array<User>> => {
+		if (isNumericID(userFilter.groupID)) return getUsersByGroup(userFilter.groupID);
+		return getAllUsers();
 	};
 };

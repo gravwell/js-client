@@ -13,7 +13,7 @@ import { makeUpdateOneScheduledTask } from './update-one-scheduled-task';
 export const makeUpdateOneScheduledScript = (context: APIContext) => {
 	const updateOneScheduleTask = makeUpdateOneScheduledTask(context);
 
-	return (authToken: string | null, data: UpdatableScheduledQuery): Promise<ScheduledScript> => {
-		return updateOneScheduleTask(authToken, { ...data, type: 'script' });
+	return (data: UpdatableScheduledQuery): Promise<ScheduledScript> => {
+		return updateOneScheduleTask({ ...data, type: 'script' });
 	};
 };

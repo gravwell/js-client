@@ -10,12 +10,12 @@ import { ID } from '../../value-objects';
 import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 
 export const makeUninstallOneKit = (context: APIContext) => {
-	return async (authToken: string | null, kitID: ID): Promise<void> => {
+	return async (kitID: ID): Promise<void> => {
 		const path = '/api/kits/{kitID}';
 		const url = buildURL(path, { ...context, protocol: 'http', pathParams: { kitID } });
 
 		const baseRequestOptions: HTTPRequestOptions = {
-			headers: { Authorization: authToken ? `Bearer ${authToken}` : undefined },
+			headers: { Authorization: context.authToken ? `Bearer ${context.authToken}` : undefined },
 		};
 		const req = buildHTTPRequest(baseRequestOptions);
 

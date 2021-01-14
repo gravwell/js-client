@@ -13,9 +13,9 @@ export const makeGetAllMacros = (context: APIContext) => {
 	const path = '/api/macros/all';
 	const url = buildURL(path, { ...context, protocol: 'http' });
 
-	return async (authToken: string | null): Promise<Array<Macro>> => {
+	return async (): Promise<Array<Macro>> => {
 		const baseRequestOptions: HTTPRequestOptions = {
-			headers: { Authorization: authToken ? `Bearer ${authToken}` : undefined },
+			headers: { Authorization: context.authToken ? `Bearer ${context.authToken}` : undefined },
 		};
 		const req = buildHTTPRequest(baseRequestOptions);
 

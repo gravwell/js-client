@@ -11,4 +11,5 @@ import { Host } from '../../value-objects';
 export interface APIContext {
 	host: Host;
 	useEncryption: boolean;
+	authToken: string | null;
 }

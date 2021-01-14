@@ -13,7 +13,7 @@ import { makeCreateOneScheduledTask } from './create-one-scheduled-task';
 export const makeCreateOneScheduledQuery = (context: APIContext) => {
 	const createOneScheduledTask = makeCreateOneScheduledTask(context);
 
-	return (authToken: string | null, data: CreatableScheduledQuery): Promise<ScheduledQuery> => {
-		return createOneScheduledTask(authToken, { ...data, type: 'query' });
+	return (data: CreatableScheduledQuery): Promise<ScheduledQuery> => {
+		return createOneScheduledTask({ ...data, type: 'query' });
 	};
 };

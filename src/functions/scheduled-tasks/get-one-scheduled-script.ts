@@ -13,7 +13,7 @@ import { makeGetOneScheduledTask } from './get-one-scheduled-task';
 export const makeGetOneScheduledScript = (context: APIContext) => {
 	const getOneScheduledTask = makeGetOneScheduledTask(context);
 
-	return (authToken: string | null, scheduledTaskID: string): Promise<ScheduledScript> => {
-		return getOneScheduledTask<'script'>(authToken, scheduledTaskID);
+	return (scheduledTaskID: string): Promise<ScheduledScript> => {
+		return getOneScheduledTask<'script'>(scheduledTaskID);
 	};
 };

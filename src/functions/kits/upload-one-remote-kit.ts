@@ -11,13 +11,13 @@ import { ID } from '../../value-objects';
 import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 
 export const makeUploadOneRemoteKit = (context: APIContext) => {
-	return async (authToken: string | null, kitID: ID): Promise<RemoteKit> => {
+	return async (kitID: ID): Promise<RemoteKit> => {
 		const resourcePath = '/api/kits';
 		const url = buildURL(resourcePath, { ...context, protocol: 'http' });
 
 		try {
 			const baseRequestOptions: HTTPRequestOptions = {
-				headers: { Authorization: authToken ? `Bearer ${authToken}` : undefined },
+				headers: { Authorization: context.authToken ? `Bearer ${context.authToken}` : undefined },
 				body: JSON.stringify({ remote: kitID }),
 			};
 			const req = buildHTTPRequest(baseRequestOptions);

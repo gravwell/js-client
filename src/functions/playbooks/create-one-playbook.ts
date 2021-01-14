@@ -14,10 +14,10 @@ export const makeCreateOnePlaybook = (context: APIContext) => {
 	const playbookPath = '/api/playbooks';
 	const url = buildURL(playbookPath, { ...context, protocol: 'http' });
 
-	return async (authToken: string | null, data: CreatablePlaybook): Promise<UUID> => {
+	return async (data: CreatablePlaybook): Promise<UUID> => {
 		try {
 			const baseRequestOptions: HTTPRequestOptions = {
-				headers: { Authorization: authToken ? `Bearer ${authToken}` : undefined },
+				headers: { Authorization: context.authToken ? `Bearer ${context.authToken}` : undefined },
 				body: JSON.stringify(toRawCreatablePlaybook(data)),
 			};
 			const req = buildHTTPRequest(baseRequestOptions);

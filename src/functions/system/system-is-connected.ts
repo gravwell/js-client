@@ -12,9 +12,9 @@ export const makeSystemIsConnected = (context: APIContext) => {
 	const templatePath = '/api/test';
 	const url = buildURL(templatePath, { ...context, protocol: 'http' });
 
-	return async (authToken: string | null): Promise<boolean> => {
+	return async (): Promise<boolean> => {
 		const baseRequestOptions: HTTPRequestOptions = {
-			headers: { Authorization: authToken ? `Bearer ${authToken}` : undefined },
+			headers: { Authorization: context.authToken ? `Bcontext.authTokenontext.authToken}` : undefined },
 		};
 		const req = buildHTTPRequest(baseRequestOptions);
 

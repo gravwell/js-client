@@ -33,7 +33,7 @@ import { makeSubscribeToOneRawSearch } from './subscribe-to-one-raw-search';
 export const makeSubscribeToOneSearch = (context: APIContext) => {
 	const subscribeToOneRawSearch = makeSubscribeToOneRawSearch(context);
 
-	return (authToken: string | null) => {
+	return () => {
 		let rawSubscriptionP: ReturnType<typeof subscribeToOneRawSearch> | null = null;
 
 		return async (
@@ -41,7 +41,7 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 			range: [Date, Date],
 			options: { filter?: Partial<SearchFilter> } = {},
 		): Promise<SearchSubscription> => {
-			if (isNull(rawSubscriptionP)) rawSubscriptionP = subscribeToOneRawSearch(authToken);
+			if (isNull(rawSubscriptionP)) rawSubscriptionP = subscribeToOneRawSearch();
 			const rawSubscription = await rawSubscriptionP;
 			const initialFilter = { start: range[0], end: range[1], limit: 100, ...(options.filter ?? {}) };
 

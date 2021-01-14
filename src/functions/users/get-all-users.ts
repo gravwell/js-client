@@ -13,9 +13,9 @@ export const makeGetAllUsers = (context: APIContext) => {
 	const templatePath = '/api/users';
 	const url = buildURL(templatePath, { ...context, protocol: 'http' });
 
-	return async (authToken: string | null): Promise<Array<User>> => {
+	return async (): Promise<Array<User>> => {
 		const baseRequestOptions: HTTPRequestOptions = {
-			headers: { Authorization: authToken ? `Bearer ${authToken}` : undefined },
+			headers: { Authorization: context.authToken ? `Bcontext.authTokenontext.authToken}` : undefined },
 		};
 		const req = buildHTTPRequest(baseRequestOptions);
 

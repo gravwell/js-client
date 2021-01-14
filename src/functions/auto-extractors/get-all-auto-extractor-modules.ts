@@ -13,9 +13,9 @@ export const makeGetAllAutoExtractorModules = (context: APIContext) => {
 	const path = '/api/autoextractors/engines';
 	const url = buildURL(path, { ...context, protocol: 'http' });
 
-	return async (authToken: string | null): Promise<Array<AutoExtractorModule>> => {
+	return async (): Promise<Array<AutoExtractorModule>> => {
 		const baseRequestOptions: HTTPRequestOptions = {
-			headers: { Authorization: authToken ? `Bearer ${authToken}` : undefined },
+			headers: { Authorization: context.authToken ? `Bearer ${context.authToken}` : undefined },
 		};
 		const req = buildHTTPRequest(baseRequestOptions);
 

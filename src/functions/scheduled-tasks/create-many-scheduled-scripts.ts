@@ -13,8 +13,8 @@ import { makeCreateOneScheduledScript } from './create-one-scheduled-script';
 export const makeCreateManyScheduledScripts = (context: APIContext) => {
 	const createOneScheduledScript = makeCreateOneScheduledScript(context);
 
-	return (authToken: string | null, data: Array<CreatableScheduledScript>): Promise<Array<ScheduledScript>> => {
-		const createPromises = data.map(_data => createOneScheduledScript(authToken, _data));
+	return (data: Array<CreatableScheduledScript>): Promise<Array<ScheduledScript>> => {
+		const createPromises = data.map(_data => createOneScheduledScript(_data));
 		return Promise.all(createPromises);
 	};
 };

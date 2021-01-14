@@ -13,9 +13,9 @@ export const makeGetAllResources = (context: APIContext) => {
 	const resourcePath = '/api/resources?admin=true';
 	const url = buildURL(resourcePath, { ...context, protocol: 'http' });
 
-	return async (authToken: string | null): Promise<Array<Omit<Resource, 'body'>>> => {
+	return async (): Promise<Array<Omit<Resource, 'body'>>> => {
 		const baseRequestOptions: HTTPRequestOptions = {
-			headers: { Authorization: authToken ? `Bearer ${authToken}` : undefined },
+			headers: { Authorization: context.authToken ? `Bearer ${context.authToken}` : undefined },
 		};
 		const req = buildHTTPRequest(baseRequestOptions);
 

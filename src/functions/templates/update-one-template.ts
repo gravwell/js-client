@@ -13,9 +13,9 @@ import { makeGetOneTemplate } from './get-one-template';
 export const makeUpdateOneTemplate = (context: APIContext) => {
 	const getOneTemplate = makeGetOneTemplate(context);
 
-	return async (authToken: string | null, data: UpdatableTemplate): Promise<Template> => {
+	return async (data: UpdatableTemplate): Promise<Template> => {
 		try {
-			const current = await getOneTemplate(authToken, data.uuid);
+			const current = await getOneTemplate(data.uuid);
 
 			const templatePath = '/api/templates/{templateID}';
 			const url = buildURL(templatePath, {
@@ -25,7 +25,7 @@ export const makeUpdateOneTemplate = (context: APIContext) => {
 			});
 
 			const baseRequestOptions: HTTPRequestOptions = {
-				headers: { Authorization: authToken ? `Bearer ${authToken}` : undefined },
+				headers: { Authorization: context.authToken ? `Bearer ${context.authToken}` : undefined },
 				body: JSON.stringify(toRawUpdatableTemplate(data, current)),
 			};
 			const req = buildHTTPRequest(baseRequestOptions);

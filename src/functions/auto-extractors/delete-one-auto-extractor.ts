@@ -10,12 +10,12 @@ import { NumericID } from '../../value-objects';
 import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 
 export const makeDeleteOneAutoExtractor = (context: APIContext) => {
-	return async (authToken: string | null, autoExtractorID: NumericID): Promise<void> => {
+	return async (autoExtractorID: NumericID): Promise<void> => {
 		const templatePath = '/api/autoextractors/{autoExtractorID}';
 		const url = buildURL(templatePath, { ...context, protocol: 'http', pathParams: { autoExtractorID } });
 
 		const baseRequestOptions: HTTPRequestOptions = {
-			headers: { Authorization: authToken ? `Bearer ${authToken}` : undefined },
+			headers: { Authorization: context.authToken ? `Bearer ${context.authToken}` : undefined },
 		};
 		const req = buildHTTPRequest(baseRequestOptions);
 

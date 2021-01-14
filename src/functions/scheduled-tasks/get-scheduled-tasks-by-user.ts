@@ -11,12 +11,12 @@ import { NumericID } from '../../value-objects';
 import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 
 export const makeGetScheduledTasksByUser = (context: APIContext) => {
-	return async (authToken: string | null, userID: NumericID): Promise<Array<ScheduledTask>> => {
+	return async (userID: NumericID): Promise<Array<ScheduledTask>> => {
 		const path = '/api/scheduledsearches/user/{userID}';
 		const url = buildURL(path, { ...context, protocol: 'http', pathParams: { userID } });
 
 		const baseRequestOptions: HTTPRequestOptions = {
-			headers: { Authorization: authToken ? `Bearer ${authToken}` : undefined },
+			headers: { Authorization: context.authToken ? `Bearer ${context.authToken}` : undefined },
 		};
 		const req = buildHTTPRequest(baseRequestOptions);
 

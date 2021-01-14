@@ -14,10 +14,10 @@ export const makeCreateOneActionable = (context: APIContext) => {
 	const templatePath = '/api/pivots';
 	const url = buildURL(templatePath, { ...context, protocol: 'http' });
 
-	return async (authToken: string | null, data: CreatableActionable): Promise<UUID> => {
+	return async (data: CreatableActionable): Promise<UUID> => {
 		try {
 			const baseRequestOptions: HTTPRequestOptions = {
-				headers: { Authorization: authToken ? `Bearer ${authToken}` : undefined },
+				headers: { Authorization: context.authToken ? `Bearer ${context.authToken}` : undefined },
 				body: JSON.stringify(toRawCreatableActionable(data)),
 			};
 			const req = buildHTTPRequest(baseRequestOptions);

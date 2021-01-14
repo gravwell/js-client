@@ -10,7 +10,7 @@ import { UUID } from '../../value-objects';
 import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 
 export const makeDownloadManyAutoExtractors = (context: APIContext) => {
-	return async (authToken: string | null, filter: AutoExtractorsFilter): Promise<string> => {
+	return async (filter: AutoExtractorsFilter): Promise<string> => {
 		const path = '/api/autoextractors/download';
 		const url = buildURL(path, {
 			...context,
@@ -21,7 +21,7 @@ export const makeDownloadManyAutoExtractors = (context: APIContext) => {
 		});
 
 		const baseRequestOptions: HTTPRequestOptions = {
-			headers: { Authorization: authToken ? `Bearer ${authToken}` : undefined },
+			headers: { Authorization: context.authToken ? `Bearer ${context.authToken}` : undefined },
 		};
 		const req = buildHTTPRequest(baseRequestOptions);
 

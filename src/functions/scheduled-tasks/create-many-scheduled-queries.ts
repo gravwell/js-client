@@ -13,8 +13,8 @@ import { makeCreateOneScheduledQuery } from './create-one-scheduled-query';
 export const makeCreateManyScheduledQueries = (context: APIContext) => {
 	const createOneScheduledQuery = makeCreateOneScheduledQuery(context);
 
-	return (authToken: string | null, data: Array<CreatableScheduledQuery>): Promise<Array<ScheduledQuery>> => {
-		const createPromises = data.map(_data => createOneScheduledQuery(authToken, _data));
+	return (data: Array<CreatableScheduledQuery>): Promise<Array<ScheduledQuery>> => {
+		const createPromises = data.map(_data => createOneScheduledQuery(_data));
 		return Promise.all(createPromises);
 	};
 };

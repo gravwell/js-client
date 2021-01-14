@@ -17,10 +17,10 @@ export const makeCreateOneMacro = (context: APIContext) => {
 	const templatePath = '/api/macros';
 	const url = buildURL(templatePath, { ...context, protocol: 'http' });
 
-	return async (authToken: string | null, data: CreatableMacro): Promise<Macro> => {
+	return async (data: CreatableMacro): Promise<Macro> => {
 		try {
 			const baseRequestOptions: HTTPRequestOptions = {
-				headers: { Authorization: authToken ? `Bearer ${authToken}` : undefined },
+				headers: { Authorization: context.authToken ? `Bearer ${context.authToken}` : undefined },
 				body: JSON.stringify(toRawCreatableMacro(data)),
 			};
 			const req = buildHTTPRequest(baseRequestOptions);
@@ -28,7 +28,7 @@ export const makeCreateOneMacro = (context: APIContext) => {
 			const raw = await fetch(url, { ...req, method: 'POST' });
 			const rawRes = await parseJSONResponse<RawNumericID>(raw);
 			const macroID = toNumericID(rawRes);
-			return getOneMacro(authToken, macroID);
+			return getOneMacro(macroID);
 		} catch (err) {
 			if (err instanceof Error) throw err;
 			throw Error('Unknown error');

@@ -8,14 +8,11 @@
 
 import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 
-export const makeDeleteOneUserPreferences = (context: APIContext) => async (
-	sessionToken: string | null,
-	userID: string,
-): Promise<void> => {
+export const makeDeleteOneUserPreferences = (context: APIContext) => async (userID: string): Promise<void> => {
 	const templatePath = '/api/users/{userID}/preferences';
 	const url = buildURL(templatePath, { ...context, protocol: 'http', pathParams: { userID } });
 	const baseRequestOptions: HTTPRequestOptions = {
-		headers: { Authorization: sessionToken ? `Bearer ${sessionToken}` : undefined },
+		headers: { Authorization: context.authToken ? `Bearer ${context.authToken}` : undefined },
 	};
 	const req = buildHTTPRequest(baseRequestOptions);
 

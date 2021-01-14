@@ -25,7 +25,7 @@ import {
 export const makeCreateOneTargetedNotification = (context: APIContext) => {
 	// Had to curry that function so that the correct CreatableTargetedNotification wouldn't be lost
 	// when I lazyfirst() the auth token in the client
-	return (authToken: string | null) => async <TargetType extends TargetedNotificationTargetType>(
+	return () => async <TargetType extends TargetedNotificationTargetType>(
 		targetType: TargetType,
 		creatable: Omit<CreatableTargetedNotificationByTargetType<TargetType>, 'targetType'>,
 	): Promise<void> => {
@@ -34,7 +34,7 @@ export const makeCreateOneTargetedNotification = (context: APIContext) => {
 			const url = _buildURL(_creatable, { ...context, protocol: 'http' });
 
 			const baseRequestOptions: HTTPRequestOptions = {
-				headers: { Authorization: authToken ? `Bearer ${authToken}` : undefined },
+				headers: { Authorization: context.authToken ? `Bearer ${context.authToken}` : undefined },
 				body: JSON.stringify(toRawCreatableTargetedNotification(_creatable)),
 			};
 			const req = buildHTTPRequest(baseRequestOptions);

@@ -19,16 +19,16 @@ import { makeGetAllAutoExtractors } from './get-all-auto-extractors';
 export const makeUpdateOneAutoExtractor = (context: APIContext) => {
 	const getAllAutoExtractors = makeGetAllAutoExtractors(context);
 
-	return async (authToken: string | null, data: UpdatableAutoExtractor): Promise<AutoExtractor> => {
+	return async (data: UpdatableAutoExtractor): Promise<AutoExtractor> => {
 		const templatePath = '/api/autoextractors';
 		const url = buildURL(templatePath, { ...context, protocol: 'http', pathParams: { autoExtractorID: data.id } });
 
 		try {
-			const allAutoExtractors = await getAllAutoExtractors(authToken);
+			const allAutoExtractors = await getAllAutoExtractors();
 			const current = <AutoExtractor>allAutoExtractors.find(ae => ae.id === data.id);
 
 			const baseRequestOptions: HTTPRequestOptions = {
-				headers: { Authorization: authToken ? `Bearer ${authToken}` : undefined },
+				headers: { Authorization: context.authToken ? `Bearer ${context.authToken}` : undefined },
 				body: JSON.stringify(toRawUpdatableAutoExtractor(data, current)),
 			};
 			const req = buildHTTPRequest(baseRequestOptions);

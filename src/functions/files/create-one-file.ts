@@ -20,10 +20,10 @@ export const makeCreateOneFile = (context: APIContext) => {
 	const templatePath = '/api/files';
 	const url = buildURL(templatePath, { ...context, protocol: 'http' });
 
-	return async (authToken: string | null, data: CreatableFile): Promise<FileMetadata> => {
+	return async (data: CreatableFile): Promise<FileMetadata> => {
 		try {
 			const baseRequestOptions: HTTPRequestOptions = {
-				headers: { Authorization: authToken ? `Bearer ${authToken}` : undefined },
+				headers: { Authorization: context.authToken ? `Bearer ${context.authToken}` : undefined },
 				body: toFormData(data) as any,
 			};
 			const req = buildHTTPRequest(baseRequestOptions);
@@ -35,9 +35,9 @@ export const makeCreateOneFile = (context: APIContext) => {
 			// !WARNING: Can't set all properties on file creation gravwell/gravwell#2506
 			const updateProps: Array<keyof CreatableFile> = ['globalID', 'groupIDs', 'isGlobal', 'labels'];
 			const needsUpdate = Object.keys(data).some(k => updateProps.includes(k as keyof CreatableFile));
-			if (needsUpdate) return updateOneFile(authToken, { ...pick(data, updateProps), id: globalID });
+			if (needsUpdate) return updateOneFile({ ...pick(data, updateProps), id: globalID });
 
-			return getOneFile(authToken, globalID);
+			return getOneFile(globalID);
 		} catch (err) {
 			if (err instanceof Error) throw err;
 			throw Error('Unknown error');

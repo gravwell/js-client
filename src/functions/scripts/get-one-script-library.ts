@@ -10,11 +10,7 @@ import { Script } from '../../models';
 import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 
 export const makeGetOneScriptLibrary = (context: APIContext) => {
-	return async (
-		authToken: string | null,
-		path: string,
-		options: { repository?: string; commitID?: string } = {},
-	): Promise<Script> => {
+	return async (path: string, options: { repository?: string; commitID?: string } = {}): Promise<Script> => {
 		const templatePath = '/api/libs';
 		const url = buildURL(templatePath, {
 			...context,
@@ -23,7 +19,7 @@ export const makeGetOneScriptLibrary = (context: APIContext) => {
 		});
 
 		const baseRequestOptions: HTTPRequestOptions = {
-			headers: { Authorization: authToken ? `Bearer ${authToken}` : undefined },
+			headers: { Authorization: context.authToken ? `Bcontext.authTokenontext.authToken}` : undefined },
 		};
 		const req = buildHTTPRequest(baseRequestOptions);
 

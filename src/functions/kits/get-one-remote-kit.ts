@@ -11,12 +11,12 @@ import { NumericID } from '../../value-objects';
 import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 
 export const makeGetOneRemoteKit = (context: APIContext) => {
-	return async (authToken: string | null, kitID: NumericID): Promise<RemoteKit> => {
+	return async (kitID: NumericID): Promise<RemoteKit> => {
 		const templatePath = '/api/kits/remote/{kitID}';
 		const url = buildURL(templatePath, { ...context, protocol: 'http', pathParams: { kitID } });
 
 		const baseRequestOptions: HTTPRequestOptions = {
-			headers: { Authorization: authToken ? `Bearer ${authToken}` : undefined },
+			headers: { Authorization: context.authToken ? `Bearer ${context.authToken}` : undefined },
 		};
 		const req = buildHTTPRequest(baseRequestOptions);
 

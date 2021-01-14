@@ -13,8 +13,8 @@ export const makeSubscribeToOneRawSearch = (context: APIContext) => {
 	const templatePath = '/api/ws/search';
 	const url = buildURL(templatePath, { ...context, protocol: 'ws' });
 
-	return async (authToken: string | null): Promise<APISubscription<RawSearchMessageReceived, RawSearchMessageSent>> => {
-		const socket = new WebSocket(url, authToken ?? undefined);
+	return async (): Promise<APISubscription<RawSearchMessageReceived, RawSearchMessageSent>> => {
+		const socket = new WebSocket(url, context.authToken ?? undefined);
 		const rawSubscription = apiSubscriptionFromWebSocket<RawSearchMessageReceived, RawSearchMessageSent>(socket);
 		rawSubscription.send({ Subs: ['PONG', 'parse', 'search', 'attach'] });
 		return rawSubscription;

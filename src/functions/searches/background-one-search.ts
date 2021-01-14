@@ -10,12 +10,12 @@ import { NumericID } from '../../value-objects';
 import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 
 export const makeBackgroundOneSearch = (context: APIContext) => {
-	return async (authToken: string | null, searchID: NumericID): Promise<void> => {
+	return async (searchID: NumericID): Promise<void> => {
 		const templatePath = '/api/searchctrl/{searchID}/background';
 		const url = buildURL(templatePath, { ...context, protocol: 'http', pathParams: { searchID } });
 
 		const baseRequestOptions: HTTPRequestOptions = {
-			headers: { Authorization: authToken ? `Bearer ${authToken}` : undefined },
+			headers: { Authorization: context.authToken ? `Bcontext.authTokenontext.authToken}` : undefined },
 		};
 		const req = buildHTTPRequest(baseRequestOptions);
 

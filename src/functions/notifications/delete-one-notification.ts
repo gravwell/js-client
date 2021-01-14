@@ -8,14 +8,11 @@
 
 import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 
-export const makeDeleteOneNotification = (makerOptions: APIContext) => async (
-	authToken: string | null,
-	notificationID: string,
-): Promise<void> => {
+export const makeDeleteOneNotification = (context: APIContext) => async (notificationID: string): Promise<void> => {
 	const templatePath = '/api/notifications/{notificationID}';
-	const url = buildURL(templatePath, { ...makerOptions, protocol: 'http', pathParams: { notificationID } });
+	const url = buildURL(templatePath, { ...context, protocol: 'http', pathParams: { notificationID } });
 	const baseRequestOptions: HTTPRequestOptions = {
-		headers: { Authorization: authToken ? `Bearer ${authToken}` : undefined },
+		headers: { Authorization: context.authToken ? `Bearer ${context.authToken}` : undefined },
 	};
 	const req = buildHTTPRequest(baseRequestOptions);
 

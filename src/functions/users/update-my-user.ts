@@ -16,13 +16,13 @@ export const makeUpdateMyUser = (context: APIContext) => {
 	const getMyUser = makeGetMyUser(context);
 	const updateOneUser = makeUpdateOneUser(context);
 
-	return async (authToken: string | null, data: Omit<UpdatableUser, 'id'>): Promise<void> => {
+	return async (data: Omit<UpdatableUser, 'id'>): Promise<void> => {
 		try {
 			if (isString(data.password) && isUndefined(data.currentPassword))
 				throw new Error('You must specify your current password to change it');
 
-			const userID = (await getMyUser(authToken)).id;
-			return updateOneUser(authToken, { ...data, id: userID });
+			const userID = (await getMyUser()).id;
+			return updateOneUser({ ...data, id: userID });
 		} catch (err) {
 			if (err instanceof Error) throw err;
 			throw Error('Unknown error');

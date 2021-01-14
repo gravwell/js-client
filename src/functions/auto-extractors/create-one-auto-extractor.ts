@@ -17,10 +17,10 @@ export const makeCreateOneAutoExtractor = (context: APIContext) => {
 	const templatePath = '/api/autoextractors';
 	const url = buildURL(templatePath, { ...context, protocol: 'http' });
 
-	return async (authToken: string | null, data: CreatableAutoExtractor): Promise<AutoExtractor> => {
+	return async (data: CreatableAutoExtractor): Promise<AutoExtractor> => {
 		try {
 			const baseRequestOptions: HTTPRequestOptions = {
-				headers: { Authorization: authToken ? `Bearer ${authToken}` : undefined },
+				headers: { Authorization: context.authToken ? `Bearer ${context.authToken}` : undefined },
 				body: JSON.stringify(toRawCreatableAutoExtractor(data)),
 			};
 			const req = buildHTTPRequest(baseRequestOptions);
@@ -29,7 +29,7 @@ export const makeCreateOneAutoExtractor = (context: APIContext) => {
 			const rawRes = await parseJSONResponse<RawNumericID>(raw);
 			const autoExtractorID = toNumericID(rawRes);
 
-			const allAutoExtractors = await getAllAutoExtractors(authToken);
+			const allAutoExtractors = await getAllAutoExtractors();
 			const autoExtractor = <AutoExtractor>allAutoExtractors.find(ae => ae.id === autoExtractorID);
 			return autoExtractor;
 		} catch (err) {

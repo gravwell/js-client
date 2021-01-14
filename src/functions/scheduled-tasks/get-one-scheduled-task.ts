@@ -19,14 +19,13 @@ import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, pars
 
 export const makeGetOneScheduledTask = (context: APIContext) => {
 	return async <Type extends ScheduledTaskType = ScheduledTaskType>(
-		authToken: string | null,
 		scheduledTaskID: NumericID,
 	): Promise<Type extends 'query' ? ScheduledQuery : Type extends 'script' ? ScheduledScript : ScheduledTask> => {
 		const templatePath = '/api/scheduledsearches/{scheduledTaskID}';
 		const url = buildURL(templatePath, { ...context, protocol: 'http', pathParams: { scheduledTaskID } });
 
 		const baseRequestOptions: HTTPRequestOptions = {
-			headers: { Authorization: authToken ? `Bearer ${authToken}` : undefined },
+			headers: { Authorization: context.authToken ? `Bcontext.authTokenontext.authToken}` : undefined },
 		};
 		const req = buildHTTPRequest(baseRequestOptions);
 

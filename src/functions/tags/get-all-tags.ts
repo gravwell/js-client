@@ -13,9 +13,9 @@ export const makeGetAllTags = (context: APIContext) => {
 	const templatePath = '/api/tags';
 	const url = buildURL(templatePath, { ...context, protocol: 'http' });
 
-	return async (sessionToken: string | null): Promise<Array<Tag>> => {
+	return async (): Promise<Array<Tag>> => {
 		const baseRequestOptions: HTTPRequestOptions = {
-			headers: { Authorization: sessionToken ? `Bearer ${sessionToken}` : undefined },
+			headers: { Authorization: context.authToken ? `Bearer ${context.authToken}` : undefined },
 		};
 		const req = buildHTTPRequest(baseRequestOptions);
 

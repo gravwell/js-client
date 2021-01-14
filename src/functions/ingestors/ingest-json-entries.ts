@@ -13,10 +13,10 @@ export const makeIngestJSONEntries = (context: APIContext) => {
 	const templatePath = '/api/ingest/json';
 	const url = buildURL(templatePath, { ...context, protocol: 'http' });
 
-	return async (authToken: string | null, entries: Array<CreatableJSONEntry>): Promise<number> => {
+	return async (entries: Array<CreatableJSONEntry>): Promise<number> => {
 		try {
 			const baseRequestOptions: HTTPRequestOptions = {
-				headers: { Authorization: authToken ? `Bearer ${authToken}` : undefined },
+				headers: { Authorization: context.authToken ? `Bearer ${context.authToken}` : undefined },
 				body: JSON.stringify(entries.map(toRawCreatableJSONEntry)),
 			};
 			const req = buildHTTPRequest(baseRequestOptions);

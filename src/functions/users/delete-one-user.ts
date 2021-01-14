@@ -9,12 +9,12 @@
 import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 
 export const makeDeleteOneUser = (context: APIContext) => {
-	return async (authToken: string | null, userID: string): Promise<void> => {
+	return async (userID: string): Promise<void> => {
 		const templatePath = '/api/users/{userID}';
 		const url = buildURL(templatePath, { ...context, protocol: 'http', pathParams: { userID } });
 
 		const baseRequestOptions: HTTPRequestOptions = {
-			headers: { Authorization: authToken ? `Bearer ${authToken}` : undefined },
+			headers: { Authorization: context.authToken ? `Bcontext.authTokenontext.authToken}` : undefined },
 		};
 		const req = buildHTTPRequest(baseRequestOptions);
 

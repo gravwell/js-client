@@ -13,9 +13,9 @@ export const makeGetAllActionablesAsAdmin = (context: APIContext) => {
 	const templatePath = '/api/pivots?admin=true';
 	const url = buildURL(templatePath, { ...context, protocol: 'http' });
 
-	return async (authToken: string | null): Promise<Array<Actionable>> => {
+	return async (): Promise<Array<Actionable>> => {
 		const baseRequestOptions: HTTPRequestOptions = {
-			headers: { Authorization: authToken ? `Bearer ${authToken}` : undefined },
+			headers: { Authorization: context.authToken ? `Bearer ${context.authToken}` : undefined },
 		};
 		const req = buildHTTPRequest(baseRequestOptions);
 

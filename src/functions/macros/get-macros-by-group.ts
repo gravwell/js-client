@@ -11,12 +11,12 @@ import { NumericID } from '../../value-objects';
 import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 
 export const makeGetMacrosByGroup = (context: APIContext) => {
-	return async (authToken: string | null, groupID: NumericID): Promise<Array<Macro>> => {
+	return async (groupID: NumericID): Promise<Array<Macro>> => {
 		const path = '/api/groups/{groupID}/macros';
 		const url = buildURL(path, { ...context, protocol: 'http', pathParams: { groupID } });
 
 		const baseRequestOptions: HTTPRequestOptions = {
-			headers: { Authorization: authToken ? `Bearer ${authToken}` : undefined },
+			headers: { Authorization: context.authToken ? `Bearer ${context.authToken}` : undefined },
 		};
 		const req = buildHTTPRequest(baseRequestOptions);
 

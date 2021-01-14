@@ -11,12 +11,12 @@ import { NumericID } from '../../value-objects';
 import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 
 export const makeGetOneSavedQuery = (context: APIContext) => {
-	return async (authToken: string | null, savedQueryID: NumericID): Promise<SavedQuery> => {
+	return async (savedQueryID: NumericID): Promise<SavedQuery> => {
 		const templatePath = '/api/library/{savedQueryID}';
 		const url = buildURL(templatePath, { ...context, protocol: 'http', pathParams: { savedQueryID } });
 
 		const baseRequestOptions: HTTPRequestOptions = {
-			headers: { Authorization: authToken ? `Bearer ${authToken}` : undefined },
+			headers: { Authorization: context.authToken ? `Bearer ${context.authToken}` : undefined },
 		};
 		const req = buildHTTPRequest(baseRequestOptions);
 

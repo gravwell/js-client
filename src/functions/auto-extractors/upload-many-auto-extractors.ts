@@ -21,10 +21,10 @@ export const makeUploadManyAutoExtractors = (context: APIContext) => {
 	const resourcePath = '/api/autoextractors/upload';
 	const url = buildURL(resourcePath, { ...context, protocol: 'http' });
 
-	return async (authToken: string | null, data: UploadableAutoExtractor): Promise<Array<AutoExtractor>> => {
+	return async (data: UploadableAutoExtractor): Promise<Array<AutoExtractor>> => {
 		try {
 			const baseRequestOptions: HTTPRequestOptions = {
-				headers: { Authorization: authToken ? `Bearer ${authToken}` : undefined },
+				headers: { Authorization: context.authToken ? `Bearer ${context.authToken}` : undefined },
 				body: toFormData(data.file) as any,
 			};
 			const req = buildHTTPRequest(baseRequestOptions);
@@ -33,7 +33,7 @@ export const makeUploadManyAutoExtractors = (context: APIContext) => {
 			const createdIDs = new Set(await parseJSONResponse<Array<RawUUID>>(raw));
 
 			// Only upload and return it
-			const uploaded = await getAllAutoExtractors(authToken).then(aes => aes.filter(ae => createdIDs.has(ae.id)));
+			const uploaded = await getAllAutoExtractors().then(aes => aes.filter(ae => createdIDs.has(ae.id)));
 			const dataKeys = Object.keys(data);
 			if (dataKeys.length === 1 && dataKeys.includes('file')) return uploaded;
 
@@ -41,7 +41,7 @@ export const makeUploadManyAutoExtractors = (context: APIContext) => {
 			return Promise.all(
 				uploaded.map(ae => {
 					const updatable: UpdatableAutoExtractor = { id: ae.id, ...data };
-					return updateOneAutoExtractor(authToken, updatable);
+					return updateOneAutoExtractor(updatable);
 				}),
 			);
 		} catch (err) {

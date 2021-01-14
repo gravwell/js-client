@@ -15,8 +15,8 @@ import { makeGetAllAutoExtractors } from './get-all-auto-extractors';
 export const makeGetOneAutoExtractor = (context: APIContext) => {
 	const getAllAutoExtractors = makeGetAllAutoExtractors(context);
 
-	return async (authToken: string | null, autoExtractorID: UUID): Promise<AutoExtractor> => {
-		const autoExtractors = await getAllAutoExtractors(authToken);
+	return async (autoExtractorID: UUID): Promise<AutoExtractor> => {
+		const autoExtractors = await getAllAutoExtractors();
 		const autoExtractor = autoExtractors.find(ae => ae.id === autoExtractorID);
 		if (isUndefined(autoExtractor)) throw Error('Not found');
 		return autoExtractor;

@@ -12,12 +12,12 @@ import { UUID } from '../../value-objects';
 import { APIContext } from '../utils';
 import { makeGetAllFiles } from './get-all-files';
 
-export const makeGetOneFile = (makerOptions: APIContext) => {
-	const getAllFiles = makeGetAllFiles(makerOptions);
+export const makeGetOneFile = (context: APIContext) => {
+	const getAllFiles = makeGetAllFiles(context);
 
-	return async (authToken: string | null, fileID: UUID): Promise<FileMetadata> => {
+	return async (fileID: UUID): Promise<FileMetadata> => {
 		try {
-			const all = await getAllFiles(authToken);
+			const all = await getAllFiles();
 			const file = all.find(f => f.id === fileID || f.globalID === fileID);
 			if (isUndefined(file)) throw new Error('Not found');
 			return file;

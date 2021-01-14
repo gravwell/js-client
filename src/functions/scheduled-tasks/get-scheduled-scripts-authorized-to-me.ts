@@ -15,8 +15,8 @@ const isScheduledScript = (s: ScheduledTask): s is ScheduledScript => s.type ===
 export const makeGetScheduledScriptsAuthorizedToMe = (context: APIContext) => {
 	const getScheduledTasksAuthorizedToMe = makeGetScheduledTasksAuthorizedToMe(context);
 
-	return async (authToken: string | null): Promise<Array<ScheduledScript>> => {
-		const scheduledTasks = await getScheduledTasksAuthorizedToMe(authToken);
+	return async (): Promise<Array<ScheduledScript>> => {
+		const scheduledTasks = await getScheduledTasksAuthorizedToMe();
 		return scheduledTasks.filter(isScheduledScript);
 	};
 };

@@ -13,9 +13,9 @@ export const makeGetAllSavedQueries = (context: APIContext) => {
 	const path = '/api/library?admin=true';
 	const url = buildURL(path, { ...context, protocol: 'http' });
 
-	return async (authToken: string | null): Promise<Array<SavedQuery>> => {
+	return async (): Promise<Array<SavedQuery>> => {
 		const baseRequestOptions: HTTPRequestOptions = {
-			headers: { Authorization: authToken ? `Bearer ${authToken}` : undefined },
+			headers: { Authorization: context.authToken ? `Bearer ${context.authToken}` : undefined },
 		};
 		const req = buildHTTPRequest(baseRequestOptions);
 

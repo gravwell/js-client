@@ -12,13 +12,13 @@ import { LocalKit, RawLocalKit, toLocalKit } from '../../models';
 import { APIContext, buildHTTPRequest, buildURL, fetch, File, HTTPRequestOptions, parseJSONResponse } from '../utils';
 
 export const makeUploadOneLocalKit = (context: APIContext) => {
-	return async (authToken: string | null, kit: File): Promise<LocalKit> => {
+	return async (kit: File): Promise<LocalKit> => {
 		const resourcePath = '/api/kits';
 		const url = buildURL(resourcePath, { ...context, protocol: 'http' });
 
 		try {
 			const baseRequestOptions: HTTPRequestOptions = {
-				headers: { Authorization: authToken ? `Bearer ${authToken}` : undefined },
+				headers: { Authorization: context.authToken ? `Bearer ${context.authToken}` : undefined },
 				body: toFormData(kit) as any,
 			};
 			const req = buildHTTPRequest(baseRequestOptions);

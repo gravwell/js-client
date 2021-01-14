@@ -10,7 +10,7 @@ import { toRawUpdatableNotification, UpdatableNotification } from '../../models/
 import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 
 export const makeUpdateOneNotification = (context: APIContext) => {
-	return async (authToken: string | null, updatable: UpdatableNotification): Promise<void> => {
+	return async (updatable: UpdatableNotification): Promise<void> => {
 		try {
 			const templatePath = '/api/notifications/{notificationID}';
 			const url = buildURL(templatePath, {
@@ -20,7 +20,7 @@ export const makeUpdateOneNotification = (context: APIContext) => {
 			});
 
 			const baseRequestOptions: HTTPRequestOptions = {
-				headers: { Authorization: authToken ? `Bearer ${authToken}` : undefined },
+				headers: { Authorization: context.authToken ? `Bearer ${context.authToken}` : undefined },
 				body: JSON.stringify(toRawUpdatableNotification(updatable)),
 			};
 			const req = buildHTTPRequest(baseRequestOptions);

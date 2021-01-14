@@ -19,7 +19,6 @@ export const makeSubscribeToMyNotifications = (context: APIContext) => {
 	const getMyNotifications = makeGetMyNotifications(context);
 
 	return async (
-		authToken: string | null,
 		options: { pollInterval?: number } = { pollInterval: 10000 },
 	): Promise<APISubscription<MyNotificationsMessageReceived, MyNotificationsMessageSent>> => {
 		const pollInterval = options.pollInterval ?? 10000;
@@ -27,13 +26,13 @@ export const makeSubscribeToMyNotifications = (context: APIContext) => {
 		let timeoutID: ReturnType<typeof setTimeout>;
 		const setPoll = () => {
 			timeoutID = setTimeout(async () => {
-				const notifications = await getMyNotifications(authToken);
+				const notifications = await getMyNotifications();
 				_received$.next(notifications);
 				setPoll();
 			}, pollInterval);
 		};
 
-		const firstNotifications = await getMyNotifications(authToken);
+		const firstNotifications = await getMyNotifications();
 		setPoll();
 
 		const received: Array<MyNotificationsMessageReceived> = [];

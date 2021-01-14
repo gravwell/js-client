@@ -10,7 +10,7 @@ import { RawSearch, Search, toSearch } from '../../models';
 import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 
 export const makeGetSearchHistory = (context: APIContext) => {
-	return async (authToken: string | null, filter: SearchHistoryFilter): Promise<Array<Search>> => {
+	return async (filter: SearchHistoryFilter): Promise<Array<Search>> => {
 		const baseURLOptions = { ...context, protocol: 'http' } as const;
 		const url = ((): string => {
 			switch (filter.target) {
@@ -38,7 +38,7 @@ export const makeGetSearchHistory = (context: APIContext) => {
 		})();
 
 		const baseRequestOptions: HTTPRequestOptions = {
-			headers: { Authorization: authToken ? `Bearer ${authToken}` : undefined },
+			headers: { Authorization: context.authToken ? `Bearer ${context.authToken}` : undefined },
 		};
 		const req = buildHTTPRequest(baseRequestOptions);
 

@@ -10,7 +10,7 @@ import { ID } from '../../value-objects';
 import { APIContext, buildURL, downloadFromURL, DownloadReturn } from '../utils';
 
 export const makeDownloadOneLocalKit = (context: APIContext) => {
-	return async (authToken: string | null, kitID: ID): Promise<DownloadReturn> => {
+	return async (kitID: ID): Promise<DownloadReturn> => {
 		const templatePath = '/api/kits/build/{kitID}';
 		const url = buildURL(templatePath, { ...context, protocol: 'http', pathParams: { kitID } });
 		return downloadFromURL(url, `kit-${kitID}`);

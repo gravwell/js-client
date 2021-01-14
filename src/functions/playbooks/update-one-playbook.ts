@@ -13,10 +13,10 @@ import { makeGetOnePlaybook } from './get-one-playbook';
 export const makeUpdateOnePlaybook = (context: APIContext) => {
 	const getOnePlaybook = makeGetOnePlaybook(context);
 
-	return async (authToken: string | null, data: UpdatablePlaybook): Promise<Playbook> => {
+	return async (data: UpdatablePlaybook): Promise<Playbook> => {
 		try {
 			// TODO: We shouldn't have to query the current object before updating
-			const current = await getOnePlaybook(authToken, data.uuid);
+			const current = await getOnePlaybook(data.uuid);
 
 			const playbookPath = '/api/playbooks/{playbookID}';
 			const url = buildURL(playbookPath, {
@@ -26,7 +26,7 @@ export const makeUpdateOnePlaybook = (context: APIContext) => {
 			});
 
 			const baseRequestOptions: HTTPRequestOptions = {
-				headers: { Authorization: authToken ? `Bearer ${authToken}` : undefined },
+				headers: { Authorization: context.authToken ? `Bearer ${context.authToken}` : undefined },
 				body: JSON.stringify(toRawUpdatablePlaybook(data, current)),
 			};
 			const req = buildHTTPRequest(baseRequestOptions);

@@ -145,10 +145,9 @@ export const makeSubscribeToManySystemInformations = (context: APIContext) => {
 	const url = buildURL(templatePath, { ...context, protocol: 'ws' });
 
 	return async (
-		sessionToken: string | null,
 		statusCategories: Array<SystemStatusCategory>,
 	): Promise<APISubscription<SystemStatusMessageReceived, SystemStatusMessageSent>> => {
-		const socket = new WebSocket(url, sessionToken ?? undefined);
+		const socket = new WebSocket(url, context.authToken ?? undefined);
 		const subscription = apiSubscriptionFromWebSocket<SystemStatusMessageReceived, SystemStatusMessageSent>(socket);
 		const Subs = statusCategories.map(category => SYSTEM_STATUS_CATEGORIES[category]);
 		subscription.send({ Subs });

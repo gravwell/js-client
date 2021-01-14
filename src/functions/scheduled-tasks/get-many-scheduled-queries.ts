@@ -16,8 +16,8 @@ const isScheduledQuery = (s: ScheduledTask): s is ScheduledQuery => s.type === '
 export const makeGetManyScheduledQueries = (context: APIContext) => {
 	const getManyScheduledTasks = makeGetManyScheduledTasks(context);
 
-	return async (authToken: string | null, filter: ScheduledQueriesFilter = {}): Promise<Array<ScheduledQuery>> => {
-		const tasks = await getManyScheduledTasks(authToken, filter);
+	return async (filter: ScheduledQueriesFilter = {}): Promise<Array<ScheduledQuery>> => {
+		const tasks = await getManyScheduledTasks(filter);
 		return tasks.filter(isScheduledQuery);
 	};
 };

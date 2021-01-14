@@ -10,12 +10,12 @@ import { NumericID } from '../../value-objects';
 import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 
 export const makeDeleteOneTemplate = (context: APIContext) => {
-	return async (authToken: string | null, templateID: NumericID): Promise<void> => {
+	return async (templateID: NumericID): Promise<void> => {
 		const templatePath = '/api/templates/{templateID}';
 		const url = buildURL(templatePath, { ...context, protocol: 'http', pathParams: { templateID } });
 
 		const baseRequestOptions: HTTPRequestOptions = {
-			headers: { Authorization: authToken ? `Bearer ${authToken}` : undefined },
+			headers: { Authorization: context.authToken ? `Bcontext.authTokenontext.authToken}` : undefined },
 		};
 		const req = buildHTTPRequest(baseRequestOptions);
 

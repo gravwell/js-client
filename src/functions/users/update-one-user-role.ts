@@ -11,13 +11,13 @@ import { NumericID } from '../../value-objects';
 import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 
 export const makeUpdateOneUserRole = (context: APIContext) => {
-	return async (authToken: string | null, userID: NumericID, role: UserRole): Promise<void> => {
+	return async (userID: NumericID, role: UserRole): Promise<void> => {
 		try {
 			const templatePath = '/api/users/{userID}/admin';
 			const url = buildURL(templatePath, { ...context, protocol: 'http', pathParams: { userID } });
 
 			const baseRequestOptions: HTTPRequestOptions = {
-				headers: { Authorization: authToken ? `Bearer ${authToken}` : undefined },
+				headers: { Authorization: context.authToken ? `Bearer ${context.authToken}` : undefined },
 			};
 			const req = buildHTTPRequest(baseRequestOptions);
 

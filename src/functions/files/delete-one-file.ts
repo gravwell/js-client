@@ -11,12 +11,12 @@ import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, pars
 
 // !WARNING gravwell/gravwell#2505 can't use ThingUUID
 export const makeDeleteOneFile = (context: APIContext) => {
-	return async (authToken: string | null, fileID: UUID): Promise<void> => {
+	return async (fileID: UUID): Promise<void> => {
 		const templatePath = '/api/files/{fileID}';
 		const url = buildURL(templatePath, { ...context, protocol: 'http', pathParams: { fileID } });
 
 		const baseRequestOptions: HTTPRequestOptions = {
-			headers: { Authorization: authToken ? `Bearer ${authToken}` : undefined },
+			headers: { Authorization: context.authToken ? `Bearer ${context.authToken}` : undefined },
 		};
 		const req = buildHTTPRequest(baseRequestOptions);
 

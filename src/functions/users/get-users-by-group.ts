@@ -11,12 +11,12 @@ import { NumericID } from '../../value-objects';
 import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 
 export const makeGetUsersByGroup = (context: APIContext) => {
-	return async (authToken: string | null, groupID: NumericID): Promise<Array<User>> => {
+	return async (groupID: NumericID): Promise<Array<User>> => {
 		const templatePath = '/api/groups/{groupID}/members';
 		const url = buildURL(templatePath, { ...context, protocol: 'http', pathParams: { groupID } });
 
 		const baseRequestOptions: HTTPRequestOptions = {
-			headers: { Authorization: authToken ? `Bearer ${authToken}` : undefined },
+			headers: { Authorization: context.authToken ? `Bearer ${context.authToken}` : undefined },
 		};
 		const req = buildHTTPRequest(baseRequestOptions);
 

@@ -13,10 +13,10 @@ export const makeCreateOneSavedQuery = (context: APIContext) => {
 	const templatePath = '/api/library';
 	const url = buildURL(templatePath, { ...context, protocol: 'http' });
 
-	return async (authToken: string | null, data: CreatableSavedQuery): Promise<SavedQuery> => {
+	return async (data: CreatableSavedQuery): Promise<SavedQuery> => {
 		try {
 			const baseRequestOptions: HTTPRequestOptions = {
-				headers: { Authorization: authToken ? `Bearer ${authToken}` : undefined },
+				headers: { Authorization: context.authToken ? `Bcontext.authTokenontext.authToken}` : undefined },
 				body: JSON.stringify(toRawCreatableSavedQuery(data)),
 			};
 			const req = buildHTTPRequest(baseRequestOptions);

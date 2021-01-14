@@ -13,13 +13,10 @@ export const makeIsValidAutoExtractorSyntax = (context: APIContext) => {
 	const templatePath = '/api/autoextractors';
 	const url = buildURL(templatePath, { ...context, protocol: 'http' });
 
-	return async (
-		authToken: string | null,
-		data: CreatableAutoExtractor,
-	): Promise<IsValidAutoExtractorSyntaxResponse> => {
+	return async (data: CreatableAutoExtractor): Promise<IsValidAutoExtractorSyntaxResponse> => {
 		try {
 			const baseRequestOptions: HTTPRequestOptions = {
-				headers: { Authorization: authToken ? `Bearer ${authToken}` : undefined },
+				headers: { Authorization: context.authToken ? `Bearer ${context.authToken}` : undefined },
 				body: JSON.stringify(toRawCreatableAutoExtractor(data)),
 			};
 			const req = buildHTTPRequest(baseRequestOptions);

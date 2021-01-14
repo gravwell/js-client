@@ -10,13 +10,13 @@ import { NumericID, toRawNumericID } from '../../value-objects';
 import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 
 export const makeAddOneUserToManyGroups = (context: APIContext) => {
-	return async (authToken: string | null, userID: NumericID, groupIDs: Array<NumericID>): Promise<void> => {
+	return async (userID: NumericID, groupIDs: Array<NumericID>): Promise<void> => {
 		const templatePath = '/api/users/{userID}/group';
 		const url = buildURL(templatePath, { ...context, protocol: 'http', pathParams: { userID } });
 
 		try {
 			const baseRequestOptions: HTTPRequestOptions = {
-				headers: { Authorization: authToken ? `Bearer ${authToken}` : undefined },
+				headers: { Authorization: context.authToken ? `Bearer ${context.authToken}` : undefined },
 				body: JSON.stringify({ GIDs: groupIDs.map(toRawNumericID) }),
 			};
 			const req = buildHTTPRequest(baseRequestOptions);

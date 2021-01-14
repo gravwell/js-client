@@ -28,12 +28,12 @@ import {
 export const makeInstallOneKit = (context: APIContext) => {
 	const queueOneKitForInstallation = makeQueueOneKitForInstallation(context);
 	const getOneKitInstallationStatus = makeGetOneKitInstallationStatus(context);
-	const subscribeToOneKitInstallationStatus = (authToken: string | null, installationID: ID) =>
+	const subscribeToOneKitInstallationStatus = (installationID: ID) =>
 		new Observable<KitInstallationStatus>(observer => {
 			(async () => {
 				while (observer.closed === false) {
 					try {
-						const status = await getOneKitInstallationStatus(authToken, installationID);
+						const status = await getOneKitInstallationStatus(installationID);
 						observer.next(status);
 						if (status.isDone) observer.complete();
 						await wait(1000);
@@ -44,10 +44,7 @@ export const makeInstallOneKit = (context: APIContext) => {
 			})();
 		});
 
-	return async (
-		authToken: string | null,
-		data: InstallableKit,
-	): Promise<APISubscription<KitInstallationStatus, never>> => {
+	return async (data: InstallableKit): Promise<APISubscription<KitInstallationStatus, never>> => {
 		const _received$ = new Subject<KitInstallationStatus>();
 		const _sent$ = new Subject<never>();
 
@@ -57,8 +54,8 @@ export const makeInstallOneKit = (context: APIContext) => {
 		_received$.subscribe(receivedMessage => received.push(receivedMessage));
 		_sent$.subscribe(sentMessage => sent.push(sentMessage));
 
-		const installationID = await queueOneKitForInstallation(authToken, data);
-		const statusSub = subscribeToOneKitInstallationStatus(authToken, installationID).subscribe(status => {
+		const installationID = await queueOneKitForInstallation(data);
+		const statusSub = subscribeToOneKitInstallationStatus(installationID).subscribe(status => {
 			_received$.next(status);
 		});
 
@@ -82,12 +79,12 @@ export const makeInstallOneKit = (context: APIContext) => {
 const wait = (ms: number) => new Promise<void>(res => setTimeout(res, ms));
 
 const makeGetOneKitInstallationStatus = (context: APIContext) => {
-	return async (authToken: string | null, installationID: NumericID): Promise<KitInstallationStatus> => {
+	return async (installationID: NumericID): Promise<KitInstallationStatus> => {
 		const templatePath = '/api/kits/status/{installationID}';
 		const url = buildURL(templatePath, { ...context, protocol: 'http', pathParams: { installationID } });
 
 		const baseRequestOptions: HTTPRequestOptions = {
-			headers: { Authorization: authToken ? `Bearer ${authToken}` : undefined },
+			headers: { Authorization: context.authToken ? `Bearer ${context.authToken}` : undefined },
 		};
 		const req = buildHTTPRequest(baseRequestOptions);
 
@@ -98,13 +95,13 @@ const makeGetOneKitInstallationStatus = (context: APIContext) => {
 };
 
 const makeQueueOneKitForInstallation = (context: APIContext) => {
-	return async (authToken: string | null, data: InstallableKit): Promise<NumericID> => {
+	return async (data: InstallableKit): Promise<NumericID> => {
 		const templatePath = '/api/kits/{kitID}';
 		const url = buildURL(templatePath, { ...context, protocol: 'http' });
 
 		try {
 			const baseRequestOptions: HTTPRequestOptions = {
-				headers: { Authorization: authToken ? `Bearer ${authToken}` : undefined },
+				headers: { Authorization: context.authToken ? `Bearer ${context.authToken}` : undefined },
 				body: JSON.stringify(toRawInstallableKit(data)),
 			};
 			const req = buildHTTPRequest(baseRequestOptions);

@@ -18,12 +18,7 @@ import {
 } from '../utils';
 
 export const makeUpdateOneUserPassword = (context: APIContext) => {
-	return async (
-		authToken: string | null,
-		userID: NumericID,
-		newPassword: string,
-		currentPassword?: string,
-	): Promise<void> => {
+	return async (userID: NumericID, newPassword: string, currentPassword?: string): Promise<void> => {
 		try {
 			const templatePath = '/api/users/{userID}/pwd';
 			const url = buildURL(templatePath, { ...context, protocol: 'http', pathParams: { userID } });
@@ -33,7 +28,7 @@ export const makeUpdateOneUserPassword = (context: APIContext) => {
 				OrigPass: currentPassword,
 			});
 			const baseRequestOptions: HTTPRequestOptions = {
-				headers: { Authorization: authToken ? `Bearer ${authToken}` : undefined },
+				headers: { Authorization: context.authToken ? `Bearer ${context.authToken}` : undefined },
 				body: JSON.stringify(body),
 			};
 			const req = buildHTTPRequest(baseRequestOptions);
