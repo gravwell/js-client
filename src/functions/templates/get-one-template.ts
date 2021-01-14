@@ -6,7 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { Template, RawTemplate, toTemplate } from '../../models';
+import { RawTemplate, Template, toTemplate } from '../../models';
 import { NumericID } from '../../value-objects';
 import {
 	APIFunctionMakerOptions,

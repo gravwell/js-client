@@ -7,7 +7,7 @@
  **************************************************************************/
 
 import { Group } from '../../models';
-import { NumericID, isNumericID } from '../../value-objects';
+import { isNumericID, NumericID } from '../../value-objects';
 import { APIFunctionMakerOptions } from '../utils';
 import { makeGetAllGroups } from './get-all-groups';
 import { makeGetGroupsByUser } from './get-groups-by-user';

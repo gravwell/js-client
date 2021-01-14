@@ -7,6 +7,7 @@
  **************************************************************************/
 
 import * as dotenv from 'dotenv';
+
 dotenv.config();
 
 export const getEnvVar = (key: string): string | undefined => {

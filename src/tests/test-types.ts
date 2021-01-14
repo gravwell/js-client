@@ -6,7 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { TestType, TEST_TYPES } from './config';
+import { TEST_TYPES, TestType } from './config';
 
 type TestAssertion = Parameters<typeof it>[1];
 

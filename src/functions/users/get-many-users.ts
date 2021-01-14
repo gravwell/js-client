@@ -7,7 +7,7 @@
  **************************************************************************/
 
 import { User } from '../../models';
-import { NumericID, isNumericID } from '../../value-objects';
+import { isNumericID, NumericID } from '../../value-objects';
 import { APIFunctionMakerOptions } from '../utils';
 import { makeGetAllUsers } from './get-all-users';
 import { makeGetUsersByGroup } from './get-users-by-group';

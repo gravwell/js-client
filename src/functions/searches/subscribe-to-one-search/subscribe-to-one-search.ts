@@ -20,11 +20,11 @@ import {
 	RawResponseForSearchEntriesWithinRangeMessageReceived,
 	RawResponseForSearchStatsMessageReceived,
 	RawSearchInitiatedMessageReceived,
+	SEARCH_MESSAGE_COMMANDS,
 	SearchEntries,
 	SearchFilter,
 	SearchStats,
 	SearchSubscription,
-	SEARCH_MESSAGE_COMMANDS,
 } from '../../../models';
 import { Percentage, toNumericID } from '../../../value-objects';
 import { APIFunctionMakerOptions, promiseProgrammatically } from '../../utils';

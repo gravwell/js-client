@@ -7,6 +7,7 @@
  **************************************************************************/
 
 import { getEnvVar } from './get-env-var';
+
 export * from './paths';
 
 export const TEST_HOST = getEnvVar('TEST_HOST') ?? 'localhost:8080';
