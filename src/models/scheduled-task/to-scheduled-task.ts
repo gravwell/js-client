@@ -6,21 +6,20 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
+import { isNil } from 'lodash';
 import { RawScheduledTask } from './raw-scheduled-task';
 import { ScheduledTask, ScheduledTaskType } from './scheduled-task';
 import { toScheduledTaskBase } from './to-scheduled-task-base';
 
 export const toScheduledTask = (raw: RawScheduledTask): ScheduledTask => {
 	const base = toScheduledTaskBase(raw);
-	// From the [docs](https://docs.gravwell.io/#!api/scheduledsearches.md#Creating_a_scheduled_search):
-	// If both (Script and SearchString) are populated, the script will take precedence.
-	const type: ScheduledTaskType = raw.Script.trim().length > 0 ? 'script' : 'query';
+	const type: ScheduledTaskType = getScheduledTaskType(raw);
 
 	switch (type) {
 		case 'query':
 			return {
 				...base,
-				type: 'query',
+				type,
 				query: raw.SearchString,
 				searchSince: {
 					lastRun: raw.SearchSinceLastRun,
@@ -30,10 +29,18 @@ export const toScheduledTask = (raw: RawScheduledTask): ScheduledTask => {
 		case 'script':
 			return {
 				...base,
-				type: 'script',
+				type,
 				script: raw.Script,
 				isDebugging: raw.DebugMode,
 				debugOutput: raw.DebugOutput,
 			};
 	}
+};
+
+const getScheduledTaskType = (raw: RawScheduledTask): ScheduledTask['type'] => {
+	if (isNil(raw.Script)) return 'query';
+	if (raw.Script.trim() !== '') return 'script';
+	// From the [docs](https://docs.gravwell.io/#!api/scheduledsearches.md#Creating_a_scheduled_search):
+	// If both (Script and SearchString) are populated, the script will take precedence.
+	return raw.SearchString.trim() === '' ? 'script' : 'query';
 };
