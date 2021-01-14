@@ -8,7 +8,7 @@
 
 import { NumericID } from '../../value-objects';
 import {
-	APIFunctionMakerOptions,
+	APIContext,
 	buildHTTPRequest,
 	buildURL,
 	fetch,
@@ -17,7 +17,7 @@ import {
 	parseJSONResponse,
 } from '../utils';
 
-export const makeUpdateOneUserPassword = (makerOptions: APIFunctionMakerOptions) => {
+export const makeUpdateOneUserPassword = (context: APIContext) => {
 	return async (
 		authToken: string | null,
 		userID: NumericID,
@@ -26,7 +26,7 @@ export const makeUpdateOneUserPassword = (makerOptions: APIFunctionMakerOptions)
 	): Promise<void> => {
 		try {
 			const templatePath = '/api/users/{userID}/pwd';
-			const url = buildURL(templatePath, { ...makerOptions, protocol: 'http', pathParams: { userID } });
+			const url = buildURL(templatePath, { ...context, protocol: 'http', pathParams: { userID } });
 
 			const body: UpdateOneUserPasswordRawRequest = omitUndefinedShallow({
 				NewPass: newPassword,

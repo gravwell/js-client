@@ -8,19 +8,12 @@
 
 import { Dashboard, RawDashboard, toDashboard } from '../../models';
 import { NumericID } from '../../value-objects';
-import {
-	APIFunctionMakerOptions,
-	buildHTTPRequest,
-	buildURL,
-	fetch,
-	HTTPRequestOptions,
-	parseJSONResponse,
-} from '../utils';
+import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 
-export const makeGetOneDashboard = (makerOptions: APIFunctionMakerOptions) => {
+export const makeGetOneDashboard = (context: APIContext) => {
 	return async (authToken: string | null, dashboardID: NumericID): Promise<Dashboard> => {
 		const templatePath = '/api/dashboards/{dashboardID}';
-		const url = buildURL(templatePath, { ...makerOptions, protocol: 'http', pathParams: { dashboardID } });
+		const url = buildURL(templatePath, { ...context, protocol: 'http', pathParams: { dashboardID } });
 
 		const baseRequestOptions: HTTPRequestOptions = {
 			headers: { Authorization: authToken ? `Bearer ${authToken}` : undefined },

@@ -8,18 +8,11 @@
 
 import { CreatableTemplate, toRawCreatableTemplate } from '../../models';
 import { UUID } from '../../value-objects';
-import {
-	APIFunctionMakerOptions,
-	buildHTTPRequest,
-	buildURL,
-	fetch,
-	HTTPRequestOptions,
-	parseJSONResponse,
-} from '../utils';
+import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 
-export const makeCreateOneTemplate = (makerOptions: APIFunctionMakerOptions) => {
+export const makeCreateOneTemplate = (context: APIContext) => {
 	const templatePath = '/api/templates';
-	const url = buildURL(templatePath, { ...makerOptions, protocol: 'http' });
+	const url = buildURL(templatePath, { ...context, protocol: 'http' });
 
 	return async (authToken: string | null, data: CreatableTemplate): Promise<UUID> => {
 		try {

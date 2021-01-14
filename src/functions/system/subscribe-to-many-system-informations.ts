@@ -6,7 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { APIFunctionMakerOptions, APISubscription, apiSubscriptionFromWebSocket, buildURL, WebSocket } from '../utils';
+import { APIContext, APISubscription, apiSubscriptionFromWebSocket, buildURL, WebSocket } from '../utils';
 
 export type SystemStatusMessageReceived =
 	| { Resp: 'ACK' }
@@ -140,9 +140,9 @@ const SYSTEM_STATUS_CATEGORIES = {
 export type SystemStatusCategory = keyof typeof SYSTEM_STATUS_CATEGORIES;
 type SystemStatusCategoryToken = typeof SYSTEM_STATUS_CATEGORIES[SystemStatusCategory];
 
-export const makeSubscribeToManySystemInformations = (makerOptions: APIFunctionMakerOptions) => {
+export const makeSubscribeToManySystemInformations = (context: APIContext) => {
 	const templatePath = '/api/ws/stats';
-	const url = buildURL(templatePath, { ...makerOptions, protocol: 'ws' });
+	const url = buildURL(templatePath, { ...context, protocol: 'ws' });
 
 	return async (
 		sessionToken: string | null,

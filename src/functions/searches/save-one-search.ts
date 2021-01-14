@@ -7,19 +7,12 @@
  **************************************************************************/
 
 import { NumericID } from '../../value-objects';
-import {
-	APIFunctionMakerOptions,
-	buildHTTPRequest,
-	buildURL,
-	fetch,
-	HTTPRequestOptions,
-	parseJSONResponse,
-} from '../utils';
+import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 
-export const makeSaveOneSearch = (makerOptions: APIFunctionMakerOptions) => {
+export const makeSaveOneSearch = (context: APIContext) => {
 	return async (authToken: string | null, searchID: NumericID): Promise<void> => {
 		const templatePath = '/api/searchctrl/{searchID}/save';
-		const url = buildURL(templatePath, { ...makerOptions, protocol: 'http', pathParams: { searchID } });
+		const url = buildURL(templatePath, { ...context, protocol: 'http', pathParams: { searchID } });
 
 		const baseRequestOptions: HTTPRequestOptions = {
 			headers: { Authorization: authToken ? `Bearer ${authToken}` : undefined },

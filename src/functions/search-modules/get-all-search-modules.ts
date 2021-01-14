@@ -7,18 +7,11 @@
  **************************************************************************/
 
 import { RawSearchModule, SearchModule, toSearchModule } from '../../models';
-import {
-	APIFunctionMakerOptions,
-	buildHTTPRequest,
-	buildURL,
-	fetch,
-	HTTPRequestOptions,
-	parseJSONResponse,
-} from '../utils';
+import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 
-export const makeGetAllSearchModules = (makerOptions: APIFunctionMakerOptions) => {
+export const makeGetAllSearchModules = (context: APIContext) => {
 	const templatePath = '/api/info/searchmodules';
-	const url = buildURL(templatePath, { ...makerOptions, protocol: 'http' });
+	const url = buildURL(templatePath, { ...context, protocol: 'http' });
 
 	return async (authToken: string | null): Promise<Array<SearchModule>> => {
 		const baseRequestOptions: HTTPRequestOptions = {

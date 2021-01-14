@@ -6,18 +6,11 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import {
-	APIFunctionMakerOptions,
-	buildHTTPRequest,
-	buildURL,
-	fetch,
-	HTTPRequestOptions,
-	parseJSONResponse,
-} from '../utils';
+import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 
-export const makeSystemIsConnected = (makerOptions: APIFunctionMakerOptions) => {
+export const makeSystemIsConnected = (context: APIContext) => {
 	const templatePath = '/api/test';
-	const url = buildURL(templatePath, { ...makerOptions, protocol: 'http' });
+	const url = buildURL(templatePath, { ...context, protocol: 'http' });
 
 	return async (authToken: string | null): Promise<boolean> => {
 		const baseRequestOptions: HTTPRequestOptions = {

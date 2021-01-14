@@ -7,19 +7,12 @@
  **************************************************************************/
 
 import { NumericID } from '../../value-objects';
-import {
-	APIFunctionMakerOptions,
-	buildHTTPRequest,
-	buildURL,
-	fetch,
-	HTTPRequestOptions,
-	parseJSONResponse,
-} from '../utils';
+import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 
-export const makeRemoveOneUserFromOneGroup = (makerOptions: APIFunctionMakerOptions) => {
+export const makeRemoveOneUserFromOneGroup = (context: APIContext) => {
 	return async (authToken: string | null, userID: NumericID, groupID: NumericID): Promise<void> => {
 		const templatePath = '/api/users/{userID}/group/{groupID}';
-		const url = buildURL(templatePath, { ...makerOptions, protocol: 'http', pathParams: { userID, groupID } });
+		const url = buildURL(templatePath, { ...context, protocol: 'http', pathParams: { userID, groupID } });
 
 		try {
 			const baseRequestOptions: HTTPRequestOptions = {

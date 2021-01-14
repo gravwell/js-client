@@ -6,21 +6,14 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import {
-	APIFunctionMakerOptions,
-	buildHTTPRequest,
-	buildURL,
-	fetch,
-	HTTPRequestOptions,
-	parseJSONResponse,
-} from '../utils';
+import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 
-export const makeDeleteOneUserPreferences = (makerOptions: APIFunctionMakerOptions) => async (
+export const makeDeleteOneUserPreferences = (context: APIContext) => async (
 	sessionToken: string | null,
 	userID: string,
 ): Promise<void> => {
 	const templatePath = '/api/users/{userID}/preferences';
-	const url = buildURL(templatePath, { ...makerOptions, protocol: 'http', pathParams: { userID } });
+	const url = buildURL(templatePath, { ...context, protocol: 'http', pathParams: { userID } });
 	const baseRequestOptions: HTTPRequestOptions = {
 		headers: { Authorization: sessionToken ? `Bearer ${sessionToken}` : undefined },
 	};

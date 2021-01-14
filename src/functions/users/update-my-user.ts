@@ -8,13 +8,13 @@
 
 import { isString, isUndefined } from 'lodash';
 import { UpdatableUser } from '../../models';
-import { APIFunctionMakerOptions } from '../utils';
+import { APIContext } from '../utils';
 import { makeGetMyUser } from './get-my-user';
 import { makeUpdateOneUser } from './update-one-user';
 
-export const makeUpdateMyUser = (makerOptions: APIFunctionMakerOptions) => {
-	const getMyUser = makeGetMyUser(makerOptions);
-	const updateOneUser = makeUpdateOneUser(makerOptions);
+export const makeUpdateMyUser = (context: APIContext) => {
+	const getMyUser = makeGetMyUser(context);
+	const updateOneUser = makeUpdateOneUser(context);
 
 	return async (authToken: string | null, data: Omit<UpdatableUser, 'id'>): Promise<void> => {
 		try {

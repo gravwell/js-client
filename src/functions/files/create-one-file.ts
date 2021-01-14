@@ -9,23 +9,16 @@
 import * as FormData from 'form-data';
 import { isString, pick } from 'lodash';
 import { CreatableFile, FileMetadata, RawBaseFileMetadata, toRawCreatableFile } from '../../models';
-import {
-	APIFunctionMakerOptions,
-	buildHTTPRequest,
-	buildURL,
-	fetch,
-	HTTPRequestOptions,
-	parseJSONResponse,
-} from '../utils';
+import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 import { makeGetOneFile } from './get-one-file';
 import { makeUpdateOneFile } from './update-one-file';
 
-export const makeCreateOneFile = (makerOptions: APIFunctionMakerOptions) => {
-	const updateOneFile = makeUpdateOneFile(makerOptions);
-	const getOneFile = makeGetOneFile(makerOptions);
+export const makeCreateOneFile = (context: APIContext) => {
+	const updateOneFile = makeUpdateOneFile(context);
+	const getOneFile = makeGetOneFile(context);
 
 	const templatePath = '/api/files';
-	const url = buildURL(templatePath, { ...makerOptions, protocol: 'http' });
+	const url = buildURL(templatePath, { ...context, protocol: 'http' });
 
 	return async (authToken: string | null, data: CreatableFile): Promise<FileMetadata> => {
 		try {

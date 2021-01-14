@@ -7,18 +7,11 @@
  **************************************************************************/
 
 import { Group, RawGroup, toGroup } from '../../models';
-import {
-	APIFunctionMakerOptions,
-	buildHTTPRequest,
-	buildURL,
-	fetch,
-	HTTPRequestOptions,
-	parseJSONResponse,
-} from '../utils';
+import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 
-export const makeGetAllGroups = (makerOptions: APIFunctionMakerOptions) => {
+export const makeGetAllGroups = (context: APIContext) => {
 	const templatePath = '/api/groups';
-	const url = buildURL(templatePath, { ...makerOptions, protocol: 'http' });
+	const url = buildURL(templatePath, { ...context, protocol: 'http' });
 
 	return async (authToken: string | null): Promise<Array<Group>> => {
 		const baseRequestOptions: HTTPRequestOptions = {

@@ -7,19 +7,12 @@
  **************************************************************************/
 
 import { UUID } from '../../value-objects';
-import {
-	APIFunctionMakerOptions,
-	buildHTTPRequest,
-	buildURL,
-	fetch,
-	HTTPRequestOptions,
-	parseJSONResponse,
-} from '../utils';
+import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 
-export const makeGetOneFileContent = (makerOptions: APIFunctionMakerOptions) => {
+export const makeGetOneFileContent = (context: APIContext) => {
 	return async (authToken: string | null, fileID: UUID): Promise<string> => {
 		const templatePath = '/api/files/{fileID}';
-		const url = buildURL(templatePath, { ...makerOptions, protocol: 'http', pathParams: { fileID } });
+		const url = buildURL(templatePath, { ...context, protocol: 'http', pathParams: { fileID } });
 
 		const baseRequestOptions: HTTPRequestOptions = {
 			headers: { Authorization: authToken ? `Bearer ${authToken}` : undefined },

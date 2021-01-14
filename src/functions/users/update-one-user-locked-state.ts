@@ -7,20 +7,13 @@
  **************************************************************************/
 
 import { NumericID } from '../../value-objects';
-import {
-	APIFunctionMakerOptions,
-	buildHTTPRequest,
-	buildURL,
-	fetch,
-	HTTPRequestOptions,
-	parseJSONResponse,
-} from '../utils';
+import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 
-export const makeUpdateOneUserLockedState = (makerOptions: APIFunctionMakerOptions) => {
+export const makeUpdateOneUserLockedState = (context: APIContext) => {
 	return async (authToken: string | null, userID: NumericID, lock: boolean): Promise<void> => {
 		try {
 			const templatePath = '/api/users/{userID}/lock';
-			const url = buildURL(templatePath, { ...makerOptions, protocol: 'http', pathParams: { userID } });
+			const url = buildURL(templatePath, { ...context, protocol: 'http', pathParams: { userID } });
 
 			const baseRequestOptions: HTTPRequestOptions = {
 				headers: { Authorization: authToken ? `Bearer ${authToken}` : undefined },

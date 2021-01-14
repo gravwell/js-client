@@ -7,18 +7,11 @@
  **************************************************************************/
 
 import { Playbook, RawPlaybook, toPlaybook, toRawUpdatablePlaybook, UpdatablePlaybook } from '../../models';
-import {
-	APIFunctionMakerOptions,
-	buildHTTPRequest,
-	buildURL,
-	fetch,
-	HTTPRequestOptions,
-	parseJSONResponse,
-} from '../utils';
+import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 import { makeGetOnePlaybook } from './get-one-playbook';
 
-export const makeUpdateOnePlaybook = (makerOptions: APIFunctionMakerOptions) => {
-	const getOnePlaybook = makeGetOnePlaybook(makerOptions);
+export const makeUpdateOnePlaybook = (context: APIContext) => {
+	const getOnePlaybook = makeGetOnePlaybook(context);
 
 	return async (authToken: string | null, data: UpdatablePlaybook): Promise<Playbook> => {
 		try {
@@ -27,7 +20,7 @@ export const makeUpdateOnePlaybook = (makerOptions: APIFunctionMakerOptions) => 
 
 			const playbookPath = '/api/playbooks/{playbookID}';
 			const url = buildURL(playbookPath, {
-				...makerOptions,
+				...context,
 				protocol: 'http',
 				pathParams: { playbookID: data.uuid },
 			});

@@ -8,15 +8,15 @@
 
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Notification } from '../../models';
-import { APIFunctionMakerOptions, APISubscription } from '../utils';
+import { APIContext, APISubscription } from '../utils';
 import { makeGetMyNotifications } from './get-my-notifications';
 
 export type MyNotificationsMessageReceived = Array<Notification>;
 
 export type MyNotificationsMessageSent = never;
 
-export const makeSubscribeToMyNotifications = (makerOptions: APIFunctionMakerOptions) => {
-	const getMyNotifications = makeGetMyNotifications(makerOptions);
+export const makeSubscribeToMyNotifications = (context: APIContext) => {
+	const getMyNotifications = makeGetMyNotifications(context);
 
 	return async (
 		authToken: string | null,

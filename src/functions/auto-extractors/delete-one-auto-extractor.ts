@@ -7,19 +7,12 @@
  **************************************************************************/
 
 import { NumericID } from '../../value-objects';
-import {
-	APIFunctionMakerOptions,
-	buildHTTPRequest,
-	buildURL,
-	fetch,
-	HTTPRequestOptions,
-	parseJSONResponse,
-} from '../utils';
+import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 
-export const makeDeleteOneAutoExtractor = (makerOptions: APIFunctionMakerOptions) => {
+export const makeDeleteOneAutoExtractor = (context: APIContext) => {
 	return async (authToken: string | null, autoExtractorID: NumericID): Promise<void> => {
 		const templatePath = '/api/autoextractors/{autoExtractorID}';
-		const url = buildURL(templatePath, { ...makerOptions, protocol: 'http', pathParams: { autoExtractorID } });
+		const url = buildURL(templatePath, { ...context, protocol: 'http', pathParams: { autoExtractorID } });
 
 		const baseRequestOptions: HTTPRequestOptions = {
 			headers: { Authorization: authToken ? `Bearer ${authToken}` : undefined },

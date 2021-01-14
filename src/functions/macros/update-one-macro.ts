@@ -7,22 +7,15 @@
  **************************************************************************/
 
 import { Macro, RawMacro, toMacro, toRawUpdatableMacro, UpdatableMacro } from '../../models';
-import {
-	APIFunctionMakerOptions,
-	buildHTTPRequest,
-	buildURL,
-	fetch,
-	HTTPRequestOptions,
-	parseJSONResponse,
-} from '../utils';
+import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 import { makeGetOneMacro } from './get-one-macro';
 
-export const makeUpdateOneMacro = (makerOptions: APIFunctionMakerOptions) => {
-	const getOneMacro = makeGetOneMacro(makerOptions);
+export const makeUpdateOneMacro = (context: APIContext) => {
+	const getOneMacro = makeGetOneMacro(context);
 
 	return async (authToken: string | null, data: UpdatableMacro): Promise<Macro> => {
 		const templatePath = '/api/macros/{macroID}';
-		const url = buildURL(templatePath, { ...makerOptions, protocol: 'http', pathParams: { macroID: data.id } });
+		const url = buildURL(templatePath, { ...context, protocol: 'http', pathParams: { macroID: data.id } });
 
 		try {
 			const current = await getOneMacro(authToken, data.id);

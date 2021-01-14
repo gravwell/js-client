@@ -8,18 +8,11 @@
 
 import { CreatableActionable, toRawCreatableActionable } from '../../models';
 import { UUID } from '../../value-objects';
-import {
-	APIFunctionMakerOptions,
-	buildHTTPRequest,
-	buildURL,
-	fetch,
-	HTTPRequestOptions,
-	parseJSONResponse,
-} from '../utils';
+import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 
-export const makeCreateOneActionable = (makerOptions: APIFunctionMakerOptions) => {
+export const makeCreateOneActionable = (context: APIContext) => {
 	const templatePath = '/api/pivots';
-	const url = buildURL(templatePath, { ...makerOptions, protocol: 'http' });
+	const url = buildURL(templatePath, { ...context, protocol: 'http' });
 
 	return async (authToken: string | null, data: CreatableActionable): Promise<UUID> => {
 		try {

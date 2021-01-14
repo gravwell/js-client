@@ -7,16 +7,9 @@
  **************************************************************************/
 
 import { NumericID } from '../../value-objects';
-import {
-	APIFunctionMakerOptions,
-	buildHTTPRequest,
-	buildURL,
-	fetch,
-	HTTPRequestOptions,
-	parseJSONResponse,
-} from '../utils';
+import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 
-export const makeDeleteOneResource = (makerOptions: APIFunctionMakerOptions) => {
+export const makeDeleteOneResource = (makerOptions: APIContext) => {
 	return async (authToken: string | null, resourceID: NumericID): Promise<void> => {
 		const resourcePath = '/api/resources/{resourceID}';
 		const url = buildURL(resourcePath, { ...makerOptions, protocol: 'http', pathParams: { resourceID } });

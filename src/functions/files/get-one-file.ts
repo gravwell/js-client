@@ -9,10 +9,10 @@
 import { isUndefined } from 'lodash';
 import { FileMetadata } from '../../models';
 import { UUID } from '../../value-objects';
-import { APIFunctionMakerOptions } from '../utils';
+import { APIContext } from '../utils';
 import { makeGetAllFiles } from './get-all-files';
 
-export const makeGetOneFile = (makerOptions: APIFunctionMakerOptions) => {
+export const makeGetOneFile = (makerOptions: APIContext) => {
 	const getAllFiles = makeGetAllFiles(makerOptions);
 
 	return async (authToken: string | null, fileID: UUID): Promise<FileMetadata> => {

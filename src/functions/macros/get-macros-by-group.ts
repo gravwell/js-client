@@ -8,19 +8,12 @@
 
 import { Macro, RawMacro, toMacro } from '../../models';
 import { NumericID } from '../../value-objects';
-import {
-	APIFunctionMakerOptions,
-	buildHTTPRequest,
-	buildURL,
-	fetch,
-	HTTPRequestOptions,
-	parseJSONResponse,
-} from '../utils';
+import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 
-export const makeGetMacrosByGroup = (makerOptions: APIFunctionMakerOptions) => {
+export const makeGetMacrosByGroup = (context: APIContext) => {
 	return async (authToken: string | null, groupID: NumericID): Promise<Array<Macro>> => {
 		const path = '/api/groups/{groupID}/macros';
-		const url = buildURL(path, { ...makerOptions, protocol: 'http', pathParams: { groupID } });
+		const url = buildURL(path, { ...context, protocol: 'http', pathParams: { groupID } });
 
 		const baseRequestOptions: HTTPRequestOptions = {
 			headers: { Authorization: authToken ? `Bearer ${authToken}` : undefined },

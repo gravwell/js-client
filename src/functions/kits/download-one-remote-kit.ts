@@ -7,12 +7,12 @@
  **************************************************************************/
 
 import { ID } from '../../value-objects';
-import { APIFunctionMakerOptions, buildURL, downloadFromURL, DownloadReturn } from '../utils';
+import { APIContext, buildURL, downloadFromURL, DownloadReturn } from '../utils';
 
-export const makeDownloadRemoteKit = (makerOptions: APIFunctionMakerOptions) => {
+export const makeDownloadRemoteKit = (context: APIContext) => {
 	return async (authToken: string | null, kitID: ID): Promise<DownloadReturn> => {
 		const templatePath = '/api/kits/remote/{kitID}/download';
-		const url = buildURL(templatePath, { ...makerOptions, protocol: 'http', pathParams: { kitID } });
+		const url = buildURL(templatePath, { ...context, protocol: 'http', pathParams: { kitID } });
 		return downloadFromURL(url, `kit-${kitID}`);
 	};
 };

@@ -7,18 +7,11 @@
  **************************************************************************/
 
 import { CreatableBroadcastNotification, toRawCreatableBroadcastedNotification } from '../../models';
-import {
-	APIFunctionMakerOptions,
-	buildHTTPRequest,
-	buildURL,
-	fetch,
-	HTTPRequestOptions,
-	parseJSONResponse,
-} from '../utils';
+import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 
-export const makeCreateOneBroadcastedNotification = (makerOptions: APIFunctionMakerOptions) => {
+export const makeCreateOneBroadcastedNotification = (context: APIContext) => {
 	const templatePath = '/api/notifications/broadcast';
-	const url = buildURL(templatePath, { ...makerOptions, protocol: 'http' });
+	const url = buildURL(templatePath, { ...context, protocol: 'http' });
 
 	return async (authToken: string | null, creatable: CreatableBroadcastNotification): Promise<void> => {
 		try {

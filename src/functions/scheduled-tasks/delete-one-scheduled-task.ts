@@ -7,19 +7,12 @@
  **************************************************************************/
 
 import { NumericID } from '../../value-objects';
-import {
-	APIFunctionMakerOptions,
-	buildHTTPRequest,
-	buildURL,
-	fetch,
-	HTTPRequestOptions,
-	parseJSONResponse,
-} from '../utils';
+import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 
-export const makeDeleteOneScheduledTask = (makerOptions: APIFunctionMakerOptions) => {
+export const makeDeleteOneScheduledTask = (context: APIContext) => {
 	return async (authToken: string | null, scheduledTaskID: NumericID): Promise<void> => {
 		const templatePath = '/api/scheduledsearches/{scheduledTaskID}';
-		const url = buildURL(templatePath, { ...makerOptions, protocol: 'http', pathParams: { scheduledTaskID } });
+		const url = buildURL(templatePath, { ...context, protocol: 'http', pathParams: { scheduledTaskID } });
 
 		const baseRequestOptions: HTTPRequestOptions = {
 			headers: { Authorization: authToken ? `Bearer ${authToken}` : undefined },

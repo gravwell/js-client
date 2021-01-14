@@ -6,16 +6,9 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import {
-	APIFunctionMakerOptions,
-	buildHTTPRequest,
-	buildURL,
-	fetch,
-	HTTPRequestOptions,
-	parseJSONResponse,
-} from '../utils';
+import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 
-export const makeDeleteOneNotification = (makerOptions: APIFunctionMakerOptions) => async (
+export const makeDeleteOneNotification = (makerOptions: APIContext) => async (
 	authToken: string | null,
 	notificationID: string,
 ): Promise<void> => {

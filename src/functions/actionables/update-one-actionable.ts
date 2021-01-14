@@ -7,18 +7,11 @@
  **************************************************************************/
 
 import { Actionable, RawActionable, toActionable, toRawUpdatableActionable, UpdatableActionable } from '../../models';
-import {
-	APIFunctionMakerOptions,
-	buildHTTPRequest,
-	buildURL,
-	fetch,
-	HTTPRequestOptions,
-	parseJSONResponse,
-} from '../utils';
+import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 import { makeGetOneActionable } from './get-one-actionable';
 
-export const makeUpdateOneActionable = (makerOptions: APIFunctionMakerOptions) => {
-	const getOneActionable = makeGetOneActionable(makerOptions);
+export const makeUpdateOneActionable = (context: APIContext) => {
+	const getOneActionable = makeGetOneActionable(context);
 
 	return async (authToken: string | null, data: UpdatableActionable): Promise<Actionable> => {
 		try {
@@ -26,7 +19,7 @@ export const makeUpdateOneActionable = (makerOptions: APIFunctionMakerOptions) =
 
 			const templatePath = '/api/pivots/{actionableID}';
 			const url = buildURL(templatePath, {
-				...makerOptions,
+				...context,
 				protocol: 'http',
 				pathParams: { actionableID: data.uuid },
 			});

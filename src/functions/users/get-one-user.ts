@@ -7,19 +7,12 @@
  **************************************************************************/
 
 import { RawUser, toUser, User } from '../../models';
-import {
-	APIFunctionMakerOptions,
-	buildHTTPRequest,
-	buildURL,
-	fetch,
-	HTTPRequestOptions,
-	parseJSONResponse,
-} from '../utils';
+import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 
-export const makeGetOneUser = (makerOptions: APIFunctionMakerOptions) => {
+export const makeGetOneUser = (context: APIContext) => {
 	return async (authToken: string | null, userID: string): Promise<User> => {
 		const templatePath = '/api/users/{userID}';
-		const url = buildURL(templatePath, { ...makerOptions, protocol: 'http', pathParams: { userID } });
+		const url = buildURL(templatePath, { ...context, protocol: 'http', pathParams: { userID } });
 
 		const baseRequestOptions: HTTPRequestOptions = {
 			headers: { Authorization: authToken ? `Bearer ${authToken}` : undefined },

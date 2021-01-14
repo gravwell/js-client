@@ -7,18 +7,11 @@
  **************************************************************************/
 
 import { Macro, RawMacro, toMacro } from '../../models';
-import {
-	APIFunctionMakerOptions,
-	buildHTTPRequest,
-	buildURL,
-	fetch,
-	HTTPRequestOptions,
-	parseJSONResponse,
-} from '../utils';
+import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 
-export const makeGetAllMacros = (makerOptions: APIFunctionMakerOptions) => {
+export const makeGetAllMacros = (context: APIContext) => {
 	const path = '/api/macros/all';
-	const url = buildURL(path, { ...makerOptions, protocol: 'http' });
+	const url = buildURL(path, { ...context, protocol: 'http' });
 
 	return async (authToken: string | null): Promise<Array<Macro>> => {
 		const baseRequestOptions: HTTPRequestOptions = {

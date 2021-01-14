@@ -8,18 +8,11 @@
 
 import { isUndefined } from 'lodash';
 import { RawResource, Resource, toRawUpdatableResourceMetadata, toResource, UpdatableResource } from '../../models';
-import {
-	APIFunctionMakerOptions,
-	buildHTTPRequest,
-	buildURL,
-	fetch,
-	HTTPRequestOptions,
-	parseJSONResponse,
-} from '../utils';
+import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 import { makeGetOneResource } from './get-one-resource';
 import { makeSetOneResourceContent } from './set-one-resource-content';
 
-export const makeUpdateOneResource = (makerOptions: APIFunctionMakerOptions) => {
+export const makeUpdateOneResource = (makerOptions: APIContext) => {
 	const getOneResource = makeGetOneResource(makerOptions);
 	const setOneResourceContent = makeSetOneResourceContent(makerOptions);
 

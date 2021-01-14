@@ -14,21 +14,14 @@ import {
 	toRawCreatableScheduledTask,
 } from '../../models';
 import { RawNumericID, toNumericID } from '../../value-objects';
-import {
-	APIFunctionMakerOptions,
-	buildHTTPRequest,
-	buildURL,
-	fetch,
-	HTTPRequestOptions,
-	parseJSONResponse,
-} from '../utils';
+import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 import { makeGetOneScheduledTask } from './get-one-scheduled-task';
 
-export const makeCreateOneScheduledTask = (makerOptions: APIFunctionMakerOptions) => {
-	const getOneScheduledTask = makeGetOneScheduledTask(makerOptions);
+export const makeCreateOneScheduledTask = (context: APIContext) => {
+	const getOneScheduledTask = makeGetOneScheduledTask(context);
 
 	const templatePath = '/api/scheduledsearches';
-	const url = buildURL(templatePath, { ...makerOptions, protocol: 'http' });
+	const url = buildURL(templatePath, { ...context, protocol: 'http' });
 
 	return async <D extends CreatableScheduledTask>(
 		authToken: string | null,

@@ -7,13 +7,13 @@
  **************************************************************************/
 
 import { ScheduledScript, ScheduledTask } from '../../models';
-import { APIFunctionMakerOptions } from '../utils';
+import { APIContext } from '../utils';
 import { makeGetAllScheduledTasks } from './get-all-scheduled-tasks';
 
 const isScheduledScript = (s: ScheduledTask): s is ScheduledScript => s.type === 'script';
 
-export const makeGetAllScheduledScripts = (makerOptions: APIFunctionMakerOptions) => {
-	const getAllScheduledTasks = makeGetAllScheduledTasks(makerOptions);
+export const makeGetAllScheduledScripts = (context: APIContext) => {
+	const getAllScheduledTasks = makeGetAllScheduledTasks(context);
 
 	return async (authToken: string | null): Promise<Array<ScheduledScript>> => {
 		const scheduledTasks = await getAllScheduledTasks(authToken);

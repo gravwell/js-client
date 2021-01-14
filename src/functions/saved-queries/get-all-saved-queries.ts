@@ -7,18 +7,11 @@
  **************************************************************************/
 
 import { RawSavedQuery, SavedQuery, toSavedQuery } from '../../models';
-import {
-	APIFunctionMakerOptions,
-	buildHTTPRequest,
-	buildURL,
-	fetch,
-	HTTPRequestOptions,
-	parseJSONResponse,
-} from '../utils';
+import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 
-export const makeGetAllSavedQueries = (makerOptions: APIFunctionMakerOptions) => {
+export const makeGetAllSavedQueries = (context: APIContext) => {
 	const path = '/api/library?admin=true';
-	const url = buildURL(path, { ...makerOptions, protocol: 'http' });
+	const url = buildURL(path, { ...context, protocol: 'http' });
 
 	return async (authToken: string | null): Promise<Array<SavedQuery>> => {
 		const baseRequestOptions: HTTPRequestOptions = {

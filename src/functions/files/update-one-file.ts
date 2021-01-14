@@ -8,22 +8,15 @@
 
 import * as FormData from 'form-data';
 import { FileMetadata, RawBaseFileMetadata, toRawUpdatableFile, UpdatableFile } from '../../models';
-import {
-	APIFunctionMakerOptions,
-	buildHTTPRequest,
-	buildURL,
-	fetch,
-	HTTPRequestOptions,
-	parseJSONResponse,
-} from '../utils';
+import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 import { makeGetOneFile } from './get-one-file';
 
-export const makeUpdateOneFile = (makerOptions: APIFunctionMakerOptions) => {
-	const getOneFile = makeGetOneFile(makerOptions);
+export const makeUpdateOneFile = (context: APIContext) => {
+	const getOneFile = makeGetOneFile(context);
 
 	return async (authToken: string | null, data: UpdatableFile): Promise<FileMetadata> => {
 		const templatePath = '/api/files/{fileID}';
-		const url = buildURL(templatePath, { ...makerOptions, protocol: 'http', pathParams: { fileID: data.id } });
+		const url = buildURL(templatePath, { ...context, protocol: 'http', pathParams: { fileID: data.id } });
 
 		try {
 			const current = await getOneFile(authToken, data.id);

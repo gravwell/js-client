@@ -8,19 +8,12 @@
 
 import { RawScheduledTask, ScheduledTask, toScheduledTask } from '../../models';
 import { NumericID } from '../../value-objects';
-import {
-	APIFunctionMakerOptions,
-	buildHTTPRequest,
-	buildURL,
-	fetch,
-	HTTPRequestOptions,
-	parseJSONResponse,
-} from '../utils';
+import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 
-export const makeGetScheduledTasksByUser = (makerOptions: APIFunctionMakerOptions) => {
+export const makeGetScheduledTasksByUser = (context: APIContext) => {
 	return async (authToken: string | null, userID: NumericID): Promise<Array<ScheduledTask>> => {
 		const path = '/api/scheduledsearches/user/{userID}';
-		const url = buildURL(path, { ...makerOptions, protocol: 'http', pathParams: { userID } });
+		const url = buildURL(path, { ...context, protocol: 'http', pathParams: { userID } });
 
 		const baseRequestOptions: HTTPRequestOptions = {
 			headers: { Authorization: authToken ? `Bearer ${authToken}` : undefined },

@@ -7,11 +7,11 @@
  **************************************************************************/
 
 import { CreatableScheduledScript, ScheduledScript } from '../../models';
-import { APIFunctionMakerOptions } from '../utils';
+import { APIContext } from '../utils';
 import { makeCreateOneScheduledScript } from './create-one-scheduled-script';
 
-export const makeCreateManyScheduledScripts = (makerOptions: APIFunctionMakerOptions) => {
-	const createOneScheduledScript = makeCreateOneScheduledScript(makerOptions);
+export const makeCreateManyScheduledScripts = (context: APIContext) => {
+	const createOneScheduledScript = makeCreateOneScheduledScript(context);
 
 	return (authToken: string | null, data: Array<CreatableScheduledScript>): Promise<Array<ScheduledScript>> => {
 		const createPromises = data.map(_data => createOneScheduledScript(authToken, _data));

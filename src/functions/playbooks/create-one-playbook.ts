@@ -8,18 +8,11 @@
 
 import { CreatablePlaybook, toRawCreatablePlaybook } from '../../models';
 import { UUID } from '../../value-objects';
-import {
-	APIFunctionMakerOptions,
-	buildHTTPRequest,
-	buildURL,
-	fetch,
-	HTTPRequestOptions,
-	parseJSONResponse,
-} from '../utils';
+import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 
-export const makeCreateOnePlaybook = (makerOptions: APIFunctionMakerOptions) => {
+export const makeCreateOnePlaybook = (context: APIContext) => {
 	const playbookPath = '/api/playbooks';
-	const url = buildURL(playbookPath, { ...makerOptions, protocol: 'http' });
+	const url = buildURL(playbookPath, { ...context, protocol: 'http' });
 
 	return async (authToken: string | null, data: CreatablePlaybook): Promise<UUID> => {
 		try {

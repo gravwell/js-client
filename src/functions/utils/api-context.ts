@@ -8,7 +8,7 @@
 
 import { Host } from '../../value-objects';
 
-export interface APIFunctionMakerOptions {
+export interface APIContext {
 	host: Host;
 	useEncryption: boolean;
 }

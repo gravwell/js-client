@@ -6,13 +6,13 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { APIFunctionMakerOptions } from '../utils';
+import { APIContext } from '../utils';
 import { makeGetAllLocalKits } from './get-all-local-kits';
 import { makeUninstallOneKit } from './uninstall-one-kit';
 
-export const makeUninstallAllKits = (makerOptions: APIFunctionMakerOptions) => {
-	const getAllLocalKits = makeGetAllLocalKits(makerOptions);
-	const uninstallOneKit = makeUninstallOneKit(makerOptions);
+export const makeUninstallAllKits = (context: APIContext) => {
+	const getAllLocalKits = makeGetAllLocalKits(context);
+	const uninstallOneKit = makeUninstallOneKit(context);
 
 	return async (authToken: string | null): Promise<void> => {
 		const kits = await getAllLocalKits(authToken);

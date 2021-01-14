@@ -8,21 +8,14 @@
 
 import { AutoExtractor, CreatableAutoExtractor, toRawCreatableAutoExtractor } from '../../models';
 import { RawNumericID, toNumericID } from '../../value-objects';
-import {
-	APIFunctionMakerOptions,
-	buildHTTPRequest,
-	buildURL,
-	fetch,
-	HTTPRequestOptions,
-	parseJSONResponse,
-} from '../utils';
+import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 import { makeGetAllAutoExtractors } from './get-all-auto-extractors';
 
-export const makeCreateOneAutoExtractor = (makerOptions: APIFunctionMakerOptions) => {
-	const getAllAutoExtractors = makeGetAllAutoExtractors(makerOptions);
+export const makeCreateOneAutoExtractor = (context: APIContext) => {
+	const getAllAutoExtractors = makeGetAllAutoExtractors(context);
 
 	const templatePath = '/api/autoextractors';
-	const url = buildURL(templatePath, { ...makerOptions, protocol: 'http' });
+	const url = buildURL(templatePath, { ...context, protocol: 'http' });
 
 	return async (authToken: string | null, data: CreatableAutoExtractor): Promise<AutoExtractor> => {
 		try {

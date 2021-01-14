@@ -7,18 +7,11 @@
  **************************************************************************/
 
 import { CreatableJSONEntry, toRawCreatableJSONEntry } from '../../models';
-import {
-	APIFunctionMakerOptions,
-	buildHTTPRequest,
-	buildURL,
-	fetch,
-	HTTPRequestOptions,
-	parseJSONResponse,
-} from '../utils';
+import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 
-export const makeIngestJSONEntries = (makerOptions: APIFunctionMakerOptions) => {
+export const makeIngestJSONEntries = (context: APIContext) => {
 	const templatePath = '/api/ingest/json';
-	const url = buildURL(templatePath, { ...makerOptions, protocol: 'http' });
+	const url = buildURL(templatePath, { ...context, protocol: 'http' });
 
 	return async (authToken: string | null, entries: Array<CreatableJSONEntry>): Promise<number> => {
 		try {

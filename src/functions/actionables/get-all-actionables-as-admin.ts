@@ -7,18 +7,11 @@
  **************************************************************************/
 
 import { Actionable, RawActionable, toActionable } from '../../models';
-import {
-	APIFunctionMakerOptions,
-	buildHTTPRequest,
-	buildURL,
-	fetch,
-	HTTPRequestOptions,
-	parseJSONResponse,
-} from '../utils';
+import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 
-export const makeGetAllActionablesAsAdmin = (makerOptions: APIFunctionMakerOptions) => {
+export const makeGetAllActionablesAsAdmin = (context: APIContext) => {
 	const templatePath = '/api/pivots?admin=true';
-	const url = buildURL(templatePath, { ...makerOptions, protocol: 'http' });
+	const url = buildURL(templatePath, { ...context, protocol: 'http' });
 
 	return async (authToken: string | null): Promise<Array<Actionable>> => {
 		const baseRequestOptions: HTTPRequestOptions = {

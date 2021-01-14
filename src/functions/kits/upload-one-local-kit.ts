@@ -9,20 +9,12 @@
 import * as FormData from 'form-data';
 import { isString } from 'lodash';
 import { LocalKit, RawLocalKit, toLocalKit } from '../../models';
-import {
-	APIFunctionMakerOptions,
-	buildHTTPRequest,
-	buildURL,
-	fetch,
-	File,
-	HTTPRequestOptions,
-	parseJSONResponse,
-} from '../utils';
+import { APIContext, buildHTTPRequest, buildURL, fetch, File, HTTPRequestOptions, parseJSONResponse } from '../utils';
 
-export const makeUploadOneLocalKit = (makerOptions: APIFunctionMakerOptions) => {
+export const makeUploadOneLocalKit = (context: APIContext) => {
 	return async (authToken: string | null, kit: File): Promise<LocalKit> => {
 		const resourcePath = '/api/kits';
-		const url = buildURL(resourcePath, { ...makerOptions, protocol: 'http' });
+		const url = buildURL(resourcePath, { ...context, protocol: 'http' });
 
 		try {
 			const baseRequestOptions: HTTPRequestOptions = {

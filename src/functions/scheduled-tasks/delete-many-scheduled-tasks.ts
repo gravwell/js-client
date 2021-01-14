@@ -6,12 +6,12 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { APIFunctionMakerOptions } from '../utils';
+import { APIContext } from '../utils';
 import { makeDeleteScheduledTasksByUser } from './delete-scheduled-tasks-by-user';
 import { ScheduledTasksFilter } from './get-many-scheduled-tasks';
 
-export const makeDeleteManyScheduledTasks = (makerOptions: APIFunctionMakerOptions) => {
-	const deleteScheduledTasksByUser = makeDeleteScheduledTasksByUser(makerOptions);
+export const makeDeleteManyScheduledTasks = (context: APIContext) => {
+	const deleteScheduledTasksByUser = makeDeleteScheduledTasksByUser(context);
 
 	return async (authToken: string | null, filter: Required<ScheduledTasksFilter>): Promise<void> => {
 		return deleteScheduledTasksByUser(authToken, filter.userID);

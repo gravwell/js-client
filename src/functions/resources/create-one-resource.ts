@@ -7,18 +7,11 @@
  **************************************************************************/
 
 import { CreatableResource, RawResource, Resource, toRawCreatableResource, toResource } from '../../models';
-import {
-	APIFunctionMakerOptions,
-	buildHTTPRequest,
-	buildURL,
-	fetch,
-	HTTPRequestOptions,
-	parseJSONResponse,
-} from '../utils';
+import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 
-export const makeCreateOneResource = (makerOptions: APIFunctionMakerOptions) => {
+export const makeCreateOneResource = (context: APIContext) => {
 	const resourcePath = '/api/resources';
-	const url = buildURL(resourcePath, { ...makerOptions, protocol: 'http' });
+	const url = buildURL(resourcePath, { ...context, protocol: 'http' });
 
 	return async (authToken: string | null, data: CreatableResource): Promise<Resource> => {
 		try {

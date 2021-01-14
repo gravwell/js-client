@@ -6,18 +6,11 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import {
-	APIFunctionMakerOptions,
-	buildHTTPRequest,
-	buildURL,
-	fetch,
-	HTTPRequestOptions,
-	parseJSONResponse,
-} from '../utils';
+import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 
-export const makeLogoutOneUser = (makerOptions: APIFunctionMakerOptions) => {
+export const makeLogoutOneUser = (context: APIContext) => {
 	const templatePath = '/api/logout';
-	const url = buildURL(templatePath, { ...makerOptions, protocol: 'http' });
+	const url = buildURL(templatePath, { ...context, protocol: 'http' });
 
 	return async (userAuthToken: string): Promise<void> => {
 		const baseRequestOptions: HTTPRequestOptions = {

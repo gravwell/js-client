@@ -8,19 +8,12 @@
 
 import { RawRemoteKit, RemoteKit, toRemoteKit } from '../../models';
 import { NumericID } from '../../value-objects';
-import {
-	APIFunctionMakerOptions,
-	buildHTTPRequest,
-	buildURL,
-	fetch,
-	HTTPRequestOptions,
-	parseJSONResponse,
-} from '../utils';
+import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 
-export const makeGetOneRemoteKit = (makerOptions: APIFunctionMakerOptions) => {
+export const makeGetOneRemoteKit = (context: APIContext) => {
 	return async (authToken: string | null, kitID: NumericID): Promise<RemoteKit> => {
 		const templatePath = '/api/kits/remote/{kitID}';
-		const url = buildURL(templatePath, { ...makerOptions, protocol: 'http', pathParams: { kitID } });
+		const url = buildURL(templatePath, { ...context, protocol: 'http', pathParams: { kitID } });
 
 		const baseRequestOptions: HTTPRequestOptions = {
 			headers: { Authorization: authToken ? `Bearer ${authToken}` : undefined },

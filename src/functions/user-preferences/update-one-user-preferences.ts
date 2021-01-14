@@ -7,21 +7,14 @@
  **************************************************************************/
 
 import { UserPreferences } from '../../models';
-import {
-	APIFunctionMakerOptions,
-	buildHTTPRequest,
-	buildURL,
-	fetch,
-	HTTPRequestOptions,
-	parseJSONResponse,
-} from '../utils';
+import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 
-export const makeUpdateOneUserPreferences = (makerOptions: APIFunctionMakerOptions) => async (
+export const makeUpdateOneUserPreferences = (context: APIContext) => async (
 	sessionToken: string | null,
 	userID: string,
 ): Promise<UserPreferences> => {
 	const templatePath = '/api/users/{userID}/preferences';
-	const url = buildURL(templatePath, { ...makerOptions, protocol: 'http', pathParams: { userID } });
+	const url = buildURL(templatePath, { ...context, protocol: 'http', pathParams: { userID } });
 	const baseRequestOptions: HTTPRequestOptions = {
 		headers: { Authorization: sessionToken ? `Bearer ${sessionToken}` : undefined },
 	};

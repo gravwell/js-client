@@ -7,18 +7,11 @@
  **************************************************************************/
 
 import { FileMetadata, RawFileMetadata, toFileMetadata } from '../../models';
-import {
-	APIFunctionMakerOptions,
-	buildHTTPRequest,
-	buildURL,
-	fetch,
-	HTTPRequestOptions,
-	parseJSONResponse,
-} from '../utils';
+import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 
-export const makeGetAllFiles = (makerOptions: APIFunctionMakerOptions) => {
+export const makeGetAllFiles = (context: APIContext) => {
 	const path = '/api/files?admin=true';
-	const url = buildURL(path, { ...makerOptions, protocol: 'http' });
+	const url = buildURL(path, { ...context, protocol: 'http' });
 
 	return async (authToken: string | null): Promise<Array<FileMetadata>> => {
 		const baseRequestOptions: HTTPRequestOptions = {

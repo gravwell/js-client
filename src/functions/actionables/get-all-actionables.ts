@@ -7,18 +7,11 @@
  **************************************************************************/
 
 import { Actionable, RawActionable, toActionable } from '../../models';
-import {
-	APIFunctionMakerOptions,
-	buildHTTPRequest,
-	buildURL,
-	fetch,
-	HTTPRequestOptions,
-	parseJSONResponse,
-} from '../utils';
+import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 
-export const makeGetAllActionables = (makerOptions: APIFunctionMakerOptions) => {
+export const makeGetAllActionables = (context: APIContext) => {
 	const templatePath = '/api/pivots';
-	const url = buildURL(templatePath, { ...makerOptions, protocol: 'http' });
+	const url = buildURL(templatePath, { ...context, protocol: 'http' });
 
 	return async (authToken: string | null): Promise<Array<Actionable>> => {
 		const baseRequestOptions: HTTPRequestOptions = {

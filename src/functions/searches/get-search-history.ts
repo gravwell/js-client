@@ -7,18 +7,11 @@
  **************************************************************************/
 
 import { RawSearch, Search, toSearch } from '../../models';
-import {
-	APIFunctionMakerOptions,
-	buildHTTPRequest,
-	buildURL,
-	fetch,
-	HTTPRequestOptions,
-	parseJSONResponse,
-} from '../utils';
+import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 
-export const makeGetSearchHistory = (makerOptions: APIFunctionMakerOptions) => {
+export const makeGetSearchHistory = (context: APIContext) => {
 	return async (authToken: string | null, filter: SearchHistoryFilter): Promise<Array<Search>> => {
-		const baseURLOptions = { ...makerOptions, protocol: 'http' } as const;
+		const baseURLOptions = { ...context, protocol: 'http' } as const;
 		const url = ((): string => {
 			switch (filter.target) {
 				case 'myself': {

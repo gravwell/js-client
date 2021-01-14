@@ -13,7 +13,7 @@ import {
 	toRawCreatableTargetedNotification,
 } from '../../models';
 import {
-	APIFunctionMakerOptions,
+	APIContext,
 	buildHTTPRequest,
 	buildURL,
 	fetch,
@@ -22,7 +22,7 @@ import {
 	URLOptions,
 } from '../utils';
 
-export const makeCreateOneTargetedNotification = (makerOptions: APIFunctionMakerOptions) => {
+export const makeCreateOneTargetedNotification = (context: APIContext) => {
 	// Had to curry that function so that the correct CreatableTargetedNotification wouldn't be lost
 	// when I lazyfirst() the auth token in the client
 	return (authToken: string | null) => async <TargetType extends TargetedNotificationTargetType>(
@@ -31,7 +31,7 @@ export const makeCreateOneTargetedNotification = (makerOptions: APIFunctionMaker
 	): Promise<void> => {
 		try {
 			const _creatable: CreatableTargetedNotification = { ...creatable, targetType: targetType as any };
-			const url = _buildURL(_creatable, { ...makerOptions, protocol: 'http' });
+			const url = _buildURL(_creatable, { ...context, protocol: 'http' });
 
 			const baseRequestOptions: HTTPRequestOptions = {
 				headers: { Authorization: authToken ? `Bearer ${authToken}` : undefined },

@@ -7,18 +7,11 @@
  **************************************************************************/
 
 import { RawScheduledTask, ScheduledTask, toScheduledTask } from '../../models';
-import {
-	APIFunctionMakerOptions,
-	buildHTTPRequest,
-	buildURL,
-	fetch,
-	HTTPRequestOptions,
-	parseJSONResponse,
-} from '../utils';
+import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 
-export const makeGetAllScheduledTasks = (makerOptions: APIFunctionMakerOptions) => {
+export const makeGetAllScheduledTasks = (context: APIContext) => {
 	const path = '/api/scheduledsearches?admin=true';
-	const url = buildURL(path, { ...makerOptions, protocol: 'http' });
+	const url = buildURL(path, { ...context, protocol: 'http' });
 
 	return async (authToken: string | null): Promise<Array<ScheduledTask>> => {
 		const baseRequestOptions: HTTPRequestOptions = {

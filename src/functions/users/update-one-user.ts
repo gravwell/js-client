@@ -8,17 +8,17 @@
 
 import { isBoolean, isString, isUndefined, negate } from 'lodash';
 import { isValidUserRole, UpdatableUser } from '../../models';
-import { APIFunctionMakerOptions } from '../utils';
+import { APIContext } from '../utils';
 import { makeUpdateOneUserInformation } from './update-one-user-information';
 import { makeUpdateOneUserLockedState } from './update-one-user-locked-state';
 import { makeUpdateOneUserPassword } from './update-one-user-password';
 import { makeUpdateOneUserRole } from './update-one-user-role';
 
-export const makeUpdateOneUser = (makerOptions: APIFunctionMakerOptions) => {
-	const updateOneUserLockedState = makeUpdateOneUserLockedState(makerOptions);
-	const updateOneUserInformation = makeUpdateOneUserInformation(makerOptions);
-	const updateOneUserRole = makeUpdateOneUserRole(makerOptions);
-	const updateOneUserPassword = makeUpdateOneUserPassword(makerOptions);
+export const makeUpdateOneUser = (context: APIContext) => {
+	const updateOneUserLockedState = makeUpdateOneUserLockedState(context);
+	const updateOneUserInformation = makeUpdateOneUserInformation(context);
+	const updateOneUserRole = makeUpdateOneUserRole(context);
+	const updateOneUserPassword = makeUpdateOneUserPassword(context);
 
 	return async (authToken: string | null, data: UpdatableUser): Promise<void> => {
 		try {

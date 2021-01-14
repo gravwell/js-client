@@ -8,21 +8,14 @@
 
 import { CreatableDashboard, Dashboard, toRawCreatableDashboard } from '../../models';
 import { RawNumericID, toNumericID } from '../../value-objects';
-import {
-	APIFunctionMakerOptions,
-	buildHTTPRequest,
-	buildURL,
-	fetch,
-	HTTPRequestOptions,
-	parseJSONResponse,
-} from '../utils';
+import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 import { makeGetOneDashboard } from './get-one-dashboard';
 
-export const makeCreateOneDashboard = (makerOptions: APIFunctionMakerOptions) => {
-	const getOneDashboard = makeGetOneDashboard(makerOptions);
+export const makeCreateOneDashboard = (context: APIContext) => {
+	const getOneDashboard = makeGetOneDashboard(context);
 
 	const templatePath = '/api/dashboards';
-	const url = buildURL(templatePath, { ...makerOptions, protocol: 'http' });
+	const url = buildURL(templatePath, { ...context, protocol: 'http' });
 
 	return async (authToken: string | null, data: CreatableDashboard): Promise<Dashboard> => {
 		try {

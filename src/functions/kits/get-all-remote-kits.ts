@@ -7,18 +7,11 @@
  **************************************************************************/
 
 import { RawRemoteKit, RemoteKit, toRemoteKit } from '../../models';
-import {
-	APIFunctionMakerOptions,
-	buildHTTPRequest,
-	buildURL,
-	fetch,
-	HTTPRequestOptions,
-	parseJSONResponse,
-} from '../utils';
+import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 
-export const makeGetAllRemoteKits = (makerOptions: APIFunctionMakerOptions) => {
+export const makeGetAllRemoteKits = (context: APIContext) => {
 	const path = '/api/kits/remote/list';
-	const url = buildURL(path, { ...makerOptions, protocol: 'http' });
+	const url = buildURL(path, { ...context, protocol: 'http' });
 
 	return async (authToken: string | null): Promise<Array<RemoteKit>> => {
 		const baseRequestOptions: HTTPRequestOptions = {

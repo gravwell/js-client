@@ -7,16 +7,9 @@
  **************************************************************************/
 
 import { FileMetadata, RawFileMetadata, toFileMetadata } from '../../models';
-import {
-	APIFunctionMakerOptions,
-	buildHTTPRequest,
-	buildURL,
-	fetch,
-	HTTPRequestOptions,
-	parseJSONResponse,
-} from '../utils';
+import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 
-export const makeGetFilesAuthorizedToMe = (makerOptions: APIFunctionMakerOptions) => {
+export const makeGetFilesAuthorizedToMe = (makerOptions: APIContext) => {
 	const path = '/api/files';
 	const url = buildURL(path, { ...makerOptions, protocol: 'http' });
 

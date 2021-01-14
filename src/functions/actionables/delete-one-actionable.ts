@@ -7,19 +7,12 @@
  **************************************************************************/
 
 import { NumericID } from '../../value-objects';
-import {
-	APIFunctionMakerOptions,
-	buildHTTPRequest,
-	buildURL,
-	fetch,
-	HTTPRequestOptions,
-	parseJSONResponse,
-} from '../utils';
+import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 
-export const makeDeleteOneActionable = (makerOptions: APIFunctionMakerOptions) => {
+export const makeDeleteOneActionable = (context: APIContext) => {
 	return async (authToken: string | null, actionableID: NumericID): Promise<void> => {
 		const templatePath = '/api/pivots/{actionableID}';
-		const url = buildURL(templatePath, { ...makerOptions, protocol: 'http', pathParams: { actionableID } });
+		const url = buildURL(templatePath, { ...context, protocol: 'http', pathParams: { actionableID } });
 
 		const baseRequestOptions: HTTPRequestOptions = {
 			headers: { Authorization: authToken ? `Bearer ${authToken}` : undefined },

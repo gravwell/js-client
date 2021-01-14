@@ -8,15 +8,15 @@
 
 import { Macro } from '../../models';
 import { isNumericID, NumericID } from '../../value-objects';
-import { APIFunctionMakerOptions } from '../utils';
+import { APIContext } from '../utils';
 import { makeGetAllMacros } from './get-all-macros';
 import { makeGetMacrosByGroup } from './get-macros-by-group';
 import { makeGetMacrosByUser } from './get-macros-by-user';
 
-export const makeGetManyMacros = (makerOptions: APIFunctionMakerOptions) => {
-	const getMacrosByUser = makeGetMacrosByUser(makerOptions);
-	const getMacrosByGroup = makeGetMacrosByGroup(makerOptions);
-	const getAllMacros = makeGetAllMacros(makerOptions);
+export const makeGetManyMacros = (context: APIContext) => {
+	const getMacrosByUser = makeGetMacrosByUser(context);
+	const getMacrosByGroup = makeGetMacrosByGroup(context);
+	const getAllMacros = makeGetAllMacros(context);
 
 	return async (authToken: string | null, filter: MacrosFilter = {}): Promise<Array<Macro>> => {
 		if (isNumericID(filter.userID) && isNumericID(filter.groupID)) {

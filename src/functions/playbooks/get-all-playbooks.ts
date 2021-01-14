@@ -7,18 +7,11 @@
  **************************************************************************/
 
 import { Playbook, RawPlaybook, toPlaybook } from '../../models';
-import {
-	APIFunctionMakerOptions,
-	buildHTTPRequest,
-	buildURL,
-	fetch,
-	HTTPRequestOptions,
-	parseJSONResponse,
-} from '../utils';
+import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 
-export const makeGetAllPlaybooks = (makerOptions: APIFunctionMakerOptions) => {
+export const makeGetAllPlaybooks = (context: APIContext) => {
 	const playbookPath = '/api/playbooks?admin=true';
-	const url = buildURL(playbookPath, { ...makerOptions, protocol: 'http' });
+	const url = buildURL(playbookPath, { ...context, protocol: 'http' });
 
 	return async (authToken: string | null): Promise<Array<Omit<Playbook, 'body'>>> => {
 		const baseRequestOptions: HTTPRequestOptions = {

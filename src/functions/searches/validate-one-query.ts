@@ -9,10 +9,10 @@
 import { isNull, pick } from 'lodash';
 import { filter, first, map } from 'rxjs/operators';
 import { Query, RawQuery } from '../../models';
-import { APIFunctionMakerOptions, APISubscription, apiSubscriptionFromWebSocket, buildURL, WebSocket } from '../utils';
+import { APIContext, APISubscription, apiSubscriptionFromWebSocket, buildURL, WebSocket } from '../utils';
 
-export const makeValidateOneQuery = (makerOptions: APIFunctionMakerOptions) => {
-	const subscribeToOneQueryValidation = makeSubscribeToOneQueryValidation(makerOptions);
+export const makeValidateOneQuery = (context: APIContext) => {
+	const subscribeToOneQueryValidation = makeSubscribeToOneQueryValidation(context);
 
 	return (authToken: string | null) => {
 		let querySubP: ReturnType<typeof subscribeToOneQueryValidation> | null = null;
@@ -43,9 +43,9 @@ const SEARCH_SOCKET_ID_GENERATOR = (() => {
 	};
 })();
 
-const makeSubscribeToOneQueryValidation = (makerOptions: APIFunctionMakerOptions) => {
+const makeSubscribeToOneQueryValidation = (context: APIContext) => {
 	const templatePath = '/api/ws/search';
-	const url = buildURL(templatePath, { ...makerOptions, protocol: 'ws' });
+	const url = buildURL(templatePath, { ...context, protocol: 'ws' });
 
 	return async (
 		authToken: string | null,

@@ -9,7 +9,7 @@
 import { isUndefined } from 'lodash';
 import { BehaviorSubject } from 'rxjs';
 import * as f from './functions';
-import { APIFunctionMakerOptions, DropFirst, lazyFirst } from './functions/utils';
+import { APIContext, DropFirst, lazyFirst } from './functions/utils';
 import { CreatableJSONEntry, Search } from './models';
 import { Host, NumericID } from './value-objects';
 
@@ -60,18 +60,18 @@ export class GravwellClient {
 		this._authToken$.next(null);
 	}
 
-	private _makeFunction = <MakeF extends (makerOptions: APIFunctionMakerOptions) => (...args: Array<any>) => any>(
+	private _makeFunction = <MakeF extends (context: APIContext) => (...args: Array<any>) => any>(
 		makeF: MakeF,
 	): ReturnType<MakeF> => {
 		return ((...args: Parameters<ReturnType<MakeF>>) => {
-			const makerOptions: APIFunctionMakerOptions = { host: this.host, useEncryption: this.useEncryption };
-			const f = makeF(makerOptions);
+			const context: APIContext = { host: this.host, useEncryption: this.useEncryption };
+			const f = makeF(context);
 			return f(...args);
 		}) as any;
 	};
 
 	private _simplifyFunction = <
-		MakeF extends (makerOptions: APIFunctionMakerOptions) => (authToken: string | null, ...args: Array<any>) => any
+		MakeF extends (context: APIContext) => (authToken: string | null, ...args: Array<any>) => any
 	>(
 		makeF: MakeF,
 	): SimplifiedFunction<ReturnType<MakeF>> => {

@@ -8,19 +8,12 @@
 
 import { isBlankRawResource, RawResource, Resource, toResource } from '../../models';
 import { UUID } from '../../value-objects';
-import {
-	APIFunctionMakerOptions,
-	buildHTTPRequest,
-	buildURL,
-	fetch,
-	HTTPRequestOptions,
-	parseJSONResponse,
-} from '../utils';
+import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 
-export const makeGetOneResource = (makerOptions: APIFunctionMakerOptions) => {
+export const makeGetOneResource = (context: APIContext) => {
 	return async (authToken: string | null, resourceID: UUID): Promise<Resource> => {
 		const resourcePath = '/api/resources/{resourceID}';
-		const url = buildURL(resourcePath, { ...makerOptions, protocol: 'http', pathParams: { resourceID } });
+		const url = buildURL(resourcePath, { ...context, protocol: 'http', pathParams: { resourceID } });
 
 		const baseRequestOptions: HTTPRequestOptions = {
 			headers: { Authorization: authToken ? `Bearer ${authToken}` : undefined },

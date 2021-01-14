@@ -7,16 +7,9 @@
  **************************************************************************/
 
 import { Script } from '../../models';
-import {
-	APIFunctionMakerOptions,
-	buildHTTPRequest,
-	buildURL,
-	fetch,
-	HTTPRequestOptions,
-	parseJSONResponse,
-} from '../utils';
+import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 
-export const makeGetOneScriptLibrary = (makerOptions: APIFunctionMakerOptions) => {
+export const makeGetOneScriptLibrary = (context: APIContext) => {
 	return async (
 		authToken: string | null,
 		path: string,
@@ -24,7 +17,7 @@ export const makeGetOneScriptLibrary = (makerOptions: APIFunctionMakerOptions) =
 	): Promise<Script> => {
 		const templatePath = '/api/libs';
 		const url = buildURL(templatePath, {
-			...makerOptions,
+			...context,
 			protocol: 'http',
 			queryParams: { path, repo: options.repository, commit: options.commitID },
 		});

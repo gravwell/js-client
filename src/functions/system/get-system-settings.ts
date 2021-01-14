@@ -7,18 +7,11 @@
  **************************************************************************/
 
 import { RawSystemSettings, SystemSettings, toSystemSettings } from '../../models';
-import {
-	APIFunctionMakerOptions,
-	buildHTTPRequest,
-	buildURL,
-	fetch,
-	HTTPRequestOptions,
-	parseJSONResponse,
-} from '../utils';
+import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 
-export const makeGetSystemSettings = (makerOptions: APIFunctionMakerOptions) => {
+export const makeGetSystemSettings = (context: APIContext) => {
 	const templatePath = '/api/settings';
-	const url = buildURL(templatePath, { ...makerOptions, protocol: 'http' });
+	const url = buildURL(templatePath, { ...context, protocol: 'http' });
 
 	return async (authToken: string | null): Promise<SystemSettings> => {
 		const baseRequestOptions: HTTPRequestOptions = {

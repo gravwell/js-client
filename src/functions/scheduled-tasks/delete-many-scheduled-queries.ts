@@ -7,14 +7,14 @@
  **************************************************************************/
 
 import { isNil } from 'lodash';
-import { APIFunctionMakerOptions } from '../utils';
+import { APIContext } from '../utils';
 import { makeDeleteOneScheduledQuery } from './delete-one-scheduled-query';
 import { makeGetAllScheduledQueries } from './get-all-scheduled-queries';
 import { ScheduledTasksFilter } from './get-many-scheduled-tasks';
 
-export const makeDeleteManyScheduledQueries = (makerOptions: APIFunctionMakerOptions) => {
-	const deleteOneScheduledQuery = makeDeleteOneScheduledQuery(makerOptions);
-	const getAllScheduledQueries = makeGetAllScheduledQueries(makerOptions);
+export const makeDeleteManyScheduledQueries = (context: APIContext) => {
+	const deleteOneScheduledQuery = makeDeleteOneScheduledQuery(context);
+	const getAllScheduledQueries = makeGetAllScheduledQueries(context);
 
 	return async (authToken: string | null, filter: ScheduledTasksFilter = {}): Promise<void> => {
 		const queries = await getAllScheduledQueries(authToken);

@@ -8,21 +8,14 @@
 
 import { CreatableMacro, Macro, toRawCreatableMacro } from '../../models';
 import { RawNumericID, toNumericID } from '../../value-objects';
-import {
-	APIFunctionMakerOptions,
-	buildHTTPRequest,
-	buildURL,
-	fetch,
-	HTTPRequestOptions,
-	parseJSONResponse,
-} from '../utils';
+import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 import { makeGetOneMacro } from './get-one-macro';
 
-export const makeCreateOneMacro = (makerOptions: APIFunctionMakerOptions) => {
-	const getOneMacro = makeGetOneMacro(makerOptions);
+export const makeCreateOneMacro = (context: APIContext) => {
+	const getOneMacro = makeGetOneMacro(context);
 
 	const templatePath = '/api/macros';
-	const url = buildURL(templatePath, { ...makerOptions, protocol: 'http' });
+	const url = buildURL(templatePath, { ...context, protocol: 'http' });
 
 	return async (authToken: string | null, data: CreatableMacro): Promise<Macro> => {
 		try {

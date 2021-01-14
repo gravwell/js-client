@@ -8,19 +8,12 @@
 
 import { LocalKit, RawLocalKit, toLocalKit } from '../../models';
 import { NumericID } from '../../value-objects';
-import {
-	APIFunctionMakerOptions,
-	buildHTTPRequest,
-	buildURL,
-	fetch,
-	HTTPRequestOptions,
-	parseJSONResponse,
-} from '../utils';
+import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 
-export const makeGetOneLocalKit = (makerOptions: APIFunctionMakerOptions) => {
+export const makeGetOneLocalKit = (context: APIContext) => {
 	return async (authToken: string | null, kitID: NumericID): Promise<LocalKit> => {
 		const templatePath = '/api/kits/{kitID}';
-		const url = buildURL(templatePath, { ...makerOptions, protocol: 'http', pathParams: { kitID } });
+		const url = buildURL(templatePath, { ...context, protocol: 'http', pathParams: { kitID } });
 
 		const baseRequestOptions: HTTPRequestOptions = {
 			headers: { Authorization: authToken ? `Bearer ${authToken}` : undefined },

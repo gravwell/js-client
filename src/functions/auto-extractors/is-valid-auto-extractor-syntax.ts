@@ -7,18 +7,11 @@
  **************************************************************************/
 
 import { CreatableAutoExtractor, toRawCreatableAutoExtractor } from '../../models';
-import {
-	APIFunctionMakerOptions,
-	buildHTTPRequest,
-	buildURL,
-	fetch,
-	HTTPRequestOptions,
-	parseJSONResponse,
-} from '../utils';
+import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 
-export const makeIsValidAutoExtractorSyntax = (makerOptions: APIFunctionMakerOptions) => {
+export const makeIsValidAutoExtractorSyntax = (context: APIContext) => {
 	const templatePath = '/api/autoextractors';
-	const url = buildURL(templatePath, { ...makerOptions, protocol: 'http' });
+	const url = buildURL(templatePath, { ...context, protocol: 'http' });
 
 	return async (
 		authToken: string | null,

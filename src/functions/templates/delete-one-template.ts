@@ -7,19 +7,12 @@
  **************************************************************************/
 
 import { NumericID } from '../../value-objects';
-import {
-	APIFunctionMakerOptions,
-	buildHTTPRequest,
-	buildURL,
-	fetch,
-	HTTPRequestOptions,
-	parseJSONResponse,
-} from '../utils';
+import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 
-export const makeDeleteOneTemplate = (makerOptions: APIFunctionMakerOptions) => {
+export const makeDeleteOneTemplate = (context: APIContext) => {
 	return async (authToken: string | null, templateID: NumericID): Promise<void> => {
 		const templatePath = '/api/templates/{templateID}';
-		const url = buildURL(templatePath, { ...makerOptions, protocol: 'http', pathParams: { templateID } });
+		const url = buildURL(templatePath, { ...context, protocol: 'http', pathParams: { templateID } });
 
 		const baseRequestOptions: HTTPRequestOptions = {
 			headers: { Authorization: authToken ? `Bearer ${authToken}` : undefined },

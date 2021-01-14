@@ -7,19 +7,12 @@
  **************************************************************************/
 
 import { NumericID, toRawNumericID } from '../../value-objects';
-import {
-	APIFunctionMakerOptions,
-	buildHTTPRequest,
-	buildURL,
-	fetch,
-	HTTPRequestOptions,
-	parseJSONResponse,
-} from '../utils';
+import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 
-export const makeAddOneUserToManyGroups = (makerOptions: APIFunctionMakerOptions) => {
+export const makeAddOneUserToManyGroups = (context: APIContext) => {
 	return async (authToken: string | null, userID: NumericID, groupIDs: Array<NumericID>): Promise<void> => {
 		const templatePath = '/api/users/{userID}/group';
-		const url = buildURL(templatePath, { ...makerOptions, protocol: 'http', pathParams: { userID } });
+		const url = buildURL(templatePath, { ...context, protocol: 'http', pathParams: { userID } });
 
 		try {
 			const baseRequestOptions: HTTPRequestOptions = {

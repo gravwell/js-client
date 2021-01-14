@@ -7,18 +7,11 @@
  **************************************************************************/
 
 import { RawTemplate, Template, toRawUpdatableTemplate, toTemplate, UpdatableTemplate } from '../../models';
-import {
-	APIFunctionMakerOptions,
-	buildHTTPRequest,
-	buildURL,
-	fetch,
-	HTTPRequestOptions,
-	parseJSONResponse,
-} from '../utils';
+import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 import { makeGetOneTemplate } from './get-one-template';
 
-export const makeUpdateOneTemplate = (makerOptions: APIFunctionMakerOptions) => {
-	const getOneTemplate = makeGetOneTemplate(makerOptions);
+export const makeUpdateOneTemplate = (context: APIContext) => {
+	const getOneTemplate = makeGetOneTemplate(context);
 
 	return async (authToken: string | null, data: UpdatableTemplate): Promise<Template> => {
 		try {
@@ -26,7 +19,7 @@ export const makeUpdateOneTemplate = (makerOptions: APIFunctionMakerOptions) => 
 
 			const templatePath = '/api/templates/{templateID}';
 			const url = buildURL(templatePath, {
-				...makerOptions,
+				...context,
 				protocol: 'http',
 				pathParams: { templateID: data.uuid },
 			});

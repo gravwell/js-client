@@ -8,18 +8,11 @@
 
 import * as FormData from 'form-data';
 import { CreatableMultiLineEntry } from '../../models';
-import {
-	APIFunctionMakerOptions,
-	buildHTTPRequest,
-	buildURL,
-	fetch,
-	HTTPRequestOptions,
-	parseJSONResponse,
-} from '../utils';
+import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 
-export const makeIngestMultiLineEntry = (makerOptions: APIFunctionMakerOptions) => {
+export const makeIngestMultiLineEntry = (context: APIContext) => {
 	const templatePath = '/api/ingest/lines';
-	const url = buildURL(templatePath, { ...makerOptions, protocol: 'http' });
+	const url = buildURL(templatePath, { ...context, protocol: 'http' });
 
 	return async (authToken: string | null, entry: CreatableMultiLineEntry): Promise<number> => {
 		try {

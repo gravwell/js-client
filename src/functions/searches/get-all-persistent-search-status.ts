@@ -7,18 +7,11 @@
  **************************************************************************/
 
 import { RawSearch2, Search2, toSearch2 } from '../../models';
-import {
-	APIFunctionMakerOptions,
-	buildHTTPRequest,
-	buildURL,
-	fetch,
-	HTTPRequestOptions,
-	parseJSONResponse,
-} from '../utils';
+import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 
-export const makeGetAllPersistentSearchStatus = (makerOptions: APIFunctionMakerOptions) => {
+export const makeGetAllPersistentSearchStatus = (context: APIContext) => {
 	const templatePath = '/api/searchctrl/all';
-	const url = buildURL(templatePath, { ...makerOptions, protocol: 'http' });
+	const url = buildURL(templatePath, { ...context, protocol: 'http' });
 
 	return async (authToken: string | null): Promise<Array<Search2>> => {
 		const baseRequestOptions: HTTPRequestOptions = {

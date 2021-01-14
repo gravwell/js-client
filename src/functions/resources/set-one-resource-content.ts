@@ -10,20 +10,12 @@ import * as FormData from 'form-data';
 import { isString } from 'lodash';
 import { RawResource, Resource, toResource } from '../../models';
 import { UUID } from '../../value-objects';
-import {
-	APIFunctionMakerOptions,
-	buildHTTPRequest,
-	buildURL,
-	fetch,
-	File,
-	HTTPRequestOptions,
-	parseJSONResponse,
-} from '../utils';
+import { APIContext, buildHTTPRequest, buildURL, fetch, File, HTTPRequestOptions, parseJSONResponse } from '../utils';
 
-export const makeSetOneResourceContent = (makerOptions: APIFunctionMakerOptions) => {
+export const makeSetOneResourceContent = (context: APIContext) => {
 	return async (authToken: string | null, resourceID: UUID, file: File): Promise<Resource> => {
 		const resourcePath = '/api/resources/{resourceID}/raw';
-		const url = buildURL(resourcePath, { ...makerOptions, protocol: 'http', pathParams: { resourceID } });
+		const url = buildURL(resourcePath, { ...context, protocol: 'http', pathParams: { resourceID } });
 
 		try {
 			const baseRequestOptions: HTTPRequestOptions = {

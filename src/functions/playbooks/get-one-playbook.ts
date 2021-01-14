@@ -8,19 +8,12 @@
 
 import { Playbook, RawPlaybook, toPlaybook } from '../../models';
 import { UUID } from '../../value-objects';
-import {
-	APIFunctionMakerOptions,
-	buildHTTPRequest,
-	buildURL,
-	fetch,
-	HTTPRequestOptions,
-	parseJSONResponse,
-} from '../utils';
+import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 
-export const makeGetOnePlaybook = (makerOptions: APIFunctionMakerOptions) => {
+export const makeGetOnePlaybook = (context: APIContext) => {
 	return async (authToken: string | null, playbookID: UUID): Promise<Playbook> => {
 		const playbookPath = '/api/playbooks/{playbookID}';
-		const url = buildURL(playbookPath, { ...makerOptions, protocol: 'http', pathParams: { playbookID } });
+		const url = buildURL(playbookPath, { ...context, protocol: 'http', pathParams: { playbookID } });
 
 		const baseRequestOptions: HTTPRequestOptions = {
 			headers: { Authorization: authToken ? `Bearer ${authToken}` : undefined },

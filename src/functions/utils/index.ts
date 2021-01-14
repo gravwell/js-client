@@ -6,7 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-export * from './api-function-maker-options';
+export * from './api-context';
 export * from './api-query-function';
 export * from './api-subscription';
 export * from './api-subscription-from-web-socket';

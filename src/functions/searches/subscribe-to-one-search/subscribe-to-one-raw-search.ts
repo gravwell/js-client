@@ -7,17 +7,11 @@
  **************************************************************************/
 
 import { RawSearchMessageReceived, RawSearchMessageSent } from '../../../models';
-import {
-	APIFunctionMakerOptions,
-	APISubscription,
-	apiSubscriptionFromWebSocket,
-	buildURL,
-	WebSocket,
-} from '../../utils';
+import { APIContext, APISubscription, apiSubscriptionFromWebSocket, buildURL, WebSocket } from '../../utils';
 
-export const makeSubscribeToOneRawSearch = (makerOptions: APIFunctionMakerOptions) => {
+export const makeSubscribeToOneRawSearch = (context: APIContext) => {
 	const templatePath = '/api/ws/search';
-	const url = buildURL(templatePath, { ...makerOptions, protocol: 'ws' });
+	const url = buildURL(templatePath, { ...context, protocol: 'ws' });
 
 	return async (authToken: string | null): Promise<APISubscription<RawSearchMessageReceived, RawSearchMessageSent>> => {
 		const socket = new WebSocket(url, authToken ?? undefined);

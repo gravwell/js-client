@@ -27,11 +27,11 @@ import {
 	SearchSubscription,
 } from '../../../models';
 import { Percentage, toNumericID } from '../../../value-objects';
-import { APIFunctionMakerOptions, promiseProgrammatically } from '../../utils';
+import { APIContext, promiseProgrammatically } from '../../utils';
 import { makeSubscribeToOneRawSearch } from './subscribe-to-one-raw-search';
 
-export const makeSubscribeToOneSearch = (makerOptions: APIFunctionMakerOptions) => {
-	const subscribeToOneRawSearch = makeSubscribeToOneRawSearch(makerOptions);
+export const makeSubscribeToOneSearch = (context: APIContext) => {
+	const subscribeToOneRawSearch = makeSubscribeToOneRawSearch(context);
 
 	return (authToken: string | null) => {
 		let rawSubscriptionP: ReturnType<typeof subscribeToOneRawSearch> | null = null;

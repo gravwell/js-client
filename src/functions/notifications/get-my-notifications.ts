@@ -16,7 +16,7 @@ import {
 	TargetedNotification,
 } from '../../models';
 import {
-	APIFunctionMakerOptions,
+	APIContext,
 	buildHTTPRequest,
 	buildURL,
 	fetch,
@@ -25,9 +25,9 @@ import {
 	parseJSONResponse,
 } from '../utils';
 
-export const makeGetMyNotifications = (makerOptions: APIFunctionMakerOptions) => {
+export const makeGetMyNotifications = (context: APIContext) => {
 	const templatePath = '/api/notifications/';
-	const url = buildURL(templatePath, { ...makerOptions, protocol: 'http' });
+	const url = buildURL(templatePath, { ...context, protocol: 'http' });
 
 	return async (sessionToken: string | null): Promise<Array<Notification>> => {
 		const baseRequestOptions: HTTPRequestOptions = {

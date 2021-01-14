@@ -8,19 +8,12 @@
 
 import { RawSavedQuery, SavedQuery, toSavedQuery } from '../../models';
 import { NumericID } from '../../value-objects';
-import {
-	APIFunctionMakerOptions,
-	buildHTTPRequest,
-	buildURL,
-	fetch,
-	HTTPRequestOptions,
-	parseJSONResponse,
-} from '../utils';
+import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 
-export const makeGetOneSavedQuery = (makerOptions: APIFunctionMakerOptions) => {
+export const makeGetOneSavedQuery = (context: APIContext) => {
 	return async (authToken: string | null, savedQueryID: NumericID): Promise<SavedQuery> => {
 		const templatePath = '/api/library/{savedQueryID}';
-		const url = buildURL(templatePath, { ...makerOptions, protocol: 'http', pathParams: { savedQueryID } });
+		const url = buildURL(templatePath, { ...context, protocol: 'http', pathParams: { savedQueryID } });
 
 		const baseRequestOptions: HTTPRequestOptions = {
 			headers: { Authorization: authToken ? `Bearer ${authToken}` : undefined },

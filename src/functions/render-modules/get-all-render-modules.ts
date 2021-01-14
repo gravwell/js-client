@@ -7,18 +7,11 @@
  **************************************************************************/
 
 import { RawRenderModule, RenderModule, toRenderModule } from '../../models';
-import {
-	APIFunctionMakerOptions,
-	buildHTTPRequest,
-	buildURL,
-	fetch,
-	HTTPRequestOptions,
-	parseJSONResponse,
-} from '../utils';
+import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 
-export const makeGetAllRenderModules = (makerOptions: APIFunctionMakerOptions) => {
+export const makeGetAllRenderModules = (context: APIContext) => {
 	const templatePath = '/api/info/rendermodules';
-	const url = buildURL(templatePath, { ...makerOptions, protocol: 'http' });
+	const url = buildURL(templatePath, { ...context, protocol: 'http' });
 
 	return async (authToken: string | null): Promise<Array<RenderModule>> => {
 		const baseRequestOptions: HTTPRequestOptions = {

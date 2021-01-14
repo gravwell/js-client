@@ -7,20 +7,13 @@
  **************************************************************************/
 
 import { UUID } from '../../value-objects';
-import {
-	APIFunctionMakerOptions,
-	buildHTTPRequest,
-	buildURL,
-	fetch,
-	HTTPRequestOptions,
-	parseJSONResponse,
-} from '../utils';
+import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 
-export const makeDownloadManyAutoExtractors = (makerOptions: APIFunctionMakerOptions) => {
+export const makeDownloadManyAutoExtractors = (context: APIContext) => {
 	return async (authToken: string | null, filter: AutoExtractorsFilter): Promise<string> => {
 		const path = '/api/autoextractors/download';
 		const url = buildURL(path, {
-			...makerOptions,
+			...context,
 			protocol: 'http',
 			queryParams: {
 				id: filter.ids,

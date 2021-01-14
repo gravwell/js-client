@@ -7,21 +7,14 @@
  **************************************************************************/
 
 import { toRawUpdatableNotification, UpdatableNotification } from '../../models/notification';
-import {
-	APIFunctionMakerOptions,
-	buildHTTPRequest,
-	buildURL,
-	fetch,
-	HTTPRequestOptions,
-	parseJSONResponse,
-} from '../utils';
+import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 
-export const makeUpdateOneNotification = (makerOptions: APIFunctionMakerOptions) => {
+export const makeUpdateOneNotification = (context: APIContext) => {
 	return async (authToken: string | null, updatable: UpdatableNotification): Promise<void> => {
 		try {
 			const templatePath = '/api/notifications/{notificationID}';
 			const url = buildURL(templatePath, {
-				...makerOptions,
+				...context,
 				protocol: 'http',
 				pathParams: { notificationID: updatable.id },
 			});

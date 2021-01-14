@@ -10,24 +10,16 @@ import * as FormData from 'form-data';
 import { isString } from 'lodash';
 import { AutoExtractor, UpdatableAutoExtractor, UploadableAutoExtractor } from '../../models';
 import { RawUUID } from '../../value-objects';
-import {
-	APIFunctionMakerOptions,
-	buildHTTPRequest,
-	buildURL,
-	fetch,
-	File,
-	HTTPRequestOptions,
-	parseJSONResponse,
-} from '../utils';
+import { APIContext, buildHTTPRequest, buildURL, fetch, File, HTTPRequestOptions, parseJSONResponse } from '../utils';
 import { makeGetAllAutoExtractors } from './get-all-auto-extractors';
 import { makeUpdateOneAutoExtractor } from './update-one-auto-extractor';
 
-export const makeUploadManyAutoExtractors = (makerOptions: APIFunctionMakerOptions) => {
-	const getAllAutoExtractors = makeGetAllAutoExtractors(makerOptions);
-	const updateOneAutoExtractor = makeUpdateOneAutoExtractor(makerOptions);
+export const makeUploadManyAutoExtractors = (context: APIContext) => {
+	const getAllAutoExtractors = makeGetAllAutoExtractors(context);
+	const updateOneAutoExtractor = makeUpdateOneAutoExtractor(context);
 
 	const resourcePath = '/api/autoextractors/upload';
-	const url = buildURL(resourcePath, { ...makerOptions, protocol: 'http' });
+	const url = buildURL(resourcePath, { ...context, protocol: 'http' });
 
 	return async (authToken: string | null, data: UploadableAutoExtractor): Promise<Array<AutoExtractor>> => {
 		try {

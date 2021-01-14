@@ -16,7 +16,7 @@ import {
 } from '../../models';
 import { ID, NumericID, RawNumericID, toNumericID } from '../../value-objects';
 import {
-	APIFunctionMakerOptions,
+	APIContext,
 	APISubscription,
 	buildHTTPRequest,
 	buildURL,
@@ -25,9 +25,9 @@ import {
 	parseJSONResponse,
 } from '../utils';
 
-export const makeInstallOneKit = (makerOptions: APIFunctionMakerOptions) => {
-	const queueOneKitForInstallation = makeQueueOneKitForInstallation(makerOptions);
-	const getOneKitInstallationStatus = makeGetOneKitInstallationStatus(makerOptions);
+export const makeInstallOneKit = (context: APIContext) => {
+	const queueOneKitForInstallation = makeQueueOneKitForInstallation(context);
+	const getOneKitInstallationStatus = makeGetOneKitInstallationStatus(context);
 	const subscribeToOneKitInstallationStatus = (authToken: string | null, installationID: ID) =>
 		new Observable<KitInstallationStatus>(observer => {
 			(async () => {
@@ -81,10 +81,10 @@ export const makeInstallOneKit = (makerOptions: APIFunctionMakerOptions) => {
 
 const wait = (ms: number) => new Promise<void>(res => setTimeout(res, ms));
 
-const makeGetOneKitInstallationStatus = (makerOptions: APIFunctionMakerOptions) => {
+const makeGetOneKitInstallationStatus = (context: APIContext) => {
 	return async (authToken: string | null, installationID: NumericID): Promise<KitInstallationStatus> => {
 		const templatePath = '/api/kits/status/{installationID}';
-		const url = buildURL(templatePath, { ...makerOptions, protocol: 'http', pathParams: { installationID } });
+		const url = buildURL(templatePath, { ...context, protocol: 'http', pathParams: { installationID } });
 
 		const baseRequestOptions: HTTPRequestOptions = {
 			headers: { Authorization: authToken ? `Bearer ${authToken}` : undefined },
@@ -97,10 +97,10 @@ const makeGetOneKitInstallationStatus = (makerOptions: APIFunctionMakerOptions) 
 	};
 };
 
-const makeQueueOneKitForInstallation = (makerOptions: APIFunctionMakerOptions) => {
+const makeQueueOneKitForInstallation = (context: APIContext) => {
 	return async (authToken: string | null, data: InstallableKit): Promise<NumericID> => {
 		const templatePath = '/api/kits/{kitID}';
-		const url = buildURL(templatePath, { ...makerOptions, protocol: 'http' });
+		const url = buildURL(templatePath, { ...context, protocol: 'http' });
 
 		try {
 			const baseRequestOptions: HTTPRequestOptions = {

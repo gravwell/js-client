@@ -8,19 +8,12 @@
 
 import { RawSearch2, Search2, toSearch2 } from '../../models';
 import { NumericID } from '../../value-objects';
-import {
-	APIFunctionMakerOptions,
-	buildHTTPRequest,
-	buildURL,
-	fetch,
-	HTTPRequestOptions,
-	parseJSONResponse,
-} from '../utils';
+import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 
-export const makeGetOnePersistentSearchStatus = (makerOptions: APIFunctionMakerOptions) => {
+export const makeGetOnePersistentSearchStatus = (context: APIContext) => {
 	return async (authToken: string | null, searchID: NumericID): Promise<Search2> => {
 		const templatePath = '/api/searchctrl/{searchID}';
-		const url = buildURL(templatePath, { ...makerOptions, protocol: 'http', pathParams: { searchID } });
+		const url = buildURL(templatePath, { ...context, protocol: 'http', pathParams: { searchID } });
 
 		const baseRequestOptions: HTTPRequestOptions = {
 			headers: { Authorization: authToken ? `Bearer ${authToken}` : undefined },

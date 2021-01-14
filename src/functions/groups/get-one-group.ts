@@ -8,19 +8,12 @@
 
 import { Group, RawGroup, toGroup } from '../../models';
 import { NumericID } from '../../value-objects';
-import {
-	APIFunctionMakerOptions,
-	buildHTTPRequest,
-	buildURL,
-	fetch,
-	HTTPRequestOptions,
-	parseJSONResponse,
-} from '../utils';
+import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 
-export const makeGetOneGroup = (makerOptions: APIFunctionMakerOptions) => {
+export const makeGetOneGroup = (context: APIContext) => {
 	return async (authToken: string | null, groupID: NumericID): Promise<Group> => {
 		const templatePath = '/api/groups/{groupID}';
-		const url = buildURL(templatePath, { ...makerOptions, protocol: 'http', pathParams: { groupID } });
+		const url = buildURL(templatePath, { ...context, protocol: 'http', pathParams: { groupID } });
 
 		const baseRequestOptions: HTTPRequestOptions = {
 			headers: { Authorization: authToken ? `Bearer ${authToken}` : undefined },

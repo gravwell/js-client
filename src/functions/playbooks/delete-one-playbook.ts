@@ -7,19 +7,12 @@
  **************************************************************************/
 
 import { NumericID } from '../../value-objects';
-import {
-	APIFunctionMakerOptions,
-	buildHTTPRequest,
-	buildURL,
-	fetch,
-	HTTPRequestOptions,
-	parseJSONResponse,
-} from '../utils';
+import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 
-export const makeDeleteOnePlaybook = (makerOptions: APIFunctionMakerOptions) => {
+export const makeDeleteOnePlaybook = (context: APIContext) => {
 	return async (authToken: string | null, playbookID: NumericID): Promise<void> => {
 		const playbookPath = '/api/playbooks/{playbookID}';
-		const url = buildURL(playbookPath, { ...makerOptions, protocol: 'http', pathParams: { playbookID } });
+		const url = buildURL(playbookPath, { ...context, protocol: 'http', pathParams: { playbookID } });
 
 		const baseRequestOptions: HTTPRequestOptions = {
 			headers: { Authorization: authToken ? `Bearer ${authToken}` : undefined },
