@@ -14,7 +14,7 @@ module.exports = {
 		ecmaVersion: 2020,
 		sourceType: 'module',
 	},
-	plugins: ['@typescript-eslint'],
+	plugins: ['@typescript-eslint', 'simple-import-sort', 'import'],
 	rules: {
 		'no-extra-semi': 'off',
 		'curly': 'off',
@@ -22,6 +22,12 @@ module.exports = {
 
 		'no-unused-vars': 'off',
 		'@typescript-eslint/no-unused-vars': 'error',
+
+		'sort-imports': 'off',
+		'simple-import-sort/imports': ['error', { groups: [['^\\u0000', '^@?\\w', '^[^.]', '^\\.']] }],
+		'import/first': 'error',
+		'import/newline-after-import': 'error',
+		'import/no-duplicates': 'error',
 
 		'@typescript-eslint/array-type': ['error', { default: 'generic' }],
 
