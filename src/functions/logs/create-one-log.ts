@@ -7,23 +7,16 @@
  **************************************************************************/
 
 import { LogLevel, toRawLogLevel } from '../../models';
-import {
-	APIFunctionMakerOptions,
-	buildHTTPRequest,
-	buildURL,
-	fetch,
-	HTTPRequestOptions,
-	parseJSONResponse,
-} from '../utils';
+import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 
-export const makeCreateOneLog = (makerOptions: APIFunctionMakerOptions) => {
-	return async (authToken: string | null, level: LogLevel, message: string): Promise<void> => {
+export const makeCreateOneLog = (context: APIContext) => {
+	return async (level: LogLevel, message: string): Promise<void> => {
 		const templatePath = '/api/logging/{lowerCaseRawLogLevel}';
 		const lowerCaseRawLogLevel = toRawLogLevel(level).toLowerCase();
-		const url = buildURL(templatePath, { ...makerOptions, protocol: 'http', pathParams: { lowerCaseRawLogLevel } });
+		const url = buildURL(templatePath, { ...context, protocol: 'http', pathParams: { lowerCaseRawLogLevel } });
 
 		const baseRequestOptions: HTTPRequestOptions = {
-			headers: { Authorization: authToken ? `Bearer ${authToken}` : undefined },
+			headers: { Authorization: context.authToken ? `Bearer ${context.authToken}` : undefined },
 			body: JSON.stringify({ Body: message }),
 		};
 		const req = buildHTTPRequest(baseRequestOptions);

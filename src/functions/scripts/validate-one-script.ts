@@ -7,22 +7,15 @@
  **************************************************************************/
 
 import { RawValidatedScript, Script, toValidatedScript, ValidatedScript } from '../../models';
-import {
-	APIFunctionMakerOptions,
-	buildHTTPRequest,
-	buildURL,
-	fetch,
-	HTTPRequestOptions,
-	parseJSONResponse,
-} from '../utils';
+import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 
-export const makeValidateOneScript = (makerOptions: APIFunctionMakerOptions) => {
+export const makeValidateOneScript = (context: APIContext) => {
 	const templatePath = '/api/scheduledsearches/parse';
-	const url = buildURL(templatePath, { ...makerOptions, protocol: 'http' });
+	const url = buildURL(templatePath, { ...context, protocol: 'http' });
 
-	return async (authToken: string | null, script: Script): Promise<ValidatedScript> => {
+	return async (script: Script): Promise<ValidatedScript> => {
 		const baseRequestOptions: HTTPRequestOptions = {
-			headers: { Authorization: authToken ? `Bearer ${authToken}` : undefined },
+			headers: { Authorization: context.authToken ? `Bcontext.authTokenontext.authToken}` : undefined },
 			body: JSON.stringify({ Script: script }),
 		};
 		const req = buildHTTPRequest(baseRequestOptions);

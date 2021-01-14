@@ -9,13 +9,9 @@
 import { isUndefined } from 'lodash';
 import { BehaviorSubject } from 'rxjs';
 import * as f from './functions';
-import { APIFunctionMakerOptions, DropFirst, lazyFirst } from './functions/utils';
+import { APIContext } from './functions/utils';
 import { CreatableJSONEntry, Search } from './models';
 import { Host, NumericID } from './value-objects';
-
-type SimplifiedFunction<F extends (authToken: string | null, ...args: Array<any>) => any> = (
-	...args: DropFirst<Parameters<F>>
-) => ReturnType<F>;
 
 export interface GravwellClientOptions {
 	useEncryption: boolean;
@@ -60,122 +56,107 @@ export class GravwellClient {
 		this._authToken$.next(null);
 	}
 
-	private _makeFunction = <MakeF extends (makerOptions: APIFunctionMakerOptions) => (...args: Array<any>) => any>(
+	private _makeFunction = <MakeF extends (context: APIContext) => (...args: Array<any>) => any>(
 		makeF: MakeF,
 	): ReturnType<MakeF> => {
 		return ((...args: Parameters<ReturnType<MakeF>>) => {
-			const makerOptions: APIFunctionMakerOptions = { host: this.host, useEncryption: this.useEncryption };
-			const f = makeF(makerOptions);
+			const context: APIContext = { host: this.host, useEncryption: this.useEncryption, authToken: this.authToken };
+			const f = makeF(context);
 			return f(...args);
 		}) as any;
 	};
 
-	private _simplifyFunction = <
-		MakeF extends (makerOptions: APIFunctionMakerOptions) => (authToken: string | null, ...args: Array<any>) => any
-	>(
-		makeF: MakeF,
-	): SimplifiedFunction<ReturnType<MakeF>> => {
-		return (...args) => {
-			const f = this._makeFunction(makeF);
-			const dropFirst = lazyFirst(() => this.authToken);
-			const simplifiedF = dropFirst(f);
-			return simplifiedF(...args);
-		};
-	};
-
 	public readonly tags = {
-		getAll: this._simplifyFunction(f.makeGetAllTags),
+		getAll: this._makeFunction(f.makeGetAllTags),
 	};
 
 	public readonly system = {
-		getSettings: this._simplifyFunction(f.makeGetSystemSettings),
-		isConnected: this._simplifyFunction(f.makeSystemIsConnected),
-		getAPIVersion: this._simplifyFunction(f.makeGetAPIVersion),
-		subscribeToManyInformations: this._simplifyFunction(f.makeSubscribeToManySystemInformations),
+		getSettings: this._makeFunction(f.makeGetSystemSettings),
+		isConnected: this._makeFunction(f.makeSystemIsConnected),
+		getAPIVersion: this._makeFunction(f.makeGetAPIVersion),
+		subscribeToManyInformations: this._makeFunction(f.makeSubscribeToManySystemInformations),
 	};
 
 	public readonly users = {
-		getMe: this._simplifyFunction(f.makeGetMyUser),
-		getOne: this._simplifyFunction(f.makeGetOneUser),
-		getMany: this._simplifyFunction(f.makeGetManyUsers),
-		getAll: this._simplifyFunction(f.makeGetAllUsers),
-		createOne: this._simplifyFunction(f.makeCreateOneUser),
-		updateMe: this._simplifyFunction(f.makeUpdateMyUser),
-		updateOne: this._simplifyFunction(f.makeUpdateOneUser),
-		deleteOne: this._simplifyFunction(f.makeDeleteOneUser),
+		getMe: this._makeFunction(f.makeGetMyUser),
+		getOne: this._makeFunction(f.makeGetOneUser),
+		getMany: this._makeFunction(f.makeGetManyUsers),
+		getAll: this._makeFunction(f.makeGetAllUsers),
+		createOne: this._makeFunction(f.makeCreateOneUser),
+		updateMe: this._makeFunction(f.makeUpdateMyUser),
+		updateOne: this._makeFunction(f.makeUpdateOneUser),
+		deleteOne: this._makeFunction(f.makeDeleteOneUser),
 	};
 
 	public readonly userPreferences = {
-		getOne: this._simplifyFunction(f.makeGetOneUserPreferences),
-		getAll: this._simplifyFunction(f.makeGetAllUserPreferences),
-		updateOne: this._simplifyFunction(f.makeUpdateOneUserPreferences),
-		deleteOne: this._simplifyFunction(f.makeDeleteOneUserPreferences),
+		getOne: this._makeFunction(f.makeGetOneUserPreferences),
+		getAll: this._makeFunction(f.makeGetAllUserPreferences),
+		updateOne: this._makeFunction(f.makeUpdateOneUserPreferences),
+		deleteOne: this._makeFunction(f.makeDeleteOneUserPreferences),
 	};
 
 	public readonly auth = {
 		loginOne: this._makeFunction(f.makeLoginOneUser),
 		logoutOne: this._makeFunction(f.makeLogoutOneUser),
-		logoutAll: this._simplifyFunction(f.makeLogoutAllUsers),
-		getOneUserSessions: this._simplifyFunction(f.makeGetOneUserActiveSessions),
+		logoutAll: this._makeFunction(f.makeLogoutAllUsers),
+		getOneUserSessions: this._makeFunction(f.makeGetOneUserActiveSessions),
 	};
 
 	public readonly notifications = {
-		createOneBroadcasted: this._simplifyFunction(f.makeCreateOneBroadcastedNotification),
-		createOneTargeted: lazyExec(
-			lazyFirst(() => this.authToken)(this._makeFunction(f.makeCreateOneTargetedNotification)),
-		),
-		getMine: this._simplifyFunction(f.makeGetMyNotifications),
-		subscribeToMine: this._simplifyFunction(f.makeSubscribeToMyNotifications),
-		updateOne: this._simplifyFunction(f.makeUpdateOneNotification),
-		deleteOne: this._simplifyFunction(f.makeDeleteOneUserPreferences),
+		createOneBroadcasted: this._makeFunction(f.makeCreateOneBroadcastedNotification),
+		createOneTargeted: this._makeFunction(f.makeCreateOneTargetedNotification),
+		getMine: this._makeFunction(f.makeGetMyNotifications),
+		subscribeToMine: this._makeFunction(f.makeSubscribeToMyNotifications),
+		updateOne: this._makeFunction(f.makeUpdateOneNotification),
+		deleteOne: this._makeFunction(f.makeDeleteOneUserPreferences),
 	};
 
 	public readonly webServer = {
-		restart: this._simplifyFunction(f.makeRestartWebServer),
-		isDistributed: this._simplifyFunction(f.makeWebServerIsDistributed),
+		restart: this._makeFunction(f.makeRestartWebServer),
+		isDistributed: this._makeFunction(f.makeWebServerIsDistributed),
 	};
 
 	public readonly indexers = {
-		restart: this._simplifyFunction(f.makeRestartIndexers),
+		restart: this._makeFunction(f.makeRestartIndexers),
 	};
 
 	public readonly ingestors = {
-		ingestOneJSON: (entry: CreatableJSONEntry) => this._simplifyFunction(f.makeIngestJSONEntries)([entry]),
-		ingestManyJSON: this._simplifyFunction(f.makeIngestJSONEntries),
-		ingestByLine: this._simplifyFunction(f.makeIngestMultiLineEntry),
+		ingestOneJSON: (entry: CreatableJSONEntry) => this._makeFunction(f.makeIngestJSONEntries)([entry]),
+		ingestManyJSON: this._makeFunction(f.makeIngestJSONEntries),
+		ingestByLine: this._makeFunction(f.makeIngestMultiLineEntry),
 	};
 
 	public readonly logs = {
-		getLogLevels: this._simplifyFunction(f.makeGetLogLevels),
-		setLogLevel: this._simplifyFunction(f.makeSetLogLevel),
-		createOne: this._simplifyFunction(f.makeCreateOneLog),
+		getLogLevels: this._makeFunction(f.makeGetLogLevels),
+		setLogLevel: this._makeFunction(f.makeSetLogLevel),
+		createOne: this._makeFunction(f.makeCreateOneLog),
 	};
 
 	public readonly searchModules = {
-		getAll: this._simplifyFunction(f.makeGetAllSearchModules),
+		getAll: this._makeFunction(f.makeGetAllSearchModules),
 	};
 
 	public readonly renderModules = {
-		getAll: this._simplifyFunction(f.makeGetAllRenderModules),
+		getAll: this._makeFunction(f.makeGetAllRenderModules),
 	};
 
 	public readonly scripts = {
 		validate: {
-			one: this._simplifyFunction(f.makeValidateOneScript),
+			one: this._makeFunction(f.makeValidateOneScript),
 		},
 
 		libraries: {
 			/**
 			 * Retrieves the code to a specific script library.
 			 */
-			getOne: this._simplifyFunction(f.makeGetOneScriptLibrary),
+			getOne: this._makeFunction(f.makeGetOneScriptLibrary),
 
 			/**
 			 * Updates all libraries to their latest versions. The promise resolves
 			 * when the command to sync them is successfully received by the
 			 * backend, not we they're all synced.
 			 */
-			syncAll: this._simplifyFunction(f.makeSyncAllScriptLibraries),
+			syncAll: this._makeFunction(f.makeSyncAllScriptLibraries),
 		},
 	};
 
@@ -183,417 +164,410 @@ export class GravwellClient {
 		/**
 		 * Returns all persistent searches related to the current user.
 		 */
-		getAllStatusRelatedToMe: this._simplifyFunction(f.makeGetPersistentSearchStatusRelatedToMe),
+		getAllStatusRelatedToMe: this._makeFunction(f.makeGetPersistentSearchStatusRelatedToMe),
 
 		/**
 		 * Returns the status of a specific persistent search.
 		 */
-		getOneStatus: this._simplifyFunction(f.makeGetOnePersistentSearchStatus),
+		getOneStatus: this._makeFunction(f.makeGetOnePersistentSearchStatus),
 
 		/**
 		 * Returns all persistent searches.
 		 */
-		getAllStatus: this._simplifyFunction(f.makeGetAllPersistentSearchStatus),
+		getAllStatus: this._makeFunction(f.makeGetAllPersistentSearchStatus),
 
 		/**
 		 * Sends a specific search to the background.
 		 */
-		backgroundOne: this._simplifyFunction(f.makeBackgroundOneSearch),
+		backgroundOne: this._makeFunction(f.makeBackgroundOneSearch),
 
 		/**
 		 * Saves a specific search.
 		 */
-		saveOne: this._simplifyFunction(f.makeSaveOneSearch),
+		saveOne: this._makeFunction(f.makeSaveOneSearch),
 
 		/**
 		 * Deletes a specific search.
 		 */
-		deleteOne: this._simplifyFunction(f.makeDeleteOneSearch),
+		deleteOne: this._makeFunction(f.makeDeleteOneSearch),
 
 		/**
 		 * Returns all searches owned by a specific user.
 		 */
 		getUserHistory: (userID: string): Promise<Array<Search>> =>
-			this._simplifyFunction(f.makeGetSearchHistory)({ target: 'user', userID }),
+			this._makeFunction(f.makeGetSearchHistory)({ target: 'user', userID }),
 
 		/**
 		 * Returns all searches that a specific user has access to. Be it because
 		 * he made the search or because he's in the group that owns the search.
 		 */
 		getUserRelatedHistory: (userID: string): Promise<Array<Search>> =>
-			this._simplifyFunction(f.makeGetSearchHistory)({ target: 'user related', userID }),
+			this._makeFunction(f.makeGetSearchHistory)({ target: 'user related', userID }),
 
 		/**
 		 * Returns all searches owned by a specific group.
 		 */
 		getGroupHistory: (groupID: string): Promise<Array<Search>> =>
-			this._simplifyFunction(f.makeGetSearchHistory)({ target: 'group', groupID }),
+			this._makeFunction(f.makeGetSearchHistory)({ target: 'group', groupID }),
 
 		/**
 		 * Returns all searches owned by the current authenticated user.
 		 */
-		getMyHistory: (): Promise<Array<Search>> => this._simplifyFunction(f.makeGetSearchHistory)({ target: 'myself' }),
+		getMyHistory: (): Promise<Array<Search>> => this._makeFunction(f.makeGetSearchHistory)({ target: 'myself' }),
 
 		/**
 		 * Returns all searches owned by all users. Requires admin privilege.
 		 */
-		getAllHistory: (): Promise<Array<Search>> => this._simplifyFunction(f.makeGetSearchHistory)({ target: 'all' }),
+		getAllHistory: (): Promise<Array<Search>> => this._makeFunction(f.makeGetSearchHistory)({ target: 'all' }),
 
 		download: {
-			one: this._simplifyFunction(f.makeDownloadOneSearch),
+			one: this._makeFunction(f.makeDownloadOneSearch),
 		},
 
 		create: {
-			one: lazyExec(lazyFirst(() => this.authToken)(this._makeFunction(f.makeSubscribeToOneSearch))),
+			one: this._makeFunction(f.makeSubscribeToOneSearch),
 		},
 	};
 
 	public readonly groups = {
-		createOne: this._simplifyFunction(f.makeCreateOneGroup),
-		deleteOne: this._simplifyFunction(f.makeDeleteOneGroup),
-		getOne: this._simplifyFunction(f.makeGetOneGroup),
-		getMany: this._simplifyFunction(f.makeGetManyGroups),
-		getAll: this._simplifyFunction(f.makeGetAllGroups),
-		updateOne: this._simplifyFunction(f.makeUpdateOneGroup),
+		createOne: this._makeFunction(f.makeCreateOneGroup),
+		deleteOne: this._makeFunction(f.makeDeleteOneGroup),
+		getOne: this._makeFunction(f.makeGetOneGroup),
+		getMany: this._makeFunction(f.makeGetManyGroups),
+		getAll: this._makeFunction(f.makeGetAllGroups),
+		updateOne: this._makeFunction(f.makeUpdateOneGroup),
 		addOneUser: {
 			toOne: (userID: NumericID, groupID: NumericID) =>
-				this._simplifyFunction(f.makeAddOneUserToManyGroups)(userID, [groupID]),
-			toMany: this._simplifyFunction(f.makeAddOneUserToManyGroups),
+				this._makeFunction(f.makeAddOneUserToManyGroups)(userID, [groupID]),
+			toMany: this._makeFunction(f.makeAddOneUserToManyGroups),
 		},
 		removeOneUser: {
-			fromOne: this._simplifyFunction(f.makeRemoveOneUserFromOneGroup),
+			fromOne: this._makeFunction(f.makeRemoveOneUserFromOneGroup),
 		},
 	};
 
 	public readonly actionables = {
 		get: {
-			one: this._simplifyFunction(f.makeGetOneActionable),
-			all: this._simplifyFunction(f.makeGetAllActionablesAsAdmin),
+			one: this._makeFunction(f.makeGetOneActionable),
+			all: this._makeFunction(f.makeGetAllActionablesAsAdmin),
 			related: {
-				toMe: this._simplifyFunction(f.makeGetAllActionables),
+				toMe: this._makeFunction(f.makeGetAllActionables),
 			},
 		},
 
 		create: {
-			one: this._simplifyFunction(f.makeCreateOneActionable),
+			one: this._makeFunction(f.makeCreateOneActionable),
 		},
 
 		update: {
-			one: this._simplifyFunction(f.makeUpdateOneActionable),
+			one: this._makeFunction(f.makeUpdateOneActionable),
 		},
 
 		delete: {
-			one: this._simplifyFunction(f.makeDeleteOneActionable),
+			one: this._makeFunction(f.makeDeleteOneActionable),
 		},
 	};
 
 	public readonly templates = {
 		get: {
-			one: this._simplifyFunction(f.makeGetOneTemplate),
-			all: this._simplifyFunction(f.makeGetAllTemplatesAsAdmin),
+			one: this._makeFunction(f.makeGetOneTemplate),
+			all: this._makeFunction(f.makeGetAllTemplatesAsAdmin),
 			related: {
-				toMe: this._simplifyFunction(f.makeGetAllTemplates),
+				toMe: this._makeFunction(f.makeGetAllTemplates),
 			},
 		},
 
 		create: {
-			one: this._simplifyFunction(f.makeCreateOneTemplate),
+			one: this._makeFunction(f.makeCreateOneTemplate),
 		},
 
 		update: {
-			one: this._simplifyFunction(f.makeUpdateOneTemplate),
+			one: this._makeFunction(f.makeUpdateOneTemplate),
 		},
 
 		delete: {
-			one: this._simplifyFunction(f.makeDeleteOneTemplate),
+			one: this._makeFunction(f.makeDeleteOneTemplate),
 		},
 	};
 
 	public readonly playbooks = {
 		get: {
-			one: this._simplifyFunction(f.makeGetOnePlaybook),
-			all: this._simplifyFunction(f.makeGetAllPlaybooks),
+			one: this._makeFunction(f.makeGetOnePlaybook),
+			all: this._makeFunction(f.makeGetAllPlaybooks),
 			related: {
-				toMe: this._simplifyFunction(f.makeGetAllPlaybooksRelatedToMe),
+				toMe: this._makeFunction(f.makeGetAllPlaybooksRelatedToMe),
 			},
 		},
 
 		create: {
-			one: this._simplifyFunction(f.makeCreateOnePlaybook),
+			one: this._makeFunction(f.makeCreateOnePlaybook),
 		},
 
 		update: {
-			one: this._simplifyFunction(f.makeUpdateOnePlaybook),
+			one: this._makeFunction(f.makeUpdateOnePlaybook),
 		},
 
 		delete: {
-			one: this._simplifyFunction(f.makeDeleteOnePlaybook),
+			one: this._makeFunction(f.makeDeleteOnePlaybook),
 		},
 	};
 
 	public readonly resources = {
 		get: {
-			one: this._simplifyFunction(f.makeGetOneResource),
-			all: this._simplifyFunction(f.makeGetAllResources),
+			one: this._makeFunction(f.makeGetOneResource),
+			all: this._makeFunction(f.makeGetAllResources),
 			authorized: {
-				toMe: this._simplifyFunction(f.makeGetResourcesAuthorizedToMe),
+				toMe: this._makeFunction(f.makeGetResourcesAuthorizedToMe),
 			},
 		},
 
 		preview: {
-			one: this._simplifyFunction(f.makePreviewOneResourceContent),
+			one: this._makeFunction(f.makePreviewOneResourceContent),
 		},
 
 		create: {
-			one: this._simplifyFunction(f.makeCreateOneResource),
+			one: this._makeFunction(f.makeCreateOneResource),
 		},
 
 		update: {
-			one: this._simplifyFunction(f.makeUpdateOneResource),
+			one: this._makeFunction(f.makeUpdateOneResource),
 		},
 
 		delete: {
-			one: this._simplifyFunction(f.makeDeleteOneResource),
+			one: this._makeFunction(f.makeDeleteOneResource),
 		},
 	};
 
 	public readonly macros = {
 		get: {
-			one: this._simplifyFunction(f.makeGetOneMacro),
-			many: this._simplifyFunction(f.makeGetManyMacros),
-			all: this._simplifyFunction(f.makeGetAllMacros),
+			one: this._makeFunction(f.makeGetOneMacro),
+			many: this._makeFunction(f.makeGetManyMacros),
+			all: this._makeFunction(f.makeGetAllMacros),
 			authorized: {
-				toMe: this._simplifyFunction(f.makeGetMacrosAuthorizedToMe),
+				toMe: this._makeFunction(f.makeGetMacrosAuthorizedToMe),
 			},
 		},
 
 		create: {
-			one: this._simplifyFunction(f.makeCreateOneMacro),
+			one: this._makeFunction(f.makeCreateOneMacro),
 		},
 
 		update: {
-			one: this._simplifyFunction(f.makeUpdateOneMacro),
+			one: this._makeFunction(f.makeUpdateOneMacro),
 		},
 
 		delete: {
-			one: this._simplifyFunction(f.makeDeleteOneMacro),
+			one: this._makeFunction(f.makeDeleteOneMacro),
 		},
 	};
 
 	public readonly dashboards = {
 		get: {
-			one: this._simplifyFunction(f.makeGetOneDashboard),
-			many: this._simplifyFunction(f.makeGetManyDashboards),
-			all: this._simplifyFunction(f.makeGetAllDashboards),
+			one: this._makeFunction(f.makeGetOneDashboard),
+			many: this._makeFunction(f.makeGetManyDashboards),
+			all: this._makeFunction(f.makeGetAllDashboards),
 			authorized: {
-				toMe: this._simplifyFunction(f.makeGetDashboardsAuthorizedToMe),
+				toMe: this._makeFunction(f.makeGetDashboardsAuthorizedToMe),
 			},
 		},
 
 		create: {
-			one: this._simplifyFunction(f.makeCreateOneDashboard),
+			one: this._makeFunction(f.makeCreateOneDashboard),
 		},
 
 		update: {
-			one: this._simplifyFunction(f.makeUpdateOneDashboard),
+			one: this._makeFunction(f.makeUpdateOneDashboard),
 		},
 
 		delete: {
-			one: this._simplifyFunction(f.makeDeleteOneDashboard),
+			one: this._makeFunction(f.makeDeleteOneDashboard),
 		},
 	};
 
 	public readonly autoExtractors = {
 		get: {
-			validModules: this._simplifyFunction(f.makeGetAllAutoExtractorModules),
-			all: this._simplifyFunction(f.makeGetAllAutoExtractors),
+			validModules: this._makeFunction(f.makeGetAllAutoExtractorModules),
+			all: this._makeFunction(f.makeGetAllAutoExtractors),
 			authorized: {
-				toMe: this._simplifyFunction(f.makeGetAutoExtractorsAuthorizedToMe),
+				toMe: this._makeFunction(f.makeGetAutoExtractorsAuthorizedToMe),
 			},
 		},
 
 		create: {
-			one: this._simplifyFunction(f.makeCreateOneAutoExtractor),
+			one: this._makeFunction(f.makeCreateOneAutoExtractor),
 		},
 
 		update: {
-			one: this._simplifyFunction(f.makeUpdateOneAutoExtractor),
+			one: this._makeFunction(f.makeUpdateOneAutoExtractor),
 		},
 
 		delete: {
-			one: this._simplifyFunction(f.makeDeleteOneAutoExtractor),
+			one: this._makeFunction(f.makeDeleteOneAutoExtractor),
 		},
 
 		is: {
-			validSyntax: this._simplifyFunction(f.makeIsValidAutoExtractorSyntax),
+			validSyntax: this._makeFunction(f.makeIsValidAutoExtractorSyntax),
 		},
 
 		upload: {
-			many: this._simplifyFunction(f.makeUploadManyAutoExtractors),
+			many: this._makeFunction(f.makeUploadManyAutoExtractors),
 		},
 
 		download: {
-			many: this._simplifyFunction(f.makeDownloadManyAutoExtractors),
+			many: this._makeFunction(f.makeDownloadManyAutoExtractors),
 		},
 	};
 
 	public readonly files = {
 		get: {
-			all: this._simplifyFunction(f.makeGetAllFiles),
+			all: this._makeFunction(f.makeGetAllFiles),
 			authorized: {
-				toMe: this._simplifyFunction(f.makeGetFilesAuthorizedToMe),
+				toMe: this._makeFunction(f.makeGetFilesAuthorizedToMe),
 			},
 		},
 
 		create: {
-			one: this._simplifyFunction(f.makeCreateOneFile),
+			one: this._makeFunction(f.makeCreateOneFile),
 		},
 
 		update: {
-			one: this._simplifyFunction(f.makeUpdateOneFile),
+			one: this._makeFunction(f.makeUpdateOneFile),
 		},
 
 		delete: {
-			one: this._simplifyFunction(f.makeDeleteOneFile),
+			one: this._makeFunction(f.makeDeleteOneFile),
 		},
 	};
 
 	public readonly savedQueries = {
 		get: {
-			one: this._simplifyFunction(f.makeGetOneSavedQuery),
-			all: this._simplifyFunction(f.makeGetAllSavedQueries),
+			one: this._makeFunction(f.makeGetOneSavedQuery),
+			all: this._makeFunction(f.makeGetAllSavedQueries),
 			authorized: {
-				toMe: this._simplifyFunction(f.makeGetSavedQueriesAuthorizedToMe),
+				toMe: this._makeFunction(f.makeGetSavedQueriesAuthorizedToMe),
 			},
 		},
 
 		create: {
-			one: this._simplifyFunction(f.makeCreateOneSavedQuery),
+			one: this._makeFunction(f.makeCreateOneSavedQuery),
 		},
 
 		update: {
-			one: this._simplifyFunction(f.makeUpdateOneSavedQuery),
+			one: this._makeFunction(f.makeUpdateOneSavedQuery),
 		},
 
 		delete: {
-			one: this._simplifyFunction(f.makeDeleteOneSavedQuery),
+			one: this._makeFunction(f.makeDeleteOneSavedQuery),
 		},
 	};
 
 	public readonly scheduledScripts = {
 		get: {
-			one: this._simplifyFunction(f.makeGetOneScheduledScript),
-			many: this._simplifyFunction(f.makeGetManyScheduledScripts),
-			all: this._simplifyFunction(f.makeGetAllScheduledScripts),
+			one: this._makeFunction(f.makeGetOneScheduledScript),
+			many: this._makeFunction(f.makeGetManyScheduledScripts),
+			all: this._makeFunction(f.makeGetAllScheduledScripts),
 			authorized: {
-				toMe: this._simplifyFunction(f.makeGetScheduledScriptsAuthorizedToMe),
+				toMe: this._makeFunction(f.makeGetScheduledScriptsAuthorizedToMe),
 			},
 		},
 
 		create: {
-			one: this._simplifyFunction(f.makeCreateOneScheduledScript),
-			many: this._simplifyFunction(f.makeCreateManyScheduledScripts),
+			one: this._makeFunction(f.makeCreateOneScheduledScript),
+			many: this._makeFunction(f.makeCreateManyScheduledScripts),
 		},
 
 		update: {
-			one: this._simplifyFunction(f.makeUpdateOneScheduledScript),
+			one: this._makeFunction(f.makeUpdateOneScheduledScript),
 		},
 
 		delete: {
-			one: this._simplifyFunction(f.makeDeleteOneScheduledScript),
-			many: this._simplifyFunction(f.makeDeleteManyScheduledScripts),
-			all: this._simplifyFunction(f.makeDeleteAllScheduledScripts),
+			one: this._makeFunction(f.makeDeleteOneScheduledScript),
+			many: this._makeFunction(f.makeDeleteManyScheduledScripts),
+			all: this._makeFunction(f.makeDeleteAllScheduledScripts),
 		},
 
 		clear: {
-			lastError: this._simplifyFunction(f.makeClearOneScheduledScriptError),
-			state: this._simplifyFunction(f.makeClearOneScheduledScriptState),
+			lastError: this._makeFunction(f.makeClearOneScheduledScriptError),
+			state: this._makeFunction(f.makeClearOneScheduledScriptState),
 		},
 	};
 
 	public readonly scheduledQueries = {
 		get: {
-			one: this._simplifyFunction(f.makeGetOneScheduledQuery),
-			many: this._simplifyFunction(f.makeGetManyScheduledQueries),
-			all: this._simplifyFunction(f.makeGetAllScheduledQueries),
+			one: this._makeFunction(f.makeGetOneScheduledQuery),
+			many: this._makeFunction(f.makeGetManyScheduledQueries),
+			all: this._makeFunction(f.makeGetAllScheduledQueries),
 			authorized: {
-				toMe: this._simplifyFunction(f.makeGetScheduledQueriesAuthorizedToMe),
+				toMe: this._makeFunction(f.makeGetScheduledQueriesAuthorizedToMe),
 			},
 		},
 
 		create: {
-			one: this._simplifyFunction(f.makeCreateOneScheduledQuery),
-			many: this._simplifyFunction(f.makeCreateManyScheduledQueries),
+			one: this._makeFunction(f.makeCreateOneScheduledQuery),
+			many: this._makeFunction(f.makeCreateManyScheduledQueries),
 		},
 
 		update: {
-			one: this._simplifyFunction(f.makeUpdateOneScheduledQuery),
+			one: this._makeFunction(f.makeUpdateOneScheduledQuery),
 		},
 
 		delete: {
-			one: this._simplifyFunction(f.makeDeleteOneScheduledQuery),
-			many: this._simplifyFunction(f.makeDeleteManyScheduledQueries),
-			all: this._simplifyFunction(f.makeDeleteAllScheduledQueries),
+			one: this._makeFunction(f.makeDeleteOneScheduledQuery),
+			many: this._makeFunction(f.makeDeleteManyScheduledQueries),
+			all: this._makeFunction(f.makeDeleteAllScheduledQueries),
 		},
 
 		clear: {
-			lastError: this._simplifyFunction(f.makeClearOneScheduledQueryError),
-			state: this._simplifyFunction(f.makeClearOneScheduledQueryState),
+			lastError: this._makeFunction(f.makeClearOneScheduledQueryError),
+			state: this._makeFunction(f.makeClearOneScheduledQueryState),
 		},
 	};
 
 	public readonly queries = {
 		validate: {
-			one: lazyExec(lazyFirst(() => this.authToken)(this._makeFunction(f.makeValidateOneQuery))),
+			one: this._makeFunction(f.makeValidateOneQuery),
 		},
 	};
 
 	public readonly kits = {
 		get: {
 			one: {
-				local: this._simplifyFunction(f.makeGetOneLocalKit),
-				remote: this._simplifyFunction(f.makeGetOneRemoteKit),
+				local: this._makeFunction(f.makeGetOneLocalKit),
+				remote: this._makeFunction(f.makeGetOneRemoteKit),
 			},
 			all: {
-				local: this._simplifyFunction(f.makeGetAllLocalKits),
-				remote: this._simplifyFunction(f.makeGetAllRemoteKits),
+				local: this._makeFunction(f.makeGetAllLocalKits),
+				remote: this._makeFunction(f.makeGetAllRemoteKits),
 			},
 		},
 
 		build: {
 			one: {
-				local: this._simplifyFunction(f.makeBuildOneLocalKit),
+				local: this._makeFunction(f.makeBuildOneLocalKit),
 			},
 		},
 
 		upload: {
 			one: {
-				local: this._simplifyFunction(f.makeUploadOneLocalKit),
-				remote: this._simplifyFunction(f.makeUploadOneRemoteKit),
+				local: this._makeFunction(f.makeUploadOneLocalKit),
+				remote: this._makeFunction(f.makeUploadOneRemoteKit),
 			},
 		},
 
 		download: {
 			one: {
-				local: this._simplifyFunction(f.makeDownloadOneLocalKit),
-				remote: this._simplifyFunction(f.makeDownloadRemoteKit),
+				local: this._makeFunction(f.makeDownloadOneLocalKit),
+				remote: this._makeFunction(f.makeDownloadRemoteKit),
 			},
 		},
 
 		install: {
-			one: this._simplifyFunction(f.makeInstallOneKit),
+			one: this._makeFunction(f.makeInstallOneKit),
 		},
 
 		uninstall: {
-			one: this._simplifyFunction(f.makeUninstallOneKit),
-			all: this._simplifyFunction(f.makeUninstallAllKits),
+			one: this._makeFunction(f.makeUninstallOneKit),
+			all: this._makeFunction(f.makeUninstallAllKits),
 		},
 	};
 }
-
-const lazyExec = <ReturnF extends (...args: Array<any>) => any>(f: () => ReturnF): ReturnF => {
-	const returnF = (...args: Parameters<ReturnF>): ReturnType<ReturnF> => {
-		return f()(...args);
-	};
-	return returnF as any;
-};

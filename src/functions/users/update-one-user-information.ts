@@ -8,7 +8,7 @@
 
 import { NumericID } from '../../value-objects';
 import {
-	APIFunctionMakerOptions,
+	APIContext,
 	buildHTTPRequest,
 	buildURL,
 	fetch,
@@ -17,14 +17,14 @@ import {
 	parseJSONResponse,
 } from '../utils';
 
-export const makeUpdateOneUserInformation = (makerOptions: APIFunctionMakerOptions) => {
-	return async (authToken: string | null, data: UpdatableUserInformation): Promise<void> => {
+export const makeUpdateOneUserInformation = (context: APIContext) => {
+	return async (data: UpdatableUserInformation): Promise<void> => {
 		try {
 			const templatePath = '/api/users/{userID}';
-			const url = buildURL(templatePath, { ...makerOptions, protocol: 'http', pathParams: { userID: data.id } });
+			const url = buildURL(templatePath, { ...context, protocol: 'http', pathParams: { userID: data.id } });
 
 			const baseRequestOptions: HTTPRequestOptions = {
-				headers: { Authorization: authToken ? `Bearer ${authToken}` : undefined },
+				headers: { Authorization: context.authToken ? `Bearer ${context.authToken}` : undefined },
 				body: JSON.stringify(toRawUpdatableUserInformation(data)),
 			};
 			const req = buildHTTPRequest(baseRequestOptions);

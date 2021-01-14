@@ -7,22 +7,15 @@
  **************************************************************************/
 
 import { RawResource, Resource, toResource } from '../../models';
-import {
-	APIFunctionMakerOptions,
-	buildHTTPRequest,
-	buildURL,
-	fetch,
-	HTTPRequestOptions,
-	parseJSONResponse,
-} from '../utils';
+import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 
-export const makeGetResourcesAuthorizedToMe = (makerOptions: APIFunctionMakerOptions) => {
+export const makeGetResourcesAuthorizedToMe = (context: APIContext) => {
 	const resourcePath = '/api/resources';
-	const url = buildURL(resourcePath, { ...makerOptions, protocol: 'http' });
+	const url = buildURL(resourcePath, { ...context, protocol: 'http' });
 
-	return async (authToken: string | null): Promise<Array<Omit<Resource, 'body'>>> => {
+	return async (): Promise<Array<Omit<Resource, 'body'>>> => {
 		const baseRequestOptions: HTTPRequestOptions = {
-			headers: { Authorization: authToken ? `Bearer ${authToken}` : undefined },
+			headers: { Authorization: context.authToken ? `Bearer ${context.authToken}` : undefined },
 		};
 		const req = buildHTTPRequest(baseRequestOptions);
 

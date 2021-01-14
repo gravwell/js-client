@@ -7,22 +7,15 @@
  **************************************************************************/
 
 import { AutoExtractor, RawAutoExtractor, toAutoExtractor } from '../../models';
-import {
-	APIFunctionMakerOptions,
-	buildHTTPRequest,
-	buildURL,
-	fetch,
-	HTTPRequestOptions,
-	parseJSONResponse,
-} from '../utils';
+import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 
-export const makeGetAutoExtractorsAuthorizedToMe = (makerOptions: APIFunctionMakerOptions) => {
+export const makeGetAutoExtractorsAuthorizedToMe = (context: APIContext) => {
 	const path = '/api/autoextractors';
-	const url = buildURL(path, { ...makerOptions, protocol: 'http' });
+	const url = buildURL(path, { ...context, protocol: 'http' });
 
-	return async (authToken: string | null): Promise<Array<AutoExtractor>> => {
+	return async (): Promise<Array<AutoExtractor>> => {
 		const baseRequestOptions: HTTPRequestOptions = {
-			headers: { Authorization: authToken ? `Bearer ${authToken}` : undefined },
+			headers: { Authorization: context.authToken ? `Bearer ${context.authToken}` : undefined },
 		};
 		const req = buildHTTPRequest(baseRequestOptions);
 

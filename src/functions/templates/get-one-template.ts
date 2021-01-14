@@ -6,24 +6,17 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { Template, RawTemplate, toTemplate } from '../../models';
+import { RawTemplate, Template, toTemplate } from '../../models';
 import { NumericID } from '../../value-objects';
-import {
-	APIFunctionMakerOptions,
-	buildHTTPRequest,
-	buildURL,
-	fetch,
-	HTTPRequestOptions,
-	parseJSONResponse,
-} from '../utils';
+import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 
-export const makeGetOneTemplate = (makerOptions: APIFunctionMakerOptions) => {
-	return async (authToken: string | null, templateID: NumericID): Promise<Template> => {
+export const makeGetOneTemplate = (context: APIContext) => {
+	return async (templateID: NumericID): Promise<Template> => {
 		const templatePath = '/api/templates/{templateID}';
-		const url = buildURL(templatePath, { ...makerOptions, protocol: 'http', pathParams: { templateID } });
+		const url = buildURL(templatePath, { ...context, protocol: 'http', pathParams: { templateID } });
 
 		const baseRequestOptions: HTTPRequestOptions = {
-			headers: { Authorization: authToken ? `Bearer ${authToken}` : undefined },
+			headers: { Authorization: context.authToken ? `Bearer ${context.authToken}` : undefined },
 		};
 		const req = buildHTTPRequest(baseRequestOptions);
 

@@ -7,28 +7,21 @@
  **************************************************************************/
 
 import { RawSavedQuery, SavedQuery, toRawUpdatableSavedQuery, toSavedQuery, UpdatableSavedQuery } from '../../models';
-import {
-	APIFunctionMakerOptions,
-	buildHTTPRequest,
-	buildURL,
-	fetch,
-	HTTPRequestOptions,
-	parseJSONResponse,
-} from '../utils';
+import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 import { makeGetOneSavedQuery } from './get-one-saved-query';
 
-export const makeUpdateOneSavedQuery = (makerOptions: APIFunctionMakerOptions) => {
-	const getOneSavedQuery = makeGetOneSavedQuery(makerOptions);
+export const makeUpdateOneSavedQuery = (context: APIContext) => {
+	const getOneSavedQuery = makeGetOneSavedQuery(context);
 
-	return async (authToken: string | null, data: UpdatableSavedQuery): Promise<SavedQuery> => {
+	return async (data: UpdatableSavedQuery): Promise<SavedQuery> => {
 		const templatePath = '/api/library/{savedQueryID}?admin=true';
-		const url = buildURL(templatePath, { ...makerOptions, protocol: 'http', pathParams: { savedQueryID: data.id } });
+		const url = buildURL(templatePath, { ...context, protocol: 'http', pathParams: { savedQueryID: data.id } });
 
 		try {
-			const current = await getOneSavedQuery(authToken, data.id);
+			const current = await getOneSavedQuery(data.id);
 
 			const baseRequestOptions: HTTPRequestOptions = {
-				headers: { Authorization: authToken ? `Bearer ${authToken}` : undefined },
+				headers: { Authorization: context.authToken ? `Bearer ${context.authToken}` : undefined },
 				body: JSON.stringify(toRawUpdatableSavedQuery(data, current)),
 			};
 			const req = buildHTTPRequest(baseRequestOptions);

@@ -7,23 +7,16 @@
  **************************************************************************/
 
 import { toRawUpdatableGroup, UpdatableGroup } from '../../models';
-import {
-	APIFunctionMakerOptions,
-	buildHTTPRequest,
-	buildURL,
-	fetch,
-	HTTPRequestOptions,
-	parseJSONResponse,
-} from '../utils';
+import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 
-export const makeUpdateOneGroup = (makerOptions: APIFunctionMakerOptions) => {
-	return async (authToken: string | null, data: UpdatableGroup): Promise<void> => {
+export const makeUpdateOneGroup = (context: APIContext) => {
+	return async (data: UpdatableGroup): Promise<void> => {
 		const templatePath = '/api/groups/{groupID}';
-		const url = buildURL(templatePath, { ...makerOptions, protocol: 'http', pathParams: { groupID: data.id } });
+		const url = buildURL(templatePath, { ...context, protocol: 'http', pathParams: { groupID: data.id } });
 
 		try {
 			const baseRequestOptions: HTTPRequestOptions = {
-				headers: { Authorization: authToken ? `Bearer ${authToken}` : undefined },
+				headers: { Authorization: context.authToken ? `Bearer ${context.authToken}` : undefined },
 				body: JSON.stringify(toRawUpdatableGroup(data)),
 			};
 			const req = buildHTTPRequest(baseRequestOptions);

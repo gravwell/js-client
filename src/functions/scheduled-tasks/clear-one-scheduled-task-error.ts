@@ -7,22 +7,15 @@
  **************************************************************************/
 
 import { NumericID } from '../../value-objects';
-import {
-	APIFunctionMakerOptions,
-	buildHTTPRequest,
-	buildURL,
-	fetch,
-	HTTPRequestOptions,
-	parseJSONResponse,
-} from '../utils';
+import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 
-export const makeClearOneScheduledTaskError = (makerOptions: APIFunctionMakerOptions) => {
-	return async (authToken: string | null, scheduledTaskID: NumericID): Promise<void> => {
+export const makeClearOneScheduledTaskError = (context: APIContext) => {
+	return async (scheduledTaskID: NumericID): Promise<void> => {
 		const templatePath = '/api/scheduledsearches/{scheduledTaskID}/error';
-		const url = buildURL(templatePath, { ...makerOptions, protocol: 'http', pathParams: { scheduledTaskID } });
+		const url = buildURL(templatePath, { ...context, protocol: 'http', pathParams: { scheduledTaskID } });
 
 		const baseRequestOptions: HTTPRequestOptions = {
-			headers: { Authorization: authToken ? `Bearer ${authToken}` : undefined },
+			headers: { Authorization: context.authToken ? `Bcontext.authTokenontext.authToken}` : undefined },
 		};
 		const req = buildHTTPRequest(baseRequestOptions);
 

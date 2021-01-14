@@ -7,13 +7,13 @@
  **************************************************************************/
 
 import { ScheduledQuery } from '../../models';
-import { APIFunctionMakerOptions } from '../utils';
+import { APIContext } from '../utils';
 import { makeGetOneScheduledTask } from './get-one-scheduled-task';
 
-export const makeGetOneScheduledQuery = (makerOptions: APIFunctionMakerOptions) => {
-	const getOneScheduledTask = makeGetOneScheduledTask(makerOptions);
+export const makeGetOneScheduledQuery = (context: APIContext) => {
+	const getOneScheduledTask = makeGetOneScheduledTask(context);
 
-	return (authToken: string | null, scheduledTaskID: string): Promise<ScheduledQuery> => {
-		return getOneScheduledTask<'query'>(authToken, scheduledTaskID);
+	return (scheduledTaskID: string): Promise<ScheduledQuery> => {
+		return getOneScheduledTask<'query'>(scheduledTaskID);
 	};
 };

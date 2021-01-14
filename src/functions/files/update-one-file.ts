@@ -8,25 +8,18 @@
 
 import * as FormData from 'form-data';
 import { FileMetadata, RawBaseFileMetadata, toRawUpdatableFile, UpdatableFile } from '../../models';
-import {
-	APIFunctionMakerOptions,
-	buildHTTPRequest,
-	buildURL,
-	fetch,
-	HTTPRequestOptions,
-	parseJSONResponse,
-} from '../utils';
+import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 import { makeGetOneFile } from './get-one-file';
 
-export const makeUpdateOneFile = (makerOptions: APIFunctionMakerOptions) => {
-	const getOneFile = makeGetOneFile(makerOptions);
+export const makeUpdateOneFile = (context: APIContext) => {
+	const getOneFile = makeGetOneFile(context);
 
-	return async (authToken: string | null, data: UpdatableFile): Promise<FileMetadata> => {
+	return async (data: UpdatableFile): Promise<FileMetadata> => {
 		const templatePath = '/api/files/{fileID}';
-		const url = buildURL(templatePath, { ...makerOptions, protocol: 'http', pathParams: { fileID: data.id } });
+		const url = buildURL(templatePath, { ...context, protocol: 'http', pathParams: { fileID: data.id } });
 
 		try {
-			const current = await getOneFile(authToken, data.id);
+			const current = await getOneFile(data.id);
 			const updatedKeys = <Set<keyof UpdatableFile>>new Set(Object.keys(data));
 
 			const metadataP = (async (): Promise<any> => {
@@ -42,7 +35,7 @@ export const makeUpdateOneFile = (makerOptions: APIFunctionMakerOptions) => {
 				if (!hasTargettedKey) return Promise.resolve();
 
 				const baseRequestOptions: HTTPRequestOptions = {
-					headers: { Authorization: authToken ? `Bearer ${authToken}` : undefined },
+					headers: { Authorization: context.authToken ? `Bearer ${context.authToken}` : undefined },
 					body: JSON.stringify(toRawUpdatableFile(data, current)),
 				};
 				const req = buildHTTPRequest(baseRequestOptions);
@@ -60,7 +53,7 @@ export const makeUpdateOneFile = (makerOptions: APIFunctionMakerOptions) => {
 				formData.append('file', data.file);
 
 				const baseRequestOptions: HTTPRequestOptions = {
-					headers: { Authorization: authToken ? `Bearer ${authToken}` : undefined },
+					headers: { Authorization: context.authToken ? `Bearer ${context.authToken}` : undefined },
 					body: formData as any,
 				};
 				const req = buildHTTPRequest(baseRequestOptions);
@@ -70,7 +63,7 @@ export const makeUpdateOneFile = (makerOptions: APIFunctionMakerOptions) => {
 			})();
 
 			await Promise.all([metadataP, fileP]);
-			return getOneFile(authToken, data.id);
+			return getOneFile(data.id);
 		} catch (err) {
 			if (err instanceof Error) throw err;
 			throw Error('Unknown error');

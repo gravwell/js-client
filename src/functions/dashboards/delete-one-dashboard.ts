@@ -7,22 +7,15 @@
  **************************************************************************/
 
 import { NumericID } from '../../value-objects';
-import {
-	APIFunctionMakerOptions,
-	buildHTTPRequest,
-	buildURL,
-	fetch,
-	HTTPRequestOptions,
-	parseJSONResponse,
-} from '../utils';
+import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 
-export const makeDeleteOneDashboard = (makerOptions: APIFunctionMakerOptions) => {
-	return async (authToken: string | null, dashboardID: NumericID): Promise<void> => {
+export const makeDeleteOneDashboard = (context: APIContext) => {
+	return async (dashboardID: NumericID): Promise<void> => {
 		const templatePath = '/api/dashboards/{dashboardID}';
-		const url = buildURL(templatePath, { ...makerOptions, protocol: 'http', pathParams: { dashboardID } });
+		const url = buildURL(templatePath, { ...context, protocol: 'http', pathParams: { dashboardID } });
 
 		const baseRequestOptions: HTTPRequestOptions = {
-			headers: { Authorization: authToken ? `Bearer ${authToken}` : undefined },
+			headers: { Authorization: context.authToken ? `Bearer ${context.authToken}` : undefined },
 		};
 		const req = buildHTTPRequest(baseRequestOptions);
 

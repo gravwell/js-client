@@ -6,17 +6,17 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { APIFunctionMakerOptions } from '../utils';
+import { APIContext } from '../utils';
 import { makeDeleteOneScheduledScript } from './delete-one-scheduled-script';
 import { makeGetAllScheduledScripts } from './get-all-scheduled-scripts';
 
-export const makeDeleteAllScheduledScripts = (makerOptions: APIFunctionMakerOptions) => {
-	const deleteOneScheduledScript = makeDeleteOneScheduledScript(makerOptions);
-	const getAllScheduledScripts = makeGetAllScheduledScripts(makerOptions);
+export const makeDeleteAllScheduledScripts = (context: APIContext) => {
+	const deleteOneScheduledScript = makeDeleteOneScheduledScript(context);
+	const getAllScheduledScripts = makeGetAllScheduledScripts(context);
 
-	return async (authToken: string | null): Promise<void> => {
-		const scripts = await getAllScheduledScripts(authToken);
-		const deletePs = scripts.map(s => deleteOneScheduledScript(authToken, s.id));
+	return async (): Promise<void> => {
+		const scripts = await getAllScheduledScripts();
+		const deletePs = scripts.map(s => deleteOneScheduledScript(s.id));
 		await Promise.all(deletePs);
 	};
 };

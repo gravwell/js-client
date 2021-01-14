@@ -7,22 +7,15 @@
  **************************************************************************/
 
 import { Version } from '../../models';
-import {
-	APIFunctionMakerOptions,
-	buildHTTPRequest,
-	buildURL,
-	fetch,
-	HTTPRequestOptions,
-	parseJSONResponse,
-} from '../utils';
+import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 
-export const makeGetAPIVersion = (makerOptions: APIFunctionMakerOptions) => {
+export const makeGetAPIVersion = (context: APIContext) => {
 	const templatePath = '/api/version/';
-	const url = buildURL(templatePath, { ...makerOptions, protocol: 'http' });
+	const url = buildURL(templatePath, { ...context, protocol: 'http' });
 
-	return async (authToken: string | null): Promise<GetAPIVersionResponse> => {
+	return async (): Promise<GetAPIVersionResponse> => {
 		const baseRequestOptions: HTTPRequestOptions = {
-			headers: { Authorization: authToken ? `Bearer ${authToken}` : undefined },
+			headers: { Authorization: context.authToken ? `Bearer ${context.authToken}` : undefined },
 		};
 		const req = buildHTTPRequest(baseRequestOptions);
 

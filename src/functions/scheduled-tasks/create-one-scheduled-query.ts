@@ -7,13 +7,13 @@
  **************************************************************************/
 
 import { CreatableScheduledQuery, ScheduledQuery } from '../../models';
-import { APIFunctionMakerOptions } from '../utils';
+import { APIContext } from '../utils';
 import { makeCreateOneScheduledTask } from './create-one-scheduled-task';
 
-export const makeCreateOneScheduledQuery = (makerOptions: APIFunctionMakerOptions) => {
-	const createOneScheduledTask = makeCreateOneScheduledTask(makerOptions);
+export const makeCreateOneScheduledQuery = (context: APIContext) => {
+	const createOneScheduledTask = makeCreateOneScheduledTask(context);
 
-	return (authToken: string | null, data: CreatableScheduledQuery): Promise<ScheduledQuery> => {
-		return createOneScheduledTask(authToken, { ...data, type: 'query' });
+	return (data: CreatableScheduledQuery): Promise<ScheduledQuery> => {
+		return createOneScheduledTask({ ...data, type: 'query' });
 	};
 };

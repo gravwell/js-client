@@ -8,22 +8,15 @@
 
 import { Group, RawGroup, toGroup } from '../../models';
 import { NumericID } from '../../value-objects';
-import {
-	APIFunctionMakerOptions,
-	buildHTTPRequest,
-	buildURL,
-	fetch,
-	HTTPRequestOptions,
-	parseJSONResponse,
-} from '../utils';
+import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 
-export const makeGetGroupsByUser = (makerOptions: APIFunctionMakerOptions) => {
-	return async (authToken: string | null, userID: NumericID): Promise<Array<Group>> => {
+export const makeGetGroupsByUser = (context: APIContext) => {
+	return async (userID: NumericID): Promise<Array<Group>> => {
 		const templatePath = '/api/users/{userID}/group';
-		const url = buildURL(templatePath, { ...makerOptions, protocol: 'http', pathParams: { userID } });
+		const url = buildURL(templatePath, { ...context, protocol: 'http', pathParams: { userID } });
 
 		const baseRequestOptions: HTTPRequestOptions = {
-			headers: { Authorization: authToken ? `Bearer ${authToken}` : undefined },
+			headers: { Authorization: context.authToken ? `Bearer ${context.authToken}` : undefined },
 		};
 		const req = buildHTTPRequest(baseRequestOptions);
 

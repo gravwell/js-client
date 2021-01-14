@@ -9,29 +9,26 @@
 import { isNull, pick } from 'lodash';
 import { filter, first, map } from 'rxjs/operators';
 import { Query, RawQuery } from '../../models';
-import { APIFunctionMakerOptions, APISubscription, apiSubscriptionFromWebSocket, buildURL, WebSocket } from '../utils';
+import { APIContext, APISubscription, apiSubscriptionFromWebSocket, buildURL, WebSocket } from '../utils';
 
-export const makeValidateOneQuery = (makerOptions: APIFunctionMakerOptions) => {
-	const subscribeToOneQueryValidation = makeSubscribeToOneQueryValidation(makerOptions);
+export const makeValidateOneQuery = (context: APIContext) => {
+	const subscribeToOneQueryValidation = makeSubscribeToOneQueryValidation(context);
+	let querySubP: ReturnType<typeof subscribeToOneQueryValidation> | null = null;
 
-	return (authToken: string | null) => {
-		let querySubP: ReturnType<typeof subscribeToOneQueryValidation> | null = null;
+	return async (query: Query): Promise<ValidatedQuery> => {
+		if (isNull(querySubP)) querySubP = subscribeToOneQueryValidation();
+		const querySub = await querySubP;
+		const id = SEARCH_SOCKET_ID_GENERATOR.generate();
 
-		return async (query: Query): Promise<ValidatedQuery> => {
-			if (isNull(querySubP)) querySubP = subscribeToOneQueryValidation(authToken);
-			const querySub = await querySubP;
-			const id = SEARCH_SOCKET_ID_GENERATOR.generate();
-
-			const validationP = querySub.received$
-				.pipe(
-					filter(msg => msg.id === id),
-					map(msg => pick(msg, ['isValid', 'error']) as ValidatedQuery),
-					first(),
-				)
-				.toPromise();
-			querySub.send({ id, query });
-			return validationP;
-		};
+		const validationP = querySub.received$
+			.pipe(
+				filter(msg => msg.id === id),
+				map(msg => pick(msg, ['isValid', 'error']) as ValidatedQuery),
+				first(),
+			)
+			.toPromise();
+		querySub.send({ id, query });
+		return validationP;
 	};
 };
 
@@ -43,14 +40,12 @@ const SEARCH_SOCKET_ID_GENERATOR = (() => {
 	};
 })();
 
-const makeSubscribeToOneQueryValidation = (makerOptions: APIFunctionMakerOptions) => {
+const makeSubscribeToOneQueryValidation = (context: APIContext) => {
 	const templatePath = '/api/ws/search';
-	const url = buildURL(templatePath, { ...makerOptions, protocol: 'ws' });
+	const url = buildURL(templatePath, { ...context, protocol: 'ws' });
 
-	return async (
-		authToken: string | null,
-	): Promise<APISubscription<ValidatedQuery & { id: number }, { id: number; query: Query }>> => {
-		const socket = new WebSocket(url, authToken ?? undefined);
+	return async (): Promise<APISubscription<ValidatedQuery & { id: number }, { id: number; query: Query }>> => {
+		const socket = new WebSocket(url, context.authToken ?? undefined);
 		const rawSubscription = apiSubscriptionFromWebSocket<
 			RawQueryValidationMessageReceived,
 			RawQueryValidationMessageSent

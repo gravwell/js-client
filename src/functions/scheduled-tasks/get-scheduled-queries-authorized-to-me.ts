@@ -7,16 +7,16 @@
  **************************************************************************/
 
 import { ScheduledQuery, ScheduledTask } from '../../models';
-import { APIFunctionMakerOptions } from '../utils';
+import { APIContext } from '../utils';
 import { makeGetScheduledTasksAuthorizedToMe } from './get-scheduled-tasks-authorized-to-me';
 
 const isScheduledQuery = (s: ScheduledTask): s is ScheduledQuery => s.type === 'query';
 
-export const makeGetScheduledQueriesAuthorizedToMe = (makerOptions: APIFunctionMakerOptions) => {
-	const getScheduledTasksAuthorizedToMe = makeGetScheduledTasksAuthorizedToMe(makerOptions);
+export const makeGetScheduledQueriesAuthorizedToMe = (context: APIContext) => {
+	const getScheduledTasksAuthorizedToMe = makeGetScheduledTasksAuthorizedToMe(context);
 
-	return async (authToken: string | null): Promise<Array<ScheduledQuery>> => {
-		const scheduledTasks = await getScheduledTasksAuthorizedToMe(authToken);
+	return async (): Promise<Array<ScheduledQuery>> => {
+		const scheduledTasks = await getScheduledTasksAuthorizedToMe();
 		return scheduledTasks.filter(isScheduledQuery);
 	};
 };

@@ -7,18 +7,11 @@
  **************************************************************************/
 
 import { JWT } from '../../models';
-import {
-	APIFunctionMakerOptions,
-	buildHTTPRequest,
-	buildURL,
-	fetch,
-	HTTPRequestOptions,
-	parseJSONResponse,
-} from '../utils';
+import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 
-export const makeLoginOneUser = (makerOptions: APIFunctionMakerOptions) => {
+export const makeLoginOneUser = (context: APIContext) => {
 	const templatePath = '/api/login';
-	const url = buildURL(templatePath, { ...makerOptions, protocol: 'http' });
+	const url = buildURL(templatePath, { ...context, protocol: 'http' });
 
 	return async (username: string, password: string): Promise<JWT> => {
 		const baseRequestOptions: HTTPRequestOptions = {

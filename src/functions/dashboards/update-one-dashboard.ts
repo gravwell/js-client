@@ -7,28 +7,21 @@
  **************************************************************************/
 
 import { Dashboard, RawDashboard, toDashboard, toRawUpdatableDashboard, UpdatableDashboard } from '../../models';
-import {
-	APIFunctionMakerOptions,
-	buildHTTPRequest,
-	buildURL,
-	fetch,
-	HTTPRequestOptions,
-	parseJSONResponse,
-} from '../utils';
+import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 import { makeGetOneDashboard } from './get-one-dashboard';
 
-export const makeUpdateOneDashboard = (makerOptions: APIFunctionMakerOptions) => {
-	const getOneDashboard = makeGetOneDashboard(makerOptions);
+export const makeUpdateOneDashboard = (context: APIContext) => {
+	const getOneDashboard = makeGetOneDashboard(context);
 
-	return async (authToken: string | null, data: UpdatableDashboard): Promise<Dashboard> => {
+	return async (data: UpdatableDashboard): Promise<Dashboard> => {
 		const templatePath = '/api/dashboards/{dashboardID}';
-		const url = buildURL(templatePath, { ...makerOptions, protocol: 'http', pathParams: { dashboardID: data.id } });
+		const url = buildURL(templatePath, { ...context, protocol: 'http', pathParams: { dashboardID: data.id } });
 
 		try {
-			const current = await getOneDashboard(authToken, data.id);
+			const current = await getOneDashboard(data.id);
 
 			const baseRequestOptions: HTTPRequestOptions = {
-				headers: { Authorization: authToken ? `Bearer ${authToken}` : undefined },
+				headers: { Authorization: context.authToken ? `Bearer ${context.authToken}` : undefined },
 				body: JSON.stringify(toRawUpdatableDashboard(data, current)),
 			};
 			const req = buildHTTPRequest(baseRequestOptions);

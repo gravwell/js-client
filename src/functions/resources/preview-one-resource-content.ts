@@ -8,31 +8,20 @@
 
 import { RawResourceContentPreview, ResourceContentPreview, toResourceContentPreview } from '../../models';
 import { UUID } from '../../value-objects';
-import {
-	APIFunctionMakerOptions,
-	buildHTTPRequest,
-	buildURL,
-	fetch,
-	HTTPRequestOptions,
-	parseJSONResponse,
-} from '../utils';
+import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 
-export const makePreviewOneResourceContent = (makerOptions: APIFunctionMakerOptions) => {
-	return async (
-		authToken: string | null,
-		resourceID: UUID,
-		options: { bytes?: number } = {},
-	): Promise<ResourceContentPreview> => {
+export const makePreviewOneResourceContent = (context: APIContext) => {
+	return async (resourceID: UUID, options: { bytes?: number } = {}): Promise<ResourceContentPreview> => {
 		const resourcePath = '/api/resources/{resourceID}/contenttype';
 		const url = buildURL(resourcePath, {
-			...makerOptions,
+			...context,
 			protocol: 'http',
 			pathParams: { resourceID },
 			queryParams: { bytes: options.bytes },
 		});
 
 		const baseRequestOptions: HTTPRequestOptions = {
-			headers: { Authorization: authToken ? `Bearer ${authToken}` : undefined },
+			headers: { Authorization: context.authToken ? `Bearer ${context.authToken}` : undefined },
 		};
 		const req = buildHTTPRequest(baseRequestOptions);
 

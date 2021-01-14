@@ -10,8 +10,8 @@ import { CreatableResource, isResource } from '../../models';
 import { integrationTest } from '../../tests';
 import { TEST_AUTH_TOKEN, TEST_HOST } from '../../tests/config';
 import { makeCreateOneResource } from './create-one-resource';
-import { makeGetOneResource } from './get-one-resource';
 import { makeDeleteOneResource } from './delete-one-resource';
+import { makeGetOneResource } from './get-one-resource';
 
 describe('createOneResource()', () => {
 	const createOneResource = makeCreateOneResource({ host: TEST_HOST, useEncryption: false });

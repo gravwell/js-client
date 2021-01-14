@@ -7,22 +7,15 @@
  **************************************************************************/
 
 import { Tag } from '../../models';
-import {
-	APIFunctionMakerOptions,
-	buildHTTPRequest,
-	buildURL,
-	fetch,
-	HTTPRequestOptions,
-	parseJSONResponse,
-} from '../utils';
+import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 
-export const makeGetAllTags = (makerOptions: APIFunctionMakerOptions) => {
+export const makeGetAllTags = (context: APIContext) => {
 	const templatePath = '/api/tags';
-	const url = buildURL(templatePath, { ...makerOptions, protocol: 'http' });
+	const url = buildURL(templatePath, { ...context, protocol: 'http' });
 
-	return async (sessionToken: string | null): Promise<Array<Tag>> => {
+	return async (): Promise<Array<Tag>> => {
 		const baseRequestOptions: HTTPRequestOptions = {
-			headers: { Authorization: sessionToken ? `Bearer ${sessionToken}` : undefined },
+			headers: { Authorization: context.authToken ? `Bearer ${context.authToken}` : undefined },
 		};
 		const req = buildHTTPRequest(baseRequestOptions);
 

@@ -7,22 +7,15 @@
  **************************************************************************/
 
 import { Dashboard, RawDashboard, toDashboard } from '../../models';
-import {
-	APIFunctionMakerOptions,
-	buildHTTPRequest,
-	buildURL,
-	fetch,
-	HTTPRequestOptions,
-	parseJSONResponse,
-} from '../utils';
+import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 
-export const makeGetAllDashboards = (makerOptions: APIFunctionMakerOptions) => {
+export const makeGetAllDashboards = (context: APIContext) => {
 	const path = '/api/dashboards/all';
-	const url = buildURL(path, { ...makerOptions, protocol: 'http' });
+	const url = buildURL(path, { ...context, protocol: 'http' });
 
-	return async (authToken: string | null): Promise<Array<Dashboard>> => {
+	return async (): Promise<Array<Dashboard>> => {
 		const baseRequestOptions: HTTPRequestOptions = {
-			headers: { Authorization: authToken ? `Bearer ${authToken}` : undefined },
+			headers: { Authorization: context.authToken ? `Bearer ${context.authToken}` : undefined },
 		};
 		const req = buildHTTPRequest(baseRequestOptions);
 

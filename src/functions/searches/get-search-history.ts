@@ -7,18 +7,11 @@
  **************************************************************************/
 
 import { RawSearch, Search, toSearch } from '../../models';
-import {
-	APIFunctionMakerOptions,
-	buildHTTPRequest,
-	buildURL,
-	fetch,
-	HTTPRequestOptions,
-	parseJSONResponse,
-} from '../utils';
+import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 
-export const makeGetSearchHistory = (makerOptions: APIFunctionMakerOptions) => {
-	return async (authToken: string | null, filter: SearchHistoryFilter): Promise<Array<Search>> => {
-		const baseURLOptions = { ...makerOptions, protocol: 'http' } as const;
+export const makeGetSearchHistory = (context: APIContext) => {
+	return async (filter: SearchHistoryFilter): Promise<Array<Search>> => {
+		const baseURLOptions = { ...context, protocol: 'http' } as const;
 		const url = ((): string => {
 			switch (filter.target) {
 				case 'myself': {
@@ -45,7 +38,7 @@ export const makeGetSearchHistory = (makerOptions: APIFunctionMakerOptions) => {
 		})();
 
 		const baseRequestOptions: HTTPRequestOptions = {
-			headers: { Authorization: authToken ? `Bearer ${authToken}` : undefined },
+			headers: { Authorization: context.authToken ? `Bearer ${context.authToken}` : undefined },
 		};
 		const req = buildHTTPRequest(baseRequestOptions);
 

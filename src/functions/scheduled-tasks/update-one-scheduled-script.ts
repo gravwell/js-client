@@ -7,13 +7,13 @@
  **************************************************************************/
 
 import { ScheduledScript, UpdatableScheduledQuery } from '../../models';
-import { APIFunctionMakerOptions } from '../utils';
+import { APIContext } from '../utils';
 import { makeUpdateOneScheduledTask } from './update-one-scheduled-task';
 
-export const makeUpdateOneScheduledScript = (makerOptions: APIFunctionMakerOptions) => {
-	const updateOneScheduleTask = makeUpdateOneScheduledTask(makerOptions);
+export const makeUpdateOneScheduledScript = (context: APIContext) => {
+	const updateOneScheduleTask = makeUpdateOneScheduledTask(context);
 
-	return (authToken: string | null, data: UpdatableScheduledQuery): Promise<ScheduledScript> => {
-		return updateOneScheduleTask(authToken, { ...data, type: 'script' });
+	return (data: UpdatableScheduledQuery): Promise<ScheduledScript> => {
+		return updateOneScheduleTask({ ...data, type: 'script' });
 	};
 };

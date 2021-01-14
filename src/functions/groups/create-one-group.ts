@@ -8,23 +8,16 @@
 
 import { CreatableGroup, toRawCreatableGroup } from '../../models';
 import { NumericID } from '../../value-objects';
-import {
-	APIFunctionMakerOptions,
-	buildHTTPRequest,
-	buildURL,
-	fetch,
-	HTTPRequestOptions,
-	parseJSONResponse,
-} from '../utils';
+import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 
-export const makeCreateOneGroup = (makerOptions: APIFunctionMakerOptions) => {
+export const makeCreateOneGroup = (context: APIContext) => {
 	const templatePath = '/api/groups';
-	const url = buildURL(templatePath, { ...makerOptions, protocol: 'http' });
+	const url = buildURL(templatePath, { ...context, protocol: 'http' });
 
-	return async (authToken: string | null, data: CreatableGroup): Promise<NumericID> => {
+	return async (data: CreatableGroup): Promise<NumericID> => {
 		try {
 			const baseRequestOptions: HTTPRequestOptions = {
-				headers: { Authorization: authToken ? `Bearer ${authToken}` : undefined },
+				headers: { Authorization: context.authToken ? `Bearer ${context.authToken}` : undefined },
 				body: JSON.stringify(toRawCreatableGroup(data)),
 			};
 			const req = buildHTTPRequest(baseRequestOptions);
