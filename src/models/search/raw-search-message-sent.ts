@@ -7,7 +7,7 @@
  **************************************************************************/
 
 import { RawQuery } from '../query';
-import { SEARCH_MESSAGE_COMMANDS } from './search-message-commands';
+import { SearchMessageCommands } from './search-message-commands';
 
 export interface RawInformSubscriptionsMessageSent {
 	Subs: Array<'PONG' | 'parse' | 'search' | 'attach'>;
@@ -31,23 +31,23 @@ export interface RawAcceptSearchMessageSent {
 
 export interface RawRequestSearchCloseMessageSent {
 	type: string; // Search subtype ID eg. "search2"
-	data: { ID: SEARCH_MESSAGE_COMMANDS.CLOSE };
+	data: { ID: SearchMessageCommands.Close };
 }
 
 export interface RawRequestSearchDetailsMessageSent {
 	type: string; // Search subtype ID eg. "search2"
-	data: { ID: SEARCH_MESSAGE_COMMANDS.REQUEST_DETAILS };
+	data: { ID: SearchMessageCommands.RequestDetails };
 }
 
 export interface RawRequestSearchTagsMessageSent {
 	type: string; // Search subtype ID eg. "search2"
-	data: { ID: SEARCH_MESSAGE_COMMANDS.REQUEST_TAGS };
+	data: { ID: SearchMessageCommands.RequestTags };
 }
 
 export interface RawRequestSearchEntriesWithinRangeMessageSent {
 	type: string; // Search subtype ID eg. "search2"
 	data: {
-		ID: SEARCH_MESSAGE_COMMANDS.REQ_TS_RANGE;
+		ID: SearchMessageCommands.RequestTimestampRange;
 		Addendum: {};
 		EntryRange: {
 			First: number;
@@ -61,7 +61,7 @@ export interface RawRequestSearchEntriesWithinRangeMessageSent {
 export interface RawRequestSearchStatsMessageSent {
 	type: string; // Search subtype ID eg. "search2"
 	data: {
-		ID: SEARCH_MESSAGE_COMMANDS.REQ_STATS_GET;
+		ID: SearchMessageCommands.RequestAllStats;
 		Stats: { SetCount: number };
 	};
 }
@@ -69,7 +69,7 @@ export interface RawRequestSearchStatsMessageSent {
 export interface RawRequestSearchStatsWithinRangeMessageSent {
 	type: string; // Search subtype ID eg. "search2"
 	data: {
-		ID: SEARCH_MESSAGE_COMMANDS.REQ_STATS_GET_RANGE;
+		ID: SearchMessageCommands.RequestStatsInRange;
 		Stats: {
 			SetCount: number;
 			SetEnd: string; // timestamp
@@ -81,14 +81,14 @@ export interface RawRequestSearchStatsWithinRangeMessageSent {
 export interface RawRequestSearchStatsSummaryMessageSent {
 	type: string; // Search subtype ID eg. "search2"
 	data: {
-		ID: SEARCH_MESSAGE_COMMANDS.REQ_STATS_GET_SUMMARY;
+		ID: SearchMessageCommands.RequestStatsSummary;
 	};
 }
 
 export interface RawRequestSearchStatsLocationMessageSent {
 	type: string; // Search subtype ID eg. "search2"
 	data: {
-		ID: SEARCH_MESSAGE_COMMANDS.REQ_STATS_GET_LOCATION;
+		ID: SearchMessageCommands.RequestStatsLocation;
 	};
 }
 

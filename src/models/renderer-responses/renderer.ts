@@ -6,10 +6,10 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { SEARCH_MESSAGE_COMMANDS } from '../search';
+import { SearchMessageCommands } from '../search';
 
 export interface BaseRendererResponse {
-	ID: SEARCH_MESSAGE_COMMANDS.REQ_TS_RANGE;
+	ID: SearchMessageCommands.RequestTimestampRange;
 	Addendum?: { customView: string };
 	EntryRange: {
 		First: number;

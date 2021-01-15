@@ -20,9 +20,9 @@ import {
 	RawResponseForSearchEntriesWithinRangeMessageReceived,
 	RawResponseForSearchStatsMessageReceived,
 	RawSearchInitiatedMessageReceived,
-	SEARCH_MESSAGE_COMMANDS,
 	SearchEntries,
 	SearchFilter,
+	SearchMessageCommands,
 	SearchStats,
 	SearchSubscription,
 } from '../../../models';
@@ -93,7 +93,7 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 			filter((msg): msg is RawResponseForSearchEntriesWithinRangeMessageReceived => {
 				try {
 					const _msg = <RawResponseForSearchEntriesWithinRangeMessageReceived>msg;
-					return _msg.data.ID === SEARCH_MESSAGE_COMMANDS.REQ_TS_RANGE;
+					return _msg.data.ID === SearchMessageCommands.RequestTimestampRange;
 				} catch {
 					return false;
 				}
@@ -131,7 +131,7 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 			rawSubscription.send(<RawRequestSearchEntriesWithinRangeMessageSent>{
 				type: searchTypeID,
 				data: {
-					ID: SEARCH_MESSAGE_COMMANDS.REQ_TS_RANGE,
+					ID: SearchMessageCommands.RequestTimestampRange,
 					Addendum: {},
 					EntryRange: {
 						First: 0,
@@ -151,7 +151,7 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 			filter((msg): msg is RawResponseForSearchStatsMessageReceived => {
 				try {
 					const _msg = <RawResponseForSearchStatsMessageReceived>msg;
-					return _msg.data.ID === SEARCH_MESSAGE_COMMANDS.REQ_STATS_GET;
+					return _msg.data.ID === SearchMessageCommands.RequestAllStats;
 				} catch {
 					return false;
 				}
@@ -162,7 +162,7 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 			filter((msg): msg is RawResponseForSearchDetailsMessageReceived => {
 				try {
 					const _msg = <RawResponseForSearchDetailsMessageReceived>msg;
-					return _msg.data.ID === SEARCH_MESSAGE_COMMANDS.REQUEST_DETAILS;
+					return _msg.data.ID === SearchMessageCommands.RequestDetails;
 				} catch {
 					return false;
 				}
