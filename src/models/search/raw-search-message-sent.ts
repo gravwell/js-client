@@ -31,23 +31,23 @@ export interface RawAcceptSearchMessageSent {
 
 export interface RawRequestSearchCloseMessageSent {
 	type: string; // Search subtype ID eg. "search2"
-	data: { ID: typeof SEARCH_MESSAGE_COMMANDS.CLOSE };
+	data: { ID: SEARCH_MESSAGE_COMMANDS.CLOSE };
 }
 
 export interface RawRequestSearchDetailsMessageSent {
 	type: string; // Search subtype ID eg. "search2"
-	data: { ID: typeof SEARCH_MESSAGE_COMMANDS.REQUEST_DETAILS };
+	data: { ID: SEARCH_MESSAGE_COMMANDS.REQUEST_DETAILS };
 }
 
 export interface RawRequestSearchTagsMessageSent {
 	type: string; // Search subtype ID eg. "search2"
-	data: { ID: typeof SEARCH_MESSAGE_COMMANDS.REQUEST_TAGS };
+	data: { ID: SEARCH_MESSAGE_COMMANDS.REQUEST_TAGS };
 }
 
 export interface RawRequestSearchEntriesWithinRangeMessageSent {
 	type: string; // Search subtype ID eg. "search2"
 	data: {
-		ID: typeof SEARCH_MESSAGE_COMMANDS.REQ_TS_RANGE;
+		ID: SEARCH_MESSAGE_COMMANDS.REQ_TS_RANGE;
 		Addendum: {};
 		EntryRange: {
 			First: number;
@@ -61,7 +61,7 @@ export interface RawRequestSearchEntriesWithinRangeMessageSent {
 export interface RawRequestSearchStatsMessageSent {
 	type: string; // Search subtype ID eg. "search2"
 	data: {
-		ID: typeof SEARCH_MESSAGE_COMMANDS.REQ_STATS_GET;
+		ID: SEARCH_MESSAGE_COMMANDS.REQ_STATS_GET;
 		Stats: { SetCount: number };
 	};
 }
@@ -69,7 +69,7 @@ export interface RawRequestSearchStatsMessageSent {
 export interface RawRequestSearchStatsWithinRangeMessageSent {
 	type: string; // Search subtype ID eg. "search2"
 	data: {
-		ID: typeof SEARCH_MESSAGE_COMMANDS.REQ_STATS_GET_RANGE;
+		ID: SEARCH_MESSAGE_COMMANDS.REQ_STATS_GET_RANGE;
 		Stats: {
 			SetCount: number;
 			SetEnd: string; // timestamp
@@ -81,14 +81,14 @@ export interface RawRequestSearchStatsWithinRangeMessageSent {
 export interface RawRequestSearchStatsSummaryMessageSent {
 	type: string; // Search subtype ID eg. "search2"
 	data: {
-		ID: typeof SEARCH_MESSAGE_COMMANDS.REQ_STATS_GET_SUMMARY;
+		ID: SEARCH_MESSAGE_COMMANDS.REQ_STATS_GET_SUMMARY;
 	};
 }
 
 export interface RawRequestSearchStatsLocationMessageSent {
 	type: string; // Search subtype ID eg. "search2"
 	data: {
-		ID: typeof SEARCH_MESSAGE_COMMANDS.REQ_STATS_GET_LOCATION;
+		ID: SEARCH_MESSAGE_COMMANDS.REQ_STATS_GET_LOCATION;
 	};
 }
 

@@ -9,7 +9,7 @@
 import { SEARCH_MESSAGE_COMMANDS } from '../search';
 
 export interface BaseRendererResponse {
-	ID: typeof SEARCH_MESSAGE_COMMANDS.REQ_TS_RANGE;
+	ID: SEARCH_MESSAGE_COMMANDS.REQ_TS_RANGE;
 	Addendum?: { customView: string };
 	EntryRange: {
 		First: number;
