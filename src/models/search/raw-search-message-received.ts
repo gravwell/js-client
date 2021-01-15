@@ -144,7 +144,7 @@ export const isRawChartEntries = (v: RawEntries): v is RawChartEntries => {
 export interface RawResponseForSearchEntriesWithinRangeMessageReceived {
 	type: string; // Search subtype ID eg. "search2"
 	data: {
-		ID: SearchMessageCommands.RequestTimestampRange;
+		ID: SearchMessageCommands.RequestEntriesWithinRange;
 		Addendum: {};
 		EntryRange: {
 			First: number;

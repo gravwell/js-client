@@ -9,7 +9,7 @@
 import { SearchMessageCommands } from '../search';
 
 export interface BaseRendererResponse {
-	ID: SearchMessageCommands.RequestTimestampRange;
+	ID: SearchMessageCommands.RequestEntriesWithinRange;
 	Addendum?: { customView: string };
 	EntryRange: {
 		First: number;

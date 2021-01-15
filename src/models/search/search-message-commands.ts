@@ -14,12 +14,13 @@ export enum SearchMessageCommands {
 	Status = 'status', // Named SEARCH_CTRL_CMD_STATUS on docs
 
 	RequestEntries = 0x10, // Named REQ_GET_ENTRIES on docs
+	RequestEntriesWithinRange = 0x12, // Named REQ_TS_RANGE on docs
+
 	RequestEntryCount = 0x3, // Named REQUEST_ENTRY_COUNT on docs
 	RequestDetails = 0x4, // Named REQUEST_DETAILS on docs
 	RequestTags = 0x5, // Named REQUEST_TAGS on docs
 
 	RequestStreaming = 0x11, // Named REQ_STREAMING on docs
-	RequestTimestampRange = 0x12, // Named REQ_TS_RANGE on docs
 	RequestTextSearchDetails = 0x01000004, // Named TEXT_REQ_SEARCH_DETAILS on docs
 
 	/** Requests "size" value of stats chunks. Never used. */

@@ -47,7 +47,7 @@ export interface RawRequestSearchTagsMessageSent {
 export interface RawRequestSearchEntriesWithinRangeMessageSent {
 	type: string; // Search subtype ID eg. "search2"
 	data: {
-		ID: SearchMessageCommands.RequestTimestampRange;
+		ID: SearchMessageCommands.RequestEntriesWithinRange;
 		Addendum: {};
 		EntryRange: {
 			First: number;
