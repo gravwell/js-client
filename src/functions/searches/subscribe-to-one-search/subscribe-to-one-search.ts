@@ -93,7 +93,7 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 			filter((msg): msg is RawResponseForSearchEntriesWithinRangeMessageReceived => {
 				try {
 					const _msg = <RawResponseForSearchEntriesWithinRangeMessageReceived>msg;
-					return _msg.data.ID === SearchMessageCommands.RequestTimestampRange;
+					return _msg.data.ID === SearchMessageCommands.RequestEntriesWithinRange;
 				} catch {
 					return false;
 				}
@@ -131,7 +131,7 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 			rawSubscription.send(<RawRequestSearchEntriesWithinRangeMessageSent>{
 				type: searchTypeID,
 				data: {
-					ID: SearchMessageCommands.RequestTimestampRange,
+					ID: SearchMessageCommands.RequestEntriesWithinRange,
 					Addendum: {},
 					EntryRange: {
 						First: 0,

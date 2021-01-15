@@ -6,7 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { ExploreResult, SearchEntry } from '../renderer-responses';
+import { ExploreResult, SearchEntry } from '../search/entries';
 import { RawAutoExtractor } from './raw-auto-extractor';
 
 // Named as GenerateAXResponse in the Go source

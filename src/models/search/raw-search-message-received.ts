@@ -145,7 +145,7 @@ export interface RawResponseForSearchEntriesWithinRangeMessageReceived {
 	type: string; // Search subtype ID eg. "search2"
 	data: {
 		ID: SearchMessageCommands.RequestEntriesWithinRange;
-		Addendum: {};
+		Addendum: { customView?: string };
 		EntryRange: {
 			First: number;
 			Last: number;
