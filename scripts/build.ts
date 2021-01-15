@@ -45,6 +45,14 @@ const buildNode = async (): Promise<void> => {
 	await execAsync('npx copyfiles --up=1 "dist-tsc/**/*" dist/node');
 	if (INCLUDE_ASSETS) await execAsync('npx copyfiles --up=1 "src/**/!(*.ts)" dist/node');
 
+	debug('Generating types from browser files');
+	await execAsync('npx rimraf "src-tsc" "dist-tsc"');
+	await execAsync('npx copyfiles --up=1 "src/**/*.ts" src-tsc');
+	await execAsync('npx rimraf "src-tsc/**/*.node.ts"');
+	const browsersTsconfig = '.config/tsconfig.' + (INCLUDE_TESTS ? 'browsers-spec' : 'browsers-build') + '.json';
+	await execAsync(`npx tsc -p ${browsersTsconfig}`);
+	await execAsync('npx copyfiles --up=1 "dist-tsc/**/*.d.ts" dist/node');
+
 	debug('Cleaning the TypeScript builds');
 	await execAsync('npx rimraf "src-tsc" "dist-tsc"');
 
