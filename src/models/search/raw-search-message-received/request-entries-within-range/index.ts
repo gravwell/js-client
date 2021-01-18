@@ -6,30 +6,30 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { RawSearchMessageReceived_RequestEntriesWithinRange_ChartRenderer } from './chart-renderer';
-import { RawSearchMessageReceived_RequestEntriesWithinRange_GaugeRenderer } from './gauge-renderer';
-import { RawSearchMessageReceived_RequestEntriesWithinRange_HeatmapRenderer } from './heatmap-renderer';
-import { RawSearchMessageReceived_RequestEntriesWithinRange_PointToPointRenderer } from './point-to-point-renderer';
-import { RawSearchMessageReceived_RequestEntriesWithinRange_PointmapRenderer } from './pointmap-renderer';
-import { RawSearchMessageReceived_RequestEntriesWithinRange_RawRenderer } from './raw-renderer';
-import { RawSearchMessageReceived_RequestEntriesWithinRange_StackGraphRenderer } from './stack-graph-renderer';
-import { RawSearchMessageReceived_RequestEntriesWithinRange_TableRenderer } from './table-renderer';
-import { RawSearchMessageReceived_RequestEntriesWithinRange_TextRenderer } from './text-renderer';
+import { RawSearchMessageReceivedRequestEntriesWithinRangeChartRenderer } from './chart-renderer';
+import { RawSearchMessageReceivedRequestEntriesWithinRangeGaugeRenderer } from './gauge-renderer';
+import { RawSearchMessageReceivedRequestEntriesWithinRangeHeatmapRenderer } from './heatmap-renderer';
+import { RawSearchMessageReceivedRequestEntriesWithinRangePointToPointRenderer } from './point-to-point-renderer';
+import { RawSearchMessageReceivedRequestEntriesWithinRangePointmapRenderer } from './pointmap-renderer';
+import { RawSearchMessageReceivedRequestEntriesWithinRangeRawRenderer } from './raw-renderer';
+import { RawSearchMessageReceivedRequestEntriesWithinRangeStackGraphRenderer } from './stack-graph-renderer';
+import { RawSearchMessageReceivedRequestEntriesWithinRangeTableRenderer } from './table-renderer';
+import { RawSearchMessageReceivedRequestEntriesWithinRangeTextRenderer } from './text-renderer';
 
-export type RawSearchMessageReceived_RequestEntriesWithinRangeData =
-	| RawSearchMessageReceived_RequestEntriesWithinRange_ChartRenderer
-	| RawSearchMessageReceived_RequestEntriesWithinRange_GaugeRenderer
-	| RawSearchMessageReceived_RequestEntriesWithinRange_HeatmapRenderer
-	| RawSearchMessageReceived_RequestEntriesWithinRange_PointToPointRenderer
-	| RawSearchMessageReceived_RequestEntriesWithinRange_PointmapRenderer
-	| RawSearchMessageReceived_RequestEntriesWithinRange_RawRenderer
-	| RawSearchMessageReceived_RequestEntriesWithinRange_StackGraphRenderer
-	| RawSearchMessageReceived_RequestEntriesWithinRange_TableRenderer
-	| RawSearchMessageReceived_RequestEntriesWithinRange_TextRenderer;
+export type RawSearchMessageReceivedRequestEntriesWithinRangeData =
+	| RawSearchMessageReceivedRequestEntriesWithinRangeChartRenderer
+	| RawSearchMessageReceivedRequestEntriesWithinRangeGaugeRenderer
+	| RawSearchMessageReceivedRequestEntriesWithinRangeHeatmapRenderer
+	| RawSearchMessageReceivedRequestEntriesWithinRangePointToPointRenderer
+	| RawSearchMessageReceivedRequestEntriesWithinRangePointmapRenderer
+	| RawSearchMessageReceivedRequestEntriesWithinRangeRawRenderer
+	| RawSearchMessageReceivedRequestEntriesWithinRangeStackGraphRenderer
+	| RawSearchMessageReceivedRequestEntriesWithinRangeTableRenderer
+	| RawSearchMessageReceivedRequestEntriesWithinRangeTextRenderer;
 
-export interface RawSearchMessageReceived_RequestEntriesWithinRange {
+export interface RawSearchMessageReceivedRequestEntriesWithinRange {
 	type: string; // Search subtype ID eg. "search2"
-	data: RawSearchMessageReceived_RequestEntriesWithinRangeData;
+	data: RawSearchMessageReceivedRequestEntriesWithinRangeData;
 }
 
 export * from './chart-renderer';

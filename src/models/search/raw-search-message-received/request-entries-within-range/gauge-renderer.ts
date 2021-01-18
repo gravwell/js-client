@@ -6,10 +6,10 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { RawSearchMessageReceived_RequestEntriesWithinRange_BaseData } from './base';
+import { RawSearchMessageReceivedRequestEntriesWithinRangeBaseData } from './base';
 
-export interface RawSearchMessageReceived_RequestEntriesWithinRange_GaugeRenderer
-	extends RawSearchMessageReceived_RequestEntriesWithinRange_BaseData {
+export interface RawSearchMessageReceivedRequestEntriesWithinRangeGaugeRenderer
+	extends RawSearchMessageReceivedRequestEntriesWithinRangeBaseData {
 	Entries: Array<RawGaugeEntries>;
 }
 

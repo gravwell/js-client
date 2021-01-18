@@ -17,7 +17,7 @@ import {
 	RawResponseForSearchDetailsMessageReceived,
 	RawResponseForSearchStatsMessageReceived,
 	RawSearchInitiatedMessageReceived,
-	RawSearchMessageReceived_RequestEntriesWithinRange,
+	RawSearchMessageReceivedRequestEntriesWithinRange,
 	SearchEntries,
 	SearchFilter,
 	SearchMessageCommands,
@@ -88,9 +88,9 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 		);
 
 		const entries$ = searchMessages$.pipe(
-			filter((msg): msg is RawSearchMessageReceived_RequestEntriesWithinRange => {
+			filter((msg): msg is RawSearchMessageReceivedRequestEntriesWithinRange => {
 				try {
-					const _msg = <RawSearchMessageReceived_RequestEntriesWithinRange>msg;
+					const _msg = <RawSearchMessageReceivedRequestEntriesWithinRange>msg;
 					return _msg.data.ID === SearchMessageCommands.RequestEntriesWithinRange;
 				} catch {
 					return false;

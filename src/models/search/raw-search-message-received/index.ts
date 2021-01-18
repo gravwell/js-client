@@ -10,7 +10,7 @@ import { isArray, isString } from 'lodash';
 import { RawNumericID } from '../../../value-objects';
 import { RawQuery } from '../../query';
 import { SearchMessageCommands } from '../search-message-commands';
-import { RawSearchMessageReceived_RequestEntriesWithinRange } from './request-entries-within-range';
+import { RawSearchMessageReceivedRequestEntriesWithinRange } from './request-entries-within-range';
 
 export interface RawSearchInitiatedMessageReceived {
 	type: 'search';
@@ -249,6 +249,6 @@ export type RawSearchMessageReceived =
 	| RawResponseForSearchStatsWithinRangeMessageReceived
 	| RawResponseForSearchStatsSummaryMessageReceived
 	| RawResponseForSearchStatsLocationMessageReceived
-	| RawSearchMessageReceived_RequestEntriesWithinRange;
+	| RawSearchMessageReceivedRequestEntriesWithinRange;
 
-export { RawSearchMessageReceived_RequestEntriesWithinRange } from './request-entries-within-range';
+export { RawSearchMessageReceivedRequestEntriesWithinRange } from './request-entries-within-range';

@@ -7,9 +7,9 @@
  **************************************************************************/
 
 import { RawSearchEntry } from '../../entries/search-entry';
-import { RawSearchMessageReceived_RequestEntriesWithinRange_BaseData } from './base';
+import { RawSearchMessageReceivedRequestEntriesWithinRangeBaseData } from './base';
 
-export interface RawSearchMessageReceived_RequestEntriesWithinRange_RawRenderer
-	extends RawSearchMessageReceived_RequestEntriesWithinRange_BaseData {
+export interface RawSearchMessageReceivedRequestEntriesWithinRangeRawRenderer
+	extends RawSearchMessageReceivedRequestEntriesWithinRangeBaseData {
 	Entries?: Array<RawSearchEntry>;
 }

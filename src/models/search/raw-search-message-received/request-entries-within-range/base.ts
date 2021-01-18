@@ -9,7 +9,7 @@
 import { ExploreResult } from '../../entries/explore';
 import { SearchMessageCommands } from '../../search-message-commands';
 
-export interface RawSearchMessageReceived_RequestEntriesWithinRange_BaseData {
+export interface RawSearchMessageReceivedRequestEntriesWithinRangeBaseData {
 	ID: SearchMessageCommands.RequestEntriesWithinRange;
 	Addendum: { customView?: string };
 	EntryRange: {

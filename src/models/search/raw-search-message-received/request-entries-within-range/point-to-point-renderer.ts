@@ -6,11 +6,11 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { RawSearchMessageReceived_RequestEntriesWithinRange_BaseData } from './base';
+import { RawSearchMessageReceivedRequestEntriesWithinRangeBaseData } from './base';
 import { RawMapLocation } from './pointmap-renderer';
 
-export interface RawSearchMessageReceived_RequestEntriesWithinRange_PointToPointRenderer
-	extends RawSearchMessageReceived_RequestEntriesWithinRange_BaseData {
+export interface RawSearchMessageReceivedRequestEntriesWithinRangePointToPointRenderer
+	extends RawSearchMessageReceivedRequestEntriesWithinRangeBaseData {
 	ValueNames: Array<string>;
 	Entries?: Array<RawPointToPointEntries>;
 }
