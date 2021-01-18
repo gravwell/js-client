@@ -6,7 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { SearchEntry } from '../search/entries';
+import { RawSearchEntry } from '../search/entries';
 
 // Named as GenerateAXRequest in the Go source
 /**
@@ -16,5 +16,5 @@ import { SearchEntry } from '../search/entries';
  */
 export interface RawCreatableAutoExtractorGuess {
 	Tag: string;
-	Entries: Array<SearchEntry>;
+	Entries: Array<RawSearchEntry>;
 }

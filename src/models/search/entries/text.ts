@@ -9,17 +9,17 @@
 import { isArray, isUndefined } from 'lodash';
 import { ExploreResult, isExploreResult } from './explore';
 import { BaseRendererResponse } from './renderer';
-import { isSearchEntry, SearchEntry } from './search-entry';
+import { isRawSearchEntry, RawSearchEntry } from './search-entry';
 
 export interface TextResponse extends BaseRendererResponse {
-	Entries?: Array<SearchEntry>;
+	Entries?: Array<RawSearchEntry>;
 	Explore?: Array<ExploreResult>;
 }
 
 export const isTextResponse = (v: BaseRendererResponse): v is TextResponse => {
 	try {
 		const t = v as TextResponse;
-		const entriesOK = isUndefined(t.Entries) || (isArray(t.Entries) && t.Entries.every(isSearchEntry));
+		const entriesOK = isUndefined(t.Entries) || (isArray(t.Entries) && t.Entries.every(isRawSearchEntry));
 		const exploreOK = isUndefined(t.Entries) || (isArray(t.Explore) && t.Explore.every(isExploreResult));
 		return entriesOK && exploreOK;
 	} catch {
@@ -30,14 +30,14 @@ export const isTextResponse = (v: BaseRendererResponse): v is TextResponse => {
 //from a functional standpoint Raw and Text are identical
 //so just replicate all of their data types
 export interface RawResponse extends BaseRendererResponse {
-	Entries?: Array<SearchEntry>;
+	Entries?: Array<RawSearchEntry>;
 	Explore?: Array<ExploreResult>;
 }
 
 export const isRawResponse = (v: BaseRendererResponse): v is RawResponse => {
 	try {
 		const t = v as RawResponse;
-		const entriesOK = isUndefined(t.Entries) || (isArray(t.Entries) && t.Entries.every(isSearchEntry));
+		const entriesOK = isUndefined(t.Entries) || (isArray(t.Entries) && t.Entries.every(isRawSearchEntry));
 		const exploreOK = isUndefined(t.Entries) || (isArray(t.Explore) && t.Explore.every(isExploreResult));
 		return entriesOK && exploreOK;
 	} catch {

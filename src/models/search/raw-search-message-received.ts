@@ -9,6 +9,7 @@
 import { isArray, isString } from 'lodash';
 import { RawNumericID } from '../../value-objects';
 import { RawQuery } from '../query';
+import { ExploreResult } from './entries/explore';
 import { SearchMessageCommands } from './search-message-commands';
 
 export interface RawSearchInitiatedMessageReceived {
@@ -158,6 +159,7 @@ export interface RawResponseForSearchEntriesWithinRangeMessageReceived {
 		EntryCount: number;
 
 		Entries: RawEntries;
+		Explore?: Array<ExploreResult>;
 	};
 }
 
