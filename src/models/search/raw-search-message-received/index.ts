@@ -7,10 +7,10 @@
  **************************************************************************/
 
 import { isArray, isString } from 'lodash';
-import { RawNumericID } from '../../value-objects';
-import { RawQuery } from '../query';
-import { ExploreResult } from './entries/explore';
-import { SearchMessageCommands } from './search-message-commands';
+import { RawNumericID } from '../../../value-objects';
+import { RawQuery } from '../../query';
+import { SearchMessageCommands } from '../search-message-commands';
+import { RawSearchMessageReceived_RequestEntriesWithinRange } from './request-entries-within-range';
 
 export interface RawSearchInitiatedMessageReceived {
 	type: 'search';
@@ -124,7 +124,7 @@ export interface RawChartEntries {
 	}>;
 }
 
-export const isRawTableEntries = (v: RawEntries): v is RawTableEntries => {
+export const isRawTableEntries = (v: unknown): v is RawTableEntries => {
 	try {
 		const e = <RawTableEntries>v;
 		return isArray(e.Columns) && e.Columns.every(isString);
@@ -245,8 +245,10 @@ export type RawSearchMessageReceived =
 	| RawResponseForSearchCloseMessageReceived
 	| RawResponseForSearchDetailsMessageReceived
 	| RawResponseForSearchTagsMessageReceived
-	| RawResponseForSearchEntriesWithinRangeMessageReceived
 	| RawResponseForSearchStatsMessageReceived
 	| RawResponseForSearchStatsWithinRangeMessageReceived
 	| RawResponseForSearchStatsSummaryMessageReceived
-	| RawResponseForSearchStatsLocationMessageReceived;
+	| RawResponseForSearchStatsLocationMessageReceived
+	| RawSearchMessageReceived_RequestEntriesWithinRange;
+
+export { RawSearchMessageReceived_RequestEntriesWithinRange } from './request-entries-within-range';

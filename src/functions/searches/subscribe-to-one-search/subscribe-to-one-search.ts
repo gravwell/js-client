@@ -6,20 +6,18 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { decode as base64Decode } from 'base-64';
-import { isArray, isBoolean, isEqual, isNull, isUndefined } from 'lodash';
+import { isBoolean, isEqual, isNull, isUndefined } from 'lodash';
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import { distinctUntilChanged, filter, first, map } from 'rxjs/operators';
 import {
-	isRawTableEntries,
 	Query,
 	RawAcceptSearchMessageSent,
 	RawInitiateSearchMessageSent,
 	RawRequestSearchEntriesWithinRangeMessageSent,
 	RawResponseForSearchDetailsMessageReceived,
-	RawResponseForSearchEntriesWithinRangeMessageReceived,
 	RawResponseForSearchStatsMessageReceived,
 	RawSearchInitiatedMessageReceived,
+	RawSearchMessageReceived_RequestEntriesWithinRange,
 	SearchEntries,
 	SearchFilter,
 	SearchMessageCommands,
@@ -90,9 +88,9 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 		);
 
 		const entries$ = searchMessages$.pipe(
-			filter((msg): msg is RawResponseForSearchEntriesWithinRangeMessageReceived => {
+			filter((msg): msg is RawSearchMessageReceived_RequestEntriesWithinRange => {
 				try {
-					const _msg = <RawResponseForSearchEntriesWithinRangeMessageReceived>msg;
+					const _msg = <RawSearchMessageReceived_RequestEntriesWithinRange>msg;
 					return _msg.data.ID === SearchMessageCommands.RequestEntriesWithinRange;
 				} catch {
 					return false;
@@ -102,21 +100,29 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 				(msg): SearchEntries => ({
 					start: new Date(msg.data.EntryRange.StartTS),
 					end: new Date(msg.data.EntryRange.EndTS),
-					names: isArray(msg.data.Entries)
-						? ['Data']
-						: isRawTableEntries(msg.data.Entries)
-						? msg.data.Entries.Columns
-						: msg.data.Entries.Names,
-					data: isArray(msg.data.Entries)
-						? msg.data.Entries.map(rawData => ({
-								timestamp: new Date(rawData.TS),
-								values: [base64Decode(rawData.Data)],
-						  }))
-						: isRawTableEntries(msg.data.Entries)
-						? isNull(msg.data.Entries.Rows)
-							? []
-							: msg.data.Entries.Rows.map(rawData => ({ timestamp: new Date(rawData.TS), values: rawData.Row }))
-						: msg.data.Entries.Values.map(rawData => ({ timestamp: new Date(rawData.TS), values: rawData.Data })),
+
+					// TODO
+					// isArray(msg.data.Entries)
+					// 	? ['Data']
+					// 	: isRawTableEntries(msg.data.Entries)
+					// 	? msg.data.Entries.Columns
+					// 	: isArray(msg.data.Entries.Names)
+					// 	? msg.data.Entries.Names
+					// 	: [msg.data.Entries.Names]
+					names: [],
+
+					// TODO
+					// data: isArray(msg.data.Entries)
+					// ? msg.data.Entries.map(rawData => ({
+					// 		timestamp: new Date(rawData.TS),
+					// 		values: [base64Decode(rawData.Data)],
+					// 	}))
+					// : isRawTableEntries(msg.data.Entries)
+					// ? isNull(msg.data.Entries.Rows)
+					// 	? []
+					// 	: msg.data.Entries.Rows.map(rawData => ({ timestamp: new Date(rawData.TS), values: rawData.Row }))
+					// : msg.data.Entries.Values.map(rawData => ({ timestamp: new Date(rawData.TS), values: rawData.Data })),
+					data: [],
 				}),
 			),
 		);

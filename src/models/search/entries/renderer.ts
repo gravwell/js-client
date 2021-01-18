@@ -6,6 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { RawResponseForSearchEntriesWithinRangeMessageReceived } from '../raw-search-message-received';
-
-export type BaseRendererResponse = Omit<RawResponseForSearchEntriesWithinRangeMessageReceived['data'], 'Entries'>;
+/**
+ * @deprecated
+ */
+export type BaseRendererResponse = {};
