@@ -142,27 +142,6 @@ export const isRawChartEntries = (v: RawEntries): v is RawChartEntries => {
 	}
 };
 
-export interface RawResponseForSearchEntriesWithinRangeMessageReceived {
-	type: string; // Search subtype ID eg. "search2"
-	data: {
-		ID: SearchMessageCommands.RequestEntriesWithinRange;
-		Addendum: { customView?: string };
-		EntryRange: {
-			First: number;
-			Last: number;
-			StartTS: string; // timestamp
-			EndTS: string; // timestamp
-		};
-
-		AdditionalEntries: boolean;
-		Finished: boolean;
-		EntryCount: number;
-
-		Entries: RawEntries;
-		Explore?: Array<ExploreResult>;
-	};
-}
-
 export interface RawResponseForSearchStatsMessageReceived {
 	type: string; // Search subtype ID eg. "search2"
 	data: {
