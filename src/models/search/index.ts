@@ -22,4 +22,5 @@ export * from './search-stats';
 export * from './search-subscription';
 export * from './search2';
 export * from './to-search';
+export * from './to-search-entries';
 export * from './to-search2';

@@ -18,11 +18,11 @@ import {
 	RawResponseForSearchStatsMessageReceived,
 	RawSearchInitiatedMessageReceived,
 	RawSearchMessageReceivedRequestEntriesWithinRange,
-	SearchEntries,
 	SearchFilter,
 	SearchMessageCommands,
 	SearchStats,
 	SearchSubscription,
+	toSearchEntries,
 } from '../../../models';
 import { Percentage, toNumericID } from '../../../value-objects';
 import { APIContext, promiseProgrammatically } from '../../utils';
@@ -96,35 +96,7 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 					return false;
 				}
 			}),
-			map(
-				(msg): SearchEntries => ({
-					start: new Date(msg.data.EntryRange.StartTS),
-					end: new Date(msg.data.EntryRange.EndTS),
-
-					// TODO
-					// isArray(msg.data.Entries)
-					// 	? ['Data']
-					// 	: isRawTableEntries(msg.data.Entries)
-					// 	? msg.data.Entries.Columns
-					// 	: isArray(msg.data.Entries.Names)
-					// 	? msg.data.Entries.Names
-					// 	: [msg.data.Entries.Names]
-					names: [],
-
-					// TODO
-					// data: isArray(msg.data.Entries)
-					// ? msg.data.Entries.map(rawData => ({
-					// 		timestamp: new Date(rawData.TS),
-					// 		values: [base64Decode(rawData.Data)],
-					// 	}))
-					// : isRawTableEntries(msg.data.Entries)
-					// ? isNull(msg.data.Entries.Rows)
-					// 	? []
-					// 	: msg.data.Entries.Rows.map(rawData => ({ timestamp: new Date(rawData.TS), values: rawData.Row }))
-					// : msg.data.Entries.Values.map(rawData => ({ timestamp: new Date(rawData.TS), values: rawData.Data })),
-					data: [],
-				}),
-			),
+			map(msg => toSearchEntries(msg)),
 		);
 
 		const _filter$ = new BehaviorSubject(initialFilter);

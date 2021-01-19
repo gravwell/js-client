@@ -33,10 +33,9 @@ export interface RawFDGNode {
  */
 export interface RawFDGEdge {
 	value: number;
-
-	/** index into the source node list */
+	/** Source index into the nodes list */
 	source: number;
-	/** index into the destination node list */
+	/** Target index into the nodes list */
 	target: number;
 }
 

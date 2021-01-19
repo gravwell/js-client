@@ -33,6 +33,7 @@ export interface RawSearchMessageReceivedRequestEntriesWithinRange {
 }
 
 export * from './chart-renderer';
+export * from './fdg-renderer';
 export * from './gauge-renderer';
 export * from './heatmap-renderer';
 export * from './point-to-point-renderer';

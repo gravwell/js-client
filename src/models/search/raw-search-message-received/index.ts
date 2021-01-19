@@ -251,4 +251,4 @@ export type RawSearchMessageReceived =
 	| RawResponseForSearchStatsLocationMessageReceived
 	| RawSearchMessageReceivedRequestEntriesWithinRange;
 
-export { RawSearchMessageReceivedRequestEntriesWithinRange } from './request-entries-within-range';
+export * from './request-entries-within-range';
