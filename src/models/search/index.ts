@@ -8,7 +8,9 @@
 
 export * from './is-search2';
 export * from './is-valid-search';
+export * from './raw-data-explorer-result';
 export * from './raw-search';
+export * from './raw-search-entry';
 export * from './raw-search-message-received';
 export * from './raw-search-message-sent';
 export * from './raw-search2';

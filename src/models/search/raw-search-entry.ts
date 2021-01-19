@@ -8,6 +8,34 @@
 
 import { isArray, isNumber, isString } from 'lodash';
 
+// Named SearchEntry in Go
+/**
+ * The entry that makes it out of the search pipeline
+ */
+export interface RawSearchEntry {
+	TS: string;
+	Tag: number;
+	SRC: string; // IP
+	Data: string; // base64
+	Enumerated: Array<RawEnumeratedPair>;
+}
+
+export const isRawSearchEntry = (v: unknown): v is RawSearchEntry => {
+	try {
+		const s = v as RawSearchEntry;
+		return (
+			isString(s.TS) &&
+			isString(s.SRC) &&
+			isNumber(s.Tag) &&
+			isString(s.Data) &&
+			isArray(s.Enumerated) &&
+			s.Enumerated.every(isRawEnumeratedPair)
+		);
+	} catch {
+		return false;
+	}
+};
+
 // Named StringTagEntry in Go
 /**
  * Used for scripting and ingesting entries via the webserver
@@ -27,34 +55,6 @@ export const isRawStringTagEntry = (v: unknown): v is RawStringTagEntry => {
 			isString(s.TS) &&
 			isString(s.Tag) &&
 			isString(s.SRC) &&
-			isString(s.Data) &&
-			isArray(s.Enumerated) &&
-			s.Enumerated.every(isRawEnumeratedPair)
-		);
-	} catch {
-		return false;
-	}
-};
-
-// Named SearchEntry in Go
-/**
- * The entry that makes it out of the search pipeline
- */
-export interface RawSearchEntry {
-	TS: string;
-	SRC: string; // IP
-	Tag: number;
-	Data: string; // base64
-	Enumerated: Array<RawEnumeratedPair>;
-}
-
-export const isRawSearchEntry = (v: unknown): v is RawSearchEntry => {
-	try {
-		const s = v as RawSearchEntry;
-		return (
-			isString(s.TS) &&
-			isString(s.SRC) &&
-			isNumber(s.Tag) &&
 			isString(s.Data) &&
 			isArray(s.Enumerated) &&
 			s.Enumerated.every(isRawEnumeratedPair)
