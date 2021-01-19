@@ -6,6 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
+import { isArray, isNumber, isString } from 'lodash';
 import { RawSearchMessageReceivedRequestEntriesWithinRangeBaseData } from './base';
 
 export interface RawSearchMessageReceivedRequestEntriesWithinRangeStackGraphRenderer
@@ -24,3 +25,32 @@ export interface RawStackGraphValue {
 	Label: string;
 	Value: number;
 }
+
+export const isRawSearchMessageReceivedRequestEntriesWithinRangeStackGraphRenderer = (
+	v: RawSearchMessageReceivedRequestEntriesWithinRangeBaseData,
+): v is RawSearchMessageReceivedRequestEntriesWithinRangeStackGraphRenderer => {
+	try {
+		const s = v as RawSearchMessageReceivedRequestEntriesWithinRangeStackGraphRenderer;
+		return isArray(s.Entries) && s.Entries.every(isRawStackGraphEntries);
+	} catch {
+		return false;
+	}
+};
+
+const isRawStackGraphEntries = (v: unknown): v is RawStackGraphEntries => {
+	try {
+		const s = v as RawStackGraphEntries;
+		return isString(s.Key) && s.Values.every(isRawStackGraphValue);
+	} catch {
+		return false;
+	}
+};
+
+const isRawStackGraphValue = (v: unknown): v is RawStackGraphValue => {
+	try {
+		const s = v as RawStackGraphValue;
+		return isString(s.Label) && isNumber(s.Value);
+	} catch {
+		return false;
+	}
+};

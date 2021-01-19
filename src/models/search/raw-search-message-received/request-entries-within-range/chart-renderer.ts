@@ -6,6 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
+import { isArray, isNumber, isString, isUndefined } from 'lodash';
 import { RawSearchMessageReceivedRequestEntriesWithinRangeBaseData } from './base';
 
 export interface RawSearchMessageReceivedRequestEntriesWithinRangeChartRenderer
@@ -35,3 +36,47 @@ export interface RawChartEntriesValue {
 	Data: Array<number>;
 	TS: string;
 }
+
+export const isRawSearchMessageReceivedRequestEntriesWithinRangeChartRenderer = (
+	v: RawSearchMessageReceivedRequestEntriesWithinRangeBaseData,
+): v is RawSearchMessageReceivedRequestEntriesWithinRangeChartRenderer => {
+	try {
+		const x = v as RawSearchMessageReceivedRequestEntriesWithinRangeChartRenderer;
+		return isRawChartEntries(x.Entries);
+	} catch {
+		return false;
+	}
+};
+
+const isRawChartEntries = (v: unknown): v is RawChartEntries => {
+	try {
+		const c = v as RawChartEntries;
+		const keyCompsOK = isUndefined(c.KeyComps)
+			? true
+			: isArray(c.KeyComps) && c.KeyComps.every(isRawChartEntriesKeyComponents);
+		const categoriesOK = isUndefined(c.Categories) ? true : isArray(c.KeyComps) && c.KeyComps.every(isString);
+		return (
+			isString(c.Names) && keyCompsOK && categoriesOK && isArray(c.Values) && c.Values.every(isRawChartEntriesValue)
+		);
+	} catch {
+		return false;
+	}
+};
+
+const isRawChartEntriesKeyComponents = (v: unknown): v is RawChartEntriesKeyComponents => {
+	try {
+		const k = v as RawChartEntriesKeyComponents;
+		return isArray(k.Keys) && k.Keys.every(isString);
+	} catch {
+		return false;
+	}
+};
+
+const isRawChartEntriesValue = (v: unknown): v is RawChartEntriesValue => {
+	try {
+		const c = v as RawChartEntriesValue;
+		return isArray(c.Data) && c.Data.every(isNumber) && isString(c.TS);
+	} catch {
+		return false;
+	}
+};

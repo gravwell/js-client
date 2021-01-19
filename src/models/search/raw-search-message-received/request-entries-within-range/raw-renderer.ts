@@ -6,10 +6,25 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { RawSearchEntry } from '../../entries/search-entry';
+import { isArray, isUndefined } from 'lodash';
+import { isExploreResult } from '../../entries/explore';
+import { isRawSearchEntry, RawSearchEntry } from '../../entries/search-entry';
 import { RawSearchMessageReceivedRequestEntriesWithinRangeBaseData } from './base';
 
 export interface RawSearchMessageReceivedRequestEntriesWithinRangeRawRenderer
 	extends RawSearchMessageReceivedRequestEntriesWithinRangeBaseData {
 	Entries?: Array<RawSearchEntry>;
 }
+
+export const isRawSearchMessageReceivedRequestEntriesWithinRangeRawRenderer = (
+	v: RawSearchMessageReceivedRequestEntriesWithinRangeBaseData,
+): v is RawSearchMessageReceivedRequestEntriesWithinRangeRawRenderer => {
+	try {
+		const t = v as RawSearchMessageReceivedRequestEntriesWithinRangeRawRenderer;
+		const entriesOK = isUndefined(t.Entries) || (isArray(t.Entries) && t.Entries.every(isRawSearchEntry));
+		const exploreOK = isUndefined(t.Entries) || (isArray(t.Explore) && t.Explore.every(isExploreResult));
+		return entriesOK && exploreOK;
+	} catch {
+		return false;
+	}
+};

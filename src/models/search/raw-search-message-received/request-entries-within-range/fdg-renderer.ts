@@ -6,6 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
+import { isArray, isNumber, isString } from 'lodash';
 import { RawSearchMessageReceivedRequestEntriesWithinRangeBaseData } from './base';
 
 export interface RawSearchMessageReceivedRequestEntriesWithinRangeFDGRenderer
@@ -38,3 +39,48 @@ export interface RawFDGEdge {
 	/** index into the destination node list */
 	target: number;
 }
+
+export const isRawSearchMessageReceivedRequestEntriesWithinRangeFDGRenderer = (
+	v: RawSearchMessageReceivedRequestEntriesWithinRangeBaseData,
+): v is RawSearchMessageReceivedRequestEntriesWithinRangeFDGRenderer => {
+	try {
+		const f = v as RawSearchMessageReceivedRequestEntriesWithinRangeFDGRenderer;
+		return isRawFDGEntries(f.Entries);
+	} catch {
+		return false;
+	}
+};
+
+const isRawFDGEntries = (v: unknown): v is RawFDGEntries => {
+	try {
+		const f = v as RawFDGEntries;
+		return (
+			isArray(f.nodes) &&
+			f.nodes.every(isRawFDGNode) &&
+			isArray(f.links) &&
+			f.links.every(isRawFDGEdge) &&
+			isArray(f.groups) &&
+			f.groups.every(isString)
+		);
+	} catch {
+		return false;
+	}
+};
+
+const isRawFDGNode = (v: unknown): v is RawFDGNode => {
+	try {
+		const f = v as RawFDGNode;
+		return isString(f.name) && isNumber(f.group);
+	} catch {
+		return false;
+	}
+};
+
+const isRawFDGEdge = (v: unknown): v is RawFDGEdge => {
+	try {
+		const f = v as RawFDGEdge;
+		return isNumber(f.value) && isNumber(f.source) && isNumber(f.target);
+	} catch {
+		return false;
+	}
+};
