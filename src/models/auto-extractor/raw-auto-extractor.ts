@@ -8,6 +8,7 @@
 
 import { RawNumericID, RawUUID } from '../../value-objects';
 
+// Named as AXDefinition in the Go source
 export interface RawAutoExtractor {
 	UUID: RawUUID;
 

@@ -7,9 +7,10 @@
  **************************************************************************/
 
 import { isArray, isString } from 'lodash';
-import { RawNumericID } from '../../value-objects';
-import { RawQuery } from '../query';
-import { SEARCH_MESSAGE_COMMANDS } from './search-message-commands';
+import { RawNumericID } from '../../../value-objects';
+import { RawQuery } from '../../query';
+import { SearchMessageCommands } from '../search-message-commands';
+import { RawSearchMessageReceivedRequestEntriesWithinRange } from './request-entries-within-range';
 
 export interface RawSearchInitiatedMessageReceived {
 	type: 'search';
@@ -38,13 +39,13 @@ export interface RawSearchInitiatedMessageReceived {
 
 export interface RawResponseForSearchCloseMessageReceived {
 	type: string; // Search subtype ID eg. "search2"
-	data: { ID: typeof SEARCH_MESSAGE_COMMANDS.CLOSE };
+	data: { ID: SearchMessageCommands.Close };
 }
 
 export interface RawResponseForSearchDetailsMessageReceived {
 	type: string; // Search subtype ID eg. "search2"
 	data: {
-		ID: typeof SEARCH_MESSAGE_COMMANDS.REQUEST_DETAILS;
+		ID: SearchMessageCommands.RequestDetails;
 		AdditionalEntries: boolean;
 		EntryCount: number;
 		Finished: boolean;
@@ -82,7 +83,7 @@ export interface RawResponseForSearchDetailsMessageReceived {
 export interface RawResponseForSearchTagsMessageReceived {
 	type: string; // Search subtype ID eg. "search2"
 	data: {
-		ID: typeof SEARCH_MESSAGE_COMMANDS.REQUEST_TAGS;
+		ID: SearchMessageCommands.RequestTags;
 		Finished: boolean;
 		AdditionalEntries: boolean;
 		EntryCount: number;
@@ -123,7 +124,7 @@ export interface RawChartEntries {
 	}>;
 }
 
-export const isRawTableEntries = (v: RawEntries): v is RawTableEntries => {
+export const isRawTableEntries = (v: unknown): v is RawTableEntries => {
 	try {
 		const e = <RawTableEntries>v;
 		return isArray(e.Columns) && e.Columns.every(isString);
@@ -141,30 +142,10 @@ export const isRawChartEntries = (v: RawEntries): v is RawChartEntries => {
 	}
 };
 
-export interface RawResponseForSearchEntriesWithinRangeMessageReceived {
-	type: string; // Search subtype ID eg. "search2"
-	data: {
-		ID: typeof SEARCH_MESSAGE_COMMANDS.REQ_TS_RANGE;
-		Addendum: {};
-		EntryRange: {
-			First: number;
-			Last: number;
-			StartTS: string; // timestamp
-			EndTS: string; // timestamp
-		};
-
-		AdditionalEntries: boolean;
-		Finished: boolean;
-		EntryCount: number;
-
-		Entries: RawEntries;
-	};
-}
-
 export interface RawResponseForSearchStatsMessageReceived {
 	type: string; // Search subtype ID eg. "search2"
 	data: {
-		ID: typeof SEARCH_MESSAGE_COMMANDS.REQ_STATS_GET;
+		ID: SearchMessageCommands.RequestAllStats;
 		AdditionalEntries: false;
 		EntryCount: number;
 		Finished: true;
@@ -192,7 +173,7 @@ export interface RawResponseForSearchStatsMessageReceived {
 export interface RawResponseForSearchStatsWithinRangeMessageReceived {
 	type: string; // Search subtype ID eg. "search2"
 	data: {
-		ID: typeof SEARCH_MESSAGE_COMMANDS.REQ_STATS_GET_RANGE;
+		ID: SearchMessageCommands.RequestStatsInRange;
 		AdditionalEntries: false;
 		EntryCount: number;
 		Finished: true;
@@ -220,7 +201,7 @@ export interface RawResponseForSearchStatsWithinRangeMessageReceived {
 export interface RawResponseForSearchStatsSummaryMessageReceived {
 	type: string; // Search subtype ID eg. "search2"
 	data: {
-		ID: typeof SEARCH_MESSAGE_COMMANDS.REQ_STATS_GET_SUMMARY;
+		ID: SearchMessageCommands.RequestStatsSummary;
 		AdditionalEntries: false;
 		EntryCount: number;
 		Finished: true;
@@ -245,7 +226,7 @@ export interface RawResponseForSearchStatsSummaryMessageReceived {
 export interface RawResponseForSearchStatsLocationMessageReceived {
 	type: string; // Search subtype ID eg. "search2"
 	data: {
-		ID: typeof SEARCH_MESSAGE_COMMANDS.REQ_STATS_GET_LOCATION;
+		ID: SearchMessageCommands.RequestStatsLocation;
 		AdditionalEntries: false;
 		EntryCount: number;
 		Finished: true;
@@ -264,8 +245,10 @@ export type RawSearchMessageReceived =
 	| RawResponseForSearchCloseMessageReceived
 	| RawResponseForSearchDetailsMessageReceived
 	| RawResponseForSearchTagsMessageReceived
-	| RawResponseForSearchEntriesWithinRangeMessageReceived
 	| RawResponseForSearchStatsMessageReceived
 	| RawResponseForSearchStatsWithinRangeMessageReceived
 	| RawResponseForSearchStatsSummaryMessageReceived
-	| RawResponseForSearchStatsLocationMessageReceived;
+	| RawResponseForSearchStatsLocationMessageReceived
+	| RawSearchMessageReceivedRequestEntriesWithinRange;
+
+export * from './request-entries-within-range';

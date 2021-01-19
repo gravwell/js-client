@@ -6,19 +6,15 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { SEARCH_MESSAGE_COMMANDS } from '../search';
+import { RawSearchEntry } from '../search';
 
-export interface BaseRendererResponse {
-	ID: typeof SEARCH_MESSAGE_COMMANDS.REQ_TS_RANGE;
-	Addendum?: { customView: string };
-	EntryRange: {
-		First: number;
-		Last: number;
-		StartTS: string; // timestamp
-		EndTS: string; // timestamp
-	};
-
-	AdditionalEntries: boolean;
-	Finished: boolean;
-	EntryCount: number;
+// Named as GenerateAXRequest in the Go source
+/**
+ * Contains a tag name and a set of entries.
+ * It is used by clients to request all possible extractions from the given entries.
+ * All entries should have the same tag.
+ */
+export interface RawCreatableAutoExtractorGuess {
+	Tag: string;
+	Entries: Array<RawSearchEntry>;
 }

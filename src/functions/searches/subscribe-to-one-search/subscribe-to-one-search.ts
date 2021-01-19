@@ -6,25 +6,23 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { decode as base64Decode } from 'base-64';
-import { isArray, isBoolean, isEqual, isNull, isUndefined } from 'lodash';
+import { isBoolean, isEqual, isNull, isUndefined } from 'lodash';
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import { distinctUntilChanged, filter, first, map } from 'rxjs/operators';
 import {
-	isRawTableEntries,
 	Query,
 	RawAcceptSearchMessageSent,
 	RawInitiateSearchMessageSent,
 	RawRequestSearchEntriesWithinRangeMessageSent,
 	RawResponseForSearchDetailsMessageReceived,
-	RawResponseForSearchEntriesWithinRangeMessageReceived,
 	RawResponseForSearchStatsMessageReceived,
 	RawSearchInitiatedMessageReceived,
-	SEARCH_MESSAGE_COMMANDS,
-	SearchEntries,
+	RawSearchMessageReceivedRequestEntriesWithinRange,
 	SearchFilter,
+	SearchMessageCommands,
 	SearchStats,
 	SearchSubscription,
+	toSearchEntries,
 } from '../../../models';
 import { Percentage, toNumericID } from '../../../value-objects';
 import { APIContext, promiseProgrammatically } from '../../utils';
@@ -90,35 +88,15 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 		);
 
 		const entries$ = searchMessages$.pipe(
-			filter((msg): msg is RawResponseForSearchEntriesWithinRangeMessageReceived => {
+			filter((msg): msg is RawSearchMessageReceivedRequestEntriesWithinRange => {
 				try {
-					const _msg = <RawResponseForSearchEntriesWithinRangeMessageReceived>msg;
-					return _msg.data.ID === SEARCH_MESSAGE_COMMANDS.REQ_TS_RANGE;
+					const _msg = <RawSearchMessageReceivedRequestEntriesWithinRange>msg;
+					return _msg.data.ID === SearchMessageCommands.RequestEntriesWithinRange;
 				} catch {
 					return false;
 				}
 			}),
-			map(
-				(msg): SearchEntries => ({
-					start: new Date(msg.data.EntryRange.StartTS),
-					end: new Date(msg.data.EntryRange.EndTS),
-					names: isArray(msg.data.Entries)
-						? ['Data']
-						: isRawTableEntries(msg.data.Entries)
-						? msg.data.Entries.Columns
-						: msg.data.Entries.Names,
-					data: isArray(msg.data.Entries)
-						? msg.data.Entries.map(rawData => ({
-								timestamp: new Date(rawData.TS),
-								values: [base64Decode(rawData.Data)],
-						  }))
-						: isRawTableEntries(msg.data.Entries)
-						? isNull(msg.data.Entries.Rows)
-							? []
-							: msg.data.Entries.Rows.map(rawData => ({ timestamp: new Date(rawData.TS), values: rawData.Row }))
-						: msg.data.Entries.Values.map(rawData => ({ timestamp: new Date(rawData.TS), values: rawData.Data })),
-				}),
-			),
+			map(msg => toSearchEntries(msg)),
 		);
 
 		const _filter$ = new BehaviorSubject(initialFilter);
@@ -131,7 +109,7 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 			rawSubscription.send(<RawRequestSearchEntriesWithinRangeMessageSent>{
 				type: searchTypeID,
 				data: {
-					ID: SEARCH_MESSAGE_COMMANDS.REQ_TS_RANGE,
+					ID: SearchMessageCommands.RequestEntriesWithinRange,
 					Addendum: {},
 					EntryRange: {
 						First: 0,
@@ -151,7 +129,7 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 			filter((msg): msg is RawResponseForSearchStatsMessageReceived => {
 				try {
 					const _msg = <RawResponseForSearchStatsMessageReceived>msg;
-					return _msg.data.ID === SEARCH_MESSAGE_COMMANDS.REQ_STATS_GET;
+					return _msg.data.ID === SearchMessageCommands.RequestAllStats;
 				} catch {
 					return false;
 				}
@@ -162,7 +140,7 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 			filter((msg): msg is RawResponseForSearchDetailsMessageReceived => {
 				try {
 					const _msg = <RawResponseForSearchDetailsMessageReceived>msg;
-					return _msg.data.ID === SEARCH_MESSAGE_COMMANDS.REQUEST_DETAILS;
+					return _msg.data.ID === SearchMessageCommands.RequestDetails;
 				} catch {
 					return false;
 				}
