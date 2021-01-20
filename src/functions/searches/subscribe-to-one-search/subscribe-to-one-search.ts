@@ -8,7 +8,7 @@
 
 import { isBoolean, isEqual, isNull, isUndefined } from 'lodash';
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
-import { distinctUntilChanged, filter, first, map } from 'rxjs/operators';
+import { bufferCount, distinctUntilChanged, filter, first, map, startWith } from 'rxjs/operators';
 import {
 	Query,
 	RawAcceptSearchMessageSent,
@@ -35,11 +35,23 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 	return async (
 		query: Query,
 		range: [Date, Date],
-		options: { filter?: Partial<SearchFilter> } = {},
+		options: { filter?: SearchFilter } = {},
 	): Promise<SearchSubscription> => {
 		if (isNull(rawSubscriptionP)) rawSubscriptionP = subscribeToOneRawSearch();
 		const rawSubscription = await rawSubscriptionP;
-		const initialFilter = { start: range[0], end: range[1], limit: 100, ...(options.filter ?? {}) };
+		const initialFilter = {
+			entriesOffset: {
+				index: options.filter?.entriesOffset?.index ?? 0,
+				count: options.filter?.entriesOffset?.count ?? 100,
+			},
+			dateRange: {
+				start: options.filter?.dateRange?.start ?? range[0],
+				end: options.filter?.dateRange?.end ?? range[1],
+			},
+			// TODO(wisely): IDK what should be the default value here
+			desiredGranularity: options.filter?.desiredGranularity ?? 100,
+			fieldFilters: options.filter?.fieldFilters ?? [],
+		};
 
 		const searchTypeIDP = promiseProgrammatically<string>();
 		rawSubscription.received$
@@ -99,26 +111,51 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 			map(msg => toSearchEntries(msg)),
 		);
 
-		const _filter$ = new BehaviorSubject(initialFilter);
+		const _filter$ = new BehaviorSubject<SearchFilter>(initialFilter);
 		const setFilter = (filter: SearchFilter) => {
 			_filter$.next(filter);
 		};
-		const filter$ = _filter$.asObservable().pipe(distinctUntilChanged((a, b) => isEqual(a, b)));
+		const filter$ = _filter$.asObservable().pipe(
+			startWith<SearchFilter>(initialFilter),
+			bufferCount(2, 1),
+			map(
+				([prev, curr]): Required<SearchFilter> => ({
+					entriesOffset: {
+						index: curr.entriesOffset?.index ?? prev.entriesOffset?.index ?? initialFilter.entriesOffset.index,
+						count: curr.entriesOffset?.count ?? prev.entriesOffset?.count ?? initialFilter.entriesOffset.count,
+					},
+					dateRange: {
+						start: curr.dateRange?.start ?? prev.dateRange?.start ?? initialFilter.dateRange.start,
+						end: curr.dateRange?.end ?? prev.dateRange?.end ?? initialFilter.dateRange.end,
+					},
+					desiredGranularity: curr.desiredGranularity ?? prev.desiredGranularity ?? initialFilter.desiredGranularity,
+					fieldFilters: curr.fieldFilters ?? prev.fieldFilters ?? initialFilter.fieldFilters,
+				}),
+			),
+			distinctUntilChanged((a, b) => isEqual(a, b)),
+		);
 
-		const requestEntries = (filter: SearchFilter) =>
-			rawSubscription.send(<RawRequestSearchEntriesWithinRangeMessageSent>{
+		const requestEntries = async (filter: Required<SearchFilter>): Promise<void> => {
+			const first = filter.entriesOffset.index * filter.entriesOffset.count;
+			const last = first + filter.entriesOffset.count;
+			const start = filter.dateRange.start!;
+			const end = filter.dateRange.end!;
+			// TODO: Filter by .desiredGranularity and .fieldFilters
+
+			await rawSubscription.send(<RawRequestSearchEntriesWithinRangeMessageSent>{
 				type: searchTypeID,
 				data: {
 					ID: SearchMessageCommands.RequestEntriesWithinRange,
 					Addendum: {},
 					EntryRange: {
-						First: 0,
-						Last: filter.limit,
-						StartTS: filter.start.toISOString(),
-						EndTS: filter.end.toISOString(),
+						First: first,
+						Last: last,
+						StartTS: start.toISOString(),
+						EndTS: end.toISOString(),
 					},
 				},
 			});
+		};
 
 		filter$.subscribe(filter => {
 			requestEntries(filter);
