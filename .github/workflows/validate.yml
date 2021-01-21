@@ -65,11 +65,37 @@ jobs:
           LICENSE: ${{ secrets.TEST_LICENSE }}
         run: |
           [[ "$(echo "$LICENSE" | base64 -d | md5sum)" == "e1fd9a7a78a5ddd27e3443f2144a6de3  -" ]] || ( echo "md5sum mismatch"; exit 1 )
-          while curl --silent --fail http://localhost:8080/license/status ; do sleep 1; done
-          sleep 1
-          echo "$LICENSE" | base64 -d | curl --silent --form 'file=@-;filename=license' http://localhost:8080/license || ( echo "license upload failed"; exit 1 )
+          n=0
+          until [[ "$n" -ge 5 ]]
+          do
+            curl --silent --fail http://localhost:8080/license/status && break
+            n=$((n+1))
+            sleep 10
+          done
+          if [[ "$n" -eq 5 ]]
+          then
+            echo "Timed out waiting for license server to stand up"
+            exit 1
+          else
+            echo "License server is up"
+          fi
           sleep 5
-          while curl --silent --fail http://localhost:8080/license/status ; do sleep 1; done
+          echo "$LICENSE" | base64 -d | curl --silent --form 'file=@-;filename=license' http://localhost:8080/license || ( echo "License upload failed"; exit 1 )
+          sleep 5
+          n=0
+          until [[ "$n" -ge 5 ]]
+          do
+            curl --silent --fail http://localhost:8080/license/status && break
+            n=$((n+1))
+            sleep 10
+          done
+          if [[ "$n" -eq 5 ]]
+          then
+            echo "Timed out checking for license acceptance"
+            exit 1
+          else
+            echo "License accepted"
+          fi
           sleep 10
           curl --silent --fail http://localhost:8080/api/test || ( echo "api test failed"; exit 1 )
       - name: Use Node.js 10.20.1
@@ -105,14 +131,40 @@ jobs:
         env:
           LICENSE: ${{ secrets.TEST_LICENSE }}
         run: |
-          [[ "$(echo "$LICENSE" | base64 -d | md5sum)" == "e1fd9a7a78a5ddd27e3443f2144a6de3  -" ]]
-          while curl --silent --fail http://localhost:8080/license/status ; do sleep 1; done
-          sleep 1
-          echo "$LICENSE" | base64 -d | curl --silent --form 'file=@-;filename=license' http://localhost:8080/license
+          [[ "$(echo "$LICENSE" | base64 -d | md5sum)" == "e1fd9a7a78a5ddd27e3443f2144a6de3  -" ]] || ( echo "md5sum mismatch"; exit 1 )
+          n=0
+          until [[ "$n" -ge 5 ]]
+          do
+            curl --silent --fail http://localhost:8080/license/status && break
+            n=$((n+1))
+            sleep 10
+          done
+          if [[ "$n" -eq 5 ]]
+          then
+            echo "Timed out waiting for license server to stand up"
+            exit 1
+          else
+            echo "License server is up"
+          fi
           sleep 5
-          while curl --silent --fail http://localhost:8080/license/status ; do sleep 1; done
+          echo "$LICENSE" | base64 -d | curl --silent --form 'file=@-;filename=license' http://localhost:8080/license || ( echo "License upload failed"; exit 1 )
+          sleep 5
+          n=0
+          until [[ "$n" -ge 5 ]]
+          do
+            curl --silent --fail http://localhost:8080/license/status && break
+            n=$((n+1))
+            sleep 10
+          done
+          if [[ "$n" -eq 5 ]]
+          then
+            echo "Timed out checking for license acceptance"
+            exit 1
+          else
+            echo "License accepted"
+          fi
           sleep 10
-          curl --silent --fail http://localhost:8080/api/test
+          curl --silent --fail http://localhost:8080/api/test || ( echo "api test failed"; exit 1 )
       - name: Use Node.js 10.20.1
         uses: actions/setup-node@v1
         with:
@@ -146,14 +198,40 @@ jobs:
         env:
           LICENSE: ${{ secrets.TEST_LICENSE }}
         run: |
-          [[ "$(echo "$LICENSE" | base64 -d | md5sum)" == "e1fd9a7a78a5ddd27e3443f2144a6de3  -" ]]
-          while curl --silent --fail http://localhost:8080/license/status ; do sleep 1; done
-          sleep 1
-          echo "$LICENSE" | base64 -d | curl --silent --form 'file=@-;filename=license' http://localhost:8080/license
+          [[ "$(echo "$LICENSE" | base64 -d | md5sum)" == "e1fd9a7a78a5ddd27e3443f2144a6de3  -" ]] || ( echo "md5sum mismatch"; exit 1 )
+          n=0
+          until [[ "$n" -ge 5 ]]
+          do
+            curl --silent --fail http://localhost:8080/license/status && break
+            n=$((n+1))
+            sleep 10
+          done
+          if [[ "$n" -eq 5 ]]
+          then
+            echo "Timed out waiting for license server to stand up"
+            exit 1
+          else
+            echo "License server is up"
+          fi
           sleep 5
-          while curl --silent --fail http://localhost:8080/license/status ; do sleep 1; done
+          echo "$LICENSE" | base64 -d | curl --silent --form 'file=@-;filename=license' http://localhost:8080/license || ( echo "License upload failed"; exit 1 )
+          sleep 5
+          n=0
+          until [[ "$n" -ge 5 ]]
+          do
+            curl --silent --fail http://localhost:8080/license/status && break
+            n=$((n+1))
+            sleep 10
+          done
+          if [[ "$n" -eq 5 ]]
+          then
+            echo "Timed out checking for license acceptance"
+            exit 1
+          else
+            echo "License accepted"
+          fi
           sleep 10
-          curl --silent --fail http://localhost:8080/api/test
+          curl --silent --fail http://localhost:8080/api/test || ( echo "api test failed"; exit 1 )
       - name: Use Node.js 10.20.1
         uses: actions/setup-node@v1
         with:
