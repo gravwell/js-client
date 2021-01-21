@@ -9,7 +9,7 @@
 import { random, sortBy } from 'lodash';
 import { CreatableUser, isScheduledScript, ScheduledScript, User } from '../../models';
 import { integrationTest } from '../../tests';
-import { TEST_BASE_API_CONTEXT, TEST_HOST } from '../../tests/config';
+import { TEST_BASE_API_CONTEXT } from '../../tests/config';
 import { makeLoginOneUser } from '../auth/login-one-user';
 import { makeCreateOneUser, makeGetOneUser } from '../users';
 import { makeCreateManyScheduledScripts } from './create-many-scheduled-scripts';
@@ -66,8 +66,7 @@ describe('getScheduledScriptsAuthorizedToMe()', () => {
 
 		// Create three scheduled scripts as analyst
 		const createManyScheduledScriptsAsAnalyst = makeCreateManyScheduledScripts({
-			host: TEST_HOST,
-			useEncryption: false,
+			...TEST_BASE_API_CONTEXT,
 			authToken: analystAuth,
 		});
 
@@ -101,8 +100,7 @@ describe('getScheduledScriptsAuthorizedToMe()', () => {
 			for (const scheduledScript of actualAdminScheduledScripts) expect(isScheduledScript(scheduledScript)).toBeTrue();
 
 			const getScheduledScriptsAuthorizedToAnalyst = makeGetScheduledScriptsAuthorizedToMe({
-				host: TEST_HOST,
-				useEncryption: false,
+				...TEST_BASE_API_CONTEXT,
 				authToken: analystAuth,
 			});
 

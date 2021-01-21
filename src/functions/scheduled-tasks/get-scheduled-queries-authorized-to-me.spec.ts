@@ -9,7 +9,7 @@
 import { random, sortBy } from 'lodash';
 import { CreatableUser, isScheduledQuery, ScheduledQuery, User } from '../../models';
 import { integrationTest } from '../../tests';
-import { TEST_BASE_API_CONTEXT, TEST_HOST } from '../../tests/config';
+import { TEST_BASE_API_CONTEXT } from '../../tests/config';
 import { makeLoginOneUser } from '../auth/login-one-user';
 import { makeCreateOneUser, makeGetOneUser } from '../users';
 import { makeCreateManyScheduledQueries } from './create-many-scheduled-queries';
@@ -68,8 +68,7 @@ describe('getScheduledQueriesAuthorizedToMe()', () => {
 
 		// Create three scheduled queries as analyst
 		const createManyScheduledQueriesAsAnalyst = makeCreateManyScheduledQueries({
-			host: TEST_HOST,
-			useEncryption: false,
+			...TEST_BASE_API_CONTEXT,
 			authToken: analystAuth,
 		});
 
@@ -106,8 +105,7 @@ describe('getScheduledQueriesAuthorizedToMe()', () => {
 			for (const scheduledQuery of actualAdminScheduledQueries) expect(isScheduledQuery(scheduledQuery)).toBeTrue();
 
 			const getScheduledQueriesAuthorizedToAnalyst = makeGetScheduledQueriesAuthorizedToMe({
-				host: TEST_HOST,
-				useEncryption: false,
+				...TEST_BASE_API_CONTEXT,
 				authToken: analystAuth,
 			});
 

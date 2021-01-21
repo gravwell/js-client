@@ -9,7 +9,7 @@
 import { random, sortBy } from 'lodash';
 import { AutoExtractor, CreatableAutoExtractor, CreatableUser, isAutoExtractor, User } from '../../models';
 import { integrationTest } from '../../tests';
-import { TEST_BASE_API_CONTEXT, TEST_HOST } from '../../tests/config';
+import { TEST_BASE_API_CONTEXT } from '../../tests/config';
 import { makeLoginOneUser } from '../auth/login-one-user';
 import { makeCreateOneUser, makeGetOneUser } from '../users';
 import { makeCreateOneAutoExtractor } from './create-one-auto-extractor';
@@ -103,8 +103,7 @@ describe('getAutoExtractorsAuthorizedToMe()', () => {
 		];
 
 		const createOneAutoExtractorAsAnalyst = makeCreateOneAutoExtractor({
-			host: TEST_HOST,
-			useEncryption: false,
+			...TEST_BASE_API_CONTEXT,
 			authToken: analystAuth,
 		});
 
@@ -120,8 +119,7 @@ describe('getAutoExtractorsAuthorizedToMe()', () => {
 			for (const autoExtractor of actualAdminAutoExtractors) expect(isAutoExtractor(autoExtractor)).toBeTrue();
 
 			const getAutoExtractorsAuthorizedToAnalyst = makeGetAutoExtractorsAuthorizedToMe({
-				host: TEST_HOST,
-				useEncryption: false,
+				...TEST_BASE_API_CONTEXT,
 				authToken: analystAuth,
 			});
 

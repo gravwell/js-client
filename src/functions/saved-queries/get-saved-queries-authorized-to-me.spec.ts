@@ -9,7 +9,7 @@
 import { random, sortBy } from 'lodash';
 import { CreatableSavedQuery, CreatableUser, isSavedQuery, SavedQuery, User } from '../../models';
 import { integrationTest } from '../../tests';
-import { TEST_BASE_API_CONTEXT, TEST_HOST } from '../../tests/config';
+import { TEST_BASE_API_CONTEXT } from '../../tests/config';
 import { makeLoginOneUser } from '../auth/login-one-user';
 import { makeCreateOneUser, makeGetOneUser } from '../users';
 import { makeCreateOneSavedQuery } from './create-one-saved-query';
@@ -83,8 +83,7 @@ describe('getSavedQueriesAuthorizedToMe()', () => {
 		];
 
 		const createOneSavedQueryAsAnalyst = makeCreateOneSavedQuery({
-			host: TEST_HOST,
-			useEncryption: false,
+			...TEST_BASE_API_CONTEXT,
 			authToken: analystAuth,
 		});
 
@@ -100,8 +99,7 @@ describe('getSavedQueriesAuthorizedToMe()', () => {
 			for (const savedQuery of actualAdminSavedQueries) expect(isSavedQuery(savedQuery)).toBeTrue();
 
 			const getSavedQueriesAuthorizedToAnalyst = makeGetSavedQueriesAuthorizedToMe({
-				host: TEST_HOST,
-				useEncryption: false,
+				...TEST_BASE_API_CONTEXT,
 				authToken: analystAuth,
 			});
 

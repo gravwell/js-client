@@ -9,7 +9,7 @@
 import { random } from 'lodash';
 import { CreatableDashboard, CreatableGroup, CreatableUser, isDashboard, User } from '../../models';
 import { integrationTest } from '../../tests';
-import { TEST_BASE_API_CONTEXT, TEST_HOST } from '../../tests/config';
+import { TEST_BASE_API_CONTEXT } from '../../tests/config';
 import { makeLoginOneUser } from '../auth/login-one-user';
 import { makeAddOneUserToManyGroups } from '../groups/add-one-user-to-many-groups';
 import { makeCreateOneGroup } from '../groups/create-one-group';
@@ -118,8 +118,7 @@ xdescribe('getDashboardsByGroup()', () => {
 		];
 
 		const createOneDashboardAsAnalyst = makeCreateOneDashboard({
-			host: TEST_HOST,
-			useEncryption: false,
+			...TEST_BASE_API_CONTEXT,
 			authToken: analystAuth,
 		});
 
@@ -168,8 +167,7 @@ xdescribe('getDashboardsByGroup()', () => {
 			await expectAsync(getDashboardsByGroup(analystGroupID)).toBeResolved();
 
 			const getDashboardsByGroupAsAnalyst = makeGetDashboardsByGroup({
-				host: TEST_HOST,
-				useEncryption: false,
+				...TEST_BASE_API_CONTEXT,
 				authToken: analystAuth,
 			});
 

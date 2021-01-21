@@ -9,7 +9,7 @@
 import { random } from 'lodash';
 import { CreatableUser, isScheduledScript, User } from '../../models';
 import { integrationTest } from '../../tests';
-import { TEST_BASE_API_CONTEXT, TEST_HOST } from '../../tests/config';
+import { TEST_BASE_API_CONTEXT } from '../../tests/config';
 import { makeLoginOneUser } from '../auth/login-one-user';
 import { makeCreateOneUser, makeGetOneUser } from '../users';
 import { makeCreateManyScheduledScripts } from './create-many-scheduled-scripts';
@@ -63,8 +63,7 @@ describe('getManyScheduledScripts()', () => {
 
 		// Create three scheduled scripts as analyst
 		const createManyScheduledScriptsAsAnalyst = makeCreateManyScheduledScripts({
-			host: TEST_HOST,
-			useEncryption: false,
+			...TEST_BASE_API_CONTEXT,
 			authToken: userAuth,
 		});
 

@@ -9,7 +9,7 @@
 import { random } from 'lodash';
 import { CreatableMacro, CreatableUser, isMacro, User } from '../../models';
 import { integrationTest } from '../../tests';
-import { TEST_BASE_API_CONTEXT, TEST_HOST } from '../../tests/config';
+import { TEST_BASE_API_CONTEXT } from '../../tests/config';
 import { makeLoginOneUser } from '../auth/login-one-user';
 import { makeCreateOneUser, makeGetOneUser } from '../users';
 import { makeCreateOneMacro } from './create-one-macro';
@@ -65,8 +65,7 @@ describe('getMacrosByUser()', () => {
 		];
 
 		const createOneMacroAsAnalyst = makeCreateOneMacro({
-			host: TEST_HOST,
-			useEncryption: false,
+			...TEST_BASE_API_CONTEXT,
 			authToken: userAuth,
 		});
 
@@ -117,8 +116,7 @@ describe('getMacrosByUser()', () => {
 			expect(analystMacroIDs.length).toBe(3);
 
 			const getMacrosByUserAsAnalyst = makeGetMacrosByUser({
-				host: TEST_HOST,
-				useEncryption: false,
+				...TEST_BASE_API_CONTEXT,
 				authToken: userAuth,
 			});
 

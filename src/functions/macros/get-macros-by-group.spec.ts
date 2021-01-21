@@ -9,7 +9,7 @@
 import { random } from 'lodash';
 import { CreatableGroup, CreatableMacro, CreatableUser, isMacro, User } from '../../models';
 import { integrationTest } from '../../tests';
-import { TEST_BASE_API_CONTEXT, TEST_HOST } from '../../tests/config';
+import { TEST_BASE_API_CONTEXT } from '../../tests/config';
 import { makeLoginOneUser } from '../auth/login-one-user';
 import { makeAddOneUserToManyGroups } from '../groups/add-one-user-to-many-groups';
 import { makeCreateOneGroup } from '../groups/create-one-group';
@@ -88,8 +88,7 @@ describe('getMacrosByGroup()', () => {
 		];
 
 		const createOneMacroAsAnalyst = makeCreateOneMacro({
-			host: TEST_HOST,
-			useEncryption: false,
+			...TEST_BASE_API_CONTEXT,
 			authToken: analystAuth,
 		});
 
@@ -138,8 +137,7 @@ describe('getMacrosByGroup()', () => {
 			await expectAsync(getMacrosByGroup(analystGroupID)).toBeResolved();
 
 			const getMacrosByGroupAsAnalyst = makeGetMacrosByGroup({
-				host: TEST_HOST,
-				useEncryption: false,
+				...TEST_BASE_API_CONTEXT,
 				authToken: analystAuth,
 			});
 

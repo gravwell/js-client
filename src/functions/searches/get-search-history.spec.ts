@@ -9,7 +9,7 @@
 import { random } from 'lodash';
 import { CreatableUser, isValidSearch, User } from '../../models';
 import { integrationTest } from '../../tests';
-import { TEST_BASE_API_CONTEXT, TEST_HOST } from '../../tests/config';
+import { TEST_BASE_API_CONTEXT } from '../../tests/config';
 import { makeLoginOneUser } from '../auth/login-one-user';
 import { makeCreateOneUser, makeGetMyUser, makeGetOneUser } from '../users';
 import { makeGetSearchHistory } from './get-search-history';
@@ -85,8 +85,7 @@ describe('getSearchHistory()', () => {
 		'Should not get the search history of another user if the request was not from an admin',
 		integrationTest(async () => {
 			const getSearchHistoryAsAnalyst = makeGetSearchHistory({
-				host: TEST_HOST,
-				useEncryption: false,
+				...TEST_BASE_API_CONTEXT,
 				authToken: userAuth,
 			});
 

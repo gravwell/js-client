@@ -9,7 +9,7 @@
 import { random, sortBy } from 'lodash';
 import { CreatableMacro, CreatableUser, isMacro, Macro, User } from '../../models';
 import { integrationTest } from '../../tests';
-import { TEST_BASE_API_CONTEXT, TEST_HOST } from '../../tests/config';
+import { TEST_BASE_API_CONTEXT } from '../../tests/config';
 import { makeLoginOneUser } from '../auth/login-one-user';
 import { makeCreateOneUser, makeGetOneUser } from '../users';
 import { makeCreateOneMacro } from './create-one-macro';
@@ -68,8 +68,7 @@ describe('getMacrosAuthorizedToMe()', () => {
 		];
 
 		const createOneMacroAsAnalyst = makeCreateOneMacro({
-			host: TEST_HOST,
-			useEncryption: false,
+			...TEST_BASE_API_CONTEXT,
 			authToken: analystAuth,
 		});
 
@@ -85,8 +84,7 @@ describe('getMacrosAuthorizedToMe()', () => {
 			for (const macro of actualAdminMacros) expect(isMacro(macro)).toBeTrue();
 
 			const getMacrosAuthorizedToAnalyst = makeGetMacrosAuthorizedToMe({
-				host: TEST_HOST,
-				useEncryption: false,
+				...TEST_BASE_API_CONTEXT,
 				authToken: analystAuth,
 			});
 

@@ -9,7 +9,7 @@
 import { random } from 'lodash';
 import { CreatableDashboard, CreatableUser, isDashboard, User } from '../../models';
 import { integrationTest } from '../../tests';
-import { TEST_BASE_API_CONTEXT, TEST_HOST } from '../../tests/config';
+import { TEST_BASE_API_CONTEXT } from '../../tests/config';
 import { makeLoginOneUser } from '../auth/login-one-user';
 import { makeCreateOneUser, makeGetOneUser } from '../users';
 import { makeCreateOneDashboard } from './create-one-dashboard';
@@ -90,8 +90,7 @@ describe('getDashboardsByUser()', () => {
 		];
 
 		const createOneDashboardAsAnalyst = makeCreateOneDashboard({
-			host: TEST_HOST,
-			useEncryption: false,
+			...TEST_BASE_API_CONTEXT,
 			authToken: userAuth,
 		});
 
@@ -142,8 +141,7 @@ describe('getDashboardsByUser()', () => {
 			expect(analystDashboardIDs.length).toBe(3);
 
 			const getDashboardsByUserAsAnalyst = makeGetDashboardsByUser({
-				host: TEST_HOST,
-				useEncryption: false,
+				...TEST_BASE_API_CONTEXT,
 				authToken: userAuth,
 			});
 
