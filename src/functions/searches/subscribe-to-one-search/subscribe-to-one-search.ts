@@ -28,6 +28,10 @@ import { Percentage, toNumericID } from '../../../value-objects';
 import { APIContext, promiseProgrammatically } from '../../utils';
 import { makeSubscribeToOneRawSearch } from './subscribe-to-one-raw-search';
 
+type RequiredSearchFilter = Required<
+	Omit<SearchFilter, 'dateRange'> & { dateRange: Required<NonNullable<SearchFilter['dateRange']>> }
+>;
+
 export const makeSubscribeToOneSearch = (context: APIContext) => {
 	const subscribeToOneRawSearch = makeSubscribeToOneRawSearch(context);
 	let rawSubscriptionP: ReturnType<typeof subscribeToOneRawSearch> | null = null;
@@ -119,7 +123,7 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 			startWith<SearchFilter>(initialFilter),
 			bufferCount(2, 1),
 			map(
-				([prev, curr]): Required<SearchFilter> => ({
+				([prev, curr]): RequiredSearchFilter => ({
 					entriesOffset: {
 						index: curr.entriesOffset?.index ?? prev.entriesOffset?.index ?? initialFilter.entriesOffset.index,
 						count: curr.entriesOffset?.count ?? prev.entriesOffset?.count ?? initialFilter.entriesOffset.count,
@@ -135,11 +139,11 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 			distinctUntilChanged((a, b) => isEqual(a, b)),
 		);
 
-		const requestEntries = async (filter: Required<SearchFilter>): Promise<void> => {
+		const requestEntries = async (filter: RequiredSearchFilter): Promise<void> => {
 			const first = filter.entriesOffset.index * filter.entriesOffset.count;
 			const last = first + filter.entriesOffset.count;
-			const start = filter.dateRange.start!;
-			const end = filter.dateRange.end!;
+			const start = filter.dateRange.start;
+			const end = filter.dateRange.end;
 			// TODO: Filter by .desiredGranularity and .fieldFilters
 
 			await rawSubscription.send(<RawRequestSearchEntriesWithinRangeMessageSent>{
