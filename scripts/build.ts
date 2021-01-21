@@ -20,8 +20,10 @@ if (BUILD_ENVIRONMENTS.length === 0) throw Error('No build environment');
 const execAsync = (command: string): Promise<string> =>
 	new Promise((resolve, reject) => {
 		exec(command, (err, stdout, stderr) => {
-			if (err) reject(err);
-			else resolve(stdout);
+			if (err) {
+				if (stdout) (err as any).logs = stdout;
+				reject(err);
+			} else resolve(stdout);
 		});
 	});
 
@@ -79,8 +81,17 @@ const buildBrowsers = async (): Promise<void> => {
 	startDebugContext('Build', ['red', 'bold']);
 	debug(`Will build for ${BUILD_ENVIRONMENTS.join(' and ')}`);
 
-	if (BUILD_ENVIRONMENTS.includes('Node')) await buildNode();
-	if (BUILD_ENVIRONMENTS.includes('Browsers')) await buildBrowsers();
+	try {
+		if (BUILD_ENVIRONMENTS.includes('Node')) await buildNode();
+		if (BUILD_ENVIRONMENTS.includes('Browsers')) await buildBrowsers();
+	} catch (err) {
+		startDebugContext('Error', ['red', 'bold']);
+		if (err.message) debug(err.message);
+		if (err.logs) console.log(err.logs);
+		endDebugContext();
+
+		process.exit(1);
+	}
 
 	debug(`Improving typescript compatibility`);
 	await improveTypescriptCompatibility('dist');
