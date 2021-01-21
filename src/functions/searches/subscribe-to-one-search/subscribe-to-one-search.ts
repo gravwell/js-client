@@ -6,9 +6,9 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { isBoolean, isEqual, isNull, isUndefined } from 'lodash';
+import { isBoolean, isEqual, isNil, isNull, isUndefined } from 'lodash';
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
-import { bufferCount, distinctUntilChanged, filter, first, map, startWith } from 'rxjs/operators';
+import { bufferCount, distinctUntilChanged, filter, first, map, startWith, tap } from 'rxjs/operators';
 import {
 	Query,
 	RawAcceptSearchMessageSent,
@@ -18,6 +18,7 @@ import {
 	RawResponseForSearchStatsMessageReceived,
 	RawSearchInitiatedMessageReceived,
 	RawSearchMessageReceivedRequestEntriesWithinRange,
+	SearchEntries,
 	SearchFilter,
 	SearchMessageCommands,
 	SearchStats,
@@ -52,7 +53,7 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 				start: options.filter?.dateRange?.start ?? range[0],
 				end: options.filter?.dateRange?.end ?? range[1],
 			},
-			// TODO(wisely): IDK what should be the default value here
+			// *NOTE: The default granularity is recalculate when we receive the renderer type
 			desiredGranularity: options.filter?.desiredGranularity ?? 100,
 		};
 
@@ -102,7 +103,7 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 			map(rawPercentage => new Percentage(rawPercentage)),
 		);
 
-		const entries$ = searchMessages$.pipe(
+		const entries$: Observable<SearchEntries> = searchMessages$.pipe(
 			filter((msg): msg is RawSearchMessageReceivedRequestEntriesWithinRange => {
 				try {
 					const _msg = <RawSearchMessageReceivedRequestEntriesWithinRange>msg;
@@ -112,6 +113,10 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 				}
 			}),
 			map(msg => toSearchEntries(msg)),
+			tap(entries => {
+				const defDesiredGranularity = getDefaultGranularityByRendererType(entries.type);
+				initialFilter.desiredGranularity = defDesiredGranularity;
+			}),
 		);
 
 		const _filter$ = new BehaviorSubject<SearchFilter>(initialFilter);
@@ -247,4 +252,26 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 
 		return { progress$, entries$, stats$, setFilter };
 	};
+};
+
+const DEFAULT_GRANULARITY_MAP: Record<SearchEntries['type'], number> = {
+	'chart': 160,
+	'fdg': 2000,
+	'gauge': 100, // *NOTE: Couldn't find it in environments.ts, using the same as table
+	'heatmap': 10000,
+	'point to point': 1000, // *NOTE: Couldn't find it in environments.ts, using the same as pointmap
+	'pointmap': 1000,
+	'raw': 50,
+	'text': 50,
+	'stack graph': 150,
+	'table': 100,
+};
+
+const getDefaultGranularityByRendererType = (rendererType: SearchEntries['type']): number => {
+	const v = DEFAULT_GRANULARITY_MAP[rendererType];
+	if (isNil(v)) {
+		console.log(`Unknown renderer ${rendererType}, will use 100 as the default granularity`);
+		return 100;
+	}
+	return v;
 };
