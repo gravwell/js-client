@@ -8,28 +8,16 @@
 
 import { CreatablePlaybook, isPlaybook } from '../../models';
 import { integrationTest } from '../../tests';
-import { TEST_AUTH_TOKEN, TEST_HOST } from '../../tests/config';
+import { TEST_BASE_API_CONTEXT } from '../../tests/config';
 import { UUID } from '../../value-objects';
 import { makeCreateOnePlaybook } from './create-one-playbook';
 import { makeDeleteOnePlaybook } from './delete-one-playbook';
 import { makeGetAllPlaybooksRelatedToMe } from './get-all-playbooks-related-to-me';
 
 describe('getAllPlaybooksRelatedToMe()', () => {
-	const getAllPlaybooksRelatedToMe = makeGetAllPlaybooksRelatedToMe({
-		host: TEST_HOST,
-		useEncryption: false,
-		authToken: TEST_AUTH_TOKEN,
-	});
-	const createOnePlaybook = makeCreateOnePlaybook({
-		host: TEST_HOST,
-		useEncryption: false,
-		authToken: TEST_AUTH_TOKEN,
-	});
-	const deleteOnePlaybook = makeDeleteOnePlaybook({
-		host: TEST_HOST,
-		useEncryption: false,
-		authToken: TEST_AUTH_TOKEN,
-	});
+	const getAllPlaybooksRelatedToMe = makeGetAllPlaybooksRelatedToMe(TEST_BASE_API_CONTEXT);
+	const createOnePlaybook = makeCreateOnePlaybook(TEST_BASE_API_CONTEXT);
+	const deleteOnePlaybook = makeDeleteOnePlaybook(TEST_BASE_API_CONTEXT);
 
 	let createdPlaybooksUUIDs: Array<UUID> = [];
 

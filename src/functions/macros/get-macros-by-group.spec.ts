@@ -9,7 +9,7 @@
 import { random } from 'lodash';
 import { CreatableGroup, CreatableMacro, CreatableUser, isMacro, User } from '../../models';
 import { integrationTest } from '../../tests';
-import { TEST_AUTH_TOKEN, TEST_HOST } from '../../tests/config';
+import { TEST_BASE_API_CONTEXT, TEST_HOST } from '../../tests/config';
 import { makeLoginOneUser } from '../auth/login-one-user';
 import { makeAddOneUserToManyGroups } from '../groups/add-one-user-to-many-groups';
 import { makeCreateOneGroup } from '../groups/create-one-group';
@@ -20,20 +20,16 @@ import { makeGetAllMacros } from './get-all-macros';
 import { makeGetMacrosByGroup } from './get-macros-by-group';
 
 describe('getMacrosByGroup()', () => {
-	const getAllMacros = makeGetAllMacros({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
-	const getOneUser = makeGetOneUser({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
-	const createOneUser = makeCreateOneUser({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
-	const login = makeLoginOneUser({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
-	const createOneMacro = makeCreateOneMacro({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
-	const deleteOneMacro = makeDeleteOneMacro({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
-	const getMacrosByGroup = makeGetMacrosByGroup({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
-	const createOneGroup = makeCreateOneGroup({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
-	const addOneUserToManyGroups = makeAddOneUserToManyGroups({
-		host: TEST_HOST,
-		useEncryption: false,
-		authToken: TEST_AUTH_TOKEN,
-	});
-	const getMyUser = makeGetMyUser({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
+	const getAllMacros = makeGetAllMacros(TEST_BASE_API_CONTEXT);
+	const getOneUser = makeGetOneUser(TEST_BASE_API_CONTEXT);
+	const createOneUser = makeCreateOneUser(TEST_BASE_API_CONTEXT);
+	const login = makeLoginOneUser(TEST_BASE_API_CONTEXT);
+	const createOneMacro = makeCreateOneMacro(TEST_BASE_API_CONTEXT);
+	const deleteOneMacro = makeDeleteOneMacro(TEST_BASE_API_CONTEXT);
+	const getMacrosByGroup = makeGetMacrosByGroup(TEST_BASE_API_CONTEXT);
+	const createOneGroup = makeCreateOneGroup(TEST_BASE_API_CONTEXT);
+	const addOneUserToManyGroups = makeAddOneUserToManyGroups(TEST_BASE_API_CONTEXT);
+	const getMyUser = makeGetMyUser(TEST_BASE_API_CONTEXT);
 
 	let admin: User;
 	let adminGroupID: string;

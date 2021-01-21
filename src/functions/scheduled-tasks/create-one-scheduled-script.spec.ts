@@ -8,24 +8,16 @@
 
 import { CreatableScheduledScript, isScheduledScript } from '../../models';
 import { integrationTest, myCustomMatchers } from '../../tests';
-import { TEST_AUTH_TOKEN, TEST_HOST } from '../../tests/config';
+import { TEST_BASE_API_CONTEXT } from '../../tests/config';
 import { NumericID } from '../../value-objects';
 import { makeCreateOneGroup } from '../groups/create-one-group';
 import { makeCreateOneScheduledScript } from './create-one-scheduled-script';
 import { makeDeleteAllScheduledScripts } from './delete-all-scheduled-scripts';
 
 describe('createOneScheduledScript()', () => {
-	const createOneScheduledScript = makeCreateOneScheduledScript({
-		host: TEST_HOST,
-		useEncryption: false,
-		authToken: TEST_AUTH_TOKEN,
-	});
-	const createOneGroup = makeCreateOneGroup({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
-	const deleteAllScheduledScripts = makeDeleteAllScheduledScripts({
-		host: TEST_HOST,
-		useEncryption: false,
-		authToken: TEST_AUTH_TOKEN,
-	});
+	const createOneScheduledScript = makeCreateOneScheduledScript(TEST_BASE_API_CONTEXT);
+	const createOneGroup = makeCreateOneGroup(TEST_BASE_API_CONTEXT);
+	const deleteAllScheduledScripts = makeDeleteAllScheduledScripts(TEST_BASE_API_CONTEXT);
 
 	let groupIDs: Array<NumericID>;
 

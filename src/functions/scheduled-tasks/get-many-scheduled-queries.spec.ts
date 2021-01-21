@@ -9,7 +9,7 @@
 import { random } from 'lodash';
 import { CreatableUser, isScheduledQuery, User } from '../../models';
 import { integrationTest } from '../../tests';
-import { TEST_AUTH_TOKEN, TEST_HOST } from '../../tests/config';
+import { TEST_BASE_API_CONTEXT, TEST_HOST } from '../../tests/config';
 import { makeLoginOneUser } from '../auth/login-one-user';
 import { makeCreateOneUser, makeGetOneUser } from '../users';
 import { makeCreateManyScheduledQueries } from './create-many-scheduled-queries';
@@ -18,29 +18,13 @@ import { makeGetAllScheduledQueries } from './get-all-scheduled-queries';
 import { makeGetManyScheduledQueries } from './get-many-scheduled-queries';
 
 describe('getManyScheduledQueries()', () => {
-	const getOneUser = makeGetOneUser({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
-	const createOneUser = makeCreateOneUser({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
-	const login = makeLoginOneUser({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
-	const getAllScheduledQueries = makeGetAllScheduledQueries({
-		host: TEST_HOST,
-		useEncryption: false,
-		authToken: TEST_AUTH_TOKEN,
-	});
-	const deleteAllScheduledQueries = makeDeleteAllScheduledQueries({
-		host: TEST_HOST,
-		useEncryption: false,
-		authToken: TEST_AUTH_TOKEN,
-	});
-	const createManyScheduledQueries = makeCreateManyScheduledQueries({
-		host: TEST_HOST,
-		useEncryption: false,
-		authToken: TEST_AUTH_TOKEN,
-	});
-	const getManyScheduledQueries = makeGetManyScheduledQueries({
-		host: TEST_HOST,
-		useEncryption: false,
-		authToken: TEST_AUTH_TOKEN,
-	});
+	const getOneUser = makeGetOneUser(TEST_BASE_API_CONTEXT);
+	const createOneUser = makeCreateOneUser(TEST_BASE_API_CONTEXT);
+	const login = makeLoginOneUser(TEST_BASE_API_CONTEXT);
+	const getAllScheduledQueries = makeGetAllScheduledQueries(TEST_BASE_API_CONTEXT);
+	const deleteAllScheduledQueries = makeDeleteAllScheduledQueries(TEST_BASE_API_CONTEXT);
+	const createManyScheduledQueries = makeCreateManyScheduledQueries(TEST_BASE_API_CONTEXT);
+	const getManyScheduledQueries = makeGetManyScheduledQueries(TEST_BASE_API_CONTEXT);
 
 	let user: User;
 	let userAuth: string;

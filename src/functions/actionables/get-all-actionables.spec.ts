@@ -8,28 +8,16 @@
 
 import { CreatableActionable, isActionable } from '../../models';
 import { integrationTest } from '../../tests';
-import { TEST_AUTH_TOKEN, TEST_HOST } from '../../tests/config';
+import { TEST_BASE_API_CONTEXT } from '../../tests/config';
 import { UUID } from '../../value-objects';
 import { makeCreateOneActionable } from './create-one-actionable';
 import { makeDeleteOneActionable } from './delete-one-actionable';
 import { makeGetAllActionables } from './get-all-actionables';
 
 describe('getAllActionables()', () => {
-	const getAllActionables = makeGetAllActionables({
-		host: TEST_HOST,
-		useEncryption: false,
-		authToken: TEST_AUTH_TOKEN,
-	});
-	const createOneActionable = makeCreateOneActionable({
-		host: TEST_HOST,
-		useEncryption: false,
-		authToken: TEST_AUTH_TOKEN,
-	});
-	const deleteOneActionable = makeDeleteOneActionable({
-		host: TEST_HOST,
-		useEncryption: false,
-		authToken: TEST_AUTH_TOKEN,
-	});
+	const getAllActionables = makeGetAllActionables(TEST_BASE_API_CONTEXT);
+	const createOneActionable = makeCreateOneActionable(TEST_BASE_API_CONTEXT);
+	const deleteOneActionable = makeDeleteOneActionable(TEST_BASE_API_CONTEXT);
 
 	let createdActionablesUUIDs: Array<UUID> = [];
 

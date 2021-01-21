@@ -7,27 +7,15 @@
  **************************************************************************/
 
 import { integrationTest } from '../../tests';
-import { TEST_AUTH_TOKEN, TEST_HOST } from '../../tests/config';
+import { TEST_BASE_API_CONTEXT } from '../../tests/config';
 import { makeDeleteOneSearch } from './delete-one-search';
 import { makeGetOnePersistentSearchStatus } from './get-one-persistent-search-status';
 import { makeGetPersistentSearchStatusRelatedToMe } from './get-persistent-search-status-related-to-me';
 
 describe('deleteOneSearch()', () => {
-	const getPersistentSearchStatusRelatedToMe = makeGetPersistentSearchStatusRelatedToMe({
-		host: TEST_HOST,
-		useEncryption: false,
-		authToken: TEST_AUTH_TOKEN,
-	});
-	const getOnePersistentSearchStatus = makeGetOnePersistentSearchStatus({
-		host: TEST_HOST,
-		useEncryption: false,
-		authToken: TEST_AUTH_TOKEN,
-	});
-	const deleteOneSearch = makeDeleteOneSearch({
-		host: TEST_HOST,
-		useEncryption: false,
-		authToken: TEST_AUTH_TOKEN,
-	});
+	const getPersistentSearchStatusRelatedToMe = makeGetPersistentSearchStatusRelatedToMe(TEST_BASE_API_CONTEXT);
+	const getOnePersistentSearchStatus = makeGetOnePersistentSearchStatus(TEST_BASE_API_CONTEXT);
+	const deleteOneSearch = makeDeleteOneSearch(TEST_BASE_API_CONTEXT);
 
 	xit(
 		'Should delete a search',

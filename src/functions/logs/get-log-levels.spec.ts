@@ -8,11 +8,11 @@
 
 import { isLogLevel, LogLevel } from '../../models';
 import { integrationTest } from '../../tests';
-import { TEST_AUTH_TOKEN, TEST_HOST } from '../../tests/config';
+import { TEST_BASE_API_CONTEXT } from '../../tests/config';
 import { makeGetLogLevels } from './get-log-levels';
 
 describe('getLogLevels()', () => {
-	const getLogLevels = makeGetLogLevels({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
+	const getLogLevels = makeGetLogLevels(TEST_BASE_API_CONTEXT);
 
 	it(
 		'Should get all available log levels and the current active log level',

@@ -8,7 +8,7 @@
 
 import { CreatableGroup, CreatableUser, isGroup, User } from '../../models';
 import { integrationTest } from '../../tests';
-import { TEST_AUTH_TOKEN, TEST_HOST } from '../../tests/config';
+import { TEST_BASE_API_CONTEXT } from '../../tests/config';
 import { NumericID } from '../../value-objects';
 import { makeCreateOneUser, makeDeleteOneUser, makeGetOneUser } from '../users';
 import { makeAddOneUserToManyGroups } from './add-one-user-to-many-groups';
@@ -18,18 +18,14 @@ import { makeGetAllGroups } from './get-all-groups';
 import { makeGetGroupsByUser } from './get-groups-by-user';
 
 describe('getGroupsByUser()', () => {
-	const getAllGroups = makeGetAllGroups({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
-	const createOneGroup = makeCreateOneGroup({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
-	const deleteOneGroup = makeDeleteOneGroup({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
-	const getGroupsByUser = makeGetGroupsByUser({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
-	const getOneUser = makeGetOneUser({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
-	const createOneUser = makeCreateOneUser({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
-	const deleteOneUser = makeDeleteOneUser({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
-	const addOneUserToManyGroups = makeAddOneUserToManyGroups({
-		host: TEST_HOST,
-		useEncryption: false,
-		authToken: TEST_AUTH_TOKEN,
-	});
+	const getAllGroups = makeGetAllGroups(TEST_BASE_API_CONTEXT);
+	const createOneGroup = makeCreateOneGroup(TEST_BASE_API_CONTEXT);
+	const deleteOneGroup = makeDeleteOneGroup(TEST_BASE_API_CONTEXT);
+	const getGroupsByUser = makeGetGroupsByUser(TEST_BASE_API_CONTEXT);
+	const getOneUser = makeGetOneUser(TEST_BASE_API_CONTEXT);
+	const createOneUser = makeCreateOneUser(TEST_BASE_API_CONTEXT);
+	const deleteOneUser = makeDeleteOneUser(TEST_BASE_API_CONTEXT);
+	const addOneUserToManyGroups = makeAddOneUserToManyGroups(TEST_BASE_API_CONTEXT);
 
 	let user: User;
 

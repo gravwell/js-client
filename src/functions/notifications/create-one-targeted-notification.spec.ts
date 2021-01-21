@@ -6,21 +6,14 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { integrationTest, TEST_AUTH_TOKEN, TEST_HOST } from '../../tests';
+import { integrationTest } from '../../tests';
+import { TEST_BASE_API_CONTEXT } from '../../tests/config';
 import { makeCreateOneGroup } from '../groups';
 import { makeCreateOneTargetedNotification } from './create-one-targeted-notification';
 
 describe('createOneTargetedNotification', () => {
-	const createOneTargetedNotification = makeCreateOneTargetedNotification({
-		host: TEST_HOST,
-		useEncryption: false,
-		authToken: TEST_AUTH_TOKEN,
-	});
-	const createOneGroup = makeCreateOneGroup({
-		host: TEST_HOST,
-		useEncryption: false,
-		authToken: TEST_AUTH_TOKEN,
-	});
+	const createOneTargetedNotification = makeCreateOneTargetedNotification(TEST_BASE_API_CONTEXT);
+	const createOneGroup = makeCreateOneGroup(TEST_BASE_API_CONTEXT);
 
 	it(
 		'Should be able to create a targeted message to myself',

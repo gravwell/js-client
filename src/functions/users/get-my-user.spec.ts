@@ -8,11 +8,11 @@
 
 import { isValidUser } from '../../models';
 import { integrationTest } from '../../tests';
-import { TEST_AUTH_TOKEN, TEST_HOST } from '../../tests/config';
+import { TEST_BASE_API_CONTEXT } from '../../tests/config';
 import { makeGetMyUser } from './get-my-user';
 
 describe('getMyUser()', () => {
-	const getMyUser = makeGetMyUser({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
+	const getMyUser = makeGetMyUser(TEST_BASE_API_CONTEXT);
 
 	it(
 		'Should return a user',

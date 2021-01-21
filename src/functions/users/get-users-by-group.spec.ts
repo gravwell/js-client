@@ -9,7 +9,7 @@
 import { random } from 'lodash';
 import { CreatableGroup, CreatableUser, isValidUser } from '../../models';
 import { integrationTest } from '../../tests';
-import { TEST_AUTH_TOKEN, TEST_HOST } from '../../tests/config';
+import { TEST_BASE_API_CONTEXT } from '../../tests/config';
 import { NumericID } from '../../value-objects';
 import { makeAddOneUserToManyGroups, makeCreateOneGroup, makeDeleteOneGroup, makeGetAllGroups } from '../groups';
 import { makeCreateOneUser } from './create-one-user';
@@ -17,17 +17,13 @@ import { makeDeleteOneUser } from './delete-one-user';
 import { makeGetUsersByGroup } from './get-users-by-group';
 
 describe('getUsersByGroup()', () => {
-	const getAllGroups = makeGetAllGroups({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
-	const createOneGroup = makeCreateOneGroup({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
-	const deleteOneGroup = makeDeleteOneGroup({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
-	const getUsersByGroup = makeGetUsersByGroup({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
-	const createOneUser = makeCreateOneUser({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
-	const deleteOneUser = makeDeleteOneUser({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
-	const addOneUserToManyGroups = makeAddOneUserToManyGroups({
-		host: TEST_HOST,
-		useEncryption: false,
-		authToken: TEST_AUTH_TOKEN,
-	});
+	const getAllGroups = makeGetAllGroups(TEST_BASE_API_CONTEXT);
+	const createOneGroup = makeCreateOneGroup(TEST_BASE_API_CONTEXT);
+	const deleteOneGroup = makeDeleteOneGroup(TEST_BASE_API_CONTEXT);
+	const getUsersByGroup = makeGetUsersByGroup(TEST_BASE_API_CONTEXT);
+	const createOneUser = makeCreateOneUser(TEST_BASE_API_CONTEXT);
+	const deleteOneUser = makeDeleteOneUser(TEST_BASE_API_CONTEXT);
+	const addOneUserToManyGroups = makeAddOneUserToManyGroups(TEST_BASE_API_CONTEXT);
 
 	let createdUserIDs: Array<NumericID>;
 

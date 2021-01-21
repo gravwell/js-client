@@ -7,11 +7,11 @@
  **************************************************************************/
 
 import { integrationTest } from '../../tests';
-import { TEST_AUTH_TOKEN, TEST_HOST } from '../../tests/config';
+import { TEST_BASE_API_CONTEXT } from '../../tests/config';
 import { makeSetLogLevel } from './set-log-level';
 
 describe('setLogLevel()', () => {
-	const setLogLevel = makeSetLogLevel({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
+	const setLogLevel = makeSetLogLevel(TEST_BASE_API_CONTEXT);
 
 	it(
 		'Should set the current active log level',

@@ -7,7 +7,7 @@
  **************************************************************************/
 
 import { integrationTest } from '../../tests';
-import { TEST_AUTH_TOKEN, TEST_HOST } from '../../tests/config';
+import { TEST_BASE_API_CONTEXT } from '../../tests/config';
 import { makeCreateManyScheduledQueries } from './create-many-scheduled-queries';
 import { makeDeleteAllScheduledQueries } from './delete-all-scheduled-queries';
 import { makeDeleteOneScheduledQuery } from './delete-one-scheduled-query';
@@ -15,31 +15,11 @@ import { makeGetAllScheduledQueries } from './get-all-scheduled-queries';
 import { makeGetOneScheduledQuery } from './get-one-scheduled-query';
 
 describe('deleteOneScheduledQuery()', () => {
-	const deleteOneScheduledQuery = makeDeleteOneScheduledQuery({
-		host: TEST_HOST,
-		useEncryption: false,
-		authToken: TEST_AUTH_TOKEN,
-	});
-	const getAllScheduledQueries = makeGetAllScheduledQueries({
-		host: TEST_HOST,
-		useEncryption: false,
-		authToken: TEST_AUTH_TOKEN,
-	});
-	const getOneScheduledQuery = makeGetOneScheduledQuery({
-		host: TEST_HOST,
-		useEncryption: false,
-		authToken: TEST_AUTH_TOKEN,
-	});
-	const deleteAllScheduledQueries = makeDeleteAllScheduledQueries({
-		host: TEST_HOST,
-		useEncryption: false,
-		authToken: TEST_AUTH_TOKEN,
-	});
-	const createManyScheduledQueries = makeCreateManyScheduledQueries({
-		host: TEST_HOST,
-		useEncryption: false,
-		authToken: TEST_AUTH_TOKEN,
-	});
+	const deleteOneScheduledQuery = makeDeleteOneScheduledQuery(TEST_BASE_API_CONTEXT);
+	const getAllScheduledQueries = makeGetAllScheduledQueries(TEST_BASE_API_CONTEXT);
+	const getOneScheduledQuery = makeGetOneScheduledQuery(TEST_BASE_API_CONTEXT);
+	const deleteAllScheduledQueries = makeDeleteAllScheduledQueries(TEST_BASE_API_CONTEXT);
+	const createManyScheduledQueries = makeCreateManyScheduledQueries(TEST_BASE_API_CONTEXT);
 
 	beforeEach(async () => {
 		await deleteAllScheduledQueries();

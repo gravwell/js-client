@@ -9,7 +9,7 @@
 import { isNull } from 'lodash';
 import { CreatableResource } from '../../models';
 import { integrationTest } from '../../tests';
-import { TEST_AUTH_TOKEN, TEST_HOST } from '../../tests/config';
+import { TEST_BASE_API_CONTEXT } from '../../tests/config';
 import { UUID } from '../../value-objects';
 import { makeCreateOneResource } from './create-one-resource';
 import { makeDeleteOneResource } from './delete-one-resource';
@@ -18,31 +18,11 @@ import { makePreviewOneResourceContent } from './preview-one-resource-content';
 import { makeSetOneResourceContent } from './set-one-resource-content';
 
 describe('previewOneResource()', () => {
-	const createOneResource = makeCreateOneResource({
-		host: TEST_HOST,
-		useEncryption: false,
-		authToken: TEST_AUTH_TOKEN,
-	});
-	const deleteOneResource = makeDeleteOneResource({
-		host: TEST_HOST,
-		useEncryption: false,
-		authToken: TEST_AUTH_TOKEN,
-	});
-	const previewOneResource = makePreviewOneResourceContent({
-		host: TEST_HOST,
-		useEncryption: false,
-		authToken: TEST_AUTH_TOKEN,
-	});
-	const setOneResourceContent = makeSetOneResourceContent({
-		host: TEST_HOST,
-		useEncryption: false,
-		authToken: TEST_AUTH_TOKEN,
-	});
-	const getOneResourceContent = makeGetOneResourceContent({
-		host: TEST_HOST,
-		useEncryption: false,
-		authToken: TEST_AUTH_TOKEN,
-	});
+	const createOneResource = makeCreateOneResource(TEST_BASE_API_CONTEXT);
+	const deleteOneResource = makeDeleteOneResource(TEST_BASE_API_CONTEXT);
+	const previewOneResource = makePreviewOneResourceContent(TEST_BASE_API_CONTEXT);
+	const setOneResourceContent = makeSetOneResourceContent(TEST_BASE_API_CONTEXT);
+	const getOneResourceContent = makeGetOneResourceContent(TEST_BASE_API_CONTEXT);
 
 	let createdResourceID: UUID;
 	let createdResourceContent: string;

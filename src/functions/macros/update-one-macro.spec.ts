@@ -9,17 +9,17 @@
 import { omit } from 'lodash';
 import { CreatableMacro, isMacro, Macro, UpdatableMacro } from '../../models';
 import { integrationTest } from '../../tests';
-import { TEST_AUTH_TOKEN, TEST_HOST } from '../../tests/config';
+import { TEST_BASE_API_CONTEXT } from '../../tests/config';
 import { makeCreateOneMacro } from './create-one-macro';
 import { makeDeleteOneMacro } from './delete-one-macro';
 import { makeGetAllMacros } from './get-all-macros';
 import { makeUpdateOneMacro } from './update-one-macro';
 
 describe('updateOneMacro()', () => {
-	const createOneMacro = makeCreateOneMacro({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
-	const updateOneMacro = makeUpdateOneMacro({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
-	const deleteOneMacro = makeDeleteOneMacro({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
-	const getAllMacros = makeGetAllMacros({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
+	const createOneMacro = makeCreateOneMacro(TEST_BASE_API_CONTEXT);
+	const updateOneMacro = makeUpdateOneMacro(TEST_BASE_API_CONTEXT);
+	const deleteOneMacro = makeDeleteOneMacro(TEST_BASE_API_CONTEXT);
+	const getAllMacros = makeGetAllMacros(TEST_BASE_API_CONTEXT);
 
 	let createdMacro: Macro;
 

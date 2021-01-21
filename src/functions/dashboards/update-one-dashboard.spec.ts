@@ -8,29 +8,17 @@
 
 import { CreatableDashboard, Dashboard, isDashboard, toVersion, UpdatableDashboard } from '../../models';
 import { integrationTest, myCustomMatchers } from '../../tests';
-import { TEST_AUTH_TOKEN, TEST_HOST } from '../../tests/config';
+import { TEST_BASE_API_CONTEXT } from '../../tests/config';
 import { makeCreateOneDashboard } from './create-one-dashboard';
 import { makeDeleteOneDashboard } from './delete-one-dashboard';
 import { makeGetAllDashboards } from './get-all-dashboards';
 import { makeUpdateOneDashboard } from './update-one-dashboard';
 
 describe('updateOneDashboard()', () => {
-	const createOneDashboard = makeCreateOneDashboard({
-		host: TEST_HOST,
-		useEncryption: false,
-		authToken: TEST_AUTH_TOKEN,
-	});
-	const updateOneDashboard = makeUpdateOneDashboard({
-		host: TEST_HOST,
-		useEncryption: false,
-		authToken: TEST_AUTH_TOKEN,
-	});
-	const deleteOneDashboard = makeDeleteOneDashboard({
-		host: TEST_HOST,
-		useEncryption: false,
-		authToken: TEST_AUTH_TOKEN,
-	});
-	const getAllDashboards = makeGetAllDashboards({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
+	const createOneDashboard = makeCreateOneDashboard(TEST_BASE_API_CONTEXT);
+	const updateOneDashboard = makeUpdateOneDashboard(TEST_BASE_API_CONTEXT);
+	const deleteOneDashboard = makeDeleteOneDashboard(TEST_BASE_API_CONTEXT);
+	const getAllDashboards = makeGetAllDashboards(TEST_BASE_API_CONTEXT);
 
 	let createdDashboard: Dashboard;
 

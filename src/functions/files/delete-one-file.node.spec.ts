@@ -10,17 +10,17 @@ import { createReadStream } from 'fs';
 import { join } from 'path';
 import { CreatableFile } from '../../models';
 import { integrationTest } from '../../tests';
-import { TEST_ASSETS_PATH, TEST_AUTH_TOKEN, TEST_HOST } from '../../tests/config';
+import { TEST_ASSETS_PATH, TEST_BASE_API_CONTEXT } from '../../tests/config';
 import { makeCreateOneFile } from './create-one-file';
 import { makeDeleteOneFile } from './delete-one-file';
 import { makeGetAllFiles } from './get-all-files';
 import { makeGetOneFile } from './get-one-file';
 
 describe('deleteOneFile()', () => {
-	const createOneFile = makeCreateOneFile({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
-	const deleteOneFile = makeDeleteOneFile({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
-	const getAllFiles = makeGetAllFiles({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
-	const getOneFile = makeGetOneFile({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
+	const createOneFile = makeCreateOneFile(TEST_BASE_API_CONTEXT);
+	const deleteOneFile = makeDeleteOneFile(TEST_BASE_API_CONTEXT);
+	const getAllFiles = makeGetAllFiles(TEST_BASE_API_CONTEXT);
+	const getOneFile = makeGetOneFile(TEST_BASE_API_CONTEXT);
 
 	beforeEach(async () => {
 		// Delete all files

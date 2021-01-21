@@ -7,15 +7,12 @@
  **************************************************************************/
 
 import { CreatableBroadcastNotification } from '../../models';
-import { integrationTest, TEST_AUTH_TOKEN, TEST_HOST } from '../../tests';
+import { integrationTest } from '../../tests';
+import { TEST_BASE_API_CONTEXT } from '../../tests/config';
 import { makeCreateOneBroadcastedNotification } from './create-one-broadcasted-notification';
 
 describe('createOneBroadcastedNotification', () => {
-	const createOneBroadcastedNotification = makeCreateOneBroadcastedNotification({
-		host: TEST_HOST,
-		useEncryption: false,
-		authToken: TEST_AUTH_TOKEN,
-	});
+	const createOneBroadcastedNotification = makeCreateOneBroadcastedNotification(TEST_BASE_API_CONTEXT);
 
 	it(
 		'Should be able to create a broadcasted message',

@@ -8,27 +8,15 @@
 
 import { CreatableSavedQuery, isSavedQuery } from '../../models';
 import { integrationTest } from '../../tests';
-import { TEST_AUTH_TOKEN, TEST_HOST } from '../../tests/config';
+import { TEST_BASE_API_CONTEXT } from '../../tests/config';
 import { makeCreateOneSavedQuery } from './create-one-saved-query';
 import { makeDeleteOneSavedQuery } from './delete-one-saved-query';
 import { makeGetAllSavedQueries } from './get-all-saved-queries';
 
 describe('getAllSavedQueries()', () => {
-	const createOneSavedQuery = makeCreateOneSavedQuery({
-		host: TEST_HOST,
-		useEncryption: false,
-		authToken: TEST_AUTH_TOKEN,
-	});
-	const deleteOneSavedQuery = makeDeleteOneSavedQuery({
-		host: TEST_HOST,
-		useEncryption: false,
-		authToken: TEST_AUTH_TOKEN,
-	});
-	const getAllSavedQueries = makeGetAllSavedQueries({
-		host: TEST_HOST,
-		useEncryption: false,
-		authToken: TEST_AUTH_TOKEN,
-	});
+	const createOneSavedQuery = makeCreateOneSavedQuery(TEST_BASE_API_CONTEXT);
+	const deleteOneSavedQuery = makeDeleteOneSavedQuery(TEST_BASE_API_CONTEXT);
+	const getAllSavedQueries = makeGetAllSavedQueries(TEST_BASE_API_CONTEXT);
 
 	beforeEach(async () => {
 		// Delete all saved queries

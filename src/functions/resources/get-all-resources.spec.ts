@@ -8,11 +8,11 @@
 
 import { isResource } from '../../models';
 import { integrationTest } from '../../tests';
-import { TEST_AUTH_TOKEN, TEST_HOST } from '../../tests/config';
+import { TEST_BASE_API_CONTEXT } from '../../tests/config';
 import { makeGetAllResources } from './get-all-resources';
 
 describe('getAllResources()', () => {
-	const getAllResources = makeGetAllResources({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
+	const getAllResources = makeGetAllResources(TEST_BASE_API_CONTEXT);
 
 	beforeEach(async () => {
 		// TODO: Create two resources

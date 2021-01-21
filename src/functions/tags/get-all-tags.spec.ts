@@ -7,11 +7,11 @@
  **************************************************************************/
 
 import { integrationTest, unitTest } from '../../tests';
-import { TEST_AUTH_TOKEN, TEST_HOST } from '../../tests/config';
+import { TEST_AUTH_TOKEN, TEST_BASE_API_CONTEXT } from '../../tests/config';
 import { makeGetAllTags } from './get-all-tags';
 
 describe('getAllTags()', () => {
-	const getAllTags = makeGetAllTags({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
+	const getAllTags = makeGetAllTags(TEST_BASE_API_CONTEXT);
 
 	it(
 		'Should return a function given a valid host',

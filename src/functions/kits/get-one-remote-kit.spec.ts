@@ -7,13 +7,14 @@
  **************************************************************************/
 
 import { isRemoteKit } from '../../models';
-import { integrationTest, TEST_AUTH_TOKEN, TEST_HOST } from '../../tests';
+import { integrationTest } from '../../tests';
+import { TEST_BASE_API_CONTEXT } from '../../tests/config';
 import { makeGetAllRemoteKits } from './get-all-remote-kits';
 import { makeGetOneRemoteKit } from './get-one-remote-kit';
 
 describe('getOneRemoteKit()', () => {
-	const getOneRemoteKit = makeGetOneRemoteKit({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
-	const getAllRemoteKits = makeGetAllRemoteKits({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
+	const getOneRemoteKit = makeGetOneRemoteKit(TEST_BASE_API_CONTEXT);
+	const getAllRemoteKits = makeGetAllRemoteKits(TEST_BASE_API_CONTEXT);
 
 	it(
 		'Returns a remote kit',

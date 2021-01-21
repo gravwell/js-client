@@ -8,33 +8,17 @@
 
 import { AutoExtractor, CreatableAutoExtractor, isAutoExtractor, UpdatableAutoExtractor } from '../../models';
 import { integrationTest, myCustomMatchers } from '../../tests';
-import { TEST_AUTH_TOKEN, TEST_HOST } from '../../tests/config';
+import { TEST_BASE_API_CONTEXT } from '../../tests/config';
 import { makeCreateOneAutoExtractor } from './create-one-auto-extractor';
 import { makeDeleteOneAutoExtractor } from './delete-one-auto-extractor';
 import { makeGetAllAutoExtractors } from './get-all-auto-extractors';
 import { makeUpdateOneAutoExtractor } from './update-one-auto-extractor';
 
 describe('updateOneAutoExtractor()', () => {
-	const createOneAutoExtractor = makeCreateOneAutoExtractor({
-		host: TEST_HOST,
-		useEncryption: false,
-		authToken: TEST_AUTH_TOKEN,
-	});
-	const updateOneAutoExtractor = makeUpdateOneAutoExtractor({
-		host: TEST_HOST,
-		useEncryption: false,
-		authToken: TEST_AUTH_TOKEN,
-	});
-	const deleteOneAutoExtractor = makeDeleteOneAutoExtractor({
-		host: TEST_HOST,
-		useEncryption: false,
-		authToken: TEST_AUTH_TOKEN,
-	});
-	const getAllAutoExtractors = makeGetAllAutoExtractors({
-		host: TEST_HOST,
-		useEncryption: false,
-		authToken: TEST_AUTH_TOKEN,
-	});
+	const createOneAutoExtractor = makeCreateOneAutoExtractor(TEST_BASE_API_CONTEXT);
+	const updateOneAutoExtractor = makeUpdateOneAutoExtractor(TEST_BASE_API_CONTEXT);
+	const deleteOneAutoExtractor = makeDeleteOneAutoExtractor(TEST_BASE_API_CONTEXT);
+	const getAllAutoExtractors = makeGetAllAutoExtractors(TEST_BASE_API_CONTEXT);
 
 	let createdAutoExtractor: AutoExtractor;
 

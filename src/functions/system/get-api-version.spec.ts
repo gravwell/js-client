@@ -8,11 +8,11 @@
 
 import { isVersion } from '../../models';
 import { integrationTest } from '../../tests';
-import { TEST_AUTH_TOKEN, TEST_HOST } from '../../tests/config';
+import { TEST_BASE_API_CONTEXT } from '../../tests/config';
 import { makeGetAPIVersion } from './get-api-version';
 
 describe('getAPIVersion()', () => {
-	const getAPIVersion = makeGetAPIVersion({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
+	const getAPIVersion = makeGetAPIVersion(TEST_BASE_API_CONTEXT);
 
 	it(
 		'Should get the API version',

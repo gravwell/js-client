@@ -7,7 +7,7 @@
  **************************************************************************/
 
 import { integrationTest } from '../../tests';
-import { TEST_AUTH_TOKEN, TEST_HOST } from '../../tests/config';
+import { TEST_BASE_API_CONTEXT } from '../../tests/config';
 import { makeCreateManyScheduledScripts } from './create-many-scheduled-scripts';
 import { makeDeleteAllScheduledScripts } from './delete-all-scheduled-scripts';
 import { makeDeleteOneScheduledScript } from './delete-one-scheduled-script';
@@ -15,31 +15,11 @@ import { makeGetAllScheduledScripts } from './get-all-scheduled-scripts';
 import { makeGetOneScheduledScript } from './get-one-scheduled-script';
 
 describe('deleteOneScheduledScript()', () => {
-	const deleteOneScheduledScript = makeDeleteOneScheduledScript({
-		host: TEST_HOST,
-		useEncryption: false,
-		authToken: TEST_AUTH_TOKEN,
-	});
-	const getAllScheduledScripts = makeGetAllScheduledScripts({
-		host: TEST_HOST,
-		useEncryption: false,
-		authToken: TEST_AUTH_TOKEN,
-	});
-	const getOneScheduledScript = makeGetOneScheduledScript({
-		host: TEST_HOST,
-		useEncryption: false,
-		authToken: TEST_AUTH_TOKEN,
-	});
-	const deleteAllScheduledScripts = makeDeleteAllScheduledScripts({
-		host: TEST_HOST,
-		useEncryption: false,
-		authToken: TEST_AUTH_TOKEN,
-	});
-	const createManyScheduledScripts = makeCreateManyScheduledScripts({
-		host: TEST_HOST,
-		useEncryption: false,
-		authToken: TEST_AUTH_TOKEN,
-	});
+	const deleteOneScheduledScript = makeDeleteOneScheduledScript(TEST_BASE_API_CONTEXT);
+	const getAllScheduledScripts = makeGetAllScheduledScripts(TEST_BASE_API_CONTEXT);
+	const getOneScheduledScript = makeGetOneScheduledScript(TEST_BASE_API_CONTEXT);
+	const deleteAllScheduledScripts = makeDeleteAllScheduledScripts(TEST_BASE_API_CONTEXT);
+	const createManyScheduledScripts = makeCreateManyScheduledScripts(TEST_BASE_API_CONTEXT);
 
 	beforeEach(async () => {
 		await deleteAllScheduledScripts();

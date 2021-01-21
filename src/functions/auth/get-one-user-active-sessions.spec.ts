@@ -7,15 +7,11 @@
  **************************************************************************/
 
 import { integrationTest } from '../../tests';
-import { TEST_AUTH_TOKEN, TEST_HOST } from '../../tests/config';
+import { TEST_BASE_API_CONTEXT } from '../../tests/config';
 import { makeGetOneUserActiveSessions } from './get-one-user-active-sessions';
 
 describe('getOneUserActiveSessions', () => {
-	const getOneUserActiveSessions = makeGetOneUserActiveSessions({
-		host: TEST_HOST,
-		useEncryption: false,
-		authToken: TEST_AUTH_TOKEN,
-	});
+	const getOneUserActiveSessions = makeGetOneUserActiveSessions(TEST_BASE_API_CONTEXT);
 
 	it(
 		'Should return an array of sessions',

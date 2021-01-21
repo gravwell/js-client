@@ -10,27 +10,15 @@ import { createReadStream } from 'fs';
 import { join } from 'path';
 import { isAutoExtractor } from '../../models';
 import { integrationTest } from '../../tests';
-import { TEST_ASSETS_PATH, TEST_AUTH_TOKEN, TEST_HOST } from '../../tests/config';
+import { TEST_ASSETS_PATH, TEST_BASE_API_CONTEXT } from '../../tests/config';
 import { makeDeleteOneAutoExtractor } from './delete-one-auto-extractor';
 import { makeGetAllAutoExtractors } from './get-all-auto-extractors';
 import { makeUploadManyAutoExtractors } from './upload-many-auto-extractors';
 
 describe('setOneAutoExtractorContent()', () => {
-	const deleteOneAutoExtractor = makeDeleteOneAutoExtractor({
-		host: TEST_HOST,
-		useEncryption: false,
-		authToken: TEST_AUTH_TOKEN,
-	});
-	const uploadManyAutoExtractors = makeUploadManyAutoExtractors({
-		host: TEST_HOST,
-		useEncryption: false,
-		authToken: TEST_AUTH_TOKEN,
-	});
-	const getAllAutoExtractors = makeGetAllAutoExtractors({
-		host: TEST_HOST,
-		useEncryption: false,
-		authToken: TEST_AUTH_TOKEN,
-	});
+	const deleteOneAutoExtractor = makeDeleteOneAutoExtractor(TEST_BASE_API_CONTEXT);
+	const uploadManyAutoExtractors = makeUploadManyAutoExtractors(TEST_BASE_API_CONTEXT);
+	const getAllAutoExtractors = makeGetAllAutoExtractors(TEST_BASE_API_CONTEXT);
 
 	beforeEach(async () => {
 		// Delete all autoExtractors

@@ -9,7 +9,7 @@
 import { omit } from 'lodash';
 import { Actionable, ActionableAction, CreatableActionable, isActionable, UpdatableActionable } from '../../models';
 import { integrationTest } from '../../tests';
-import { TEST_AUTH_TOKEN, TEST_HOST } from '../../tests/config';
+import { TEST_BASE_API_CONTEXT } from '../../tests/config';
 import { omitUndefinedShallow } from '../utils';
 import { makeCreateOneActionable } from './create-one-actionable';
 import { makeDeleteOneActionable } from './delete-one-actionable';
@@ -17,26 +17,10 @@ import { makeGetOneActionable } from './get-one-actionable';
 import { makeUpdateOneActionable } from './update-one-actionable';
 
 describe('updateOneActionable()', () => {
-	const createOneActionable = makeCreateOneActionable({
-		host: TEST_HOST,
-		useEncryption: false,
-		authToken: TEST_AUTH_TOKEN,
-	});
-	const getOneActionable = makeGetOneActionable({
-		host: TEST_HOST,
-		useEncryption: false,
-		authToken: TEST_AUTH_TOKEN,
-	});
-	const updateOneActionable = makeUpdateOneActionable({
-		host: TEST_HOST,
-		useEncryption: false,
-		authToken: TEST_AUTH_TOKEN,
-	});
-	const deleteOneActionable = makeDeleteOneActionable({
-		host: TEST_HOST,
-		useEncryption: false,
-		authToken: TEST_AUTH_TOKEN,
-	});
+	const createOneActionable = makeCreateOneActionable(TEST_BASE_API_CONTEXT);
+	const getOneActionable = makeGetOneActionable(TEST_BASE_API_CONTEXT);
+	const updateOneActionable = makeUpdateOneActionable(TEST_BASE_API_CONTEXT);
+	const deleteOneActionable = makeDeleteOneActionable(TEST_BASE_API_CONTEXT);
 
 	let createdActionable: Actionable;
 

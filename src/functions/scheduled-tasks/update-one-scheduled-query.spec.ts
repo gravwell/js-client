@@ -8,27 +8,15 @@
 
 import { isScheduledQuery, ScheduledQuery, UpdatableScheduledQuery } from '../../models';
 import { integrationTest, myCustomMatchers } from '../../tests';
-import { TEST_AUTH_TOKEN, TEST_HOST } from '../../tests/config';
+import { TEST_BASE_API_CONTEXT } from '../../tests/config';
 import { makeCreateOneScheduledQuery } from './create-one-scheduled-query';
 import { makeDeleteAllScheduledQueries } from './delete-all-scheduled-queries';
 import { makeUpdateOneScheduledQuery } from './update-one-scheduled-query';
 
 describe('updateOneScheduledQuery()', () => {
-	const createOneScheduledQuery = makeCreateOneScheduledQuery({
-		host: TEST_HOST,
-		useEncryption: false,
-		authToken: TEST_AUTH_TOKEN,
-	});
-	const updateOneScheduledQuery = makeUpdateOneScheduledQuery({
-		host: TEST_HOST,
-		useEncryption: false,
-		authToken: TEST_AUTH_TOKEN,
-	});
-	const deleteAllScheduledQueries = makeDeleteAllScheduledQueries({
-		host: TEST_HOST,
-		useEncryption: false,
-		authToken: TEST_AUTH_TOKEN,
-	});
+	const createOneScheduledQuery = makeCreateOneScheduledQuery(TEST_BASE_API_CONTEXT);
+	const updateOneScheduledQuery = makeUpdateOneScheduledQuery(TEST_BASE_API_CONTEXT);
+	const deleteAllScheduledQueries = makeDeleteAllScheduledQueries(TEST_BASE_API_CONTEXT);
 
 	let createdScheduledQuery: ScheduledQuery;
 

@@ -9,7 +9,7 @@
 import { random, sortBy } from 'lodash';
 import { CreatableMacro, CreatableUser, isMacro, Macro, User } from '../../models';
 import { integrationTest } from '../../tests';
-import { TEST_AUTH_TOKEN, TEST_HOST } from '../../tests/config';
+import { TEST_BASE_API_CONTEXT, TEST_HOST } from '../../tests/config';
 import { makeLoginOneUser } from '../auth/login-one-user';
 import { makeCreateOneUser, makeGetOneUser } from '../users';
 import { makeCreateOneMacro } from './create-one-macro';
@@ -18,17 +18,13 @@ import { makeGetAllMacros } from './get-all-macros';
 import { makeGetMacrosAuthorizedToMe } from './get-macros-authorized-to-me';
 
 describe('getMacrosAuthorizedToMe()', () => {
-	const getMacrosAuthorizedToMe = makeGetMacrosAuthorizedToMe({
-		host: TEST_HOST,
-		useEncryption: false,
-		authToken: TEST_AUTH_TOKEN,
-	});
-	const createOneMacro = makeCreateOneMacro({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
-	const deleteOneMacro = makeDeleteOneMacro({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
-	const getAllMacros = makeGetAllMacros({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
-	const getOneUser = makeGetOneUser({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
-	const createOneUser = makeCreateOneUser({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
-	const login = makeLoginOneUser({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
+	const getMacrosAuthorizedToMe = makeGetMacrosAuthorizedToMe(TEST_BASE_API_CONTEXT);
+	const createOneMacro = makeCreateOneMacro(TEST_BASE_API_CONTEXT);
+	const deleteOneMacro = makeDeleteOneMacro(TEST_BASE_API_CONTEXT);
+	const getAllMacros = makeGetAllMacros(TEST_BASE_API_CONTEXT);
+	const getOneUser = makeGetOneUser(TEST_BASE_API_CONTEXT);
+	const createOneUser = makeCreateOneUser(TEST_BASE_API_CONTEXT);
+	const login = makeLoginOneUser(TEST_BASE_API_CONTEXT);
 
 	let adminMacros: Array<Macro>;
 

@@ -8,23 +8,15 @@
 
 import { CreatableResource, isResource } from '../../models';
 import { integrationTest } from '../../tests';
-import { TEST_AUTH_TOKEN, TEST_HOST } from '../../tests/config';
+import { TEST_BASE_API_CONTEXT } from '../../tests/config';
 import { makeCreateOneResource } from './create-one-resource';
 import { makeDeleteOneResource } from './delete-one-resource';
 import { makeGetOneResource } from './get-one-resource';
 
 describe('createOneResource()', () => {
-	const createOneResource = makeCreateOneResource({
-		host: TEST_HOST,
-		useEncryption: false,
-		authToken: TEST_AUTH_TOKEN,
-	});
-	const getOneResource = makeGetOneResource({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
-	const deleteOneResource = makeDeleteOneResource({
-		host: TEST_HOST,
-		useEncryption: false,
-		authToken: TEST_AUTH_TOKEN,
-	});
+	const createOneResource = makeCreateOneResource(TEST_BASE_API_CONTEXT);
+	const getOneResource = makeGetOneResource(TEST_BASE_API_CONTEXT);
+	const deleteOneResource = makeDeleteOneResource(TEST_BASE_API_CONTEXT);
 
 	it(
 		'Should create an resource and return it',

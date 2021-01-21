@@ -8,27 +8,15 @@
 
 import { isScheduledScript, ScheduledScript } from '../../models';
 import { integrationTest } from '../../tests';
-import { TEST_AUTH_TOKEN, TEST_HOST } from '../../tests/config';
+import { TEST_BASE_API_CONTEXT } from '../../tests/config';
 import { makeCreateOneScheduledScript } from './create-one-scheduled-script';
 import { makeDeleteAllScheduledScripts } from './delete-all-scheduled-scripts';
 import { makeGetOneScheduledScript } from './get-one-scheduled-script';
 
 describe('getOneScheduledScript()', () => {
-	const getOneScheduledScript = makeGetOneScheduledScript({
-		host: TEST_HOST,
-		useEncryption: false,
-		authToken: TEST_AUTH_TOKEN,
-	});
-	const createOneScheduledScript = makeCreateOneScheduledScript({
-		host: TEST_HOST,
-		useEncryption: false,
-		authToken: TEST_AUTH_TOKEN,
-	});
-	const deleteAllScheduledScripts = makeDeleteAllScheduledScripts({
-		host: TEST_HOST,
-		useEncryption: false,
-		authToken: TEST_AUTH_TOKEN,
-	});
+	const getOneScheduledScript = makeGetOneScheduledScript(TEST_BASE_API_CONTEXT);
+	const createOneScheduledScript = makeCreateOneScheduledScript(TEST_BASE_API_CONTEXT);
+	const deleteAllScheduledScripts = makeDeleteAllScheduledScripts(TEST_BASE_API_CONTEXT);
 
 	let createdScheduledScript: ScheduledScript;
 

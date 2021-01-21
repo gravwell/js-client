@@ -9,15 +9,15 @@
 import { random } from 'lodash';
 import { CreatableUser, isValidUser } from '../../models';
 import { integrationTest } from '../../tests';
-import { TEST_AUTH_TOKEN, TEST_HOST } from '../../tests/config';
+import { TEST_BASE_API_CONTEXT } from '../../tests/config';
 import { makeCreateOneUser } from './create-one-user';
 import { makeDeleteOneUser } from './delete-one-user';
 import { makeGetOneUser } from './get-one-user';
 
 describe('deleteOneUser()', () => {
-	const deleteOneUser = makeDeleteOneUser({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
-	const createOneUser = makeCreateOneUser({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
-	const getOneUser = makeGetOneUser({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
+	const deleteOneUser = makeDeleteOneUser(TEST_BASE_API_CONTEXT);
+	const createOneUser = makeCreateOneUser(TEST_BASE_API_CONTEXT);
+	const getOneUser = makeGetOneUser(TEST_BASE_API_CONTEXT);
 
 	it(
 		'Should delete a user',

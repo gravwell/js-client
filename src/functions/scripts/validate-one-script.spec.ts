@@ -7,15 +7,11 @@
  **************************************************************************/
 
 import { integrationTest } from '../../tests';
-import { TEST_AUTH_TOKEN, TEST_HOST } from '../../tests/config';
+import { TEST_BASE_API_CONTEXT } from '../../tests/config';
 import { makeValidateOneScript } from './validate-one-script';
 
 describe('validateOneScript()', () => {
-	const validateOneScript = makeValidateOneScript({
-		host: TEST_HOST,
-		useEncryption: false,
-		authToken: TEST_AUTH_TOKEN,
-	});
+	const validateOneScript = makeValidateOneScript(TEST_BASE_API_CONTEXT);
 
 	it(
 		'Should approve a valid script',

@@ -8,24 +8,16 @@
 
 import { CreatableTemplate, isTemplate } from '../../models';
 import { integrationTest } from '../../tests';
-import { TEST_AUTH_TOKEN, TEST_HOST } from '../../tests/config';
+import { TEST_BASE_API_CONTEXT } from '../../tests/config';
 import { isUUID } from '../../value-objects';
 import { makeCreateOneTemplate } from './create-one-template';
 import { makeDeleteOneTemplate } from './delete-one-template';
 import { makeGetOneTemplate } from './get-one-template';
 
 describe('deleteOneTemplate()', () => {
-	const deleteOneTemplate = makeDeleteOneTemplate({
-		host: TEST_HOST,
-		useEncryption: false,
-		authToken: TEST_AUTH_TOKEN,
-	});
-	const createOneTemplate = makeCreateOneTemplate({
-		host: TEST_HOST,
-		useEncryption: false,
-		authToken: TEST_AUTH_TOKEN,
-	});
-	const getOneTemplate = makeGetOneTemplate({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
+	const deleteOneTemplate = makeDeleteOneTemplate(TEST_BASE_API_CONTEXT);
+	const createOneTemplate = makeCreateOneTemplate(TEST_BASE_API_CONTEXT);
+	const getOneTemplate = makeGetOneTemplate(TEST_BASE_API_CONTEXT);
 
 	// gravwell/gravwell#2426
 	xit(

@@ -10,7 +10,7 @@ import { createReadStream, ReadStream } from 'fs';
 import { join } from 'path';
 import { CreatableFile, FileMetadata, isFileMetadata, UpdatableFile } from '../../models';
 import { integrationTest, myCustomMatchers } from '../../tests';
-import { TEST_ASSETS_PATH, TEST_AUTH_TOKEN, TEST_HOST } from '../../tests/config';
+import { TEST_ASSETS_PATH, TEST_BASE_API_CONTEXT } from '../../tests/config';
 import { makeCreateOneFile } from './create-one-file';
 import { makeDeleteOneFile } from './delete-one-file';
 import { makeGetAllFiles } from './get-all-files';
@@ -18,15 +18,11 @@ import { makeGetOneFileContent } from './get-one-file-content';
 import { makeUpdateOneFile } from './update-one-file';
 
 describe('updateOneFile()', () => {
-	const createOneFile = makeCreateOneFile({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
-	const updateOneFile = makeUpdateOneFile({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
-	const deleteOneFile = makeDeleteOneFile({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
-	const getAllFiles = makeGetAllFiles({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
-	const getOneFileContent = makeGetOneFileContent({
-		host: TEST_HOST,
-		useEncryption: false,
-		authToken: TEST_AUTH_TOKEN,
-	});
+	const createOneFile = makeCreateOneFile(TEST_BASE_API_CONTEXT);
+	const updateOneFile = makeUpdateOneFile(TEST_BASE_API_CONTEXT);
+	const deleteOneFile = makeDeleteOneFile(TEST_BASE_API_CONTEXT);
+	const getAllFiles = makeGetAllFiles(TEST_BASE_API_CONTEXT);
+	const getOneFileContent = makeGetOneFileContent(TEST_BASE_API_CONTEXT);
 
 	let createdFile: FileMetadata;
 

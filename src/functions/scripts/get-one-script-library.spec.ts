@@ -7,15 +7,11 @@
  **************************************************************************/
 
 import { integrationTest } from '../../tests';
-import { TEST_AUTH_TOKEN, TEST_HOST } from '../../tests/config';
+import { TEST_BASE_API_CONTEXT } from '../../tests/config';
 import { makeGetOneScriptLibrary } from './get-one-script-library';
 
 describe('getOneScriptLibrary()', () => {
-	const getOneScriptLibrary = makeGetOneScriptLibrary({
-		host: TEST_HOST,
-		useEncryption: false,
-		authToken: TEST_AUTH_TOKEN,
-	});
+	const getOneScriptLibrary = makeGetOneScriptLibrary(TEST_BASE_API_CONTEXT);
 
 	it(
 		'Should return the code for a script library',

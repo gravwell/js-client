@@ -8,15 +8,11 @@
 
 import { isSearch2 } from '../../models';
 import { integrationTest } from '../../tests';
-import { TEST_AUTH_TOKEN, TEST_HOST } from '../../tests/config';
+import { TEST_BASE_API_CONTEXT } from '../../tests/config';
 import { makeGetPersistentSearchStatusRelatedToMe } from './get-persistent-search-status-related-to-me';
 
 describe('getPersistentSearchStatusRelatedToMe()', () => {
-	const getPersistentSearchStatusRelatedToMe = makeGetPersistentSearchStatusRelatedToMe({
-		host: TEST_HOST,
-		useEncryption: false,
-		authToken: TEST_AUTH_TOKEN,
-	});
+	const getPersistentSearchStatusRelatedToMe = makeGetPersistentSearchStatusRelatedToMe(TEST_BASE_API_CONTEXT);
 
 	it(
 		'Should return all persistent searches related to me',

@@ -8,17 +8,13 @@
 
 import { CreatableDashboard, isDashboard } from '../../models';
 import { integrationTest, myCustomMatchers } from '../../tests';
-import { TEST_AUTH_TOKEN, TEST_HOST } from '../../tests/config';
+import { TEST_BASE_API_CONTEXT } from '../../tests/config';
 import { makeCreateOneGroup } from '../groups/create-one-group';
 import { makeCreateOneDashboard } from './create-one-dashboard';
 
 describe('createOneDashboard()', () => {
-	const createOneDashboard = makeCreateOneDashboard({
-		host: TEST_HOST,
-		useEncryption: false,
-		authToken: TEST_AUTH_TOKEN,
-	});
-	const createOneGroup = makeCreateOneGroup({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
+	const createOneDashboard = makeCreateOneDashboard(TEST_BASE_API_CONTEXT);
+	const createOneGroup = makeCreateOneGroup(TEST_BASE_API_CONTEXT);
 
 	// let groupIDs: Array<NumericID>;
 

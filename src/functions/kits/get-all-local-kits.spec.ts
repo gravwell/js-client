@@ -8,11 +8,11 @@
 
 import { isLocalKit } from '../../models';
 import { integrationTest } from '../../tests';
-import { TEST_AUTH_TOKEN, TEST_HOST } from '../../tests/config';
+import { TEST_BASE_API_CONTEXT } from '../../tests/config';
 import { makeGetAllLocalKits } from './get-all-local-kits';
 
 describe('getAllLocalKits()', () => {
-	const getAllLocalKits = makeGetAllLocalKits({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
+	const getAllLocalKits = makeGetAllLocalKits(TEST_BASE_API_CONTEXT);
 
 	it(
 		'Should return all kits in the system',

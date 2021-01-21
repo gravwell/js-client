@@ -9,7 +9,7 @@
 import { random, sortBy } from 'lodash';
 import { CreatableUser, isScheduledScript, ScheduledScript, User } from '../../models';
 import { integrationTest } from '../../tests';
-import { TEST_AUTH_TOKEN, TEST_HOST } from '../../tests/config';
+import { TEST_BASE_API_CONTEXT, TEST_HOST } from '../../tests/config';
 import { makeLoginOneUser } from '../auth/login-one-user';
 import { makeCreateOneUser, makeGetOneUser } from '../users';
 import { makeCreateManyScheduledScripts } from './create-many-scheduled-scripts';
@@ -18,29 +18,13 @@ import { makeGetAllScheduledScripts } from './get-all-scheduled-scripts';
 import { makeGetScheduledScriptsAuthorizedToMe } from './get-scheduled-scripts-authorized-to-me';
 
 describe('getScheduledScriptsAuthorizedToMe()', () => {
-	const getScheduledScriptsAuthorizedToMe = makeGetScheduledScriptsAuthorizedToMe({
-		host: TEST_HOST,
-		useEncryption: false,
-		authToken: TEST_AUTH_TOKEN,
-	});
-	const getAllScheduledScripts = makeGetAllScheduledScripts({
-		host: TEST_HOST,
-		useEncryption: false,
-		authToken: TEST_AUTH_TOKEN,
-	});
-	const getOneUser = makeGetOneUser({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
-	const createOneUser = makeCreateOneUser({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
-	const login = makeLoginOneUser({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
-	const deleteAllScheduledScripts = makeDeleteAllScheduledScripts({
-		host: TEST_HOST,
-		useEncryption: false,
-		authToken: TEST_AUTH_TOKEN,
-	});
-	const createManyScheduledScripts = makeCreateManyScheduledScripts({
-		host: TEST_HOST,
-		useEncryption: false,
-		authToken: TEST_AUTH_TOKEN,
-	});
+	const getScheduledScriptsAuthorizedToMe = makeGetScheduledScriptsAuthorizedToMe(TEST_BASE_API_CONTEXT);
+	const getAllScheduledScripts = makeGetAllScheduledScripts(TEST_BASE_API_CONTEXT);
+	const getOneUser = makeGetOneUser(TEST_BASE_API_CONTEXT);
+	const createOneUser = makeCreateOneUser(TEST_BASE_API_CONTEXT);
+	const login = makeLoginOneUser(TEST_BASE_API_CONTEXT);
+	const deleteAllScheduledScripts = makeDeleteAllScheduledScripts(TEST_BASE_API_CONTEXT);
+	const createManyScheduledScripts = makeCreateManyScheduledScripts(TEST_BASE_API_CONTEXT);
 
 	let adminScheduledScripts: Array<ScheduledScript>;
 

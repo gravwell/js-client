@@ -9,7 +9,7 @@
 import { random } from 'lodash';
 import { CreatableDashboard, CreatableUser, isDashboard, User } from '../../models';
 import { integrationTest } from '../../tests';
-import { TEST_AUTH_TOKEN, TEST_HOST } from '../../tests/config';
+import { TEST_BASE_API_CONTEXT, TEST_HOST } from '../../tests/config';
 import { makeLoginOneUser } from '../auth/login-one-user';
 import { makeCreateOneUser, makeGetOneUser } from '../users';
 import { makeCreateOneDashboard } from './create-one-dashboard';
@@ -18,25 +18,13 @@ import { makeGetAllDashboards } from './get-all-dashboards';
 import { makeGetDashboardsByUser } from './get-dashboards-by-user';
 
 describe('getDashboardsByUser()', () => {
-	const getAllDashboards = makeGetAllDashboards({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
-	const getDashboardsByUser = makeGetDashboardsByUser({
-		host: TEST_HOST,
-		useEncryption: false,
-		authToken: TEST_AUTH_TOKEN,
-	});
-	const getOneUser = makeGetOneUser({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
-	const createOneUser = makeCreateOneUser({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
-	const login = makeLoginOneUser({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
-	const createOneDashboard = makeCreateOneDashboard({
-		host: TEST_HOST,
-		useEncryption: false,
-		authToken: TEST_AUTH_TOKEN,
-	});
-	const deleteOneDashboard = makeDeleteOneDashboard({
-		host: TEST_HOST,
-		useEncryption: false,
-		authToken: TEST_AUTH_TOKEN,
-	});
+	const getAllDashboards = makeGetAllDashboards(TEST_BASE_API_CONTEXT);
+	const getDashboardsByUser = makeGetDashboardsByUser(TEST_BASE_API_CONTEXT);
+	const getOneUser = makeGetOneUser(TEST_BASE_API_CONTEXT);
+	const createOneUser = makeCreateOneUser(TEST_BASE_API_CONTEXT);
+	const login = makeLoginOneUser(TEST_BASE_API_CONTEXT);
+	const createOneDashboard = makeCreateOneDashboard(TEST_BASE_API_CONTEXT);
+	const deleteOneDashboard = makeDeleteOneDashboard(TEST_BASE_API_CONTEXT);
 
 	let user: User;
 	let userAuth: string;

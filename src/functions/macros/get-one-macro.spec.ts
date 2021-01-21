@@ -8,17 +8,17 @@
 
 import { CreatableMacro, isMacro, Macro } from '../../models';
 import { integrationTest } from '../../tests';
-import { TEST_AUTH_TOKEN, TEST_HOST } from '../../tests/config';
+import { TEST_BASE_API_CONTEXT } from '../../tests/config';
 import { makeCreateOneMacro } from './create-one-macro';
 import { makeDeleteOneMacro } from './delete-one-macro';
 import { makeGetAllMacros } from './get-all-macros';
 import { makeGetOneMacro } from './get-one-macro';
 
 describe('getOneMacro()', () => {
-	const getOneMacro = makeGetOneMacro({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
-	const createOneMacro = makeCreateOneMacro({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
-	const getAllMacros = makeGetAllMacros({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
-	const deleteOneMacro = makeDeleteOneMacro({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
+	const getOneMacro = makeGetOneMacro(TEST_BASE_API_CONTEXT);
+	const createOneMacro = makeCreateOneMacro(TEST_BASE_API_CONTEXT);
+	const getAllMacros = makeGetAllMacros(TEST_BASE_API_CONTEXT);
+	const deleteOneMacro = makeDeleteOneMacro(TEST_BASE_API_CONTEXT);
 
 	let createdMacro: Macro;
 
