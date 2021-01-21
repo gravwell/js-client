@@ -16,7 +16,7 @@
 		"target": "ES5",
 		"lib": ["ES2020"],
 		"baseUrl": "..",
-		"rootDir": "../src-tsc",
+		"rootDir": "../src",
 		"outDir": "../dist-tsc"
 	}
 }
