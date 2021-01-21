@@ -54,7 +54,6 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 			},
 			// TODO(wisely): IDK what should be the default value here
 			desiredGranularity: options.filter?.desiredGranularity ?? 100,
-			fieldFilters: options.filter?.fieldFilters ?? [],
 		};
 
 		const searchTypeIDP = promiseProgrammatically<string>();
@@ -133,14 +132,13 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 						end: curr.dateRange?.end ?? prev.dateRange?.end ?? initialFilter.dateRange.end,
 					},
 					desiredGranularity: curr.desiredGranularity ?? prev.desiredGranularity ?? initialFilter.desiredGranularity,
-					fieldFilters: curr.fieldFilters ?? prev.fieldFilters ?? initialFilter.fieldFilters,
 				}),
 			),
 			distinctUntilChanged((a, b) => isEqual(a, b)),
 		);
 
 		const requestEntries = async (filter: RequiredSearchFilter): Promise<void> => {
-			const first = filter.entriesOffset.index * filter.entriesOffset.count;
+			const first = filter.entriesOffset.index;
 			const last = first + filter.entriesOffset.count;
 			const start = filter.dateRange.start;
 			const end = filter.dateRange.end;

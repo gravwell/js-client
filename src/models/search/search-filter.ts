@@ -12,10 +12,21 @@
 export interface SearchFilter {
 	/** Retrieve entries with pagination. */
 	entriesOffset?: {
-		/** Offset index ("page" number). */
+		/** Entry index starting from zero. */
 		index: number;
 
-		/** Amount of entries per offset (entries per "page"). */
+		/**
+		 * Amount of entries to retrieve from the index.
+		 *
+		 * If you wanted to refer to indexes 2 through 6 inclusive, you'd use
+		 * `{ index: 2, count: 5 }`
+		 *
+		 * ```txt
+		 *           ↓ index
+		 * | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 |
+		 *         |←----- count -----→|
+		 * ```
+		 */
 		count: number;
 	};
 
@@ -29,7 +40,8 @@ export interface SearchFilter {
 
 	desiredGranularity?: number;
 
-	fieldFilters?: Array<FieldFilter>;
+	// TODO: Implement field filters
+	// fieldFilters?: Array<FieldFilter>;
 }
 
 export type FieldFilterOperation = 'EQ' | 'NEQ' | 'GT' | 'LT' | 'GTE' | 'LTE';
