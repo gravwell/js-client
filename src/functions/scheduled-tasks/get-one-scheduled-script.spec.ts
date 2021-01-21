@@ -8,23 +8,23 @@
 
 import { isScheduledScript, ScheduledScript } from '../../models';
 import { integrationTest } from '../../tests';
-import { TEST_AUTH_TOKEN, TEST_HOST } from '../../tests/config';
+import { TEST_BASE_API_CONTEXT } from '../../tests/config';
 import { makeCreateOneScheduledScript } from './create-one-scheduled-script';
 import { makeDeleteAllScheduledScripts } from './delete-all-scheduled-scripts';
 import { makeGetOneScheduledScript } from './get-one-scheduled-script';
 
 describe('getOneScheduledScript()', () => {
-	const getOneScheduledScript = makeGetOneScheduledScript({ host: TEST_HOST, useEncryption: false });
-	const createOneScheduledScript = makeCreateOneScheduledScript({ host: TEST_HOST, useEncryption: false });
-	const deleteAllScheduledScripts = makeDeleteAllScheduledScripts({ host: TEST_HOST, useEncryption: false });
+	const getOneScheduledScript = makeGetOneScheduledScript(TEST_BASE_API_CONTEXT);
+	const createOneScheduledScript = makeCreateOneScheduledScript(TEST_BASE_API_CONTEXT);
+	const deleteAllScheduledScripts = makeDeleteAllScheduledScripts(TEST_BASE_API_CONTEXT);
 
 	let createdScheduledScript: ScheduledScript;
 
 	beforeEach(async () => {
-		await deleteAllScheduledScripts(TEST_AUTH_TOKEN);
+		await deleteAllScheduledScripts();
 
 		// Create a scheduled script
-		createdScheduledScript = await createOneScheduledScript(TEST_AUTH_TOKEN, {
+		createdScheduledScript = await createOneScheduledScript({
 			name: 'Script1',
 			description: 'D1',
 			schedule: '0 1 * * *',
@@ -35,7 +35,7 @@ describe('getOneScheduledScript()', () => {
 	it(
 		'Returns a scheduled script',
 		integrationTest(async () => {
-			const scheduledScript = await getOneScheduledScript(TEST_AUTH_TOKEN, createdScheduledScript.id);
+			const scheduledScript = await getOneScheduledScript(createdScheduledScript.id);
 			expect(isScheduledScript(scheduledScript)).toBeTrue();
 			expect(scheduledScript).toEqual(createdScheduledScript);
 		}),
@@ -44,7 +44,7 @@ describe('getOneScheduledScript()', () => {
 	it(
 		"Returns an error if the scheduled script doesn't exist",
 		integrationTest(async () => {
-			await expectAsync(getOneScheduledScript(TEST_AUTH_TOKEN, 'non-existent')).toBeRejected();
+			await expectAsync(getOneScheduledScript('non-existent')).toBeRejected();
 		}),
 	);
 });

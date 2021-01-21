@@ -7,27 +7,25 @@
  **************************************************************************/
 
 import { integrationTest } from '../../tests';
-import { TEST_AUTH_TOKEN, TEST_HOST } from '../../tests/config';
+import { TEST_BASE_API_CONTEXT } from '../../tests/config';
 import { makeCreateOneTargetedNotification } from './create-one-targeted-notification';
 import { makeDeleteOneNotification } from './delete-one-notification';
 import { makeGetMyNotifications } from './get-my-notifications';
 
 describe('deleteOneNotification()', () => {
-	const deleteOneNotification = makeDeleteOneNotification({ host: TEST_HOST, useEncryption: false });
-	const getMyNotifications = makeGetMyNotifications({ host: TEST_HOST, useEncryption: false });
-	const targetOneNotification = makeCreateOneTargetedNotification({ host: TEST_HOST, useEncryption: false })(
-		TEST_AUTH_TOKEN,
-	);
+	const deleteOneNotification = makeDeleteOneNotification(TEST_BASE_API_CONTEXT);
+	const getMyNotifications = makeGetMyNotifications(TEST_BASE_API_CONTEXT);
+	const targetOneNotification = makeCreateOneTargetedNotification(TEST_BASE_API_CONTEXT);
 
 	it(
 		'Should delete the notification',
 		integrationTest(async () => {
 			await targetOneNotification('myself', { message: 'test' });
 
-			const notifications = await getMyNotifications(TEST_AUTH_TOKEN);
-			await Promise.all(notifications.map(n => deleteOneNotification(TEST_AUTH_TOKEN, n.id)));
+			const notifications = await getMyNotifications();
+			await Promise.all(notifications.map(n => deleteOneNotification(n.id)));
 
-			const notificationsKept = await getMyNotifications(TEST_AUTH_TOKEN);
+			const notificationsKept = await getMyNotifications();
 			const notificationsKeptIDs = new Set(notificationsKept.map(n => n.id));
 			const notificationsDeleted = notifications.filter(n => !notificationsKeptIDs.has(n.id));
 

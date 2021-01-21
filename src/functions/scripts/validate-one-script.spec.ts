@@ -7,17 +7,17 @@
  **************************************************************************/
 
 import { integrationTest } from '../../tests';
-import { TEST_AUTH_TOKEN, TEST_HOST } from '../../tests/config';
+import { TEST_BASE_API_CONTEXT } from '../../tests/config';
 import { makeValidateOneScript } from './validate-one-script';
 
 describe('validateOneScript()', () => {
-	const validateOneScript = makeValidateOneScript({ host: TEST_HOST, useEncryption: false });
+	const validateOneScript = makeValidateOneScript(TEST_BASE_API_CONTEXT);
 
 	it(
 		'Should approve a valid script',
 		integrationTest(async () => {
 			const script = '1 + 2';
-			const validation = await validateOneScript(TEST_AUTH_TOKEN, script);
+			const validation = await validateOneScript(script);
 			expect(validation).toEqual({ isValid: true, error: null });
 		}),
 	);
@@ -26,7 +26,7 @@ describe('validateOneScript()', () => {
 		'Should repprove an invalid script',
 		integrationTest(async () => {
 			const script = '1 + ';
-			const validation = await validateOneScript(TEST_AUTH_TOKEN, script);
+			const validation = await validateOneScript(script);
 			expect(validation).toEqual({ isValid: false, error: { message: 'syntax error', line: 1, column: 5 } });
 		}),
 	);

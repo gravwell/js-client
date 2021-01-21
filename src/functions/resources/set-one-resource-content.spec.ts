@@ -8,17 +8,17 @@
 
 import { CreatableResource, isResource, Resource } from '../../models';
 import { integrationTest } from '../../tests';
-import { TEST_AUTH_TOKEN, TEST_HOST } from '../../tests/config';
+import { TEST_BASE_API_CONTEXT } from '../../tests/config';
 import { makeCreateOneResource } from './create-one-resource';
 import { makeDeleteOneResource } from './delete-one-resource';
 import { makeGetOneResourceContent } from './get-one-resource-content';
 import { makeSetOneResourceContent } from './set-one-resource-content';
 
 describe('setOneResourceContent()', () => {
-	const createOneResource = makeCreateOneResource({ host: TEST_HOST, useEncryption: false });
-	const setOneResourceContent = makeSetOneResourceContent({ host: TEST_HOST, useEncryption: false });
-	const deleteOneResource = makeDeleteOneResource({ host: TEST_HOST, useEncryption: false });
-	const getOneResourceContent = makeGetOneResourceContent({ host: TEST_HOST, useEncryption: false });
+	const createOneResource = makeCreateOneResource(TEST_BASE_API_CONTEXT);
+	const setOneResourceContent = makeSetOneResourceContent(TEST_BASE_API_CONTEXT);
+	const deleteOneResource = makeDeleteOneResource(TEST_BASE_API_CONTEXT);
+	const getOneResourceContent = makeGetOneResourceContent(TEST_BASE_API_CONTEXT);
 
 	let createdResource: Resource;
 
@@ -27,23 +27,23 @@ describe('setOneResourceContent()', () => {
 			name: 'name',
 			description: 'description',
 		};
-		createdResource = await createOneResource(TEST_AUTH_TOKEN, data);
+		createdResource = await createOneResource(data);
 	});
 
 	afterEach(async () => {
-		await deleteOneResource(TEST_AUTH_TOKEN, createdResource.id);
+		await deleteOneResource(createdResource.id);
 	});
 
 	it(
 		'Should set the contents of an existing resource',
 		integrationTest(async () => {
-			const originalResourceContent = await getOneResourceContent(TEST_AUTH_TOKEN, createdResource.id);
+			const originalResourceContent = await getOneResourceContent(createdResource.id);
 
 			const fileContent = 'This is a file created for browser tests';
 			const file = new File([fileContent], 'browser-test-file.txt');
 
-			const resource = await setOneResourceContent(TEST_AUTH_TOKEN, createdResource.id, file);
-			const updatedResourceContent = await getOneResourceContent(TEST_AUTH_TOKEN, createdResource.id);
+			const resource = await setOneResourceContent(createdResource.id, file);
+			const updatedResourceContent = await getOneResourceContent(createdResource.id);
 
 			expect(isResource(resource)).toBeTrue();
 			expect(originalResourceContent).not.toBe(updatedResourceContent);

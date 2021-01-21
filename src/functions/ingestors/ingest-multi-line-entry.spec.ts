@@ -7,16 +7,16 @@
  **************************************************************************/
 
 import { integrationTest } from '../../tests';
-import { TEST_AUTH_TOKEN, TEST_HOST } from '../../tests/config';
+import { TEST_BASE_API_CONTEXT } from '../../tests/config';
 import { makeIngestMultiLineEntry } from './ingest-multi-line-entry';
 
 describe('ingestMultiLineEntry()', () => {
-	const ingestMultiLineEntry = makeIngestMultiLineEntry({ host: TEST_HOST, useEncryption: false });
+	const ingestMultiLineEntry = makeIngestMultiLineEntry(TEST_BASE_API_CONTEXT);
 
 	it(
 		'Should ingest the file entry',
 		integrationTest(async () => {
-			const entriesIngestedCount = await ingestMultiLineEntry(TEST_AUTH_TOKEN, {
+			const entriesIngestedCount = await ingestMultiLineEntry({
 				tag: 'custom-test',
 				data: 'This is\na file\nwith three lines',
 			});

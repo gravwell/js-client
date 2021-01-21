@@ -7,18 +7,18 @@
  **************************************************************************/
 
 import { integrationTest } from '../../tests';
-import { TEST_AUTH_TOKEN, TEST_HOST } from '../../tests/config';
+import { TEST_BASE_API_CONTEXT } from '../../tests/config';
 import { makeRestartWebServer } from './restart-web-server';
 
 describe('restartWebServer()', () => {
-	const restartWebServer = makeRestartWebServer({ host: TEST_HOST, useEncryption: false });
+	const restartWebServer = makeRestartWebServer(TEST_BASE_API_CONTEXT);
 
 	// !WARNING: This causes panic for the backend guys see gravwell/gravwell#2277
 	xit(
 		'Should restart the web server',
 		integrationTest(async () => {
 			// TODO: Ping it and expect OK
-			await restartWebServer(TEST_AUTH_TOKEN);
+			await restartWebServer();
 			// TODO: Ping it and expect no connection
 			await new Promise(res => setTimeout(res, 5000));
 			// TODO: Ping it and expect OK

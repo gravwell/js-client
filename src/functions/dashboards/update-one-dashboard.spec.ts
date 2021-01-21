@@ -8,17 +8,17 @@
 
 import { CreatableDashboard, Dashboard, isDashboard, toVersion, UpdatableDashboard } from '../../models';
 import { integrationTest, myCustomMatchers } from '../../tests';
-import { TEST_AUTH_TOKEN, TEST_HOST } from '../../tests/config';
+import { TEST_BASE_API_CONTEXT } from '../../tests/config';
 import { makeCreateOneDashboard } from './create-one-dashboard';
 import { makeDeleteOneDashboard } from './delete-one-dashboard';
 import { makeGetAllDashboards } from './get-all-dashboards';
 import { makeUpdateOneDashboard } from './update-one-dashboard';
 
 describe('updateOneDashboard()', () => {
-	const createOneDashboard = makeCreateOneDashboard({ host: TEST_HOST, useEncryption: false });
-	const updateOneDashboard = makeUpdateOneDashboard({ host: TEST_HOST, useEncryption: false });
-	const deleteOneDashboard = makeDeleteOneDashboard({ host: TEST_HOST, useEncryption: false });
-	const getAllDashboards = makeGetAllDashboards({ host: TEST_HOST, useEncryption: false });
+	const createOneDashboard = makeCreateOneDashboard(TEST_BASE_API_CONTEXT);
+	const updateOneDashboard = makeUpdateOneDashboard(TEST_BASE_API_CONTEXT);
+	const deleteOneDashboard = makeDeleteOneDashboard(TEST_BASE_API_CONTEXT);
+	const getAllDashboards = makeGetAllDashboards(TEST_BASE_API_CONTEXT);
 
 	let createdDashboard: Dashboard;
 
@@ -26,9 +26,9 @@ describe('updateOneDashboard()', () => {
 		jasmine.addMatchers(myCustomMatchers);
 
 		// Delete all dashboards
-		const currentDashboards = await getAllDashboards(TEST_AUTH_TOKEN);
+		const currentDashboards = await getAllDashboards();
 		const currentDashboardIDs = currentDashboards.map(m => m.id);
-		const deletePromises = currentDashboardIDs.map(dashboardID => deleteOneDashboard(TEST_AUTH_TOKEN, dashboardID));
+		const deletePromises = currentDashboardIDs.map(dashboardID => deleteOneDashboard(dashboardID));
 		await Promise.all(deletePromises);
 
 		// Create one dashboard
@@ -38,7 +38,7 @@ describe('updateOneDashboard()', () => {
 			tiles: [],
 			timeframe: { durationString: 'PT1H', end: null, start: null, timeframe: 'PT1H' },
 		};
-		createdDashboard = await createOneDashboard(TEST_AUTH_TOKEN, data);
+		createdDashboard = await createOneDashboard(data);
 	});
 
 	const updateTests: Array<Omit<UpdatableDashboard, 'id'>> = [
@@ -91,7 +91,7 @@ describe('updateOneDashboard()', () => {
 				expect(isDashboard(current)).toBeTrue();
 
 				const data: UpdatableDashboard = { ..._data, id: current.id };
-				const updated = await updateOneDashboard(TEST_AUTH_TOKEN, data);
+				const updated = await updateOneDashboard(data);
 
 				expect(isDashboard(updated)).toBeTrue();
 				expect(updated).toPartiallyEqual(data);

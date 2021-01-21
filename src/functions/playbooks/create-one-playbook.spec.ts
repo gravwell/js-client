@@ -8,16 +8,16 @@
 
 import { CreatablePlaybook, isPlaybook } from '../../models';
 import { integrationTest } from '../../tests';
-import { TEST_AUTH_TOKEN, TEST_HOST } from '../../tests/config';
+import { TEST_BASE_API_CONTEXT } from '../../tests/config';
 import { isUUID } from '../../value-objects';
 import { makeCreateOnePlaybook } from './create-one-playbook';
 import { makeDeleteOnePlaybook } from './delete-one-playbook';
 import { makeGetOnePlaybook } from './get-one-playbook';
 
 describe('createOnePlaybook()', () => {
-	const createOnePlaybook = makeCreateOnePlaybook({ host: TEST_HOST, useEncryption: false });
-	const getOnePlaybook = makeGetOnePlaybook({ host: TEST_HOST, useEncryption: false });
-	const deleteOnePlaybook = makeDeleteOnePlaybook({ host: TEST_HOST, useEncryption: false });
+	const createOnePlaybook = makeCreateOnePlaybook(TEST_BASE_API_CONTEXT);
+	const getOnePlaybook = makeGetOnePlaybook(TEST_BASE_API_CONTEXT);
+	const deleteOnePlaybook = makeDeleteOnePlaybook(TEST_BASE_API_CONTEXT);
 
 	it(
 		"Should create an playbook and return it's UUID",
@@ -27,12 +27,12 @@ describe('createOnePlaybook()', () => {
 				body: 'This is my playbook',
 			};
 
-			const playbookUUID = await createOnePlaybook(TEST_AUTH_TOKEN, data);
+			const playbookUUID = await createOnePlaybook(data);
 			expect(isUUID(playbookUUID)).toBeTrue();
-			const playbook = await getOnePlaybook(TEST_AUTH_TOKEN, playbookUUID);
+			const playbook = await getOnePlaybook(playbookUUID);
 			expect(isPlaybook(playbook)).toBeTrue();
 
-			await deleteOnePlaybook(TEST_AUTH_TOKEN, playbookUUID);
+			await deleteOnePlaybook(playbookUUID);
 		}),
 	);
 });

@@ -7,19 +7,16 @@
  **************************************************************************/
 
 import { integrationTest } from '../../tests';
-import { TEST_AUTH_TOKEN, TEST_HOST } from '../../tests/config';
+import { TEST_BASE_API_CONTEXT } from '../../tests/config';
 import { makeSyncAllScriptLibraries } from './sync-all-script-libraries';
 
 describe('syncAllScriptLibraries()', () => {
-	const syncAllScriptLibraries = makeSyncAllScriptLibraries({
-		host: TEST_HOST,
-		useEncryption: false,
-	});
+	const syncAllScriptLibraries = makeSyncAllScriptLibraries(TEST_BASE_API_CONTEXT);
 
 	it(
 		'Should update all libraries',
 		integrationTest(async () => {
-			await expectAsync(syncAllScriptLibraries(TEST_AUTH_TOKEN)).toBeResolved();
+			await expectAsync(syncAllScriptLibraries()).toBeResolved();
 		}),
 	);
 });

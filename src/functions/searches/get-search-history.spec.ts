@@ -9,20 +9,19 @@
 import { random } from 'lodash';
 import { CreatableUser, isValidSearch, User } from '../../models';
 import { integrationTest } from '../../tests';
-import { TEST_AUTH_TOKEN, TEST_HOST } from '../../tests/config';
+import { TEST_BASE_API_CONTEXT } from '../../tests/config';
 import { makeLoginOneUser } from '../auth/login-one-user';
 import { makeCreateOneUser, makeGetMyUser, makeGetOneUser } from '../users';
 import { makeGetSearchHistory } from './get-search-history';
 
 describe('getSearchHistory()', () => {
-	const getSearchHistory = makeGetSearchHistory({ host: TEST_HOST, useEncryption: false });
-	const createOneUser = makeCreateOneUser({ host: TEST_HOST, useEncryption: false });
-	const getOneUser = makeGetOneUser({ host: TEST_HOST, useEncryption: false });
-	const login = makeLoginOneUser({ host: TEST_HOST, useEncryption: false });
-	const getMyUser = makeGetMyUser({ host: TEST_HOST, useEncryption: false });
+	const getSearchHistory = makeGetSearchHistory(TEST_BASE_API_CONTEXT);
+	const createOneUser = makeCreateOneUser(TEST_BASE_API_CONTEXT);
+	const getOneUser = makeGetOneUser(TEST_BASE_API_CONTEXT);
+	const login = makeLoginOneUser(TEST_BASE_API_CONTEXT);
+	const getMyUser = makeGetMyUser(TEST_BASE_API_CONTEXT);
 
 	let admin: User;
-	const adminAuth = TEST_AUTH_TOKEN;
 	let user: User;
 	let userAuth: string;
 
@@ -35,17 +34,17 @@ describe('getSearchHistory()', () => {
 			role: 'analyst',
 			user: userSeed,
 		};
-		const userID = await createOneUser(adminAuth, data);
-		user = await getOneUser(adminAuth, userID);
+		const userID = await createOneUser(data);
+		user = await getOneUser(userID);
 		userAuth = await login(user.username, data.password);
 
-		admin = await getMyUser(adminAuth);
+		admin = await getMyUser();
 	});
 
 	it(
 		'Should get the search history of a specific user',
 		integrationTest(async () => {
-			const searches = await getSearchHistory(adminAuth, { target: 'user', userID: '1' });
+			const searches = await getSearchHistory({ target: 'user', userID: '1' });
 			expect(searches.every(isValidSearch)).toBeTrue();
 		}),
 	);
@@ -53,7 +52,7 @@ describe('getSearchHistory()', () => {
 	it(
 		'Should get the search history of a specific group',
 		integrationTest(async () => {
-			const searches = await getSearchHistory(adminAuth, { target: 'group', groupID: '1' });
+			const searches = await getSearchHistory({ target: 'group', groupID: '1' });
 			expect(searches.every(isValidSearch)).toBeTrue();
 		}),
 	);
@@ -61,7 +60,7 @@ describe('getSearchHistory()', () => {
 	it(
 		'Should get the search history related to a specific user',
 		integrationTest(async () => {
-			const searches = await getSearchHistory(adminAuth, { target: 'user related', userID: '1' });
+			const searches = await getSearchHistory({ target: 'user related', userID: '1' });
 			expect(searches.every(isValidSearch)).toBeTrue();
 		}),
 	);
@@ -69,7 +68,7 @@ describe('getSearchHistory()', () => {
 	it(
 		'Should get the search history of all users',
 		integrationTest(async () => {
-			const searches = await getSearchHistory(adminAuth, { target: 'all' });
+			const searches = await getSearchHistory({ target: 'all' });
 			expect(searches.every(isValidSearch)).toBeTrue();
 		}),
 	);
@@ -77,7 +76,7 @@ describe('getSearchHistory()', () => {
 	it(
 		'Should get my search history',
 		integrationTest(async () => {
-			const searches = await getSearchHistory(TEST_AUTH_TOKEN, { target: 'myself' });
+			const searches = await getSearchHistory({ target: 'myself' });
 			expect(searches.every(isValidSearch)).toBeTrue();
 		}),
 	);
@@ -85,7 +84,12 @@ describe('getSearchHistory()', () => {
 	it(
 		'Should not get the search history of another user if the request was not from an admin',
 		integrationTest(async () => {
-			await expectAsync(getSearchHistory(userAuth, { target: 'user', userID: admin.id })).toBeRejected();
+			const getSearchHistoryAsAnalyst = makeGetSearchHistory({
+				...TEST_BASE_API_CONTEXT,
+				authToken: userAuth,
+			});
+
+			await expectAsync(getSearchHistoryAsAnalyst({ target: 'user', userID: admin.id })).toBeRejected();
 		}),
 	);
 });

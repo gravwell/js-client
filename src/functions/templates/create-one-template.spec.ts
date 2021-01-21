@@ -8,16 +8,16 @@
 
 import { CreatableTemplate, isTemplate } from '../../models';
 import { integrationTest } from '../../tests';
-import { TEST_AUTH_TOKEN, TEST_HOST } from '../../tests/config';
+import { TEST_BASE_API_CONTEXT } from '../../tests/config';
 import { isUUID } from '../../value-objects';
 import { makeCreateOneTemplate } from './create-one-template';
 import { makeDeleteOneTemplate } from './delete-one-template';
 import { makeGetOneTemplate } from './get-one-template';
 
 describe('createOneTemplate()', () => {
-	const createOneTemplate = makeCreateOneTemplate({ host: TEST_HOST, useEncryption: false });
-	const getOneTemplate = makeGetOneTemplate({ host: TEST_HOST, useEncryption: false });
-	const deleteOneTemplate = makeDeleteOneTemplate({ host: TEST_HOST, useEncryption: false });
+	const createOneTemplate = makeCreateOneTemplate(TEST_BASE_API_CONTEXT);
+	const getOneTemplate = makeGetOneTemplate(TEST_BASE_API_CONTEXT);
+	const deleteOneTemplate = makeDeleteOneTemplate(TEST_BASE_API_CONTEXT);
 
 	// gravwell/gravwell#2426
 	xit(
@@ -30,12 +30,12 @@ describe('createOneTemplate()', () => {
 				variable: { name: 'Variable', token: '__VAR__' },
 			};
 
-			const templateUUID = await createOneTemplate(TEST_AUTH_TOKEN, data);
+			const templateUUID = await createOneTemplate(data);
 			expect(isUUID(templateUUID)).toBeTrue();
-			const template = await getOneTemplate(TEST_AUTH_TOKEN, templateUUID);
+			const template = await getOneTemplate(templateUUID);
 			expect(isTemplate(template)).toBeTrue();
 
-			await deleteOneTemplate(TEST_AUTH_TOKEN, templateUUID);
+			await deleteOneTemplate(templateUUID);
 		}),
 	);
 });

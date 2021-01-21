@@ -8,16 +8,16 @@
 
 import { isRemoteKit } from '../../models';
 import { integrationTest } from '../../tests';
-import { TEST_AUTH_TOKEN, TEST_HOST } from '../../tests/config';
+import { TEST_BASE_API_CONTEXT } from '../../tests/config';
 import { makeGetAllRemoteKits } from './get-all-remote-kits';
 
 describe('getAllRemoteKits()', () => {
-	const getAllRemoteKits = makeGetAllRemoteKits({ host: TEST_HOST, useEncryption: false });
+	const getAllRemoteKits = makeGetAllRemoteKits(TEST_BASE_API_CONTEXT);
 
 	it(
 		'Should return all available kits from the remote server',
 		integrationTest(async () => {
-			const kits = await getAllRemoteKits(TEST_AUTH_TOKEN);
+			const kits = await getAllRemoteKits();
 			expect(kits.length).toBeGreaterThan(5);
 			expect(kits.every(isRemoteKit)).toBeTrue();
 		}),

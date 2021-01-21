@@ -8,23 +8,23 @@
 
 import { isScheduledScript, ScheduledScript, UpdatableScheduledScript } from '../../models';
 import { integrationTest, myCustomMatchers } from '../../tests';
-import { TEST_AUTH_TOKEN, TEST_HOST } from '../../tests/config';
+import { TEST_BASE_API_CONTEXT } from '../../tests/config';
 import { makeCreateOneScheduledScript } from './create-one-scheduled-script';
 import { makeDeleteAllScheduledScripts } from './delete-all-scheduled-scripts';
 import { makeUpdateOneScheduledScript } from './update-one-scheduled-script';
 
 describe('updateOneScheduledScript()', () => {
-	const createOneScheduledScript = makeCreateOneScheduledScript({ host: TEST_HOST, useEncryption: false });
-	const updateOneScheduledScript = makeUpdateOneScheduledScript({ host: TEST_HOST, useEncryption: false });
-	const deleteAllScheduledScripts = makeDeleteAllScheduledScripts({ host: TEST_HOST, useEncryption: false });
+	const createOneScheduledScript = makeCreateOneScheduledScript(TEST_BASE_API_CONTEXT);
+	const updateOneScheduledScript = makeUpdateOneScheduledScript(TEST_BASE_API_CONTEXT);
+	const deleteAllScheduledScripts = makeDeleteAllScheduledScripts(TEST_BASE_API_CONTEXT);
 
 	let createdScheduledScript: ScheduledScript;
 
 	beforeEach(async () => {
 		jasmine.addMatchers(myCustomMatchers);
 
-		await deleteAllScheduledScripts(TEST_AUTH_TOKEN);
-		createdScheduledScript = await createOneScheduledScript(TEST_AUTH_TOKEN, {
+		await deleteAllScheduledScripts();
+		createdScheduledScript = await createOneScheduledScript({
 			name: 'Script1',
 			description: 'D1',
 			schedule: '0 1 * * *',
@@ -73,7 +73,7 @@ describe('updateOneScheduledScript()', () => {
 				expect(isScheduledScript(current)).toBeTrue();
 
 				const data: UpdatableScheduledScript = { ..._data, id: current.id };
-				const updated = await updateOneScheduledScript(TEST_AUTH_TOKEN, data);
+				const updated = await updateOneScheduledScript(data);
 
 				expect(isScheduledScript(updated)).toBeTrue();
 				expect(updated).toPartiallyEqual(data);

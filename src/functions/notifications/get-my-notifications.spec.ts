@@ -6,19 +6,17 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { integrationTest, TEST_AUTH_TOKEN, TEST_HOST } from '../../tests';
+import { integrationTest } from '../../tests';
+import { TEST_BASE_API_CONTEXT } from '../../tests/config';
 import { makeGetMyNotifications } from './get-my-notifications';
 
 describe('getMyNotifications', () => {
-	const getMyNotifications = makeGetMyNotifications({
-		host: TEST_HOST,
-		useEncryption: false,
-	});
+	const getMyNotifications = makeGetMyNotifications(TEST_BASE_API_CONTEXT);
 
 	it(
 		'Should be able to get all my notifications',
 		integrationTest(async () => {
-			const notifications = await getMyNotifications(TEST_AUTH_TOKEN);
+			const notifications = await getMyNotifications();
 			expect(notifications instanceof Array).toBeTrue();
 		}),
 	);

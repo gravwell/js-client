@@ -8,16 +8,16 @@
 
 import { CreatableResource, isResource } from '../../models';
 import { integrationTest } from '../../tests';
-import { TEST_AUTH_TOKEN, TEST_HOST } from '../../tests/config';
+import { TEST_BASE_API_CONTEXT } from '../../tests/config';
 import { UUID } from '../../value-objects';
 import { makeCreateOneResource } from './create-one-resource';
 import { makeDeleteOneResource } from './delete-one-resource';
 import { makeGetOneResource } from './get-one-resource';
 
 describe('getOneResource()', () => {
-	const getOneResource = makeGetOneResource({ host: TEST_HOST, useEncryption: false });
-	const createOneResource = makeCreateOneResource({ host: TEST_HOST, useEncryption: false });
-	const deleteOneResource = makeDeleteOneResource({ host: TEST_HOST, useEncryption: false });
+	const getOneResource = makeGetOneResource(TEST_BASE_API_CONTEXT);
+	const createOneResource = makeCreateOneResource(TEST_BASE_API_CONTEXT);
+	const deleteOneResource = makeDeleteOneResource(TEST_BASE_API_CONTEXT);
 
 	let createdResourceID: UUID;
 
@@ -26,17 +26,17 @@ describe('getOneResource()', () => {
 			name: 'a name',
 			description: 'a description',
 		};
-		createdResourceID = (await createOneResource(TEST_AUTH_TOKEN, data)).id;
+		createdResourceID = (await createOneResource(data)).id;
 	});
 
 	afterEach(async () => {
-		await deleteOneResource(TEST_AUTH_TOKEN, createdResourceID);
+		await deleteOneResource(createdResourceID);
 	});
 
 	it(
 		'Should return a resource',
 		integrationTest(async () => {
-			const resource = await getOneResource(TEST_AUTH_TOKEN, createdResourceID);
+			const resource = await getOneResource(createdResourceID);
 			expect(isResource(resource)).toBeTrue();
 		}),
 	);

@@ -8,16 +8,16 @@
 
 import { isValidUser } from '../../models';
 import { integrationTest } from '../../tests';
-import { TEST_AUTH_TOKEN, TEST_HOST } from '../../tests/config';
+import { TEST_BASE_API_CONTEXT } from '../../tests/config';
 import { makeGetOneUser } from './get-one-user';
 
 describe('getOneUser()', () => {
-	const getOneUser = makeGetOneUser({ host: TEST_HOST, useEncryption: false });
+	const getOneUser = makeGetOneUser(TEST_BASE_API_CONTEXT);
 
 	it(
 		'Should return a user',
 		integrationTest(async () => {
-			const user = await getOneUser(TEST_AUTH_TOKEN, '1');
+			const user = await getOneUser('1');
 			expect(isValidUser(user)).toBeTrue();
 		}),
 	);

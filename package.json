@@ -13,6 +13,7 @@
 		"build": "scripts/build",
 		"build:browsers": "scripts/build --browsersOnly",
 		"build:node": "scripts/build --nodeOnly",
+		"build:tests": "scripts/build --tests --assets",
 		"lint": "scripts/lint",
 		"format": "scripts/format",
 		"prepublishOnly": "npm ci && npm run format && npm run lint && npm run build"

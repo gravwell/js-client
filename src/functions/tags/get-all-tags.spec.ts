@@ -7,16 +7,16 @@
  **************************************************************************/
 
 import { integrationTest, unitTest } from '../../tests';
-import { TEST_AUTH_TOKEN, TEST_HOST } from '../../tests/config';
+import { TEST_AUTH_TOKEN, TEST_BASE_API_CONTEXT } from '../../tests/config';
 import { makeGetAllTags } from './get-all-tags';
 
 describe('getAllTags()', () => {
-	const getAllTags = makeGetAllTags({ host: TEST_HOST, useEncryption: false });
+	const getAllTags = makeGetAllTags(TEST_BASE_API_CONTEXT);
 
 	it(
 		'Should return a function given a valid host',
 		unitTest(() => {
-			const fn = () => makeGetAllTags({ host: 'www.example.com', useEncryption: false });
+			const fn = () => makeGetAllTags({ host: 'www.example.com', useEncryption: false, authToken: TEST_AUTH_TOKEN });
 			expect(fn).not.toThrow();
 			expect(typeof fn()).toBe('function');
 		}),
@@ -25,7 +25,7 @@ describe('getAllTags()', () => {
 	it(
 		'Should return 200 with a list of tags',
 		integrationTest(async () => {
-			const tags = await getAllTags(TEST_AUTH_TOKEN);
+			const tags = await getAllTags();
 			expect(tags instanceof Array).toBe(true);
 			for (const tag of tags) expect(typeof tag).toBe('string');
 		}),

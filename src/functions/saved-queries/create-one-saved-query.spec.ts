@@ -8,14 +8,14 @@
 
 import { CreatableSavedQuery, isSavedQuery } from '../../models';
 import { integrationTest, myCustomMatchers } from '../../tests';
-import { TEST_AUTH_TOKEN, TEST_HOST } from '../../tests/config';
+import { TEST_BASE_API_CONTEXT } from '../../tests/config';
 import { NumericID } from '../../value-objects';
 import { makeCreateOneGroup } from '../groups/create-one-group';
 import { makeCreateOneSavedQuery } from './create-one-saved-query';
 
 describe('createOneSavedQuery()', () => {
-	const createOneSavedQuery = makeCreateOneSavedQuery({ host: TEST_HOST, useEncryption: false });
-	const createOneGroup = makeCreateOneGroup({ host: TEST_HOST, useEncryption: false });
+	const createOneSavedQuery = makeCreateOneSavedQuery(TEST_BASE_API_CONTEXT);
+	const createOneGroup = makeCreateOneGroup(TEST_BASE_API_CONTEXT);
 
 	let groupIDs: Array<NumericID>;
 
@@ -25,7 +25,7 @@ describe('createOneSavedQuery()', () => {
 		groupIDs = await Promise.all(
 			Array.from({ length: 3 })
 				.map((_, i) => `G${i}`)
-				.map(name => createOneGroup(TEST_AUTH_TOKEN, { name })),
+				.map(name => createOneGroup({ name })),
 		);
 	});
 
@@ -43,7 +43,7 @@ describe('createOneSavedQuery()', () => {
 				query: 'tag=netflow',
 			};
 
-			const savedQuery = await createOneSavedQuery(TEST_AUTH_TOKEN, data);
+			const savedQuery = await createOneSavedQuery(data);
 			expect(isSavedQuery(savedQuery)).toBeTrue();
 			expect(savedQuery).toPartiallyEqual(data);
 		}),

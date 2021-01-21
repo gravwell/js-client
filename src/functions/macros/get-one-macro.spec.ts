@@ -8,25 +8,25 @@
 
 import { CreatableMacro, isMacro, Macro } from '../../models';
 import { integrationTest } from '../../tests';
-import { TEST_AUTH_TOKEN, TEST_HOST } from '../../tests/config';
+import { TEST_BASE_API_CONTEXT } from '../../tests/config';
 import { makeCreateOneMacro } from './create-one-macro';
 import { makeDeleteOneMacro } from './delete-one-macro';
 import { makeGetAllMacros } from './get-all-macros';
 import { makeGetOneMacro } from './get-one-macro';
 
 describe('getOneMacro()', () => {
-	const getOneMacro = makeGetOneMacro({ host: TEST_HOST, useEncryption: false });
-	const createOneMacro = makeCreateOneMacro({ host: TEST_HOST, useEncryption: false });
-	const getAllMacros = makeGetAllMacros({ host: TEST_HOST, useEncryption: false });
-	const deleteOneMacro = makeDeleteOneMacro({ host: TEST_HOST, useEncryption: false });
+	const getOneMacro = makeGetOneMacro(TEST_BASE_API_CONTEXT);
+	const createOneMacro = makeCreateOneMacro(TEST_BASE_API_CONTEXT);
+	const getAllMacros = makeGetAllMacros(TEST_BASE_API_CONTEXT);
+	const deleteOneMacro = makeDeleteOneMacro(TEST_BASE_API_CONTEXT);
 
 	let createdMacro: Macro;
 
 	beforeEach(async () => {
 		// Delete all macros
-		const currentMacros = await getAllMacros(TEST_AUTH_TOKEN);
+		const currentMacros = await getAllMacros();
 		const currentMacroIDs = currentMacros.map(m => m.id);
-		const deletePromises = currentMacroIDs.map(macroID => deleteOneMacro(TEST_AUTH_TOKEN, macroID));
+		const deletePromises = currentMacroIDs.map(macroID => deleteOneMacro(macroID));
 		await Promise.all(deletePromises);
 
 		// Create on macro
@@ -34,13 +34,13 @@ describe('getOneMacro()', () => {
 			name: 'TEST',
 			expansion: 'test',
 		};
-		createdMacro = await createOneMacro(TEST_AUTH_TOKEN, data);
+		createdMacro = await createOneMacro(data);
 	});
 
 	it(
 		'Returns a macro',
 		integrationTest(async () => {
-			const macro = await getOneMacro(TEST_AUTH_TOKEN, createdMacro.id);
+			const macro = await getOneMacro(createdMacro.id);
 			expect(isMacro(macro)).toBeTrue();
 			expect(macro).toEqual(createdMacro);
 		}),
@@ -49,7 +49,7 @@ describe('getOneMacro()', () => {
 	it(
 		"Returns an error if the macro doesn't exist",
 		integrationTest(async () => {
-			await expectAsync(getOneMacro(TEST_AUTH_TOKEN, 'non-existent')).toBeRejected();
+			await expectAsync(getOneMacro('non-existent')).toBeRejected();
 		}),
 	);
 });

@@ -8,7 +8,7 @@
 
 import { CreatableGroup, CreatableUser, User } from '../../models';
 import { integrationTest } from '../../tests';
-import { TEST_AUTH_TOKEN, TEST_HOST } from '../../tests/config';
+import { TEST_BASE_API_CONTEXT } from '../../tests/config';
 import { NumericID } from '../../value-objects';
 import { makeCreateOneUser, makeDeleteOneUser, makeGetOneUser } from '../users';
 import { makeAddOneUserToManyGroups } from './add-one-user-to-many-groups';
@@ -18,27 +18,27 @@ import { makeGetAllGroups } from './get-all-groups';
 import { makeRemoveOneUserFromOneGroup } from './remove-one-user-from-one-group';
 
 describe('removeOneUserFromOneGroup()', () => {
-	const getAllGroups = makeGetAllGroups({ host: TEST_HOST, useEncryption: false });
-	const createOneGroup = makeCreateOneGroup({ host: TEST_HOST, useEncryption: false });
-	const deleteOneGroup = makeDeleteOneGroup({ host: TEST_HOST, useEncryption: false });
-	const getOneUser = makeGetOneUser({ host: TEST_HOST, useEncryption: false });
-	const createOneUser = makeCreateOneUser({ host: TEST_HOST, useEncryption: false });
-	const deleteOneUser = makeDeleteOneUser({ host: TEST_HOST, useEncryption: false });
-	const addOneUserToManyGroups = makeAddOneUserToManyGroups({ host: TEST_HOST, useEncryption: false });
-	const removeOneUserFromOneGroup = makeRemoveOneUserFromOneGroup({ host: TEST_HOST, useEncryption: false });
+	const getAllGroups = makeGetAllGroups(TEST_BASE_API_CONTEXT);
+	const createOneGroup = makeCreateOneGroup(TEST_BASE_API_CONTEXT);
+	const deleteOneGroup = makeDeleteOneGroup(TEST_BASE_API_CONTEXT);
+	const getOneUser = makeGetOneUser(TEST_BASE_API_CONTEXT);
+	const createOneUser = makeCreateOneUser(TEST_BASE_API_CONTEXT);
+	const deleteOneUser = makeDeleteOneUser(TEST_BASE_API_CONTEXT);
+	const addOneUserToManyGroups = makeAddOneUserToManyGroups(TEST_BASE_API_CONTEXT);
+	const removeOneUserFromOneGroup = makeRemoveOneUserFromOneGroup(TEST_BASE_API_CONTEXT);
 
 	let user: User;
 
 	beforeEach(async () => {
 		// Delete all groups
-		const currentGroups = await getAllGroups(TEST_AUTH_TOKEN);
+		const currentGroups = await getAllGroups();
 		const currentGroupIDs = currentGroups.map(g => g.id);
-		const deletePromises = currentGroupIDs.map(groupID => deleteOneGroup(TEST_AUTH_TOKEN, groupID));
+		const deletePromises = currentGroupIDs.map(groupID => deleteOneGroup(groupID));
 		await Promise.all(deletePromises);
 
 		// Create three groups
 		const creatableGroups: Array<CreatableGroup> = [{ name: '1' }, { name: '2' }, { name: '3' }];
-		const createPromises = creatableGroups.map(creatable => createOneGroup(TEST_AUTH_TOKEN, creatable));
+		const createPromises = creatableGroups.map(creatable => createOneGroup(creatable));
 		const createdGroupIDs = await Promise.all(createPromises);
 
 		// Creates a user
@@ -50,17 +50,17 @@ describe('removeOneUserFromOneGroup()', () => {
 			role: 'analyst',
 			user: userSeed,
 		};
-		const userID = await createOneUser(TEST_AUTH_TOKEN, data);
+		const userID = await createOneUser(data);
 
 		// Adds the user to all groups
-		await addOneUserToManyGroups(TEST_AUTH_TOKEN, userID, createdGroupIDs);
+		await addOneUserToManyGroups(userID, createdGroupIDs);
 
 		// Saves the user into a variable
-		user = await getOneUser(TEST_AUTH_TOKEN, userID);
+		user = await getOneUser(userID);
 	});
 
 	afterEach(async () => {
-		await deleteOneUser(TEST_AUTH_TOKEN, user.id);
+		await deleteOneUser(user.id);
 	});
 
 	it(
@@ -70,10 +70,10 @@ describe('removeOneUserFromOneGroup()', () => {
 
 			const removedGroupIDs: Array<NumericID> = [];
 			for (const groupID of user.groupIDs) {
-				await removeOneUserFromOneGroup(TEST_AUTH_TOKEN, user.id, groupID);
+				await removeOneUserFromOneGroup(user.id, groupID);
 				removedGroupIDs.push(groupID);
 
-				const _user = await getOneUser(TEST_AUTH_TOKEN, user.id);
+				const _user = await getOneUser(user.id);
 				expect(_user.groupIDs.length).toBe(user.groupIDs.length - removedGroupIDs.length);
 				expect(_user.groupIDs).not.toContain(groupID);
 			}
