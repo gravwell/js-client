@@ -18,11 +18,15 @@ import { makeGetOneFileContent } from './get-one-file-content';
 import { makeUpdateOneFile } from './update-one-file';
 
 describe('updateOneFile()', () => {
-	const createOneFile = makeCreateOneFile({ host: TEST_HOST, useEncryption: false });
-	const updateOneFile = makeUpdateOneFile({ host: TEST_HOST, useEncryption: false });
-	const deleteOneFile = makeDeleteOneFile({ host: TEST_HOST, useEncryption: false });
-	const getAllFiles = makeGetAllFiles({ host: TEST_HOST, useEncryption: false });
-	const getOneFileContent = makeGetOneFileContent({ host: TEST_HOST, useEncryption: false });
+	const createOneFile = makeCreateOneFile({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
+	const updateOneFile = makeUpdateOneFile({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
+	const deleteOneFile = makeDeleteOneFile({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
+	const getAllFiles = makeGetAllFiles({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
+	const getOneFileContent = makeGetOneFileContent({
+		host: TEST_HOST,
+		useEncryption: false,
+		authToken: TEST_AUTH_TOKEN,
+	});
 
 	let createdFile: FileMetadata;
 
@@ -30,9 +34,9 @@ describe('updateOneFile()', () => {
 		jasmine.addMatchers(myCustomMatchers);
 
 		// Delete all files
-		const currentFiles = await getAllFiles(TEST_AUTH_TOKEN);
+		const currentFiles = await getAllFiles();
 		const currentFileIDs = currentFiles.map(f => f.globalID);
-		const deletePromises = currentFileIDs.map(fileID => deleteOneFile(TEST_AUTH_TOKEN, fileID));
+		const deletePromises = currentFileIDs.map(fileID => deleteOneFile(fileID));
 		await Promise.all(deletePromises);
 
 		// Create one file
@@ -40,7 +44,7 @@ describe('updateOneFile()', () => {
 			name: 'F1',
 			file: createReadStream(join(TEST_ASSETS_PATH!, 'file-a.txt')),
 		};
-		createdFile = await createOneFile(TEST_AUTH_TOKEN, data);
+		createdFile = await createOneFile(data);
 	});
 
 	const updateTests: Array<Omit<UpdatableFile, 'id'>> = [
@@ -75,12 +79,12 @@ describe('updateOneFile()', () => {
 
 				// !WARNING: Using globalID because gravwell/gravwell#2509
 				const data: UpdatableFile = { ..._data, id: current.globalID };
-				const updated = await updateOneFile(TEST_AUTH_TOKEN, data);
+				const updated = await updateOneFile(data);
 
 				if (data.file) {
 					const stream = createReadStream(join(TEST_ASSETS_PATH!, 'auto-extractors.config'));
 					const expectedContent = await streamToString(stream);
-					const actualContent = await getOneFileContent(TEST_AUTH_TOKEN, data.id);
+					const actualContent = await getOneFileContent(data.id);
 					expect(actualContent).toBe(expectedContent);
 				}
 				delete data.file;

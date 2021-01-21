@@ -11,12 +11,12 @@ import { TEST_AUTH_TOKEN, TEST_HOST } from '../../tests/config';
 import { makeCreateOneLog } from './create-one-log';
 
 describe('createOneLog()', () => {
-	const createOneLog = makeCreateOneLog({ host: TEST_HOST, useEncryption: false });
+	const createOneLog = makeCreateOneLog({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
 
 	it(
 		'Should create a log',
 		integrationTest(async () => {
-			await createOneLog(TEST_AUTH_TOKEN, 'information', 'log test');
+			await createOneLog('information', 'log test');
 		}),
 	);
 });

@@ -21,13 +21,26 @@ describe('getScheduledScriptsAuthorizedToMe()', () => {
 	const getScheduledScriptsAuthorizedToMe = makeGetScheduledScriptsAuthorizedToMe({
 		host: TEST_HOST,
 		useEncryption: false,
+		authToken: TEST_AUTH_TOKEN,
 	});
-	const getAllScheduledScripts = makeGetAllScheduledScripts({ host: TEST_HOST, useEncryption: false });
-	const getOneUser = makeGetOneUser({ host: TEST_HOST, useEncryption: false });
-	const createOneUser = makeCreateOneUser({ host: TEST_HOST, useEncryption: false });
-	const login = makeLoginOneUser({ host: TEST_HOST, useEncryption: false });
-	const deleteAllScheduledScripts = makeDeleteAllScheduledScripts({ host: TEST_HOST, useEncryption: false });
-	const createManyScheduledScripts = makeCreateManyScheduledScripts({ host: TEST_HOST, useEncryption: false });
+	const getAllScheduledScripts = makeGetAllScheduledScripts({
+		host: TEST_HOST,
+		useEncryption: false,
+		authToken: TEST_AUTH_TOKEN,
+	});
+	const getOneUser = makeGetOneUser({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
+	const createOneUser = makeCreateOneUser({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
+	const login = makeLoginOneUser({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
+	const deleteAllScheduledScripts = makeDeleteAllScheduledScripts({
+		host: TEST_HOST,
+		useEncryption: false,
+		authToken: TEST_AUTH_TOKEN,
+	});
+	const createManyScheduledScripts = makeCreateManyScheduledScripts({
+		host: TEST_HOST,
+		useEncryption: false,
+		authToken: TEST_AUTH_TOKEN,
+	});
 
 	let adminScheduledScripts: Array<ScheduledScript>;
 
@@ -36,10 +49,10 @@ describe('getScheduledScriptsAuthorizedToMe()', () => {
 	let analystScheduledScripts: Array<ScheduledScript>;
 
 	beforeEach(async () => {
-		await deleteAllScheduledScripts(TEST_AUTH_TOKEN);
+		await deleteAllScheduledScripts();
 
 		// Create two scheduled scripts as admin
-		adminScheduledScripts = await createManyScheduledScripts(TEST_AUTH_TOKEN, [
+		adminScheduledScripts = await createManyScheduledScripts([
 			{
 				name: 'Script1',
 				description: 'D1',
@@ -63,8 +76,8 @@ describe('getScheduledScriptsAuthorizedToMe()', () => {
 			role: 'analyst',
 			user: userSeed,
 		};
-		const userID = await createOneUser(TEST_AUTH_TOKEN, data);
-		analyst = await getOneUser(TEST_AUTH_TOKEN, userID);
+		const userID = await createOneUser(data);
+		analyst = await getOneUser(userID);
 		analystAuth = await login(analyst.username, data.password);
 
 		// Create three scheduled scripts as analyst
@@ -93,7 +106,7 @@ describe('getScheduledScriptsAuthorizedToMe()', () => {
 	it(
 		'Returns all my scheduled scripts',
 		integrationTest(async () => {
-			const actualAdminScheduledScripts = await getScheduledScriptsAuthorizedToMe(TEST_AUTH_TOKEN);
+			const actualAdminScheduledScripts = await getScheduledScriptsAuthorizedToMe();
 			expect(sortBy(actualAdminScheduledScripts, s => s.id)).toEqual(sortBy(adminScheduledScripts, s => s.id));
 			for (const scheduledScript of actualAdminScheduledScripts) expect(isScheduledScript(scheduledScript)).toBeTrue();
 
@@ -102,7 +115,7 @@ describe('getScheduledScriptsAuthorizedToMe()', () => {
 			for (const scheduledScript of actualAnalystScheduledScripts)
 				expect(isScheduledScript(scheduledScript)).toBeTrue();
 
-			const allScheduledScripts = await getAllScheduledScripts(TEST_AUTH_TOKEN);
+			const allScheduledScripts = await getAllScheduledScripts();
 			expect(sortBy(allScheduledScripts, s => s.id)).toEqual(
 				sortBy([...analystScheduledScripts, ...adminScheduledScripts], s => s.id),
 			);

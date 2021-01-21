@@ -15,9 +15,9 @@ import { makeDeleteOneGroup } from './delete-one-group';
 import { makeGetOneGroup } from './get-one-group';
 
 describe('getOneGroup()', () => {
-	const getOneGroup = makeGetOneGroup({ host: TEST_HOST, useEncryption: false });
-	const createOneGroup = makeCreateOneGroup({ host: TEST_HOST, useEncryption: false });
-	const deleteOneGroup = makeDeleteOneGroup({ host: TEST_HOST, useEncryption: false });
+	const getOneGroup = makeGetOneGroup({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
+	const createOneGroup = makeCreateOneGroup({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
+	const deleteOneGroup = makeDeleteOneGroup({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
 
 	let groupID: NumericID;
 
@@ -26,17 +26,17 @@ describe('getOneGroup()', () => {
 			name: 'Name test',
 			description: 'Description test',
 		};
-		groupID = await createOneGroup(TEST_AUTH_TOKEN, data);
+		groupID = await createOneGroup(data);
 	});
 
 	afterEach(async () => {
-		await deleteOneGroup(TEST_AUTH_TOKEN, groupID);
+		await deleteOneGroup(groupID);
 	});
 
 	it(
 		'Should return a group',
 		integrationTest(async () => {
-			const group = await getOneGroup(TEST_AUTH_TOKEN, groupID);
+			const group = await getOneGroup(groupID);
 			expect(isGroup(group)).toBeTrue();
 		}),
 	);

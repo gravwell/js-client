@@ -15,18 +15,30 @@ import { makeGetAllSavedQueries } from './get-all-saved-queries';
 import { makeGetOneSavedQuery } from './get-one-saved-query';
 
 describe('getOneSavedQuery()', () => {
-	const getOneSavedQuery = makeGetOneSavedQuery({ host: TEST_HOST, useEncryption: false });
-	const createOneSavedQuery = makeCreateOneSavedQuery({ host: TEST_HOST, useEncryption: false });
-	const getAllSavedQueries = makeGetAllSavedQueries({ host: TEST_HOST, useEncryption: false });
-	const deleteOneSavedQuery = makeDeleteOneSavedQuery({ host: TEST_HOST, useEncryption: false });
+	const getOneSavedQuery = makeGetOneSavedQuery({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
+	const createOneSavedQuery = makeCreateOneSavedQuery({
+		host: TEST_HOST,
+		useEncryption: false,
+		authToken: TEST_AUTH_TOKEN,
+	});
+	const getAllSavedQueries = makeGetAllSavedQueries({
+		host: TEST_HOST,
+		useEncryption: false,
+		authToken: TEST_AUTH_TOKEN,
+	});
+	const deleteOneSavedQuery = makeDeleteOneSavedQuery({
+		host: TEST_HOST,
+		useEncryption: false,
+		authToken: TEST_AUTH_TOKEN,
+	});
 
 	let createdSavedQuery: SavedQuery;
 
 	beforeEach(async () => {
 		// Delete all saved queries
-		const currentSavedQueries = await getAllSavedQueries(TEST_AUTH_TOKEN);
+		const currentSavedQueries = await getAllSavedQueries();
 		const currentSavedQueryIDs = currentSavedQueries.map(m => m.id);
-		const deletePromises = currentSavedQueryIDs.map(savedQueryID => deleteOneSavedQuery(TEST_AUTH_TOKEN, savedQueryID));
+		const deletePromises = currentSavedQueryIDs.map(savedQueryID => deleteOneSavedQuery(savedQueryID));
 		await Promise.all(deletePromises);
 
 		// Create a saved query
@@ -34,13 +46,13 @@ describe('getOneSavedQuery()', () => {
 			name: 'Q1',
 			query: 'tag=netflow',
 		};
-		createdSavedQuery = await createOneSavedQuery(TEST_AUTH_TOKEN, data);
+		createdSavedQuery = await createOneSavedQuery(data);
 	});
 
 	it(
 		'Returns a saved query',
 		integrationTest(async () => {
-			const savedQuery = await getOneSavedQuery(TEST_AUTH_TOKEN, createdSavedQuery.id);
+			const savedQuery = await getOneSavedQuery(createdSavedQuery.id);
 			expect(isSavedQuery(savedQuery)).toBeTrue();
 			expect(savedQuery).toEqual(createdSavedQuery);
 		}),
@@ -49,7 +61,7 @@ describe('getOneSavedQuery()', () => {
 	it(
 		"Returns an error if the saved query doesn't exist",
 		integrationTest(async () => {
-			await expectAsync(getOneSavedQuery(TEST_AUTH_TOKEN, 'non-existent')).toBeRejected();
+			await expectAsync(getOneSavedQuery('non-existent')).toBeRejected();
 		}),
 	);
 });

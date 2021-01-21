@@ -12,12 +12,12 @@ import { TEST_AUTH_TOKEN, TEST_HOST } from '../../tests/config';
 import { makeGetAllLocalKits } from './get-all-local-kits';
 
 describe('getAllLocalKits()', () => {
-	const getAllLocalKits = makeGetAllLocalKits({ host: TEST_HOST, useEncryption: false });
+	const getAllLocalKits = makeGetAllLocalKits({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
 
 	it(
 		'Should return all kits in the system',
 		integrationTest(async () => {
-			const kits = await getAllLocalKits(TEST_AUTH_TOKEN);
+			const kits = await getAllLocalKits();
 			expect(kits.every(isLocalKit)).toBeTrue();
 		}),
 	);

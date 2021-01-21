@@ -21,13 +21,26 @@ describe('getScheduledQueriesAuthorizedToMe()', () => {
 	const getScheduledQueriesAuthorizedToMe = makeGetScheduledQueriesAuthorizedToMe({
 		host: TEST_HOST,
 		useEncryption: false,
+		authToken: TEST_AUTH_TOKEN,
 	});
-	const getAllScheduledQueries = makeGetAllScheduledQueries({ host: TEST_HOST, useEncryption: false });
-	const getOneUser = makeGetOneUser({ host: TEST_HOST, useEncryption: false });
-	const createOneUser = makeCreateOneUser({ host: TEST_HOST, useEncryption: false });
-	const login = makeLoginOneUser({ host: TEST_HOST, useEncryption: false });
-	const deleteAllScheduledQueries = makeDeleteAllScheduledQueries({ host: TEST_HOST, useEncryption: false });
-	const createManyScheduledQueries = makeCreateManyScheduledQueries({ host: TEST_HOST, useEncryption: false });
+	const getAllScheduledQueries = makeGetAllScheduledQueries({
+		host: TEST_HOST,
+		useEncryption: false,
+		authToken: TEST_AUTH_TOKEN,
+	});
+	const getOneUser = makeGetOneUser({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
+	const createOneUser = makeCreateOneUser({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
+	const login = makeLoginOneUser({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
+	const deleteAllScheduledQueries = makeDeleteAllScheduledQueries({
+		host: TEST_HOST,
+		useEncryption: false,
+		authToken: TEST_AUTH_TOKEN,
+	});
+	const createManyScheduledQueries = makeCreateManyScheduledQueries({
+		host: TEST_HOST,
+		useEncryption: false,
+		authToken: TEST_AUTH_TOKEN,
+	});
 
 	let adminScheduledQueries: Array<ScheduledQuery>;
 
@@ -36,10 +49,10 @@ describe('getScheduledQueriesAuthorizedToMe()', () => {
 	let analystScheduledQueries: Array<ScheduledQuery>;
 
 	beforeEach(async () => {
-		await deleteAllScheduledQueries(TEST_AUTH_TOKEN);
+		await deleteAllScheduledQueries();
 
 		// Create two scheduled queries as admin
-		adminScheduledQueries = await createManyScheduledQueries(TEST_AUTH_TOKEN, [
+		adminScheduledQueries = await createManyScheduledQueries([
 			{
 				name: 'Q1',
 				description: 'D1',
@@ -65,8 +78,8 @@ describe('getScheduledQueriesAuthorizedToMe()', () => {
 			role: 'analyst',
 			user: userSeed,
 		};
-		const userID = await createOneUser(TEST_AUTH_TOKEN, data);
-		analyst = await getOneUser(TEST_AUTH_TOKEN, userID);
+		const userID = await createOneUser(data);
+		analyst = await getOneUser(userID);
 		analystAuth = await login(analyst.username, data.password);
 
 		// Create three scheduled queries as analyst
@@ -98,7 +111,7 @@ describe('getScheduledQueriesAuthorizedToMe()', () => {
 	it(
 		'Returns all my scheduled queries',
 		integrationTest(async () => {
-			const actualAdminScheduledQueries = await getScheduledQueriesAuthorizedToMe(TEST_AUTH_TOKEN);
+			const actualAdminScheduledQueries = await getScheduledQueriesAuthorizedToMe();
 			expect(sortBy(actualAdminScheduledQueries, s => s.id)).toEqual(sortBy(adminScheduledQueries, s => s.id));
 			for (const scheduledQuery of actualAdminScheduledQueries) expect(isScheduledQuery(scheduledQuery)).toBeTrue();
 
@@ -106,7 +119,7 @@ describe('getScheduledQueriesAuthorizedToMe()', () => {
 			expect(sortBy(actualAnalystScheduledQueries, s => s.id)).toEqual(sortBy(analystScheduledQueries, s => s.id));
 			for (const scheduledQuery of actualAnalystScheduledQueries) expect(isScheduledQuery(scheduledQuery)).toBeTrue();
 
-			const allScheduledQueries = await getAllScheduledQueries(TEST_AUTH_TOKEN);
+			const allScheduledQueries = await getAllScheduledQueries();
 			expect(sortBy(allScheduledQueries, s => s.id)).toEqual(
 				sortBy([...analystScheduledQueries, ...adminScheduledQueries], s => s.id),
 			);

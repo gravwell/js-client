@@ -16,18 +16,18 @@ import { makeGetAllMacros } from './get-all-macros';
 import { makeUpdateOneMacro } from './update-one-macro';
 
 describe('updateOneMacro()', () => {
-	const createOneMacro = makeCreateOneMacro({ host: TEST_HOST, useEncryption: false });
-	const updateOneMacro = makeUpdateOneMacro({ host: TEST_HOST, useEncryption: false });
-	const deleteOneMacro = makeDeleteOneMacro({ host: TEST_HOST, useEncryption: false });
-	const getAllMacros = makeGetAllMacros({ host: TEST_HOST, useEncryption: false });
+	const createOneMacro = makeCreateOneMacro({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
+	const updateOneMacro = makeUpdateOneMacro({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
+	const deleteOneMacro = makeDeleteOneMacro({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
+	const getAllMacros = makeGetAllMacros({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
 
 	let createdMacro: Macro;
 
 	beforeEach(async () => {
 		// Delete all macros
-		const currentMacros = await getAllMacros(TEST_AUTH_TOKEN);
+		const currentMacros = await getAllMacros();
 		const currentMacroIDs = currentMacros.map(m => m.id);
-		const deletePromises = currentMacroIDs.map(macroID => deleteOneMacro(TEST_AUTH_TOKEN, macroID));
+		const deletePromises = currentMacroIDs.map(macroID => deleteOneMacro(macroID));
 		await Promise.all(deletePromises);
 
 		// Create one macro
@@ -35,7 +35,7 @@ describe('updateOneMacro()', () => {
 			name: 'CURRENT_NAME',
 			expansion: 'Current expansion',
 		};
-		createdMacro = await createOneMacro(TEST_AUTH_TOKEN, data);
+		createdMacro = await createOneMacro(data);
 	});
 
 	const updateTests: Array<Omit<UpdatableMacro, 'id'>> = [
@@ -61,7 +61,7 @@ describe('updateOneMacro()', () => {
 				expect(isMacro(current)).toBeTrue();
 
 				const data: UpdatableMacro = { ..._data, id: current.id };
-				const updated = await updateOneMacro(TEST_AUTH_TOKEN, data);
+				const updated = await updateOneMacro(data);
 
 				expect(isMacro(updated)).toBeTrue();
 				expect(updated).toEqual({ ...current, ...data, lastUpdateDate: updated.lastUpdateDate });

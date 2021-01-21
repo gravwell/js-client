@@ -15,16 +15,16 @@ import { makeGetAllMacros } from './get-all-macros';
 import { makeGetOneMacro } from './get-one-macro';
 
 describe('deleteOneMacro()', () => {
-	const createOneMacro = makeCreateOneMacro({ host: TEST_HOST, useEncryption: false });
-	const deleteOneMacro = makeDeleteOneMacro({ host: TEST_HOST, useEncryption: false });
-	const getAllMacros = makeGetAllMacros({ host: TEST_HOST, useEncryption: false });
-	const getOneMacro = makeGetOneMacro({ host: TEST_HOST, useEncryption: false });
+	const createOneMacro = makeCreateOneMacro({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
+	const deleteOneMacro = makeDeleteOneMacro({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
+	const getAllMacros = makeGetAllMacros({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
+	const getOneMacro = makeGetOneMacro({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
 
 	beforeEach(async () => {
 		// Delete all macros
-		const currentMacros = await getAllMacros(TEST_AUTH_TOKEN);
+		const currentMacros = await getAllMacros();
 		const currentMacroIDs = currentMacros.map(m => m.id);
-		const deletePromises = currentMacroIDs.map(macroID => deleteOneMacro(TEST_AUTH_TOKEN, macroID));
+		const deletePromises = currentMacroIDs.map(macroID => deleteOneMacro(macroID));
 		await Promise.all(deletePromises);
 
 		// Create two macros
@@ -32,22 +32,22 @@ describe('deleteOneMacro()', () => {
 			{ name: 'M1', expansion: 'abc' },
 			{ name: 'M2', expansion: 'def' },
 		];
-		const createPromises = creatableMacros.map(creatable => createOneMacro(TEST_AUTH_TOKEN, creatable));
+		const createPromises = creatableMacros.map(creatable => createOneMacro(creatable));
 		await Promise.all(createPromises);
 	});
 
 	it(
 		'Should delete a macro',
 		integrationTest(async () => {
-			const currentMacros = await getAllMacros(TEST_AUTH_TOKEN);
+			const currentMacros = await getAllMacros();
 			const currentMacroIDs = currentMacros.map(m => m.id);
 			expect(currentMacroIDs.length).toBe(2);
 
 			const deleteMacroID = currentMacroIDs[0];
-			await deleteOneMacro(TEST_AUTH_TOKEN, deleteMacroID);
-			await expectAsync(getOneMacro(TEST_AUTH_TOKEN, deleteMacroID)).toBeRejected();
+			await deleteOneMacro(deleteMacroID);
+			await expectAsync(getOneMacro(deleteMacroID)).toBeRejected();
 
-			const remainingMacros = await getAllMacros(TEST_AUTH_TOKEN);
+			const remainingMacros = await getAllMacros();
 			const remainingMacroIDs = remainingMacros.map(m => m.id);
 			expect(remainingMacroIDs).not.toContain(deleteMacroID);
 			expect(remainingMacroIDs.length).toBe(1);

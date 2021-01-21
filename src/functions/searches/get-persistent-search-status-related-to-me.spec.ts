@@ -15,12 +15,13 @@ describe('getPersistentSearchStatusRelatedToMe()', () => {
 	const getPersistentSearchStatusRelatedToMe = makeGetPersistentSearchStatusRelatedToMe({
 		host: TEST_HOST,
 		useEncryption: false,
+		authToken: TEST_AUTH_TOKEN,
 	});
 
 	it(
 		'Should return all persistent searches related to me',
 		integrationTest(async () => {
-			const searches = await getPersistentSearchStatusRelatedToMe(TEST_AUTH_TOKEN);
+			const searches = await getPersistentSearchStatusRelatedToMe();
 			expect(searches.every(isSearch2)).toBeTrue();
 		}),
 	);

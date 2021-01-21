@@ -12,7 +12,11 @@ import { TEST_AUTH_TOKEN, TEST_HOST } from '../../tests/config';
 import { makeIsValidAutoExtractorSyntax } from './is-valid-auto-extractor-syntax';
 
 describe('isValidAutoExtractorSyntax()', () => {
-	const isValidAutoExtractorSyntax = makeIsValidAutoExtractorSyntax({ host: TEST_HOST, useEncryption: false });
+	const isValidAutoExtractorSyntax = makeIsValidAutoExtractorSyntax({
+		host: TEST_HOST,
+		useEncryption: false,
+		authToken: TEST_AUTH_TOKEN,
+	});
 
 	it(
 		'Should validate an auto extractor syntax',
@@ -32,7 +36,7 @@ describe('isValidAutoExtractorSyntax()', () => {
 				arguments: '1 2 3',
 			};
 
-			const validation = await isValidAutoExtractorSyntax(TEST_AUTH_TOKEN, data);
+			const validation = await isValidAutoExtractorSyntax(data);
 			expect(validation).not.toBeUndefined();
 		}),
 	);

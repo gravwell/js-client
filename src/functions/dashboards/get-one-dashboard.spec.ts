@@ -15,18 +15,26 @@ import { makeGetAllDashboards } from './get-all-dashboards';
 import { makeGetOneDashboard } from './get-one-dashboard';
 
 describe('getOneDashboard()', () => {
-	const getOneDashboard = makeGetOneDashboard({ host: TEST_HOST, useEncryption: false });
-	const createOneDashboard = makeCreateOneDashboard({ host: TEST_HOST, useEncryption: false });
-	const getAllDashboards = makeGetAllDashboards({ host: TEST_HOST, useEncryption: false });
-	const deleteOneDashboard = makeDeleteOneDashboard({ host: TEST_HOST, useEncryption: false });
+	const getOneDashboard = makeGetOneDashboard({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
+	const createOneDashboard = makeCreateOneDashboard({
+		host: TEST_HOST,
+		useEncryption: false,
+		authToken: TEST_AUTH_TOKEN,
+	});
+	const getAllDashboards = makeGetAllDashboards({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
+	const deleteOneDashboard = makeDeleteOneDashboard({
+		host: TEST_HOST,
+		useEncryption: false,
+		authToken: TEST_AUTH_TOKEN,
+	});
 
 	let createdDashboard: Dashboard;
 
 	beforeEach(async () => {
 		// Delete all dashboards
-		const currentDashboards = await getAllDashboards(TEST_AUTH_TOKEN);
+		const currentDashboards = await getAllDashboards();
 		const currentDashboardIDs = currentDashboards.map(m => m.id);
-		const deletePromises = currentDashboardIDs.map(dashboardID => deleteOneDashboard(TEST_AUTH_TOKEN, dashboardID));
+		const deletePromises = currentDashboardIDs.map(dashboardID => deleteOneDashboard(dashboardID));
 		await Promise.all(deletePromises);
 
 		// Create on dashboard
@@ -36,13 +44,13 @@ describe('getOneDashboard()', () => {
 			tiles: [],
 			timeframe: { durationString: 'PT1H', end: null, start: null, timeframe: 'PT1H' },
 		};
-		createdDashboard = await createOneDashboard(TEST_AUTH_TOKEN, data);
+		createdDashboard = await createOneDashboard(data);
 	});
 
 	it(
 		'Returns a dashboard',
 		integrationTest(async () => {
-			const dashboard = await getOneDashboard(TEST_AUTH_TOKEN, createdDashboard.id);
+			const dashboard = await getOneDashboard(createdDashboard.id);
 			expect(isDashboard(dashboard)).toBeTrue();
 			expect(dashboard).toEqual(createdDashboard);
 		}),
@@ -51,7 +59,7 @@ describe('getOneDashboard()', () => {
 	it(
 		"Returns an error if the dashboard doesn't exist",
 		integrationTest(async () => {
-			await expectAsync(getOneDashboard(TEST_AUTH_TOKEN, 'non-existent')).toBeRejected();
+			await expectAsync(getOneDashboard('non-existent')).toBeRejected();
 		}),
 	);
 });

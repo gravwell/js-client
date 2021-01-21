@@ -14,17 +14,29 @@ import { makeDeleteAllScheduledQueries } from './delete-all-scheduled-queries';
 import { makeGetOneScheduledQuery } from './get-one-scheduled-query';
 
 describe('getOneScheduledQuery()', () => {
-	const getOneScheduledQuery = makeGetOneScheduledQuery({ host: TEST_HOST, useEncryption: false });
-	const createOneScheduledQuery = makeCreateOneScheduledQuery({ host: TEST_HOST, useEncryption: false });
-	const deleteAllScheduledQueries = makeDeleteAllScheduledQueries({ host: TEST_HOST, useEncryption: false });
+	const getOneScheduledQuery = makeGetOneScheduledQuery({
+		host: TEST_HOST,
+		useEncryption: false,
+		authToken: TEST_AUTH_TOKEN,
+	});
+	const createOneScheduledQuery = makeCreateOneScheduledQuery({
+		host: TEST_HOST,
+		useEncryption: false,
+		authToken: TEST_AUTH_TOKEN,
+	});
+	const deleteAllScheduledQueries = makeDeleteAllScheduledQueries({
+		host: TEST_HOST,
+		useEncryption: false,
+		authToken: TEST_AUTH_TOKEN,
+	});
 
 	let createdScheduledQuery: ScheduledQuery;
 
 	beforeEach(async () => {
-		await deleteAllScheduledQueries(TEST_AUTH_TOKEN);
+		await deleteAllScheduledQueries();
 
 		// Create a scheduled query
-		createdScheduledQuery = await createOneScheduledQuery(TEST_AUTH_TOKEN, {
+		createdScheduledQuery = await createOneScheduledQuery({
 			name: 'Q1',
 			description: 'D1',
 			schedule: '0 1 * * *',
@@ -36,7 +48,7 @@ describe('getOneScheduledQuery()', () => {
 	it(
 		'Returns a scheduled query',
 		integrationTest(async () => {
-			const scheduledQuery = await getOneScheduledQuery(TEST_AUTH_TOKEN, createdScheduledQuery.id);
+			const scheduledQuery = await getOneScheduledQuery(createdScheduledQuery.id);
 			expect(isScheduledQuery(scheduledQuery)).toBeTrue();
 			expect(scheduledQuery).toEqual(createdScheduledQuery);
 		}),
@@ -45,7 +57,7 @@ describe('getOneScheduledQuery()', () => {
 	it(
 		"Returns an error if the scheduled query doesn't exist",
 		integrationTest(async () => {
-			await expectAsync(getOneScheduledQuery(TEST_AUTH_TOKEN, 'non-existent')).toBeRejected();
+			await expectAsync(getOneScheduledQuery('non-existent')).toBeRejected();
 		}),
 	);
 });

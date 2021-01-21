@@ -11,12 +11,16 @@ import { TEST_AUTH_TOKEN, TEST_HOST } from '../../tests/config';
 import { makeIngestJSONEntries } from './ingest-json-entries';
 
 describe('ingestJSONEntries()', () => {
-	const ingestJSONEntries = makeIngestJSONEntries({ host: TEST_HOST, useEncryption: false });
+	const ingestJSONEntries = makeIngestJSONEntries({
+		host: TEST_HOST,
+		useEncryption: false,
+		authToken: TEST_AUTH_TOKEN,
+	});
 
 	it(
 		'Should ingest the JSON entries',
 		integrationTest(async () => {
-			const entriesIngestedCount = await ingestJSONEntries(TEST_AUTH_TOKEN, [
+			const entriesIngestedCount = await ingestJSONEntries([
 				{ tag: 'custom-test', data: 'Text with 👻 emojis' },
 				{ tag: 'custom-test', data: 'This is utf8 赤ちゃん' },
 			]);

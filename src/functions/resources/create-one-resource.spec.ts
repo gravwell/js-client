@@ -14,9 +14,17 @@ import { makeDeleteOneResource } from './delete-one-resource';
 import { makeGetOneResource } from './get-one-resource';
 
 describe('createOneResource()', () => {
-	const createOneResource = makeCreateOneResource({ host: TEST_HOST, useEncryption: false });
-	const getOneResource = makeGetOneResource({ host: TEST_HOST, useEncryption: false });
-	const deleteOneResource = makeDeleteOneResource({ host: TEST_HOST, useEncryption: false });
+	const createOneResource = makeCreateOneResource({
+		host: TEST_HOST,
+		useEncryption: false,
+		authToken: TEST_AUTH_TOKEN,
+	});
+	const getOneResource = makeGetOneResource({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
+	const deleteOneResource = makeDeleteOneResource({
+		host: TEST_HOST,
+		useEncryption: false,
+		authToken: TEST_AUTH_TOKEN,
+	});
 
 	it(
 		'Should create an resource and return it',
@@ -26,12 +34,12 @@ describe('createOneResource()', () => {
 				description: 'Resource description',
 			};
 
-			const resource = await createOneResource(TEST_AUTH_TOKEN, data);
+			const resource = await createOneResource(data);
 			expect(isResource(resource)).toBeTrue();
-			const _resource = await getOneResource(TEST_AUTH_TOKEN, resource.id);
+			const _resource = await getOneResource(resource.id);
 			expect(isResource(_resource)).toBeTrue();
 
-			await deleteOneResource(TEST_AUTH_TOKEN, resource.id);
+			await deleteOneResource(resource.id);
 		}),
 	);
 });

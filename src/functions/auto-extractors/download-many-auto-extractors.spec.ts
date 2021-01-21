@@ -16,10 +16,26 @@ import { makeDownloadManyAutoExtractors } from './download-many-auto-extractors'
 import { makeGetAllAutoExtractors } from './get-all-auto-extractors';
 
 describe('downloadManyAutoExtractors()', () => {
-	const createOneAutoExtractor = makeCreateOneAutoExtractor({ host: TEST_HOST, useEncryption: false });
-	const deleteOneAutoExtractor = makeDeleteOneAutoExtractor({ host: TEST_HOST, useEncryption: false });
-	const getAllAutoExtractors = makeGetAllAutoExtractors({ host: TEST_HOST, useEncryption: false });
-	const downloadManyAutoExtractors = makeDownloadManyAutoExtractors({ host: TEST_HOST, useEncryption: false });
+	const createOneAutoExtractor = makeCreateOneAutoExtractor({
+		host: TEST_HOST,
+		useEncryption: false,
+		authToken: TEST_AUTH_TOKEN,
+	});
+	const deleteOneAutoExtractor = makeDeleteOneAutoExtractor({
+		host: TEST_HOST,
+		useEncryption: false,
+		authToken: TEST_AUTH_TOKEN,
+	});
+	const getAllAutoExtractors = makeGetAllAutoExtractors({
+		host: TEST_HOST,
+		useEncryption: false,
+		authToken: TEST_AUTH_TOKEN,
+	});
+	const downloadManyAutoExtractors = makeDownloadManyAutoExtractors({
+		host: TEST_HOST,
+		useEncryption: false,
+		authToken: TEST_AUTH_TOKEN,
+	});
 
 	let createdAutoExtractors: Array<AutoExtractor>;
 
@@ -27,11 +43,9 @@ describe('downloadManyAutoExtractors()', () => {
 		jasmine.addMatchers(myCustomMatchers);
 
 		// Delete all auto extractors
-		const currentAutoExtractors = await getAllAutoExtractors(TEST_AUTH_TOKEN);
+		const currentAutoExtractors = await getAllAutoExtractors();
 		const currentAutoExtractorIDs = currentAutoExtractors.map(m => m.id);
-		const deletePromises = currentAutoExtractorIDs.map(autoExtractorID =>
-			deleteOneAutoExtractor(TEST_AUTH_TOKEN, autoExtractorID),
-		);
+		const deletePromises = currentAutoExtractorIDs.map(autoExtractorID => deleteOneAutoExtractor(autoExtractorID));
 		await Promise.all(deletePromises);
 
 		// Create three auto extractors
@@ -61,7 +75,7 @@ describe('downloadManyAutoExtractors()', () => {
 				parameters: 'abc',
 			},
 		];
-		const createPromises = creatableAutoExtractors.map(creatable => createOneAutoExtractor(TEST_AUTH_TOKEN, creatable));
+		const createPromises = creatableAutoExtractors.map(creatable => createOneAutoExtractor(creatable));
 		createdAutoExtractors = await Promise.all(createPromises);
 	});
 
@@ -72,7 +86,7 @@ describe('downloadManyAutoExtractors()', () => {
 			const expectedAutoExtractors = sortByName(createdAutoExtractors.slice(0, 2));
 			const ids = expectedAutoExtractors.map(ae => ae.id);
 
-			const autoExtractorContents = await downloadManyAutoExtractors(TEST_AUTH_TOKEN, { ids });
+			const autoExtractorContents = await downloadManyAutoExtractors({ ids });
 			const parsedAutoExtractorContents = sortByName(parseAutoExtractorFile(autoExtractorContents));
 			expect(expectedAutoExtractors).toPartiallyEqual(parsedAutoExtractorContents);
 		}),

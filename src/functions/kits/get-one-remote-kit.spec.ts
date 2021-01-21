@@ -12,18 +12,18 @@ import { makeGetAllRemoteKits } from './get-all-remote-kits';
 import { makeGetOneRemoteKit } from './get-one-remote-kit';
 
 describe('getOneRemoteKit()', () => {
-	const getOneRemoteKit = makeGetOneRemoteKit({ host: TEST_HOST, useEncryption: false });
-	const getAllRemoteKits = makeGetAllRemoteKits({ host: TEST_HOST, useEncryption: false });
+	const getOneRemoteKit = makeGetOneRemoteKit({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
+	const getAllRemoteKits = makeGetAllRemoteKits({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
 
 	it(
 		'Returns a remote kit',
 		integrationTest(async () => {
-			const kits = (await getAllRemoteKits(TEST_AUTH_TOKEN)).slice(0, 6);
+			const kits = (await getAllRemoteKits()).slice(0, 6);
 			expect(kits.length).toBeGreaterThan(5);
 			for (const kit of kits) expect(isRemoteKit(kit)).toBeTrue();
 
 			const ps = kits.map(async kit => {
-				const _kit = await getOneRemoteKit(TEST_AUTH_TOKEN, kit.globalID);
+				const _kit = await getOneRemoteKit(kit.globalID);
 				expect(_kit).toEqual(kit);
 			});
 			await Promise.all(ps);
@@ -33,7 +33,7 @@ describe('getOneRemoteKit()', () => {
 	it(
 		"Returns an error if the remote kit doesn't exist",
 		integrationTest(async () => {
-			await expectAsync(getOneRemoteKit(TEST_AUTH_TOKEN, 'non-existent')).toBeRejected();
+			await expectAsync(getOneRemoteKit('non-existent')).toBeRejected();
 		}),
 	);
 });

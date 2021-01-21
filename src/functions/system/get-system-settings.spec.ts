@@ -12,12 +12,16 @@ import { TEST_AUTH_TOKEN, TEST_HOST } from '../../tests/config';
 import { makeGetSystemSettings } from './get-system-settings';
 
 describe('getSystemSettings()', () => {
-	const getSystemSettings = makeGetSystemSettings({ host: TEST_HOST, useEncryption: false });
+	const getSystemSettings = makeGetSystemSettings({
+		host: TEST_HOST,
+		useEncryption: false,
+		authToken: TEST_AUTH_TOKEN,
+	});
 
 	it(
 		'Should get the system settings',
 		integrationTest(async () => {
-			const settings = await getSystemSettings(TEST_AUTH_TOKEN);
+			const settings = await getSystemSettings();
 			expect(isSystemSettings(settings)).toBeTrue();
 		}),
 	);

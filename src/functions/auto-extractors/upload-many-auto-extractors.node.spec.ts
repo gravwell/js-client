@@ -16,30 +16,40 @@ import { makeGetAllAutoExtractors } from './get-all-auto-extractors';
 import { makeUploadManyAutoExtractors } from './upload-many-auto-extractors';
 
 describe('setOneAutoExtractorContent()', () => {
-	const deleteOneAutoExtractor = makeDeleteOneAutoExtractor({ host: TEST_HOST, useEncryption: false });
-	const uploadManyAutoExtractors = makeUploadManyAutoExtractors({ host: TEST_HOST, useEncryption: false });
-	const getAllAutoExtractors = makeGetAllAutoExtractors({ host: TEST_HOST, useEncryption: false });
+	const deleteOneAutoExtractor = makeDeleteOneAutoExtractor({
+		host: TEST_HOST,
+		useEncryption: false,
+		authToken: TEST_AUTH_TOKEN,
+	});
+	const uploadManyAutoExtractors = makeUploadManyAutoExtractors({
+		host: TEST_HOST,
+		useEncryption: false,
+		authToken: TEST_AUTH_TOKEN,
+	});
+	const getAllAutoExtractors = makeGetAllAutoExtractors({
+		host: TEST_HOST,
+		useEncryption: false,
+		authToken: TEST_AUTH_TOKEN,
+	});
 
 	beforeEach(async () => {
 		// Delete all autoExtractors
-		const currentAutoExtractors = await getAllAutoExtractors(TEST_AUTH_TOKEN);
+		const currentAutoExtractors = await getAllAutoExtractors();
 		const currentAutoExtractorIDs = currentAutoExtractors.map(m => m.id);
-		const deletePromises = currentAutoExtractorIDs.map(autoExtractorID =>
-			deleteOneAutoExtractor(TEST_AUTH_TOKEN, autoExtractorID),
-		);
+		const deletePromises = currentAutoExtractorIDs.map(autoExtractorID => deleteOneAutoExtractor(autoExtractorID));
 		await Promise.all(deletePromises);
 	});
 
 	it(
 		'Should upload an auto extractor file and create the auto extractors defined in the file',
 		integrationTest(async () => {
-			const autoExtractors1 = await getAllAutoExtractors(TEST_AUTH_TOKEN);
+			const autoExtractors1 = await getAllAutoExtractors();
 			expect(autoExtractors1.length).toBe(0);
 
 			const createFileStream = () => createReadStream(join(TEST_ASSETS_PATH!, 'auto-extractors.config'));
 			const fileStream = createFileStream();
 
-			const autoExtractors2 = await uploadManyAutoExtractors(TEST_AUTH_TOKEN, { file: fileStream });
+			const autoExtractors2 = await uploadManyAutoExtractors({ file: fileStream });
 			expect(autoExtractors2.length).toBe(2);
 			for (const ae of autoExtractors2) expect(isAutoExtractor(ae)).toBeTrue();
 		}),

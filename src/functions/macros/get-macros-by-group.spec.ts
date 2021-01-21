@@ -20,16 +20,20 @@ import { makeGetAllMacros } from './get-all-macros';
 import { makeGetMacrosByGroup } from './get-macros-by-group';
 
 describe('getMacrosByGroup()', () => {
-	const getAllMacros = makeGetAllMacros({ host: TEST_HOST, useEncryption: false });
-	const getOneUser = makeGetOneUser({ host: TEST_HOST, useEncryption: false });
-	const createOneUser = makeCreateOneUser({ host: TEST_HOST, useEncryption: false });
-	const login = makeLoginOneUser({ host: TEST_HOST, useEncryption: false });
-	const createOneMacro = makeCreateOneMacro({ host: TEST_HOST, useEncryption: false });
-	const deleteOneMacro = makeDeleteOneMacro({ host: TEST_HOST, useEncryption: false });
-	const getMacrosByGroup = makeGetMacrosByGroup({ host: TEST_HOST, useEncryption: false });
-	const createOneGroup = makeCreateOneGroup({ host: TEST_HOST, useEncryption: false });
-	const addOneUserToManyGroups = makeAddOneUserToManyGroups({ host: TEST_HOST, useEncryption: false });
-	const getMyUser = makeGetMyUser({ host: TEST_HOST, useEncryption: false });
+	const getAllMacros = makeGetAllMacros({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
+	const getOneUser = makeGetOneUser({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
+	const createOneUser = makeCreateOneUser({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
+	const login = makeLoginOneUser({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
+	const createOneMacro = makeCreateOneMacro({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
+	const deleteOneMacro = makeDeleteOneMacro({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
+	const getMacrosByGroup = makeGetMacrosByGroup({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
+	const createOneGroup = makeCreateOneGroup({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
+	const addOneUserToManyGroups = makeAddOneUserToManyGroups({
+		host: TEST_HOST,
+		useEncryption: false,
+		authToken: TEST_AUTH_TOKEN,
+	});
+	const getMyUser = makeGetMyUser({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
 
 	let admin: User;
 	const adminAuth = TEST_AUTH_TOKEN;
@@ -120,7 +124,7 @@ describe('getMacrosByGroup()', () => {
 		integrationTest(async () => {
 			const creatableGroup: CreatableGroup = { name: 'New' };
 			const groupID = await createOneGroup(adminAuth, creatableGroup);
-			const macros = await getMacrosByGroup(TEST_AUTH_TOKEN, groupID);
+			const macros = await getMacrosByGroup(groupID);
 			expect(macros.length).toBe(0);
 		}),
 	);

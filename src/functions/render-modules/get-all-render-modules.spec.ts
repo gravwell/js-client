@@ -15,12 +15,13 @@ describe('getAllRenderModules()', () => {
 	const getAllRenderModules = makeGetAllRenderModules({
 		host: TEST_HOST,
 		useEncryption: false,
+		authToken: TEST_AUTH_TOKEN,
 	});
 
 	it(
 		'Should return all render modules',
 		integrationTest(async () => {
-			const renderModules = await getAllRenderModules(TEST_AUTH_TOKEN);
+			const renderModules = await getAllRenderModules();
 			expect(renderModules.length).toBeGreaterThan(10);
 			expect(renderModules.every(isRenderModule)).toBeTrue();
 		}),

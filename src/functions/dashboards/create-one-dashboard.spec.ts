@@ -13,8 +13,12 @@ import { makeCreateOneGroup } from '../groups/create-one-group';
 import { makeCreateOneDashboard } from './create-one-dashboard';
 
 describe('createOneDashboard()', () => {
-	const createOneDashboard = makeCreateOneDashboard({ host: TEST_HOST, useEncryption: false });
-	const createOneGroup = makeCreateOneGroup({ host: TEST_HOST, useEncryption: false });
+	const createOneDashboard = makeCreateOneDashboard({
+		host: TEST_HOST,
+		useEncryption: false,
+		authToken: TEST_AUTH_TOKEN,
+	});
+	const createOneGroup = makeCreateOneGroup({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
 
 	// let groupIDs: Array<NumericID>;
 
@@ -25,7 +29,7 @@ describe('createOneDashboard()', () => {
 		await Promise.all(
 			Array.from({ length: 3 })
 				.map((_, i) => `G${i}`)
-				.map(name => createOneGroup(TEST_AUTH_TOKEN, { name })),
+				.map(name => createOneGroup({ name })),
 		);
 	});
 
@@ -56,7 +60,7 @@ describe('createOneDashboard()', () => {
 				timeframe: { durationString: 'PT1H', end: null, start: null, timeframe: 'PT1H' },
 			};
 
-			const dashboard = await createOneDashboard(TEST_AUTH_TOKEN, data);
+			const dashboard = await createOneDashboard(data);
 			expect(isDashboard(dashboard)).toBeTrue();
 			expect(dashboard).toPartiallyEqual(data);
 		}),

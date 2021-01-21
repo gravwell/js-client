@@ -21,13 +21,26 @@ describe('getAutoExtractorsAuthorizedToMe()', () => {
 	const getAutoExtractorsAuthorizedToMe = makeGetAutoExtractorsAuthorizedToMe({
 		host: TEST_HOST,
 		useEncryption: false,
+		authToken: TEST_AUTH_TOKEN,
 	});
-	const createOneAutoExtractor = makeCreateOneAutoExtractor({ host: TEST_HOST, useEncryption: false });
-	const deleteOneAutoExtractor = makeDeleteOneAutoExtractor({ host: TEST_HOST, useEncryption: false });
-	const getAllAutoExtractors = makeGetAllAutoExtractors({ host: TEST_HOST, useEncryption: false });
-	const getOneUser = makeGetOneUser({ host: TEST_HOST, useEncryption: false });
-	const createOneUser = makeCreateOneUser({ host: TEST_HOST, useEncryption: false });
-	const login = makeLoginOneUser({ host: TEST_HOST, useEncryption: false });
+	const createOneAutoExtractor = makeCreateOneAutoExtractor({
+		host: TEST_HOST,
+		useEncryption: false,
+		authToken: TEST_AUTH_TOKEN,
+	});
+	const deleteOneAutoExtractor = makeDeleteOneAutoExtractor({
+		host: TEST_HOST,
+		useEncryption: false,
+		authToken: TEST_AUTH_TOKEN,
+	});
+	const getAllAutoExtractors = makeGetAllAutoExtractors({
+		host: TEST_HOST,
+		useEncryption: false,
+		authToken: TEST_AUTH_TOKEN,
+	});
+	const getOneUser = makeGetOneUser({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
+	const createOneUser = makeCreateOneUser({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
+	const login = makeLoginOneUser({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
 
 	let adminAutoExtractors: Array<AutoExtractor>;
 
@@ -37,11 +50,9 @@ describe('getAutoExtractorsAuthorizedToMe()', () => {
 
 	beforeEach(async () => {
 		// Delete all auto extractors
-		const currentAutoExtractors = await getAllAutoExtractors(TEST_AUTH_TOKEN);
+		const currentAutoExtractors = await getAllAutoExtractors();
 		const currentAutoExtractorIDs = currentAutoExtractors.map(m => m.id);
-		const deletePromises = currentAutoExtractorIDs.map(autoExtractorID =>
-			deleteOneAutoExtractor(TEST_AUTH_TOKEN, autoExtractorID),
-		);
+		const deletePromises = currentAutoExtractorIDs.map(autoExtractorID => deleteOneAutoExtractor(autoExtractorID));
 		await Promise.all(deletePromises);
 
 		// Create two auto extractors as admin
@@ -63,7 +74,7 @@ describe('getAutoExtractorsAuthorizedToMe()', () => {
 				parameters: '1 2 3',
 			},
 		];
-		const createPromises = creatableAutoExtractors.map(creatable => createOneAutoExtractor(TEST_AUTH_TOKEN, creatable));
+		const createPromises = creatableAutoExtractors.map(creatable => createOneAutoExtractor(creatable));
 		adminAutoExtractors = await Promise.all(createPromises);
 
 		// Creates an analyst
@@ -75,8 +86,8 @@ describe('getAutoExtractorsAuthorizedToMe()', () => {
 			role: 'analyst',
 			user: userSeed,
 		};
-		const userID = await createOneUser(TEST_AUTH_TOKEN, data);
-		analyst = await getOneUser(TEST_AUTH_TOKEN, userID);
+		const userID = await createOneUser(data);
+		analyst = await getOneUser(userID);
 		analystAuth = await login(analyst.username, data.password);
 
 		// Create three autoExtractors as analyst
@@ -113,7 +124,7 @@ describe('getAutoExtractorsAuthorizedToMe()', () => {
 	it(
 		'Returns all my auto extractors',
 		integrationTest(async () => {
-			const actualAdminAutoExtractors = await getAutoExtractorsAuthorizedToMe(TEST_AUTH_TOKEN);
+			const actualAdminAutoExtractors = await getAutoExtractorsAuthorizedToMe();
 			expect(sortBy(actualAdminAutoExtractors, m => m.id)).toEqual(sortBy(adminAutoExtractors, m => m.id));
 			for (const autoExtractor of actualAdminAutoExtractors) expect(isAutoExtractor(autoExtractor)).toBeTrue();
 
@@ -121,7 +132,7 @@ describe('getAutoExtractorsAuthorizedToMe()', () => {
 			expect(sortBy(actualAnalystAutoExtractors, m => m.id)).toEqual(sortBy(analystAutoExtractors, m => m.id));
 			for (const autoExtractor of actualAnalystAutoExtractors) expect(isAutoExtractor(autoExtractor)).toBeTrue();
 
-			const allAutoExtractors = await getAllAutoExtractors(TEST_AUTH_TOKEN);
+			const allAutoExtractors = await getAllAutoExtractors();
 			expect(sortBy(allAutoExtractors, m => m.id)).toEqual(
 				sortBy([...analystAutoExtractors, ...adminAutoExtractors], m => m.id),
 			);

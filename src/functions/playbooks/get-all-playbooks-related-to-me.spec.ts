@@ -15,9 +15,21 @@ import { makeDeleteOnePlaybook } from './delete-one-playbook';
 import { makeGetAllPlaybooksRelatedToMe } from './get-all-playbooks-related-to-me';
 
 describe('getAllPlaybooksRelatedToMe()', () => {
-	const getAllPlaybooksRelatedToMe = makeGetAllPlaybooksRelatedToMe({ host: TEST_HOST, useEncryption: false });
-	const createOnePlaybook = makeCreateOnePlaybook({ host: TEST_HOST, useEncryption: false });
-	const deleteOnePlaybook = makeDeleteOnePlaybook({ host: TEST_HOST, useEncryption: false });
+	const getAllPlaybooksRelatedToMe = makeGetAllPlaybooksRelatedToMe({
+		host: TEST_HOST,
+		useEncryption: false,
+		authToken: TEST_AUTH_TOKEN,
+	});
+	const createOnePlaybook = makeCreateOnePlaybook({
+		host: TEST_HOST,
+		useEncryption: false,
+		authToken: TEST_AUTH_TOKEN,
+	});
+	const deleteOnePlaybook = makeDeleteOnePlaybook({
+		host: TEST_HOST,
+		useEncryption: false,
+		authToken: TEST_AUTH_TOKEN,
+	});
 
 	let createdPlaybooksUUIDs: Array<UUID> = [];
 
@@ -27,20 +39,20 @@ describe('getAllPlaybooksRelatedToMe()', () => {
 			name: 'Playbook test',
 			body: 'This is my playbook',
 		};
-		const createdPlaybooksUUIDsPs = Array.from({ length: 2 }).map(() => createOnePlaybook(TEST_AUTH_TOKEN, data));
+		const createdPlaybooksUUIDsPs = Array.from({ length: 2 }).map(() => createOnePlaybook(data));
 		createdPlaybooksUUIDs = await Promise.all(createdPlaybooksUUIDsPs);
 	});
 
 	afterEach(async () => {
 		// Delete the created playbooks
-		const deletePs = createdPlaybooksUUIDs.map(playbookUUID => deleteOnePlaybook(TEST_AUTH_TOKEN, playbookUUID));
+		const deletePs = createdPlaybooksUUIDs.map(playbookUUID => deleteOnePlaybook(playbookUUID));
 		await Promise.all(deletePs);
 	});
 
 	it(
 		'Should return playbooks',
 		integrationTest(async () => {
-			const playbooks = await getAllPlaybooksRelatedToMe(TEST_AUTH_TOKEN);
+			const playbooks = await getAllPlaybooksRelatedToMe();
 			const playbookUUIDs = playbooks.map(a => a.uuid);
 
 			expect(playbooks.map(p => ({ ...p, body: '' })).every(isPlaybook)).toBeTrue();

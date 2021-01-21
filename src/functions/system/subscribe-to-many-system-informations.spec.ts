@@ -16,6 +16,7 @@ describe('subscribeToManySystemInformations()', () => {
 	const subscribeToManySystemInformations = makeSubscribeToManySystemInformations({
 		host: TEST_HOST,
 		useEncryption: false,
+		authToken: TEST_AUTH_TOKEN,
 	});
 
 	it(
@@ -30,7 +31,7 @@ describe('subscribeToManySystemInformations()', () => {
 	it(
 		'Should subscribe to ping information',
 		integrationTest(async () => {
-			const pingSubscription = await subscribeToManySystemInformations(TEST_AUTH_TOKEN, ['ping']);
+			const pingSubscription = await subscribeToManySystemInformations(['ping']);
 			await wait(1500);
 			pingSubscription.close();
 

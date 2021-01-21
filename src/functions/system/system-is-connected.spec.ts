@@ -11,12 +11,16 @@ import { TEST_AUTH_TOKEN, TEST_HOST } from '../../tests/config';
 import { makeSystemIsConnected } from './system-is-connected';
 
 describe('systemIsConnected()', () => {
-	const systemIsConnected = makeSystemIsConnected({ host: TEST_HOST, useEncryption: false });
+	const systemIsConnected = makeSystemIsConnected({
+		host: TEST_HOST,
+		useEncryption: false,
+		authToken: TEST_AUTH_TOKEN,
+	});
 
 	it(
 		'Should tell if the system is connect',
 		integrationTest(async () => {
-			const isConnected = await systemIsConnected(TEST_AUTH_TOKEN);
+			const isConnected = await systemIsConnected();
 			expect(isConnected).toBeTrue();
 		}),
 	);

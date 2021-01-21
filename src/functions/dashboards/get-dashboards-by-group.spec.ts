@@ -20,16 +20,32 @@ import { makeGetAllDashboards } from './get-all-dashboards';
 import { makeGetDashboardsByGroup } from './get-dashboards-by-group';
 
 xdescribe('getDashboardsByGroup()', () => {
-	const getAllDashboards = makeGetAllDashboards({ host: TEST_HOST, useEncryption: false });
-	const getOneUser = makeGetOneUser({ host: TEST_HOST, useEncryption: false });
-	const createOneUser = makeCreateOneUser({ host: TEST_HOST, useEncryption: false });
-	const login = makeLoginOneUser({ host: TEST_HOST, useEncryption: false });
-	const createOneDashboard = makeCreateOneDashboard({ host: TEST_HOST, useEncryption: false });
-	const deleteOneDashboard = makeDeleteOneDashboard({ host: TEST_HOST, useEncryption: false });
-	const getDashboardsByGroup = makeGetDashboardsByGroup({ host: TEST_HOST, useEncryption: false });
-	const createOneGroup = makeCreateOneGroup({ host: TEST_HOST, useEncryption: false });
-	const addOneUserToManyGroups = makeAddOneUserToManyGroups({ host: TEST_HOST, useEncryption: false });
-	const getMyUser = makeGetMyUser({ host: TEST_HOST, useEncryption: false });
+	const getAllDashboards = makeGetAllDashboards({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
+	const getOneUser = makeGetOneUser({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
+	const createOneUser = makeCreateOneUser({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
+	const login = makeLoginOneUser({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
+	const createOneDashboard = makeCreateOneDashboard({
+		host: TEST_HOST,
+		useEncryption: false,
+		authToken: TEST_AUTH_TOKEN,
+	});
+	const deleteOneDashboard = makeDeleteOneDashboard({
+		host: TEST_HOST,
+		useEncryption: false,
+		authToken: TEST_AUTH_TOKEN,
+	});
+	const getDashboardsByGroup = makeGetDashboardsByGroup({
+		host: TEST_HOST,
+		useEncryption: false,
+		authToken: TEST_AUTH_TOKEN,
+	});
+	const createOneGroup = makeCreateOneGroup({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
+	const addOneUserToManyGroups = makeAddOneUserToManyGroups({
+		host: TEST_HOST,
+		useEncryption: false,
+		authToken: TEST_AUTH_TOKEN,
+	});
+	const getMyUser = makeGetMyUser({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
 
 	let admin: User;
 	const adminAuth = TEST_AUTH_TOKEN;
@@ -150,7 +166,7 @@ xdescribe('getDashboardsByGroup()', () => {
 		integrationTest(async () => {
 			const creatableGroup: CreatableGroup = { name: 'New' };
 			const groupID = await createOneGroup(adminAuth, creatableGroup);
-			const dashboards = await getDashboardsByGroup(TEST_AUTH_TOKEN, groupID);
+			const dashboards = await getDashboardsByGroup(groupID);
 			expect(dashboards.length).toBe(0);
 		}),
 	);

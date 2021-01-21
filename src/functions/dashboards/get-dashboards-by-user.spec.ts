@@ -18,22 +18,34 @@ import { makeGetAllDashboards } from './get-all-dashboards';
 import { makeGetDashboardsByUser } from './get-dashboards-by-user';
 
 describe('getDashboardsByUser()', () => {
-	const getAllDashboards = makeGetAllDashboards({ host: TEST_HOST, useEncryption: false });
-	const getDashboardsByUser = makeGetDashboardsByUser({ host: TEST_HOST, useEncryption: false });
-	const getOneUser = makeGetOneUser({ host: TEST_HOST, useEncryption: false });
-	const createOneUser = makeCreateOneUser({ host: TEST_HOST, useEncryption: false });
-	const login = makeLoginOneUser({ host: TEST_HOST, useEncryption: false });
-	const createOneDashboard = makeCreateOneDashboard({ host: TEST_HOST, useEncryption: false });
-	const deleteOneDashboard = makeDeleteOneDashboard({ host: TEST_HOST, useEncryption: false });
+	const getAllDashboards = makeGetAllDashboards({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
+	const getDashboardsByUser = makeGetDashboardsByUser({
+		host: TEST_HOST,
+		useEncryption: false,
+		authToken: TEST_AUTH_TOKEN,
+	});
+	const getOneUser = makeGetOneUser({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
+	const createOneUser = makeCreateOneUser({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
+	const login = makeLoginOneUser({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
+	const createOneDashboard = makeCreateOneDashboard({
+		host: TEST_HOST,
+		useEncryption: false,
+		authToken: TEST_AUTH_TOKEN,
+	});
+	const deleteOneDashboard = makeDeleteOneDashboard({
+		host: TEST_HOST,
+		useEncryption: false,
+		authToken: TEST_AUTH_TOKEN,
+	});
 
 	let user: User;
 	let userAuth: string;
 
 	beforeEach(async () => {
 		// Delete all dashboards
-		const currentDashboards = await getAllDashboards(TEST_AUTH_TOKEN);
+		const currentDashboards = await getAllDashboards();
 		const currentDashboardIDs = currentDashboards.map(m => m.id);
-		const deletePromises = currentDashboardIDs.map(dashboardID => deleteOneDashboard(TEST_AUTH_TOKEN, dashboardID));
+		const deletePromises = currentDashboardIDs.map(dashboardID => deleteOneDashboard(dashboardID));
 		await Promise.all(deletePromises);
 
 		// Create two dashboards as admin
@@ -51,7 +63,7 @@ describe('getDashboardsByUser()', () => {
 				timeframe: { durationString: 'PT1H', end: null, start: null, timeframe: 'PT1H' },
 			},
 		];
-		const createPromises1 = creatableDashboards1.map(creatable => createOneDashboard(TEST_AUTH_TOKEN, creatable));
+		const createPromises1 = creatableDashboards1.map(creatable => createOneDashboard(creatable));
 		await Promise.all(createPromises1);
 
 		// Creates a user
@@ -63,8 +75,8 @@ describe('getDashboardsByUser()', () => {
 			role: 'analyst',
 			user: userSeed,
 		};
-		const userID = await createOneUser(TEST_AUTH_TOKEN, data);
-		user = await getOneUser(TEST_AUTH_TOKEN, userID);
+		const userID = await createOneUser(data);
+		user = await getOneUser(userID);
 		userAuth = await login(user.username, data.password);
 
 		// Create three dashboards as analyst
@@ -95,14 +107,14 @@ describe('getDashboardsByUser()', () => {
 	it(
 		'Should return all dashboards of a user',
 		integrationTest(async () => {
-			const allDashboards = await getAllDashboards(TEST_AUTH_TOKEN);
+			const allDashboards = await getAllDashboards();
 			const allDashboardIDs = allDashboards.map(m => m.id);
 			const analystDashboardIDs = allDashboards.filter(m => m.userID === user.id).map(m => m.id);
 
 			expect(allDashboardIDs.length).toBe(5);
 			expect(analystDashboardIDs.length).toBe(3);
 
-			const dashboards = await getDashboardsByUser(TEST_AUTH_TOKEN, user.id);
+			const dashboards = await getDashboardsByUser(user.id);
 			expect(dashboards.length).toBe(analystDashboardIDs.length);
 			expect(dashboards.every(isDashboard)).toBeTrue();
 			expect(dashboards.map(m => m.id).sort()).toEqual(analystDashboardIDs.sort());
@@ -113,12 +125,12 @@ describe('getDashboardsByUser()', () => {
 		'Should return an empty array if the user has no dashboards',
 		integrationTest(async () => {
 			// Delete all dashboards
-			const currentDashboards = await getAllDashboards(TEST_AUTH_TOKEN);
+			const currentDashboards = await getAllDashboards();
 			const currentDashboardIDs = currentDashboards.map(m => m.id);
-			const deletePromises = currentDashboardIDs.map(dashboardID => deleteOneDashboard(TEST_AUTH_TOKEN, dashboardID));
+			const deletePromises = currentDashboardIDs.map(dashboardID => deleteOneDashboard(dashboardID));
 			await Promise.all(deletePromises);
 
-			const dashboards = await getDashboardsByUser(TEST_AUTH_TOKEN, user.id);
+			const dashboards = await getDashboardsByUser(user.id);
 			expect(dashboards.length).toBe(0);
 		}),
 	);
@@ -126,7 +138,7 @@ describe('getDashboardsByUser()', () => {
 	it(
 		'Blocks non admin users from grabbing dashboards from other users other than themselves',
 		integrationTest(async () => {
-			const allDashboards = await getAllDashboards(TEST_AUTH_TOKEN);
+			const allDashboards = await getAllDashboards();
 			const allDashboardIDs = allDashboards.map(m => m.id);
 			const analystDashboardIDs = allDashboards.filter(m => m.userID === user.id).map(m => m.id);
 			const adminID = allDashboards.filter(m => m.userID !== user.id)[0].userID;

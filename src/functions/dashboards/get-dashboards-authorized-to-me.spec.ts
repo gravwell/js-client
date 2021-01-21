@@ -18,13 +18,25 @@ import { makeGetAllDashboards } from './get-all-dashboards';
 import { makeGetDashboardsAuthorizedToMe } from './get-dashboards-authorized-to-me';
 
 describe('getDashboardsAuthorizedToMe()', () => {
-	const getDashboardsAuthorizedToMe = makeGetDashboardsAuthorizedToMe({ host: TEST_HOST, useEncryption: false });
-	const createOneDashboard = makeCreateOneDashboard({ host: TEST_HOST, useEncryption: false });
-	const deleteOneDashboard = makeDeleteOneDashboard({ host: TEST_HOST, useEncryption: false });
-	const getAllDashboards = makeGetAllDashboards({ host: TEST_HOST, useEncryption: false });
-	const getOneUser = makeGetOneUser({ host: TEST_HOST, useEncryption: false });
-	const createOneUser = makeCreateOneUser({ host: TEST_HOST, useEncryption: false });
-	const login = makeLoginOneUser({ host: TEST_HOST, useEncryption: false });
+	const getDashboardsAuthorizedToMe = makeGetDashboardsAuthorizedToMe({
+		host: TEST_HOST,
+		useEncryption: false,
+		authToken: TEST_AUTH_TOKEN,
+	});
+	const createOneDashboard = makeCreateOneDashboard({
+		host: TEST_HOST,
+		useEncryption: false,
+		authToken: TEST_AUTH_TOKEN,
+	});
+	const deleteOneDashboard = makeDeleteOneDashboard({
+		host: TEST_HOST,
+		useEncryption: false,
+		authToken: TEST_AUTH_TOKEN,
+	});
+	const getAllDashboards = makeGetAllDashboards({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
+	const getOneUser = makeGetOneUser({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
+	const createOneUser = makeCreateOneUser({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
+	const login = makeLoginOneUser({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
 
 	let adminDashboards: Array<Dashboard>;
 
@@ -34,9 +46,9 @@ describe('getDashboardsAuthorizedToMe()', () => {
 
 	beforeEach(async () => {
 		// Delete all dashboards
-		const currentDashboards = await getAllDashboards(TEST_AUTH_TOKEN);
+		const currentDashboards = await getAllDashboards();
 		const currentDashboardIDs = currentDashboards.map(m => m.id);
-		const deletePromises = currentDashboardIDs.map(dashboardID => deleteOneDashboard(TEST_AUTH_TOKEN, dashboardID));
+		const deletePromises = currentDashboardIDs.map(dashboardID => deleteOneDashboard(dashboardID));
 		await Promise.all(deletePromises);
 
 		// Create two dashboards as admin
@@ -54,7 +66,7 @@ describe('getDashboardsAuthorizedToMe()', () => {
 				timeframe: { durationString: 'PT1H', end: null, start: null, timeframe: 'PT1H' },
 			},
 		];
-		const createPromises = creatableDashboards.map(creatable => createOneDashboard(TEST_AUTH_TOKEN, creatable));
+		const createPromises = creatableDashboards.map(creatable => createOneDashboard(creatable));
 		adminDashboards = await Promise.all(createPromises);
 
 		// Creates an analyst
@@ -66,8 +78,8 @@ describe('getDashboardsAuthorizedToMe()', () => {
 			role: 'analyst',
 			user: userSeed,
 		};
-		const userID = await createOneUser(TEST_AUTH_TOKEN, data);
-		analyst = await getOneUser(TEST_AUTH_TOKEN, userID);
+		const userID = await createOneUser(data);
+		analyst = await getOneUser(userID);
 		analystAuth = await login(analyst.username, data.password);
 
 		// Create three dashboards as analyst
@@ -98,7 +110,7 @@ describe('getDashboardsAuthorizedToMe()', () => {
 	it(
 		'Returns all my dashboards',
 		integrationTest(async () => {
-			const actualAdminDashboards = await getDashboardsAuthorizedToMe(TEST_AUTH_TOKEN);
+			const actualAdminDashboards = await getDashboardsAuthorizedToMe();
 			expect(sortBy(actualAdminDashboards, m => m.id)).toEqual(sortBy(adminDashboards, m => m.id));
 			for (const dashboard of actualAdminDashboards) expect(isDashboard(dashboard)).toBeTrue();
 
@@ -106,7 +118,7 @@ describe('getDashboardsAuthorizedToMe()', () => {
 			expect(sortBy(actualAnalystDashboards, m => m.id)).toEqual(sortBy(analystDashboards, m => m.id));
 			for (const dashboard of actualAnalystDashboards) expect(isDashboard(dashboard)).toBeTrue();
 
-			const allDashboards = await getAllDashboards(TEST_AUTH_TOKEN);
+			const allDashboards = await getAllDashboards();
 			expect(sortBy(allDashboards, m => m.id)).toEqual(sortBy([...analystDashboards, ...adminDashboards], m => m.id));
 			for (const dashboard of allDashboards) expect(isDashboard(dashboard)).toBeTrue();
 		}),

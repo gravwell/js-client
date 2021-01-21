@@ -17,10 +17,22 @@ import { makeGetOneTemplate } from './get-one-template';
 import { makeUpdateOneTemplate } from './update-one-template';
 
 describe('updateOneTemplate()', () => {
-	const createOneTemplate = makeCreateOneTemplate({ host: TEST_HOST, useEncryption: false });
-	const getOneTemplate = makeGetOneTemplate({ host: TEST_HOST, useEncryption: false });
-	const updateOneTemplate = makeUpdateOneTemplate({ host: TEST_HOST, useEncryption: false });
-	const deleteOneTemplate = makeDeleteOneTemplate({ host: TEST_HOST, useEncryption: false });
+	const createOneTemplate = makeCreateOneTemplate({
+		host: TEST_HOST,
+		useEncryption: false,
+		authToken: TEST_AUTH_TOKEN,
+	});
+	const getOneTemplate = makeGetOneTemplate({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
+	const updateOneTemplate = makeUpdateOneTemplate({
+		host: TEST_HOST,
+		useEncryption: false,
+		authToken: TEST_AUTH_TOKEN,
+	});
+	const deleteOneTemplate = makeDeleteOneTemplate({
+		host: TEST_HOST,
+		useEncryption: false,
+		authToken: TEST_AUTH_TOKEN,
+	});
 
 	let createdTemplate: Template;
 
@@ -33,12 +45,12 @@ describe('updateOneTemplate()', () => {
 			query: 'tag=netflow __VAR__',
 			variable: { name: 'Variable', token: '__VAR__' },
 		};
-		const templateUUID = await createOneTemplate(TEST_AUTH_TOKEN, data);
-		createdTemplate = await getOneTemplate(TEST_AUTH_TOKEN, templateUUID);
+		const templateUUID = await createOneTemplate(data);
+		createdTemplate = await getOneTemplate(templateUUID);
 	});
 
 	afterEach(async () => {
-		await deleteOneTemplate(TEST_AUTH_TOKEN, createdTemplate.uuid).catch(() => undefined);
+		await deleteOneTemplate(createdTemplate.uuid).catch(() => undefined);
 	});
 
 	const updateTests: Array<Omit<UpdatableTemplate, 'uuid'>> = [
@@ -89,12 +101,12 @@ describe('updateOneTemplate()', () => {
 				const data: UpdatableTemplate = { ..._data, uuid: current.uuid };
 				if (updatedFields.includes('userID')) {
 					// *NOTE: gravwell/gravwell#2318 nº 7
-					await expectAsync(updateOneTemplate(TEST_AUTH_TOKEN, data)).toBeRejected();
-					await expectAsync(getOneTemplate(TEST_AUTH_TOKEN, data.uuid)).toBeRejected();
+					await expectAsync(updateOneTemplate(data)).toBeRejected();
+					await expectAsync(getOneTemplate(data.uuid)).toBeRejected();
 					return;
 				}
 
-				const updated = await updateOneTemplate(TEST_AUTH_TOKEN, data);
+				const updated = await updateOneTemplate(data);
 				expect(isTemplate(updated)).toBeTrue();
 
 				const parsedData = omitUndefinedShallow({

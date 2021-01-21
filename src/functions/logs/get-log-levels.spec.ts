@@ -12,12 +12,12 @@ import { TEST_AUTH_TOKEN, TEST_HOST } from '../../tests/config';
 import { makeGetLogLevels } from './get-log-levels';
 
 describe('getLogLevels()', () => {
-	const getLogLevels = makeGetLogLevels({ host: TEST_HOST, useEncryption: false });
+	const getLogLevels = makeGetLogLevels({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
 
 	it(
 		'Should get all available log levels and the current active log level',
 		integrationTest(async () => {
-			const { available, current } = await getLogLevels(TEST_AUTH_TOKEN);
+			const { available, current } = await getLogLevels();
 			const _isValidLogLevel = (value: any): value is LogLevel | 'off' => value === 'off' || isLogLevel(value);
 			expect(_isValidLogLevel(current)).toBeTrue();
 			expect(available.every(_isValidLogLevel)).toBeTrue();

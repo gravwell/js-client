@@ -12,12 +12,12 @@ import { TEST_AUTH_TOKEN, TEST_HOST } from '../../tests/config';
 import { makeGetOneUser } from './get-one-user';
 
 describe('getOneUser()', () => {
-	const getOneUser = makeGetOneUser({ host: TEST_HOST, useEncryption: false });
+	const getOneUser = makeGetOneUser({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
 
 	it(
 		'Should return a user',
 		integrationTest(async () => {
-			const user = await getOneUser(TEST_AUTH_TOKEN, '1');
+			const user = await getOneUser('1');
 			expect(isValidUser(user)).toBeTrue();
 		}),
 	);

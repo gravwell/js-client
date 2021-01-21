@@ -14,12 +14,13 @@ describe('syncAllScriptLibraries()', () => {
 	const syncAllScriptLibraries = makeSyncAllScriptLibraries({
 		host: TEST_HOST,
 		useEncryption: false,
+		authToken: TEST_AUTH_TOKEN,
 	});
 
 	it(
 		'Should update all libraries',
 		integrationTest(async () => {
-			await expectAsync(syncAllScriptLibraries(TEST_AUTH_TOKEN)).toBeResolved();
+			await expectAsync(syncAllScriptLibraries()).toBeResolved();
 		}),
 	);
 });

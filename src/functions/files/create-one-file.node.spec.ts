@@ -16,8 +16,8 @@ import { makeCreateOneGroup } from '../groups/create-one-group';
 import { makeCreateOneFile } from './create-one-file';
 
 describe('createOneFile()', () => {
-	const createOneFile = makeCreateOneFile({ host: TEST_HOST, useEncryption: false });
-	const createOneGroup = makeCreateOneGroup({ host: TEST_HOST, useEncryption: false });
+	const createOneFile = makeCreateOneFile({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
+	const createOneGroup = makeCreateOneGroup({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
 
 	let groupIDs: Array<NumericID>;
 
@@ -27,7 +27,7 @@ describe('createOneFile()', () => {
 		groupIDs = await Promise.all(
 			Array.from({ length: 3 })
 				.map((_, i) => `G${i}`)
-				.map(name => createOneGroup(TEST_AUTH_TOKEN, { name })),
+				.map(name => createOneGroup({ name })),
 		);
 	});
 
@@ -48,7 +48,7 @@ describe('createOneFile()', () => {
 				file: fileStream as any,
 			};
 
-			const file = await createOneFile(TEST_AUTH_TOKEN, data);
+			const file = await createOneFile(data);
 			expect(isFileMetadata(file)).toBeTrue();
 
 			const _data = { ...data };

@@ -14,9 +14,17 @@ import { makeDeleteOneResource } from './delete-one-resource';
 import { makeGetOneResource } from './get-one-resource';
 
 describe('deleteOneResource()', () => {
-	const deleteOneResource = makeDeleteOneResource({ host: TEST_HOST, useEncryption: false });
-	const createOneResource = makeCreateOneResource({ host: TEST_HOST, useEncryption: false });
-	const getOneResource = makeGetOneResource({ host: TEST_HOST, useEncryption: false });
+	const deleteOneResource = makeDeleteOneResource({
+		host: TEST_HOST,
+		useEncryption: false,
+		authToken: TEST_AUTH_TOKEN,
+	});
+	const createOneResource = makeCreateOneResource({
+		host: TEST_HOST,
+		useEncryption: false,
+		authToken: TEST_AUTH_TOKEN,
+	});
+	const getOneResource = makeGetOneResource({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
 
 	it(
 		'Should delete a resource',
@@ -26,12 +34,12 @@ describe('deleteOneResource()', () => {
 				description: 'Resource description',
 			};
 
-			const resource = await createOneResource(TEST_AUTH_TOKEN, data);
+			const resource = await createOneResource(data);
 			expect(isResource(resource)).toBeTrue();
 
-			await expectAsync(getOneResource(TEST_AUTH_TOKEN, resource.id)).toBeResolved();
-			await expectAsync(deleteOneResource(TEST_AUTH_TOKEN, resource.id)).toBeResolved();
-			await expectAsync(getOneResource(TEST_AUTH_TOKEN, resource.id)).toBeRejected();
+			await expectAsync(getOneResource(resource.id)).toBeResolved();
+			await expectAsync(deleteOneResource(resource.id)).toBeResolved();
+			await expectAsync(getOneResource(resource.id)).toBeRejected();
 		}),
 	);
 });

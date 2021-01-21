@@ -15,12 +15,13 @@ describe('getAllSearchModules()', () => {
 	const getAllSearchModules = makeGetAllSearchModules({
 		host: TEST_HOST,
 		useEncryption: false,
+		authToken: TEST_AUTH_TOKEN,
 	});
 
 	it(
 		'Should return all search modules',
 		integrationTest(async () => {
-			const searchModules = await getAllSearchModules(TEST_AUTH_TOKEN);
+			const searchModules = await getAllSearchModules();
 			expect(searchModules.length).toBeGreaterThan(20);
 			expect(searchModules.every(isSearchModule)).toBeTrue();
 		}),

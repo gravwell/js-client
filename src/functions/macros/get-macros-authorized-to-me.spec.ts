@@ -18,13 +18,17 @@ import { makeGetAllMacros } from './get-all-macros';
 import { makeGetMacrosAuthorizedToMe } from './get-macros-authorized-to-me';
 
 describe('getMacrosAuthorizedToMe()', () => {
-	const getMacrosAuthorizedToMe = makeGetMacrosAuthorizedToMe({ host: TEST_HOST, useEncryption: false });
-	const createOneMacro = makeCreateOneMacro({ host: TEST_HOST, useEncryption: false });
-	const deleteOneMacro = makeDeleteOneMacro({ host: TEST_HOST, useEncryption: false });
-	const getAllMacros = makeGetAllMacros({ host: TEST_HOST, useEncryption: false });
-	const getOneUser = makeGetOneUser({ host: TEST_HOST, useEncryption: false });
-	const createOneUser = makeCreateOneUser({ host: TEST_HOST, useEncryption: false });
-	const login = makeLoginOneUser({ host: TEST_HOST, useEncryption: false });
+	const getMacrosAuthorizedToMe = makeGetMacrosAuthorizedToMe({
+		host: TEST_HOST,
+		useEncryption: false,
+		authToken: TEST_AUTH_TOKEN,
+	});
+	const createOneMacro = makeCreateOneMacro({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
+	const deleteOneMacro = makeDeleteOneMacro({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
+	const getAllMacros = makeGetAllMacros({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
+	const getOneUser = makeGetOneUser({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
+	const createOneUser = makeCreateOneUser({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
+	const login = makeLoginOneUser({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
 
 	let adminMacros: Array<Macro>;
 
@@ -34,9 +38,9 @@ describe('getMacrosAuthorizedToMe()', () => {
 
 	beforeEach(async () => {
 		// Delete all macros
-		const currentMacros = await getAllMacros(TEST_AUTH_TOKEN);
+		const currentMacros = await getAllMacros();
 		const currentMacroIDs = currentMacros.map(m => m.id);
-		const deletePromises = currentMacroIDs.map(macroID => deleteOneMacro(TEST_AUTH_TOKEN, macroID));
+		const deletePromises = currentMacroIDs.map(macroID => deleteOneMacro(macroID));
 		await Promise.all(deletePromises);
 
 		// Create two macros as admin
@@ -44,7 +48,7 @@ describe('getMacrosAuthorizedToMe()', () => {
 			{ name: 'M1', expansion: 'abc' },
 			{ name: 'M2', expansion: 'def' },
 		];
-		const createPromises = creatableMacros.map(creatable => createOneMacro(TEST_AUTH_TOKEN, creatable));
+		const createPromises = creatableMacros.map(creatable => createOneMacro(creatable));
 		adminMacros = await Promise.all(createPromises);
 
 		// Creates an analyst
@@ -56,8 +60,8 @@ describe('getMacrosAuthorizedToMe()', () => {
 			role: 'analyst',
 			user: userSeed,
 		};
-		const userID = await createOneUser(TEST_AUTH_TOKEN, data);
-		analyst = await getOneUser(TEST_AUTH_TOKEN, userID);
+		const userID = await createOneUser(data);
+		analyst = await getOneUser(userID);
 		analystAuth = await login(analyst.username, data.password);
 
 		// Create three macros as analyst
@@ -73,7 +77,7 @@ describe('getMacrosAuthorizedToMe()', () => {
 	it(
 		'Returns all my macros',
 		integrationTest(async () => {
-			const actualAdminMacros = await getMacrosAuthorizedToMe(TEST_AUTH_TOKEN);
+			const actualAdminMacros = await getMacrosAuthorizedToMe();
 			expect(sortBy(actualAdminMacros, m => m.id)).toEqual(sortBy(adminMacros, m => m.id));
 			for (const macro of actualAdminMacros) expect(isMacro(macro)).toBeTrue();
 
@@ -81,7 +85,7 @@ describe('getMacrosAuthorizedToMe()', () => {
 			expect(sortBy(actualAnalystMacros, m => m.id)).toEqual(sortBy(analystMacros, m => m.id));
 			for (const macro of actualAnalystMacros) expect(isMacro(macro)).toBeTrue();
 
-			const allMacros = await getAllMacros(TEST_AUTH_TOKEN);
+			const allMacros = await getAllMacros();
 			expect(sortBy(allMacros, m => m.id)).toEqual(sortBy([...analystMacros, ...adminMacros], m => m.id));
 			for (const macro of allMacros) expect(isMacro(macro)).toBeTrue();
 		}),

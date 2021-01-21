@@ -15,9 +15,9 @@ import { makeDeleteOneUser } from './delete-one-user';
 import { makeGetOneUser } from './get-one-user';
 
 describe('deleteOneUser()', () => {
-	const deleteOneUser = makeDeleteOneUser({ host: TEST_HOST, useEncryption: false });
-	const createOneUser = makeCreateOneUser({ host: TEST_HOST, useEncryption: false });
-	const getOneUser = makeGetOneUser({ host: TEST_HOST, useEncryption: false });
+	const deleteOneUser = makeDeleteOneUser({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
+	const createOneUser = makeCreateOneUser({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
+	const getOneUser = makeGetOneUser({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
 
 	it(
 		'Should delete a user',
@@ -31,12 +31,12 @@ describe('deleteOneUser()', () => {
 				user: username,
 			};
 
-			const userID = await createOneUser(TEST_AUTH_TOKEN, data);
-			const user = await getOneUser(TEST_AUTH_TOKEN, userID);
+			const userID = await createOneUser(data);
+			const user = await getOneUser(userID);
 			expect(isValidUser(user)).toBeTrue();
 
-			await deleteOneUser(TEST_AUTH_TOKEN, userID);
-			await expectAsync(getOneUser(TEST_AUTH_TOKEN, userID)).toBeRejected();
+			await deleteOneUser(userID);
+			await expectAsync(getOneUser(userID)).toBeRejected();
 		}),
 	);
 });

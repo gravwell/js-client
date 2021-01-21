@@ -15,16 +15,28 @@ import { makeGetAllSavedQueries } from './get-all-saved-queries';
 import { makeGetOneSavedQuery } from './get-one-saved-query';
 
 describe('deleteOneSavedQuery()', () => {
-	const createOneSavedQuery = makeCreateOneSavedQuery({ host: TEST_HOST, useEncryption: false });
-	const deleteOneSavedQuery = makeDeleteOneSavedQuery({ host: TEST_HOST, useEncryption: false });
-	const getAllSavedQueries = makeGetAllSavedQueries({ host: TEST_HOST, useEncryption: false });
-	const getOneSavedQuery = makeGetOneSavedQuery({ host: TEST_HOST, useEncryption: false });
+	const createOneSavedQuery = makeCreateOneSavedQuery({
+		host: TEST_HOST,
+		useEncryption: false,
+		authToken: TEST_AUTH_TOKEN,
+	});
+	const deleteOneSavedQuery = makeDeleteOneSavedQuery({
+		host: TEST_HOST,
+		useEncryption: false,
+		authToken: TEST_AUTH_TOKEN,
+	});
+	const getAllSavedQueries = makeGetAllSavedQueries({
+		host: TEST_HOST,
+		useEncryption: false,
+		authToken: TEST_AUTH_TOKEN,
+	});
+	const getOneSavedQuery = makeGetOneSavedQuery({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
 
 	beforeEach(async () => {
 		// Delete all saved queries
-		const currentSavedQueries = await getAllSavedQueries(TEST_AUTH_TOKEN);
+		const currentSavedQueries = await getAllSavedQueries();
 		const currentSavedQueryIDs = currentSavedQueries.map(m => m.id);
-		const deletePromises = currentSavedQueryIDs.map(savedQueryID => deleteOneSavedQuery(TEST_AUTH_TOKEN, savedQueryID));
+		const deletePromises = currentSavedQueryIDs.map(savedQueryID => deleteOneSavedQuery(savedQueryID));
 		await Promise.all(deletePromises);
 
 		// Create two saved queries
@@ -38,22 +50,22 @@ describe('deleteOneSavedQuery()', () => {
 				query: 'tag=custom-test',
 			},
 		];
-		const createPromises = creatableSavedQueries.map(creatable => createOneSavedQuery(TEST_AUTH_TOKEN, creatable));
+		const createPromises = creatableSavedQueries.map(creatable => createOneSavedQuery(creatable));
 		await Promise.all(createPromises);
 	});
 
 	it(
 		'Should delete a saved query',
 		integrationTest(async () => {
-			const currentSavedQueries = await getAllSavedQueries(TEST_AUTH_TOKEN);
+			const currentSavedQueries = await getAllSavedQueries();
 			const currentSavedQueryIDs = currentSavedQueries.map(m => m.id);
 			expect(currentSavedQueryIDs.length).toBe(2);
 
 			const deleteSavedQueryID = currentSavedQueryIDs[0];
-			await deleteOneSavedQuery(TEST_AUTH_TOKEN, deleteSavedQueryID);
-			await expectAsync(getOneSavedQuery(TEST_AUTH_TOKEN, deleteSavedQueryID)).toBeRejected();
+			await deleteOneSavedQuery(deleteSavedQueryID);
+			await expectAsync(getOneSavedQuery(deleteSavedQueryID)).toBeRejected();
 
-			const remainingSavedQueries = await getAllSavedQueries(TEST_AUTH_TOKEN);
+			const remainingSavedQueries = await getAllSavedQueries();
 			const remainingSavedQueryIDs = remainingSavedQueries.map(m => m.id);
 			expect(remainingSavedQueryIDs).not.toContain(deleteSavedQueryID);
 			expect(remainingSavedQueryIDs.length).toBe(1);

@@ -17,10 +17,22 @@ import { makeGetOnePlaybook } from './get-one-playbook';
 import { makeUpdateOnePlaybook } from './update-one-playbook';
 
 describe('updateOnePlaybook()', () => {
-	const createOnePlaybook = makeCreateOnePlaybook({ host: TEST_HOST, useEncryption: false });
-	const getOnePlaybook = makeGetOnePlaybook({ host: TEST_HOST, useEncryption: false });
-	const updateOnePlaybook = makeUpdateOnePlaybook({ host: TEST_HOST, useEncryption: false });
-	const deleteOnePlaybook = makeDeleteOnePlaybook({ host: TEST_HOST, useEncryption: false });
+	const createOnePlaybook = makeCreateOnePlaybook({
+		host: TEST_HOST,
+		useEncryption: false,
+		authToken: TEST_AUTH_TOKEN,
+	});
+	const getOnePlaybook = makeGetOnePlaybook({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
+	const updateOnePlaybook = makeUpdateOnePlaybook({
+		host: TEST_HOST,
+		useEncryption: false,
+		authToken: TEST_AUTH_TOKEN,
+	});
+	const deleteOnePlaybook = makeDeleteOnePlaybook({
+		host: TEST_HOST,
+		useEncryption: false,
+		authToken: TEST_AUTH_TOKEN,
+	});
 
 	let createdPlaybook: Playbook;
 
@@ -31,12 +43,12 @@ describe('updateOnePlaybook()', () => {
 			description: 'Current description',
 			body: 'This is my playbook',
 		};
-		const playbookUUID = await createOnePlaybook(TEST_AUTH_TOKEN, data);
-		createdPlaybook = await getOnePlaybook(TEST_AUTH_TOKEN, playbookUUID);
+		const playbookUUID = await createOnePlaybook(data);
+		createdPlaybook = await getOnePlaybook(playbookUUID);
 	});
 
 	afterEach(async () => {
-		await deleteOnePlaybook(TEST_AUTH_TOKEN, createdPlaybook.uuid).catch(() => undefined);
+		await deleteOnePlaybook(createdPlaybook.uuid).catch(() => undefined);
 	});
 
 	const updateTests: Array<Omit<UpdatablePlaybook, 'uuid'>> = [
@@ -70,7 +82,7 @@ describe('updateOnePlaybook()', () => {
 				expect(isPlaybook(current)).toBeTrue();
 
 				const data: UpdatablePlaybook = { ..._data, uuid: current.uuid };
-				const updated = await updateOnePlaybook(TEST_AUTH_TOKEN, data);
+				const updated = await updateOnePlaybook(data);
 				expect(isPlaybook(updated)).toBeTrue();
 
 				const parsedData = omitUndefinedShallow(data);

@@ -12,12 +12,12 @@ import { TEST_AUTH_TOKEN, TEST_HOST } from '../../tests/config';
 import { makeGetAllUsers } from './get-all-users';
 
 describe('getAllUsers()', () => {
-	const getAllUsers = makeGetAllUsers({ host: TEST_HOST, useEncryption: false });
+	const getAllUsers = makeGetAllUsers({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
 
 	it(
 		'Should return users',
 		integrationTest(async () => {
-			const users = await getAllUsers(TEST_AUTH_TOKEN);
+			const users = await getAllUsers();
 			expect(users.every(isValidUser)).toBeTrue();
 		}),
 	);

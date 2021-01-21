@@ -15,10 +15,26 @@ import { makeGetAllSavedQueries } from './get-all-saved-queries';
 import { makeUpdateOneSavedQuery } from './update-one-saved-query';
 
 describe('updateOneSavedQuery()', () => {
-	const createOneSavedQuery = makeCreateOneSavedQuery({ host: TEST_HOST, useEncryption: false });
-	const updateOneSavedQuery = makeUpdateOneSavedQuery({ host: TEST_HOST, useEncryption: false });
-	const deleteOneSavedQuery = makeDeleteOneSavedQuery({ host: TEST_HOST, useEncryption: false });
-	const getAllSavedQueries = makeGetAllSavedQueries({ host: TEST_HOST, useEncryption: false });
+	const createOneSavedQuery = makeCreateOneSavedQuery({
+		host: TEST_HOST,
+		useEncryption: false,
+		authToken: TEST_AUTH_TOKEN,
+	});
+	const updateOneSavedQuery = makeUpdateOneSavedQuery({
+		host: TEST_HOST,
+		useEncryption: false,
+		authToken: TEST_AUTH_TOKEN,
+	});
+	const deleteOneSavedQuery = makeDeleteOneSavedQuery({
+		host: TEST_HOST,
+		useEncryption: false,
+		authToken: TEST_AUTH_TOKEN,
+	});
+	const getAllSavedQueries = makeGetAllSavedQueries({
+		host: TEST_HOST,
+		useEncryption: false,
+		authToken: TEST_AUTH_TOKEN,
+	});
 
 	let createdSavedQuery: SavedQuery;
 
@@ -26,9 +42,9 @@ describe('updateOneSavedQuery()', () => {
 		jasmine.addMatchers(myCustomMatchers);
 
 		// Delete all saved queries
-		const currentSavedQueries = await getAllSavedQueries(TEST_AUTH_TOKEN);
+		const currentSavedQueries = await getAllSavedQueries();
 		const currentSavedQueryIDs = currentSavedQueries.map(m => m.id);
-		const deletePromises = currentSavedQueryIDs.map(savedQueryID => deleteOneSavedQuery(TEST_AUTH_TOKEN, savedQueryID));
+		const deletePromises = currentSavedQueryIDs.map(savedQueryID => deleteOneSavedQuery(savedQueryID));
 		await Promise.all(deletePromises);
 
 		// Create one saved query
@@ -36,7 +52,7 @@ describe('updateOneSavedQuery()', () => {
 			name: 'Current name',
 			query: 'tag=netflow',
 		};
-		createdSavedQuery = await createOneSavedQuery(TEST_AUTH_TOKEN, data);
+		createdSavedQuery = await createOneSavedQuery(data);
 	});
 
 	const updateTests: Array<Omit<UpdatableSavedQuery, 'id'>> = [
@@ -73,7 +89,7 @@ describe('updateOneSavedQuery()', () => {
 				expect(isSavedQuery(current)).toBeTrue();
 
 				const data: UpdatableSavedQuery = { ..._data, id: current.id };
-				const updated = await updateOneSavedQuery(TEST_AUTH_TOKEN, data);
+				const updated = await updateOneSavedQuery(data);
 
 				expect(isSavedQuery(updated)).toBeTrue();
 				expect(updated).toPartiallyEqual(data);

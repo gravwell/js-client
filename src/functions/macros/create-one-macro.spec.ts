@@ -14,9 +14,9 @@ import { makeDeleteOneMacro } from './delete-one-macro';
 import { makeGetOneMacro } from './get-one-macro';
 
 describe('createOneMacro()', () => {
-	const createOneMacro = makeCreateOneMacro({ host: TEST_HOST, useEncryption: false });
-	const getOneMacro = makeGetOneMacro({ host: TEST_HOST, useEncryption: false });
-	const deleteOneMacro = makeDeleteOneMacro({ host: TEST_HOST, useEncryption: false });
+	const createOneMacro = makeCreateOneMacro({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
+	const getOneMacro = makeGetOneMacro({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
+	const deleteOneMacro = makeDeleteOneMacro({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
 
 	it(
 		'Should create a macro and return it',
@@ -26,11 +26,11 @@ describe('createOneMacro()', () => {
 				expansion: 'tag=netflow',
 			};
 
-			const macro = await createOneMacro(TEST_AUTH_TOKEN, data);
+			const macro = await createOneMacro(data);
 			expect(isMacro(macro)).toBeTrue();
 
-			await expectAsync(deleteOneMacro(TEST_AUTH_TOKEN, macro.id)).toBeResolved();
-			await expectAsync(getOneMacro(TEST_AUTH_TOKEN, macro.id)).toBeRejected();
+			await expectAsync(deleteOneMacro(macro.id)).toBeResolved();
+			await expectAsync(getOneMacro(macro.id)).toBeRejected();
 		}),
 	);
 });

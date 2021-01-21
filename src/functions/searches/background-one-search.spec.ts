@@ -17,14 +17,17 @@ describe('backgroundOneSearch()', () => {
 	const getPersistentSearchStatusRelatedToMe = makeGetPersistentSearchStatusRelatedToMe({
 		host: TEST_HOST,
 		useEncryption: false,
+		authToken: TEST_AUTH_TOKEN,
 	});
 	const backgroundOneSearch = makeBackgroundOneSearch({
 		host: TEST_HOST,
 		useEncryption: false,
+		authToken: TEST_AUTH_TOKEN,
 	});
 	const getOnePersistentSearchStatus = makeGetOnePersistentSearchStatus({
 		host: TEST_HOST,
 		useEncryption: false,
+		authToken: TEST_AUTH_TOKEN,
 	});
 
 	xit(
@@ -32,14 +35,14 @@ describe('backgroundOneSearch()', () => {
 		integrationTest(async () => {
 			// TODO: Create the search first
 
-			const searches = await getPersistentSearchStatusRelatedToMe(TEST_AUTH_TOKEN);
+			const searches = await getPersistentSearchStatusRelatedToMe();
 			expect(searches.length).toBeGreaterThanOrEqual(1);
 
 			expect(searches[0].states).not.toContain('backgrounded');
 			const searchID = searches[0].id;
 
-			await backgroundOneSearch(TEST_AUTH_TOKEN, searchID);
-			const backgroundedSearch = await getOnePersistentSearchStatus(TEST_AUTH_TOKEN, searchID);
+			await backgroundOneSearch(searchID);
+			const backgroundedSearch = await getOnePersistentSearchStatus(searchID);
 			expect(isSearch2(backgroundedSearch)).toBeTrue();
 			expect(backgroundedSearch.states).toContain('backgrounded');
 		}),

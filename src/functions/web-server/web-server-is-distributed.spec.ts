@@ -11,12 +11,16 @@ import { TEST_AUTH_TOKEN, TEST_HOST } from '../../tests/config';
 import { makeWebServerIsDistributed } from './web-server-is-distributed';
 
 describe('webServerIsDistributed()', () => {
-	const webServerIsDistributed = makeWebServerIsDistributed({ host: TEST_HOST, useEncryption: false });
+	const webServerIsDistributed = makeWebServerIsDistributed({
+		host: TEST_HOST,
+		useEncryption: false,
+		authToken: TEST_AUTH_TOKEN,
+	});
 
 	it(
 		'Should tell if the web server is distributed',
 		integrationTest(async () => {
-			const isDistributed = await webServerIsDistributed(TEST_AUTH_TOKEN);
+			const isDistributed = await webServerIsDistributed();
 			expect(isDistributed).toBeFalse();
 		}),
 	);

@@ -14,19 +14,29 @@ import { makeDeleteOneAutoExtractor } from './delete-one-auto-extractor';
 import { makeGetAllAutoExtractors } from './get-all-auto-extractors';
 
 describe('createOneAutoExtractor()', () => {
-	const createOneAutoExtractor = makeCreateOneAutoExtractor({ host: TEST_HOST, useEncryption: false });
-	const deleteOneAutoExtractor = makeDeleteOneAutoExtractor({ host: TEST_HOST, useEncryption: false });
-	const getAllAutoExtractors = makeGetAllAutoExtractors({ host: TEST_HOST, useEncryption: false });
+	const createOneAutoExtractor = makeCreateOneAutoExtractor({
+		host: TEST_HOST,
+		useEncryption: false,
+		authToken: TEST_AUTH_TOKEN,
+	});
+	const deleteOneAutoExtractor = makeDeleteOneAutoExtractor({
+		host: TEST_HOST,
+		useEncryption: false,
+		authToken: TEST_AUTH_TOKEN,
+	});
+	const getAllAutoExtractors = makeGetAllAutoExtractors({
+		host: TEST_HOST,
+		useEncryption: false,
+		authToken: TEST_AUTH_TOKEN,
+	});
 
 	beforeEach(async () => {
 		jasmine.addMatchers(myCustomMatchers);
 
 		// Delete all autoExtractors
-		const currentAutoExtractors = await getAllAutoExtractors(TEST_AUTH_TOKEN);
+		const currentAutoExtractors = await getAllAutoExtractors();
 		const currentAutoExtractorIDs = currentAutoExtractors.map(m => m.id);
-		const deletePromises = currentAutoExtractorIDs.map(autoExtractorID =>
-			deleteOneAutoExtractor(TEST_AUTH_TOKEN, autoExtractorID),
-		);
+		const deletePromises = currentAutoExtractorIDs.map(autoExtractorID => deleteOneAutoExtractor(autoExtractorID));
 		await Promise.all(deletePromises);
 	});
 
@@ -48,7 +58,7 @@ describe('createOneAutoExtractor()', () => {
 				arguments: '1 2 3',
 			};
 
-			const autoExtractor = await createOneAutoExtractor(TEST_AUTH_TOKEN, data);
+			const autoExtractor = await createOneAutoExtractor(data);
 			expect(isAutoExtractor(autoExtractor)).toBeTrue();
 			expect(autoExtractor).toPartiallyEqual(data);
 		}),

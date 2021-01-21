@@ -15,21 +15,29 @@ import { makeCreateOneScheduledQuery } from './create-one-scheduled-query';
 import { makeDeleteAllScheduledQueries } from './delete-all-scheduled-queries';
 
 describe('createOneScheduledQuery()', () => {
-	const createOneScheduledQuery = makeCreateOneScheduledQuery({ host: TEST_HOST, useEncryption: false });
-	const createOneGroup = makeCreateOneGroup({ host: TEST_HOST, useEncryption: false });
-	const deleteAllScheduledQueries = makeDeleteAllScheduledQueries({ host: TEST_HOST, useEncryption: false });
+	const createOneScheduledQuery = makeCreateOneScheduledQuery({
+		host: TEST_HOST,
+		useEncryption: false,
+		authToken: TEST_AUTH_TOKEN,
+	});
+	const createOneGroup = makeCreateOneGroup({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
+	const deleteAllScheduledQueries = makeDeleteAllScheduledQueries({
+		host: TEST_HOST,
+		useEncryption: false,
+		authToken: TEST_AUTH_TOKEN,
+	});
 
 	let groupIDs: Array<NumericID>;
 
 	beforeEach(async () => {
 		jasmine.addMatchers(myCustomMatchers);
 
-		await deleteAllScheduledQueries(TEST_AUTH_TOKEN);
+		await deleteAllScheduledQueries();
 
 		groupIDs = await Promise.all(
 			Array.from({ length: 3 })
 				.map((_, i) => `G${i}`)
-				.map(name => createOneGroup(TEST_AUTH_TOKEN, { name })),
+				.map(name => createOneGroup({ name })),
 		);
 	});
 
@@ -52,7 +60,7 @@ describe('createOneScheduledQuery()', () => {
 				isDisabled: true,
 			};
 
-			const scheduledQuery = await createOneScheduledQuery(TEST_AUTH_TOKEN, data);
+			const scheduledQuery = await createOneScheduledQuery(data);
 			expect(isScheduledQuery(scheduledQuery)).toBeTrue();
 			expect(scheduledQuery).toPartiallyEqual(data);
 		}),

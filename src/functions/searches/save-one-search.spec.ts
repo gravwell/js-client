@@ -17,14 +17,17 @@ describe('saveOneSearch()', () => {
 	const getPersistentSearchStatusRelatedToMe = makeGetPersistentSearchStatusRelatedToMe({
 		host: TEST_HOST,
 		useEncryption: false,
+		authToken: TEST_AUTH_TOKEN,
 	});
 	const saveOneSearch = makeSaveOneSearch({
 		host: TEST_HOST,
 		useEncryption: false,
+		authToken: TEST_AUTH_TOKEN,
 	});
 	const getOnePersistentSearchStatus = makeGetOnePersistentSearchStatus({
 		host: TEST_HOST,
 		useEncryption: false,
+		authToken: TEST_AUTH_TOKEN,
 	});
 
 	xit(
@@ -32,16 +35,16 @@ describe('saveOneSearch()', () => {
 		integrationTest(async () => {
 			// TODO: Create the search first
 
-			const searches = await getPersistentSearchStatusRelatedToMe(TEST_AUTH_TOKEN);
+			const searches = await getPersistentSearchStatusRelatedToMe();
 			expect(searches.length).toBeGreaterThanOrEqual(1);
 
 			expect(searches[0].states).not.toContain('saved');
 			const searchID = searches[0].id;
 
-			await saveOneSearch(TEST_AUTH_TOKEN, searchID);
+			await saveOneSearch(searchID);
 			await new Promise(res => setTimeout(res, 1500));
 
-			const savedSearch = await getOnePersistentSearchStatus(TEST_AUTH_TOKEN, searchID);
+			const savedSearch = await getOnePersistentSearchStatus(searchID);
 			expect(isSearch2(savedSearch)).toBeTrue();
 			expect(savedSearch.states).toContain('saved');
 		}),

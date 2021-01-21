@@ -17,10 +17,26 @@ import { makeGetOneActionable } from './get-one-actionable';
 import { makeUpdateOneActionable } from './update-one-actionable';
 
 describe('updateOneActionable()', () => {
-	const createOneActionable = makeCreateOneActionable({ host: TEST_HOST, useEncryption: false });
-	const getOneActionable = makeGetOneActionable({ host: TEST_HOST, useEncryption: false });
-	const updateOneActionable = makeUpdateOneActionable({ host: TEST_HOST, useEncryption: false });
-	const deleteOneActionable = makeDeleteOneActionable({ host: TEST_HOST, useEncryption: false });
+	const createOneActionable = makeCreateOneActionable({
+		host: TEST_HOST,
+		useEncryption: false,
+		authToken: TEST_AUTH_TOKEN,
+	});
+	const getOneActionable = makeGetOneActionable({
+		host: TEST_HOST,
+		useEncryption: false,
+		authToken: TEST_AUTH_TOKEN,
+	});
+	const updateOneActionable = makeUpdateOneActionable({
+		host: TEST_HOST,
+		useEncryption: false,
+		authToken: TEST_AUTH_TOKEN,
+	});
+	const deleteOneActionable = makeDeleteOneActionable({
+		host: TEST_HOST,
+		useEncryption: false,
+		authToken: TEST_AUTH_TOKEN,
+	});
 
 	let createdActionable: Actionable;
 
@@ -33,12 +49,12 @@ describe('updateOneActionable()', () => {
 			actions: [{ name: 'Current action', command: { type: 'query', userQuery: 'tag=netflow' } }],
 			triggers: [{ pattern: /abc/g, activatesOn: 'clicks and selection' }],
 		};
-		const actionableUUID = await createOneActionable(TEST_AUTH_TOKEN, data);
-		createdActionable = await getOneActionable(TEST_AUTH_TOKEN, actionableUUID);
+		const actionableUUID = await createOneActionable(data);
+		createdActionable = await getOneActionable(actionableUUID);
 	});
 
 	afterEach(async () => {
-		await deleteOneActionable(TEST_AUTH_TOKEN, createdActionable.uuid).catch(() => undefined);
+		await deleteOneActionable(createdActionable.uuid).catch(() => undefined);
 	});
 
 	const updateTests: Array<Omit<UpdatableActionable, 'uuid'>> = [
@@ -85,12 +101,12 @@ describe('updateOneActionable()', () => {
 				const data: UpdatableActionable = { ..._data, uuid: current.uuid };
 				if (updatedFields.includes('userID')) {
 					// *NOTE: gravwell/gravwell#2318 nº 7
-					await expectAsync(updateOneActionable(TEST_AUTH_TOKEN, data)).toBeRejected();
-					await expectAsync(getOneActionable(TEST_AUTH_TOKEN, data.uuid)).toBeRejected();
+					await expectAsync(updateOneActionable(data)).toBeRejected();
+					await expectAsync(getOneActionable(data.uuid)).toBeRejected();
 					return;
 				}
 
-				const updated = await updateOneActionable(TEST_AUTH_TOKEN, data);
+				const updated = await updateOneActionable(data);
 				expect(isActionable(updated)).toBeTrue();
 
 				const parsedData = omitUndefinedShallow({

@@ -14,8 +14,8 @@ import { makeCreateOneUser } from './create-one-user';
 import { makeGetOneUser } from './get-one-user';
 
 describe('createOneUser()', () => {
-	const createOneUser = makeCreateOneUser({ host: TEST_HOST, useEncryption: false });
-	const getOneUser = makeGetOneUser({ host: TEST_HOST, useEncryption: false });
+	const createOneUser = makeCreateOneUser({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
+	const getOneUser = makeGetOneUser({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
 
 	it(
 		"Should create a user and return it's id",
@@ -29,8 +29,8 @@ describe('createOneUser()', () => {
 				user: username,
 			};
 
-			const userID = await createOneUser(TEST_AUTH_TOKEN, data);
-			const user = await getOneUser(TEST_AUTH_TOKEN, userID);
+			const userID = await createOneUser(data);
+			const user = await getOneUser(userID);
 			expect(isValidUser(user)).toBeTrue();
 		}),
 	);

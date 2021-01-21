@@ -15,9 +15,17 @@ import { makeDeleteOneTemplate } from './delete-one-template';
 import { makeGetAllTemplates } from './get-all-templates';
 
 describe('getAllTemplates()', () => {
-	const getAllTemplates = makeGetAllTemplates({ host: TEST_HOST, useEncryption: false });
-	const createOneTemplate = makeCreateOneTemplate({ host: TEST_HOST, useEncryption: false });
-	const deleteOneTemplate = makeDeleteOneTemplate({ host: TEST_HOST, useEncryption: false });
+	const getAllTemplates = makeGetAllTemplates({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
+	const createOneTemplate = makeCreateOneTemplate({
+		host: TEST_HOST,
+		useEncryption: false,
+		authToken: TEST_AUTH_TOKEN,
+	});
+	const deleteOneTemplate = makeDeleteOneTemplate({
+		host: TEST_HOST,
+		useEncryption: false,
+		authToken: TEST_AUTH_TOKEN,
+	});
 
 	let createdTemplatesUUIDs: Array<UUID> = [];
 
@@ -29,13 +37,13 @@ describe('getAllTemplates()', () => {
 			query: 'tag=netflow __VAR__',
 			variable: { name: 'Variable', token: '__VAR__' },
 		};
-		const createdTemplatesUUIDsPs = Array.from({ length: 2 }).map(() => createOneTemplate(TEST_AUTH_TOKEN, data));
+		const createdTemplatesUUIDsPs = Array.from({ length: 2 }).map(() => createOneTemplate(data));
 		createdTemplatesUUIDs = await Promise.all(createdTemplatesUUIDsPs);
 	});
 
 	afterEach(async () => {
 		// Delete the created templates
-		const deletePs = createdTemplatesUUIDs.map(templateUUID => deleteOneTemplate(TEST_AUTH_TOKEN, templateUUID));
+		const deletePs = createdTemplatesUUIDs.map(templateUUID => deleteOneTemplate(templateUUID));
 		await Promise.all(deletePs);
 	});
 
@@ -43,7 +51,7 @@ describe('getAllTemplates()', () => {
 	xit(
 		'Should return templates',
 		integrationTest(async () => {
-			const templates = await getAllTemplates(TEST_AUTH_TOKEN);
+			const templates = await getAllTemplates();
 			const templateUUIDs = templates.map(a => a.uuid);
 
 			expect(templates.every(isTemplate)).toBeTrue();

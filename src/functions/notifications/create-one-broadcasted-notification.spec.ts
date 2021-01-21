@@ -14,13 +14,14 @@ describe('createOneBroadcastedNotification', () => {
 	const createOneBroadcastedNotification = makeCreateOneBroadcastedNotification({
 		host: TEST_HOST,
 		useEncryption: false,
+		authToken: TEST_AUTH_TOKEN,
 	});
 
 	it(
 		'Should be able to create a broadcasted message',
 		integrationTest(async () => {
 			const creatable: CreatableBroadcastNotification = { message: 'test' };
-			const result = await createOneBroadcastedNotification(TEST_AUTH_TOKEN, creatable);
+			const result = await createOneBroadcastedNotification(creatable);
 			expect(result).toBeUndefined();
 		}),
 	);

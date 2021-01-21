@@ -16,10 +16,12 @@ describe('getOnePersistentSearchStatus()', () => {
 	const getPersistentSearchStatusRelatedToMe = makeGetPersistentSearchStatusRelatedToMe({
 		host: TEST_HOST,
 		useEncryption: false,
+		authToken: TEST_AUTH_TOKEN,
 	});
 	const getOnePersistentSearchStatus = makeGetOnePersistentSearchStatus({
 		host: TEST_HOST,
 		useEncryption: false,
+		authToken: TEST_AUTH_TOKEN,
 	});
 
 	xit(
@@ -27,11 +29,11 @@ describe('getOnePersistentSearchStatus()', () => {
 		integrationTest(async () => {
 			// TODO: Create the search first
 
-			const searches = await getPersistentSearchStatusRelatedToMe(TEST_AUTH_TOKEN);
+			const searches = await getPersistentSearchStatusRelatedToMe();
 			expect(searches.length).toBeGreaterThanOrEqual(1);
 			const searchID = searches[0].id;
 
-			const search = await getOnePersistentSearchStatus(TEST_AUTH_TOKEN, searchID);
+			const search = await getOnePersistentSearchStatus(searchID);
 			expect(isSearch2(search)).toBeTrue();
 		}),
 	);

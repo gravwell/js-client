@@ -14,12 +14,13 @@ describe('getOneScriptLibrary()', () => {
 	const getOneScriptLibrary = makeGetOneScriptLibrary({
 		host: TEST_HOST,
 		useEncryption: false,
+		authToken: TEST_AUTH_TOKEN,
 	});
 
 	it(
 		'Should return the code for a script library',
 		integrationTest(async () => {
-			const library = await getOneScriptLibrary(TEST_AUTH_TOKEN, 'utils/links.ank');
+			const library = await getOneScriptLibrary('utils/links.ank');
 			expect(typeof library).toBe('string');
 			expect(library.length).toBeGreaterThan(40);
 		}),

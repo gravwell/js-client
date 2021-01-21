@@ -16,14 +16,17 @@ describe('deleteOneSearch()', () => {
 	const getPersistentSearchStatusRelatedToMe = makeGetPersistentSearchStatusRelatedToMe({
 		host: TEST_HOST,
 		useEncryption: false,
+		authToken: TEST_AUTH_TOKEN,
 	});
 	const getOnePersistentSearchStatus = makeGetOnePersistentSearchStatus({
 		host: TEST_HOST,
 		useEncryption: false,
+		authToken: TEST_AUTH_TOKEN,
 	});
 	const deleteOneSearch = makeDeleteOneSearch({
 		host: TEST_HOST,
 		useEncryption: false,
+		authToken: TEST_AUTH_TOKEN,
 	});
 
 	xit(
@@ -31,15 +34,15 @@ describe('deleteOneSearch()', () => {
 		integrationTest(async () => {
 			// TODO: Create the search first
 
-			const searches = await getPersistentSearchStatusRelatedToMe(TEST_AUTH_TOKEN);
+			const searches = await getPersistentSearchStatusRelatedToMe();
 			expect(searches.length).toBeGreaterThanOrEqual(1);
 
 			expect(searches[0].states).not.toContain('saved');
 			const searchID = searches[0].id;
 
-			await deleteOneSearch(TEST_AUTH_TOKEN, searchID);
+			await deleteOneSearch(searchID);
 			await new Promise(res => setTimeout(res, 1500));
-			await expectAsync(getOnePersistentSearchStatus(TEST_AUTH_TOKEN, searchID)).toBeRejected();
+			await expectAsync(getOnePersistentSearchStatus(searchID)).toBeRejected();
 		}),
 	);
 });

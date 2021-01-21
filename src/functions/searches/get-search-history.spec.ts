@@ -15,11 +15,11 @@ import { makeCreateOneUser, makeGetMyUser, makeGetOneUser } from '../users';
 import { makeGetSearchHistory } from './get-search-history';
 
 describe('getSearchHistory()', () => {
-	const getSearchHistory = makeGetSearchHistory({ host: TEST_HOST, useEncryption: false });
-	const createOneUser = makeCreateOneUser({ host: TEST_HOST, useEncryption: false });
-	const getOneUser = makeGetOneUser({ host: TEST_HOST, useEncryption: false });
-	const login = makeLoginOneUser({ host: TEST_HOST, useEncryption: false });
-	const getMyUser = makeGetMyUser({ host: TEST_HOST, useEncryption: false });
+	const getSearchHistory = makeGetSearchHistory({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
+	const createOneUser = makeCreateOneUser({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
+	const getOneUser = makeGetOneUser({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
+	const login = makeLoginOneUser({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
+	const getMyUser = makeGetMyUser({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
 
 	let admin: User;
 	const adminAuth = TEST_AUTH_TOKEN;
@@ -77,7 +77,7 @@ describe('getSearchHistory()', () => {
 	it(
 		'Should get my search history',
 		integrationTest(async () => {
-			const searches = await getSearchHistory(TEST_AUTH_TOKEN, { target: 'myself' });
+			const searches = await getSearchHistory({ target: 'myself' });
 			expect(searches.every(isValidSearch)).toBeTrue();
 		}),
 	);

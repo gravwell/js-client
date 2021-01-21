@@ -14,19 +14,31 @@ import { makeDeleteAllScheduledScripts } from './delete-all-scheduled-scripts';
 import { makeGetAllScheduledScripts } from './get-all-scheduled-scripts';
 
 describe('getAllScheduledScripts()', () => {
-	const getAllScheduledScripts = makeGetAllScheduledScripts({ host: TEST_HOST, useEncryption: false });
-	const deleteAllScheduledScripts = makeDeleteAllScheduledScripts({ host: TEST_HOST, useEncryption: false });
-	const createManyScheduledScripts = makeCreateManyScheduledScripts({ host: TEST_HOST, useEncryption: false });
+	const getAllScheduledScripts = makeGetAllScheduledScripts({
+		host: TEST_HOST,
+		useEncryption: false,
+		authToken: TEST_AUTH_TOKEN,
+	});
+	const deleteAllScheduledScripts = makeDeleteAllScheduledScripts({
+		host: TEST_HOST,
+		useEncryption: false,
+		authToken: TEST_AUTH_TOKEN,
+	});
+	const createManyScheduledScripts = makeCreateManyScheduledScripts({
+		host: TEST_HOST,
+		useEncryption: false,
+		authToken: TEST_AUTH_TOKEN,
+	});
 
 	beforeEach(async () => {
-		await deleteAllScheduledScripts(TEST_AUTH_TOKEN);
+		await deleteAllScheduledScripts();
 	});
 
 	it(
 		'Should return all scheduled scripts',
 		integrationTest(async () => {
 			// Create two scheduled scripts
-			await createManyScheduledScripts(TEST_AUTH_TOKEN, [
+			await createManyScheduledScripts([
 				{
 					name: 'Script1',
 					description: 'D1',
@@ -41,7 +53,7 @@ describe('getAllScheduledScripts()', () => {
 				},
 			]);
 
-			const scheduledScripts = await getAllScheduledScripts(TEST_AUTH_TOKEN);
+			const scheduledScripts = await getAllScheduledScripts();
 			expect(scheduledScripts.length).toBe(2);
 			expect(scheduledScripts.every(isScheduledTaskBase)).toBeTrue();
 		}),
@@ -50,7 +62,7 @@ describe('getAllScheduledScripts()', () => {
 	it(
 		'Should return an empty array if there are no scheduled scripts',
 		integrationTest(async () => {
-			const scheduledScripts = await getAllScheduledScripts(TEST_AUTH_TOKEN);
+			const scheduledScripts = await getAllScheduledScripts();
 			expect(scheduledScripts.length).toBe(0);
 		}),
 	);

@@ -15,9 +15,17 @@ import { makeDeleteOnePlaybook } from './delete-one-playbook';
 import { makeGetOnePlaybook } from './get-one-playbook';
 
 describe('getOnePlaybook()', () => {
-	const getOnePlaybook = makeGetOnePlaybook({ host: TEST_HOST, useEncryption: false });
-	const createOnePlaybook = makeCreateOnePlaybook({ host: TEST_HOST, useEncryption: false });
-	const deleteOnePlaybook = makeDeleteOnePlaybook({ host: TEST_HOST, useEncryption: false });
+	const getOnePlaybook = makeGetOnePlaybook({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
+	const createOnePlaybook = makeCreateOnePlaybook({
+		host: TEST_HOST,
+		useEncryption: false,
+		authToken: TEST_AUTH_TOKEN,
+	});
+	const deleteOnePlaybook = makeDeleteOnePlaybook({
+		host: TEST_HOST,
+		useEncryption: false,
+		authToken: TEST_AUTH_TOKEN,
+	});
 
 	let createdPlaybookUUID: UUID;
 
@@ -26,17 +34,17 @@ describe('getOnePlaybook()', () => {
 			name: 'Playbook test',
 			body: 'This is my playbook',
 		};
-		createdPlaybookUUID = await createOnePlaybook(TEST_AUTH_TOKEN, data);
+		createdPlaybookUUID = await createOnePlaybook(data);
 	});
 
 	afterEach(async () => {
-		await deleteOnePlaybook(TEST_AUTH_TOKEN, createdPlaybookUUID);
+		await deleteOnePlaybook(createdPlaybookUUID);
 	});
 
 	it(
 		'Should return an playbook',
 		integrationTest(async () => {
-			const playbook = await getOnePlaybook(TEST_AUTH_TOKEN, createdPlaybookUUID);
+			const playbook = await getOnePlaybook(createdPlaybookUUID);
 			expect(isPlaybook(playbook)).toBeTrue();
 		}),
 	);

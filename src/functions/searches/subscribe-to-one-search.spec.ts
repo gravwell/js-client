@@ -15,7 +15,11 @@ xdescribe('subscribeToOneSearch()', () => {
 	it(
 		'Should work with queries using the raw renderer',
 		integrationTest(async () => {
-			const subscribeToOneSearch = makeSubscribeToOneSearch({ host: TEST_HOST, useEncryption: false })(TEST_AUTH_TOKEN);
+			const subscribeToOneSearch = makeSubscribeToOneSearch({
+				host: TEST_HOST,
+				useEncryption: false,
+				authToken: TEST_AUTH_TOKEN,
+			})();
 			const query = 'tag=netflow netflow Src Bytes | count Bytes by Src';
 			const range: [Date, Date] = [subDays(new Date(), 7), new Date()];
 			const search = await subscribeToOneSearch(query, range);
@@ -32,7 +36,11 @@ xdescribe('subscribeToOneSearch()', () => {
 	it(
 		'Should work with queries using the chart renderer',
 		integrationTest(async () => {
-			const subscribeToOneSearch = makeSubscribeToOneSearch({ host: TEST_HOST, useEncryption: false })(TEST_AUTH_TOKEN);
+			const subscribeToOneSearch = makeSubscribeToOneSearch({
+				host: TEST_HOST,
+				useEncryption: false,
+				authToken: TEST_AUTH_TOKEN,
+			})();
 			const query = 'tag=netflow netflow Bytes Src | count Bytes by Src | chart count by Src';
 			const range: [Date, Date] = [subDays(new Date(), 7), new Date()];
 			const search = await subscribeToOneSearch(query, range);
@@ -49,7 +57,11 @@ xdescribe('subscribeToOneSearch()', () => {
 	it(
 		'Should work with queries using the table renderer',
 		integrationTest(async () => {
-			const subscribeToOneSearch = makeSubscribeToOneSearch({ host: TEST_HOST, useEncryption: false })(TEST_AUTH_TOKEN);
+			const subscribeToOneSearch = makeSubscribeToOneSearch({
+				host: TEST_HOST,
+				useEncryption: false,
+				authToken: TEST_AUTH_TOKEN,
+			})();
 			const query = 'tag=netflow netflow Src Dst | table';
 			const range: [Date, Date] = [subDays(new Date(), 7), new Date()];
 			const search = await subscribeToOneSearch(query, range);

@@ -15,21 +15,29 @@ import { makeCreateManyScheduledScripts } from './create-many-scheduled-scripts'
 import { makeDeleteAllScheduledScripts } from './delete-all-scheduled-scripts';
 
 describe('createManyScheduledScripts()', () => {
-	const createManyScheduledScripts = makeCreateManyScheduledScripts({ host: TEST_HOST, useEncryption: false });
-	const createOneGroup = makeCreateOneGroup({ host: TEST_HOST, useEncryption: false });
-	const deleteAllScheduledScripts = makeDeleteAllScheduledScripts({ host: TEST_HOST, useEncryption: false });
+	const createManyScheduledScripts = makeCreateManyScheduledScripts({
+		host: TEST_HOST,
+		useEncryption: false,
+		authToken: TEST_AUTH_TOKEN,
+	});
+	const createOneGroup = makeCreateOneGroup({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
+	const deleteAllScheduledScripts = makeDeleteAllScheduledScripts({
+		host: TEST_HOST,
+		useEncryption: false,
+		authToken: TEST_AUTH_TOKEN,
+	});
 
 	let groupIDs: Array<NumericID>;
 
 	beforeEach(async () => {
 		jasmine.addMatchers(myCustomMatchers);
 
-		await deleteAllScheduledScripts(TEST_AUTH_TOKEN);
+		await deleteAllScheduledScripts();
 
 		groupIDs = await Promise.all(
 			Array.from({ length: 3 })
 				.map((_, i) => `G${i}`)
-				.map(name => createOneGroup(TEST_AUTH_TOKEN, { name })),
+				.map(name => createOneGroup({ name })),
 		);
 	});
 
@@ -70,7 +78,7 @@ describe('createManyScheduledScripts()', () => {
 				},
 			];
 
-			const scheduledScripts = await createManyScheduledScripts(TEST_AUTH_TOKEN, data);
+			const scheduledScripts = await createManyScheduledScripts(data);
 			for (const q of scheduledScripts) expect(isScheduledScript(q)).toBeTrue();
 			expect(scheduledScripts).toPartiallyEqual(data);
 		}),

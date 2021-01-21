@@ -15,12 +15,13 @@ describe('getAllPersistentSearchStatus()', () => {
 	const getAllPersistentSearchStatus = makeGetAllPersistentSearchStatus({
 		host: TEST_HOST,
 		useEncryption: false,
+		authToken: TEST_AUTH_TOKEN,
 	});
 
 	it(
 		'Should return all persistent searches',
 		integrationTest(async () => {
-			const searches = await getAllPersistentSearchStatus(TEST_AUTH_TOKEN);
+			const searches = await getAllPersistentSearchStatus();
 			expect(searches.every(isSearch2)).toBeTrue();
 		}),
 	);

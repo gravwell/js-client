@@ -15,9 +15,17 @@ import { makeDeleteOnePlaybook } from './delete-one-playbook';
 import { makeGetOnePlaybook } from './get-one-playbook';
 
 describe('createOnePlaybook()', () => {
-	const createOnePlaybook = makeCreateOnePlaybook({ host: TEST_HOST, useEncryption: false });
-	const getOnePlaybook = makeGetOnePlaybook({ host: TEST_HOST, useEncryption: false });
-	const deleteOnePlaybook = makeDeleteOnePlaybook({ host: TEST_HOST, useEncryption: false });
+	const createOnePlaybook = makeCreateOnePlaybook({
+		host: TEST_HOST,
+		useEncryption: false,
+		authToken: TEST_AUTH_TOKEN,
+	});
+	const getOnePlaybook = makeGetOnePlaybook({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
+	const deleteOnePlaybook = makeDeleteOnePlaybook({
+		host: TEST_HOST,
+		useEncryption: false,
+		authToken: TEST_AUTH_TOKEN,
+	});
 
 	it(
 		"Should create an playbook and return it's UUID",
@@ -27,12 +35,12 @@ describe('createOnePlaybook()', () => {
 				body: 'This is my playbook',
 			};
 
-			const playbookUUID = await createOnePlaybook(TEST_AUTH_TOKEN, data);
+			const playbookUUID = await createOnePlaybook(data);
 			expect(isUUID(playbookUUID)).toBeTrue();
-			const playbook = await getOnePlaybook(TEST_AUTH_TOKEN, playbookUUID);
+			const playbook = await getOnePlaybook(playbookUUID);
 			expect(isPlaybook(playbook)).toBeTrue();
 
-			await deleteOnePlaybook(TEST_AUTH_TOKEN, playbookUUID);
+			await deleteOnePlaybook(playbookUUID);
 		}),
 	);
 });
