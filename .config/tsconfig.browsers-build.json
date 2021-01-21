@@ -1,6 +1,7 @@
 {
 	"extends": "./tsconfig.base.json",
 	"compilerOptions": {
+		"outDir": "../dist-tsc/browsers",
 		"types": [],
 		"lib": ["ES2020", "DOM"]
 	},
