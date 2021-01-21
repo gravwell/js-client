@@ -84,6 +84,9 @@ const buildBrowsers = async (): Promise<void> => {
 	try {
 		if (BUILD_ENVIRONMENTS.includes('Node')) await buildNode();
 		if (BUILD_ENVIRONMENTS.includes('Browsers')) await buildBrowsers();
+
+		debug(`Improving typescript compatibility`);
+		await improveTypescriptCompatibility('dist');
 	} catch (err) {
 		startDebugContext('Error', ['red', 'bold']);
 		if (err.message) debug(err.message);
@@ -92,7 +95,4 @@ const buildBrowsers = async (): Promise<void> => {
 
 		process.exit(1);
 	}
-
-	debug(`Improving typescript compatibility`);
-	await improveTypescriptCompatibility('dist');
 })();
