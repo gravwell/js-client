@@ -2,7 +2,8 @@
 	"extends": "./tsconfig.base.json",
 	"compilerOptions": {
 		"declaration": false,
-		"types": ["node", "jasmine"]
+		"types": ["node", "jasmine"],
+		"lib": ["ES2020", "DOM"]
 	},
-	"include": ["../src-tsc/**/*"]
+	"include": ["../src/**/*"]
 }

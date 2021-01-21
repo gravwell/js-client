@@ -4,6 +4,6 @@
 		"types": [],
 		"lib": ["ES2020", "DOM"]
 	},
-	"include": ["../src-tsc/**/*"],
-	"exclude": ["../src-tsc/**/*.spec.ts", "../src-tsc/tests/**/*"]
+	"include": ["../src/**/*"],
+	"exclude": ["../src/**/*.spec.ts", "../src/tests/**/*", "../src/**/*.node.ts"]
 }
