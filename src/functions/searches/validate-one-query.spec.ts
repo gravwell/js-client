@@ -18,7 +18,7 @@ describe('validateOneQuery()', () => {
 				host: TEST_HOST,
 				useEncryption: false,
 				authToken: TEST_AUTH_TOKEN,
-			})();
+			});
 			const query = 'tag=netflow netflow Src';
 			const validation = await validateOneQuery(query);
 			expect(validation).toEqual({ isValid: true, error: null });
@@ -32,7 +32,7 @@ describe('validateOneQuery()', () => {
 				host: TEST_HOST,
 				useEncryption: false,
 				authToken: TEST_AUTH_TOKEN,
-			})();
+			});
 			const query = 'tag=non-existant';
 			const validation = await validateOneQuery(query);
 			expect(validation).toEqual({

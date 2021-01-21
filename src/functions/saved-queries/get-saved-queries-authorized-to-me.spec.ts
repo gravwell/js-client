@@ -97,7 +97,14 @@ describe('getSavedQueriesAuthorizedToMe()', () => {
 				query: 'tag=default',
 			},
 		];
-		const createPromises2 = creatableSavedQueries2.map(creatable => createOneSavedQuery(analystAuth, creatable));
+
+		const createOneSavedQueryAsAnalyst = makeCreateOneSavedQuery({
+			host: TEST_HOST,
+			useEncryption: false,
+			authToken: analystAuth,
+		});
+
+		const createPromises2 = creatableSavedQueries2.map(creatable => createOneSavedQueryAsAnalyst(creatable));
 		analystSavedQueries = await Promise.all(createPromises2);
 	});
 
@@ -108,7 +115,13 @@ describe('getSavedQueriesAuthorizedToMe()', () => {
 			expect(sortBy(actualAdminSavedQueries, m => m.id)).toEqual(sortBy(adminSavedQueries, m => m.id));
 			for (const savedQuery of actualAdminSavedQueries) expect(isSavedQuery(savedQuery)).toBeTrue();
 
-			const actualAnalystSavedQueries = await getSavedQueriesAuthorizedToMe(analystAuth);
+			const getSavedQueriesAuthorizedToAnalyst = makeGetSavedQueriesAuthorizedToMe({
+				host: TEST_HOST,
+				useEncryption: false,
+				authToken: analystAuth,
+			});
+
+			const actualAnalystSavedQueries = await getSavedQueriesAuthorizedToAnalyst();
 			expect(sortBy(actualAnalystSavedQueries, m => m.id)).toEqual(sortBy(analystSavedQueries, m => m.id));
 			for (const savedQuery of actualAnalystSavedQueries) expect(isSavedQuery(savedQuery)).toBeTrue();
 

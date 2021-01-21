@@ -75,7 +75,13 @@ describe('deleteAllScheduledQueries()', () => {
 		userAuth = await login(user.username, data.password);
 
 		// Create three scheduled queries as analyst
-		await createManyScheduledQueries(userAuth, [
+		const createManyScheduledQueriesAsAnalyst = makeCreateManyScheduledQueries({
+			host: TEST_HOST,
+			useEncryption: false,
+			authToken: userAuth,
+		});
+
+		await createManyScheduledQueriesAsAnalyst([
 			{
 				name: 'Q3',
 				description: 'D3',

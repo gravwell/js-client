@@ -22,7 +22,12 @@ describe('subscribeToManySystemInformations()', () => {
 	it(
 		'Should return a function given a valid host',
 		unitTest(() => {
-			const fn = () => makeSubscribeToManySystemInformations({ host: 'www.example.com', useEncryption: false });
+			const fn = () =>
+				makeSubscribeToManySystemInformations({
+					host: 'www.example.com',
+					useEncryption: false,
+					authToken: TEST_AUTH_TOKEN,
+				});
 			expect(fn).not.toThrow();
 			expect(typeof fn()).toBe('function');
 		}),

@@ -27,7 +27,7 @@ describe('deleteOneNotification()', () => {
 		host: TEST_HOST,
 		useEncryption: false,
 		authToken: TEST_AUTH_TOKEN,
-	})();
+	});
 
 	it(
 		'Should delete the notification',

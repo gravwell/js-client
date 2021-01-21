@@ -63,7 +63,14 @@ describe('getMacrosByUser()', () => {
 			{ name: 'M4', expansion: 'def' },
 			{ name: 'M5', expansion: 'ghi' },
 		];
-		const createPromises2 = creatableMacros2.map(creatable => createOneMacro(userAuth, creatable));
+
+		const createOneMacroAsAnalyst = makeCreateOneMacro({
+			host: TEST_HOST,
+			useEncryption: false,
+			authToken: userAuth,
+		});
+
+		const createPromises2 = creatableMacros2.map(creatable => createOneMacroAsAnalyst(creatable));
 		await Promise.all(createPromises2);
 	});
 
@@ -109,12 +116,18 @@ describe('getMacrosByUser()', () => {
 			expect(allMacroIDs.length).toBe(5);
 			expect(analystMacroIDs.length).toBe(3);
 
-			const macrosSelf = await getMacrosByUser(userAuth, user.id);
+			const getMacrosByUserAsAnalyst = makeGetMacrosByUser({
+				host: TEST_HOST,
+				useEncryption: false,
+				authToken: userAuth,
+			});
+
+			const macrosSelf = await getMacrosByUserAsAnalyst(user.id);
 			expect(macrosSelf.length).toBe(analystMacroIDs.length);
 			expect(macrosSelf.every(isMacro)).toBeTrue();
 			expect(macrosSelf.map(m => m.id).sort()).toEqual(analystMacroIDs.sort());
 
-			await expectAsync(getMacrosByUser(userAuth, adminID)).toBeRejected();
+			await expectAsync(getMacrosByUserAsAnalyst(adminID)).toBeRejected();
 		}),
 	);
 });

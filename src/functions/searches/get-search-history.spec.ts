@@ -22,7 +22,6 @@ describe('getSearchHistory()', () => {
 	const getMyUser = makeGetMyUser({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
 
 	let admin: User;
-	const adminAuth = TEST_AUTH_TOKEN;
 	let user: User;
 	let userAuth: string;
 
@@ -35,17 +34,17 @@ describe('getSearchHistory()', () => {
 			role: 'analyst',
 			user: userSeed,
 		};
-		const userID = await createOneUser(adminAuth, data);
-		user = await getOneUser(adminAuth, userID);
+		const userID = await createOneUser(data);
+		user = await getOneUser(userID);
 		userAuth = await login(user.username, data.password);
 
-		admin = await getMyUser(adminAuth);
+		admin = await getMyUser();
 	});
 
 	it(
 		'Should get the search history of a specific user',
 		integrationTest(async () => {
-			const searches = await getSearchHistory(adminAuth, { target: 'user', userID: '1' });
+			const searches = await getSearchHistory({ target: 'user', userID: '1' });
 			expect(searches.every(isValidSearch)).toBeTrue();
 		}),
 	);
@@ -53,7 +52,7 @@ describe('getSearchHistory()', () => {
 	it(
 		'Should get the search history of a specific group',
 		integrationTest(async () => {
-			const searches = await getSearchHistory(adminAuth, { target: 'group', groupID: '1' });
+			const searches = await getSearchHistory({ target: 'group', groupID: '1' });
 			expect(searches.every(isValidSearch)).toBeTrue();
 		}),
 	);
@@ -61,7 +60,7 @@ describe('getSearchHistory()', () => {
 	it(
 		'Should get the search history related to a specific user',
 		integrationTest(async () => {
-			const searches = await getSearchHistory(adminAuth, { target: 'user related', userID: '1' });
+			const searches = await getSearchHistory({ target: 'user related', userID: '1' });
 			expect(searches.every(isValidSearch)).toBeTrue();
 		}),
 	);
@@ -69,7 +68,7 @@ describe('getSearchHistory()', () => {
 	it(
 		'Should get the search history of all users',
 		integrationTest(async () => {
-			const searches = await getSearchHistory(adminAuth, { target: 'all' });
+			const searches = await getSearchHistory({ target: 'all' });
 			expect(searches.every(isValidSearch)).toBeTrue();
 		}),
 	);
@@ -85,7 +84,13 @@ describe('getSearchHistory()', () => {
 	it(
 		'Should not get the search history of another user if the request was not from an admin',
 		integrationTest(async () => {
-			await expectAsync(getSearchHistory(userAuth, { target: 'user', userID: admin.id })).toBeRejected();
+			const getSearchHistoryAsAnalyst = makeGetSearchHistory({
+				host: TEST_HOST,
+				useEncryption: false,
+				authToken: userAuth,
+			});
+
+			await expectAsync(getSearchHistoryAsAnalyst({ target: 'user', userID: admin.id })).toBeRejected();
 		}),
 	);
 });

@@ -100,7 +100,14 @@ describe('getDashboardsByUser()', () => {
 				timeframe: { durationString: 'PT1H', end: null, start: null, timeframe: 'PT1H' },
 			},
 		];
-		const createPromises2 = creatableDashboards2.map(creatable => createOneDashboard(userAuth, creatable));
+
+		const createOneDashboardAsAnalyst = makeCreateOneDashboard({
+			host: TEST_HOST,
+			useEncryption: false,
+			authToken: userAuth,
+		});
+
+		const createPromises2 = creatableDashboards2.map(creatable => createOneDashboardAsAnalyst(creatable));
 		await Promise.all(createPromises2);
 	});
 
@@ -146,12 +153,18 @@ describe('getDashboardsByUser()', () => {
 			expect(allDashboardIDs.length).toBe(5);
 			expect(analystDashboardIDs.length).toBe(3);
 
-			const dashboardsSelf = await getDashboardsByUser(userAuth, user.id);
+			const getDashboardsByUserAsAnalyst = makeGetDashboardsByUser({
+				host: TEST_HOST,
+				useEncryption: false,
+				authToken: userAuth,
+			});
+
+			const dashboardsSelf = await getDashboardsByUserAsAnalyst(user.id);
 			expect(dashboardsSelf.length).toBe(analystDashboardIDs.length);
 			expect(dashboardsSelf.every(isDashboard)).toBeTrue();
 			expect(dashboardsSelf.map(m => m.id).sort()).toEqual(analystDashboardIDs.sort());
 
-			await expectAsync(getDashboardsByUser(userAuth, adminID)).toBeRejected();
+			await expectAsync(getDashboardsByUserAsAnalyst(adminID)).toBeRejected();
 		}),
 	);
 });

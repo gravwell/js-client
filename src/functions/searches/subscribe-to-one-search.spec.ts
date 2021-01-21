@@ -19,13 +19,13 @@ xdescribe('subscribeToOneSearch()', () => {
 				host: TEST_HOST,
 				useEncryption: false,
 				authToken: TEST_AUTH_TOKEN,
-			})();
+			});
 			const query = 'tag=netflow netflow Src Bytes | count Bytes by Src';
 			const range: [Date, Date] = [subDays(new Date(), 7), new Date()];
 			const search = await subscribeToOneSearch(query, range);
 
 			search.progress$.subscribe(progress => console.log(`Progress ${progress}`));
-			search.entries$.subscribe(entries => console.log(`Entries`, entries.names, entries.data));
+			search.entries$.subscribe(entries => console.log(`Entries`, entries));
 			search.stats$.subscribe(stats => console.log(`Stats`, stats));
 
 			await new Promise(res => setTimeout(res, 10000));
@@ -40,13 +40,13 @@ xdescribe('subscribeToOneSearch()', () => {
 				host: TEST_HOST,
 				useEncryption: false,
 				authToken: TEST_AUTH_TOKEN,
-			})();
+			});
 			const query = 'tag=netflow netflow Bytes Src | count Bytes by Src | chart count by Src';
 			const range: [Date, Date] = [subDays(new Date(), 7), new Date()];
 			const search = await subscribeToOneSearch(query, range);
 
 			search.progress$.subscribe(progress => console.log(`Progress ${progress}`));
-			search.entries$.subscribe(entries => console.log(`Entries`, entries.names, entries.data));
+			search.entries$.subscribe(entries => console.log(`Entries`, entries));
 			search.stats$.subscribe(stats => console.log(`Stats`, stats));
 
 			await new Promise(res => setTimeout(res, 10000));
@@ -61,13 +61,13 @@ xdescribe('subscribeToOneSearch()', () => {
 				host: TEST_HOST,
 				useEncryption: false,
 				authToken: TEST_AUTH_TOKEN,
-			})();
+			});
 			const query = 'tag=netflow netflow Src Dst | table';
 			const range: [Date, Date] = [subDays(new Date(), 7), new Date()];
 			const search = await subscribeToOneSearch(query, range);
 
 			search.progress$.subscribe(progress => console.log(`Progress ${progress}`));
-			search.entries$.subscribe(entries => console.log(`Entries`, entries.names, entries.data));
+			search.entries$.subscribe(entries => console.log(`Entries`, entries));
 			search.stats$.subscribe(stats => console.log(`Stats`, stats));
 
 			await new Promise(res => setTimeout(res, 10000));

@@ -25,7 +25,7 @@ describe('createOneTargetedNotification', () => {
 	it(
 		'Should be able to create a targeted message to myself',
 		integrationTest(async () => {
-			const result = await createOneTargetedNotification()('myself', { message: 'test myself' });
+			const result = await createOneTargetedNotification('myself', { message: 'test myself' });
 			expect(result).toBeUndefined();
 		}),
 	);
@@ -36,7 +36,7 @@ describe('createOneTargetedNotification', () => {
 		integrationTest(async () => {
 			const groupID = await createOneGroup({ name: '1' });
 
-			const result = await createOneTargetedNotification()('group', {
+			const result = await createOneTargetedNotification('group', {
 				message: 'test group',
 				groupID,
 			});
@@ -48,7 +48,7 @@ describe('createOneTargetedNotification', () => {
 	it(
 		'Should be able to create a targeted message to a user',
 		integrationTest(async () => {
-			const result = await createOneTargetedNotification()('user', {
+			const result = await createOneTargetedNotification('user', {
 				message: 'test user',
 				userID: '1',
 			});

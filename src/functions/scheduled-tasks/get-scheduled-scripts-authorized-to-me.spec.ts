@@ -81,7 +81,13 @@ describe('getScheduledScriptsAuthorizedToMe()', () => {
 		analystAuth = await login(analyst.username, data.password);
 
 		// Create three scheduled scripts as analyst
-		analystScheduledScripts = await createManyScheduledScripts(analystAuth, [
+		const createManyScheduledScriptsAsAnalyst = makeCreateManyScheduledScripts({
+			host: TEST_HOST,
+			useEncryption: false,
+			authToken: analystAuth,
+		});
+
+		analystScheduledScripts = await createManyScheduledScriptsAsAnalyst([
 			{
 				name: 'Script3',
 				description: 'D3',
@@ -110,7 +116,13 @@ describe('getScheduledScriptsAuthorizedToMe()', () => {
 			expect(sortBy(actualAdminScheduledScripts, s => s.id)).toEqual(sortBy(adminScheduledScripts, s => s.id));
 			for (const scheduledScript of actualAdminScheduledScripts) expect(isScheduledScript(scheduledScript)).toBeTrue();
 
-			const actualAnalystScheduledScripts = await getScheduledScriptsAuthorizedToMe(analystAuth);
+			const getScheduledScriptsAuthorizedToAnalyst = makeGetScheduledScriptsAuthorizedToMe({
+				host: TEST_HOST,
+				useEncryption: false,
+				authToken: analystAuth,
+			});
+
+			const actualAnalystScheduledScripts = await getScheduledScriptsAuthorizedToAnalyst();
 			expect(sortBy(actualAnalystScheduledScripts, s => s.id)).toEqual(sortBy(analystScheduledScripts, s => s.id));
 			for (const scheduledScript of actualAnalystScheduledScripts)
 				expect(isScheduledScript(scheduledScript)).toBeTrue();

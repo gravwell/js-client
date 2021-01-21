@@ -78,7 +78,13 @@ describe('getManyScheduledScripts()', () => {
 		userAuth = await login(user.username, data.password);
 
 		// Create three scheduled scripts as analyst
-		await createManyScheduledScripts(userAuth, [
+		const createManyScheduledScriptsAsAnalyst = makeCreateManyScheduledScripts({
+			host: TEST_HOST,
+			useEncryption: false,
+			authToken: userAuth,
+		});
+
+		await createManyScheduledScriptsAsAnalyst([
 			{
 				name: 'Script3',
 				description: 'D3',

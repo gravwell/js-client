@@ -70,7 +70,14 @@ describe('getMacrosAuthorizedToMe()', () => {
 			{ name: 'M4', expansion: 'def' },
 			{ name: 'M5', expansion: 'ghi' },
 		];
-		const createPromises2 = creatableMacros2.map(creatable => createOneMacro(analystAuth, creatable));
+
+		const createOneMacroAsAnalyst = makeCreateOneMacro({
+			host: TEST_HOST,
+			useEncryption: false,
+			authToken: analystAuth,
+		});
+
+		const createPromises2 = creatableMacros2.map(creatable => createOneMacroAsAnalyst(creatable));
 		analystMacros = await Promise.all(createPromises2);
 	});
 
@@ -81,7 +88,13 @@ describe('getMacrosAuthorizedToMe()', () => {
 			expect(sortBy(actualAdminMacros, m => m.id)).toEqual(sortBy(adminMacros, m => m.id));
 			for (const macro of actualAdminMacros) expect(isMacro(macro)).toBeTrue();
 
-			const actualAnalystMacros = await getMacrosAuthorizedToMe(analystAuth);
+			const getMacrosAuthorizedToAnalyst = makeGetMacrosAuthorizedToMe({
+				host: TEST_HOST,
+				useEncryption: false,
+				authToken: analystAuth,
+			});
+
+			const actualAnalystMacros = await getMacrosAuthorizedToAnalyst();
 			expect(sortBy(actualAnalystMacros, m => m.id)).toEqual(sortBy(analystMacros, m => m.id));
 			for (const macro of actualAnalystMacros) expect(isMacro(macro)).toBeTrue();
 

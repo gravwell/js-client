@@ -103,7 +103,14 @@ describe('getDashboardsAuthorizedToMe()', () => {
 				timeframe: { durationString: 'PT1H', end: null, start: null, timeframe: 'PT1H' },
 			},
 		];
-		const createPromises2 = creatableDashboards2.map(creatable => createOneDashboard(analystAuth, creatable));
+
+		const createOneDashboardAsAnalyst = makeCreateOneDashboard({
+			host: TEST_HOST,
+			useEncryption: false,
+			authToken: analystAuth,
+		});
+
+		const createPromises2 = creatableDashboards2.map(creatable => createOneDashboardAsAnalyst(creatable));
 		analystDashboards = await Promise.all(createPromises2);
 	});
 
@@ -114,7 +121,13 @@ describe('getDashboardsAuthorizedToMe()', () => {
 			expect(sortBy(actualAdminDashboards, m => m.id)).toEqual(sortBy(adminDashboards, m => m.id));
 			for (const dashboard of actualAdminDashboards) expect(isDashboard(dashboard)).toBeTrue();
 
-			const actualAnalystDashboards = await getDashboardsAuthorizedToMe(analystAuth);
+			const getDashboardsAuthorizedToAnalyst = makeGetDashboardsAuthorizedToMe({
+				host: TEST_HOST,
+				useEncryption: false,
+				authToken: analystAuth,
+			});
+
+			const actualAnalystDashboards = await getDashboardsAuthorizedToAnalyst();
 			expect(sortBy(actualAnalystDashboards, m => m.id)).toEqual(sortBy(analystDashboards, m => m.id));
 			for (const dashboard of actualAnalystDashboards) expect(isDashboard(dashboard)).toBeTrue();
 

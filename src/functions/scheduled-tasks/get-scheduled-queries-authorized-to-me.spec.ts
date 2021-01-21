@@ -83,7 +83,13 @@ describe('getScheduledQueriesAuthorizedToMe()', () => {
 		analystAuth = await login(analyst.username, data.password);
 
 		// Create three scheduled queries as analyst
-		analystScheduledQueries = await createManyScheduledQueries(analystAuth, [
+		const createManyScheduledQueriesAsAnalyst = makeCreateManyScheduledQueries({
+			host: TEST_HOST,
+			useEncryption: false,
+			authToken: analystAuth,
+		});
+
+		analystScheduledQueries = await createManyScheduledQueriesAsAnalyst([
 			{
 				name: 'Q3',
 				description: 'D3',
@@ -115,7 +121,13 @@ describe('getScheduledQueriesAuthorizedToMe()', () => {
 			expect(sortBy(actualAdminScheduledQueries, s => s.id)).toEqual(sortBy(adminScheduledQueries, s => s.id));
 			for (const scheduledQuery of actualAdminScheduledQueries) expect(isScheduledQuery(scheduledQuery)).toBeTrue();
 
-			const actualAnalystScheduledQueries = await getScheduledQueriesAuthorizedToMe(analystAuth);
+			const getScheduledQueriesAuthorizedToAnalyst = makeGetScheduledQueriesAuthorizedToMe({
+				host: TEST_HOST,
+				useEncryption: false,
+				authToken: analystAuth,
+			});
+
+			const actualAnalystScheduledQueries = await getScheduledQueriesAuthorizedToAnalyst();
 			expect(sortBy(actualAnalystScheduledQueries, s => s.id)).toEqual(sortBy(analystScheduledQueries, s => s.id));
 			for (const scheduledQuery of actualAnalystScheduledQueries) expect(isScheduledQuery(scheduledQuery)).toBeTrue();
 

@@ -117,7 +117,14 @@ describe('getAutoExtractorsAuthorizedToMe()', () => {
 				parameters: '1 2 3',
 			},
 		];
-		const createPromises2 = creatableAutoExtractors2.map(creatable => createOneAutoExtractor(analystAuth, creatable));
+
+		const createOneAutoExtractorAsAnalyst = makeCreateOneAutoExtractor({
+			host: TEST_HOST,
+			useEncryption: false,
+			authToken: analystAuth,
+		});
+
+		const createPromises2 = creatableAutoExtractors2.map(creatable => createOneAutoExtractorAsAnalyst(creatable));
 		analystAutoExtractors = await Promise.all(createPromises2);
 	});
 
@@ -128,7 +135,13 @@ describe('getAutoExtractorsAuthorizedToMe()', () => {
 			expect(sortBy(actualAdminAutoExtractors, m => m.id)).toEqual(sortBy(adminAutoExtractors, m => m.id));
 			for (const autoExtractor of actualAdminAutoExtractors) expect(isAutoExtractor(autoExtractor)).toBeTrue();
 
-			const actualAnalystAutoExtractors = await getAutoExtractorsAuthorizedToMe(analystAuth);
+			const getAutoExtractorsAuthorizedToAnalyst = makeGetAutoExtractorsAuthorizedToMe({
+				host: TEST_HOST,
+				useEncryption: false,
+				authToken: analystAuth,
+			});
+
+			const actualAnalystAutoExtractors = await getAutoExtractorsAuthorizedToAnalyst();
 			expect(sortBy(actualAnalystAutoExtractors, m => m.id)).toEqual(sortBy(analystAutoExtractors, m => m.id));
 			for (const autoExtractor of actualAnalystAutoExtractors) expect(isAutoExtractor(autoExtractor)).toBeTrue();
 

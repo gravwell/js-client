@@ -48,7 +48,6 @@ xdescribe('getDashboardsByGroup()', () => {
 	const getMyUser = makeGetMyUser({ host: TEST_HOST, useEncryption: false, authToken: TEST_AUTH_TOKEN });
 
 	let admin: User;
-	const adminAuth = TEST_AUTH_TOKEN;
 	let adminGroupID: string;
 
 	let analyst: User;
@@ -57,7 +56,7 @@ xdescribe('getDashboardsByGroup()', () => {
 
 	beforeEach(async () => {
 		// Get admin
-		admin = await getMyUser(adminAuth);
+		admin = await getMyUser();
 
 		// Creates an analyst
 		const userSeed = random(0, Number.MAX_SAFE_INTEGER).toString();
@@ -68,25 +67,25 @@ xdescribe('getDashboardsByGroup()', () => {
 			role: 'analyst',
 			user: userSeed,
 		};
-		const userID = await createOneUser(adminAuth, data);
-		analyst = await getOneUser(adminAuth, userID);
+		const userID = await createOneUser(data);
+		analyst = await getOneUser(userID);
 		analystAuth = await login(analyst.username, data.password);
 
 		// Creates two groups
 		const creatableGroups: Array<CreatableGroup> = [{ name: 'Admin' }, { name: 'Analyst' }];
-		const groupCreationPs = creatableGroups.map(data => createOneGroup(adminAuth, data));
+		const groupCreationPs = creatableGroups.map(data => createOneGroup(data));
 		[adminGroupID, analystGroupID] = await Promise.all(groupCreationPs);
 
 		// Assign admin to one group and analyst to the other
 		await Promise.all([
-			addOneUserToManyGroups(adminAuth, admin.id, [adminGroupID]),
-			addOneUserToManyGroups(adminAuth, analyst.id, [analystGroupID]),
+			addOneUserToManyGroups(admin.id, [adminGroupID]),
+			addOneUserToManyGroups(analyst.id, [analystGroupID]),
 		]);
 
 		// Delete all dashboards
-		const currentDashboards = await getAllDashboards(adminAuth);
+		const currentDashboards = await getAllDashboards();
 		const currentDashboardIDs = currentDashboards.map(m => m.id);
-		const deletePromises = currentDashboardIDs.map(dashboardID => deleteOneDashboard(adminAuth, dashboardID));
+		const deletePromises = currentDashboardIDs.map(dashboardID => deleteOneDashboard(dashboardID));
 		await Promise.all(deletePromises);
 
 		// Create two dashboards for the admin group
@@ -106,7 +105,7 @@ xdescribe('getDashboardsByGroup()', () => {
 				timeframe: { durationString: 'PT1H', end: null, start: null, timeframe: 'PT1H' },
 			},
 		];
-		const createPromises = creatableDashboards.map(creatable => createOneDashboard(adminAuth, creatable));
+		const createPromises = creatableDashboards.map(creatable => createOneDashboard(creatable));
 		await Promise.all(createPromises);
 
 		// Create three dashboards for the analyst group
@@ -133,14 +132,21 @@ xdescribe('getDashboardsByGroup()', () => {
 				timeframe: { durationString: 'PT1H', end: null, start: null, timeframe: 'PT1H' },
 			},
 		];
-		const createPromises2 = creatableDashboards2.map(creatable => createOneDashboard(analystAuth, creatable));
+
+		const createOneDashboardAsAnalyst = makeCreateOneDashboard({
+			host: TEST_HOST,
+			useEncryption: false,
+			authToken: analystAuth,
+		});
+
+		const createPromises2 = creatableDashboards2.map(creatable => createOneDashboardAsAnalyst(creatable));
 		await Promise.all(createPromises2);
 	});
 
 	it(
 		'Should return all dashboards of a group',
 		integrationTest(async () => {
-			const allDashboards = await getAllDashboards(adminAuth);
+			const allDashboards = await getAllDashboards();
 			const allDashboardIDs = allDashboards.map(m => m.id);
 			const adminDashboardIDs = allDashboards.filter(m => m.userID === admin.id).map(m => m.id);
 			const analystDashboardIDs = allDashboards.filter(m => m.userID === analyst.id).map(m => m.id);
@@ -149,12 +155,12 @@ xdescribe('getDashboardsByGroup()', () => {
 			expect(adminDashboardIDs.length).toBe(2);
 			expect(analystDashboardIDs.length).toBe(3);
 
-			const adminGroupDashboards = await getDashboardsByGroup(adminAuth, adminGroupID);
+			const adminGroupDashboards = await getDashboardsByGroup(adminGroupID);
 			expect(adminGroupDashboards.length).toBe(adminDashboardIDs.length);
 			expect(adminGroupDashboards.every(isDashboard)).toBeTrue();
 			expect(adminGroupDashboards.map(m => m.id).sort()).toEqual(adminDashboardIDs.sort());
 
-			const analystGroupDashboards = await getDashboardsByGroup(adminAuth, analystGroupID);
+			const analystGroupDashboards = await getDashboardsByGroup(analystGroupID);
 			expect(analystGroupDashboards.length).toBe(analystDashboardIDs.length);
 			expect(analystGroupDashboards.every(isDashboard)).toBeTrue();
 			expect(analystGroupDashboards.map(m => m.id).sort()).toEqual(analystDashboardIDs.sort());
@@ -165,7 +171,7 @@ xdescribe('getDashboardsByGroup()', () => {
 		'Should return an empty array if the group has no dashboards',
 		integrationTest(async () => {
 			const creatableGroup: CreatableGroup = { name: 'New' };
-			const groupID = await createOneGroup(adminAuth, creatableGroup);
+			const groupID = await createOneGroup(creatableGroup);
 			const dashboards = await getDashboardsByGroup(groupID);
 			expect(dashboards.length).toBe(0);
 		}),
@@ -174,11 +180,17 @@ xdescribe('getDashboardsByGroup()', () => {
 	it(
 		"Blocks non admin users from grabbing dashboards from other groups that they don't belong",
 		integrationTest(async () => {
-			await expectAsync(getDashboardsByGroup(adminAuth, adminGroupID)).toBeResolved();
-			await expectAsync(getDashboardsByGroup(adminAuth, analystGroupID)).toBeResolved();
+			await expectAsync(getDashboardsByGroup(adminGroupID)).toBeResolved();
+			await expectAsync(getDashboardsByGroup(analystGroupID)).toBeResolved();
 
-			await expectAsync(getDashboardsByGroup(analystAuth, adminGroupID)).toBeRejected();
-			await expectAsync(getDashboardsByGroup(analystAuth, analystGroupID)).toBeResolved();
+			const getDashboardsByGroupAsAnalyst = makeGetDashboardsByGroup({
+				host: TEST_HOST,
+				useEncryption: false,
+				authToken: analystAuth,
+			});
+
+			await expectAsync(getDashboardsByGroupAsAnalyst(adminGroupID)).toBeRejected();
+			await expectAsync(getDashboardsByGroupAsAnalyst(analystGroupID)).toBeResolved();
 		}),
 	);
 });
