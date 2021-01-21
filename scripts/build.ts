@@ -38,18 +38,17 @@ const buildNode = async (): Promise<void> => {
 	await execAsync(`npx tsc -p ${tsconfig}`);
 
 	debug('Replacing transpiled files for *.node.* ones');
-	await execAsync('npx rename -f "dist-tsc/**/*.node.*" "{{f|replace|.node|}}"');
+	await execAsync('npx rename -f "dist-tsc/node/**/*.node.*" "{{f|replace|.node|}}"');
 
 	debug('Copying files to dist/node');
-	await execAsync('npx copyfiles --up=1 "dist-tsc/**/*" dist/node');
+	await execAsync('npx copyfiles --up=2 "dist-tsc/node/**/*" dist/node');
 	if (INCLUDE_ASSETS) await execAsync('npx copyfiles --up=1 "src/**/!(*.ts)" dist/node');
 
 	debug('Generating types from browser files');
-	await execAsync('npx rimraf "dist-tsc"');
 	const browsersTsconfig = '.config/tsconfig.' + (INCLUDE_TESTS ? 'browsers-spec' : 'browsers-build') + '.json';
 	await execAsync(`npx tsc -p ${browsersTsconfig}`);
-	await execAsync('npx rimraf "dist-tsc/**/*.node.ts"');
-	await execAsync('npx copyfiles --up=1 "dist-tsc/**/*.d.ts" dist/node');
+	await execAsync('npx rimraf "dist-tsc/browsers/**/*.node.ts"');
+	await execAsync('npx copyfiles --up=2 "dist-tsc/browsers/**/*.d.ts" dist/node');
 
 	debug('Cleaning the TypeScript builds');
 	await execAsync('npx rimraf "dist-tsc"');
@@ -68,7 +67,7 @@ const buildBrowsers = async (): Promise<void> => {
 	await execAsync(`npx tsc -p ${tsconfig}`);
 
 	debug('Copying files to dist/browsers');
-	await execAsync('npx copyfiles --up=1 "dist-tsc/**/*" dist/browsers');
+	await execAsync('npx copyfiles --up=2 "dist-tsc/browsers/**/*" dist/browsers');
 	if (INCLUDE_ASSETS) await execAsync('npx copyfiles --up=1 "src/**/!(*.ts)" dist/browsers');
 
 	debug('Cleaning the TypeScript builds');
