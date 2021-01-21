@@ -8,23 +8,23 @@
 
 import { CreatableGroup, isGroup } from '../../models';
 import { integrationTest } from '../../tests';
-import { TEST_AUTH_TOKEN, TEST_HOST } from '../../tests/config';
+import { TEST_BASE_API_CONTEXT } from '../../tests/config';
 import { makeCreateOneGroup } from './create-one-group';
 import { makeDeleteOneGroup } from './delete-one-group';
 import { makeGetAllGroups } from './get-all-groups';
 import { makeGetOneGroup } from './get-one-group';
 
 describe('createOneGroup()', () => {
-	const createOneGroup = makeCreateOneGroup({ host: TEST_HOST, useEncryption: false });
-	const getOneGroup = makeGetOneGroup({ host: TEST_HOST, useEncryption: false });
-	const deleteOneGroup = makeDeleteOneGroup({ host: TEST_HOST, useEncryption: false });
-	const getAllGroups = makeGetAllGroups({ host: TEST_HOST, useEncryption: false });
+	const createOneGroup = makeCreateOneGroup(TEST_BASE_API_CONTEXT);
+	const getOneGroup = makeGetOneGroup(TEST_BASE_API_CONTEXT);
+	const deleteOneGroup = makeDeleteOneGroup(TEST_BASE_API_CONTEXT);
+	const getAllGroups = makeGetAllGroups(TEST_BASE_API_CONTEXT);
 
 	beforeEach(async () => {
 		// Delete all groups
-		const currentGroups = await getAllGroups(TEST_AUTH_TOKEN);
+		const currentGroups = await getAllGroups();
 		const currentGroupIDs = currentGroups.map(g => g.id);
-		const deletePromises = currentGroupIDs.map(groupID => deleteOneGroup(TEST_AUTH_TOKEN, groupID));
+		const deletePromises = currentGroupIDs.map(groupID => deleteOneGroup(groupID));
 		await Promise.all(deletePromises);
 	});
 
@@ -36,12 +36,12 @@ describe('createOneGroup()', () => {
 				description: 'Description test',
 			};
 
-			const groupID = await createOneGroup(TEST_AUTH_TOKEN, data);
-			const group = await getOneGroup(TEST_AUTH_TOKEN, groupID);
+			const groupID = await createOneGroup(data);
+			const group = await getOneGroup(groupID);
 			expect(isGroup(group)).toBeTrue();
 			expect(group).toEqual(jasmine.objectContaining(data));
 
-			const currentGroups = await getAllGroups(TEST_AUTH_TOKEN);
+			const currentGroups = await getAllGroups();
 			const currentGroupIDs = currentGroups.map(g => g.id);
 			expect(currentGroupIDs).toContain(groupID);
 		}),
@@ -54,12 +54,12 @@ describe('createOneGroup()', () => {
 				name: 'Name test',
 			};
 
-			const groupID = await createOneGroup(TEST_AUTH_TOKEN, data);
-			const group = await getOneGroup(TEST_AUTH_TOKEN, groupID);
+			const groupID = await createOneGroup(data);
+			const group = await getOneGroup(groupID);
 			expect(isGroup(group)).toBeTrue();
 			expect(group).toEqual(jasmine.objectContaining(data));
 
-			const currentGroups = await getAllGroups(TEST_AUTH_TOKEN);
+			const currentGroups = await getAllGroups();
 			const currentGroupIDs = currentGroups.map(g => g.id);
 			expect(currentGroupIDs).toContain(groupID);
 		}),

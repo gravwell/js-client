@@ -8,16 +8,16 @@
 
 import { CreatableResource, isResource } from '../../models';
 import { integrationTest } from '../../tests';
-import { TEST_AUTH_TOKEN, TEST_HOST } from '../../tests/config';
+import { TEST_BASE_API_CONTEXT } from '../../tests/config';
 import { UUID } from '../../value-objects';
 import { makeCreateOneResource } from './create-one-resource';
 import { makeDeleteOneResource } from './delete-one-resource';
 import { makeGetResourcesAuthorizedToMe } from './get-resources-authorized-to-me';
 
 describe('getResourcesAuthorizedToMe()', () => {
-	const getResourcesAuthorizedToMe = makeGetResourcesAuthorizedToMe({ host: TEST_HOST, useEncryption: false });
-	const createOneResource = makeCreateOneResource({ host: TEST_HOST, useEncryption: false });
-	const deleteOneResource = makeDeleteOneResource({ host: TEST_HOST, useEncryption: false });
+	const getResourcesAuthorizedToMe = makeGetResourcesAuthorizedToMe(TEST_BASE_API_CONTEXT);
+	const createOneResource = makeCreateOneResource(TEST_BASE_API_CONTEXT);
+	const deleteOneResource = makeDeleteOneResource(TEST_BASE_API_CONTEXT);
 
 	let createdResourcesIDs: Array<UUID> = [];
 
@@ -27,21 +27,21 @@ describe('getResourcesAuthorizedToMe()', () => {
 			name: 'name' + i,
 			description: 'description' + i,
 		}));
-		const createdResourcesPs = datas.map(data => createOneResource(TEST_AUTH_TOKEN, data));
+		const createdResourcesPs = datas.map(data => createOneResource(data));
 		const createdResources = await Promise.all(createdResourcesPs);
 		createdResourcesIDs = createdResources.map(r => r.id);
 	});
 
 	afterEach(async () => {
 		// Delete the created resources
-		const deletePs = createdResourcesIDs.map(resourceID => deleteOneResource(TEST_AUTH_TOKEN, resourceID));
+		const deletePs = createdResourcesIDs.map(resourceID => deleteOneResource(resourceID));
 		await Promise.all(deletePs);
 	});
 
 	it(
 		'Should return resources',
 		integrationTest(async () => {
-			const resources = await getResourcesAuthorizedToMe(TEST_AUTH_TOKEN);
+			const resources = await getResourcesAuthorizedToMe();
 			const resourceIDs = resources.map(r => r.id);
 
 			expect(resources.every(isResource)).toBeTrue();

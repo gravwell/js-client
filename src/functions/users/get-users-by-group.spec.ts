@@ -9,7 +9,7 @@
 import { random } from 'lodash';
 import { CreatableGroup, CreatableUser, isValidUser } from '../../models';
 import { integrationTest } from '../../tests';
-import { TEST_AUTH_TOKEN, TEST_HOST } from '../../tests/config';
+import { TEST_BASE_API_CONTEXT } from '../../tests/config';
 import { NumericID } from '../../value-objects';
 import { makeAddOneUserToManyGroups, makeCreateOneGroup, makeDeleteOneGroup, makeGetAllGroups } from '../groups';
 import { makeCreateOneUser } from './create-one-user';
@@ -17,26 +17,26 @@ import { makeDeleteOneUser } from './delete-one-user';
 import { makeGetUsersByGroup } from './get-users-by-group';
 
 describe('getUsersByGroup()', () => {
-	const getAllGroups = makeGetAllGroups({ host: TEST_HOST, useEncryption: false });
-	const createOneGroup = makeCreateOneGroup({ host: TEST_HOST, useEncryption: false });
-	const deleteOneGroup = makeDeleteOneGroup({ host: TEST_HOST, useEncryption: false });
-	const getUsersByGroup = makeGetUsersByGroup({ host: TEST_HOST, useEncryption: false });
-	const createOneUser = makeCreateOneUser({ host: TEST_HOST, useEncryption: false });
-	const deleteOneUser = makeDeleteOneUser({ host: TEST_HOST, useEncryption: false });
-	const addOneUserToManyGroups = makeAddOneUserToManyGroups({ host: TEST_HOST, useEncryption: false });
+	const getAllGroups = makeGetAllGroups(TEST_BASE_API_CONTEXT);
+	const createOneGroup = makeCreateOneGroup(TEST_BASE_API_CONTEXT);
+	const deleteOneGroup = makeDeleteOneGroup(TEST_BASE_API_CONTEXT);
+	const getUsersByGroup = makeGetUsersByGroup(TEST_BASE_API_CONTEXT);
+	const createOneUser = makeCreateOneUser(TEST_BASE_API_CONTEXT);
+	const deleteOneUser = makeDeleteOneUser(TEST_BASE_API_CONTEXT);
+	const addOneUserToManyGroups = makeAddOneUserToManyGroups(TEST_BASE_API_CONTEXT);
 
 	let createdUserIDs: Array<NumericID>;
 
 	beforeEach(async () => {
 		// Delete all groups
-		const currentGroups = await getAllGroups(TEST_AUTH_TOKEN);
+		const currentGroups = await getAllGroups();
 		const currentGroupIDs = currentGroups.map(g => g.id);
-		const deletePromises = currentGroupIDs.map(groupID => deleteOneGroup(TEST_AUTH_TOKEN, groupID));
+		const deletePromises = currentGroupIDs.map(groupID => deleteOneGroup(groupID));
 		await Promise.all(deletePromises);
 
 		// Create two groups
 		const creatableGroups: Array<CreatableGroup> = [{ name: '1' }, { name: '2' }];
-		const createPromises = creatableGroups.map(creatable => createOneGroup(TEST_AUTH_TOKEN, creatable));
+		const createPromises = creatableGroups.map(creatable => createOneGroup(creatable));
 		await Promise.all(createPromises);
 
 		// Creates three users
@@ -49,20 +49,20 @@ describe('getUsersByGroup()', () => {
 				role: 'analyst',
 				user: userSeed,
 			};
-			return createOneUser(TEST_AUTH_TOKEN, data);
+			return createOneUser(data);
 		});
 		createdUserIDs = await Promise.all(createdUserIDsPs);
 	});
 
 	afterEach(async () => {
-		const deleteUsersPs = createdUserIDs.map(userID => deleteOneUser(TEST_AUTH_TOKEN, userID));
+		const deleteUsersPs = createdUserIDs.map(userID => deleteOneUser(userID));
 		await Promise.all(deleteUsersPs);
 	});
 
 	it(
 		'Should return all users of a group',
 		integrationTest(async () => {
-			const allGroups = await getAllGroups(TEST_AUTH_TOKEN);
+			const allGroups = await getAllGroups();
 			const allGroupIDs = allGroups.map(g => g.id);
 			const groupID = allGroupIDs[0];
 			expect(groupID).toBeDefined();
@@ -70,10 +70,10 @@ describe('getUsersByGroup()', () => {
 
 			const addedUserIDs: Array<NumericID> = [];
 			for (const userID of createdUserIDs) {
-				await addOneUserToManyGroups(TEST_AUTH_TOKEN, userID, [groupID]);
+				await addOneUserToManyGroups(userID, [groupID]);
 				addedUserIDs.push(userID);
 
-				const users = await getUsersByGroup(TEST_AUTH_TOKEN, groupID);
+				const users = await getUsersByGroup(groupID);
 				expect(users.length).toBe(addedUserIDs.length);
 				expect(users.every(isValidUser)).toBeTrue();
 				expect(users.map(u => u.id).sort()).toEqual(addedUserIDs.sort());
@@ -84,12 +84,12 @@ describe('getUsersByGroup()', () => {
 	it(
 		'Should return an empty array if the user belong to no groups',
 		integrationTest(async () => {
-			const allGroups = await getAllGroups(TEST_AUTH_TOKEN);
+			const allGroups = await getAllGroups();
 			const allGroupIDs = allGroups.map(g => g.id);
 			const groupID = allGroupIDs[0];
 			expect(groupID).toBeDefined();
 
-			const groups = await getUsersByGroup(TEST_AUTH_TOKEN, groupID);
+			const groups = await getUsersByGroup(groupID);
 			expect(groups.length).toBe(0);
 		}),
 	);

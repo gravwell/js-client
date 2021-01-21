@@ -8,16 +8,16 @@
 
 import { CreatableActionable, isActionable } from '../../models';
 import { integrationTest } from '../../tests';
-import { TEST_AUTH_TOKEN, TEST_HOST } from '../../tests/config';
+import { TEST_BASE_API_CONTEXT } from '../../tests/config';
 import { UUID } from '../../value-objects';
 import { makeCreateOneActionable } from './create-one-actionable';
 import { makeDeleteOneActionable } from './delete-one-actionable';
 import { makeGetAllActionables } from './get-all-actionables';
 
 describe('getAllActionables()', () => {
-	const getAllActionables = makeGetAllActionables({ host: TEST_HOST, useEncryption: false });
-	const createOneActionable = makeCreateOneActionable({ host: TEST_HOST, useEncryption: false });
-	const deleteOneActionable = makeDeleteOneActionable({ host: TEST_HOST, useEncryption: false });
+	const getAllActionables = makeGetAllActionables(TEST_BASE_API_CONTEXT);
+	const createOneActionable = makeCreateOneActionable(TEST_BASE_API_CONTEXT);
+	const deleteOneActionable = makeDeleteOneActionable(TEST_BASE_API_CONTEXT);
 
 	let createdActionablesUUIDs: Array<UUID> = [];
 
@@ -28,15 +28,13 @@ describe('getAllActionables()', () => {
 			actions: [{ name: 'Action test', command: { type: 'query', userQuery: 'tag=netflow' } }],
 			triggers: [{ pattern: /abc/g, activatesOn: 'clicks and selection' }],
 		};
-		const createdActionablesUUIDsPs = Array.from({ length: 2 }).map(() => createOneActionable(TEST_AUTH_TOKEN, data));
+		const createdActionablesUUIDsPs = Array.from({ length: 2 }).map(() => createOneActionable(data));
 		createdActionablesUUIDs = await Promise.all(createdActionablesUUIDsPs);
 	});
 
 	afterEach(async () => {
 		// Delete the created actionables
-		const deletePs = createdActionablesUUIDs.map(actionableUUID =>
-			deleteOneActionable(TEST_AUTH_TOKEN, actionableUUID),
-		);
+		const deletePs = createdActionablesUUIDs.map(actionableUUID => deleteOneActionable(actionableUUID));
 		await Promise.all(deletePs);
 	});
 
@@ -44,7 +42,7 @@ describe('getAllActionables()', () => {
 	xit(
 		'Should return actionables',
 		integrationTest(async () => {
-			const actionables = await getAllActionables(TEST_AUTH_TOKEN);
+			const actionables = await getAllActionables();
 			const actionableUUIDs = actionables.map(a => a.uuid);
 
 			expect(actionables.every(isActionable)).toBeTrue();

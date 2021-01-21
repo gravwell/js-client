@@ -9,13 +9,13 @@
 import { random } from 'lodash';
 import { CreatableUser, isValidUser } from '../../models';
 import { integrationTest } from '../../tests';
-import { TEST_AUTH_TOKEN, TEST_HOST } from '../../tests/config';
+import { TEST_BASE_API_CONTEXT } from '../../tests/config';
 import { makeCreateOneUser } from './create-one-user';
 import { makeGetOneUser } from './get-one-user';
 
 describe('createOneUser()', () => {
-	const createOneUser = makeCreateOneUser({ host: TEST_HOST, useEncryption: false });
-	const getOneUser = makeGetOneUser({ host: TEST_HOST, useEncryption: false });
+	const createOneUser = makeCreateOneUser(TEST_BASE_API_CONTEXT);
+	const getOneUser = makeGetOneUser(TEST_BASE_API_CONTEXT);
 
 	it(
 		"Should create a user and return it's id",
@@ -29,8 +29,8 @@ describe('createOneUser()', () => {
 				user: username,
 			};
 
-			const userID = await createOneUser(TEST_AUTH_TOKEN, data);
-			const user = await getOneUser(TEST_AUTH_TOKEN, userID);
+			const userID = await createOneUser(data);
+			const user = await getOneUser(userID);
 			expect(isValidUser(user)).toBeTrue();
 		}),
 	);

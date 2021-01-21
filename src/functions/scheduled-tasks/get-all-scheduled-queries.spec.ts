@@ -8,25 +8,25 @@
 
 import { isScheduledTaskBase } from '../../models';
 import { integrationTest } from '../../tests';
-import { TEST_AUTH_TOKEN, TEST_HOST } from '../../tests/config';
+import { TEST_BASE_API_CONTEXT } from '../../tests/config';
 import { makeCreateManyScheduledQueries } from './create-many-scheduled-queries';
 import { makeDeleteAllScheduledQueries } from './delete-all-scheduled-queries';
 import { makeGetAllScheduledQueries } from './get-all-scheduled-queries';
 
 describe('getAllScheduledQueries()', () => {
-	const getAllScheduledQueries = makeGetAllScheduledQueries({ host: TEST_HOST, useEncryption: false });
-	const deleteAllScheduledQueries = makeDeleteAllScheduledQueries({ host: TEST_HOST, useEncryption: false });
-	const createManyScheduledQueries = makeCreateManyScheduledQueries({ host: TEST_HOST, useEncryption: false });
+	const getAllScheduledQueries = makeGetAllScheduledQueries(TEST_BASE_API_CONTEXT);
+	const deleteAllScheduledQueries = makeDeleteAllScheduledQueries(TEST_BASE_API_CONTEXT);
+	const createManyScheduledQueries = makeCreateManyScheduledQueries(TEST_BASE_API_CONTEXT);
 
 	beforeEach(async () => {
-		await deleteAllScheduledQueries(TEST_AUTH_TOKEN);
+		await deleteAllScheduledQueries();
 	});
 
 	it(
 		'Should return all scheduled queries',
 		integrationTest(async () => {
 			// Create two scheduled queries
-			await createManyScheduledQueries(TEST_AUTH_TOKEN, [
+			await createManyScheduledQueries([
 				{
 					name: 'Q1',
 					description: 'D1',
@@ -45,7 +45,7 @@ describe('getAllScheduledQueries()', () => {
 				},
 			]);
 
-			const scheduledQueries = await getAllScheduledQueries(TEST_AUTH_TOKEN);
+			const scheduledQueries = await getAllScheduledQueries();
 			expect(scheduledQueries.length).toBe(2);
 			expect(scheduledQueries.every(isScheduledTaskBase)).toBeTrue();
 		}),
@@ -54,7 +54,7 @@ describe('getAllScheduledQueries()', () => {
 	it(
 		'Should return an empty array if there are no scheduled queries',
 		integrationTest(async () => {
-			const scheduledQueries = await getAllScheduledQueries(TEST_AUTH_TOKEN);
+			const scheduledQueries = await getAllScheduledQueries();
 			expect(scheduledQueries.length).toBe(0);
 		}),
 	);

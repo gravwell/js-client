@@ -7,16 +7,16 @@
  **************************************************************************/
 
 import { integrationTest } from '../../tests';
-import { TEST_AUTH_TOKEN, TEST_HOST } from '../../tests/config';
+import { TEST_BASE_API_CONTEXT } from '../../tests/config';
 import { makeGetOneUserActiveSessions } from './get-one-user-active-sessions';
 
 describe('getOneUserActiveSessions', () => {
-	const getOneUserActiveSessions = makeGetOneUserActiveSessions({ host: TEST_HOST, useEncryption: false });
+	const getOneUserActiveSessions = makeGetOneUserActiveSessions(TEST_BASE_API_CONTEXT);
 
 	it(
 		'Should return an array of sessions',
 		integrationTest(async () => {
-			const data = await getOneUserActiveSessions(TEST_AUTH_TOKEN, '1');
+			const data = await getOneUserActiveSessions('1');
 			expect(data.sessions.length).toBeGreaterThanOrEqual(1);
 		}),
 	);

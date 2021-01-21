@@ -8,17 +8,17 @@
 
 import { AutoExtractor, CreatableAutoExtractor, isAutoExtractor, UpdatableAutoExtractor } from '../../models';
 import { integrationTest, myCustomMatchers } from '../../tests';
-import { TEST_AUTH_TOKEN, TEST_HOST } from '../../tests/config';
+import { TEST_BASE_API_CONTEXT } from '../../tests/config';
 import { makeCreateOneAutoExtractor } from './create-one-auto-extractor';
 import { makeDeleteOneAutoExtractor } from './delete-one-auto-extractor';
 import { makeGetAllAutoExtractors } from './get-all-auto-extractors';
 import { makeUpdateOneAutoExtractor } from './update-one-auto-extractor';
 
 describe('updateOneAutoExtractor()', () => {
-	const createOneAutoExtractor = makeCreateOneAutoExtractor({ host: TEST_HOST, useEncryption: false });
-	const updateOneAutoExtractor = makeUpdateOneAutoExtractor({ host: TEST_HOST, useEncryption: false });
-	const deleteOneAutoExtractor = makeDeleteOneAutoExtractor({ host: TEST_HOST, useEncryption: false });
-	const getAllAutoExtractors = makeGetAllAutoExtractors({ host: TEST_HOST, useEncryption: false });
+	const createOneAutoExtractor = makeCreateOneAutoExtractor(TEST_BASE_API_CONTEXT);
+	const updateOneAutoExtractor = makeUpdateOneAutoExtractor(TEST_BASE_API_CONTEXT);
+	const deleteOneAutoExtractor = makeDeleteOneAutoExtractor(TEST_BASE_API_CONTEXT);
+	const getAllAutoExtractors = makeGetAllAutoExtractors(TEST_BASE_API_CONTEXT);
 
 	let createdAutoExtractor: AutoExtractor;
 
@@ -26,11 +26,9 @@ describe('updateOneAutoExtractor()', () => {
 		jasmine.addMatchers(myCustomMatchers);
 
 		// Delete all auto extractors
-		const currentAutoExtractors = await getAllAutoExtractors(TEST_AUTH_TOKEN);
+		const currentAutoExtractors = await getAllAutoExtractors();
 		const currentAutoExtractorIDs = currentAutoExtractors.map(m => m.id);
-		const deletePromises = currentAutoExtractorIDs.map(autoExtractorID =>
-			deleteOneAutoExtractor(TEST_AUTH_TOKEN, autoExtractorID),
-		);
+		const deletePromises = currentAutoExtractorIDs.map(autoExtractorID => deleteOneAutoExtractor(autoExtractorID));
 		await Promise.all(deletePromises);
 
 		// Create one auto extractor
@@ -42,7 +40,7 @@ describe('updateOneAutoExtractor()', () => {
 			module: 'csv',
 			parameters: 'a b c',
 		};
-		createdAutoExtractor = await createOneAutoExtractor(TEST_AUTH_TOKEN, data);
+		createdAutoExtractor = await createOneAutoExtractor(data);
 	});
 
 	const updateTests: Array<Omit<UpdatableAutoExtractor, 'id'>> = [
@@ -77,7 +75,7 @@ describe('updateOneAutoExtractor()', () => {
 				expect(isAutoExtractor(current)).toBeTrue();
 
 				const data: UpdatableAutoExtractor = { ..._data, id: current.id };
-				const updated = await updateOneAutoExtractor(TEST_AUTH_TOKEN, data);
+				const updated = await updateOneAutoExtractor(data);
 
 				expect(isAutoExtractor(updated)).toBeTrue();
 				expect(updated).toPartiallyEqual(data);

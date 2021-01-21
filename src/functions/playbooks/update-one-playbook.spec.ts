@@ -9,7 +9,7 @@
 import { omit } from 'lodash';
 import { CreatablePlaybook, isPlaybook, Playbook, UpdatablePlaybook } from '../../models';
 import { integrationTest } from '../../tests';
-import { TEST_AUTH_TOKEN, TEST_HOST } from '../../tests/config';
+import { TEST_BASE_API_CONTEXT } from '../../tests/config';
 import { omitUndefinedShallow } from '../utils';
 import { makeCreateOnePlaybook } from './create-one-playbook';
 import { makeDeleteOnePlaybook } from './delete-one-playbook';
@@ -17,10 +17,10 @@ import { makeGetOnePlaybook } from './get-one-playbook';
 import { makeUpdateOnePlaybook } from './update-one-playbook';
 
 describe('updateOnePlaybook()', () => {
-	const createOnePlaybook = makeCreateOnePlaybook({ host: TEST_HOST, useEncryption: false });
-	const getOnePlaybook = makeGetOnePlaybook({ host: TEST_HOST, useEncryption: false });
-	const updateOnePlaybook = makeUpdateOnePlaybook({ host: TEST_HOST, useEncryption: false });
-	const deleteOnePlaybook = makeDeleteOnePlaybook({ host: TEST_HOST, useEncryption: false });
+	const createOnePlaybook = makeCreateOnePlaybook(TEST_BASE_API_CONTEXT);
+	const getOnePlaybook = makeGetOnePlaybook(TEST_BASE_API_CONTEXT);
+	const updateOnePlaybook = makeUpdateOnePlaybook(TEST_BASE_API_CONTEXT);
+	const deleteOnePlaybook = makeDeleteOnePlaybook(TEST_BASE_API_CONTEXT);
 
 	let createdPlaybook: Playbook;
 
@@ -31,12 +31,12 @@ describe('updateOnePlaybook()', () => {
 			description: 'Current description',
 			body: 'This is my playbook',
 		};
-		const playbookUUID = await createOnePlaybook(TEST_AUTH_TOKEN, data);
-		createdPlaybook = await getOnePlaybook(TEST_AUTH_TOKEN, playbookUUID);
+		const playbookUUID = await createOnePlaybook(data);
+		createdPlaybook = await getOnePlaybook(playbookUUID);
 	});
 
 	afterEach(async () => {
-		await deleteOnePlaybook(TEST_AUTH_TOKEN, createdPlaybook.uuid).catch(() => undefined);
+		await deleteOnePlaybook(createdPlaybook.uuid).catch(() => undefined);
 	});
 
 	const updateTests: Array<Omit<UpdatablePlaybook, 'uuid'>> = [
@@ -70,7 +70,7 @@ describe('updateOnePlaybook()', () => {
 				expect(isPlaybook(current)).toBeTrue();
 
 				const data: UpdatablePlaybook = { ..._data, uuid: current.uuid };
-				const updated = await updateOnePlaybook(TEST_AUTH_TOKEN, data);
+				const updated = await updateOnePlaybook(data);
 				expect(isPlaybook(updated)).toBeTrue();
 
 				const parsedData = omitUndefinedShallow(data);

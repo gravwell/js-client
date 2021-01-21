@@ -9,7 +9,7 @@
 import { random } from 'lodash';
 import { CreatableUser, User } from '../../models';
 import { integrationTest } from '../../tests';
-import { TEST_AUTH_TOKEN, TEST_HOST } from '../../tests/config';
+import { TEST_BASE_API_CONTEXT } from '../../tests/config';
 import { makeLoginOneUser } from '../auth/login-one-user';
 import { makeCreateOneUser, makeGetOneUser } from '../users';
 import { makeCreateManyScheduledScripts } from './create-many-scheduled-scripts';
@@ -18,22 +18,22 @@ import { makeDeleteManyScheduledScripts } from './delete-many-scheduled-scripts'
 import { makeGetAllScheduledScripts } from './get-all-scheduled-scripts';
 
 describe('deleteManyScheduledScripts()', () => {
-	const getOneUser = makeGetOneUser({ host: TEST_HOST, useEncryption: false });
-	const createOneUser = makeCreateOneUser({ host: TEST_HOST, useEncryption: false });
-	const login = makeLoginOneUser({ host: TEST_HOST, useEncryption: false });
-	const getAllScheduledScripts = makeGetAllScheduledScripts({ host: TEST_HOST, useEncryption: false });
-	const deleteAllScheduledScripts = makeDeleteAllScheduledScripts({ host: TEST_HOST, useEncryption: false });
-	const createManyScheduledScripts = makeCreateManyScheduledScripts({ host: TEST_HOST, useEncryption: false });
-	const deleteManyScheduledScripts = makeDeleteManyScheduledScripts({ host: TEST_HOST, useEncryption: false });
+	const getOneUser = makeGetOneUser(TEST_BASE_API_CONTEXT);
+	const createOneUser = makeCreateOneUser(TEST_BASE_API_CONTEXT);
+	const login = makeLoginOneUser(TEST_BASE_API_CONTEXT);
+	const getAllScheduledScripts = makeGetAllScheduledScripts(TEST_BASE_API_CONTEXT);
+	const deleteAllScheduledScripts = makeDeleteAllScheduledScripts(TEST_BASE_API_CONTEXT);
+	const createManyScheduledScripts = makeCreateManyScheduledScripts(TEST_BASE_API_CONTEXT);
+	const deleteManyScheduledScripts = makeDeleteManyScheduledScripts(TEST_BASE_API_CONTEXT);
 
 	let user: User;
 	let userAuth: string;
 
 	beforeEach(async () => {
-		await deleteAllScheduledScripts(TEST_AUTH_TOKEN);
+		await deleteAllScheduledScripts();
 
 		// Create two scheduled scripts as admin
-		await createManyScheduledScripts(TEST_AUTH_TOKEN, [
+		await createManyScheduledScripts([
 			{
 				name: 'Script1',
 				description: 'D1',
@@ -57,12 +57,17 @@ describe('deleteManyScheduledScripts()', () => {
 			role: 'analyst',
 			user: userSeed,
 		};
-		const userID = await createOneUser(TEST_AUTH_TOKEN, data);
-		user = await getOneUser(TEST_AUTH_TOKEN, userID);
+		const userID = await createOneUser(data);
+		user = await getOneUser(userID);
 		userAuth = await login(user.username, data.password);
 
 		// Create three scheduled scripts as analyst
-		await createManyScheduledScripts(userAuth, [
+		const createManyScheduledScriptsAsAnalyst = makeCreateManyScheduledScripts({
+			...TEST_BASE_API_CONTEXT,
+			authToken: userAuth,
+		});
+
+		await createManyScheduledScriptsAsAnalyst([
 			{
 				name: 'Script3',
 				description: 'D3',
@@ -87,7 +92,7 @@ describe('deleteManyScheduledScripts()', () => {
 	it(
 		'Should delete all scheduled scripts of a user',
 		integrationTest(async () => {
-			const allScheduledScriptsBefore = await getAllScheduledScripts(TEST_AUTH_TOKEN);
+			const allScheduledScriptsBefore = await getAllScheduledScripts();
 			const allScheduledScriptIDsBefore = allScheduledScriptsBefore.map(s => s.id);
 			const analystScheduledScriptIDsBefore = allScheduledScriptsBefore
 				.filter(s => s.userID === user.id)
@@ -95,9 +100,9 @@ describe('deleteManyScheduledScripts()', () => {
 			expect(allScheduledScriptIDsBefore.length).toBe(5);
 			expect(analystScheduledScriptIDsBefore.length).toBe(3);
 
-			await deleteManyScheduledScripts(TEST_AUTH_TOKEN, { userID: user.id });
+			await deleteManyScheduledScripts({ userID: user.id });
 
-			const allScheduledScriptsAfter = await getAllScheduledScripts(TEST_AUTH_TOKEN);
+			const allScheduledScriptsAfter = await getAllScheduledScripts();
 			const allScheduledScriptIDsAfter = allScheduledScriptsAfter.map(s => s.id);
 			const analystScheduledScriptIDsAfter = allScheduledScriptsAfter.filter(s => s.userID === user.id).map(s => s.id);
 			expect(allScheduledScriptIDsAfter.length).toBe(2);

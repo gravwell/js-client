@@ -10,23 +10,23 @@ import { createReadStream } from 'fs';
 import { join } from 'path';
 import { CreatableFile } from '../../models';
 import { integrationTest } from '../../tests';
-import { TEST_ASSETS_PATH, TEST_AUTH_TOKEN, TEST_HOST } from '../../tests/config';
+import { TEST_ASSETS_PATH, TEST_BASE_API_CONTEXT } from '../../tests/config';
 import { makeCreateOneFile } from './create-one-file';
 import { makeDeleteOneFile } from './delete-one-file';
 import { makeGetAllFiles } from './get-all-files';
 import { makeGetOneFile } from './get-one-file';
 
 describe('deleteOneFile()', () => {
-	const createOneFile = makeCreateOneFile({ host: TEST_HOST, useEncryption: false });
-	const deleteOneFile = makeDeleteOneFile({ host: TEST_HOST, useEncryption: false });
-	const getAllFiles = makeGetAllFiles({ host: TEST_HOST, useEncryption: false });
-	const getOneFile = makeGetOneFile({ host: TEST_HOST, useEncryption: false });
+	const createOneFile = makeCreateOneFile(TEST_BASE_API_CONTEXT);
+	const deleteOneFile = makeDeleteOneFile(TEST_BASE_API_CONTEXT);
+	const getAllFiles = makeGetAllFiles(TEST_BASE_API_CONTEXT);
+	const getOneFile = makeGetOneFile(TEST_BASE_API_CONTEXT);
 
 	beforeEach(async () => {
 		// Delete all files
-		const currentFiles = await getAllFiles(TEST_AUTH_TOKEN);
+		const currentFiles = await getAllFiles();
 		const currentFileIDs = currentFiles.map(m => m.globalID); // !WARNING: gravwell/gravwell#2505
-		const deletePromises = currentFileIDs.map(fileID => deleteOneFile(TEST_AUTH_TOKEN, fileID));
+		const deletePromises = currentFileIDs.map(fileID => deleteOneFile(fileID));
 		await Promise.all(deletePromises);
 
 		// Create two files
@@ -40,22 +40,22 @@ describe('deleteOneFile()', () => {
 				file: createReadStream(join(TEST_ASSETS_PATH!, 'auto-extractors.config')),
 			},
 		];
-		const createPromises = creatableFiles.map(creatable => createOneFile(TEST_AUTH_TOKEN, creatable));
+		const createPromises = creatableFiles.map(creatable => createOneFile(creatable));
 		await Promise.all(createPromises);
 	});
 
 	it(
 		'Should delete a file',
 		integrationTest(async () => {
-			const currentFiles = await getAllFiles(TEST_AUTH_TOKEN);
+			const currentFiles = await getAllFiles();
 			const currentFileIDs = currentFiles.map(m => m.globalID); // !WARNING: gravwell/gravwell#2505
 			expect(currentFileIDs.length).toBe(2);
 
 			const deleteFileID = currentFileIDs[0];
-			await deleteOneFile(TEST_AUTH_TOKEN, deleteFileID);
-			await expectAsync(getOneFile(TEST_AUTH_TOKEN, deleteFileID)).toBeRejected();
+			await deleteOneFile(deleteFileID);
+			await expectAsync(getOneFile(deleteFileID)).toBeRejected();
 
-			const remainingFiles = await getAllFiles(TEST_AUTH_TOKEN);
+			const remainingFiles = await getAllFiles();
 			const remainingFileIDs = remainingFiles.map(m => m.globalID); // !WARNING: gravwell/gravwell#2505
 			expect(remainingFileIDs).not.toContain(deleteFileID);
 			expect(remainingFileIDs.length).toBe(1);

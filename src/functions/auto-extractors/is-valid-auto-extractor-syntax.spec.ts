@@ -8,11 +8,11 @@
 
 import { CreatableAutoExtractor } from '../../models';
 import { integrationTest } from '../../tests';
-import { TEST_AUTH_TOKEN, TEST_HOST } from '../../tests/config';
+import { TEST_BASE_API_CONTEXT } from '../../tests/config';
 import { makeIsValidAutoExtractorSyntax } from './is-valid-auto-extractor-syntax';
 
 describe('isValidAutoExtractorSyntax()', () => {
-	const isValidAutoExtractorSyntax = makeIsValidAutoExtractorSyntax({ host: TEST_HOST, useEncryption: false });
+	const isValidAutoExtractorSyntax = makeIsValidAutoExtractorSyntax(TEST_BASE_API_CONTEXT);
 
 	it(
 		'Should validate an auto extractor syntax',
@@ -32,7 +32,7 @@ describe('isValidAutoExtractorSyntax()', () => {
 				arguments: '1 2 3',
 			};
 
-			const validation = await isValidAutoExtractorSyntax(TEST_AUTH_TOKEN, data);
+			const validation = await isValidAutoExtractorSyntax(data);
 			expect(validation).not.toBeUndefined();
 		}),
 	);

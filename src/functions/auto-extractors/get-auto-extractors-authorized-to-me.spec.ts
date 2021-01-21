@@ -9,7 +9,7 @@
 import { random, sortBy } from 'lodash';
 import { AutoExtractor, CreatableAutoExtractor, CreatableUser, isAutoExtractor, User } from '../../models';
 import { integrationTest } from '../../tests';
-import { TEST_AUTH_TOKEN, TEST_HOST } from '../../tests/config';
+import { TEST_BASE_API_CONTEXT } from '../../tests/config';
 import { makeLoginOneUser } from '../auth/login-one-user';
 import { makeCreateOneUser, makeGetOneUser } from '../users';
 import { makeCreateOneAutoExtractor } from './create-one-auto-extractor';
@@ -18,16 +18,13 @@ import { makeGetAllAutoExtractors } from './get-all-auto-extractors';
 import { makeGetAutoExtractorsAuthorizedToMe } from './get-auto-extractors-authorized-to-me';
 
 describe('getAutoExtractorsAuthorizedToMe()', () => {
-	const getAutoExtractorsAuthorizedToMe = makeGetAutoExtractorsAuthorizedToMe({
-		host: TEST_HOST,
-		useEncryption: false,
-	});
-	const createOneAutoExtractor = makeCreateOneAutoExtractor({ host: TEST_HOST, useEncryption: false });
-	const deleteOneAutoExtractor = makeDeleteOneAutoExtractor({ host: TEST_HOST, useEncryption: false });
-	const getAllAutoExtractors = makeGetAllAutoExtractors({ host: TEST_HOST, useEncryption: false });
-	const getOneUser = makeGetOneUser({ host: TEST_HOST, useEncryption: false });
-	const createOneUser = makeCreateOneUser({ host: TEST_HOST, useEncryption: false });
-	const login = makeLoginOneUser({ host: TEST_HOST, useEncryption: false });
+	const getAutoExtractorsAuthorizedToMe = makeGetAutoExtractorsAuthorizedToMe(TEST_BASE_API_CONTEXT);
+	const createOneAutoExtractor = makeCreateOneAutoExtractor(TEST_BASE_API_CONTEXT);
+	const deleteOneAutoExtractor = makeDeleteOneAutoExtractor(TEST_BASE_API_CONTEXT);
+	const getAllAutoExtractors = makeGetAllAutoExtractors(TEST_BASE_API_CONTEXT);
+	const getOneUser = makeGetOneUser(TEST_BASE_API_CONTEXT);
+	const createOneUser = makeCreateOneUser(TEST_BASE_API_CONTEXT);
+	const login = makeLoginOneUser(TEST_BASE_API_CONTEXT);
 
 	let adminAutoExtractors: Array<AutoExtractor>;
 
@@ -37,11 +34,9 @@ describe('getAutoExtractorsAuthorizedToMe()', () => {
 
 	beforeEach(async () => {
 		// Delete all auto extractors
-		const currentAutoExtractors = await getAllAutoExtractors(TEST_AUTH_TOKEN);
+		const currentAutoExtractors = await getAllAutoExtractors();
 		const currentAutoExtractorIDs = currentAutoExtractors.map(m => m.id);
-		const deletePromises = currentAutoExtractorIDs.map(autoExtractorID =>
-			deleteOneAutoExtractor(TEST_AUTH_TOKEN, autoExtractorID),
-		);
+		const deletePromises = currentAutoExtractorIDs.map(autoExtractorID => deleteOneAutoExtractor(autoExtractorID));
 		await Promise.all(deletePromises);
 
 		// Create two auto extractors as admin
@@ -63,7 +58,7 @@ describe('getAutoExtractorsAuthorizedToMe()', () => {
 				parameters: '1 2 3',
 			},
 		];
-		const createPromises = creatableAutoExtractors.map(creatable => createOneAutoExtractor(TEST_AUTH_TOKEN, creatable));
+		const createPromises = creatableAutoExtractors.map(creatable => createOneAutoExtractor(creatable));
 		adminAutoExtractors = await Promise.all(createPromises);
 
 		// Creates an analyst
@@ -75,8 +70,8 @@ describe('getAutoExtractorsAuthorizedToMe()', () => {
 			role: 'analyst',
 			user: userSeed,
 		};
-		const userID = await createOneUser(TEST_AUTH_TOKEN, data);
-		analyst = await getOneUser(TEST_AUTH_TOKEN, userID);
+		const userID = await createOneUser(data);
+		analyst = await getOneUser(userID);
 		analystAuth = await login(analyst.username, data.password);
 
 		// Create three autoExtractors as analyst
@@ -106,22 +101,33 @@ describe('getAutoExtractorsAuthorizedToMe()', () => {
 				parameters: '1 2 3',
 			},
 		];
-		const createPromises2 = creatableAutoExtractors2.map(creatable => createOneAutoExtractor(analystAuth, creatable));
+
+		const createOneAutoExtractorAsAnalyst = makeCreateOneAutoExtractor({
+			...TEST_BASE_API_CONTEXT,
+			authToken: analystAuth,
+		});
+
+		const createPromises2 = creatableAutoExtractors2.map(creatable => createOneAutoExtractorAsAnalyst(creatable));
 		analystAutoExtractors = await Promise.all(createPromises2);
 	});
 
 	it(
 		'Returns all my auto extractors',
 		integrationTest(async () => {
-			const actualAdminAutoExtractors = await getAutoExtractorsAuthorizedToMe(TEST_AUTH_TOKEN);
+			const actualAdminAutoExtractors = await getAutoExtractorsAuthorizedToMe();
 			expect(sortBy(actualAdminAutoExtractors, m => m.id)).toEqual(sortBy(adminAutoExtractors, m => m.id));
 			for (const autoExtractor of actualAdminAutoExtractors) expect(isAutoExtractor(autoExtractor)).toBeTrue();
 
-			const actualAnalystAutoExtractors = await getAutoExtractorsAuthorizedToMe(analystAuth);
+			const getAutoExtractorsAuthorizedToAnalyst = makeGetAutoExtractorsAuthorizedToMe({
+				...TEST_BASE_API_CONTEXT,
+				authToken: analystAuth,
+			});
+
+			const actualAnalystAutoExtractors = await getAutoExtractorsAuthorizedToAnalyst();
 			expect(sortBy(actualAnalystAutoExtractors, m => m.id)).toEqual(sortBy(analystAutoExtractors, m => m.id));
 			for (const autoExtractor of actualAnalystAutoExtractors) expect(isAutoExtractor(autoExtractor)).toBeTrue();
 
-			const allAutoExtractors = await getAllAutoExtractors(TEST_AUTH_TOKEN);
+			const allAutoExtractors = await getAllAutoExtractors();
 			expect(sortBy(allAutoExtractors, m => m.id)).toEqual(
 				sortBy([...analystAutoExtractors, ...adminAutoExtractors], m => m.id),
 			);

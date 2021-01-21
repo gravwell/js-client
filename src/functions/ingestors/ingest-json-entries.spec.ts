@@ -7,16 +7,16 @@
  **************************************************************************/
 
 import { integrationTest } from '../../tests';
-import { TEST_AUTH_TOKEN, TEST_HOST } from '../../tests/config';
+import { TEST_BASE_API_CONTEXT } from '../../tests/config';
 import { makeIngestJSONEntries } from './ingest-json-entries';
 
 describe('ingestJSONEntries()', () => {
-	const ingestJSONEntries = makeIngestJSONEntries({ host: TEST_HOST, useEncryption: false });
+	const ingestJSONEntries = makeIngestJSONEntries(TEST_BASE_API_CONTEXT);
 
 	it(
 		'Should ingest the JSON entries',
 		integrationTest(async () => {
-			const entriesIngestedCount = await ingestJSONEntries(TEST_AUTH_TOKEN, [
+			const entriesIngestedCount = await ingestJSONEntries([
 				{ tag: 'custom-test', data: 'Text with 👻 emojis' },
 				{ tag: 'custom-test', data: 'This is utf8 赤ちゃん' },
 			]);

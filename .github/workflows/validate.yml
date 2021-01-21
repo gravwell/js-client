@@ -30,6 +30,7 @@ jobs:
       - run: npm i -g npm@6.14.5
       - run: npm ci
       - run: npm run build
+      - run: npm run build:tests
 
   test-ts-compatibility:
     runs-on: ubuntu-latest
