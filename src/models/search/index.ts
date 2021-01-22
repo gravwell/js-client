@@ -8,7 +8,9 @@
 
 export * from './is-search2';
 export * from './is-valid-search';
+export * from './raw-data-explorer-result';
 export * from './raw-search';
+export * from './raw-search-entry';
 export * from './raw-search-message-received';
 export * from './raw-search-message-sent';
 export * from './raw-search2';
@@ -20,4 +22,5 @@ export * from './search-stats';
 export * from './search-subscription';
 export * from './search2';
 export * from './to-search';
+export * from './to-search-entries';
 export * from './to-search2';

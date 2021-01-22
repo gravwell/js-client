@@ -6,29 +6,32 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { decode as base64Decode } from 'base-64';
-import { isArray, isBoolean, isEqual, isNull, isUndefined } from 'lodash';
+import { isBoolean, isEqual, isNil, isNull, isUndefined } from 'lodash';
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
-import { distinctUntilChanged, filter, first, map } from 'rxjs/operators';
+import { bufferCount, distinctUntilChanged, filter, first, map, startWith, tap } from 'rxjs/operators';
 import {
-	isRawTableEntries,
 	Query,
 	RawAcceptSearchMessageSent,
 	RawInitiateSearchMessageSent,
 	RawRequestSearchEntriesWithinRangeMessageSent,
 	RawResponseForSearchDetailsMessageReceived,
-	RawResponseForSearchEntriesWithinRangeMessageReceived,
 	RawResponseForSearchStatsMessageReceived,
 	RawSearchInitiatedMessageReceived,
-	SEARCH_MESSAGE_COMMANDS,
+	RawSearchMessageReceivedRequestEntriesWithinRange,
 	SearchEntries,
 	SearchFilter,
+	SearchMessageCommands,
 	SearchStats,
 	SearchSubscription,
+	toSearchEntries,
 } from '../../../models';
 import { Percentage, toNumericID } from '../../../value-objects';
 import { APIContext, promiseProgrammatically } from '../../utils';
 import { makeSubscribeToOneRawSearch } from './subscribe-to-one-raw-search';
+
+type RequiredSearchFilter = Required<
+	Omit<SearchFilter, 'dateRange'> & { dateRange: Required<NonNullable<SearchFilter['dateRange']>> }
+>;
 
 export const makeSubscribeToOneSearch = (context: APIContext) => {
 	const subscribeToOneRawSearch = makeSubscribeToOneRawSearch(context);
@@ -37,11 +40,22 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 	return async (
 		query: Query,
 		range: [Date, Date],
-		options: { filter?: Partial<SearchFilter> } = {},
+		options: { filter?: SearchFilter } = {},
 	): Promise<SearchSubscription> => {
 		if (isNull(rawSubscriptionP)) rawSubscriptionP = subscribeToOneRawSearch();
 		const rawSubscription = await rawSubscriptionP;
-		const initialFilter = { start: range[0], end: range[1], limit: 100, ...(options.filter ?? {}) };
+		const initialFilter = {
+			entriesOffset: {
+				index: options.filter?.entriesOffset?.index ?? 0,
+				count: options.filter?.entriesOffset?.count ?? 100,
+			},
+			dateRange: {
+				start: options.filter?.dateRange?.start ?? range[0],
+				end: options.filter?.dateRange?.end ?? range[1],
+			},
+			// *NOTE: The default granularity is recalculate when we receive the renderer type
+			desiredGranularity: options.filter?.desiredGranularity ?? 100,
+		};
 
 		const searchTypeIDP = promiseProgrammatically<string>();
 		rawSubscription.received$
@@ -89,58 +103,66 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 			map(rawPercentage => new Percentage(rawPercentage)),
 		);
 
-		const entries$ = searchMessages$.pipe(
-			filter((msg): msg is RawResponseForSearchEntriesWithinRangeMessageReceived => {
+		const entries$: Observable<SearchEntries> = searchMessages$.pipe(
+			filter((msg): msg is RawSearchMessageReceivedRequestEntriesWithinRange => {
 				try {
-					const _msg = <RawResponseForSearchEntriesWithinRangeMessageReceived>msg;
-					return _msg.data.ID === SEARCH_MESSAGE_COMMANDS.REQ_TS_RANGE;
+					const _msg = <RawSearchMessageReceivedRequestEntriesWithinRange>msg;
+					return _msg.data.ID === SearchMessageCommands.RequestEntriesWithinRange;
 				} catch {
 					return false;
 				}
 			}),
-			map(
-				(msg): SearchEntries => ({
-					start: new Date(msg.data.EntryRange.StartTS),
-					end: new Date(msg.data.EntryRange.EndTS),
-					names: isArray(msg.data.Entries)
-						? ['Data']
-						: isRawTableEntries(msg.data.Entries)
-						? msg.data.Entries.Columns
-						: msg.data.Entries.Names,
-					data: isArray(msg.data.Entries)
-						? msg.data.Entries.map(rawData => ({
-								timestamp: new Date(rawData.TS),
-								values: [base64Decode(rawData.Data)],
-						  }))
-						: isRawTableEntries(msg.data.Entries)
-						? isNull(msg.data.Entries.Rows)
-							? []
-							: msg.data.Entries.Rows.map(rawData => ({ timestamp: new Date(rawData.TS), values: rawData.Row }))
-						: msg.data.Entries.Values.map(rawData => ({ timestamp: new Date(rawData.TS), values: rawData.Data })),
-				}),
-			),
+			map(msg => toSearchEntries(msg)),
+			tap(entries => {
+				const defDesiredGranularity = getDefaultGranularityByRendererType(entries.type);
+				initialFilter.desiredGranularity = defDesiredGranularity;
+			}),
 		);
 
-		const _filter$ = new BehaviorSubject(initialFilter);
+		const _filter$ = new BehaviorSubject<SearchFilter>(initialFilter);
 		const setFilter = (filter: SearchFilter) => {
 			_filter$.next(filter);
 		};
-		const filter$ = _filter$.asObservable().pipe(distinctUntilChanged((a, b) => isEqual(a, b)));
+		const filter$ = _filter$.asObservable().pipe(
+			startWith<SearchFilter>(initialFilter),
+			bufferCount(2, 1),
+			map(
+				([prev, curr]): RequiredSearchFilter => ({
+					entriesOffset: {
+						index: curr.entriesOffset?.index ?? prev.entriesOffset?.index ?? initialFilter.entriesOffset.index,
+						count: curr.entriesOffset?.count ?? prev.entriesOffset?.count ?? initialFilter.entriesOffset.count,
+					},
+					dateRange: {
+						start: curr.dateRange?.start ?? prev.dateRange?.start ?? initialFilter.dateRange.start,
+						end: curr.dateRange?.end ?? prev.dateRange?.end ?? initialFilter.dateRange.end,
+					},
+					desiredGranularity: curr.desiredGranularity ?? prev.desiredGranularity ?? initialFilter.desiredGranularity,
+				}),
+			),
+			distinctUntilChanged((a, b) => isEqual(a, b)),
+		);
 
-		const requestEntries = (filter: SearchFilter) =>
-			rawSubscription.send(<RawRequestSearchEntriesWithinRangeMessageSent>{
+		const requestEntries = async (filter: RequiredSearchFilter): Promise<void> => {
+			const first = filter.entriesOffset.index;
+			const last = first + filter.entriesOffset.count;
+			const start = filter.dateRange.start;
+			const end = filter.dateRange.end;
+			// TODO: Filter by .desiredGranularity and .fieldFilters
+
+			await rawSubscription.send(<RawRequestSearchEntriesWithinRangeMessageSent>{
 				type: searchTypeID,
 				data: {
-					ID: SEARCH_MESSAGE_COMMANDS.REQ_TS_RANGE,
+					ID: SearchMessageCommands.RequestEntriesWithinRange,
 					Addendum: {},
 					EntryRange: {
-						First: 0,
-						Last: filter.limit,
-						StartTS: filter.start.toISOString(),
-						EndTS: filter.end.toISOString(),
+						First: first,
+						Last: last,
+						StartTS: start.toISOString(),
+						EndTS: end.toISOString(),
 					},
 				},
 			});
+		};
 
 		filter$.subscribe(filter => {
 			requestEntries(filter);
@@ -151,7 +173,7 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 			filter((msg): msg is RawResponseForSearchStatsMessageReceived => {
 				try {
 					const _msg = <RawResponseForSearchStatsMessageReceived>msg;
-					return _msg.data.ID === SEARCH_MESSAGE_COMMANDS.REQ_STATS_GET;
+					return _msg.data.ID === SearchMessageCommands.RequestAllStats;
 				} catch {
 					return false;
 				}
@@ -162,7 +184,7 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 			filter((msg): msg is RawResponseForSearchDetailsMessageReceived => {
 				try {
 					const _msg = <RawResponseForSearchDetailsMessageReceived>msg;
-					return _msg.data.ID === SEARCH_MESSAGE_COMMANDS.REQUEST_DETAILS;
+					return _msg.data.ID === SearchMessageCommands.RequestDetails;
 				} catch {
 					return false;
 				}
@@ -230,4 +252,26 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 
 		return { progress$, entries$, stats$, setFilter };
 	};
+};
+
+const DEFAULT_GRANULARITY_MAP: Record<SearchEntries['type'], number> = {
+	'chart': 160,
+	'fdg': 2000,
+	'gauge': 100, // *NOTE: Couldn't find it in environments.ts, using the same as table
+	'heatmap': 10000,
+	'point to point': 1000, // *NOTE: Couldn't find it in environments.ts, using the same as pointmap
+	'pointmap': 1000,
+	'raw': 50,
+	'text': 50,
+	'stack graph': 150,
+	'table': 100,
+};
+
+const getDefaultGranularityByRendererType = (rendererType: SearchEntries['type']): number => {
+	const v = DEFAULT_GRANULARITY_MAP[rendererType];
+	if (isNil(v)) {
+		console.log(`Unknown renderer ${rendererType}, will use 100 as the default granularity`);
+		return 100;
+	}
+	return v;
 };

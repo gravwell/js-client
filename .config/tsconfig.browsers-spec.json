@@ -1,8 +1,10 @@
 {
 	"extends": "./tsconfig.base.json",
 	"compilerOptions": {
+		"outDir": "../dist-tsc/browsers",
 		"types": ["jasmine"],
 		"lib": ["ES2020", "DOM"]
 	},
-	"include": ["../src-tsc/**/*"]
+	"include": ["../src/**/*"],
+	"exclude": ["../src/**/*.node.ts"]
 }

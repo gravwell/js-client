@@ -7,21 +7,23 @@
  **************************************************************************/
 
 import { integrationTest, unitTest } from '../../tests';
-import { TEST_AUTH_TOKEN, TEST_HOST } from '../../tests/config';
+import { TEST_AUTH_TOKEN, TEST_BASE_API_CONTEXT } from '../../tests/config';
 import { makeSubscribeToManySystemInformations } from './subscribe-to-many-system-informations';
 
 const wait = (n: number) => new Promise(resolve => setTimeout(resolve, n));
 
 describe('subscribeToManySystemInformations()', () => {
-	const subscribeToManySystemInformations = makeSubscribeToManySystemInformations({
-		host: TEST_HOST,
-		useEncryption: false,
-	});
+	const subscribeToManySystemInformations = makeSubscribeToManySystemInformations(TEST_BASE_API_CONTEXT);
 
 	it(
 		'Should return a function given a valid host',
 		unitTest(() => {
-			const fn = () => makeSubscribeToManySystemInformations({ host: 'www.example.com', useEncryption: false });
+			const fn = () =>
+				makeSubscribeToManySystemInformations({
+					host: 'www.example.com',
+					useEncryption: false,
+					authToken: TEST_AUTH_TOKEN,
+				});
 			expect(fn).not.toThrow();
 			expect(typeof fn()).toBe('function');
 		}),
@@ -30,7 +32,7 @@ describe('subscribeToManySystemInformations()', () => {
 	it(
 		'Should subscribe to ping information',
 		integrationTest(async () => {
-			const pingSubscription = await subscribeToManySystemInformations(TEST_AUTH_TOKEN, ['ping']);
+			const pingSubscription = await subscribeToManySystemInformations(['ping']);
 			await wait(1500);
 			pingSubscription.close();
 

@@ -8,19 +8,16 @@
 
 import { isSearchModule } from '../../models';
 import { integrationTest } from '../../tests';
-import { TEST_AUTH_TOKEN, TEST_HOST } from '../../tests/config';
+import { TEST_BASE_API_CONTEXT } from '../../tests/config';
 import { makeGetAllSearchModules } from './get-all-search-modules';
 
 describe('getAllSearchModules()', () => {
-	const getAllSearchModules = makeGetAllSearchModules({
-		host: TEST_HOST,
-		useEncryption: false,
-	});
+	const getAllSearchModules = makeGetAllSearchModules(TEST_BASE_API_CONTEXT);
 
 	it(
 		'Should return all search modules',
 		integrationTest(async () => {
-			const searchModules = await getAllSearchModules(TEST_AUTH_TOKEN);
+			const searchModules = await getAllSearchModules();
 			expect(searchModules.length).toBeGreaterThan(20);
 			expect(searchModules.every(isSearchModule)).toBeTrue();
 		}),

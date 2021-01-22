@@ -8,21 +8,21 @@
 
 import { CreatableGroup, isGroup } from '../../models';
 import { integrationTest } from '../../tests';
-import { TEST_AUTH_TOKEN, TEST_HOST } from '../../tests/config';
+import { TEST_BASE_API_CONTEXT } from '../../tests/config';
 import { makeCreateOneGroup } from './create-one-group';
 import { makeDeleteOneGroup } from './delete-one-group';
 import { makeGetAllGroups } from './get-all-groups';
 
 describe('getAllGroups()', () => {
-	const getAllGroups = makeGetAllGroups({ host: TEST_HOST, useEncryption: false });
-	const createOneGroup = makeCreateOneGroup({ host: TEST_HOST, useEncryption: false });
-	const deleteOneGroup = makeDeleteOneGroup({ host: TEST_HOST, useEncryption: false });
+	const getAllGroups = makeGetAllGroups(TEST_BASE_API_CONTEXT);
+	const createOneGroup = makeCreateOneGroup(TEST_BASE_API_CONTEXT);
+	const deleteOneGroup = makeDeleteOneGroup(TEST_BASE_API_CONTEXT);
 
 	beforeEach(async () => {
 		// Delete all groups
-		const currentGroups = await getAllGroups(TEST_AUTH_TOKEN);
+		const currentGroups = await getAllGroups();
 		const currentGroupIDs = currentGroups.map(g => g.id);
-		const deletePromises = currentGroupIDs.map(groupID => deleteOneGroup(TEST_AUTH_TOKEN, groupID));
+		const deletePromises = currentGroupIDs.map(groupID => deleteOneGroup(groupID));
 		await Promise.all(deletePromises);
 	});
 
@@ -31,10 +31,10 @@ describe('getAllGroups()', () => {
 		integrationTest(async () => {
 			// Create two groups
 			const creatableGroups: Array<CreatableGroup> = [{ name: 'N1', description: 'D1' }, { name: 'N2' }];
-			const createPromises = creatableGroups.map(creatable => createOneGroup(TEST_AUTH_TOKEN, creatable));
+			const createPromises = creatableGroups.map(creatable => createOneGroup(creatable));
 			await Promise.all(createPromises);
 
-			const groups = await getAllGroups(TEST_AUTH_TOKEN);
+			const groups = await getAllGroups();
 			expect(groups.length).toBe(2);
 			expect(groups.every(isGroup)).toBeTrue();
 		}),
@@ -43,7 +43,7 @@ describe('getAllGroups()', () => {
 	it(
 		'Should return an empty array if there are no groups',
 		integrationTest(async () => {
-			const groups = await getAllGroups(TEST_AUTH_TOKEN);
+			const groups = await getAllGroups();
 			expect(groups.length).toBe(0);
 		}),
 	);

@@ -8,16 +8,16 @@
 
 import { isValidUser } from '../../models';
 import { integrationTest } from '../../tests';
-import { TEST_AUTH_TOKEN, TEST_HOST } from '../../tests/config';
+import { TEST_BASE_API_CONTEXT } from '../../tests/config';
 import { makeGetAllUsers } from './get-all-users';
 
 describe('getAllUsers()', () => {
-	const getAllUsers = makeGetAllUsers({ host: TEST_HOST, useEncryption: false });
+	const getAllUsers = makeGetAllUsers(TEST_BASE_API_CONTEXT);
 
 	it(
 		'Should return users',
 		integrationTest(async () => {
-			const users = await getAllUsers(TEST_AUTH_TOKEN);
+			const users = await getAllUsers();
 			expect(users.every(isValidUser)).toBeTrue();
 		}),
 	);

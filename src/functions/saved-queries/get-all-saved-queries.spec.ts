@@ -8,21 +8,21 @@
 
 import { CreatableSavedQuery, isSavedQuery } from '../../models';
 import { integrationTest } from '../../tests';
-import { TEST_AUTH_TOKEN, TEST_HOST } from '../../tests/config';
+import { TEST_BASE_API_CONTEXT } from '../../tests/config';
 import { makeCreateOneSavedQuery } from './create-one-saved-query';
 import { makeDeleteOneSavedQuery } from './delete-one-saved-query';
 import { makeGetAllSavedQueries } from './get-all-saved-queries';
 
 describe('getAllSavedQueries()', () => {
-	const createOneSavedQuery = makeCreateOneSavedQuery({ host: TEST_HOST, useEncryption: false });
-	const deleteOneSavedQuery = makeDeleteOneSavedQuery({ host: TEST_HOST, useEncryption: false });
-	const getAllSavedQueries = makeGetAllSavedQueries({ host: TEST_HOST, useEncryption: false });
+	const createOneSavedQuery = makeCreateOneSavedQuery(TEST_BASE_API_CONTEXT);
+	const deleteOneSavedQuery = makeDeleteOneSavedQuery(TEST_BASE_API_CONTEXT);
+	const getAllSavedQueries = makeGetAllSavedQueries(TEST_BASE_API_CONTEXT);
 
 	beforeEach(async () => {
 		// Delete all saved queries
-		const currentSavedQueries = await getAllSavedQueries(TEST_AUTH_TOKEN);
+		const currentSavedQueries = await getAllSavedQueries();
 		const currentSavedQueryIDs = currentSavedQueries.map(m => m.id);
-		const deletePromises = currentSavedQueryIDs.map(savedQueryID => deleteOneSavedQuery(TEST_AUTH_TOKEN, savedQueryID));
+		const deletePromises = currentSavedQueryIDs.map(savedQueryID => deleteOneSavedQuery(savedQueryID));
 		await Promise.all(deletePromises);
 	});
 
@@ -40,10 +40,10 @@ describe('getAllSavedQueries()', () => {
 					query: 'tag=custom-test',
 				},
 			];
-			const createPromises = creatableSavedQueries.map(creatable => createOneSavedQuery(TEST_AUTH_TOKEN, creatable));
+			const createPromises = creatableSavedQueries.map(creatable => createOneSavedQuery(creatable));
 			await Promise.all(createPromises);
 
-			const savedQueries = await getAllSavedQueries(TEST_AUTH_TOKEN);
+			const savedQueries = await getAllSavedQueries();
 			expect(savedQueries.length).toBe(2);
 			expect(savedQueries.every(isSavedQuery)).toBeTrue();
 		}),
@@ -52,7 +52,7 @@ describe('getAllSavedQueries()', () => {
 	it(
 		'Should return an empty array if there are no saved queries',
 		integrationTest(async () => {
-			const savedQueries = await getAllSavedQueries(TEST_AUTH_TOKEN);
+			const savedQueries = await getAllSavedQueries();
 			expect(savedQueries.length).toBe(0);
 		}),
 	);

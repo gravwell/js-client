@@ -7,19 +7,16 @@
  **************************************************************************/
 
 import { integrationTest } from '../../tests';
-import { TEST_AUTH_TOKEN, TEST_HOST } from '../../tests/config';
+import { TEST_BASE_API_CONTEXT } from '../../tests/config';
 import { makeGetOneScriptLibrary } from './get-one-script-library';
 
 describe('getOneScriptLibrary()', () => {
-	const getOneScriptLibrary = makeGetOneScriptLibrary({
-		host: TEST_HOST,
-		useEncryption: false,
-	});
+	const getOneScriptLibrary = makeGetOneScriptLibrary(TEST_BASE_API_CONTEXT);
 
 	it(
 		'Should return the code for a script library',
 		integrationTest(async () => {
-			const library = await getOneScriptLibrary(TEST_AUTH_TOKEN, 'utils/links.ank');
+			const library = await getOneScriptLibrary('utils/links.ank');
 			expect(typeof library).toBe('string');
 			expect(library.length).toBeGreaterThan(40);
 		}),

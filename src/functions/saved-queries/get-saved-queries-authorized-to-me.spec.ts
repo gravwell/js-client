@@ -9,7 +9,7 @@
 import { random, sortBy } from 'lodash';
 import { CreatableSavedQuery, CreatableUser, isSavedQuery, SavedQuery, User } from '../../models';
 import { integrationTest } from '../../tests';
-import { TEST_AUTH_TOKEN, TEST_HOST } from '../../tests/config';
+import { TEST_BASE_API_CONTEXT } from '../../tests/config';
 import { makeLoginOneUser } from '../auth/login-one-user';
 import { makeCreateOneUser, makeGetOneUser } from '../users';
 import { makeCreateOneSavedQuery } from './create-one-saved-query';
@@ -18,13 +18,13 @@ import { makeGetAllSavedQueries } from './get-all-saved-queries';
 import { makeGetSavedQueriesAuthorizedToMe } from './get-saved-queries-authorized-to-me';
 
 describe('getSavedQueriesAuthorizedToMe()', () => {
-	const getSavedQueriesAuthorizedToMe = makeGetSavedQueriesAuthorizedToMe({ host: TEST_HOST, useEncryption: false });
-	const createOneSavedQuery = makeCreateOneSavedQuery({ host: TEST_HOST, useEncryption: false });
-	const deleteOneSavedQuery = makeDeleteOneSavedQuery({ host: TEST_HOST, useEncryption: false });
-	const getAllSavedQueries = makeGetAllSavedQueries({ host: TEST_HOST, useEncryption: false });
-	const getOneUser = makeGetOneUser({ host: TEST_HOST, useEncryption: false });
-	const createOneUser = makeCreateOneUser({ host: TEST_HOST, useEncryption: false });
-	const login = makeLoginOneUser({ host: TEST_HOST, useEncryption: false });
+	const getSavedQueriesAuthorizedToMe = makeGetSavedQueriesAuthorizedToMe(TEST_BASE_API_CONTEXT);
+	const createOneSavedQuery = makeCreateOneSavedQuery(TEST_BASE_API_CONTEXT);
+	const deleteOneSavedQuery = makeDeleteOneSavedQuery(TEST_BASE_API_CONTEXT);
+	const getAllSavedQueries = makeGetAllSavedQueries(TEST_BASE_API_CONTEXT);
+	const getOneUser = makeGetOneUser(TEST_BASE_API_CONTEXT);
+	const createOneUser = makeCreateOneUser(TEST_BASE_API_CONTEXT);
+	const login = makeLoginOneUser(TEST_BASE_API_CONTEXT);
 
 	let adminSavedQueries: Array<SavedQuery>;
 
@@ -34,9 +34,9 @@ describe('getSavedQueriesAuthorizedToMe()', () => {
 
 	beforeEach(async () => {
 		// Delete all saved queries
-		const currentSavedQueries = await getAllSavedQueries(TEST_AUTH_TOKEN);
+		const currentSavedQueries = await getAllSavedQueries();
 		const currentSavedQueryIDs = currentSavedQueries.map(m => m.id);
-		const deletePromises = currentSavedQueryIDs.map(savedQueryID => deleteOneSavedQuery(TEST_AUTH_TOKEN, savedQueryID));
+		const deletePromises = currentSavedQueryIDs.map(savedQueryID => deleteOneSavedQuery(savedQueryID));
 		await Promise.all(deletePromises);
 
 		// Create two saved queries as admin
@@ -50,7 +50,7 @@ describe('getSavedQueriesAuthorizedToMe()', () => {
 				query: 'tag=custom-test',
 			},
 		];
-		const createPromises = creatableSavedQueries.map(creatable => createOneSavedQuery(TEST_AUTH_TOKEN, creatable));
+		const createPromises = creatableSavedQueries.map(creatable => createOneSavedQuery(creatable));
 		adminSavedQueries = await Promise.all(createPromises);
 
 		// Creates an analyst
@@ -62,8 +62,8 @@ describe('getSavedQueriesAuthorizedToMe()', () => {
 			role: 'analyst',
 			user: userSeed,
 		};
-		const userID = await createOneUser(TEST_AUTH_TOKEN, data);
-		analyst = await getOneUser(TEST_AUTH_TOKEN, userID);
+		const userID = await createOneUser(data);
+		analyst = await getOneUser(userID);
 		analystAuth = await login(analyst.username, data.password);
 
 		// Create three saved queries as analyst
@@ -81,22 +81,33 @@ describe('getSavedQueriesAuthorizedToMe()', () => {
 				query: 'tag=default',
 			},
 		];
-		const createPromises2 = creatableSavedQueries2.map(creatable => createOneSavedQuery(analystAuth, creatable));
+
+		const createOneSavedQueryAsAnalyst = makeCreateOneSavedQuery({
+			...TEST_BASE_API_CONTEXT,
+			authToken: analystAuth,
+		});
+
+		const createPromises2 = creatableSavedQueries2.map(creatable => createOneSavedQueryAsAnalyst(creatable));
 		analystSavedQueries = await Promise.all(createPromises2);
 	});
 
 	it(
 		'Returns all my saved queries',
 		integrationTest(async () => {
-			const actualAdminSavedQueries = await getSavedQueriesAuthorizedToMe(TEST_AUTH_TOKEN);
+			const actualAdminSavedQueries = await getSavedQueriesAuthorizedToMe();
 			expect(sortBy(actualAdminSavedQueries, m => m.id)).toEqual(sortBy(adminSavedQueries, m => m.id));
 			for (const savedQuery of actualAdminSavedQueries) expect(isSavedQuery(savedQuery)).toBeTrue();
 
-			const actualAnalystSavedQueries = await getSavedQueriesAuthorizedToMe(analystAuth);
+			const getSavedQueriesAuthorizedToAnalyst = makeGetSavedQueriesAuthorizedToMe({
+				...TEST_BASE_API_CONTEXT,
+				authToken: analystAuth,
+			});
+
+			const actualAnalystSavedQueries = await getSavedQueriesAuthorizedToAnalyst();
 			expect(sortBy(actualAnalystSavedQueries, m => m.id)).toEqual(sortBy(analystSavedQueries, m => m.id));
 			for (const savedQuery of actualAnalystSavedQueries) expect(isSavedQuery(savedQuery)).toBeTrue();
 
-			const allSavedQueries = await getAllSavedQueries(TEST_AUTH_TOKEN);
+			const allSavedQueries = await getAllSavedQueries();
 			expect(sortBy(allSavedQueries, m => m.id)).toEqual(
 				sortBy([...analystSavedQueries, ...adminSavedQueries], m => m.id),
 			);

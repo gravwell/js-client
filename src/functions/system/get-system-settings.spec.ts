@@ -8,16 +8,16 @@
 
 import { isSystemSettings } from '../../models';
 import { integrationTest } from '../../tests';
-import { TEST_AUTH_TOKEN, TEST_HOST } from '../../tests/config';
+import { TEST_BASE_API_CONTEXT } from '../../tests/config';
 import { makeGetSystemSettings } from './get-system-settings';
 
 describe('getSystemSettings()', () => {
-	const getSystemSettings = makeGetSystemSettings({ host: TEST_HOST, useEncryption: false });
+	const getSystemSettings = makeGetSystemSettings(TEST_BASE_API_CONTEXT);
 
 	it(
 		'Should get the system settings',
 		integrationTest(async () => {
-			const settings = await getSystemSettings(TEST_AUTH_TOKEN);
+			const settings = await getSystemSettings();
 			expect(isSystemSettings(settings)).toBeTrue();
 		}),
 	);

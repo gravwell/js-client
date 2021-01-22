@@ -9,7 +9,7 @@
 import { random } from 'lodash';
 import { CreatableGroup, CreatableMacro, CreatableUser, isMacro, User } from '../../models';
 import { integrationTest } from '../../tests';
-import { TEST_AUTH_TOKEN, TEST_HOST } from '../../tests/config';
+import { TEST_BASE_API_CONTEXT } from '../../tests/config';
 import { makeLoginOneUser } from '../auth/login-one-user';
 import { makeAddOneUserToManyGroups } from '../groups/add-one-user-to-many-groups';
 import { makeCreateOneGroup } from '../groups/create-one-group';
@@ -20,19 +20,18 @@ import { makeGetAllMacros } from './get-all-macros';
 import { makeGetMacrosByGroup } from './get-macros-by-group';
 
 describe('getMacrosByGroup()', () => {
-	const getAllMacros = makeGetAllMacros({ host: TEST_HOST, useEncryption: false });
-	const getOneUser = makeGetOneUser({ host: TEST_HOST, useEncryption: false });
-	const createOneUser = makeCreateOneUser({ host: TEST_HOST, useEncryption: false });
-	const login = makeLoginOneUser({ host: TEST_HOST, useEncryption: false });
-	const createOneMacro = makeCreateOneMacro({ host: TEST_HOST, useEncryption: false });
-	const deleteOneMacro = makeDeleteOneMacro({ host: TEST_HOST, useEncryption: false });
-	const getMacrosByGroup = makeGetMacrosByGroup({ host: TEST_HOST, useEncryption: false });
-	const createOneGroup = makeCreateOneGroup({ host: TEST_HOST, useEncryption: false });
-	const addOneUserToManyGroups = makeAddOneUserToManyGroups({ host: TEST_HOST, useEncryption: false });
-	const getMyUser = makeGetMyUser({ host: TEST_HOST, useEncryption: false });
+	const getAllMacros = makeGetAllMacros(TEST_BASE_API_CONTEXT);
+	const getOneUser = makeGetOneUser(TEST_BASE_API_CONTEXT);
+	const createOneUser = makeCreateOneUser(TEST_BASE_API_CONTEXT);
+	const login = makeLoginOneUser(TEST_BASE_API_CONTEXT);
+	const createOneMacro = makeCreateOneMacro(TEST_BASE_API_CONTEXT);
+	const deleteOneMacro = makeDeleteOneMacro(TEST_BASE_API_CONTEXT);
+	const getMacrosByGroup = makeGetMacrosByGroup(TEST_BASE_API_CONTEXT);
+	const createOneGroup = makeCreateOneGroup(TEST_BASE_API_CONTEXT);
+	const addOneUserToManyGroups = makeAddOneUserToManyGroups(TEST_BASE_API_CONTEXT);
+	const getMyUser = makeGetMyUser(TEST_BASE_API_CONTEXT);
 
 	let admin: User;
-	const adminAuth = TEST_AUTH_TOKEN;
 	let adminGroupID: string;
 
 	let analyst: User;
@@ -41,7 +40,7 @@ describe('getMacrosByGroup()', () => {
 
 	beforeEach(async () => {
 		// Get admin
-		admin = await getMyUser(adminAuth);
+		admin = await getMyUser();
 
 		// Creates an analyst
 		const userSeed = random(0, Number.MAX_SAFE_INTEGER).toString();
@@ -52,25 +51,25 @@ describe('getMacrosByGroup()', () => {
 			role: 'analyst',
 			user: userSeed,
 		};
-		const userID = await createOneUser(adminAuth, data);
-		analyst = await getOneUser(adminAuth, userID);
+		const userID = await createOneUser(data);
+		analyst = await getOneUser(userID);
 		analystAuth = await login(analyst.username, data.password);
 
 		// Creates two groups
 		const creatableGroups: Array<CreatableGroup> = [{ name: 'Admin' }, { name: 'Analyst' }];
-		const groupCreationPs = creatableGroups.map(data => createOneGroup(adminAuth, data));
+		const groupCreationPs = creatableGroups.map(data => createOneGroup(data));
 		[adminGroupID, analystGroupID] = await Promise.all(groupCreationPs);
 
 		// Assign admin to one group and analyst to the other
 		await Promise.all([
-			addOneUserToManyGroups(adminAuth, admin.id, [adminGroupID]),
-			addOneUserToManyGroups(adminAuth, analyst.id, [analystGroupID]),
+			addOneUserToManyGroups(admin.id, [adminGroupID]),
+			addOneUserToManyGroups(analyst.id, [analystGroupID]),
 		]);
 
 		// Delete all macros
-		const currentMacros = await getAllMacros(adminAuth);
+		const currentMacros = await getAllMacros();
 		const currentMacroIDs = currentMacros.map(m => m.id);
-		const deletePromises = currentMacroIDs.map(macroID => deleteOneMacro(adminAuth, macroID));
+		const deletePromises = currentMacroIDs.map(macroID => deleteOneMacro(macroID));
 		await Promise.all(deletePromises);
 
 		// Create two macros for the admin group
@@ -78,7 +77,7 @@ describe('getMacrosByGroup()', () => {
 			{ name: 'M1', expansion: 'abc', groupIDs: [adminGroupID] },
 			{ name: 'M2', expansion: 'def', groupIDs: [adminGroupID] },
 		];
-		const createPromises = creatableMacros.map(creatable => createOneMacro(adminAuth, creatable));
+		const createPromises = creatableMacros.map(creatable => createOneMacro(creatable));
 		await Promise.all(createPromises);
 
 		// Create three macros for the analyst group
@@ -87,14 +86,20 @@ describe('getMacrosByGroup()', () => {
 			{ name: 'M4', expansion: 'def', groupIDs: [analystGroupID] },
 			{ name: 'M5', expansion: 'ghi', groupIDs: [analystGroupID] },
 		];
-		const createPromises2 = creatableMacros2.map(creatable => createOneMacro(analystAuth, creatable));
+
+		const createOneMacroAsAnalyst = makeCreateOneMacro({
+			...TEST_BASE_API_CONTEXT,
+			authToken: analystAuth,
+		});
+
+		const createPromises2 = creatableMacros2.map(creatable => createOneMacroAsAnalyst(creatable));
 		await Promise.all(createPromises2);
 	});
 
 	it(
 		'Should return all macros of a group',
 		integrationTest(async () => {
-			const allMacros = await getAllMacros(adminAuth);
+			const allMacros = await getAllMacros();
 			const allMacroIDs = allMacros.map(m => m.id);
 			const adminMacroIDs = allMacros.filter(m => m.userID === admin.id).map(m => m.id);
 			const analystMacroIDs = allMacros.filter(m => m.userID === analyst.id).map(m => m.id);
@@ -103,12 +108,12 @@ describe('getMacrosByGroup()', () => {
 			expect(adminMacroIDs.length).toBe(2);
 			expect(analystMacroIDs.length).toBe(3);
 
-			const adminGroupMacros = await getMacrosByGroup(adminAuth, adminGroupID);
+			const adminGroupMacros = await getMacrosByGroup(adminGroupID);
 			expect(adminGroupMacros.length).toBe(adminMacroIDs.length);
 			expect(adminGroupMacros.every(isMacro)).toBeTrue();
 			expect(adminGroupMacros.map(m => m.id).sort()).toEqual(adminMacroIDs.sort());
 
-			const analystGroupMacros = await getMacrosByGroup(adminAuth, analystGroupID);
+			const analystGroupMacros = await getMacrosByGroup(analystGroupID);
 			expect(analystGroupMacros.length).toBe(analystMacroIDs.length);
 			expect(analystGroupMacros.every(isMacro)).toBeTrue();
 			expect(analystGroupMacros.map(m => m.id).sort()).toEqual(analystMacroIDs.sort());
@@ -119,8 +124,8 @@ describe('getMacrosByGroup()', () => {
 		'Should return an empty array if the group has no macros',
 		integrationTest(async () => {
 			const creatableGroup: CreatableGroup = { name: 'New' };
-			const groupID = await createOneGroup(adminAuth, creatableGroup);
-			const macros = await getMacrosByGroup(TEST_AUTH_TOKEN, groupID);
+			const groupID = await createOneGroup(creatableGroup);
+			const macros = await getMacrosByGroup(groupID);
 			expect(macros.length).toBe(0);
 		}),
 	);
@@ -128,11 +133,16 @@ describe('getMacrosByGroup()', () => {
 	it(
 		"Blocks non admin users from grabbing macros from other groups that they don't belong",
 		integrationTest(async () => {
-			await expectAsync(getMacrosByGroup(adminAuth, adminGroupID)).toBeResolved();
-			await expectAsync(getMacrosByGroup(adminAuth, analystGroupID)).toBeResolved();
+			await expectAsync(getMacrosByGroup(adminGroupID)).toBeResolved();
+			await expectAsync(getMacrosByGroup(analystGroupID)).toBeResolved();
 
-			await expectAsync(getMacrosByGroup(analystAuth, adminGroupID)).toBeRejected();
-			await expectAsync(getMacrosByGroup(analystAuth, analystGroupID)).toBeResolved();
+			const getMacrosByGroupAsAnalyst = makeGetMacrosByGroup({
+				...TEST_BASE_API_CONTEXT,
+				authToken: analystAuth,
+			});
+
+			await expectAsync(getMacrosByGroupAsAnalyst(adminGroupID)).toBeRejected();
+			await expectAsync(getMacrosByGroupAsAnalyst(analystGroupID)).toBeResolved();
 		}),
 	);
 });

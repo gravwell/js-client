@@ -6,24 +6,33 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-export const SEARCH_MESSAGE_COMMANDS = {
-	CLOSE: 0x1,
-	REQUEST_ENTRY_COUNT: 0x3,
-	REQUEST_DETAILS: 0x4,
-	REQUEST_TAGS: 0x5,
-	REQUEST_STATS_SIZE: 0x7f000001, //gets backend "size" value of stats chunks. never used
-	REQUEST_STATS_WITHIN_RANGE: 0x7f000002, //gets current time range covered by stats. rarely used
+export enum SearchMessageCommands {
+	Close = 0x1, // Named CLOSE on docs
+	DeleteSearch = 'delete', // Named SEARCH_CTRL_CMD_DELETE on docs
+	ArchiveSearch = 'archive', // Named SEARCH_CTRL_CMD_ARCHIVE on docs
+	BackgroundSearch = 'background', // Named SEARCH_CTRL_CMD_BACKGROUND on docs
+	Status = 'status', // Named SEARCH_CTRL_CMD_STATUS on docs
 
-	REQ_STATS_GET: 0x7f000003, //gets stats sets over all time. may be used initially
-	REQ_STATS_GET_RANGE: 0x7f000004, //gets stats in a specific range
-	REQ_STATS_GET_SUMMARY: 0x7f000005, //gets stats summary for entire results
-	REQ_STATS_GET_LOCATION: 0x7f000006, //get current timestamp for search progress
-	REQ_GET_ENTRIES: 0x10, //1048578
-	REQ_STREAMING: 0x11,
-	REQ_TS_RANGE: 0x12,
-	TEXT_REQ_SEARCH_DETAILS: 0x01000004, //1048580
-	SEARCH_CTRL_CMD_DELETE: 'delete',
-	SEARCH_CTRL_CMD_ARCHIVE: 'archive',
-	SEARCH_CTRL_CMD_BACKGROUND: 'background',
-	SEARCH_CTRL_CMD_STATUS: 'status',
-} as const;
+	RequestEntries = 0x10, // Named REQ_GET_ENTRIES on docs
+	RequestEntriesWithinRange = 0x12, // Named REQ_TS_RANGE on docs
+
+	RequestEntryCount = 0x3, // Named REQUEST_ENTRY_COUNT on docs
+	RequestDetails = 0x4, // Named REQUEST_DETAILS on docs
+	RequestTags = 0x5, // Named REQUEST_TAGS on docs
+
+	RequestStreaming = 0x11, // Named REQ_STREAMING on docs
+	RequestTextSearchDetails = 0x01000004, // Named TEXT_REQ_SEARCH_DETAILS on docs
+
+	/** Requests "size" value of stats chunks. Never used. */
+	RequestStatsSize = 0x7f000001, // Named REQUEST_STATS_SIZE on docs
+	/** Request current time range covered by stats. Rarely used. */
+	RequestStatsWithinRange = 0x7f000002, // Named REQUEST_STATS_WITHIN_RANGE on docs
+	/** Requests stats over all time. Generally used on init. */
+	RequestAllStats = 0x7f000003, // Named REQ_STATS_GET on docs
+	/** Requests stats in a specific range. */
+	RequestStatsInRange = 0x7f000004, // Named REQ_STATS_GET_RANGE on docs
+	/** Requests stats summary for entire results. */
+	RequestStatsSummary = 0x7f000005, // Named REQ_STATS_GET_SUMMARY on docs
+	/** Requests current timestamp for search progress */
+	RequestStatsLocation = 0x7f000006, // Named REQ_STATS_GET_LOCATION on docs
+}

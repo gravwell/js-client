@@ -8,21 +8,21 @@
 
 import { CreatableDashboard, isDashboard } from '../../models';
 import { integrationTest } from '../../tests';
-import { TEST_AUTH_TOKEN, TEST_HOST } from '../../tests/config';
+import { TEST_BASE_API_CONTEXT } from '../../tests/config';
 import { makeCreateOneDashboard } from './create-one-dashboard';
 import { makeDeleteOneDashboard } from './delete-one-dashboard';
 import { makeGetAllDashboards } from './get-all-dashboards';
 
 describe('getAllDashboards()', () => {
-	const createOneDashboard = makeCreateOneDashboard({ host: TEST_HOST, useEncryption: false });
-	const deleteOneDashboard = makeDeleteOneDashboard({ host: TEST_HOST, useEncryption: false });
-	const getAllDashboards = makeGetAllDashboards({ host: TEST_HOST, useEncryption: false });
+	const createOneDashboard = makeCreateOneDashboard(TEST_BASE_API_CONTEXT);
+	const deleteOneDashboard = makeDeleteOneDashboard(TEST_BASE_API_CONTEXT);
+	const getAllDashboards = makeGetAllDashboards(TEST_BASE_API_CONTEXT);
 
 	beforeEach(async () => {
 		// Delete all dashboards
-		const currentDashboards = await getAllDashboards(TEST_AUTH_TOKEN);
+		const currentDashboards = await getAllDashboards();
 		const currentDashboardIDs = currentDashboards.map(m => m.id);
-		const deletePromises = currentDashboardIDs.map(dashboardID => deleteOneDashboard(TEST_AUTH_TOKEN, dashboardID));
+		const deletePromises = currentDashboardIDs.map(dashboardID => deleteOneDashboard(dashboardID));
 		await Promise.all(deletePromises);
 	});
 
@@ -44,10 +44,10 @@ describe('getAllDashboards()', () => {
 					timeframe: { durationString: 'PT1H', end: null, start: null, timeframe: 'PT1H' },
 				},
 			];
-			const createPromises = creatableDashboards.map(creatable => createOneDashboard(TEST_AUTH_TOKEN, creatable));
+			const createPromises = creatableDashboards.map(creatable => createOneDashboard(creatable));
 			await Promise.all(createPromises);
 
-			const dashboards = await getAllDashboards(TEST_AUTH_TOKEN);
+			const dashboards = await getAllDashboards();
 			expect(dashboards.length).toBe(2);
 			expect(dashboards.every(isDashboard)).toBeTrue();
 		}),
@@ -56,7 +56,7 @@ describe('getAllDashboards()', () => {
 	it(
 		'Should return an empty array if there are no dashboards',
 		integrationTest(async () => {
-			const dashboards = await getAllDashboards(TEST_AUTH_TOKEN);
+			const dashboards = await getAllDashboards();
 			expect(dashboards.length).toBe(0);
 		}),
 	);

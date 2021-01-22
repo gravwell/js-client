@@ -7,17 +7,17 @@
  **************************************************************************/
 
 import { integrationTest } from '../../tests';
-import { TEST_AUTH_TOKEN, TEST_HOST } from '../../tests/config';
+import { TEST_BASE_API_CONTEXT } from '../../tests/config';
 import { makeGetOneUserPreferences } from './get-one-user-preferences';
 
 describe('getOneUserPreferences()', () => {
-	const getOneUserPreferences = makeGetOneUserPreferences({ host: TEST_HOST, useEncryption: false });
+	const getOneUserPreferences = makeGetOneUserPreferences(TEST_BASE_API_CONTEXT);
 
 	it(
 		'Should return 200 with the user preferences',
 		integrationTest(async () => {
 			const userID = '1';
-			await getOneUserPreferences(TEST_AUTH_TOKEN, userID);
+			await getOneUserPreferences(userID);
 		}),
 	);
 });

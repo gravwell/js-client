@@ -7,16 +7,16 @@
  **************************************************************************/
 
 import { integrationTest } from '../../tests';
-import { TEST_AUTH_TOKEN, TEST_HOST } from '../../tests/config';
+import { TEST_BASE_API_CONTEXT } from '../../tests/config';
 import { makeCreateOneLog } from './create-one-log';
 
 describe('createOneLog()', () => {
-	const createOneLog = makeCreateOneLog({ host: TEST_HOST, useEncryption: false });
+	const createOneLog = makeCreateOneLog(TEST_BASE_API_CONTEXT);
 
 	it(
 		'Should create a log',
 		integrationTest(async () => {
-			await createOneLog(TEST_AUTH_TOKEN, 'information', 'log test');
+			await createOneLog('information', 'log test');
 		}),
 	);
 });
