@@ -15,7 +15,7 @@ export const makeValidateOneScript = (context: APIContext) => {
 
 	return async (script: Script): Promise<ValidatedScript> => {
 		const baseRequestOptions: HTTPRequestOptions = {
-			headers: { Authorization: context.authToken ? `Bcontext.authTokenontext.authToken}` : undefined },
+			headers: { Authorization: context.authToken ? `Bearer ${context.authToken}` : undefined },
 			body: JSON.stringify({ Script: script }),
 		};
 		const req = buildHTTPRequest(baseRequestOptions);

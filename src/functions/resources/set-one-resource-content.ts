@@ -19,7 +19,7 @@ export const makeSetOneResourceContent = (context: APIContext) => {
 
 		try {
 			const baseRequestOptions: HTTPRequestOptions = {
-				headers: { Authorization: context.authToken ? `Bcontext.authTokenontext.authToken}` : undefined },
+				headers: { Authorization: context.authToken ? `Bearer ${context.authToken}` : undefined },
 				body: toFormData(file) as any,
 			};
 			const req = buildHTTPRequest(baseRequestOptions);

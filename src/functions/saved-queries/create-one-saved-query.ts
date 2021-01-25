@@ -16,7 +16,7 @@ export const makeCreateOneSavedQuery = (context: APIContext) => {
 	return async (data: CreatableSavedQuery): Promise<SavedQuery> => {
 		try {
 			const baseRequestOptions: HTTPRequestOptions = {
-				headers: { Authorization: context.authToken ? `Bcontext.authTokenontext.authToken}` : undefined },
+				headers: { Authorization: context.authToken ? `Bearer ${context.authToken}` : undefined },
 				body: JSON.stringify(toRawCreatableSavedQuery(data)),
 			};
 			const req = buildHTTPRequest(baseRequestOptions);
