@@ -11,7 +11,7 @@ import { BehaviorSubject } from 'rxjs';
 import * as f from './functions';
 import { APIContext } from './functions/utils';
 import { CreatableJSONEntry, Search } from './models';
-import { Host, NumericID } from './value-objects';
+import { NumericID } from './value-objects';
 
 export interface GravwellClientOptions {
 	useEncryption: boolean;
@@ -20,12 +20,12 @@ export interface GravwellClientOptions {
 
 export class GravwellClient {
 	public set host(value: string) {
-		this._host = new Host(value);
+		this._host = value;
 	}
 	public get host(): string {
 		return this._host.valueOf();
 	}
-	private _host: Host;
+	private _host: string;
 
 	public useEncryption = true;
 
@@ -37,7 +37,7 @@ export class GravwellClient {
 	public readonly authToken$ = this._authToken$.asObservable();
 
 	constructor(host: string, options: GravwellClientOptions = { useEncryption: true }) {
-		this._host = new Host(host);
+		this._host = host;
 		this.useEncryption = options.useEncryption;
 		if (!isUndefined(options.authToken)) this.authenticate(options.authToken);
 

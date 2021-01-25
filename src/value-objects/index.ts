@@ -6,7 +6,6 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-export * from './host';
 export * from './id';
 export * from './markdown';
 export * from './percentage';
