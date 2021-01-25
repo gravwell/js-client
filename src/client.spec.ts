@@ -110,9 +110,9 @@ describe('GravwellClient', () => {
 		unitTest(() => {
 			// spyOn(fetch);
 			const client = new GravwellClient('www.example-a.com');
-			attempt(() => client.tags.getAll());
+			attempt(() => client.tags.get.all());
 			client.host = 'www.example-b.com';
-			attempt(() => client.tags.getAll());
+			attempt(() => client.tags.get.all());
 
 			// expect(fetch).toHaveBeenCalledTimes(2)
 			// expect(fetch).toHaveBeenCalledWith('www.example-a.com')
@@ -131,91 +131,95 @@ describe('GravwellClient', () => {
 			const client = new GravwellClient('www.example.com');
 
 			// Tags
-			expectTypeOf(client.tags.getAll).toEqualTypeOf<() => Promise<Array<string>>>();
+			expectTypeOf(client.tags.get.all).toEqualTypeOf<() => Promise<Array<string>>>();
 
 			// System
-			expectTypeOf(client.system.isConnected).toEqualTypeOf<() => Promise<boolean>>();
-			expectTypeOf(client.system.getAPIVersion).toEqualTypeOf<() => Promise<GetAPIVersionResponse>>();
-			expectTypeOf(client.system.subscribeToManyInformations).toEqualTypeOf<
+			expectTypeOf(client.system.is.connected).toEqualTypeOf<() => Promise<boolean>>();
+			expectTypeOf(client.system.get.apiVersion).toEqualTypeOf<() => Promise<GetAPIVersionResponse>>();
+			expectTypeOf(client.system.subscribe.toManyInformations).toEqualTypeOf<
 				(
 					statusCategories: Array<SystemStatusCategory>,
 				) => Promise<APISubscription<SystemStatusMessageReceived, SystemStatusMessageSent>>
 			>();
 
 			// Users
-			expectTypeOf(client.users.getMe).toEqualTypeOf<() => Promise<User>>();
-			expectTypeOf(client.users.getOne).toEqualTypeOf<(userID: NumericID) => Promise<User>>();
-			expectTypeOf(client.users.getMany).toEqualTypeOf<(filter?: { groupID?: NumericID }) => Promise<Array<User>>>();
-			expectTypeOf(client.users.getAll).toEqualTypeOf<() => Promise<Array<User>>>();
-			expectTypeOf(client.users.createOne).toEqualTypeOf<(data: CreatableUser) => Promise<NumericID>>();
-			expectTypeOf(client.users.updateMe).toEqualTypeOf<(data: Omit<UpdatableUser, 'id'>) => Promise<void>>();
-			expectTypeOf(client.users.updateOne).toEqualTypeOf<(data: UpdatableUser) => Promise<void>>();
-			expectTypeOf(client.users.deleteOne).toEqualTypeOf<(userID: NumericID) => Promise<void>>();
+			expectTypeOf(client.users.get.me).toEqualTypeOf<() => Promise<User>>();
+			expectTypeOf(client.users.get.one).toEqualTypeOf<(userID: NumericID) => Promise<User>>();
+			expectTypeOf(client.users.get.many).toEqualTypeOf<(filter?: { groupID?: NumericID }) => Promise<Array<User>>>();
+			expectTypeOf(client.users.get.all).toEqualTypeOf<() => Promise<Array<User>>>();
+			expectTypeOf(client.users.create.one).toEqualTypeOf<(data: CreatableUser) => Promise<NumericID>>();
+			expectTypeOf(client.users.update.me).toEqualTypeOf<(data: Omit<UpdatableUser, 'id'>) => Promise<void>>();
+			expectTypeOf(client.users.update.one).toEqualTypeOf<(data: UpdatableUser) => Promise<void>>();
+			expectTypeOf(client.users.delete.one).toEqualTypeOf<(userID: NumericID) => Promise<void>>();
 
 			// User preferences
-			expectTypeOf(client.userPreferences.getOne).toEqualTypeOf<(userID: string) => Promise<UserPreferences>>();
-			expectTypeOf(client.userPreferences.getAll).toEqualTypeOf<() => Promise<Array<UserPreferences>>>();
-			expectTypeOf(client.userPreferences.updateOne).toEqualTypeOf<(userID: string) => Promise<UserPreferences>>();
-			expectTypeOf(client.userPreferences.deleteOne).toEqualTypeOf<(userID: string) => Promise<void>>();
+			expectTypeOf(client.userPreferences.get.one).toEqualTypeOf<(userID: string) => Promise<UserPreferences>>();
+			expectTypeOf(client.userPreferences.get.all).toEqualTypeOf<() => Promise<Array<UserPreferences>>>();
+			expectTypeOf(client.userPreferences.update.one).toEqualTypeOf<(userID: string) => Promise<UserPreferences>>();
+			expectTypeOf(client.userPreferences.delete.one).toEqualTypeOf<(userID: string) => Promise<void>>();
 
 			// Auth
-			expectTypeOf(client.auth.loginOne).toEqualTypeOf<(username: string, password: string) => Promise<string>>();
-			expectTypeOf(client.auth.logoutOne).toEqualTypeOf<(userAuthToken: string) => Promise<void>>();
-			expectTypeOf(client.auth.logoutAll).toEqualTypeOf<() => Promise<void>>();
-			expectTypeOf(client.auth.getOneUserSessions).toEqualTypeOf<(userID: string) => Promise<UserSessions>>();
+			expectTypeOf(client.auth.login.one).toEqualTypeOf<(username: string, password: string) => Promise<string>>();
+			expectTypeOf(client.auth.logout.one).toEqualTypeOf<(userAuthToken: string) => Promise<void>>();
+			expectTypeOf(client.auth.logout.all).toEqualTypeOf<() => Promise<void>>();
+			expectTypeOf(client.auth.get.oneUserSessions).toEqualTypeOf<(userID: string) => Promise<UserSessions>>();
 
 			// Notifications
-			expectTypeOf(client.notifications.createOneBroadcasted).toEqualTypeOf<
+			expectTypeOf(client.notifications.create.one.broadcasted).toEqualTypeOf<
 				(creatable: CreatableBroadcastNotification) => Promise<void>
 			>();
-			expectTypeOf(client.notifications.createOneTargeted).toEqualTypeOf<
+			expectTypeOf(client.notifications.create.one.targeted).toEqualTypeOf<
 				(
 					targetType: TargetedNotificationTargetType,
 					creatable: Omit<CreatableTargetedNotification, 'targetType'>,
 				) => Promise<void>
 			>();
-			expectTypeOf(client.notifications.getMine).toEqualTypeOf<() => Promise<Array<Notification>>>();
-			expectTypeOf(client.notifications.subscribeToMine).toEqualTypeOf<
+			expectTypeOf(client.notifications.get.mine).toEqualTypeOf<() => Promise<Array<Notification>>>();
+			expectTypeOf(client.notifications.subscribe.toMine).toEqualTypeOf<
 				(options?: {
 					pollInterval?: number;
 				}) => Promise<APISubscription<MyNotificationsMessageReceived, MyNotificationsMessageSent>>
 			>();
-			expectTypeOf(client.notifications.updateOne).toEqualTypeOf<(updatable: UpdatableNotification) => Promise<void>>();
-			expectTypeOf(client.notifications.deleteOne).toEqualTypeOf<(notificationID: string) => Promise<void>>();
+			expectTypeOf(client.notifications.update.one).toEqualTypeOf<
+				(updatable: UpdatableNotification) => Promise<void>
+			>();
+			expectTypeOf(client.notifications.delete.one).toEqualTypeOf<(notificationID: string) => Promise<void>>();
 
 			// Web server
 			expectTypeOf(client.webServer.restart).toEqualTypeOf<() => Promise<void>>();
-			expectTypeOf(client.webServer.isDistributed).toEqualTypeOf<() => Promise<boolean>>();
+			expectTypeOf(client.webServer.is.distributed).toEqualTypeOf<() => Promise<boolean>>();
 
 			// Indexers
 			expectTypeOf(client.indexers.restart).toEqualTypeOf<() => Promise<void>>();
 
 			// Ingestors
-			expectTypeOf(client.ingestors.ingestOneJSON).toEqualTypeOf<(entry: CreatableJSONEntry) => Promise<number>>();
-			expectTypeOf(client.ingestors.ingestManyJSON).toEqualTypeOf<
+			expectTypeOf(client.ingestors.ingest.one.json).toEqualTypeOf<(entry: CreatableJSONEntry) => Promise<number>>();
+			expectTypeOf(client.ingestors.ingest.many.json).toEqualTypeOf<
 				(entries: Array<CreatableJSONEntry>) => Promise<number>
 			>();
-			expectTypeOf(client.ingestors.ingestByLine).toEqualTypeOf<(entry: CreatableMultiLineEntry) => Promise<number>>();
+			expectTypeOf(client.ingestors.ingest.byLine).toEqualTypeOf<(entry: CreatableMultiLineEntry) => Promise<number>>();
 
 			// Logs
-			expectTypeOf(client.logs.getLogLevels).toEqualTypeOf<
+			expectTypeOf(client.logs.get.logLevels).toEqualTypeOf<
 				() => Promise<{ current: LogLevel | 'off'; available: Array<LogLevel | 'off'> }>
 			>();
-			expectTypeOf(client.logs.setLogLevel).toEqualTypeOf<(level: LogLevel | 'off') => Promise<void>>();
-			expectTypeOf(client.logs.createOne).toEqualTypeOf<(level: LogLevel, message: string) => Promise<void>>();
+			expectTypeOf(client.logs.set.logLevel).toEqualTypeOf<(level: LogLevel | 'off') => Promise<void>>();
+			expectTypeOf(client.logs.create.one).toEqualTypeOf<(level: LogLevel, message: string) => Promise<void>>();
 
 			// Searches
-			expectTypeOf(client.searches.getAllStatusRelatedToMe).toEqualTypeOf<() => Promise<Array<Search2>>>();
-			expectTypeOf(client.searches.getOneStatus).toEqualTypeOf<(searchID: NumericID) => Promise<Search2>>();
-			expectTypeOf(client.searches.getAllStatus).toEqualTypeOf<() => Promise<Array<Search2>>>();
-			expectTypeOf(client.searches.backgroundOne).toEqualTypeOf<(searchID: NumericID) => Promise<void>>();
-			expectTypeOf(client.searches.saveOne).toEqualTypeOf<(searchID: NumericID) => Promise<void>>();
-			expectTypeOf(client.searches.deleteOne).toEqualTypeOf<(searchID: NumericID) => Promise<void>>();
-			expectTypeOf(client.searches.getUserHistory).toEqualTypeOf<(userID: string) => Promise<Array<Search>>>();
-			expectTypeOf(client.searches.getUserRelatedHistory).toEqualTypeOf<(userID: string) => Promise<Array<Search>>>();
-			expectTypeOf(client.searches.getGroupHistory).toEqualTypeOf<(groupID: string) => Promise<Array<Search>>>();
-			expectTypeOf(client.searches.getMyHistory).toEqualTypeOf<() => Promise<Array<Search>>>();
-			expectTypeOf(client.searches.getAllHistory).toEqualTypeOf<() => Promise<Array<Search>>>();
+			expectTypeOf(client.searches.status.get.authorized.toMe).toEqualTypeOf<() => Promise<Array<Search2>>>();
+			expectTypeOf(client.searches.status.get.one).toEqualTypeOf<(searchID: NumericID) => Promise<Search2>>();
+			expectTypeOf(client.searches.status.get.all).toEqualTypeOf<() => Promise<Array<Search2>>>();
+			expectTypeOf(client.searches.background.one).toEqualTypeOf<(searchID: NumericID) => Promise<void>>();
+			expectTypeOf(client.searches.save.one).toEqualTypeOf<(searchID: NumericID) => Promise<void>>();
+			expectTypeOf(client.searches.delete.one).toEqualTypeOf<(searchID: NumericID) => Promise<void>>();
+			expectTypeOf(client.searches.history.get.fromUser).toEqualTypeOf<(userID: string) => Promise<Array<Search>>>();
+			expectTypeOf(client.searches.history.get.authorizedToUser).toEqualTypeOf<
+				(userID: string) => Promise<Array<Search>>
+			>();
+			expectTypeOf(client.searches.history.get.fromGroup).toEqualTypeOf<(groupID: string) => Promise<Array<Search>>>();
+			expectTypeOf(client.searches.history.get.mine).toEqualTypeOf<() => Promise<Array<Search>>>();
+			expectTypeOf(client.searches.history.get.all).toEqualTypeOf<() => Promise<Array<Search>>>();
 			expectTypeOf(client.searches.download.one).toEqualTypeOf<
 				(searchID: ID, downloadFormat: SearchDownloadFormat) => ReturnType<typeof downloadFromURL>
 			>();
@@ -224,38 +228,38 @@ describe('GravwellClient', () => {
 			>();
 
 			// Search modules
-			expectTypeOf(client.searchModules.getAll).toEqualTypeOf<() => Promise<Array<SearchModule>>>();
+			expectTypeOf(client.searchModules.get.all).toEqualTypeOf<() => Promise<Array<SearchModule>>>();
 
 			// Render modules
-			expectTypeOf(client.renderModules.getAll).toEqualTypeOf<() => Promise<Array<RenderModule>>>();
+			expectTypeOf(client.renderModules.get.all).toEqualTypeOf<() => Promise<Array<RenderModule>>>();
 
 			// Scripts
-			expectTypeOf(client.scripts.libraries.getOne).toEqualTypeOf<
+			expectTypeOf(client.scripts.libraries.get.one).toEqualTypeOf<
 				(scriptPath: string, options?: { repository?: string; commitID?: string }) => Promise<Script>
 			>();
-			expectTypeOf(client.scripts.libraries.syncAll).toEqualTypeOf<() => Promise<void>>();
+			expectTypeOf(client.scripts.libraries.sync.all).toEqualTypeOf<() => Promise<void>>();
 
 			// Groups
-			expectTypeOf(client.groups.createOne).toEqualTypeOf<(data: CreatableGroup) => Promise<NumericID>>();
-			expectTypeOf(client.groups.deleteOne).toEqualTypeOf<(groupID: NumericID) => Promise<void>>();
-			expectTypeOf(client.groups.getOne).toEqualTypeOf<(groupID: NumericID) => Promise<Group>>();
-			expectTypeOf(client.groups.getMany).toEqualTypeOf<(filter?: { userID?: NumericID }) => Promise<Array<Group>>>();
-			expectTypeOf(client.groups.getAll).toEqualTypeOf<() => Promise<Array<Group>>>();
-			expectTypeOf(client.groups.updateOne).toEqualTypeOf<(data: UpdatableGroup) => Promise<void>>();
-			expectTypeOf(client.groups.addOneUser.toMany).toEqualTypeOf<
+			expectTypeOf(client.groups.create.one).toEqualTypeOf<(data: CreatableGroup) => Promise<NumericID>>();
+			expectTypeOf(client.groups.delete.one).toEqualTypeOf<(groupID: NumericID) => Promise<void>>();
+			expectTypeOf(client.groups.get.one).toEqualTypeOf<(groupID: NumericID) => Promise<Group>>();
+			expectTypeOf(client.groups.get.many).toEqualTypeOf<(filter?: { userID?: NumericID }) => Promise<Array<Group>>>();
+			expectTypeOf(client.groups.get.all).toEqualTypeOf<() => Promise<Array<Group>>>();
+			expectTypeOf(client.groups.update.one).toEqualTypeOf<(data: UpdatableGroup) => Promise<void>>();
+			expectTypeOf(client.groups.add.one.user.to.many).toEqualTypeOf<
 				(userID: NumericID, groupIDs: Array<NumericID>) => Promise<void>
 			>();
-			expectTypeOf(client.groups.addOneUser.toOne).toEqualTypeOf<
+			expectTypeOf(client.groups.add.one.user.to.one).toEqualTypeOf<
 				(userID: NumericID, groupID: NumericID) => Promise<void>
 			>();
-			expectTypeOf(client.groups.removeOneUser.fromOne).toEqualTypeOf<
+			expectTypeOf(client.groups.remove.one.user.from.one).toEqualTypeOf<
 				(userID: NumericID, groupID: NumericID) => Promise<void>
 			>();
 
 			// Actionables
 			expectTypeOf(client.actionables.get.one).toEqualTypeOf<(actionableID: UUID) => Promise<Actionable>>();
 			expectTypeOf(client.actionables.get.all).toEqualTypeOf<() => Promise<Array<Actionable>>>();
-			expectTypeOf(client.actionables.get.related.toMe).toEqualTypeOf<() => Promise<Array<Actionable>>>();
+			expectTypeOf(client.actionables.get.authorized.toMe).toEqualTypeOf<() => Promise<Array<Actionable>>>();
 			expectTypeOf(client.actionables.create.one).toEqualTypeOf<(data: CreatableActionable) => Promise<UUID>>();
 			expectTypeOf(client.actionables.update.one).toEqualTypeOf<(data: UpdatableActionable) => Promise<Actionable>>();
 			expectTypeOf(client.actionables.delete.one).toEqualTypeOf<(actionableID: UUID) => Promise<void>>();
@@ -263,7 +267,7 @@ describe('GravwellClient', () => {
 			// Templates
 			expectTypeOf(client.templates.get.one).toEqualTypeOf<(templateID: UUID) => Promise<Template>>();
 			expectTypeOf(client.templates.get.all).toEqualTypeOf<() => Promise<Array<Template>>>();
-			expectTypeOf(client.templates.get.related.toMe).toEqualTypeOf<() => Promise<Array<Template>>>();
+			expectTypeOf(client.templates.get.authorized.toMe).toEqualTypeOf<() => Promise<Array<Template>>>();
 			expectTypeOf(client.templates.create.one).toEqualTypeOf<(data: CreatableTemplate) => Promise<UUID>>();
 			expectTypeOf(client.templates.update.one).toEqualTypeOf<(data: UpdatableTemplate) => Promise<Template>>();
 			expectTypeOf(client.templates.delete.one).toEqualTypeOf<(templateID: UUID) => Promise<void>>();
@@ -271,7 +275,7 @@ describe('GravwellClient', () => {
 			// Playbooks
 			expectTypeOf(client.playbooks.get.one).toEqualTypeOf<(playbookID: UUID) => Promise<Playbook>>();
 			expectTypeOf(client.playbooks.get.all).toEqualTypeOf<() => Promise<Array<Omit<Playbook, 'body'>>>>();
-			expectTypeOf(client.playbooks.get.related.toMe).toEqualTypeOf<() => Promise<Array<Omit<Playbook, 'body'>>>>();
+			expectTypeOf(client.playbooks.get.authorized.toMe).toEqualTypeOf<() => Promise<Array<Omit<Playbook, 'body'>>>>();
 			expectTypeOf(client.playbooks.create.one).toEqualTypeOf<(data: CreatablePlaybook) => Promise<UUID>>();
 			expectTypeOf(client.playbooks.update.one).toEqualTypeOf<(data: UpdatablePlaybook) => Promise<Playbook>>();
 			expectTypeOf(client.playbooks.delete.one).toEqualTypeOf<(playbookID: UUID) => Promise<void>>();
