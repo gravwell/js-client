@@ -63,7 +63,7 @@ export class GravwellClient {
 			const context: APIContext = { host: this.host, useEncryption: this.useEncryption, authToken: this.authToken };
 			const f = makeF(context);
 			return f(...args);
-		}) as any;
+		}) as ReturnType<MakeF>;
 	};
 
 	public readonly tags = {
@@ -85,7 +85,7 @@ export class GravwellClient {
 		is: {
 			connected: this._makeFunction(f.makeSystemIsConnected),
 		},
-	};
+	} as const;
 
 	public readonly users = {
 		get: {
@@ -105,7 +105,7 @@ export class GravwellClient {
 		delete: {
 			one: this._makeFunction(f.makeDeleteOneUser),
 		},
-	};
+	} as const;
 
 	public readonly userPreferences = {
 		get: {
@@ -120,7 +120,7 @@ export class GravwellClient {
 		delete: {
 			one: this._makeFunction(f.makeDeleteOneUserPreferences),
 		},
-	};
+	} as const;
 
 	public readonly auth = {
 		login: {
@@ -135,7 +135,7 @@ export class GravwellClient {
 		get: {
 			oneUserSessions: this._makeFunction(f.makeGetOneUserActiveSessions),
 		},
-	};
+	} as const;
 
 	public readonly notifications = {
 		create: {
@@ -160,7 +160,7 @@ export class GravwellClient {
 		delete: {
 			one: this._makeFunction(f.makeDeleteOneUserPreferences),
 		},
-	};
+	} as const;
 
 	public readonly webServer = {
 		restart: this._makeFunction(f.makeRestartWebServer),
@@ -168,11 +168,11 @@ export class GravwellClient {
 		is: {
 			distributed: this._makeFunction(f.makeWebServerIsDistributed),
 		},
-	};
+	} as const;
 
 	public readonly indexers = {
 		restart: this._makeFunction(f.makeRestartIndexers),
-	};
+	} as const;
 
 	public readonly ingestors = {
 		ingest: {
@@ -186,7 +186,7 @@ export class GravwellClient {
 
 			byLine: this._makeFunction(f.makeIngestMultiLineEntry),
 		},
-	};
+	} as const;
 
 	public readonly logs = {
 		get: {
@@ -200,19 +200,19 @@ export class GravwellClient {
 		create: {
 			one: this._makeFunction(f.makeCreateOneLog),
 		},
-	};
+	} as const;
 
 	public readonly searchModules = {
 		get: {
 			all: this._makeFunction(f.makeGetAllSearchModules),
 		},
-	};
+	} as const;
 
 	public readonly renderModules = {
 		get: {
 			all: this._makeFunction(f.makeGetAllRenderModules),
 		},
-	};
+	} as const;
 
 	public readonly scripts = {
 		validate: {
@@ -236,7 +236,7 @@ export class GravwellClient {
 				all: this._makeFunction(f.makeSyncAllScriptLibraries),
 			},
 		},
-	};
+	} as const;
 
 	public readonly searches = {
 		status: {
@@ -321,7 +321,7 @@ export class GravwellClient {
 		create: {
 			one: this._makeFunction(f.makeSubscribeToOneSearch),
 		},
-	};
+	} as const;
 
 	public readonly groups = {
 		create: {
@@ -363,7 +363,7 @@ export class GravwellClient {
 				},
 			},
 		},
-	};
+	} as const;
 
 	public readonly actionables = {
 		get: {
@@ -385,7 +385,7 @@ export class GravwellClient {
 		delete: {
 			one: this._makeFunction(f.makeDeleteOneActionable),
 		},
-	};
+	} as const;
 
 	public readonly templates = {
 		get: {
@@ -407,7 +407,7 @@ export class GravwellClient {
 		delete: {
 			one: this._makeFunction(f.makeDeleteOneTemplate),
 		},
-	};
+	} as const;
 
 	public readonly playbooks = {
 		get: {
@@ -429,7 +429,7 @@ export class GravwellClient {
 		delete: {
 			one: this._makeFunction(f.makeDeleteOnePlaybook),
 		},
-	};
+	} as const;
 
 	public readonly resources = {
 		get: {
@@ -455,7 +455,7 @@ export class GravwellClient {
 		delete: {
 			one: this._makeFunction(f.makeDeleteOneResource),
 		},
-	};
+	} as const;
 
 	public readonly macros = {
 		get: {
@@ -478,7 +478,7 @@ export class GravwellClient {
 		delete: {
 			one: this._makeFunction(f.makeDeleteOneMacro),
 		},
-	};
+	} as const;
 
 	public readonly dashboards = {
 		get: {
@@ -501,7 +501,7 @@ export class GravwellClient {
 		delete: {
 			one: this._makeFunction(f.makeDeleteOneDashboard),
 		},
-	};
+	} as const;
 
 	public readonly autoExtractors = {
 		get: {
@@ -535,7 +535,7 @@ export class GravwellClient {
 		download: {
 			many: this._makeFunction(f.makeDownloadManyAutoExtractors),
 		},
-	};
+	} as const;
 
 	public readonly files = {
 		get: {
@@ -556,7 +556,7 @@ export class GravwellClient {
 		delete: {
 			one: this._makeFunction(f.makeDeleteOneFile),
 		},
-	};
+	} as const;
 
 	public readonly savedQueries = {
 		get: {
@@ -578,7 +578,7 @@ export class GravwellClient {
 		delete: {
 			one: this._makeFunction(f.makeDeleteOneSavedQuery),
 		},
-	};
+	} as const;
 
 	public readonly scheduledScripts = {
 		get: {
@@ -609,7 +609,7 @@ export class GravwellClient {
 			lastError: this._makeFunction(f.makeClearOneScheduledScriptError),
 			state: this._makeFunction(f.makeClearOneScheduledScriptState),
 		},
-	};
+	} as const;
 
 	public readonly scheduledQueries = {
 		get: {
@@ -640,13 +640,13 @@ export class GravwellClient {
 			lastError: this._makeFunction(f.makeClearOneScheduledQueryError),
 			state: this._makeFunction(f.makeClearOneScheduledQueryState),
 		},
-	};
+	} as const;
 
 	public readonly queries = {
 		validate: {
 			one: this._makeFunction(f.makeValidateOneQuery),
 		},
-	};
+	} as const;
 
 	public readonly kits = {
 		get: {
@@ -688,5 +688,5 @@ export class GravwellClient {
 			one: this._makeFunction(f.makeUninstallOneKit),
 			all: this._makeFunction(f.makeUninstallAllKits),
 		},
-	};
+	} as const;
 }
