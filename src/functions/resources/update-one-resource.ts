@@ -32,7 +32,7 @@ export const makeUpdateOneResource = (context: APIContext) => {
 			const url = buildURL(resourcePath, { ...context, protocol: 'http', pathParams: { resourceID: data.id } });
 
 			const baseRequestOptions: HTTPRequestOptions = {
-				headers: { Authorization: context.authToken ? `Bcontext.authTokenontext.authToken}` : undefined },
+				headers: { Authorization: context.authToken ? `Bearer ${context.authToken}` : undefined },
 				body: JSON.stringify(toRawUpdatableResourceMetadata(data, current)),
 			};
 			const req = buildHTTPRequest(baseRequestOptions);

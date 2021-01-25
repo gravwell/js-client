@@ -17,7 +17,7 @@ export const makeBuildOneLocalKit = (context: APIContext) => {
 	return async (data: BuildableKit): Promise<UUID> => {
 		try {
 			const baseRequestOptions: HTTPRequestOptions = {
-				headers: { Authorization: context.authToken ? `Bcontext.authTokenontext.authToken}` : undefined },
+				headers: { Authorization: context.authToken ? `Bearer ${context.authToken}` : undefined },
 				body: JSON.stringify(toRawBuildableKit(data)),
 			};
 			const req = buildHTTPRequest(baseRequestOptions);
