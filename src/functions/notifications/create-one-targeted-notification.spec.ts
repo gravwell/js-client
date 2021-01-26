@@ -27,11 +27,11 @@ describe('createOneTargetedNotification', () => {
 	it(
 		'Should be able to create a targeted message to a group',
 		integrationTest(async () => {
-			const groupID = await createOneGroup({ name: '1' });
+			const group = await createOneGroup({ name: '1' });
 
 			const result = await createOneTargetedNotification('group', {
 				message: 'test group',
-				groupID,
+				groupID: group.id,
 			});
 			expect(result).toBeUndefined();
 		}),

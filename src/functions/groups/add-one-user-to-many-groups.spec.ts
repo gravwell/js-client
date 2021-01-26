@@ -48,8 +48,7 @@ describe('addOneUserToManyGroups()', () => {
 			role: 'analyst',
 			user: userSeed,
 		};
-		const userID = await createOneUser(data);
-		user = await getOneUser(userID);
+		user = await createOneUser(data);
 	});
 
 	afterEach(async () => {

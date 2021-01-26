@@ -11,7 +11,7 @@ import { CreatableUser, isScheduledQuery, ScheduledQuery, User } from '../../mod
 import { integrationTest } from '../../tests';
 import { TEST_BASE_API_CONTEXT } from '../../tests/config';
 import { makeLoginOneUser } from '../auth/login-one-user';
-import { makeCreateOneUser, makeGetOneUser } from '../users';
+import { makeCreateOneUser } from '../users';
 import { makeCreateManyScheduledQueries } from './create-many-scheduled-queries';
 import { makeDeleteAllScheduledQueries } from './delete-all-scheduled-queries';
 import { makeGetAllScheduledQueries } from './get-all-scheduled-queries';
@@ -20,7 +20,6 @@ import { makeGetScheduledQueriesAuthorizedToMe } from './get-scheduled-queries-a
 describe('getScheduledQueriesAuthorizedToMe()', () => {
 	const getScheduledQueriesAuthorizedToMe = makeGetScheduledQueriesAuthorizedToMe(TEST_BASE_API_CONTEXT);
 	const getAllScheduledQueries = makeGetAllScheduledQueries(TEST_BASE_API_CONTEXT);
-	const getOneUser = makeGetOneUser(TEST_BASE_API_CONTEXT);
 	const createOneUser = makeCreateOneUser(TEST_BASE_API_CONTEXT);
 	const login = makeLoginOneUser(TEST_BASE_API_CONTEXT);
 	const deleteAllScheduledQueries = makeDeleteAllScheduledQueries(TEST_BASE_API_CONTEXT);
@@ -62,8 +61,7 @@ describe('getScheduledQueriesAuthorizedToMe()', () => {
 			role: 'analyst',
 			user: userSeed,
 		};
-		const userID = await createOneUser(data);
-		analyst = await getOneUser(userID);
+		analyst = await createOneUser(data);
 		analystAuth = await login(analyst.username, data.password);
 
 		// Create three scheduled queries as analyst

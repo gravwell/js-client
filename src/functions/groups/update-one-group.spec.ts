@@ -36,8 +36,7 @@ describe('updateOneGroup()', () => {
 			name: 'Name test',
 			description: 'Description test',
 		};
-		const groupID = await createOneGroup(data);
-		createdGroup = await getOneGroup(groupID);
+		createdGroup = await createOneGroup(data);
 	});
 
 	afterEach(async () => {

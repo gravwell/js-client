@@ -11,7 +11,7 @@ import { CreatableUser, isScheduledScript, ScheduledScript, User } from '../../m
 import { integrationTest } from '../../tests';
 import { TEST_BASE_API_CONTEXT } from '../../tests/config';
 import { makeLoginOneUser } from '../auth/login-one-user';
-import { makeCreateOneUser, makeGetOneUser } from '../users';
+import { makeCreateOneUser } from '../users';
 import { makeCreateManyScheduledScripts } from './create-many-scheduled-scripts';
 import { makeDeleteAllScheduledScripts } from './delete-all-scheduled-scripts';
 import { makeGetAllScheduledScripts } from './get-all-scheduled-scripts';
@@ -20,7 +20,6 @@ import { makeGetScheduledScriptsAuthorizedToMe } from './get-scheduled-scripts-a
 describe('getScheduledScriptsAuthorizedToMe()', () => {
 	const getScheduledScriptsAuthorizedToMe = makeGetScheduledScriptsAuthorizedToMe(TEST_BASE_API_CONTEXT);
 	const getAllScheduledScripts = makeGetAllScheduledScripts(TEST_BASE_API_CONTEXT);
-	const getOneUser = makeGetOneUser(TEST_BASE_API_CONTEXT);
 	const createOneUser = makeCreateOneUser(TEST_BASE_API_CONTEXT);
 	const login = makeLoginOneUser(TEST_BASE_API_CONTEXT);
 	const deleteAllScheduledScripts = makeDeleteAllScheduledScripts(TEST_BASE_API_CONTEXT);
@@ -60,8 +59,7 @@ describe('getScheduledScriptsAuthorizedToMe()', () => {
 			role: 'analyst',
 			user: userSeed,
 		};
-		const userID = await createOneUser(data);
-		analyst = await getOneUser(userID);
+		analyst = await createOneUser(data);
 		analystAuth = await login(analyst.username, data.password);
 
 		// Create three scheduled scripts as analyst
