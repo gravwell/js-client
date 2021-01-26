@@ -6,15 +6,18 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { CreatableTemplate, toRawCreatableTemplate } from '../../models';
+import { CreatableTemplate, Template, toRawCreatableTemplate } from '../../models';
 import { UUID } from '../../value-objects';
 import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
+import { makeGetOneTemplate } from './get-one-template';
 
 export const makeCreateOneTemplate = (context: APIContext) => {
+	const getOneTemplate = makeGetOneTemplate(context);
+
 	const templatePath = '/api/templates';
 	const url = buildURL(templatePath, { ...context, protocol: 'http' });
 
-	return async (data: CreatableTemplate): Promise<UUID> => {
+	return async (data: CreatableTemplate): Promise<Template> => {
 		try {
 			const baseRequestOptions: HTTPRequestOptions = {
 				headers: { Authorization: context.authToken ? `Bearer ${context.authToken}` : undefined },
@@ -23,8 +26,10 @@ export const makeCreateOneTemplate = (context: APIContext) => {
 			const req = buildHTTPRequest(baseRequestOptions);
 
 			const raw = await fetch(url, { ...req, method: 'POST' });
-			const rawRes = await parseJSONResponse<UUID>(raw);
-			return rawRes;
+			const rawID = await parseJSONResponse<UUID>(raw);
+
+			const templateID = rawID.toString();
+			return await getOneTemplate(templateID);
 		} catch (err) {
 			if (err instanceof Error) throw err;
 			throw Error('Unknown error');

@@ -264,7 +264,7 @@ describe('GravwellClient', () => {
 			expectTypeOf(client.templates.get.one).toEqualTypeOf<(templateID: UUID) => Promise<Template>>();
 			expectTypeOf(client.templates.get.all).toEqualTypeOf<() => Promise<Array<Template>>>();
 			expectTypeOf(client.templates.get.related.toMe).toEqualTypeOf<() => Promise<Array<Template>>>();
-			expectTypeOf(client.templates.create.one).toEqualTypeOf<(data: CreatableTemplate) => Promise<UUID>>();
+			expectTypeOf(client.templates.create.one).toEqualTypeOf<(data: CreatableTemplate) => Promise<Template>>();
 			expectTypeOf(client.templates.update.one).toEqualTypeOf<(data: UpdatableTemplate) => Promise<Template>>();
 			expectTypeOf(client.templates.delete.one).toEqualTypeOf<(templateID: UUID) => Promise<void>>();
 
