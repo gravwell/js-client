@@ -6,10 +6,8 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { Host } from '../../value-objects';
-
 export interface APIContext {
-	host: Host;
+	host: string;
 	useEncryption: boolean;
 	authToken: string | null;
 }

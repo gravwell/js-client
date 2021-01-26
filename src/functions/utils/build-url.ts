@@ -7,7 +7,6 @@
  **************************************************************************/
 
 import { isArray, isUndefined } from 'lodash';
-import { Host } from '../../value-objects';
 import { QueryParams, URLParams } from './http-request-options';
 
 export type URLProtocol = 'http' | 'ws';
@@ -19,7 +18,7 @@ const SECURE_PROTOCOLS: Record<URLProtocol, string> = {
 export interface URLOptions {
 	protocol: URLProtocol;
 	useEncryption: boolean;
-	host: Host;
+	host: string;
 	pathParams?: URLParams;
 	queryParams?: QueryParams;
 }
