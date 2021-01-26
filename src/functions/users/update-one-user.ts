@@ -7,8 +7,9 @@
  **************************************************************************/
 
 import { isBoolean, isString, isUndefined, negate } from 'lodash';
-import { isValidUserRole, UpdatableUser } from '../../models';
+import { isValidUserRole, UpdatableUser, User } from '../../models';
 import { APIContext } from '../utils';
+import { makeGetOneUser } from './get-one-user';
 import { makeUpdateOneUserInformation } from './update-one-user-information';
 import { makeUpdateOneUserLockedState } from './update-one-user-locked-state';
 import { makeUpdateOneUserPassword } from './update-one-user-password';
@@ -19,8 +20,9 @@ export const makeUpdateOneUser = (context: APIContext) => {
 	const updateOneUserInformation = makeUpdateOneUserInformation(context);
 	const updateOneUserRole = makeUpdateOneUserRole(context);
 	const updateOneUserPassword = makeUpdateOneUserPassword(context);
+	const getOneUser = makeGetOneUser(context);
 
-	return async (data: UpdatableUser): Promise<void> => {
+	return async (data: UpdatableUser): Promise<User> => {
 		try {
 			const promises: Array<Promise<void>> = [];
 
@@ -38,6 +40,7 @@ export const makeUpdateOneUser = (context: APIContext) => {
 			if (isString(data.password)) promises.push(updateOneUserPassword(data.id, data.password, data.currentPassword));
 
 			await Promise.all(promises);
+			return await getOneUser(data.id);
 		} catch (err) {
 			if (err instanceof Error) throw err;
 			throw Error('Unknown error');
