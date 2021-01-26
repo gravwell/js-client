@@ -9,14 +9,11 @@
 import { CreatablePlaybook, isPlaybook } from '../../models';
 import { integrationTest } from '../../tests';
 import { TEST_BASE_API_CONTEXT } from '../../tests/config';
-import { isUUID } from '../../value-objects';
 import { makeCreateOnePlaybook } from './create-one-playbook';
 import { makeDeleteOnePlaybook } from './delete-one-playbook';
-import { makeGetOnePlaybook } from './get-one-playbook';
 
 describe('createOnePlaybook()', () => {
 	const createOnePlaybook = makeCreateOnePlaybook(TEST_BASE_API_CONTEXT);
-	const getOnePlaybook = makeGetOnePlaybook(TEST_BASE_API_CONTEXT);
 	const deleteOnePlaybook = makeDeleteOnePlaybook(TEST_BASE_API_CONTEXT);
 
 	it(
@@ -27,12 +24,10 @@ describe('createOnePlaybook()', () => {
 				body: 'This is my playbook',
 			};
 
-			const playbookUUID = await createOnePlaybook(data);
-			expect(isUUID(playbookUUID)).toBeTrue();
-			const playbook = await getOnePlaybook(playbookUUID);
+			const playbook = await createOnePlaybook(data);
 			expect(isPlaybook(playbook)).toBeTrue();
 
-			await deleteOnePlaybook(playbookUUID);
+			await deleteOnePlaybook(playbook.uuid);
 		}),
 	);
 });

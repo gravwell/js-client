@@ -13,12 +13,10 @@ import { TEST_BASE_API_CONTEXT } from '../../tests/config';
 import { omitUndefinedShallow } from '../utils';
 import { makeCreateOnePlaybook } from './create-one-playbook';
 import { makeDeleteOnePlaybook } from './delete-one-playbook';
-import { makeGetOnePlaybook } from './get-one-playbook';
 import { makeUpdateOnePlaybook } from './update-one-playbook';
 
 describe('updateOnePlaybook()', () => {
 	const createOnePlaybook = makeCreateOnePlaybook(TEST_BASE_API_CONTEXT);
-	const getOnePlaybook = makeGetOnePlaybook(TEST_BASE_API_CONTEXT);
 	const updateOnePlaybook = makeUpdateOnePlaybook(TEST_BASE_API_CONTEXT);
 	const deleteOnePlaybook = makeDeleteOnePlaybook(TEST_BASE_API_CONTEXT);
 
@@ -31,8 +29,7 @@ describe('updateOnePlaybook()', () => {
 			description: 'Current description',
 			body: 'This is my playbook',
 		};
-		const playbookUUID = await createOnePlaybook(data);
-		createdPlaybook = await getOnePlaybook(playbookUUID);
+		createdPlaybook = await createOnePlaybook(data);
 	});
 
 	afterEach(async () => {

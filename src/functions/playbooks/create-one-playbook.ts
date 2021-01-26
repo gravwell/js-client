@@ -6,15 +6,18 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { CreatablePlaybook, toRawCreatablePlaybook } from '../../models';
+import { CreatablePlaybook, Playbook, toRawCreatablePlaybook } from '../../models';
 import { UUID } from '../../value-objects';
 import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
+import { makeGetOnePlaybook } from './get-one-playbook';
 
 export const makeCreateOnePlaybook = (context: APIContext) => {
+	const getOnePlaybook = makeGetOnePlaybook(context);
+
 	const playbookPath = '/api/playbooks';
 	const url = buildURL(playbookPath, { ...context, protocol: 'http' });
 
-	return async (data: CreatablePlaybook): Promise<UUID> => {
+	return async (data: CreatablePlaybook): Promise<Playbook> => {
 		try {
 			const baseRequestOptions: HTTPRequestOptions = {
 				headers: { Authorization: context.authToken ? `Bearer ${context.authToken}` : undefined },
@@ -23,8 +26,10 @@ export const makeCreateOnePlaybook = (context: APIContext) => {
 			const req = buildHTTPRequest(baseRequestOptions);
 
 			const raw = await fetch(url, { ...req, method: 'POST' });
-			const rawRes = await parseJSONResponse<UUID>(raw);
-			return rawRes;
+			const rawID = await parseJSONResponse<UUID>(raw);
+
+			const playbookID = rawID.toString();
+			return await getOnePlaybook(playbookID);
 		} catch (err) {
 			if (err instanceof Error) throw err;
 			throw Error('Unknown error');
