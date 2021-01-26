@@ -11,7 +11,7 @@ import { AutoExtractor, CreatableAutoExtractor, CreatableUser, isAutoExtractor, 
 import { integrationTest } from '../../tests';
 import { TEST_BASE_API_CONTEXT } from '../../tests/config';
 import { makeLoginOneUser } from '../auth/login-one-user';
-import { makeCreateOneUser, makeGetOneUser } from '../users';
+import { makeCreateOneUser } from '../users';
 import { makeCreateOneAutoExtractor } from './create-one-auto-extractor';
 import { makeDeleteOneAutoExtractor } from './delete-one-auto-extractor';
 import { makeGetAllAutoExtractors } from './get-all-auto-extractors';
@@ -22,7 +22,6 @@ describe('getAutoExtractorsAuthorizedToMe()', () => {
 	const createOneAutoExtractor = makeCreateOneAutoExtractor(TEST_BASE_API_CONTEXT);
 	const deleteOneAutoExtractor = makeDeleteOneAutoExtractor(TEST_BASE_API_CONTEXT);
 	const getAllAutoExtractors = makeGetAllAutoExtractors(TEST_BASE_API_CONTEXT);
-	const getOneUser = makeGetOneUser(TEST_BASE_API_CONTEXT);
 	const createOneUser = makeCreateOneUser(TEST_BASE_API_CONTEXT);
 	const login = makeLoginOneUser(TEST_BASE_API_CONTEXT);
 
@@ -70,8 +69,7 @@ describe('getAutoExtractorsAuthorizedToMe()', () => {
 			role: 'analyst',
 			user: userSeed,
 		};
-		const userID = await createOneUser(data);
-		analyst = await getOneUser(userID);
+		analyst = await createOneUser(data);
 		analystAuth = await login(analyst.username, data.password);
 
 		// Create three autoExtractors as analyst

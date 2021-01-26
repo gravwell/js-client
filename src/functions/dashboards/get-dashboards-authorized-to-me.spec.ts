@@ -11,7 +11,7 @@ import { CreatableDashboard, CreatableUser, Dashboard, isDashboard, User } from 
 import { integrationTest } from '../../tests';
 import { TEST_BASE_API_CONTEXT } from '../../tests/config';
 import { makeLoginOneUser } from '../auth/login-one-user';
-import { makeCreateOneUser, makeGetOneUser } from '../users';
+import { makeCreateOneUser } from '../users';
 import { makeCreateOneDashboard } from './create-one-dashboard';
 import { makeDeleteOneDashboard } from './delete-one-dashboard';
 import { makeGetAllDashboards } from './get-all-dashboards';
@@ -22,7 +22,6 @@ describe('getDashboardsAuthorizedToMe()', () => {
 	const createOneDashboard = makeCreateOneDashboard(TEST_BASE_API_CONTEXT);
 	const deleteOneDashboard = makeDeleteOneDashboard(TEST_BASE_API_CONTEXT);
 	const getAllDashboards = makeGetAllDashboards(TEST_BASE_API_CONTEXT);
-	const getOneUser = makeGetOneUser(TEST_BASE_API_CONTEXT);
 	const createOneUser = makeCreateOneUser(TEST_BASE_API_CONTEXT);
 	const login = makeLoginOneUser(TEST_BASE_API_CONTEXT);
 
@@ -66,8 +65,7 @@ describe('getDashboardsAuthorizedToMe()', () => {
 			role: 'analyst',
 			user: userSeed,
 		};
-		const userID = await createOneUser(data);
-		analyst = await getOneUser(userID);
+		analyst = await createOneUser(data);
 		analystAuth = await login(analyst.username, data.password);
 
 		// Create three dashboards as analyst

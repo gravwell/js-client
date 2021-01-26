@@ -11,13 +11,12 @@ import { CreatableUser, User } from '../../models';
 import { integrationTest } from '../../tests';
 import { TEST_BASE_API_CONTEXT } from '../../tests/config';
 import { makeLoginOneUser } from '../auth/login-one-user';
-import { makeCreateOneUser, makeGetOneUser } from '../users';
+import { makeCreateOneUser } from '../users';
 import { makeCreateManyScheduledScripts } from './create-many-scheduled-scripts';
 import { makeDeleteAllScheduledScripts } from './delete-all-scheduled-scripts';
 import { makeGetAllScheduledScripts } from './get-all-scheduled-scripts';
 
 describe('deleteAllScheduledScripts()', () => {
-	const getOneUser = makeGetOneUser(TEST_BASE_API_CONTEXT);
 	const createOneUser = makeCreateOneUser(TEST_BASE_API_CONTEXT);
 	const login = makeLoginOneUser(TEST_BASE_API_CONTEXT);
 
@@ -56,8 +55,7 @@ describe('deleteAllScheduledScripts()', () => {
 			role: 'analyst',
 			user: userSeed,
 		};
-		const userID = await createOneUser(data);
-		user = await getOneUser(userID);
+		user = await createOneUser(data);
 		userAuth = await login(user.username, data.password);
 
 		// Create three scheduled scripts as analyst

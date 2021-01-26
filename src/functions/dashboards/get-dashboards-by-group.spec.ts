@@ -13,7 +13,7 @@ import { TEST_BASE_API_CONTEXT } from '../../tests/config';
 import { makeLoginOneUser } from '../auth/login-one-user';
 import { makeAddOneUserToManyGroups } from '../groups/add-one-user-to-many-groups';
 import { makeCreateOneGroup } from '../groups/create-one-group';
-import { makeCreateOneUser, makeGetMyUser, makeGetOneUser } from '../users';
+import { makeCreateOneUser, makeGetMyUser } from '../users';
 import { makeCreateOneDashboard } from './create-one-dashboard';
 import { makeDeleteOneDashboard } from './delete-one-dashboard';
 import { makeGetAllDashboards } from './get-all-dashboards';
@@ -21,7 +21,6 @@ import { makeGetDashboardsByGroup } from './get-dashboards-by-group';
 
 xdescribe('getDashboardsByGroup()', () => {
 	const getAllDashboards = makeGetAllDashboards(TEST_BASE_API_CONTEXT);
-	const getOneUser = makeGetOneUser(TEST_BASE_API_CONTEXT);
 	const createOneUser = makeCreateOneUser(TEST_BASE_API_CONTEXT);
 	const login = makeLoginOneUser(TEST_BASE_API_CONTEXT);
 	const createOneDashboard = makeCreateOneDashboard(TEST_BASE_API_CONTEXT);
@@ -51,14 +50,14 @@ xdescribe('getDashboardsByGroup()', () => {
 			role: 'analyst',
 			user: userSeed,
 		};
-		const userID = await createOneUser(data);
-		analyst = await getOneUser(userID);
+		analyst = await createOneUser(data);
 		analystAuth = await login(analyst.username, data.password);
 
 		// Creates two groups
 		const creatableGroups: Array<CreatableGroup> = [{ name: 'Admin' }, { name: 'Analyst' }];
 		const groupCreationPs = creatableGroups.map(data => createOneGroup(data));
-		[adminGroupID, analystGroupID] = await Promise.all(groupCreationPs);
+		const groups = await Promise.all(groupCreationPs);
+		[adminGroupID, analystGroupID] = groups.map(g => g.id);
 
 		// Assign admin to one group and analyst to the other
 		await Promise.all([
@@ -154,8 +153,8 @@ xdescribe('getDashboardsByGroup()', () => {
 		'Should return an empty array if the group has no dashboards',
 		integrationTest(async () => {
 			const creatableGroup: CreatableGroup = { name: 'New' };
-			const groupID = await createOneGroup(creatableGroup);
-			const dashboards = await getDashboardsByGroup(groupID);
+			const group = await createOneGroup(creatableGroup);
+			const dashboards = await getDashboardsByGroup(group.id);
 			expect(dashboards.length).toBe(0);
 		}),
 	);

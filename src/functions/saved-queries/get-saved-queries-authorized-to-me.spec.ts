@@ -11,7 +11,7 @@ import { CreatableSavedQuery, CreatableUser, isSavedQuery, SavedQuery, User } fr
 import { integrationTest } from '../../tests';
 import { TEST_BASE_API_CONTEXT } from '../../tests/config';
 import { makeLoginOneUser } from '../auth/login-one-user';
-import { makeCreateOneUser, makeGetOneUser } from '../users';
+import { makeCreateOneUser } from '../users';
 import { makeCreateOneSavedQuery } from './create-one-saved-query';
 import { makeDeleteOneSavedQuery } from './delete-one-saved-query';
 import { makeGetAllSavedQueries } from './get-all-saved-queries';
@@ -22,7 +22,6 @@ describe('getSavedQueriesAuthorizedToMe()', () => {
 	const createOneSavedQuery = makeCreateOneSavedQuery(TEST_BASE_API_CONTEXT);
 	const deleteOneSavedQuery = makeDeleteOneSavedQuery(TEST_BASE_API_CONTEXT);
 	const getAllSavedQueries = makeGetAllSavedQueries(TEST_BASE_API_CONTEXT);
-	const getOneUser = makeGetOneUser(TEST_BASE_API_CONTEXT);
 	const createOneUser = makeCreateOneUser(TEST_BASE_API_CONTEXT);
 	const login = makeLoginOneUser(TEST_BASE_API_CONTEXT);
 
@@ -62,8 +61,7 @@ describe('getSavedQueriesAuthorizedToMe()', () => {
 			role: 'analyst',
 			user: userSeed,
 		};
-		const userID = await createOneUser(data);
-		analyst = await getOneUser(userID);
+		analyst = await createOneUser(data);
 		analystAuth = await login(analyst.username, data.password);
 
 		// Create three saved queries as analyst

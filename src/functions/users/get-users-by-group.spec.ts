@@ -51,7 +51,7 @@ describe('getUsersByGroup()', () => {
 			};
 			return createOneUser(data);
 		});
-		createdUserIDs = await Promise.all(createdUserIDsPs);
+		createdUserIDs = (await Promise.all(createdUserIDsPs)).map(u => u.id);
 	});
 
 	afterEach(async () => {

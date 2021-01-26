@@ -39,7 +39,8 @@ describe('removeOneUserFromOneGroup()', () => {
 		// Create three groups
 		const creatableGroups: Array<CreatableGroup> = [{ name: '1' }, { name: '2' }, { name: '3' }];
 		const createPromises = creatableGroups.map(creatable => createOneGroup(creatable));
-		const createdGroupIDs = await Promise.all(createPromises);
+		const createdGroups = await Promise.all(createPromises);
+		const createdGroupIDs = createdGroups.map(g => g.id);
 
 		// Creates a user
 		const userSeed = 'whatever4324234';
@@ -50,13 +51,10 @@ describe('removeOneUserFromOneGroup()', () => {
 			role: 'analyst',
 			user: userSeed,
 		};
-		const userID = await createOneUser(data);
+		user = await createOneUser(data);
 
 		// Adds the user to all groups
-		await addOneUserToManyGroups(userID, createdGroupIDs);
-
-		// Saves the user into a variable
-		user = await getOneUser(userID);
+		await addOneUserToManyGroups(user.id, createdGroupIDs);
 	});
 
 	afterEach(async () => {
