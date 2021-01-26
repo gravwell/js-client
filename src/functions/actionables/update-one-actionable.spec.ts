@@ -33,8 +33,7 @@ describe('updateOneActionable()', () => {
 			actions: [{ name: 'Current action', command: { type: 'query', userQuery: 'tag=netflow' } }],
 			triggers: [{ pattern: /abc/g, activatesOn: 'clicks and selection' }],
 		};
-		const actionableUUID = await createOneActionable(data);
-		createdActionable = await getOneActionable(actionableUUID);
+		createdActionable = await createOneActionable(data);
 	});
 
 	afterEach(async () => {
