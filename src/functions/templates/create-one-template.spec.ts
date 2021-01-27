@@ -9,14 +9,11 @@
 import { CreatableTemplate, isTemplate } from '../../models';
 import { integrationTest } from '../../tests';
 import { TEST_BASE_API_CONTEXT } from '../../tests/config';
-import { isUUID } from '../../value-objects';
 import { makeCreateOneTemplate } from './create-one-template';
 import { makeDeleteOneTemplate } from './delete-one-template';
-import { makeGetOneTemplate } from './get-one-template';
 
 describe('createOneTemplate()', () => {
 	const createOneTemplate = makeCreateOneTemplate(TEST_BASE_API_CONTEXT);
-	const getOneTemplate = makeGetOneTemplate(TEST_BASE_API_CONTEXT);
 	const deleteOneTemplate = makeDeleteOneTemplate(TEST_BASE_API_CONTEXT);
 
 	// gravwell/gravwell#2426
@@ -30,12 +27,10 @@ describe('createOneTemplate()', () => {
 				variable: { name: 'Variable', token: '__VAR__' },
 			};
 
-			const templateUUID = await createOneTemplate(data);
-			expect(isUUID(templateUUID)).toBeTrue();
-			const template = await getOneTemplate(templateUUID);
+			const template = await createOneTemplate(data);
 			expect(isTemplate(template)).toBeTrue();
 
-			await deleteOneTemplate(templateUUID);
+			await deleteOneTemplate(template.uuid);
 		}),
 	);
 });

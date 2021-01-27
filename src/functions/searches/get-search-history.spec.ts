@@ -11,13 +11,12 @@ import { CreatableUser, isValidSearch, User } from '../../models';
 import { integrationTest } from '../../tests';
 import { TEST_BASE_API_CONTEXT } from '../../tests/config';
 import { makeLoginOneUser } from '../auth/login-one-user';
-import { makeCreateOneUser, makeGetMyUser, makeGetOneUser } from '../users';
+import { makeCreateOneUser, makeGetMyUser } from '../users';
 import { makeGetSearchHistory } from './get-search-history';
 
 describe('getSearchHistory()', () => {
 	const getSearchHistory = makeGetSearchHistory(TEST_BASE_API_CONTEXT);
 	const createOneUser = makeCreateOneUser(TEST_BASE_API_CONTEXT);
-	const getOneUser = makeGetOneUser(TEST_BASE_API_CONTEXT);
 	const login = makeLoginOneUser(TEST_BASE_API_CONTEXT);
 	const getMyUser = makeGetMyUser(TEST_BASE_API_CONTEXT);
 
@@ -34,8 +33,7 @@ describe('getSearchHistory()', () => {
 			role: 'analyst',
 			user: userSeed,
 		};
-		const userID = await createOneUser(data);
-		user = await getOneUser(userID);
+		user = await createOneUser(data);
 		userAuth = await login(user.username, data.password);
 
 		admin = await getMyUser();

@@ -31,12 +31,11 @@ describe('deleteOneUser()', () => {
 				user: username,
 			};
 
-			const userID = await createOneUser(data);
-			const user = await getOneUser(userID);
+			const user = await createOneUser(data);
 			expect(isValidUser(user)).toBeTrue();
 
-			await deleteOneUser(userID);
-			await expectAsync(getOneUser(userID)).toBeRejected();
+			await deleteOneUser(user.id);
+			await expectAsync(getOneUser(user.id)).toBeRejected();
 		}),
 	);
 });

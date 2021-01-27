@@ -27,7 +27,7 @@ describe('getOneActionable()', () => {
 			actions: [{ name: 'Action test', command: { type: 'query', userQuery: 'tag=netflow' } }],
 			triggers: [{ pattern: /abc/g, activatesOn: 'clicks and selection' }],
 		};
-		createdActionableUUID = await createOneActionable(data);
+		createdActionableUUID = (await createOneActionable(data)).uuid;
 	});
 
 	afterEach(async () => {

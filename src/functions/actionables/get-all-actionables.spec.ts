@@ -28,8 +28,8 @@ describe('getAllActionables()', () => {
 			actions: [{ name: 'Action test', command: { type: 'query', userQuery: 'tag=netflow' } }],
 			triggers: [{ pattern: /abc/g, activatesOn: 'clicks and selection' }],
 		};
-		const createdActionablesUUIDsPs = Array.from({ length: 2 }).map(() => createOneActionable(data));
-		createdActionablesUUIDs = await Promise.all(createdActionablesUUIDsPs);
+		const createdActionables = await Promise.all(Array.from({ length: 2 }).map(() => createOneActionable(data)));
+		createdActionablesUUIDs = createdActionables.map(a => a.uuid);
 	});
 
 	afterEach(async () => {

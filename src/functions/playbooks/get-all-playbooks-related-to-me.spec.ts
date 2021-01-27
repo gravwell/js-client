@@ -27,8 +27,8 @@ describe('getAllPlaybooksRelatedToMe()', () => {
 			name: 'Playbook test',
 			body: 'This is my playbook',
 		};
-		const createdPlaybooksUUIDsPs = Array.from({ length: 2 }).map(() => createOnePlaybook(data));
-		createdPlaybooksUUIDs = await Promise.all(createdPlaybooksUUIDsPs);
+		const createdPlaybooksPs = Array.from({ length: 2 }).map(() => createOnePlaybook(data));
+		createdPlaybooksUUIDs = (await Promise.all(createdPlaybooksPs)).map(p => p.uuid);
 	});
 
 	afterEach(async () => {

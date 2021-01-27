@@ -11,11 +11,9 @@ import { CreatableUser, isValidUser } from '../../models';
 import { integrationTest } from '../../tests';
 import { TEST_BASE_API_CONTEXT } from '../../tests/config';
 import { makeCreateOneUser } from './create-one-user';
-import { makeGetOneUser } from './get-one-user';
 
 describe('createOneUser()', () => {
 	const createOneUser = makeCreateOneUser(TEST_BASE_API_CONTEXT);
-	const getOneUser = makeGetOneUser(TEST_BASE_API_CONTEXT);
 
 	it(
 		"Should create a user and return it's id",
@@ -29,8 +27,7 @@ describe('createOneUser()', () => {
 				user: username,
 			};
 
-			const userID = await createOneUser(data);
-			const user = await getOneUser(userID);
+			const user = await createOneUser(data);
 			expect(isValidUser(user)).toBeTrue();
 		}),
 	);

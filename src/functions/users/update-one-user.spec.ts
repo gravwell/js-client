@@ -36,8 +36,7 @@ describe('updateOneUser()', () => {
 			role: 'analyst',
 			user: username,
 		};
-		const userID = await createOneUser(data);
-		user = await getOneUser(userID);
+		user = await createOneUser(data);
 	});
 
 	afterEach(async () => {

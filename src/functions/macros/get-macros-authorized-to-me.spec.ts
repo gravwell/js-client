@@ -11,7 +11,7 @@ import { CreatableMacro, CreatableUser, isMacro, Macro, User } from '../../model
 import { integrationTest } from '../../tests';
 import { TEST_BASE_API_CONTEXT } from '../../tests/config';
 import { makeLoginOneUser } from '../auth/login-one-user';
-import { makeCreateOneUser, makeGetOneUser } from '../users';
+import { makeCreateOneUser } from '../users';
 import { makeCreateOneMacro } from './create-one-macro';
 import { makeDeleteOneMacro } from './delete-one-macro';
 import { makeGetAllMacros } from './get-all-macros';
@@ -22,7 +22,6 @@ describe('getMacrosAuthorizedToMe()', () => {
 	const createOneMacro = makeCreateOneMacro(TEST_BASE_API_CONTEXT);
 	const deleteOneMacro = makeDeleteOneMacro(TEST_BASE_API_CONTEXT);
 	const getAllMacros = makeGetAllMacros(TEST_BASE_API_CONTEXT);
-	const getOneUser = makeGetOneUser(TEST_BASE_API_CONTEXT);
 	const createOneUser = makeCreateOneUser(TEST_BASE_API_CONTEXT);
 	const login = makeLoginOneUser(TEST_BASE_API_CONTEXT);
 
@@ -56,8 +55,7 @@ describe('getMacrosAuthorizedToMe()', () => {
 			role: 'analyst',
 			user: userSeed,
 		};
-		const userID = await createOneUser(data);
-		analyst = await getOneUser(userID);
+		analyst = await createOneUser(data);
 		analystAuth = await login(analyst.username, data.password);
 
 		// Create three macros as analyst

@@ -9,7 +9,6 @@
 import { CreatableActionable, isActionable } from '../../models';
 import { integrationTest } from '../../tests';
 import { TEST_BASE_API_CONTEXT } from '../../tests/config';
-import { isUUID } from '../../value-objects';
 import { makeCreateOneActionable } from './create-one-actionable';
 import { makeDeleteOneActionable } from './delete-one-actionable';
 import { makeGetOneActionable } from './get-one-actionable';
@@ -29,13 +28,11 @@ describe('deleteOneActionable()', () => {
 				triggers: [{ pattern: /abc/g, activatesOn: 'clicks and selection' }],
 			};
 
-			const actionableUUID = await createOneActionable(data);
-			expect(isUUID(actionableUUID)).toBeTrue();
-			const actionable = await getOneActionable(actionableUUID);
+			const actionable = await createOneActionable(data);
 			expect(isActionable(actionable)).toBeTrue();
 
-			await expectAsync(deleteOneActionable(actionableUUID)).toBeResolved();
-			await expectAsync(getOneActionable(actionableUUID)).toBeRejected();
+			await expectAsync(deleteOneActionable(actionable.uuid)).toBeResolved();
+			await expectAsync(getOneActionable(actionable.uuid)).toBeRejected();
 		}),
 	);
 });

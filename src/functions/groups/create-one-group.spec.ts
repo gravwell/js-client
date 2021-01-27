@@ -12,11 +12,9 @@ import { TEST_BASE_API_CONTEXT } from '../../tests/config';
 import { makeCreateOneGroup } from './create-one-group';
 import { makeDeleteOneGroup } from './delete-one-group';
 import { makeGetAllGroups } from './get-all-groups';
-import { makeGetOneGroup } from './get-one-group';
 
 describe('createOneGroup()', () => {
 	const createOneGroup = makeCreateOneGroup(TEST_BASE_API_CONTEXT);
-	const getOneGroup = makeGetOneGroup(TEST_BASE_API_CONTEXT);
 	const deleteOneGroup = makeDeleteOneGroup(TEST_BASE_API_CONTEXT);
 	const getAllGroups = makeGetAllGroups(TEST_BASE_API_CONTEXT);
 
@@ -36,14 +34,13 @@ describe('createOneGroup()', () => {
 				description: 'Description test',
 			};
 
-			const groupID = await createOneGroup(data);
-			const group = await getOneGroup(groupID);
+			const group = await createOneGroup(data);
 			expect(isGroup(group)).toBeTrue();
 			expect(group).toEqual(jasmine.objectContaining(data));
 
 			const currentGroups = await getAllGroups();
 			const currentGroupIDs = currentGroups.map(g => g.id);
-			expect(currentGroupIDs).toContain(groupID);
+			expect(currentGroupIDs).toContain(group.id);
 		}),
 	);
 
@@ -54,14 +51,13 @@ describe('createOneGroup()', () => {
 				name: 'Name test',
 			};
 
-			const groupID = await createOneGroup(data);
-			const group = await getOneGroup(groupID);
+			const group = await createOneGroup(data);
 			expect(isGroup(group)).toBeTrue();
 			expect(group).toEqual(jasmine.objectContaining(data));
 
 			const currentGroups = await getAllGroups();
 			const currentGroupIDs = currentGroups.map(g => g.id);
-			expect(currentGroupIDs).toContain(groupID);
+			expect(currentGroupIDs).toContain(group.id);
 		}),
 	);
 });

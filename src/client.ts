@@ -11,7 +11,7 @@ import { BehaviorSubject } from 'rxjs';
 import * as f from './functions';
 import { APIContext } from './functions/utils';
 import { CreatableJSONEntry, Search } from './models';
-import { Host, NumericID } from './value-objects';
+import { isNumericID, NumericID } from './value-objects';
 
 export interface GravwellClientOptions {
 	useEncryption: boolean;
@@ -20,12 +20,12 @@ export interface GravwellClientOptions {
 
 export class GravwellClient {
 	public set host(value: string) {
-		this._host = new Host(value);
+		this._host = value;
 	}
 	public get host(): string {
 		return this._host.valueOf();
 	}
-	private _host: Host;
+	private _host: string;
 
 	public useEncryption = true;
 
@@ -37,7 +37,7 @@ export class GravwellClient {
 	public readonly authToken$ = this._authToken$.asObservable();
 
 	constructor(host: string, options: GravwellClientOptions = { useEncryption: true }) {
-		this._host = new Host(host);
+		this._host = host;
 		this.useEncryption = options.useEncryption;
 		if (!isUndefined(options.authToken)) this.authenticate(options.authToken);
 
@@ -63,162 +63,264 @@ export class GravwellClient {
 			const context: APIContext = { host: this.host, useEncryption: this.useEncryption, authToken: this.authToken };
 			const f = makeF(context);
 			return f(...args);
-		}) as any;
+		}) as ReturnType<MakeF>;
 	};
 
 	public readonly tags = {
-		getAll: this._makeFunction(f.makeGetAllTags),
+		get: {
+			all: this._makeFunction(f.makeGetAllTags),
+		},
 	};
 
 	public readonly system = {
-		getSettings: this._makeFunction(f.makeGetSystemSettings),
-		isConnected: this._makeFunction(f.makeSystemIsConnected),
-		getAPIVersion: this._makeFunction(f.makeGetAPIVersion),
-		subscribeToManyInformations: this._makeFunction(f.makeSubscribeToManySystemInformations),
-	};
+		subscribeTo: {
+			information: this._makeFunction(f.makeSubscribeToManySystemInformations),
+		},
+
+		get: {
+			settings: this._makeFunction(f.makeGetSystemSettings),
+			apiVersion: this._makeFunction(f.makeGetAPIVersion),
+		},
+
+		is: {
+			connected: this._makeFunction(f.makeSystemIsConnected),
+		},
+	} as const;
 
 	public readonly users = {
-		getMe: this._makeFunction(f.makeGetMyUser),
-		getOne: this._makeFunction(f.makeGetOneUser),
-		getMany: this._makeFunction(f.makeGetManyUsers),
-		getAll: this._makeFunction(f.makeGetAllUsers),
-		createOne: this._makeFunction(f.makeCreateOneUser),
-		updateMe: this._makeFunction(f.makeUpdateMyUser),
-		updateOne: this._makeFunction(f.makeUpdateOneUser),
-		deleteOne: this._makeFunction(f.makeDeleteOneUser),
-	};
+		get: {
+			me: this._makeFunction(f.makeGetMyUser),
+			one: this._makeFunction(f.makeGetOneUser),
+			many: this._makeFunction(f.makeGetManyUsers),
+			all: this._makeFunction(f.makeGetAllUsers),
+		},
+
+		create: { one: this._makeFunction(f.makeCreateOneUser) },
+
+		update: {
+			me: this._makeFunction(f.makeUpdateMyUser),
+			one: this._makeFunction(f.makeUpdateOneUser),
+		},
+
+		delete: {
+			one: this._makeFunction(f.makeDeleteOneUser),
+		},
+	} as const;
 
 	public readonly userPreferences = {
-		getOne: this._makeFunction(f.makeGetOneUserPreferences),
-		getAll: this._makeFunction(f.makeGetAllUserPreferences),
-		updateOne: this._makeFunction(f.makeUpdateOneUserPreferences),
-		deleteOne: this._makeFunction(f.makeDeleteOneUserPreferences),
-	};
+		get: {
+			one: this._makeFunction(f.makeGetOneUserPreferences),
+			all: this._makeFunction(f.makeGetAllUserPreferences),
+		},
+
+		update: {
+			one: this._makeFunction(f.makeUpdateOneUserPreferences),
+		},
+
+		delete: {
+			one: this._makeFunction(f.makeDeleteOneUserPreferences),
+		},
+	} as const;
 
 	public readonly auth = {
-		loginOne: this._makeFunction(f.makeLoginOneUser),
-		logoutOne: this._makeFunction(f.makeLogoutOneUser),
-		logoutAll: this._makeFunction(f.makeLogoutAllUsers),
-		getOneUserSessions: this._makeFunction(f.makeGetOneUserActiveSessions),
-	};
+		login: {
+			one: this._makeFunction(f.makeLoginOneUser),
+		},
+
+		logout: {
+			one: this._makeFunction(f.makeLogoutOneUser),
+			all: this._makeFunction(f.makeLogoutAllUsers),
+		},
+
+		get: {
+			many: {
+				activeSessions: ({ userID }: { userID: string }) => this._makeFunction(f.makeGetOneUserActiveSessions)(userID),
+			},
+		},
+	} as const;
 
 	public readonly notifications = {
-		createOneBroadcasted: this._makeFunction(f.makeCreateOneBroadcastedNotification),
-		createOneTargeted: this._makeFunction(f.makeCreateOneTargetedNotification),
-		getMine: this._makeFunction(f.makeGetMyNotifications),
-		subscribeToMine: this._makeFunction(f.makeSubscribeToMyNotifications),
-		updateOne: this._makeFunction(f.makeUpdateOneNotification),
-		deleteOne: this._makeFunction(f.makeDeleteOneUserPreferences),
-	};
+		create: {
+			one: {
+				broadcasted: this._makeFunction(f.makeCreateOneBroadcastedNotification),
+				targeted: this._makeFunction(f.makeCreateOneTargetedNotification),
+			},
+		},
+
+		get: {
+			mine: this._makeFunction(f.makeGetMyNotifications),
+		},
+
+		subscribeTo: {
+			mine: this._makeFunction(f.makeSubscribeToMyNotifications),
+		},
+
+		update: {
+			one: this._makeFunction(f.makeUpdateOneNotification),
+		},
+
+		delete: {
+			one: this._makeFunction(f.makeDeleteOneUserPreferences),
+		},
+	} as const;
 
 	public readonly webServer = {
 		restart: this._makeFunction(f.makeRestartWebServer),
-		isDistributed: this._makeFunction(f.makeWebServerIsDistributed),
-	};
+
+		is: {
+			distributed: this._makeFunction(f.makeWebServerIsDistributed),
+		},
+	} as const;
 
 	public readonly indexers = {
 		restart: this._makeFunction(f.makeRestartIndexers),
-	};
+	} as const;
 
-	public readonly ingestors = {
-		ingestOneJSON: (entry: CreatableJSONEntry) => this._makeFunction(f.makeIngestJSONEntries)([entry]),
-		ingestManyJSON: this._makeFunction(f.makeIngestJSONEntries),
-		ingestByLine: this._makeFunction(f.makeIngestMultiLineEntry),
-	};
+	public readonly entries = {
+		ingest: {
+			one: {
+				json: (entry: CreatableJSONEntry) => this._makeFunction(f.makeIngestJSONEntries)([entry]),
+			},
+
+			many: {
+				json: this._makeFunction(f.makeIngestJSONEntries),
+			},
+
+			byLine: this._makeFunction(f.makeIngestMultiLineEntry),
+		},
+	} as const;
 
 	public readonly logs = {
-		getLogLevels: this._makeFunction(f.makeGetLogLevels),
-		setLogLevel: this._makeFunction(f.makeSetLogLevel),
-		createOne: this._makeFunction(f.makeCreateOneLog),
-	};
-
-	public readonly searchModules = {
-		getAll: this._makeFunction(f.makeGetAllSearchModules),
-	};
-
-	public readonly renderModules = {
-		getAll: this._makeFunction(f.makeGetAllRenderModules),
-	};
-
-	public readonly scripts = {
-		validate: {
-			one: this._makeFunction(f.makeValidateOneScript),
+		get: {
+			levels: this._makeFunction(f.makeGetLogLevels),
 		},
 
-		libraries: {
+		set: {
+			level: this._makeFunction(f.makeSetLogLevel),
+		},
+
+		create: {
+			one: this._makeFunction(f.makeCreateOneLog),
+		},
+	} as const;
+
+	public readonly searchModules = {
+		get: {
+			all: this._makeFunction(f.makeGetAllSearchModules),
+		},
+	} as const;
+
+	public readonly renderModules = {
+		get: {
+			all: this._makeFunction(f.makeGetAllRenderModules),
+		},
+	} as const;
+
+	public readonly scriptLibraries = {
+		get: {
 			/**
 			 * Retrieves the code to a specific script library.
 			 */
-			getOne: this._makeFunction(f.makeGetOneScriptLibrary),
+			one: this._makeFunction(f.makeGetOneScriptLibrary),
+		},
 
+		sync: {
 			/**
 			 * Updates all libraries to their latest versions. The promise resolves
 			 * when the command to sync them is successfully received by the
 			 * backend, not we they're all synced.
 			 */
-			syncAll: this._makeFunction(f.makeSyncAllScriptLibraries),
+			all: this._makeFunction(f.makeSyncAllScriptLibraries),
+		},
+	} as const;
+
+	public readonly scripts = {
+		validate: {
+			one: this._makeFunction(f.makeValidateOneScript),
+		},
+	} as const;
+
+	public readonly searchStatus = {
+		get: {
+			authorizedTo: {
+				/**
+				 * Returns all persistent searches authorized to the current user.
+				 */
+				me: this._makeFunction(f.makeGetPersistentSearchStatusRelatedToMe),
+			},
+
+			/**
+			 * Returns the status of a specific persistent search.
+			 */
+			one: this._makeFunction(f.makeGetOnePersistentSearchStatus),
+
+			/**
+			 * Returns all persistent searches.
+			 */
+			all: this._makeFunction(f.makeGetAllPersistentSearchStatus),
+		},
+	};
+
+	public readonly searchHistory = {
+		get: {
+			/**
+			 * Returns all searches owned by the current authenticated user.
+			 */
+			mine: (): Promise<Array<Search>> => this._makeFunction(f.makeGetSearchHistory)({ target: 'myself' }),
+
+			many: async (filter: { userID?: string; groupID?: string } = {}): Promise<Array<Search>> => {
+				// TODO: Move it to /functions
+				const getSearchHistory = this._makeFunction(f.makeGetSearchHistory);
+
+				if (isNumericID(filter.userID) && isNumericID(filter.groupID)) {
+					const groupHistory = await getSearchHistory({ target: 'group', groupID: filter.groupID });
+					return groupHistory.filter(s => s.userID === filter.userID);
+				}
+
+				if (isNumericID(filter.userID)) return await getSearchHistory({ target: 'user', userID: filter.userID });
+
+				if (isNumericID(filter.groupID)) return await getSearchHistory({ target: 'group', groupID: filter.groupID });
+
+				return await getSearchHistory({ target: 'all' });
+			},
+
+			/**
+			 * Returns all searches owned by all users. Requires admin privilege.
+			 */
+			all: (): Promise<Array<Search>> => this._makeFunction(f.makeGetSearchHistory)({ target: 'all' }),
+
+			authorizedTo: {
+				/**
+				 * Returns all searches that a specific user has access to. Be it because
+				 * he made the search or because he's in the group that owns the search.
+				 */
+				user: (userID: string): Promise<Array<Search>> =>
+					this._makeFunction(f.makeGetSearchHistory)({ target: 'user related', userID }),
+			},
 		},
 	};
 
 	public readonly searches = {
-		/**
-		 * Returns all persistent searches related to the current user.
-		 */
-		getAllStatusRelatedToMe: this._makeFunction(f.makeGetPersistentSearchStatusRelatedToMe),
+		background: {
+			/**
+			 * Sends a specific search to the background.
+			 */
+			one: this._makeFunction(f.makeBackgroundOneSearch),
+		},
 
-		/**
-		 * Returns the status of a specific persistent search.
-		 */
-		getOneStatus: this._makeFunction(f.makeGetOnePersistentSearchStatus),
+		save: {
+			/**
+			 * Saves a specific search.
+			 */
+			one: this._makeFunction(f.makeSaveOneSearch),
+		},
 
-		/**
-		 * Returns all persistent searches.
-		 */
-		getAllStatus: this._makeFunction(f.makeGetAllPersistentSearchStatus),
-
-		/**
-		 * Sends a specific search to the background.
-		 */
-		backgroundOne: this._makeFunction(f.makeBackgroundOneSearch),
-
-		/**
-		 * Saves a specific search.
-		 */
-		saveOne: this._makeFunction(f.makeSaveOneSearch),
-
-		/**
-		 * Deletes a specific search.
-		 */
-		deleteOne: this._makeFunction(f.makeDeleteOneSearch),
-
-		/**
-		 * Returns all searches owned by a specific user.
-		 */
-		getUserHistory: (userID: string): Promise<Array<Search>> =>
-			this._makeFunction(f.makeGetSearchHistory)({ target: 'user', userID }),
-
-		/**
-		 * Returns all searches that a specific user has access to. Be it because
-		 * he made the search or because he's in the group that owns the search.
-		 */
-		getUserRelatedHistory: (userID: string): Promise<Array<Search>> =>
-			this._makeFunction(f.makeGetSearchHistory)({ target: 'user related', userID }),
-
-		/**
-		 * Returns all searches owned by a specific group.
-		 */
-		getGroupHistory: (groupID: string): Promise<Array<Search>> =>
-			this._makeFunction(f.makeGetSearchHistory)({ target: 'group', groupID }),
-
-		/**
-		 * Returns all searches owned by the current authenticated user.
-		 */
-		getMyHistory: (): Promise<Array<Search>> => this._makeFunction(f.makeGetSearchHistory)({ target: 'myself' }),
-
-		/**
-		 * Returns all searches owned by all users. Requires admin privilege.
-		 */
-		getAllHistory: (): Promise<Array<Search>> => this._makeFunction(f.makeGetSearchHistory)({ target: 'all' }),
+		delete: {
+			/**
+			 * Deletes a specific search.
+			 */
+			one: this._makeFunction(f.makeDeleteOneSearch),
+		},
 
 		download: {
 			one: this._makeFunction(f.makeDownloadOneSearch),
@@ -227,31 +329,44 @@ export class GravwellClient {
 		create: {
 			one: this._makeFunction(f.makeSubscribeToOneSearch),
 		},
-	};
+	} as const;
 
 	public readonly groups = {
-		createOne: this._makeFunction(f.makeCreateOneGroup),
-		deleteOne: this._makeFunction(f.makeDeleteOneGroup),
-		getOne: this._makeFunction(f.makeGetOneGroup),
-		getMany: this._makeFunction(f.makeGetManyGroups),
-		getAll: this._makeFunction(f.makeGetAllGroups),
-		updateOne: this._makeFunction(f.makeUpdateOneGroup),
-		addOneUser: {
-			toOne: (userID: NumericID, groupID: NumericID) =>
+		create: {
+			one: this._makeFunction(f.makeCreateOneGroup),
+		},
+
+		delete: {
+			one: this._makeFunction(f.makeDeleteOneGroup),
+		},
+
+		get: {
+			one: this._makeFunction(f.makeGetOneGroup),
+			many: this._makeFunction(f.makeGetManyGroups),
+			all: this._makeFunction(f.makeGetAllGroups),
+		},
+
+		update: {
+			one: this._makeFunction(f.makeUpdateOneGroup),
+		},
+
+		addUserTo: {
+			one: (userID: NumericID, groupID: NumericID) =>
 				this._makeFunction(f.makeAddOneUserToManyGroups)(userID, [groupID]),
-			toMany: this._makeFunction(f.makeAddOneUserToManyGroups),
+			many: this._makeFunction(f.makeAddOneUserToManyGroups),
 		},
-		removeOneUser: {
-			fromOne: this._makeFunction(f.makeRemoveOneUserFromOneGroup),
+
+		removeUserFrom: {
+			one: this._makeFunction(f.makeRemoveOneUserFromOneGroup),
 		},
-	};
+	} as const;
 
 	public readonly actionables = {
 		get: {
 			one: this._makeFunction(f.makeGetOneActionable),
 			all: this._makeFunction(f.makeGetAllActionablesAsAdmin),
-			related: {
-				toMe: this._makeFunction(f.makeGetAllActionables),
+			authorizedTo: {
+				me: this._makeFunction(f.makeGetAllActionables),
 			},
 		},
 
@@ -266,14 +381,14 @@ export class GravwellClient {
 		delete: {
 			one: this._makeFunction(f.makeDeleteOneActionable),
 		},
-	};
+	} as const;
 
 	public readonly templates = {
 		get: {
 			one: this._makeFunction(f.makeGetOneTemplate),
 			all: this._makeFunction(f.makeGetAllTemplatesAsAdmin),
-			related: {
-				toMe: this._makeFunction(f.makeGetAllTemplates),
+			authorizedTo: {
+				me: this._makeFunction(f.makeGetAllTemplates),
 			},
 		},
 
@@ -288,14 +403,14 @@ export class GravwellClient {
 		delete: {
 			one: this._makeFunction(f.makeDeleteOneTemplate),
 		},
-	};
+	} as const;
 
 	public readonly playbooks = {
 		get: {
 			one: this._makeFunction(f.makeGetOnePlaybook),
 			all: this._makeFunction(f.makeGetAllPlaybooks),
-			related: {
-				toMe: this._makeFunction(f.makeGetAllPlaybooksRelatedToMe),
+			authorizedTo: {
+				me: this._makeFunction(f.makeGetAllPlaybooksRelatedToMe),
 			},
 		},
 
@@ -310,14 +425,14 @@ export class GravwellClient {
 		delete: {
 			one: this._makeFunction(f.makeDeleteOnePlaybook),
 		},
-	};
+	} as const;
 
 	public readonly resources = {
 		get: {
 			one: this._makeFunction(f.makeGetOneResource),
 			all: this._makeFunction(f.makeGetAllResources),
-			authorized: {
-				toMe: this._makeFunction(f.makeGetResourcesAuthorizedToMe),
+			authorizedTo: {
+				me: this._makeFunction(f.makeGetResourcesAuthorizedToMe),
 			},
 		},
 
@@ -336,15 +451,15 @@ export class GravwellClient {
 		delete: {
 			one: this._makeFunction(f.makeDeleteOneResource),
 		},
-	};
+	} as const;
 
 	public readonly macros = {
 		get: {
 			one: this._makeFunction(f.makeGetOneMacro),
 			many: this._makeFunction(f.makeGetManyMacros),
 			all: this._makeFunction(f.makeGetAllMacros),
-			authorized: {
-				toMe: this._makeFunction(f.makeGetMacrosAuthorizedToMe),
+			authorizedTo: {
+				me: this._makeFunction(f.makeGetMacrosAuthorizedToMe),
 			},
 		},
 
@@ -359,15 +474,15 @@ export class GravwellClient {
 		delete: {
 			one: this._makeFunction(f.makeDeleteOneMacro),
 		},
-	};
+	} as const;
 
 	public readonly dashboards = {
 		get: {
 			one: this._makeFunction(f.makeGetOneDashboard),
 			many: this._makeFunction(f.makeGetManyDashboards),
 			all: this._makeFunction(f.makeGetAllDashboards),
-			authorized: {
-				toMe: this._makeFunction(f.makeGetDashboardsAuthorizedToMe),
+			authorizedTo: {
+				me: this._makeFunction(f.makeGetDashboardsAuthorizedToMe),
 			},
 		},
 
@@ -382,14 +497,14 @@ export class GravwellClient {
 		delete: {
 			one: this._makeFunction(f.makeDeleteOneDashboard),
 		},
-	};
+	} as const;
 
 	public readonly autoExtractors = {
 		get: {
 			validModules: this._makeFunction(f.makeGetAllAutoExtractorModules),
 			all: this._makeFunction(f.makeGetAllAutoExtractors),
-			authorized: {
-				toMe: this._makeFunction(f.makeGetAutoExtractorsAuthorizedToMe),
+			authorizedTo: {
+				me: this._makeFunction(f.makeGetAutoExtractorsAuthorizedToMe),
 			},
 		},
 
@@ -416,13 +531,13 @@ export class GravwellClient {
 		download: {
 			many: this._makeFunction(f.makeDownloadManyAutoExtractors),
 		},
-	};
+	} as const;
 
 	public readonly files = {
 		get: {
 			all: this._makeFunction(f.makeGetAllFiles),
-			authorized: {
-				toMe: this._makeFunction(f.makeGetFilesAuthorizedToMe),
+			authorizedTo: {
+				me: this._makeFunction(f.makeGetFilesAuthorizedToMe),
 			},
 		},
 
@@ -437,14 +552,14 @@ export class GravwellClient {
 		delete: {
 			one: this._makeFunction(f.makeDeleteOneFile),
 		},
-	};
+	} as const;
 
 	public readonly savedQueries = {
 		get: {
 			one: this._makeFunction(f.makeGetOneSavedQuery),
 			all: this._makeFunction(f.makeGetAllSavedQueries),
-			authorized: {
-				toMe: this._makeFunction(f.makeGetSavedQueriesAuthorizedToMe),
+			authorizedTo: {
+				me: this._makeFunction(f.makeGetSavedQueriesAuthorizedToMe),
 			},
 		},
 
@@ -459,15 +574,15 @@ export class GravwellClient {
 		delete: {
 			one: this._makeFunction(f.makeDeleteOneSavedQuery),
 		},
-	};
+	} as const;
 
 	public readonly scheduledScripts = {
 		get: {
 			one: this._makeFunction(f.makeGetOneScheduledScript),
 			many: this._makeFunction(f.makeGetManyScheduledScripts),
 			all: this._makeFunction(f.makeGetAllScheduledScripts),
-			authorized: {
-				toMe: this._makeFunction(f.makeGetScheduledScriptsAuthorizedToMe),
+			authorizedTo: {
+				me: this._makeFunction(f.makeGetScheduledScriptsAuthorizedToMe),
 			},
 		},
 
@@ -490,15 +605,15 @@ export class GravwellClient {
 			lastError: this._makeFunction(f.makeClearOneScheduledScriptError),
 			state: this._makeFunction(f.makeClearOneScheduledScriptState),
 		},
-	};
+	} as const;
 
 	public readonly scheduledQueries = {
 		get: {
 			one: this._makeFunction(f.makeGetOneScheduledQuery),
 			many: this._makeFunction(f.makeGetManyScheduledQueries),
 			all: this._makeFunction(f.makeGetAllScheduledQueries),
-			authorized: {
-				toMe: this._makeFunction(f.makeGetScheduledQueriesAuthorizedToMe),
+			authorizedTo: {
+				me: this._makeFunction(f.makeGetScheduledQueriesAuthorizedToMe),
 			},
 		},
 
@@ -521,13 +636,13 @@ export class GravwellClient {
 			lastError: this._makeFunction(f.makeClearOneScheduledQueryError),
 			state: this._makeFunction(f.makeClearOneScheduledQueryState),
 		},
-	};
+	} as const;
 
 	public readonly queries = {
 		validate: {
 			one: this._makeFunction(f.makeValidateOneQuery),
 		},
-	};
+	} as const;
 
 	public readonly kits = {
 		get: {
@@ -569,5 +684,5 @@ export class GravwellClient {
 			one: this._makeFunction(f.makeUninstallOneKit),
 			all: this._makeFunction(f.makeUninstallAllKits),
 		},
-	};
+	} as const;
 }
