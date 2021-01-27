@@ -51,7 +51,7 @@ const processFile = async (file: ProcessableFile): Promise<ProcessableFile> => {
 			'readonly $1: $2; // TSCompatibility',
 		)
 		// TS<3.7 - Replace class initializers e.g. "message = 'test';" for "message: 'test';"
-		.replace(/readonly (.+) =/g, 'readonly $1:');
+		.replace(/readonly (\w+) =/g, 'readonly $1:');
 	return { ...file, data };
 };
 
