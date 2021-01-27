@@ -6,11 +6,14 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { toRawUpdatableGroup, UpdatableGroup } from '../../models';
+import { Group, toRawUpdatableGroup, UpdatableGroup } from '../../models';
 import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
+import { makeGetOneGroup } from './get-one-group';
 
 export const makeUpdateOneGroup = (context: APIContext) => {
-	return async (data: UpdatableGroup): Promise<void> => {
+	return async (data: UpdatableGroup): Promise<Group> => {
+		const getOneGroup = makeGetOneGroup(context);
+
 		const templatePath = '/api/groups/{groupID}';
 		const url = buildURL(templatePath, { ...context, protocol: 'http', pathParams: { groupID: data.id } });
 
@@ -22,7 +25,8 @@ export const makeUpdateOneGroup = (context: APIContext) => {
 			const req = buildHTTPRequest(baseRequestOptions);
 
 			const raw = await fetch(url, { ...req, method: 'PUT' });
-			return parseJSONResponse(raw, { expect: 'void' });
+			await parseJSONResponse(raw, { expect: 'void' });
+			return await getOneGroup(data.id);
 		} catch (err) {
 			if (err instanceof Error) throw err;
 			throw Error('Unknown error');
