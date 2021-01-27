@@ -28,7 +28,7 @@ describe('getOneTemplate()', () => {
 			query: 'tag=netflow __VAR__',
 			variable: { name: 'Variable', token: '__VAR__' },
 		};
-		createdTemplateUUID = await createOneTemplate(data);
+		createdTemplateUUID = (await createOneTemplate(data)).uuid;
 	});
 
 	afterEach(async () => {

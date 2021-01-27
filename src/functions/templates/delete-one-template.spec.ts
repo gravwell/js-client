@@ -9,7 +9,6 @@
 import { CreatableTemplate, isTemplate } from '../../models';
 import { integrationTest } from '../../tests';
 import { TEST_BASE_API_CONTEXT } from '../../tests/config';
-import { isUUID } from '../../value-objects';
 import { makeCreateOneTemplate } from './create-one-template';
 import { makeDeleteOneTemplate } from './delete-one-template';
 import { makeGetOneTemplate } from './get-one-template';
@@ -30,13 +29,11 @@ describe('deleteOneTemplate()', () => {
 				variable: { name: 'Variable', token: '__VAR__' },
 			};
 
-			const templateUUID = await createOneTemplate(data);
-			expect(isUUID(templateUUID)).toBeTrue();
-			const template = await getOneTemplate(templateUUID);
+			const template = await createOneTemplate(data);
 			expect(isTemplate(template)).toBeTrue();
 
-			await expectAsync(deleteOneTemplate(templateUUID)).toBeResolved();
-			await expectAsync(getOneTemplate(templateUUID)).toBeRejected();
+			await expectAsync(deleteOneTemplate(template.uuid)).toBeResolved();
+			await expectAsync(getOneTemplate(template.uuid)).toBeRejected();
 		}),
 	);
 });

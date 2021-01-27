@@ -24,11 +24,13 @@ describe('createOneFile()', () => {
 	beforeEach(async () => {
 		jasmine.addMatchers(myCustomMatchers);
 
-		groupIDs = await Promise.all(
-			Array.from({ length: 3 })
-				.map((_, i) => `G${i}`)
-				.map(name => createOneGroup({ name })),
-		);
+		groupIDs = (
+			await Promise.all(
+				Array.from({ length: 3 })
+					.map((_, i) => `G${i}`)
+					.map(name => createOneGroup({ name })),
+			)
+		).map(g => g.id);
 	});
 
 	it(

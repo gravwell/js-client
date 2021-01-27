@@ -10,7 +10,7 @@ import { CreatableGroup, CreatableUser, isGroup, User } from '../../models';
 import { integrationTest } from '../../tests';
 import { TEST_BASE_API_CONTEXT } from '../../tests/config';
 import { NumericID } from '../../value-objects';
-import { makeCreateOneUser, makeDeleteOneUser, makeGetOneUser } from '../users';
+import { makeCreateOneUser, makeDeleteOneUser } from '../users';
 import { makeAddOneUserToManyGroups } from './add-one-user-to-many-groups';
 import { makeCreateOneGroup } from './create-one-group';
 import { makeDeleteOneGroup } from './delete-one-group';
@@ -22,7 +22,6 @@ describe('getGroupsByUser()', () => {
 	const createOneGroup = makeCreateOneGroup(TEST_BASE_API_CONTEXT);
 	const deleteOneGroup = makeDeleteOneGroup(TEST_BASE_API_CONTEXT);
 	const getGroupsByUser = makeGetGroupsByUser(TEST_BASE_API_CONTEXT);
-	const getOneUser = makeGetOneUser(TEST_BASE_API_CONTEXT);
 	const createOneUser = makeCreateOneUser(TEST_BASE_API_CONTEXT);
 	const deleteOneUser = makeDeleteOneUser(TEST_BASE_API_CONTEXT);
 	const addOneUserToManyGroups = makeAddOneUserToManyGroups(TEST_BASE_API_CONTEXT);
@@ -50,8 +49,7 @@ describe('getGroupsByUser()', () => {
 			role: 'analyst',
 			user: userSeed,
 		};
-		const userID = await createOneUser(data);
-		user = await getOneUser(userID);
+		user = await createOneUser(data);
 	});
 
 	afterEach(async () => {

@@ -6,15 +6,17 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { CreatableUser, toRawCreatableUser } from '../../models';
-import { NumericID } from '../../value-objects';
+import { CreatableUser, toRawCreatableUser, User } from '../../models';
 import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
+import { makeGetOneUser } from './get-one-user';
 
 export const makeCreateOneUser = (context: APIContext) => {
+	const getOneUser = makeGetOneUser(context);
+
 	const templatePath = '/api/users';
 	const url = buildURL(templatePath, { ...context, protocol: 'http' });
 
-	return async (data: CreatableUser): Promise<NumericID> => {
+	return async (data: CreatableUser): Promise<User> => {
 		try {
 			const baseRequestOptions: HTTPRequestOptions = {
 				headers: { Authorization: context.authToken ? `Bearer ${context.authToken}` : undefined },
@@ -23,8 +25,10 @@ export const makeCreateOneUser = (context: APIContext) => {
 			const req = buildHTTPRequest(baseRequestOptions);
 
 			const raw = await fetch(url, { ...req, method: 'POST' });
-			const rawRes = await parseJSONResponse<number>(raw);
-			return rawRes.toString();
+			const rawID = await parseJSONResponse<number>(raw);
+
+			const userID = rawID.toString();
+			return await getOneUser(userID);
 		} catch (err) {
 			if (err instanceof Error) throw err;
 			throw Error('Unknown error');

@@ -6,15 +6,17 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { CreatableGroup, toRawCreatableGroup } from '../../models';
-import { NumericID } from '../../value-objects';
+import { CreatableGroup, Group, toRawCreatableGroup } from '../../models';
 import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
+import { makeGetOneGroup } from './get-one-group';
 
 export const makeCreateOneGroup = (context: APIContext) => {
+	const getOneGroup = makeGetOneGroup(context);
+
 	const templatePath = '/api/groups';
 	const url = buildURL(templatePath, { ...context, protocol: 'http' });
 
-	return async (data: CreatableGroup): Promise<NumericID> => {
+	return async (data: CreatableGroup): Promise<Group> => {
 		try {
 			const baseRequestOptions: HTTPRequestOptions = {
 				headers: { Authorization: context.authToken ? `Bearer ${context.authToken}` : undefined },
@@ -23,8 +25,10 @@ export const makeCreateOneGroup = (context: APIContext) => {
 			const req = buildHTTPRequest(baseRequestOptions);
 
 			const raw = await fetch(url, { ...req, method: 'POST' });
-			const rawRes = await parseJSONResponse<number>(raw);
-			return rawRes.toString();
+			const rawID = await parseJSONResponse<number>(raw);
+
+			const groupID = rawID.toString();
+			return await getOneGroup(groupID);
 		} catch (err) {
 			if (err instanceof Error) throw err;
 			throw Error('Unknown error');

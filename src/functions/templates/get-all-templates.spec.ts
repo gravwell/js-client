@@ -29,8 +29,8 @@ describe('getAllTemplates()', () => {
 			query: 'tag=netflow __VAR__',
 			variable: { name: 'Variable', token: '__VAR__' },
 		};
-		const createdTemplatesUUIDsPs = Array.from({ length: 2 }).map(() => createOneTemplate(data));
-		createdTemplatesUUIDs = await Promise.all(createdTemplatesUUIDsPs);
+		const createdTemplatesPs = Array.from({ length: 2 }).map(() => createOneTemplate(data));
+		createdTemplatesUUIDs = (await Promise.all(createdTemplatesPs)).map(t => t.uuid);
 	});
 
 	afterEach(async () => {

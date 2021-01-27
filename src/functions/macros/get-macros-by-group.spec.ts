@@ -13,7 +13,7 @@ import { TEST_BASE_API_CONTEXT } from '../../tests/config';
 import { makeLoginOneUser } from '../auth/login-one-user';
 import { makeAddOneUserToManyGroups } from '../groups/add-one-user-to-many-groups';
 import { makeCreateOneGroup } from '../groups/create-one-group';
-import { makeCreateOneUser, makeGetMyUser, makeGetOneUser } from '../users';
+import { makeCreateOneUser, makeGetMyUser } from '../users';
 import { makeCreateOneMacro } from './create-one-macro';
 import { makeDeleteOneMacro } from './delete-one-macro';
 import { makeGetAllMacros } from './get-all-macros';
@@ -21,7 +21,6 @@ import { makeGetMacrosByGroup } from './get-macros-by-group';
 
 describe('getMacrosByGroup()', () => {
 	const getAllMacros = makeGetAllMacros(TEST_BASE_API_CONTEXT);
-	const getOneUser = makeGetOneUser(TEST_BASE_API_CONTEXT);
 	const createOneUser = makeCreateOneUser(TEST_BASE_API_CONTEXT);
 	const login = makeLoginOneUser(TEST_BASE_API_CONTEXT);
 	const createOneMacro = makeCreateOneMacro(TEST_BASE_API_CONTEXT);
@@ -51,14 +50,14 @@ describe('getMacrosByGroup()', () => {
 			role: 'analyst',
 			user: userSeed,
 		};
-		const userID = await createOneUser(data);
-		analyst = await getOneUser(userID);
+		analyst = await createOneUser(data);
 		analystAuth = await login(analyst.username, data.password);
 
 		// Creates two groups
 		const creatableGroups: Array<CreatableGroup> = [{ name: 'Admin' }, { name: 'Analyst' }];
 		const groupCreationPs = creatableGroups.map(data => createOneGroup(data));
-		[adminGroupID, analystGroupID] = await Promise.all(groupCreationPs);
+		const groups = await Promise.all(groupCreationPs);
+		[adminGroupID, analystGroupID] = groups.map(g => g.id);
 
 		// Assign admin to one group and analyst to the other
 		await Promise.all([
@@ -124,8 +123,8 @@ describe('getMacrosByGroup()', () => {
 		'Should return an empty array if the group has no macros',
 		integrationTest(async () => {
 			const creatableGroup: CreatableGroup = { name: 'New' };
-			const groupID = await createOneGroup(creatableGroup);
-			const macros = await getMacrosByGroup(groupID);
+			const group = await createOneGroup(creatableGroup);
+			const macros = await getMacrosByGroup(group.id);
 			expect(macros.length).toBe(0);
 		}),
 	);

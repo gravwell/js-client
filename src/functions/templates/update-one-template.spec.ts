@@ -33,8 +33,7 @@ describe('updateOneTemplate()', () => {
 			query: 'tag=netflow __VAR__',
 			variable: { name: 'Variable', token: '__VAR__' },
 		};
-		const templateUUID = await createOneTemplate(data);
-		createdTemplate = await getOneTemplate(templateUUID);
+		createdTemplate = await createOneTemplate(data);
 	});
 
 	afterEach(async () => {

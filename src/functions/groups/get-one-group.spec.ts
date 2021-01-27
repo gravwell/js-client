@@ -26,7 +26,7 @@ describe('getOneGroup()', () => {
 			name: 'Name test',
 			description: 'Description test',
 		};
-		groupID = await createOneGroup(data);
+		groupID = (await createOneGroup(data)).id;
 	});
 
 	afterEach(async () => {
