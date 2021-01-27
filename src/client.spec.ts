@@ -148,8 +148,8 @@ describe('GravwellClient', () => {
 			expectTypeOf(client.users.get.many).toEqualTypeOf<(filter?: { groupID?: NumericID }) => Promise<Array<User>>>();
 			expectTypeOf(client.users.get.all).toEqualTypeOf<() => Promise<Array<User>>>();
 			expectTypeOf(client.users.create.one).toEqualTypeOf<(data: CreatableUser) => Promise<User>>();
-			expectTypeOf(client.users.update.me).toEqualTypeOf<(data: Omit<UpdatableUser, 'id'>) => Promise<void>>();
-			expectTypeOf(client.users.update.one).toEqualTypeOf<(data: UpdatableUser) => Promise<void>>();
+			expectTypeOf(client.users.update.me).toEqualTypeOf<(data: Omit<UpdatableUser, 'id'>) => Promise<User>>();
+			expectTypeOf(client.users.update.one).toEqualTypeOf<(data: UpdatableUser) => Promise<User>>();
 			expectTypeOf(client.users.delete.one).toEqualTypeOf<(userID: NumericID) => Promise<void>>();
 
 			// User preferences
@@ -252,7 +252,7 @@ describe('GravwellClient', () => {
 			expectTypeOf(client.groups.get.one).toEqualTypeOf<(groupID: NumericID) => Promise<Group>>();
 			expectTypeOf(client.groups.get.many).toEqualTypeOf<(filter?: { userID?: NumericID }) => Promise<Array<Group>>>();
 			expectTypeOf(client.groups.get.all).toEqualTypeOf<() => Promise<Array<Group>>>();
-			expectTypeOf(client.groups.update.one).toEqualTypeOf<(data: UpdatableGroup) => Promise<void>>();
+			expectTypeOf(client.groups.update.one).toEqualTypeOf<(data: UpdatableGroup) => Promise<Group>>();
 			expectTypeOf(client.groups.addUserTo.many).toEqualTypeOf<
 				(userID: NumericID, groupIDs: Array<NumericID>) => Promise<void>
 			>();
