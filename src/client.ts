@@ -74,7 +74,7 @@ export class GravwellClient {
 
 	public readonly system = {
 		subscribeTo: {
-			informations: this._makeFunction(f.makeSubscribeToManySystemInformations),
+			information: this._makeFunction(f.makeSubscribeToManySystemInformations),
 		},
 
 		get: {

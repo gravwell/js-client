@@ -136,7 +136,7 @@ describe('GravwellClient', () => {
 			// System
 			expectTypeOf(client.system.is.connected).toEqualTypeOf<() => Promise<boolean>>();
 			expectTypeOf(client.system.get.apiVersion).toEqualTypeOf<() => Promise<GetAPIVersionResponse>>();
-			expectTypeOf(client.system.subscribeTo.informations).toEqualTypeOf<
+			expectTypeOf(client.system.subscribeTo.information).toEqualTypeOf<
 				(
 					statusCategories: Array<SystemStatusCategory>,
 				) => Promise<APISubscription<SystemStatusMessageReceived, SystemStatusMessageSent>>
