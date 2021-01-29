@@ -80,7 +80,7 @@ describe('subscribeToOneSearch()', () => {
 			const latest = result[result.length - 1] as TextSearchEntries;
 			const lastEntry = latest.data[latest.data.length - 1];
 			expect(lastEntry).toBeDefined();
-			expect(base64.decode(lastEntry.value)).toEqual('count 1000');
+			expect(base64.decode(lastEntry.value)).toEqual(`count ${count}`);
 		}),
 		25000,
 	);
