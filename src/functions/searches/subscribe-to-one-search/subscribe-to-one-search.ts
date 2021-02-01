@@ -10,7 +10,6 @@ import { isBoolean, isEqual, isNil, isNull, isUndefined } from 'lodash';
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import { bufferCount, distinctUntilChanged, filter, first, map, startWith, tap } from 'rxjs/operators';
 import {
-	normalize,
 	Query,
 	RawAcceptSearchMessageSent,
 	RawInitiateSearchMessageSent,
@@ -24,6 +23,7 @@ import {
 	SearchMessageCommands,
 	SearchStats,
 	SearchSubscription,
+	toSearchEntries,
 } from '../../../models';
 import { Percentage, toNumericID } from '../../../value-objects';
 import { APIContext, promiseProgrammatically } from '../../utils';
@@ -115,7 +115,7 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 					return false;
 				}
 			}),
-			map(msg => normalize(rendererType, msg)),
+			map(msg => toSearchEntries(rendererType, msg)),
 			tap(entries => {
 				const defDesiredGranularity = getDefaultGranularityByRendererType(entries.type);
 				initialFilter.desiredGranularity = defDesiredGranularity;
