@@ -6,152 +6,172 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
+import { isNull, isUndefined } from 'lodash';
 import {
 	isRawSearchMessageReceivedRequestEntriesWithinRangeChartRenderer,
 	isRawSearchMessageReceivedRequestEntriesWithinRangeFDGRenderer,
 	isRawSearchMessageReceivedRequestEntriesWithinRangeGaugeRenderer,
 	isRawSearchMessageReceivedRequestEntriesWithinRangeHeatmapRenderer,
+	isRawSearchMessageReceivedRequestEntriesWithinRangePointmapRenderer,
 	isRawSearchMessageReceivedRequestEntriesWithinRangePointToPointRenderer,
 	isRawSearchMessageReceivedRequestEntriesWithinRangeRawRenderer,
 	isRawSearchMessageReceivedRequestEntriesWithinRangeStackGraphRenderer,
 	isRawSearchMessageReceivedRequestEntriesWithinRangeTableRenderer,
 	isRawSearchMessageReceivedRequestEntriesWithinRangeTextRenderer,
 	RawSearchMessageReceivedRequestEntriesWithinRange,
+	RawSearchMessageReceivedRequestEntriesWithinRangeChartRenderer,
+	RawSearchMessageReceivedRequestEntriesWithinRangeFDGRenderer,
+	RawSearchMessageReceivedRequestEntriesWithinRangeGaugeRenderer,
+	RawSearchMessageReceivedRequestEntriesWithinRangeHeatmapRenderer,
+	RawSearchMessageReceivedRequestEntriesWithinRangePointmapRenderer,
+	RawSearchMessageReceivedRequestEntriesWithinRangePointToPointRenderer,
+	RawSearchMessageReceivedRequestEntriesWithinRangeRawRenderer,
+	RawSearchMessageReceivedRequestEntriesWithinRangeStackGraphRenderer,
+	RawSearchMessageReceivedRequestEntriesWithinRangeTableRenderer,
+	RawSearchMessageReceivedRequestEntriesWithinRangeTextRenderer,
 } from './raw-search-message-received';
-import { BaseSearchEntries, SearchEntries } from './search-entries';
+import {
+	normalizeToChartSearchEntries,
+	normalizeToFDGSearchEntries,
+	normalizeToGaugeSearchEntries,
+	normalizeToHeatmapSearchEntries,
+	normalizeToPointmapSearchEntries,
+	normalizeToPointToPointSearchEntries,
+	normalizeToRawSearchEntriess,
+	normalizeToStackGraphSearchEntries,
+	normalizeToTableSearchEntries,
+	normalizeToTextSearchEntries,
+	SearchEntries,
+} from './search-entries';
 
-export const toSearchEntries = (msg: RawSearchMessageReceivedRequestEntriesWithinRange): SearchEntries => {
-	const base: BaseSearchEntries = {
-		start: new Date(msg.data.EntryRange.StartTS),
-		end: new Date(msg.data.EntryRange.EndTS),
-	};
+type RawEntryNormalizer = (v: RawSearchMessageReceivedRequestEntriesWithinRange) => SearchEntries;
 
+const NORMALIZERS: Record<SearchEntries['type'], RawEntryNormalizer> = {
+	'chart': ({ data }) =>
+		normalizeToChartSearchEntries(data as RawSearchMessageReceivedRequestEntriesWithinRangeChartRenderer),
+	'fdg': ({ data }) =>
+		normalizeToFDGSearchEntries(data as RawSearchMessageReceivedRequestEntriesWithinRangeFDGRenderer),
+	'gauge': ({ data }) =>
+		normalizeToGaugeSearchEntries(data as RawSearchMessageReceivedRequestEntriesWithinRangeGaugeRenderer),
+	'heatmap': ({ data }) =>
+		normalizeToHeatmapSearchEntries(data as RawSearchMessageReceivedRequestEntriesWithinRangeHeatmapRenderer),
+	'point to point': ({ data }) =>
+		normalizeToPointToPointSearchEntries(data as RawSearchMessageReceivedRequestEntriesWithinRangePointToPointRenderer),
+	'pointmap': ({ data }) =>
+		normalizeToPointmapSearchEntries(data as RawSearchMessageReceivedRequestEntriesWithinRangePointmapRenderer),
+	'raw': ({ data }) =>
+		normalizeToRawSearchEntriess(data as RawSearchMessageReceivedRequestEntriesWithinRangeRawRenderer),
+	'text': ({ data }) =>
+		normalizeToTextSearchEntries(data as RawSearchMessageReceivedRequestEntriesWithinRangeTextRenderer),
+	'stack graph': ({ data }) =>
+		normalizeToStackGraphSearchEntries(data as RawSearchMessageReceivedRequestEntriesWithinRangeStackGraphRenderer),
+	'table': ({ data }) =>
+		normalizeToTableSearchEntries(data as RawSearchMessageReceivedRequestEntriesWithinRangeTableRenderer),
+};
+
+export function normalize(
+	renderer: 'chart',
+	msg: RawSearchMessageReceivedRequestEntriesWithinRange,
+): ReturnType<typeof normalizeToChartSearchEntries>;
+export function normalize(
+	renderer: 'fdg',
+	msg: RawSearchMessageReceivedRequestEntriesWithinRange,
+): ReturnType<typeof normalizeToFDGSearchEntries>;
+export function normalize(
+	renderer: 'gauge',
+	msg: RawSearchMessageReceivedRequestEntriesWithinRange,
+): ReturnType<typeof normalizeToGaugeSearchEntries>;
+export function normalize(
+	renderer: 'heatmap',
+	msg: RawSearchMessageReceivedRequestEntriesWithinRange,
+): ReturnType<typeof normalizeToHeatmapSearchEntries>;
+export function normalize(
+	renderer: 'point to point',
+	msg: RawSearchMessageReceivedRequestEntriesWithinRange,
+): ReturnType<typeof normalizeToPointToPointSearchEntries>;
+export function normalize(
+	renderer: 'pointmap',
+	msg: RawSearchMessageReceivedRequestEntriesWithinRange,
+): ReturnType<typeof normalizeToPointmapSearchEntries>;
+export function normalize(
+	renderer: 'raw',
+	msg: RawSearchMessageReceivedRequestEntriesWithinRange,
+): ReturnType<typeof normalizeToRawSearchEntriess>;
+export function normalize(
+	renderer: 'text',
+	msg: RawSearchMessageReceivedRequestEntriesWithinRange,
+): ReturnType<typeof normalizeToTextSearchEntries>;
+export function normalize(
+	renderer: 'stack graph',
+	msg: RawSearchMessageReceivedRequestEntriesWithinRange,
+): ReturnType<typeof normalizeToStackGraphSearchEntries>;
+export function normalize(
+	renderer: 'table',
+	msg: RawSearchMessageReceivedRequestEntriesWithinRange,
+): ReturnType<typeof normalizeToTableSearchEntries>;
+export function normalize(
+	renderer: SearchEntries['type'],
+	msg: RawSearchMessageReceivedRequestEntriesWithinRange,
+): SearchEntries {
+	const normalizer = NORMALIZERS[renderer];
+	if (isUndefined(normalizer)) {
+		throw Error(`No such renderer type ${renderer}`);
+	}
+
+	const normalized = normalizer(msg);
+	if (isNull(normalized)) {
+		throw Error(`Bad match between renderer type "${renderer}" and message "${JSON.stringify(msg)}".`);
+	}
+
+	return normalized;
+}
+
+export const toSearchEntries = (
+	renderer: string,
+	msg: RawSearchMessageReceivedRequestEntriesWithinRange,
+): SearchEntries => {
+	const normalizer = NORMALIZERS[renderer as SearchEntries['type']];
+	if (isUndefined(normalizer)) {
+		throw Error(`No such renderer type ${renderer}`);
+	}
+
+	const normalized = normalizer(msg);
+	if (isNull(normalized)) {
+		throw Error(`Bad match between renderer type "${renderer}" and message "${JSON.stringify(msg)}".`);
+	}
+
+	return normalized;
+};
+
+/** Attempts to determine the type of a search entry by inspecting the members of the msg
+ *
+ * @param msg : the value to inspect
+ *
+ * @throws an error if it wasn't possible to determine the SearchEntries type
+ */
+export const inferSearchEntries = (msg: RawSearchMessageReceivedRequestEntriesWithinRange): SearchEntries => {
 	const msgData = msg.data;
 	if (isRawSearchMessageReceivedRequestEntriesWithinRangeChartRenderer(msgData)) {
-		return {
-			...base,
-			type: 'chart',
-			names: msgData.Entries?.Categories ?? [],
-			data: (msgData.Entries?.Values ?? []).map(rawV => ({
-				timestamp: new Date(rawV.TS),
-				values: rawV.Data,
-			})),
-		};
+		return normalizeToChartSearchEntries(msgData);
 	} else if (isRawSearchMessageReceivedRequestEntriesWithinRangeFDGRenderer(msgData)) {
-		return {
-			...base,
-			type: 'fdg',
-			nodes: (msgData.Entries?.nodes ?? []).map(rawNode => ({
-				name: rawNode.name,
-				groupIndex: rawNode.group,
-			})),
-			edges: (msgData.Entries?.links ?? []).map(rawEdge => ({
-				value: rawEdge.value,
-				sourceNodeIndex: rawEdge.source,
-				targetNodeIndex: rawEdge.target,
-			})),
-			groups: msgData.Entries?.groups ?? [],
-		};
+		return normalizeToFDGSearchEntries(msgData);
 	} else if (isRawSearchMessageReceivedRequestEntriesWithinRangeGaugeRenderer(msgData)) {
-		return {
-			...base,
-			type: 'gauge',
-			data: (msgData.Entries ?? []).map(rawEntry => ({
-				name: rawEntry.Name,
-				magnitude: rawEntry.Magnitude,
-				min: rawEntry.Min,
-				max: rawEntry.Max,
-			})),
-		};
+		return normalizeToGaugeSearchEntries(msgData);
 	} else if (isRawSearchMessageReceivedRequestEntriesWithinRangeHeatmapRenderer(msgData)) {
-		return {
-			...base,
-			type: 'heatmap',
-			data: (msgData.Entries ?? []).map(rawEntry => ({
-				latitude: rawEntry.Lat,
-				longitude: rawEntry.Long,
-				magnitude: rawEntry.Magnitude ?? null,
-			})),
-		};
+		return normalizeToHeatmapSearchEntries(msgData);
+	} else if (isRawSearchMessageReceivedRequestEntriesWithinRangePointmapRenderer(msgData)) {
+		return normalizeToPointmapSearchEntries(msgData);
 	} else if (isRawSearchMessageReceivedRequestEntriesWithinRangePointToPointRenderer(msgData)) {
-		return {
-			...base,
-			type: 'point to point',
-			names: msgData.ValueNames,
-			data: (msgData.Entries ?? []).map(rawEntry => ({
-				source: {
-					latitude: rawEntry.Src.Lat,
-					longitude: rawEntry.Src.Long,
-				},
-				target: {
-					latitude: rawEntry.Dst.Lat,
-					longitude: rawEntry.Dst.Long,
-				},
-				magnitude: rawEntry.Magnitude ?? null,
-				values: rawEntry.Values ?? [],
-			})),
-		};
+		return normalizeToPointToPointSearchEntries(msgData);
 	} else if (isRawSearchMessageReceivedRequestEntriesWithinRangeRawRenderer(msgData)) {
-		return {
-			...base,
-			type: 'raw',
-			names: ['RAW'],
-			data: (msgData.Entries ?? []).map(rawEntry => ({
-				source: rawEntry.SRC,
-				timestamp: new Date(rawEntry.TS),
-				tag: rawEntry.Tag,
-				value: rawEntry.Data,
-			})),
-		};
+		return normalizeToRawSearchEntriess(msgData);
 	} else if (isRawSearchMessageReceivedRequestEntriesWithinRangeTextRenderer(msgData)) {
-		return {
-			...base,
-			type: 'text',
-			names: ['DATA'],
-			data: (msgData.Entries ?? []).map(rawEntry => ({
-				source: rawEntry.SRC,
-				timestamp: new Date(rawEntry.TS),
-				tag: rawEntry.Tag,
-				value: rawEntry.Data,
-			})),
-		};
+		return normalizeToTextSearchEntries(msgData);
 	} else if (isRawSearchMessageReceivedRequestEntriesWithinRangeStackGraphRenderer(msgData)) {
-		return {
-			...base,
-			type: 'stack graph',
-			data: (msgData.Entries ?? []).map(rawEntry => ({
-				key: rawEntry.Key,
-				values: rawEntry.Values.map(rawValue => ({
-					label: rawValue.Label,
-					value: rawValue.Value,
-				})),
-			})),
-		};
+		return normalizeToStackGraphSearchEntries(msgData);
 	} else if (isRawSearchMessageReceivedRequestEntriesWithinRangeTableRenderer(msgData)) {
-		return {
-			...base,
-			type: 'table',
-			columns: msgData.Entries?.Columns ?? [],
-			rows: (msgData.Entries?.Rows ?? []).map(rawRow => ({
-				timestamp: new Date(rawRow.TS),
-				values: rawRow.Row,
-			})),
-		};
+		return normalizeToTableSearchEntries(msgData);
 	} else {
-		// else if (isRawSearchMessageReceivedRequestEntriesWithinRangePointmapRenderer(msgData))
-		return {
-			...base,
-			type: 'pointmap',
-			data: (msgData.Entries ?? []).map(rawEntry => ({
-				location: {
-					latitude: rawEntry.Loc.Lat,
-					longitude: rawEntry.Loc.Long,
-				},
-				metadata: (rawEntry.Metadata ?? []).map(rawMeta => ({
-					key: rawMeta.Key,
-					value: rawMeta.Value,
-				})),
-			})),
-		};
+		throw Error(`Unable to identify SearchEntries type for ${JSON.stringify(msg)}`);
 	}
 };

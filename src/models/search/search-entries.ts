@@ -6,6 +6,19 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
+import {
+	RawSearchMessageReceivedRequestEntriesWithinRangeChartRenderer,
+	RawSearchMessageReceivedRequestEntriesWithinRangeFDGRenderer,
+	RawSearchMessageReceivedRequestEntriesWithinRangeGaugeRenderer,
+	RawSearchMessageReceivedRequestEntriesWithinRangeHeatmapRenderer,
+	RawSearchMessageReceivedRequestEntriesWithinRangePointmapRenderer,
+	RawSearchMessageReceivedRequestEntriesWithinRangePointToPointRenderer,
+	RawSearchMessageReceivedRequestEntriesWithinRangeRawRenderer,
+	RawSearchMessageReceivedRequestEntriesWithinRangeStackGraphRenderer,
+	RawSearchMessageReceivedRequestEntriesWithinRangeTableRenderer,
+	RawSearchMessageReceivedRequestEntriesWithinRangeTextRenderer,
+} from './raw-search-message-received';
+
 export type SearchEntries =
 	| ChartSearchEntries
 	| FDGSearchEntries
@@ -35,6 +48,21 @@ export interface ChartSearchEntries extends BaseSearchEntries {
 	}>;
 }
 
+export const normalizeToChartSearchEntries = (
+	v: RawSearchMessageReceivedRequestEntriesWithinRangeChartRenderer,
+): ChartSearchEntries => {
+	return {
+		start: new Date(v.EntryRange.StartTS),
+		end: new Date(v.EntryRange.EndTS),
+		type: 'chart',
+		names: v.Entries?.Categories ?? [],
+		data: (v.Entries?.Values ?? []).map(rawV => ({
+			timestamp: new Date(rawV.TS),
+			values: rawV.Data,
+		})),
+	};
+};
+
 export interface FDGSearchEntries extends BaseSearchEntries {
 	type: 'fdg';
 
@@ -43,6 +71,26 @@ export interface FDGSearchEntries extends BaseSearchEntries {
 	edges: Array<FDGEdge>;
 	groups: Array<string>;
 }
+
+export const normalizeToFDGSearchEntries = (
+	v: RawSearchMessageReceivedRequestEntriesWithinRangeFDGRenderer,
+): FDGSearchEntries => {
+	return {
+		start: new Date(v.EntryRange.StartTS),
+		end: new Date(v.EntryRange.EndTS),
+		type: 'fdg',
+		nodes: (v.Entries?.nodes ?? []).map(rawNode => ({
+			name: rawNode.name,
+			groupIndex: rawNode.group,
+		})),
+		edges: (v.Entries?.links ?? []).map(rawEdge => ({
+			value: rawEdge.value,
+			sourceNodeIndex: rawEdge.source,
+			targetNodeIndex: rawEdge.target,
+		})),
+		groups: v.Entries?.groups ?? [],
+	};
+};
 
 export interface FDGNode {
 	name: string;
@@ -72,12 +120,43 @@ export interface GaugeSearchEntries extends BaseSearchEntries {
 	}>;
 }
 
+export const normalizeToGaugeSearchEntries = (
+	v: RawSearchMessageReceivedRequestEntriesWithinRangeGaugeRenderer,
+): GaugeSearchEntries => {
+	return {
+		start: new Date(v.EntryRange.StartTS),
+		end: new Date(v.EntryRange.EndTS),
+		type: 'gauge',
+		data: (v.Entries ?? []).map(rawEntry => ({
+			name: rawEntry.Name,
+			magnitude: rawEntry.Magnitude,
+			min: rawEntry.Min,
+			max: rawEntry.Max,
+		})),
+	};
+};
+
 export interface HeatmapSearchEntries extends BaseSearchEntries {
 	type: 'heatmap';
 
 	// TODO
 	data: Array<MapLocation & { magnitude: number | null }>;
 }
+
+export const normalizeToHeatmapSearchEntries = (
+	v: RawSearchMessageReceivedRequestEntriesWithinRangeHeatmapRenderer,
+): HeatmapSearchEntries => {
+	return {
+		start: new Date(v.EntryRange.StartTS),
+		end: new Date(v.EntryRange.EndTS),
+		type: 'heatmap',
+		data: (v.Entries ?? []).map(rawEntry => ({
+			latitude: rawEntry.Lat,
+			longitude: rawEntry.Long,
+			magnitude: rawEntry.Magnitude ?? null,
+		})),
+	};
+};
 
 export interface PointToPointSearchEntries extends BaseSearchEntries {
 	type: 'point to point';
@@ -92,6 +171,29 @@ export interface PointToPointSearchEntries extends BaseSearchEntries {
 	}>;
 }
 
+export const normalizeToPointToPointSearchEntries = (
+	v: RawSearchMessageReceivedRequestEntriesWithinRangePointToPointRenderer,
+): PointToPointSearchEntries => {
+	return {
+		start: new Date(v.EntryRange.StartTS),
+		end: new Date(v.EntryRange.EndTS),
+		type: 'point to point',
+		names: v.ValueNames,
+		data: (v.Entries ?? []).map(rawEntry => ({
+			source: {
+				latitude: rawEntry.Src.Lat,
+				longitude: rawEntry.Src.Long,
+			},
+			target: {
+				latitude: rawEntry.Dst.Lat,
+				longitude: rawEntry.Dst.Long,
+			},
+			magnitude: rawEntry.Magnitude ?? null,
+			values: rawEntry.Values ?? [],
+		})),
+	};
+};
+
 export interface PointmapSearchEntries extends BaseSearchEntries {
 	type: 'pointmap';
 
@@ -104,6 +206,26 @@ export interface PointmapSearchEntries extends BaseSearchEntries {
 		}>;
 	}>;
 }
+
+export const normalizeToPointmapSearchEntries = (
+	v: RawSearchMessageReceivedRequestEntriesWithinRangePointmapRenderer,
+): PointmapSearchEntries => {
+	return {
+		start: new Date(v.EntryRange.StartTS),
+		end: new Date(v.EntryRange.EndTS),
+		type: 'pointmap',
+		data: (v.Entries ?? []).map(rawEntry => ({
+			location: {
+				latitude: rawEntry.Loc.Lat,
+				longitude: rawEntry.Loc.Long,
+			},
+			metadata: (rawEntry.Metadata ?? []).map(rawMeta => ({
+				key: rawMeta.Key,
+				value: rawMeta.Value,
+			})),
+		})),
+	};
+};
 
 export interface MapLocation {
 	latitude: number;
@@ -127,6 +249,23 @@ export interface RawSearchEntries extends BaseSearchEntries {
 	}>;
 }
 
+export const normalizeToRawSearchEntriess = (
+	v: RawSearchMessageReceivedRequestEntriesWithinRangeRawRenderer,
+): RawSearchEntries => {
+	return {
+		start: new Date(v.EntryRange.StartTS),
+		end: new Date(v.EntryRange.EndTS),
+		type: 'raw',
+		names: ['RAW'],
+		data: (v.Entries ?? []).map(rawEntry => ({
+			source: rawEntry.SRC,
+			timestamp: new Date(rawEntry.TS),
+			tag: rawEntry.Tag,
+			value: rawEntry.Data,
+		})),
+	};
+};
+
 export interface TextSearchEntries extends BaseSearchEntries {
 	type: 'text';
 
@@ -144,6 +283,23 @@ export interface TextSearchEntries extends BaseSearchEntries {
 	}>;
 }
 
+export const normalizeToTextSearchEntries = (
+	v: RawSearchMessageReceivedRequestEntriesWithinRangeTextRenderer,
+): TextSearchEntries => {
+	return {
+		start: new Date(v.EntryRange.StartTS),
+		end: new Date(v.EntryRange.EndTS),
+		type: 'text',
+		names: ['DATA'],
+		data: (v.Entries ?? []).map(rawEntry => ({
+			source: rawEntry.SRC,
+			timestamp: new Date(rawEntry.TS),
+			tag: rawEntry.Tag,
+			value: rawEntry.Data,
+		})),
+	};
+};
+
 export interface StackGraphSearchEntries extends BaseSearchEntries {
 	type: 'stack graph';
 
@@ -157,6 +313,23 @@ export interface StackGraphSearchEntries extends BaseSearchEntries {
 	}>;
 }
 
+export const normalizeToStackGraphSearchEntries = (
+	v: RawSearchMessageReceivedRequestEntriesWithinRangeStackGraphRenderer,
+): StackGraphSearchEntries => {
+	return {
+		start: new Date(v.EntryRange.StartTS),
+		end: new Date(v.EntryRange.EndTS),
+		type: 'stack graph',
+		data: (v.Entries ?? []).map(rawEntry => ({
+			key: rawEntry.Key,
+			values: rawEntry.Values.map(rawValue => ({
+				label: rawValue.Label,
+				value: rawValue.Value,
+			})),
+		})),
+	};
+};
+
 export interface TableSearchEntries extends BaseSearchEntries {
 	type: 'table';
 
@@ -167,3 +340,18 @@ export interface TableSearchEntries extends BaseSearchEntries {
 		values: Array<string>;
 	}>;
 }
+
+export const normalizeToTableSearchEntries = (
+	v: RawSearchMessageReceivedRequestEntriesWithinRangeTableRenderer,
+): TableSearchEntries => {
+	return {
+		start: new Date(v.EntryRange.StartTS),
+		end: new Date(v.EntryRange.EndTS),
+		type: 'table',
+		columns: v.Entries?.Columns ?? [],
+		rows: (v.Entries?.Rows ?? []).map(rawRow => ({
+			timestamp: new Date(rawRow.TS),
+			values: rawRow.Row,
+		})),
+	};
+};

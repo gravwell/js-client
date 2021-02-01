@@ -7,6 +7,7 @@
  **************************************************************************/
 
 import { RawSearchMessageReceivedRequestEntriesWithinRangeChartRenderer } from './chart-renderer';
+import { RawSearchMessageReceivedRequestEntriesWithinRangeFDGRenderer } from './fdg-renderer';
 import { RawSearchMessageReceivedRequestEntriesWithinRangeGaugeRenderer } from './gauge-renderer';
 import { RawSearchMessageReceivedRequestEntriesWithinRangeHeatmapRenderer } from './heatmap-renderer';
 import { RawSearchMessageReceivedRequestEntriesWithinRangePointToPointRenderer } from './point-to-point-renderer';
@@ -18,6 +19,7 @@ import { RawSearchMessageReceivedRequestEntriesWithinRangeTextRenderer } from '.
 
 export type RawSearchMessageReceivedRequestEntriesWithinRangeData =
 	| RawSearchMessageReceivedRequestEntriesWithinRangeChartRenderer
+	| RawSearchMessageReceivedRequestEntriesWithinRangeFDGRenderer
 	| RawSearchMessageReceivedRequestEntriesWithinRangeGaugeRenderer
 	| RawSearchMessageReceivedRequestEntriesWithinRangeHeatmapRenderer
 	| RawSearchMessageReceivedRequestEntriesWithinRangePointToPointRenderer
