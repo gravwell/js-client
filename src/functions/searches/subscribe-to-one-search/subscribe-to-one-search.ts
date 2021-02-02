@@ -57,7 +57,7 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 			desiredGranularity: options.filter?.desiredGranularity ?? 100,
 		};
 
-		const searchTypeIDP = promiseProgrammatically<string>();
+		const searchInitMsgP = promiseProgrammatically<RawSearchInitiatedMessageReceived>();
 		rawSubscription.received$
 			.pipe(
 				filter((msg): msg is RawSearchInitiatedMessageReceived => {
@@ -72,13 +72,13 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 			)
 			.subscribe(
 				msg => {
-					searchTypeIDP.resolve(msg.data.OutputSearchSubproto);
+					searchInitMsgP.resolve(msg);
 					rawSubscription.send(<RawAcceptSearchMessageSent>{
 						type: 'search',
 						data: { OK: true, OutputSearchSubproto: msg.data.OutputSearchSubproto },
 					});
 				},
-				err => searchTypeIDP.reject(err),
+				err => searchInitMsgP.reject(err),
 			);
 
 		rawSubscription.send(<RawInitiateSearchMessageSent>{
@@ -92,7 +92,10 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 			},
 		});
 
-		const searchTypeID = await searchTypeIDP.promise;
+		const searchInitMsg = await searchInitMsgP.promise;
+		const searchTypeID = searchInitMsg.data.OutputSearchSubproto;
+		const rendererType = searchInitMsg.data.RenderModule;
+
 		const searchMessages$ = rawSubscription.received$.pipe(filter(msg => msg.type === searchTypeID));
 
 		const progress$: Observable<Percentage> = searchMessages$.pipe(
@@ -112,7 +115,7 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 					return false;
 				}
 			}),
-			map(msg => toSearchEntries(msg)),
+			map(msg => toSearchEntries(rendererType, msg)),
 			tap(entries => {
 				const defDesiredGranularity = getDefaultGranularityByRendererType(entries.type);
 				initialFilter.desiredGranularity = defDesiredGranularity;
