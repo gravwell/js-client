@@ -10,7 +10,7 @@ import * as base64 from 'base-64';
 import { addMinutes } from 'date-fns';
 import { concat, from } from 'rxjs';
 import { filter, first, last, takeUntil, toArray } from 'rxjs/operators';
-import { TextSearchEntries } from 'src/models/search/search-entries';
+import { RawSearchEntries, TextSearchEntries } from 'src/models/search/search-entries';
 import { v4 as uuidv4 } from 'uuid';
 import { integrationTest } from '../../tests';
 import { TEST_BASE_API_CONTEXT } from '../../tests/config';
@@ -81,6 +81,41 @@ describe('subscribeToOneSearch()', () => {
 			const lastEntry = latest.data[latest.data.length - 1];
 			expect(lastEntry).toBeDefined();
 			expect(base64.decode(lastEntry.value)).toEqual(`count ${count}`);
+		}),
+		25000,
+	);
+
+	it(
+		'Should work with queries using the raw renderer',
+		integrationTest(async () => {
+			const subscribeToOneSearch = makeSubscribeToOneSearch(TEST_BASE_API_CONTEXT);
+			const query = `tag=${tag}`;
+			const range: [Date, Date] = [start, end];
+			const search = await subscribeToOneSearch(query, range);
+
+			const result = await search.entries$
+				.pipe(
+					takeUntil(
+						concat(
+							// Wait for progress == 100...
+							search.progress$.pipe(
+								filter(progress => progress == 100),
+								first(),
+							),
+							// ... then sleep after progress == 100 to make sure we have every entry
+							from(sleep(1000)),
+						).pipe(last()),
+					),
+					toArray(),
+				)
+				.toPromise();
+
+			expect(result.length).toBeGreaterThan(0);
+
+			const latest = result[result.length - 1] as RawSearchEntries;
+
+			// Currently, the default count is 100
+			expect(latest.data.length).toEqual(100);
 		}),
 		25000,
 	);
