@@ -6,28 +6,41 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { isUndefined } from 'lodash';
-import { BehaviorSubject } from 'rxjs';
+import { isEqual, isUndefined } from 'lodash';
+import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
+import { distinctUntilChanged, map } from 'rxjs/operators';
 import * as f from './functions';
 import { APIContext } from './functions/utils';
 import { CreatableJSONEntry, Search } from './models';
 import { isNumericID, NumericID } from './value-objects';
 
 export interface GravwellClientOptions {
-	useEncryption: boolean;
+	useEncryption?: boolean;
 	authToken?: string;
 }
 
 export class GravwellClient {
 	public set host(value: string) {
 		this._host = value;
+		this._host$.next(value);
 	}
 	public get host(): string {
 		return this._host.valueOf();
 	}
-	private _host: string;
+	private _host = '';
+	private readonly _host$ = new BehaviorSubject<string>(this._host);
+	public readonly host$ = this._host$.asObservable().pipe(distinctUntilChanged());
 
-	public useEncryption = true;
+	public set useEncryption(value: boolean) {
+		this._useEncryption = value;
+		this._useEncryption$.next(value);
+	}
+	public get useEncryption(): boolean {
+		return this._useEncryption.valueOf();
+	}
+	private _useEncryption = true;
+	private readonly _useEncryption$ = new BehaviorSubject<boolean>(this._useEncryption);
+	public readonly useEncryption$ = this._useEncryption$.asObservable().pipe(distinctUntilChanged());
 
 	public get authToken(): string | null {
 		return this._authToken;
@@ -36,9 +49,18 @@ export class GravwellClient {
 	protected _authToken$ = new BehaviorSubject<string | null>(this._authToken);
 	public readonly authToken$ = this._authToken$.asObservable();
 
-	constructor(host: string, options: GravwellClientOptions = { useEncryption: true }) {
-		this._host = host;
-		this.useEncryption = options.useEncryption;
+	private readonly _context$: Observable<APIContext> = combineLatest(
+		this.host$,
+		this.useEncryption$,
+		this.authToken$,
+	).pipe(
+		map(([host, useEncryption, authToken]) => ({ host, useEncryption, authToken })),
+		distinctUntilChanged((a, b) => isEqual(a, b)),
+	);
+
+	constructor(host: string, options: GravwellClientOptions = {}) {
+		this.host = host;
+		if (!isUndefined(options.useEncryption)) this.useEncryption = options.useEncryption;
 		if (!isUndefined(options.authToken)) this.authenticate(options.authToken);
 
 		this.authToken$.subscribe(authToken => (this._authToken = authToken));
