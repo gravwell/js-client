@@ -14,7 +14,7 @@ import { makeGetAllRemoteKits } from './get-all-remote-kits';
 describe('getAllRemoteKits()', () => {
 	const getAllRemoteKits = makeGetAllRemoteKits(TEST_BASE_API_CONTEXT);
 
-	it(
+	xit(
 		'Should return all available kits from the remote server',
 		integrationTest(async () => {
 			const kits = await getAllRemoteKits();

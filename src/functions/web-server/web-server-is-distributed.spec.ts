@@ -13,7 +13,7 @@ import { makeWebServerIsDistributed } from './web-server-is-distributed';
 describe('webServerIsDistributed()', () => {
 	const webServerIsDistributed = makeWebServerIsDistributed(TEST_BASE_API_CONTEXT);
 
-	it(
+	xit(
 		'Should tell if the web server is distributed',
 		integrationTest(async () => {
 			const isDistributed = await webServerIsDistributed();

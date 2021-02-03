@@ -90,7 +90,7 @@ describe('getScheduledScriptsAuthorizedToMe()', () => {
 		]);
 	});
 
-	it(
+	xit(
 		'Returns all my scheduled scripts',
 		integrationTest(async () => {
 			const actualAdminScheduledScripts = await getScheduledScriptsAuthorizedToMe();

@@ -87,7 +87,7 @@ describe('getManyScheduledScripts()', () => {
 		]);
 	});
 
-	it(
+	xit(
 		'Should return all scheduled scripts of a user',
 		integrationTest(async () => {
 			const allScheduledScripts = await getAllScheduledScripts();

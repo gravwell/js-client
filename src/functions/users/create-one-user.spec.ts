@@ -15,7 +15,7 @@ import { makeCreateOneUser } from './create-one-user';
 describe('createOneUser()', () => {
 	const createOneUser = makeCreateOneUser(TEST_BASE_API_CONTEXT);
 
-	it(
+	xit(
 		"Should create a user and return it's id",
 		integrationTest(async () => {
 			const username = 'test-user-' + random(0, Number.MAX_SAFE_INTEGER);

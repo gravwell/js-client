@@ -61,7 +61,7 @@ describe('removeOneUserFromOneGroup()', () => {
 		await deleteOneUser(user.id);
 	});
 
-	it(
+	xit(
 		'Should remove the user from the group',
 		integrationTest(async () => {
 			expect(user.groupIDs.length).toBe(3);

@@ -109,7 +109,7 @@ describe('getAutoExtractorsAuthorizedToMe()', () => {
 		analystAutoExtractors = await Promise.all(createPromises2);
 	});
 
-	it(
+	xit(
 		'Returns all my auto extractors',
 		integrationTest(async () => {
 			const actualAdminAutoExtractors = await getAutoExtractorsAuthorizedToMe();
