@@ -39,7 +39,7 @@ describe('getSearchHistory()', () => {
 		admin = await getMyUser();
 	});
 
-	it(
+	xit(
 		'Should get the search history of a specific user',
 		integrationTest(async () => {
 			const searches = await getSearchHistory({ target: 'user', userID: '1' });
@@ -47,7 +47,7 @@ describe('getSearchHistory()', () => {
 		}),
 	);
 
-	it(
+	xit(
 		'Should get the search history of a specific group',
 		integrationTest(async () => {
 			const searches = await getSearchHistory({ target: 'group', groupID: '1' });
@@ -55,7 +55,7 @@ describe('getSearchHistory()', () => {
 		}),
 	);
 
-	it(
+	xit(
 		'Should get the search history related to a specific user',
 		integrationTest(async () => {
 			const searches = await getSearchHistory({ target: 'user related', userID: '1' });
@@ -63,7 +63,7 @@ describe('getSearchHistory()', () => {
 		}),
 	);
 
-	it(
+	xit(
 		'Should get the search history of all users',
 		integrationTest(async () => {
 			const searches = await getSearchHistory({ target: 'all' });
@@ -71,7 +71,7 @@ describe('getSearchHistory()', () => {
 		}),
 	);
 
-	it(
+	xit(
 		'Should get my search history',
 		integrationTest(async () => {
 			const searches = await getSearchHistory({ target: 'myself' });
@@ -79,7 +79,7 @@ describe('getSearchHistory()', () => {
 		}),
 	);
 
-	it(
+	xit(
 		'Should not get the search history of another user if the request was not from an admin',
 		integrationTest(async () => {
 			const getSearchHistoryAsAnalyst = makeGetSearchHistory({

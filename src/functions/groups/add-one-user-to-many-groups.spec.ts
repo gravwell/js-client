@@ -55,7 +55,7 @@ describe('addOneUserToManyGroups()', () => {
 		await deleteOneUser(user.id);
 	});
 
-	it(
+	xit(
 		'Should add the user to the groups',
 		integrationTest(async () => {
 			const allGroups = await getAllGroups();

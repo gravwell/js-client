@@ -13,7 +13,7 @@ import { makeIngestJSONEntries } from './ingest-json-entries';
 describe('ingestJSONEntries()', () => {
 	const ingestJSONEntries = makeIngestJSONEntries(TEST_BASE_API_CONTEXT);
 
-	it(
+	xit(
 		'Should ingest the JSON entries',
 		integrationTest(async () => {
 			const entriesIngestedCount = await ingestJSONEntries([

@@ -13,7 +13,9 @@ import {
 	Query,
 	RawAcceptSearchMessageSent,
 	RawInitiateSearchMessageSent,
+	RawRequestSearchDetailsMessageSent,
 	RawRequestSearchEntriesWithinRangeMessageSent,
+	RawRequestSearchStatsMessageSent,
 	RawResponseForSearchDetailsMessageReceived,
 	RawResponseForSearchStatsMessageReceived,
 	RawSearchInitiatedMessageReceived,
@@ -152,7 +154,7 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 			const end = filter.dateRange.end;
 			// TODO: Filter by .desiredGranularity and .fieldFilters
 
-			await rawSubscription.send(<RawRequestSearchEntriesWithinRangeMessageSent>{
+			const requestEntriesMsg: RawRequestSearchEntriesWithinRangeMessageSent = {
 				type: searchTypeID,
 				data: {
 					ID: SearchMessageCommands.RequestEntriesWithinRange,
@@ -164,7 +166,26 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 						EndTS: end.toISOString(),
 					},
 				},
-			});
+			};
+			const entriesP = rawSubscription.send(requestEntriesMsg);
+
+			const requestStatsMessage: RawRequestSearchStatsMessageSent = {
+				type: searchTypeID,
+				data: {
+					ID: SearchMessageCommands.RequestAllStats,
+					// TODO: That's what we send in the gravgui, IDK why
+					Stats: { SetCount: 90 },
+				},
+			};
+			const statsP = rawSubscription.send(requestStatsMessage);
+
+			const requestDetailsMsg: RawRequestSearchDetailsMessageSent = {
+				type: searchTypeID,
+				data: { ID: SearchMessageCommands.RequestDetails },
+			};
+			const detailsP = rawSubscription.send(requestDetailsMsg);
+
+			await Promise.all([entriesP, statsP, detailsP]);
 		};
 
 		filter$.subscribe(filter => {
@@ -196,22 +217,8 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 
 		const stats$ = combineLatest(rawSearchStats$, rawSearchDetails$).pipe(
 			map(
-				([rawStats, rawDetails]): SearchStats => ({
-					id: rawDetails.data.SearchInfo.ID,
-					userID: toNumericID(rawDetails.data.SearchInfo.UID),
-
-					entries: rawStats.data.EntryCount,
-					duration: rawDetails.data.SearchInfo.Duration,
-					start: new Date(rawDetails.data.SearchInfo.StartRange),
-					end: new Date(rawDetails.data.SearchInfo.EndRange),
-
-					storeSize: rawDetails.data.SearchInfo.StoreSize,
-					processed: {
-						entries: 0, // ?QUESTION: How to calculate that?
-						bytes: 0, // ?QUESTION: How to calculate that?
-					},
-
-					pipeline: rawStats.data.Stats.Set.map(s => s.Stats)
+				([rawStats, rawDetails]): SearchStats => {
+					const pipeline = rawStats.data.Stats.Set.map(s => s.Stats)
 						.reduce<
 							Array<Array<RawResponseForSearchStatsMessageReceived['data']['Stats']['Set'][number]['Stats'][number]>>
 						>((acc, curr) => {
@@ -248,8 +255,26 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 										entries: acc.output.entries + curr.output.entries,
 									},
 								})),
-						),
-				}),
+						);
+
+					return {
+						id: rawDetails.data.SearchInfo.ID,
+						userID: toNumericID(rawDetails.data.SearchInfo.UID),
+
+						entries: rawStats.data.EntryCount,
+						duration: rawDetails.data.SearchInfo.Duration,
+						start: new Date(rawDetails.data.SearchInfo.StartRange),
+						end: new Date(rawDetails.data.SearchInfo.EndRange),
+
+						storeSize: rawDetails.data.SearchInfo.StoreSize,
+						processed: {
+							entries: pipeline[0]?.input?.entries ?? 0,
+							bytes: pipeline[0]?.input?.bytes ?? 0,
+						},
+
+						pipeline,
+					};
+				},
 			),
 		);
 

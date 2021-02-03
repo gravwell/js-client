@@ -95,7 +95,7 @@ describe('getMacrosByGroup()', () => {
 		await Promise.all(createPromises2);
 	});
 
-	it(
+	xit(
 		'Should return all macros of a group',
 		integrationTest(async () => {
 			const allMacros = await getAllMacros();
@@ -119,7 +119,7 @@ describe('getMacrosByGroup()', () => {
 		}),
 	);
 
-	it(
+	xit(
 		'Should return an empty array if the group has no macros',
 		integrationTest(async () => {
 			const creatableGroup: CreatableGroup = { name: 'New' };
@@ -129,7 +129,7 @@ describe('getMacrosByGroup()', () => {
 		}),
 	);
 
-	it(
+	xit(
 		"Blocks non admin users from grabbing macros from other groups that they don't belong",
 		integrationTest(async () => {
 			await expectAsync(getMacrosByGroup(adminGroupID)).toBeResolved();

@@ -92,7 +92,7 @@ describe('getManyScheduledQueries()', () => {
 		]);
 	});
 
-	it(
+	xit(
 		'Should return all scheduled queries of a user',
 		integrationTest(async () => {
 			const allScheduledQueries = await getAllScheduledQueries();

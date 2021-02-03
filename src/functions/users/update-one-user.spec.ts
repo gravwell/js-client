@@ -43,7 +43,7 @@ describe('updateOneUser()', () => {
 		await deleteOneUser(user.id);
 	});
 
-	it(
+	xit(
 		"Should update the user's username",
 		integrationTest(async () => {
 			expect(isValidUser(user)).toBeTrue();
@@ -58,7 +58,7 @@ describe('updateOneUser()', () => {
 		}),
 	);
 
-	it(
+	xit(
 		'Should update the user email',
 		integrationTest(async () => {
 			expect(isValidUser(user)).toBeTrue();
@@ -73,7 +73,7 @@ describe('updateOneUser()', () => {
 		}),
 	);
 
-	it(
+	xit(
 		'Should update the user name',
 		integrationTest(async () => {
 			expect(isValidUser(user)).toBeTrue();
@@ -88,7 +88,7 @@ describe('updateOneUser()', () => {
 		}),
 	);
 
-	it(
+	xit(
 		'Should update the user locked state',
 		integrationTest(async () => {
 			expect(isValidUser(user)).toBeTrue();
@@ -106,7 +106,7 @@ describe('updateOneUser()', () => {
 		}),
 	);
 
-	it(
+	xit(
 		'Should update the user role',
 		integrationTest(async () => {
 			expect(isValidUser(user)).toBeTrue();
@@ -124,7 +124,7 @@ describe('updateOneUser()', () => {
 		}),
 	);
 
-	it(
+	xit(
 		'Should update my password, requiring the current one',
 		integrationTest(async () => {
 			const myUser = await getMyUser();
@@ -155,7 +155,7 @@ describe('updateOneUser()', () => {
 		}),
 	);
 
-	it(
+	xit(
 		'Should update the user password without passing current one',
 		integrationTest(async () => {
 			expect(isValidUser(user)).toBeTrue();
