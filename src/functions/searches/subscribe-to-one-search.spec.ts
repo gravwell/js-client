@@ -20,7 +20,7 @@ import { makeIngestMultiLineEntry } from '../ingestors/ingest-multi-line-entry';
 import { makeGetAllTags } from '../tags/get-all-tags';
 import { makeSubscribeToOneSearch } from './subscribe-to-one-search/subscribe-to-one-search';
 
-fdescribe('subscribeToOneSearch()', () => {
+describe('subscribeToOneSearch()', () => {
 	// Use a randomly generated tag, so that we know exactly what we're going to query
 	const tag = uuidv4();
 
