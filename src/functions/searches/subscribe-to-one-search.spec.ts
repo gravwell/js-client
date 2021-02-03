@@ -8,8 +8,9 @@
 
 import * as base64 from 'base-64';
 import { addMinutes } from 'date-fns';
-import { concat, from } from 'rxjs';
+import { concat, from, Observable } from 'rxjs';
 import { filter, first, last, takeUntil, toArray } from 'rxjs/operators';
+import { SearchSubscription } from 'src/models';
 import { RawSearchEntries, TextSearchEntries } from 'src/models/search/search-entries';
 import { v4 as uuidv4 } from 'uuid';
 import { integrationTest } from '../../tests';
@@ -93,30 +94,32 @@ describe('subscribeToOneSearch()', () => {
 			const range: [Date, Date] = [start, end];
 			const search = await subscribeToOneSearch(query, range);
 
-			const result = await search.entries$
-				.pipe(
-					takeUntil(
-						concat(
-							// Wait for progress == 100...
-							search.progress$.pipe(
-								filter(progress => progress == 100),
-								first(),
-							),
-							// ... then sleep after progress == 100 to make sure we have every entry
-							from(sleep(1000)),
-						).pipe(last()),
-					),
-					toArray(),
-				)
-				.toPromise();
+			const entriesP = getValuesUntilSearchComplete(search.entries$, search);
+			const statsP = getValuesUntilSearchComplete(search.stats$, search);
 
-			expect(result.length).toBeGreaterThan(0);
-
-			const latest = result[result.length - 1] as RawSearchEntries;
-
+			const entries = await entriesP;
+			const latestEntry = entries[entries.length - 1] as RawSearchEntries;
+			expect(entries.length).toBeGreaterThan(0);
 			// Currently, the default count is 100
-			expect(latest.data.length).toEqual(100);
+			expect(latestEntry.data.length).toEqual(100);
+
+			const stats = await statsP;
+			expect(stats.length).toBeGreaterThan(0);
 		}),
 		25000,
 	);
 });
+
+const getValuesUntilSearchComplete = <T>(origin: Observable<T>, search: SearchSubscription): Promise<Array<T>> => {
+	const searchCompleted$ = concat(
+		// Wait for progress == 100...
+		search.progress$.pipe(
+			filter(progress => progress == 100),
+			first(),
+		),
+		// ... then sleep after progress == 100 to make sure we have every entry
+		from(sleep(1000)),
+	).pipe(last());
+
+	return origin.pipe(takeUntil(searchCompleted$), toArray()).toPromise();
+};

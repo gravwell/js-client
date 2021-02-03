@@ -59,7 +59,7 @@ describe('getUsersByGroup()', () => {
 		await Promise.all(deleteUsersPs);
 	});
 
-	it(
+	xit(
 		'Should return all users of a group',
 		integrationTest(async () => {
 			const allGroups = await getAllGroups();
@@ -81,7 +81,7 @@ describe('getUsersByGroup()', () => {
 		}),
 	);
 
-	it(
+	xit(
 		'Should return an empty array if the user belong to no groups',
 		integrationTest(async () => {
 			const allGroups = await getAllGroups();

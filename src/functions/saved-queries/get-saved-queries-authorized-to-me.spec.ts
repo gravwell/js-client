@@ -89,7 +89,7 @@ describe('getSavedQueriesAuthorizedToMe()', () => {
 		analystSavedQueries = await Promise.all(createPromises2);
 	});
 
-	it(
+	xit(
 		'Returns all my saved queries',
 		integrationTest(async () => {
 			const actualAdminSavedQueries = await getSavedQueriesAuthorizedToMe();
