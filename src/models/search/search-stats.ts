@@ -37,3 +37,8 @@ export interface SearchStats {
 		bytes: number;
 	};
 }
+
+export interface SearchFrequencyStats {
+	timestamp: Date;
+	count: number;
+}

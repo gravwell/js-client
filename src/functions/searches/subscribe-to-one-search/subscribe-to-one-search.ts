@@ -6,7 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { isBoolean, isEqual, isNil, isNull, isUndefined } from 'lodash';
+import { isBoolean, isEqual, isNil, isNull, isUndefined, last } from 'lodash';
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import { bufferCount, distinctUntilChanged, filter, first, map, startWith, tap } from 'rxjs/operators';
 import {
@@ -16,12 +16,15 @@ import {
 	RawRequestSearchDetailsMessageSent,
 	RawRequestSearchEntriesWithinRangeMessageSent,
 	RawRequestSearchStatsMessageSent,
+	RawRequestSearchStatsWithinRangeMessageSent,
 	RawResponseForSearchDetailsMessageReceived,
 	RawResponseForSearchStatsMessageReceived,
+	RawResponseForSearchStatsWithinRangeMessageReceived,
 	RawSearchInitiatedMessageReceived,
 	RawSearchMessageReceivedRequestEntriesWithinRange,
 	SearchEntries,
 	SearchFilter,
+	SearchFrequencyStats,
 	SearchMessageCommands,
 	SearchStats,
 	SearchSubscription,
@@ -34,6 +37,16 @@ import { makeSubscribeToOneRawSearch } from './subscribe-to-one-raw-search';
 type RequiredSearchFilter = Required<
 	Omit<SearchFilter, 'dateRange'> & { dateRange: Required<NonNullable<SearchFilter['dateRange']>> }
 >;
+
+const countEntriesFromModules = (
+	msg: RawResponseForSearchStatsMessageReceived | RawResponseForSearchStatsWithinRangeMessageReceived,
+): Array<SearchFrequencyStats> => {
+	const statsSet = msg.data.Stats.Set;
+	return statsSet.map(set => ({
+		timestamp: new Date(set.TS),
+		count: last(set.Stats)?.OutputCount ?? 0,
+	}));
+};
 
 export const makeSubscribeToOneSearch = (context: APIContext) => {
 	const subscribeToOneRawSearch = makeSubscribeToOneRawSearch(context);
@@ -150,8 +163,8 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 		const requestEntries = async (filter: RequiredSearchFilter): Promise<void> => {
 			const first = filter.entriesOffset.index;
 			const last = first + filter.entriesOffset.count;
-			const start = filter.dateRange.start;
-			const end = filter.dateRange.end;
+			const start = filter.dateRange.start.toISOString();
+			const end = filter.dateRange.end.toISOString();
 			// TODO: Filter by .desiredGranularity and .fieldFilters
 
 			const requestEntriesMsg: RawRequestSearchEntriesWithinRangeMessageSent = {
@@ -162,8 +175,8 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 					EntryRange: {
 						First: first,
 						Last: last,
-						StartTS: start.toISOString(),
-						EndTS: end.toISOString(),
+						StartTS: start,
+						EndTS: end,
 					},
 				},
 			};
@@ -185,7 +198,21 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 			};
 			const detailsP = rawSubscription.send(requestDetailsMsg);
 
-			await Promise.all([entriesP, statsP, detailsP]);
+			const requestStatsWithinRangeMsg: RawRequestSearchStatsWithinRangeMessageSent = {
+				type: searchTypeID,
+				data: {
+					ID: SearchMessageCommands.RequestStatsInRange,
+					Stats: {
+						// TODO: That's what we send in the gravgui for zoom granularity
+						SetCount: 90,
+						SetEnd: end,
+						SetStart: start,
+					},
+				},
+			};
+			const statsRangeP = rawSubscription.send(requestStatsWithinRangeMsg);
+
+			await Promise.all([entriesP, statsP, detailsP, statsRangeP]);
 		};
 
 		filter$.subscribe(filter => {
@@ -209,6 +236,17 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 				try {
 					const _msg = <RawResponseForSearchDetailsMessageReceived>msg;
 					return _msg.data.ID === SearchMessageCommands.RequestDetails;
+				} catch {
+					return false;
+				}
+			}),
+		);
+
+		const rawStatsZoom$ = searchMessages$.pipe(
+			filter((msg): msg is RawResponseForSearchStatsWithinRangeMessageReceived => {
+				try {
+					const _msg = <RawResponseForSearchStatsWithinRangeMessageReceived>msg;
+					return _msg.data.ID === SearchMessageCommands.RequestStatsInRange;
 				} catch {
 					return false;
 				}
@@ -278,7 +316,11 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 			),
 		);
 
-		return { progress$, entries$, stats$, setFilter };
+		const statsOverview$ = rawSearchStats$.pipe(map(set => countEntriesFromModules(set)));
+
+		const statsZoom$ = rawStatsZoom$.pipe(map(set => countEntriesFromModules(set)));
+
+		return { progress$, entries$, stats$, statsOverview$, statsZoom$, setFilter };
 	};
 };
 
