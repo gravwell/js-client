@@ -72,6 +72,7 @@ import {
 	SearchFilter,
 	SearchModule,
 	SearchSubscription,
+	SystemSettings,
 	TargetedNotificationTargetType,
 	Template,
 	UpdatableActionable,
@@ -135,6 +136,7 @@ describe('GravwellClient', () => {
 
 			// System
 			expectTypeOf(client.system.is.connected).toEqualTypeOf<() => Promise<boolean>>();
+			expectTypeOf(client.system.get.settings).toEqualTypeOf<() => Promise<SystemSettings>>();
 			expectTypeOf(client.system.get.apiVersion).toEqualTypeOf<() => Promise<GetAPIVersionResponse>>();
 			expectTypeOf(client.system.subscribeTo.information).toEqualTypeOf<
 				(
