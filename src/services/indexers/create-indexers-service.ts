@@ -8,7 +8,7 @@
 
 import { makeRestartIndexers } from '../../functions/indexers';
 import { APIContext } from '../../functions/utils';
-import { IndexersService } from './indexers-service';
+import { IndexersService } from './service';
 
 export const createIndexersService = (context: APIContext): IndexersService => ({
 	restart: makeRestartIndexers(context),

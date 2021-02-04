@@ -7,4 +7,4 @@
  **************************************************************************/
 
 export * from './create-web-server-service';
-export * from './web-server-service';
+export * from './service';

@@ -7,9 +7,9 @@
  **************************************************************************/
 
 export interface WebServerService {
-	restart: () => Promise<void>;
+	readonly restart: () => Promise<void>;
 
-	is: {
-		distributed: () => Promise<boolean>;
+	readonly is: {
+		readonly distributed: () => Promise<boolean>;
 	};
 }

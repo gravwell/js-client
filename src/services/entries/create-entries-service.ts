@@ -9,7 +9,7 @@
 import { makeIngestJSONEntries, makeIngestMultiLineEntry } from '../../functions/ingestors';
 import { APIContext } from '../../functions/utils';
 import { CreatableJSONEntry } from '../../models';
-import { EntriesService } from './entries-service';
+import { EntriesService } from './service';
 
 export const createEntriesService = (context: APIContext): EntriesService => ({
 	ingest: {

@@ -6,5 +6,5 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-export * from './indexers-service';
+export * from './service';
 export * from './create-indexers-service';

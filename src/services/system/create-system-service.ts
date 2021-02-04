@@ -13,7 +13,7 @@ import {
 	makeSystemIsConnected,
 } from '../../functions/system';
 import { APIContext } from '../../functions/utils';
-import { SystemService } from './system-service';
+import { SystemService } from './service';
 
 export const createSystemService = (context: APIContext): SystemService => ({
 	subscribeTo: {

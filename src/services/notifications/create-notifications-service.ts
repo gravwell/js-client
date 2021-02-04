@@ -15,7 +15,7 @@ import {
 	makeUpdateOneNotification,
 } from '../../functions/notifications';
 import { APIContext } from '../../functions/utils';
-import { NotificationsService } from './notifications-service';
+import { NotificationsService } from './service';
 
 export const createNotificationsService = (context: APIContext): NotificationsService => ({
 	create: {

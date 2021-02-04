@@ -13,7 +13,7 @@ import {
 	makeUpdateOneUserPreferences,
 } from '../../functions/user-preferences';
 import { APIContext } from '../../functions/utils';
-import { UserPreferencesService } from './user-preferences-service';
+import { UserPreferencesService } from './service';
 
 export const createUserPreferencesService = (context: APIContext): UserPreferencesService => ({
 	get: {

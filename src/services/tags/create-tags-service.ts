@@ -8,7 +8,7 @@
 
 import { makeGetAllTags } from '../../functions/tags';
 import { APIContext } from '../../functions/utils';
-import { TagsService } from './tags-service';
+import { TagsService } from './service';
 
 export const createTagsService = (context: APIContext): TagsService => ({
 	get: {

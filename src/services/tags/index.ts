@@ -7,4 +7,4 @@
  **************************************************************************/
 
 export * from './create-tags-service';
-export * from './tags-service';
+export * from './service';

@@ -13,7 +13,7 @@ import {
 	makeLogoutOneUser,
 } from '../../functions/auth';
 import { APIContext } from '../../functions/utils';
-import { AuthService } from './auth-service';
+import { AuthService } from './service';
 
 export const createAuthService = (context: APIContext): AuthService => ({
 	login: {

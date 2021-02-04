@@ -6,16 +6,10 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { CreatableJSONEntry, CreatableMultiLineEntry } from '../../models/entry';
+import { RenderModule } from '../../models/render-module';
 
-export interface EntriesService {
-	ingest: {
-		one: {
-			json: (entry: CreatableJSONEntry) => Promise<number>;
-		};
-		many: {
-			json: (entries: Array<CreatableJSONEntry>) => Promise<number>;
-		};
-		byLine: (entry: CreatableMultiLineEntry) => Promise<number>;
+export interface RenderModulesServices {
+	readonly get: {
+		readonly all: () => Promise<Array<RenderModule>>;
 	};
 }

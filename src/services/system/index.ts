@@ -7,4 +7,4 @@
  **************************************************************************/
 
 export * from './create-system-service';
-export * from './system-service';
+export * from './service';

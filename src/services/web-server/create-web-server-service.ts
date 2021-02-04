@@ -8,7 +8,7 @@
 
 import { APIContext } from '../../functions/utils';
 import { makeRestartWebServer, makeWebServerIsDistributed } from '../../functions/web-server';
-import { WebServerService } from './web-server-service';
+import { WebServerService } from './service';
 
 export const createWebServerService = (context: APIContext): WebServerService => ({
 	restart: makeRestartWebServer(context),
