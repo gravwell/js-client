@@ -6,10 +6,10 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-export * from './auth';
-export * from './notifications';
-export * from './system';
-export * from './tags';
-export * from './user-preferences';
-export * from './users';
-export * from './web-server';
+export interface WebServerService {
+	restart: () => Promise<void>;
+
+	is: {
+		distributed: () => Promise<boolean>;
+	};
+}

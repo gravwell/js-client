@@ -20,11 +20,13 @@ import {
 	createTagsService,
 	createUserPreferencesService,
 	createUsersService,
+	createWebServerService,
 	NotificationsService,
 	SystemService,
 	TagsService,
 	UserPreferencesService,
 	UsersService,
+	WebServerService,
 } from './services';
 import { isNumericID, NumericID } from './value-objects';
 
@@ -85,6 +87,7 @@ export class GravwellClient {
 		this._userPreferences = createUserPreferencesService(this);
 		this._auth = createAuthService(this);
 		this._notifications = createNotificationsService(this);
+		this._webServer = createWebServerService(this);
 
 		this._context$.subscribe(context => {
 			this._tags = createTagsService(context);
@@ -93,6 +96,7 @@ export class GravwellClient {
 			this._userPreferences = createUserPreferencesService(context);
 			this._auth = createAuthService(context);
 			this._notifications = createNotificationsService(context);
+			this._webServer = createWebServerService(context);
 
 			Object.apply(this, buildFunctions(context));
 		});
@@ -141,18 +145,15 @@ export class GravwellClient {
 		return this._notifications;
 	}
 	private _notifications: NotificationsService;
+
+	public get webServer(): WebServerService {
+		return this._webServer;
+	}
+	private _webServer: WebServerService;
 }
 
 const buildFunctions = (context: APIContext) => {
 	return {
-		webServer: {
-			restart: f.makeRestartWebServer(context),
-
-			is: {
-				distributed: f.makeWebServerIsDistributed(context),
-			},
-		},
-
 		indexers: {
 			restart: f.makeRestartIndexers(context),
 		},
