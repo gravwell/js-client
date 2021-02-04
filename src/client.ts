@@ -12,7 +12,14 @@ import { distinctUntilChanged, map, shareReplay } from 'rxjs/operators';
 import * as f from './functions';
 import { APIContext } from './functions/utils';
 import { CreatableJSONEntry, Search } from './models';
-import { createSystemService, createTagsService, SystemService, TagsService } from './services';
+import {
+	createSystemService,
+	createTagsService,
+	createUsersService,
+	SystemService,
+	TagsService,
+	UsersService,
+} from './services';
 import { isNumericID, NumericID } from './value-objects';
 
 export interface GravwellClientOptions {
@@ -68,10 +75,12 @@ export class GravwellClient {
 
 		this._tags = createTagsService(this);
 		this._system = createSystemService(this);
+		this._users = createUsersService(this);
 
 		this._context$.subscribe(context => {
-			this._tags = createTagsService(this);
-			this._system = createSystemService(this);
+			this._tags = createTagsService(context);
+			this._system = createSystemService(context);
+			this._users = createUsersService(context);
 
 			Object.apply(this, buildFunctions(context));
 		});
@@ -100,6 +109,11 @@ export class GravwellClient {
 		return this._system;
 	}
 	private _system: SystemService;
+
+	public get users(): UsersService {
+		return this._users;
+	}
+	private _users: UsersService;
 }
 
 const buildFunctions = (context: APIContext) => {
