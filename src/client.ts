@@ -13,6 +13,8 @@ import * as f from './functions';
 import { APIContext } from './functions/utils';
 import { CreatableJSONEntry, Search } from './models';
 import {
+	AuthService,
+	createAuthService,
 	createSystemService,
 	createTagsService,
 	createUserPreferencesService,
@@ -79,12 +81,14 @@ export class GravwellClient {
 		this._system = createSystemService(this);
 		this._users = createUsersService(this);
 		this._userPreferences = createUserPreferencesService(this);
+		this._auth = createAuthService(this);
 
 		this._context$.subscribe(context => {
 			this._tags = createTagsService(context);
 			this._system = createSystemService(context);
 			this._users = createUsersService(context);
 			this._userPreferences = createUserPreferencesService(context);
+			this._auth = createAuthService(context);
 
 			Object.apply(this, buildFunctions(context));
 		});
@@ -123,26 +127,16 @@ export class GravwellClient {
 		return this._userPreferences;
 	}
 	private _userPreferences: UserPreferencesService;
+
+	public get auth(): AuthService {
+		return this._auth;
+	}
+	private _auth: AuthService;
 }
 
 const buildFunctions = (context: APIContext) => {
 	return {
-		auth: {
-			login: {
-				one: f.makeLoginOneUser(context),
-			},
-
-			logout: {
-				one: f.makeLogoutOneUser(context),
-				all: f.makeLogoutAllUsers(context),
-			},
-
-			get: {
-				many: {
-					activeSessions: ({ userID }: { userID: string }) => f.makeGetOneUserActiveSessions(context)(userID),
-				},
-			},
-		},
+		auth: {},
 
 		notifications: {
 			create: {

@@ -6,8 +6,5 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-export * from './auth';
-export * from './system';
-export * from './tags';
-export * from './user-preferences';
-export * from './users';
+export * from './auth-service';
+export * from './create-auth-service';
