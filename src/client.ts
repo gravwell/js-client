@@ -11,10 +11,11 @@ import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import { distinctUntilChanged, map, shareReplay } from 'rxjs/operators';
 import * as f from './functions';
 import { APIContext } from './functions/utils';
-import { CreatableJSONEntry, Search } from './models';
+import { Search } from './models';
 import {
 	AuthService,
 	createAuthService,
+	createEntriesService,
 	createIndexersService,
 	createNotificationsService,
 	createSystemService,
@@ -22,6 +23,7 @@ import {
 	createUserPreferencesService,
 	createUsersService,
 	createWebServerService,
+	EntriesService,
 	IndexersService,
 	NotificationsService,
 	SystemService,
@@ -91,6 +93,7 @@ export class GravwellClient {
 		this._notifications = createNotificationsService(this);
 		this._webServer = createWebServerService(this);
 		this._indexers = createIndexersService(this);
+		this._entries = createEntriesService(this);
 
 		this._context$.subscribe(context => {
 			this._tags = createTagsService(context);
@@ -101,6 +104,7 @@ export class GravwellClient {
 			this._notifications = createNotificationsService(context);
 			this._webServer = createWebServerService(context);
 			this._indexers = createIndexersService(context);
+			this._entries = createEntriesService(context);
 
 			Object.apply(this, buildFunctions(context));
 		});
@@ -159,24 +163,15 @@ export class GravwellClient {
 		return this._indexers;
 	}
 	private _indexers: IndexersService;
+
+	public get entries(): EntriesService {
+		return this._entries;
+	}
+	private _entries: EntriesService;
 }
 
 const buildFunctions = (context: APIContext) => {
 	return {
-		entries: {
-			ingest: {
-				one: {
-					json: (entry: CreatableJSONEntry) => f.makeIngestJSONEntries(context)([entry]),
-				},
-
-				many: {
-					json: f.makeIngestJSONEntries(context),
-				},
-
-				byLine: f.makeIngestMultiLineEntry(context),
-			},
-		},
-
 		logs: {
 			get: {
 				levels: f.makeGetLogLevels(context),

@@ -6,12 +6,16 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-export * from './auth';
-export * from './entries';
-export * from './indexers';
-export * from './notifications';
-export * from './system';
-export * from './tags';
-export * from './user-preferences';
-export * from './users';
-export * from './web-server';
+import { CreatableJSONEntry, CreatableMultiLineEntry } from '../../models/entry';
+
+export interface EntriesService {
+	ingest: {
+		one: {
+			json: (entry: CreatableJSONEntry) => Promise<number>;
+		};
+		many: {
+			json: (entries: Array<CreatableJSONEntry>) => Promise<number>;
+		};
+		byLine: (entry: CreatableMultiLineEntry) => Promise<number>;
+	};
+}
