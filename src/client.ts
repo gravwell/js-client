@@ -15,12 +15,14 @@ import { CreatableJSONEntry, Search } from './models';
 import {
 	AuthService,
 	createAuthService,
+	createIndexersService,
 	createNotificationsService,
 	createSystemService,
 	createTagsService,
 	createUserPreferencesService,
 	createUsersService,
 	createWebServerService,
+	IndexersService,
 	NotificationsService,
 	SystemService,
 	TagsService,
@@ -88,6 +90,7 @@ export class GravwellClient {
 		this._auth = createAuthService(this);
 		this._notifications = createNotificationsService(this);
 		this._webServer = createWebServerService(this);
+		this._indexers = createIndexersService(this);
 
 		this._context$.subscribe(context => {
 			this._tags = createTagsService(context);
@@ -97,6 +100,7 @@ export class GravwellClient {
 			this._auth = createAuthService(context);
 			this._notifications = createNotificationsService(context);
 			this._webServer = createWebServerService(context);
+			this._indexers = createIndexersService(context);
 
 			Object.apply(this, buildFunctions(context));
 		});
@@ -150,14 +154,15 @@ export class GravwellClient {
 		return this._webServer;
 	}
 	private _webServer: WebServerService;
+
+	public get indexers(): IndexersService {
+		return this._indexers;
+	}
+	private _indexers: IndexersService;
 }
 
 const buildFunctions = (context: APIContext) => {
 	return {
-		indexers: {
-			restart: f.makeRestartIndexers(context),
-		},
-
 		entries: {
 			ingest: {
 				one: {

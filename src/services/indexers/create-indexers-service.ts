@@ -6,11 +6,10 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-export * from './auth';
-export * from './indexers';
-export * from './notifications';
-export * from './system';
-export * from './tags';
-export * from './user-preferences';
-export * from './users';
-export * from './web-server';
+import { makeRestartIndexers } from '../../functions/indexers';
+import { APIContext } from '../../functions/utils';
+import { IndexersService } from './indexers-service';
+
+export const createIndexersService = (context: APIContext): IndexersService => ({
+	restart: makeRestartIndexers(context),
+});
