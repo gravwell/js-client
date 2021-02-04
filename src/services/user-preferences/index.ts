@@ -6,7 +6,5 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-export * from './system';
-export * from './tags';
-export * from './user-preferences';
-export * from './users';
+export * from './create-user-preferences-service';
+export * from './user-preferences-service';

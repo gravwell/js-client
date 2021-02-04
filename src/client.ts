@@ -15,9 +15,11 @@ import { CreatableJSONEntry, Search } from './models';
 import {
 	createSystemService,
 	createTagsService,
+	createUserPreferencesService,
 	createUsersService,
 	SystemService,
 	TagsService,
+	UserPreferencesService,
 	UsersService,
 } from './services';
 import { isNumericID, NumericID } from './value-objects';
@@ -76,11 +78,13 @@ export class GravwellClient {
 		this._tags = createTagsService(this);
 		this._system = createSystemService(this);
 		this._users = createUsersService(this);
+		this._userPreferences = createUserPreferencesService(this);
 
 		this._context$.subscribe(context => {
 			this._tags = createTagsService(context);
 			this._system = createSystemService(context);
 			this._users = createUsersService(context);
+			this._userPreferences = createUserPreferencesService(context);
 
 			Object.apply(this, buildFunctions(context));
 		});
@@ -114,44 +118,15 @@ export class GravwellClient {
 		return this._users;
 	}
 	private _users: UsersService;
+
+	public get userPreferences(): UserPreferencesService {
+		return this._userPreferences;
+	}
+	private _userPreferences: UserPreferencesService;
 }
 
 const buildFunctions = (context: APIContext) => {
 	return {
-		users: {
-			get: {
-				me: f.makeGetMyUser(context),
-				one: f.makeGetOneUser(context),
-				many: f.makeGetManyUsers(context),
-				all: f.makeGetAllUsers(context),
-			},
-
-			create: { one: f.makeCreateOneUser(context) },
-
-			update: {
-				me: f.makeUpdateMyUser(context),
-				one: f.makeUpdateOneUser(context),
-			},
-
-			delete: {
-				one: f.makeDeleteOneUser(context),
-			},
-		},
-
-		userPreferences: {
-			get: {
-				one: f.makeGetOneUserPreferences(context),
-				all: f.makeGetAllUserPreferences(context),
-			},
-
-			update: {
-				one: f.makeUpdateOneUserPreferences(context),
-			},
-
-			delete: {
-				one: f.makeDeleteOneUserPreferences(context),
-			},
-		},
 		auth: {
 			login: {
 				one: f.makeLoginOneUser(context),
