@@ -15,10 +15,12 @@ import { CreatableJSONEntry, Search } from './models';
 import {
 	AuthService,
 	createAuthService,
+	createNotificationsService,
 	createSystemService,
 	createTagsService,
 	createUserPreferencesService,
 	createUsersService,
+	NotificationsService,
 	SystemService,
 	TagsService,
 	UserPreferencesService,
@@ -82,6 +84,7 @@ export class GravwellClient {
 		this._users = createUsersService(this);
 		this._userPreferences = createUserPreferencesService(this);
 		this._auth = createAuthService(this);
+		this._notifications = createNotificationsService(this);
 
 		this._context$.subscribe(context => {
 			this._tags = createTagsService(context);
@@ -89,6 +92,7 @@ export class GravwellClient {
 			this._users = createUsersService(context);
 			this._userPreferences = createUserPreferencesService(context);
 			this._auth = createAuthService(context);
+			this._notifications = createNotificationsService(context);
 
 			Object.apply(this, buildFunctions(context));
 		});
@@ -132,37 +136,15 @@ export class GravwellClient {
 		return this._auth;
 	}
 	private _auth: AuthService;
+
+	public get notifications(): NotificationsService {
+		return this._notifications;
+	}
+	private _notifications: NotificationsService;
 }
 
 const buildFunctions = (context: APIContext) => {
 	return {
-		auth: {},
-
-		notifications: {
-			create: {
-				one: {
-					broadcasted: f.makeCreateOneBroadcastedNotification(context),
-					targeted: f.makeCreateOneTargetedNotification(context),
-				},
-			},
-
-			get: {
-				mine: f.makeGetMyNotifications(context),
-			},
-
-			subscribeTo: {
-				mine: f.makeSubscribeToMyNotifications(context),
-			},
-
-			update: {
-				one: f.makeUpdateOneNotification(context),
-			},
-
-			delete: {
-				one: f.makeDeleteOneUserPreferences(context),
-			},
-		},
-
 		webServer: {
 			restart: f.makeRestartWebServer(context),
 
