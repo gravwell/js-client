@@ -299,6 +299,8 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 						id: rawDetails.data.SearchInfo.ID,
 						userID: toNumericID(rawDetails.data.SearchInfo.UID),
 
+						finished: rawStats.data.Finished && rawDetails.data.Finished,
+
 						entries: rawStats.data.EntryCount,
 						duration: rawDetails.data.SearchInfo.Duration,
 						start: new Date(rawDetails.data.SearchInfo.StartRange),

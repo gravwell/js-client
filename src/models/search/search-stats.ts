@@ -12,6 +12,8 @@ export interface SearchStats {
 	id: ID;
 	userID: ID;
 
+	finished: boolean;
+
 	entries: number;
 	duration: string;
 	start: Date;
