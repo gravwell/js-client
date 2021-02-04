@@ -8,10 +8,11 @@
 
 import { isEqual, isUndefined } from 'lodash';
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
-import { distinctUntilChanged, map, shareReplay, startWith } from 'rxjs/operators';
+import { distinctUntilChanged, map, shareReplay } from 'rxjs/operators';
 import * as f from './functions';
 import { APIContext } from './functions/utils';
 import { CreatableJSONEntry, Search } from './models';
+import { createTagsService, TagsService } from './services';
 import { isNumericID, NumericID } from './value-objects';
 
 export interface GravwellClientOptions {
@@ -65,7 +66,11 @@ export class GravwellClient {
 		if (!isUndefined(options.useEncryption)) this.useEncryption = options.useEncryption;
 		if (!isUndefined(options.authToken)) this.authenticate(options.authToken);
 
-		this._context$.pipe(startWith<APIContext>(this)).subscribe(context => {
+		this._tags = createTagsService(this);
+
+		this._context$.subscribe(context => {
+			this._tags = createTagsService(this);
+
 			Object.apply(this, buildFunctions(context));
 		});
 
@@ -83,16 +88,15 @@ export class GravwellClient {
 	public unauthenticate(): void {
 		this._authToken$.next(null);
 	}
+
+	public get tags(): TagsService {
+		return this._tags;
+	}
+	private _tags: TagsService;
 }
 
 const buildFunctions = (context: APIContext) => {
 	return {
-		tags: {
-			get: {
-				all: f.makeGetAllTags(context),
-			},
-		},
-
 		system: {
 			subscribeTo: {
 				information: f.makeSubscribeToManySystemInformations(context),
