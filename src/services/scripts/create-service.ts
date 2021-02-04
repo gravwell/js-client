@@ -6,5 +6,12 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-export * from './create-service';
-export * from './service';
+import { makeValidateOneScript } from '../../functions/scripts';
+import { APIContext } from '../../functions/utils';
+import { ScriptsService } from './service';
+
+export const createScriptsService = (context: APIContext): ScriptsService => ({
+	validate: {
+		one: makeValidateOneScript(context),
+	},
+});

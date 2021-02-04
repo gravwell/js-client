@@ -8,6 +8,9 @@
 
 export interface ScriptLibrariesService {
 	readonly get: {
+		/**
+		 * Retrieves the code to a specific script library.
+		 */
 		readonly one: (
 			path: string,
 			options?: {
@@ -17,5 +20,12 @@ export interface ScriptLibrariesService {
 		) => Promise<string>;
 	};
 
-	readonly all: () => Promise<void>;
+	readonly sync: {
+		/**
+		 * Updates all libraries to their latest versions. The promise resolves
+		 * when the command to sync them is successfully received by the
+		 * backend, not we they're all synced.
+		 */
+		readonly all: () => Promise<void>;
+	};
 }

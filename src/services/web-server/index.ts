@@ -6,5 +6,5 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-export * from './create-web-server-service';
+export * from './create-service';
 export * from './service';

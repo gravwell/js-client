@@ -6,5 +6,12 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-export * from './create-service';
-export * from './service';
+import { makeGetAllRenderModules } from '../../functions/render-modules';
+import { APIContext } from '../../functions/utils';
+import { RenderModulesService } from './service';
+
+export const createRenderModulesService = (context: APIContext): RenderModulesService => ({
+	get: {
+		all: makeGetAllRenderModules(context),
+	},
+});

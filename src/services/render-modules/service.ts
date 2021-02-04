@@ -8,7 +8,7 @@
 
 import { RenderModule } from '../../models/render-module';
 
-export interface RenderModulesServices {
+export interface RenderModulesService {
 	readonly get: {
 		readonly all: () => Promise<Array<RenderModule>>;
 	};

@@ -6,5 +6,12 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-export * from './create-service';
-export * from './service';
+import { makeGetAllSearchModules } from '../../functions/search-modules';
+import { APIContext } from '../../functions/utils';
+import { SearchModulesService } from './service';
+
+export const createSearchModulesService = (context: APIContext): SearchModulesService => ({
+	get: {
+		all: makeGetAllSearchModules(context),
+	},
+});

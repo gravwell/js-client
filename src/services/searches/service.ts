@@ -10,14 +10,23 @@ import { SearchFilter, SearchSubscription } from '../../models/search';
 
 export interface SearchesService {
 	readonly background: {
+		/**
+		 * Sends a specific search to the background.
+		 */
 		readonly one: (searchID: string) => Promise<void>;
 	};
 
 	readonly save: {
+		/**
+		 * Saves a specific search.
+		 */
 		readonly one: (searchID: string) => Promise<void>;
 	};
 
 	readonly delete: {
+		/**
+		 * Deletes a specific search.
+		 */
 		readonly one: (searchID: string) => Promise<void>;
 	};
 

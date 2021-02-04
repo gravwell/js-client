@@ -6,5 +6,12 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-export * from './create-service';
-export * from './service';
+import { makeValidateOneQuery } from 'src/functions/searches';
+import { APIContext } from '../../functions/utils';
+import { QueriesService } from './service';
+
+export const createQueriesService = (context: APIContext): QueriesService => ({
+	validate: {
+		one: makeValidateOneQuery(context),
+	},
+});
