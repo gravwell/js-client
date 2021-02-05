@@ -25,7 +25,6 @@ import {
 	ValidatedQuery,
 } from '~/functions';
 import { APISubscription, downloadFromURL, DownloadReturn, File } from '~/functions/utils';
-import { GravwellClient } from './client';
 import {
 	Actionable,
 	AutoExtractor,
@@ -92,7 +91,8 @@ import {
 	User,
 	UserPreferences,
 	UserSessions,
-} from './models';
+} from '~/models';
+import { GravwellClient } from './client';
 import { unitTest } from './tests';
 import { ID, NumericID, UUID } from './value-objects';
 

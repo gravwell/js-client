@@ -6,7 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { Playbook, RawPlaybook, toPlaybook } from '../../models';
+import { Playbook, RawPlaybook, toPlaybook } from '~/models';
 import { UUID } from '../../value-objects';
 import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 

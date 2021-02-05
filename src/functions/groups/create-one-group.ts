@@ -6,7 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { CreatableGroup, Group, toRawCreatableGroup } from '../../models';
+import { CreatableGroup, Group, toRawCreatableGroup } from '~/models';
 import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 import { makeGetOneGroup } from './get-one-group';
 

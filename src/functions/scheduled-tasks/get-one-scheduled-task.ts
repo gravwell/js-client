@@ -13,7 +13,7 @@ import {
 	ScheduledTask,
 	ScheduledTaskType,
 	toScheduledTask,
-} from '../../models';
+} from '~/models';
 import { NumericID } from '../../value-objects';
 import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 

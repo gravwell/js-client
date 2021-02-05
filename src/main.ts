@@ -7,4 +7,4 @@
  **************************************************************************/
 
 export { GravwellClient as Gravwell } from './client';
-export * from './models';
+export * from '~/models';

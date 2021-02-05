@@ -7,7 +7,7 @@
  **************************************************************************/
 
 import { isUndefined } from 'lodash';
-import { AutoExtractor } from '../../models';
+import { AutoExtractor } from '~/models';
 import { UUID } from '../../value-objects';
 import { APIContext } from '../utils';
 import { makeGetAllAutoExtractors } from './get-all-auto-extractors';

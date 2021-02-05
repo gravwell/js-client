@@ -13,7 +13,7 @@ import {
 	RawKitInstallationStatus,
 	toKitInstallationStatus,
 	toRawInstallableKit,
-} from '../../models';
+} from '~/models';
 import { ID, NumericID, RawNumericID, toNumericID } from '../../value-objects';
 import {
 	APIContext,

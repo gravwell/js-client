@@ -14,7 +14,7 @@ import {
 	RawNotification,
 	RawTargetedNotification,
 	TargetedNotification,
-} from '../../models';
+} from '~/models';
 import {
 	APIContext,
 	buildHTTPRequest,

@@ -6,7 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { isRenderModule } from '../../models';
+import { isRenderModule } from '~/models';
 import { integrationTest } from '../../tests';
 import { TEST_BASE_API_CONTEXT } from '../../tests/config';
 import { makeGetAllRenderModules } from './get-all-render-modules';

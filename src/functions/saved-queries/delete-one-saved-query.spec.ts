@@ -6,7 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { CreatableSavedQuery } from '../../models';
+import { CreatableSavedQuery } from '~/models';
 import { integrationTest } from '../../tests';
 import { TEST_BASE_API_CONTEXT } from '../../tests/config';
 import { makeCreateOneSavedQuery } from './create-one-saved-query';

@@ -6,7 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { CreatableGroup, isGroup } from '../../models';
+import { CreatableGroup, isGroup } from '~/models';
 import { integrationTest } from '../../tests';
 import { TEST_BASE_API_CONTEXT } from '../../tests/config';
 import { NumericID } from '../../value-objects';

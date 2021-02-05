@@ -8,7 +8,7 @@
 
 import { createReadStream, ReadStream } from 'fs';
 import { join } from 'path';
-import { CreatableFile, FileMetadata, isFileMetadata, UpdatableFile } from '../../models';
+import { CreatableFile, FileMetadata, isFileMetadata, UpdatableFile } from '~/models';
 import { integrationTest, myCustomMatchers } from '../../tests';
 import { TEST_ASSETS_PATH, TEST_BASE_API_CONTEXT } from '../../tests/config';
 import { makeCreateOneFile } from './create-one-file';

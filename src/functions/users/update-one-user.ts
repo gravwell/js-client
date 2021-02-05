@@ -7,7 +7,7 @@
  **************************************************************************/
 
 import { isBoolean, isString, isUndefined, negate } from 'lodash';
-import { isValidUserRole, UpdatableUser, User } from '../../models';
+import { isValidUserRole, UpdatableUser, User } from '~/models';
 import { APIContext } from '../utils';
 import { makeGetOneUser } from './get-one-user';
 import { makeUpdateOneUserInformation } from './update-one-user-information';

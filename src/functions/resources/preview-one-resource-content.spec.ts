@@ -7,7 +7,7 @@
  **************************************************************************/
 
 import { isNull } from 'lodash';
-import { CreatableResource } from '../../models';
+import { CreatableResource } from '~/models';
 import { integrationTest } from '../../tests';
 import { TEST_BASE_API_CONTEXT } from '../../tests/config';
 import { UUID } from '../../value-objects';

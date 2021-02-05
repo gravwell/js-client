@@ -7,7 +7,7 @@
  **************************************************************************/
 
 import { omit } from 'lodash';
-import { Actionable, ActionableAction, CreatableActionable, isActionable, UpdatableActionable } from '../../models';
+import { Actionable, ActionableAction, CreatableActionable, isActionable, UpdatableActionable } from '~/models';
 import { integrationTest } from '../../tests';
 import { TEST_BASE_API_CONTEXT } from '../../tests/config';
 import { omitUndefinedShallow } from '../utils';

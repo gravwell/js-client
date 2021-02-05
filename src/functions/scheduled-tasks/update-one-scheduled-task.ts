@@ -14,7 +14,7 @@ import {
 	toRawUpdatableScheduledTask,
 	toScheduledTask,
 	UpdatableScheduledTask,
-} from '../../models';
+} from '~/models';
 import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 import { makeGetOneScheduledTask } from './get-one-scheduled-task';
 

@@ -7,7 +7,7 @@
  **************************************************************************/
 
 import { random } from 'lodash';
-import { CreatableUser, isValidUser } from '../../models';
+import { CreatableUser, isValidUser } from '~/models';
 import { integrationTest } from '../../tests';
 import { TEST_BASE_API_CONTEXT } from '../../tests/config';
 import { makeCreateOneUser } from './create-one-user';

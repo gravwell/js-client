@@ -7,7 +7,7 @@
  **************************************************************************/
 
 import { omit } from 'lodash';
-import { CreatableMacro, isMacro, Macro, UpdatableMacro } from '../../models';
+import { CreatableMacro, isMacro, Macro, UpdatableMacro } from '~/models';
 import { integrationTest } from '../../tests';
 import { TEST_BASE_API_CONTEXT } from '../../tests/config';
 import { makeCreateOneMacro } from './create-one-macro';

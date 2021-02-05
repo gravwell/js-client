@@ -8,7 +8,7 @@
 
 import { createReadStream, ReadStream } from 'fs';
 import { join } from 'path';
-import { CreatableResource, isResource, Resource } from '../../models';
+import { CreatableResource, isResource, Resource } from '~/models';
 import { integrationTest } from '../../tests';
 import { TEST_ASSETS_PATH, TEST_BASE_API_CONTEXT } from '../../tests/config';
 import { makeCreateOneResource } from './create-one-resource';

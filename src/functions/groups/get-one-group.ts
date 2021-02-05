@@ -6,7 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { Group, RawGroup, toGroup } from '../../models';
+import { Group, RawGroup, toGroup } from '~/models';
 import { NumericID } from '../../value-objects';
 import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 

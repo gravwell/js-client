@@ -6,7 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { CreatableDashboard, Dashboard, toRawCreatableDashboard } from '../../models';
+import { CreatableDashboard, Dashboard, toRawCreatableDashboard } from '~/models';
 import { RawNumericID, toNumericID } from '../../value-objects';
 import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 import { makeGetOneDashboard } from './get-one-dashboard';

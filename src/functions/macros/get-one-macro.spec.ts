@@ -6,7 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { CreatableMacro, isMacro, Macro } from '../../models';
+import { CreatableMacro, isMacro, Macro } from '~/models';
 import { integrationTest } from '../../tests';
 import { TEST_BASE_API_CONTEXT } from '../../tests/config';
 import { makeCreateOneMacro } from './create-one-macro';

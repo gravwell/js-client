@@ -6,7 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { CreatablePlaybook, Playbook, toRawCreatablePlaybook } from '../../models';
+import { CreatablePlaybook, Playbook, toRawCreatablePlaybook } from '~/models';
 import { UUID } from '../../value-objects';
 import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 import { makeGetOnePlaybook } from './get-one-playbook';

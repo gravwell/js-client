@@ -6,7 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { BuildableKit, toRawBuildableKit } from '../../models';
+import { BuildableKit, toRawBuildableKit } from '~/models';
 import { RawNumericID, RawUUID, UUID } from '../../value-objects';
 import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 

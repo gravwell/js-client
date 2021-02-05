@@ -6,7 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { isScheduledScript, ScheduledScript, UpdatableScheduledScript } from '../../models';
+import { isScheduledScript, ScheduledScript, UpdatableScheduledScript } from '~/models';
 import { integrationTest, myCustomMatchers } from '../../tests';
 import { TEST_BASE_API_CONTEXT } from '../../tests/config';
 import { makeCreateOneScheduledScript } from './create-one-scheduled-script';

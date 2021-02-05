@@ -7,7 +7,7 @@
  **************************************************************************/
 
 import { random, sortBy } from 'lodash';
-import { AutoExtractor, CreatableAutoExtractor, CreatableUser, isAutoExtractor, User } from '../../models';
+import { AutoExtractor, CreatableAutoExtractor, CreatableUser, isAutoExtractor, User } from '~/models';
 import { integrationTest } from '../../tests';
 import { TEST_BASE_API_CONTEXT } from '../../tests/config';
 import { makeLoginOneUser } from '../auth/login-one-user';

@@ -7,7 +7,7 @@
  **************************************************************************/
 
 import { random } from 'lodash';
-import { CreatableGroup, CreatableUser, isValidUser } from '../../models';
+import { CreatableGroup, CreatableUser, isValidUser } from '~/models';
 import { integrationTest } from '../../tests';
 import { TEST_BASE_API_CONTEXT } from '../../tests/config';
 import { NumericID } from '../../value-objects';

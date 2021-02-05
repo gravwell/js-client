@@ -6,7 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { isBlankRawResource, RawResource, Resource, toResource } from '../../models';
+import { isBlankRawResource, RawResource, Resource, toResource } from '~/models';
 import { UUID } from '../../value-objects';
 import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 

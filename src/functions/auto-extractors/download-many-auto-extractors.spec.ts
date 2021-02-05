@@ -7,7 +7,7 @@
  **************************************************************************/
 
 import { sortBy } from 'lodash';
-import { AutoExtractor, CreatableAutoExtractor } from '../../models';
+import { AutoExtractor, CreatableAutoExtractor } from '~/models';
 import { integrationTest, myCustomMatchers } from '../../tests';
 import { TEST_BASE_API_CONTEXT } from '../../tests/config';
 import { makeCreateOneAutoExtractor } from './create-one-auto-extractor';

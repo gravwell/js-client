@@ -6,7 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { RawSearch2, Search2, toSearch2 } from '../../models';
+import { RawSearch2, Search2, toSearch2 } from '~/models';
 import { NumericID } from '../../value-objects';
 import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 
