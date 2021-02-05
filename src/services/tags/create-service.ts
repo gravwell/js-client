@@ -6,8 +6,8 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { makeGetAllTags } from '../../functions/tags';
-import { APIContext } from '../../functions/utils';
+import { makeGetAllTags } from '~/functions/tags';
+import { APIContext } from '~/functions/utils';
 import { TagsService } from './service';
 
 export const createTagsService = (context: APIContext): TagsService => ({

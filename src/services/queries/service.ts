@@ -6,7 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { ValidatedQuery } from '../../functions/searches';
+import { ValidatedQuery } from '~/functions/searches';
 
 export interface QueriesService {
 	readonly validate: {

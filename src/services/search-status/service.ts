@@ -6,7 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { Search2 } from '../../models/search';
+import { Search2 } from '~/models/search';
 
 export interface SearchStatusService {
 	readonly get: {

@@ -6,9 +6,72 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { isUndefined } from 'lodash';
-import { BehaviorSubject } from 'rxjs';
+import { isEqual, isUndefined } from 'lodash';
+import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
+import { distinctUntilChanged, map, shareReplay } from 'rxjs/operators';
 import { APIContext } from '~/functions/utils';
+import {
+	ActionablesService,
+	AuthService,
+	AutoExtractorsService,
+	createActionablesService,
+	createAuthService,
+	createAutoExtractorsService,
+	createDashboardsService,
+	createEntriesService,
+	createFilesService,
+	createGroupsService,
+	createIndexersService,
+	createKitsService,
+	createLogsService,
+	createMacrosService,
+	createNotificationsService,
+	createPlaybooksService,
+	createQueriesService,
+	createRenderModulesService,
+	createResourcesService,
+	createSavedQueriesService,
+	createScheduledQueriesService,
+	createScheduledScriptsService,
+	createScriptLibrariesService,
+	createSearchesService,
+	createSearchHistoryService,
+	createSearchModulesService,
+	createSearchStatusService,
+	createSystemService,
+	createTagsService,
+	createTemplatesService,
+	createUserPreferencesService,
+	createUsersService,
+	createWebServerService,
+	DashboardsService,
+	EntriesService,
+	FilesService,
+	GroupsService,
+	IndexersService,
+	KitsService,
+	LogsService,
+	MacrosService,
+	NotificationsService,
+	PlaybooksService,
+	QueriesService,
+	RenderModulesService,
+	ResourcesService,
+	SavedQueriesService,
+	ScheduledQueriesService,
+	ScheduledScriptsService,
+	ScriptLibrariesService,
+	SearchesService,
+	SearchHistoryService,
+	SearchModulesService,
+	SearchStatusService,
+	SystemService,
+	TagsService,
+	TemplatesService,
+	UserPreferencesService,
+	UsersService,
+	WebServerService,
+} from '~/services';
 
 export interface GravwellClientOptions {
 	useEncryption?: boolean;

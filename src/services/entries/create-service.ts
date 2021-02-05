@@ -6,9 +6,9 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { makeIngestJSONEntries, makeIngestMultiLineEntry } from '../../functions/ingestors';
-import { APIContext } from '../../functions/utils';
-import { CreatableJSONEntry } from '../../models';
+import { makeIngestJSONEntries, makeIngestMultiLineEntry } from '~/functions/ingestors';
+import { APIContext } from '~/functions/utils';
+import { CreatableJSONEntry } from '~/models';
 import { EntriesService } from './service';
 
 export const createEntriesService = (context: APIContext): EntriesService => ({

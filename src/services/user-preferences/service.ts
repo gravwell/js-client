@@ -6,7 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { UserPreferences } from '../../models';
+import { UserPreferences } from '~/models';
 
 export interface UserPreferencesService {
 	readonly get: {

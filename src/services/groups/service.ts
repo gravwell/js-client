@@ -6,8 +6,8 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { CreatableGroup, Group, UpdatableGroup } from '../../models/group';
-import { NumericID } from '../../value-objects';
+import { CreatableGroup, Group, UpdatableGroup } from '~/models/group';
+import { NumericID } from '~/value-objects';
 
 export interface GroupsService {
 	readonly create: {

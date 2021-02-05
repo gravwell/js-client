@@ -6,7 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { CreatableJSONEntry, CreatableMultiLineEntry } from '../../models/entry';
+import { CreatableJSONEntry, CreatableMultiLineEntry } from '~/models/entry';
 
 export interface EntriesService {
 	readonly ingest: {

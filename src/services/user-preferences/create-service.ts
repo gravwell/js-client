@@ -11,8 +11,8 @@ import {
 	makeGetAllUserPreferences,
 	makeGetOneUserPreferences,
 	makeUpdateOneUserPreferences,
-} from '../../functions/user-preferences';
-import { APIContext } from '../../functions/utils';
+} from '~/functions/user-preferences';
+import { APIContext } from '~/functions/utils';
 import { UserPreferencesService } from './service';
 
 export const createUserPreferencesService = (context: APIContext): UserPreferencesService => ({

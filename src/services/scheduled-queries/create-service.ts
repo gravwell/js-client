@@ -19,8 +19,8 @@ import {
 	makeGetOneScheduledQuery,
 	makeGetScheduledQueriesAuthorizedToMe,
 	makeUpdateOneScheduledQuery,
-} from '../../functions/scheduled-tasks';
-import { APIContext } from '../../functions/utils';
+} from '~/functions/scheduled-tasks';
+import { APIContext } from '~/functions/utils';
 import { ScheduledQueriesService } from './service';
 
 export const createScheduledQueriesService = (context: APIContext): ScheduledQueriesService => ({

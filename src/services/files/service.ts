@@ -6,7 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { CreatableFile, FileMetadata, UpdatableFile } from '../../models/file';
+import { CreatableFile, FileMetadata, UpdatableFile } from '~/models/file';
 
 export interface FilesService {
 	readonly get: {

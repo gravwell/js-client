@@ -14,8 +14,8 @@ import {
 	makeGetResourcesAuthorizedToMe,
 	makePreviewOneResourceContent,
 	makeUpdateOneResource,
-} from '../../functions/resources';
-import { APIContext } from '../../functions/utils';
+} from '~/functions/resources';
+import { APIContext } from '~/functions/utils';
 import { ResourcesService } from './service';
 
 export const createResourcesService = (context: APIContext): ResourcesService => ({

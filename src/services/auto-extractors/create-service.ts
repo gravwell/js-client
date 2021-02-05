@@ -16,8 +16,8 @@ import {
 	makeIsValidAutoExtractorSyntax,
 	makeUpdateOneAutoExtractor,
 	makeUploadManyAutoExtractors,
-} from '../../functions/auto-extractors';
-import { APIContext } from '../../functions/utils';
+} from '~/functions/auto-extractors';
+import { APIContext } from '~/functions/utils';
 import { AutoExtractorsService } from './service';
 
 export const createAutoExtractorsService = (context: APIContext): AutoExtractorsService => ({

@@ -6,8 +6,8 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { makeCreateOneLog, makeGetLogLevels, makeSetLogLevel } from '../../functions/logs';
-import { APIContext } from '../../functions/utils';
+import { makeCreateOneLog, makeGetLogLevels, makeSetLogLevel } from '~/functions/logs';
+import { APIContext } from '~/functions/utils';
 import { LogsService } from './service';
 
 export const createLogsService = (context: APIContext): LogsService => ({

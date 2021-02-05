@@ -15,8 +15,8 @@ import {
 	makeGetOneUser,
 	makeUpdateMyUser,
 	makeUpdateOneUser,
-} from '../../functions/users';
-import { APIContext } from '../../functions/utils';
+} from '~/functions/users';
+import { APIContext } from '~/functions/utils';
 import { UsersService } from './service';
 
 export const createUsersService = (context: APIContext): UsersService => ({

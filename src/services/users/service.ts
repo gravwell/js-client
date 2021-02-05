@@ -6,8 +6,8 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { CreatableUser, UpdatableUser, User } from '../../models';
-import { NumericID } from '../../value-objects';
+import { CreatableUser, UpdatableUser, User } from '~/models';
+import { NumericID } from '~/value-objects';
 
 export interface UsersService {
 	readonly get: {

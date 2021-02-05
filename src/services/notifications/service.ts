@@ -6,15 +6,15 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { MyNotificationsMessageReceived } from '../../functions/notifications';
-import { APISubscription } from '../../functions/utils';
+import { MyNotificationsMessageReceived } from '~/functions/notifications';
+import { APISubscription } from '~/functions/utils';
 import {
 	CreatableBroadcastNotification,
 	CreatableTargetedNotificationByTargetType,
 	Notification,
 	TargetedNotificationTargetType,
 	UpdatableNotification,
-} from '../../models/notification';
+} from '~/models/notification';
 
 export interface NotificationsService {
 	readonly create: {

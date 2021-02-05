@@ -6,7 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { LogLevel, LogLevels } from '../../models/log-level';
+import { LogLevel, LogLevels } from '~/models/log-level';
 
 export interface LogsService {
 	readonly get: {

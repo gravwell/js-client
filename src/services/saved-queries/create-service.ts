@@ -13,8 +13,8 @@ import {
 	makeGetOneSavedQuery,
 	makeGetSavedQueriesAuthorizedToMe,
 	makeUpdateOneSavedQuery,
-} from '../../functions/saved-queries';
-import { APIContext } from '../../functions/utils';
+} from '~/functions/saved-queries';
+import { APIContext } from '~/functions/utils';
 import { SavedQueriesService } from './service';
 
 export const createSavedQueriesService = (context: APIContext): SavedQueriesService => ({

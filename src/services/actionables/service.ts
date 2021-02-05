@@ -6,7 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { Actionable, CreatableActionable, UpdatableActionable } from '../../models/actionable';
+import { Actionable, CreatableActionable, UpdatableActionable } from '~/models/actionable';
 
 export interface ActionablesService {
 	readonly get: {

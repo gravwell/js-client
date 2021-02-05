@@ -19,8 +19,8 @@ import {
 	makeUninstallOneKit,
 	makeUploadOneLocalKit,
 	makeUploadOneRemoteKit,
-} from '../../functions/kits';
-import { APIContext } from '../../functions/utils';
+} from '~/functions/kits';
+import { APIContext } from '~/functions/utils';
 import { KitsService } from './service';
 
 export const createKitsService = (context: APIContext): KitsService => ({

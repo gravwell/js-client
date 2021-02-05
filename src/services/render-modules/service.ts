@@ -6,7 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { RenderModule } from '../../models/render-module';
+import { RenderModule } from '~/models/render-module';
 
 export interface RenderModulesService {
 	readonly get: {

@@ -14,8 +14,8 @@ import {
 	makeGetManyDashboards,
 	makeGetOneDashboard,
 	makeUpdateOneDashboard,
-} from '../../functions/dashboards';
-import { APIContext } from '../../functions/utils';
+} from '~/functions/dashboards';
+import { APIContext } from '~/functions/utils';
 import { DashboardsService } from './service';
 
 export const createDashboardsService = (context: APIContext): DashboardsService => ({

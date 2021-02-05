@@ -6,7 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { UserSessions } from '../../models/user-sessions';
+import { UserSessions } from '~/models/user-sessions';
 
 export interface AuthService {
 	readonly login: {

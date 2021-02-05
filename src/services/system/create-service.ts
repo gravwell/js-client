@@ -11,8 +11,8 @@ import {
 	makeGetSystemSettings,
 	makeSubscribeToManySystemInformations,
 	makeSystemIsConnected,
-} from '../../functions/system';
-import { APIContext } from '../../functions/utils';
+} from '~/functions/system';
+import { APIContext } from '~/functions/utils';
 import { SystemService } from './service';
 
 export const createSystemService = (context: APIContext): SystemService => ({

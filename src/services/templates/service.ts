@@ -6,7 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { CreatableTemplate, Template, UpdatableTemplate } from '../../models/template';
+import { CreatableTemplate, Template, UpdatableTemplate } from '~/models/template';
 
 export interface TemplatesService {
 	readonly get: {

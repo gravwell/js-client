@@ -13,8 +13,8 @@ import {
 	makeGetMyNotifications,
 	makeSubscribeToMyNotifications,
 	makeUpdateOneNotification,
-} from '../../functions/notifications';
-import { APIContext } from '../../functions/utils';
+} from '~/functions/notifications';
+import { APIContext } from '~/functions/utils';
 import { NotificationsService } from './service';
 
 export const createNotificationsService = (context: APIContext): NotificationsService => ({

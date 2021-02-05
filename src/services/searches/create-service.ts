@@ -12,8 +12,8 @@ import {
 	makeDownloadOneSearch,
 	makeSaveOneSearch,
 	makeSubscribeToOneSearch,
-} from '../../functions/searches';
-import { APIContext } from '../../functions/utils';
+} from '~/functions/searches';
+import { APIContext } from '~/functions/utils';
 import { SearchesService } from './service';
 
 export const createSearchesService = (context: APIContext): SearchesService => ({

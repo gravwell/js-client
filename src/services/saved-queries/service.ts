@@ -6,7 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { CreatableSavedQuery, SavedQuery, UpdatableSavedQuery } from '../../models/saved-query';
+import { CreatableSavedQuery, SavedQuery, UpdatableSavedQuery } from '~/models/saved-query';
 
 export interface SavedQueriesService {
 	readonly get: {

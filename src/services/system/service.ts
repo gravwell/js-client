@@ -11,9 +11,9 @@ import {
 	SystemStatusCategory,
 	SystemStatusMessageReceived,
 	SystemStatusMessageSent,
-} from '../../functions/system';
-import { APISubscription } from '../../functions/utils';
-import { SystemSettings } from '../../models/system-settings';
+} from '~/functions/system';
+import { APISubscription } from '~/functions/utils';
+import { SystemSettings } from '~/models/system-settings';
 
 export interface SystemService {
 	readonly subscribeTo: {

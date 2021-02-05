@@ -13,8 +13,8 @@ import {
 	makeGetAllPlaybooksRelatedToMe,
 	makeGetOnePlaybook,
 	makeUpdateOnePlaybook,
-} from '../../functions/playbooks';
-import { APIContext } from '../../functions/utils';
+} from '~/functions/playbooks';
+import { APIContext } from '~/functions/utils';
 import { PlaybooksService } from './service';
 
 export const createPlaybooksService = (context: APIContext): PlaybooksService => ({

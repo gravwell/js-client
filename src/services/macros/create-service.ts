@@ -14,8 +14,8 @@ import {
 	makeGetManyMacros,
 	makeGetOneMacro,
 	makeUpdateOneMacro,
-} from '../../functions/macros';
-import { APIContext } from '../../functions/utils';
+} from '~/functions/macros';
+import { APIContext } from '~/functions/utils';
 import { MacrosService } from './service';
 
 export const createMacrosService = (context: APIContext): MacrosService => ({

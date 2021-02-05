@@ -6,7 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { SearchFilter, SearchSubscription } from '../../models/search';
+import { SearchFilter, SearchSubscription } from '~/models/search';
 
 export interface SearchesService {
 	readonly background: {

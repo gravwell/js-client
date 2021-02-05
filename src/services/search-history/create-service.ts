@@ -6,10 +6,10 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { makeGetSearchHistory } from '../../functions/searches';
-import { APIContext } from '../../functions/utils';
-import { Search } from '../../models/search';
-import { isNumericID } from '../../value-objects';
+import { makeGetSearchHistory } from '~/functions/searches';
+import { APIContext } from '~/functions/utils';
+import { Search } from '~/models/search';
+import { isNumericID } from '~/value-objects';
 import { SearchHistoryService } from './service';
 
 export const createSearchHistoryService = (context: APIContext): SearchHistoryService => ({

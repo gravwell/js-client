@@ -11,8 +11,8 @@ import {
 	makeLoginOneUser,
 	makeLogoutAllUsers,
 	makeLogoutOneUser,
-} from '../../functions/auth';
-import { APIContext } from '../../functions/utils';
+} from '~/functions/auth';
+import { APIContext } from '~/functions/utils';
 import { AuthService } from './service';
 
 export const createAuthService = (context: APIContext): AuthService => ({

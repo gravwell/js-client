@@ -10,8 +10,8 @@ import {
 	makeGetAllPersistentSearchStatus,
 	makeGetOnePersistentSearchStatus,
 	makeGetPersistentSearchStatusRelatedToMe,
-} from '../../functions/searches';
-import { APIContext } from '../../functions/utils';
+} from '~/functions/searches';
+import { APIContext } from '~/functions/utils';
 import { SearchStatusService } from './service';
 
 export const createSearchStatusService = (context: APIContext): SearchStatusService => ({

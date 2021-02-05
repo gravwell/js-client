@@ -19,8 +19,8 @@ import {
 	makeGetOneScheduledScript,
 	makeGetScheduledScriptsAuthorizedToMe,
 	makeUpdateOneScheduledScript,
-} from '../../functions/scheduled-tasks';
-import { APIContext } from '../../functions/utils';
+} from '~/functions/scheduled-tasks';
+import { APIContext } from '~/functions/utils';
 import { ScheduledScriptsService } from './service';
 
 export const createScheduledScriptsService = (context: APIContext): ScheduledScriptsService => ({

@@ -13,8 +13,8 @@ import {
 	makeGetAllTemplatesAsAdmin,
 	makeGetOneTemplate,
 	makeUpdateOneTemplate,
-} from '../../functions/templates';
-import { APIContext } from '../../functions/utils';
+} from '~/functions/templates';
+import { APIContext } from '~/functions/utils';
 import { TemplatesService } from './service';
 
 export const createTemplatesService = (context: APIContext): TemplatesService => ({

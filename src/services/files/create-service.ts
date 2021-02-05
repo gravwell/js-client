@@ -12,8 +12,8 @@ import {
 	makeGetAllFiles,
 	makeGetFilesAuthorizedToMe,
 	makeUpdateOneFile,
-} from '../../functions/files';
-import { APIContext } from '../../functions/utils';
+} from '~/functions/files';
+import { APIContext } from '~/functions/utils';
 import { FilesService } from './service';
 
 export const createFilesService = (context: APIContext): FilesService => ({

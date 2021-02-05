@@ -6,9 +6,9 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { ScheduledScriptsFilter } from '../../functions/scheduled-tasks';
-import { ScheduledTasksFilter } from '../../functions/scheduled-tasks/get-many-scheduled-tasks';
-import { CreatableScheduledScript, ScheduledScript, UpdatableScheduledQuery } from '../../models/scheduled-task';
+import { ScheduledScriptsFilter } from '~/functions/scheduled-tasks';
+import { ScheduledTasksFilter } from '~/functions/scheduled-tasks/get-many-scheduled-tasks';
+import { CreatableScheduledScript, ScheduledScript, UpdatableScheduledQuery } from '~/models/scheduled-task';
 
 export interface ScheduledScriptsService {
 	readonly get: {

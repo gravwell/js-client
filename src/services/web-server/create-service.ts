@@ -6,8 +6,8 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { APIContext } from '../../functions/utils';
-import { makeRestartWebServer, makeWebServerIsDistributed } from '../../functions/web-server';
+import { APIContext } from '~/functions/utils';
+import { makeRestartWebServer, makeWebServerIsDistributed } from '~/functions/web-server';
 import { WebServerService } from './service';
 
 export const createWebServerService = (context: APIContext): WebServerService => ({

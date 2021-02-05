@@ -6,8 +6,8 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { DashboardsFilter } from '../../functions/dashboards';
-import { CreatableDashboard, Dashboard, UpdatableDashboard } from '../../models/dashboard';
+import { DashboardsFilter } from '~/functions/dashboards';
+import { CreatableDashboard, Dashboard, UpdatableDashboard } from '~/models/dashboard';
 
 export interface DashboardsService {
 	readonly get: {

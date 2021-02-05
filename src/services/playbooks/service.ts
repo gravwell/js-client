@@ -6,7 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { CreatablePlaybook, Playbook, UpdatablePlaybook } from '../../models/playbook';
+import { CreatablePlaybook, Playbook, UpdatablePlaybook } from '~/models/playbook';
 
 export interface PlaybooksService {
 	readonly get: {

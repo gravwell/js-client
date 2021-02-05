@@ -13,8 +13,8 @@ import {
 	makeGetAllActionablesAsAdmin,
 	makeGetOneActionable,
 	makeUpdateOneActionable,
-} from '../../functions/actionables';
-import { APIContext } from '../../functions/utils';
+} from '~/functions/actionables';
+import { APIContext } from '~/functions/utils';
 import { ActionablesService } from './service';
 
 export const createActionablesService = (context: APIContext): ActionablesService => ({
