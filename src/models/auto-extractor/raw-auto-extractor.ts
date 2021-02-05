@@ -6,7 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { RawNumericID, RawUUID } from '../../value-objects';
+import { RawNumericID, RawUUID } from '~/value-objects';
 
 // Named as AXDefinition in the Go source
 export interface RawAutoExtractor {

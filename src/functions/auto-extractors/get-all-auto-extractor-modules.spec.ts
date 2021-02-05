@@ -7,8 +7,7 @@
  **************************************************************************/
 
 import { isString } from 'lodash';
-import { integrationTest } from '../../tests';
-import { TEST_BASE_API_CONTEXT } from '../../tests/config';
+import { integrationTest, TEST_BASE_API_CONTEXT } from '~/tests';
 import { makeGetAllAutoExtractorModules } from './get-all-auto-extractor-modules';
 
 describe('getAllAutoExtractorModules()', () => {

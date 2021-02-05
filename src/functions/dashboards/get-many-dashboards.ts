@@ -6,8 +6,8 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { Dashboard } from '../../models';
-import { isNumericID, NumericID } from '../../value-objects';
+import { Dashboard } from '~/models';
+import { isNumericID, NumericID } from '~/value-objects';
 import { APIContext } from '../utils';
 import { makeGetAllDashboards } from './get-all-dashboards';
 import { makeGetDashboardsByGroup } from './get-dashboards-by-group';

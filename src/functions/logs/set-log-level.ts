@@ -6,7 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { LogLevel, toRawLogLevel } from '../../models';
+import { LogLevel, toRawLogLevel } from '~/models';
 import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 
 export const makeSetLogLevel = (context: APIContext) => {

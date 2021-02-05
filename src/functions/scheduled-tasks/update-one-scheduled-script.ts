@@ -6,7 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { ScheduledScript, UpdatableScheduledQuery } from '../../models';
+import { ScheduledScript, UpdatableScheduledQuery } from '~/models';
 import { APIContext } from '../utils';
 import { makeUpdateOneScheduledTask } from './update-one-scheduled-task';
 

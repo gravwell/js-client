@@ -7,7 +7,7 @@
  **************************************************************************/
 
 import { isNull } from 'lodash';
-import { toNumericID } from '../../value-objects';
+import { toNumericID } from '~/value-objects';
 import { toTimeframe } from '../timeframe';
 import { RawSavedQuery } from './raw-saved-query';
 import { SavedQuery } from './saved-query';

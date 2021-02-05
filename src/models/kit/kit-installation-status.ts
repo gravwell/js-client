@@ -6,7 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { ID, NumericID, Percentage } from '../../value-objects';
+import { ID, NumericID, Percentage } from '~/value-objects';
 
 export interface KitInstallationStatus {
 	id: NumericID;

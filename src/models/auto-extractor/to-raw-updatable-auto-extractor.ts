@@ -7,7 +7,7 @@
  **************************************************************************/
 
 import { isUndefined } from 'lodash';
-import { toRawNumericID } from '../../value-objects';
+import { toRawNumericID } from '~/value-objects';
 import { AutoExtractor } from './auto-extractor';
 import { RawUpdatableAutoExtractor } from './raw-updatable-auto-extractor';
 import { UpdatableAutoExtractor } from './updatable-auto-extractor';

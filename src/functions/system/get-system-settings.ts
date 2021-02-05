@@ -6,7 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { RawSystemSettings, SystemSettings, toSystemSettings } from '../../models';
+import { RawSystemSettings, SystemSettings, toSystemSettings } from '~/models';
 import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 
 export const makeGetSystemSettings = (context: APIContext) => {

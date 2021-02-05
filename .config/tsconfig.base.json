@@ -15,7 +15,8 @@
 		"downlevelIteration": true,
 		"target": "ES5",
 		"lib": ["ES2020"],
-		"baseUrl": "..",
-		"rootDir": "../src"
+
+		"baseUrl": "../src",
+		"paths": { "~/*": ["*"] }
 	}
 }

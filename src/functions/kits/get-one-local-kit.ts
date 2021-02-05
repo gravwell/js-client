@@ -6,8 +6,8 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { LocalKit, RawLocalKit, toLocalKit } from '../../models';
-import { NumericID } from '../../value-objects';
+import { LocalKit, RawLocalKit, toLocalKit } from '~/models';
+import { NumericID } from '~/value-objects';
 import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 
 export const makeGetOneLocalKit = (context: APIContext) => {

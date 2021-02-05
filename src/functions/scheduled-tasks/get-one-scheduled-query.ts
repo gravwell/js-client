@@ -6,7 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { ScheduledQuery } from '../../models';
+import { ScheduledQuery } from '~/models';
 import { APIContext } from '../utils';
 import { makeGetOneScheduledTask } from './get-one-scheduled-task';
 

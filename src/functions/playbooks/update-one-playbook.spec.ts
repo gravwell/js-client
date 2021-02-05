@@ -7,9 +7,8 @@
  **************************************************************************/
 
 import { omit } from 'lodash';
-import { CreatablePlaybook, isPlaybook, Playbook, UpdatablePlaybook } from '../../models';
-import { integrationTest } from '../../tests';
-import { TEST_BASE_API_CONTEXT } from '../../tests/config';
+import { CreatablePlaybook, isPlaybook, Playbook, UpdatablePlaybook } from '~/models';
+import { integrationTest, TEST_BASE_API_CONTEXT } from '~/tests';
 import { omitUndefinedShallow } from '../utils';
 import { makeCreateOnePlaybook } from './create-one-playbook';
 import { makeDeleteOnePlaybook } from './delete-one-playbook';

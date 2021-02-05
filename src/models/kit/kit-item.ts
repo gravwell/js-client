@@ -7,7 +7,7 @@
  **************************************************************************/
 
 import { isNull, isNumber, isString } from 'lodash';
-import { isUUID, UUID } from '../../value-objects';
+import { isUUID, UUID } from '~/value-objects';
 import { isVersion, Version } from '../version';
 
 export interface KitItemBase {

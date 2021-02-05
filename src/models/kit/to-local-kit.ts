@@ -6,7 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { toNumericID } from '../../value-objects';
+import { toNumericID } from '~/value-objects';
 import { toVersion } from '../version';
 import { KitItem } from './kit-item';
 import { LocalKit } from './local-kit';

@@ -6,7 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { NumericID, UUID } from '../../value-objects';
+import { NumericID, UUID } from '~/value-objects';
 import { Timeframe } from '../timeframe';
 import { Version } from '../version';
 import { DashboardSearch } from './dashboard-search';

@@ -7,7 +7,7 @@
  **************************************************************************/
 
 import { isString, isUndefined } from 'lodash';
-import { UpdatableUser, User } from '../../models';
+import { UpdatableUser, User } from '~/models';
 import { APIContext } from '../utils';
 import { makeGetMyUser } from './get-my-user';
 import { makeUpdateOneUser } from './update-one-user';

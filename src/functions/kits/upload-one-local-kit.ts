@@ -8,7 +8,7 @@
 
 import * as FormData from 'form-data';
 import { isString } from 'lodash';
-import { LocalKit, RawLocalKit, toLocalKit } from '../../models';
+import { LocalKit, RawLocalKit, toLocalKit } from '~/models';
 import { APIContext, buildHTTPRequest, buildURL, fetch, File, HTTPRequestOptions, parseJSONResponse } from '../utils';
 
 export const makeUploadOneLocalKit = (context: APIContext) => {

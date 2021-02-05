@@ -8,7 +8,7 @@
 
 import * as FormData from 'form-data';
 import { isString, pick } from 'lodash';
-import { CreatableFile, FileMetadata, RawBaseFileMetadata, toRawCreatableFile } from '../../models';
+import { CreatableFile, FileMetadata, RawBaseFileMetadata, toRawCreatableFile } from '~/models';
 import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 import { makeGetOneFile } from './get-one-file';
 import { makeUpdateOneFile } from './update-one-file';

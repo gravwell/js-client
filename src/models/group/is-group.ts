@@ -7,7 +7,7 @@
  **************************************************************************/
 
 import { isNull, isString } from 'lodash';
-import { isNumericID } from '../../value-objects';
+import { isNumericID } from '~/value-objects';
 import { Group } from './group';
 
 export const isGroup = (value: any): value is Group => {

@@ -7,7 +7,7 @@
  **************************************************************************/
 
 import { isBoolean, isDate, isNull, isString } from 'lodash';
-import { isNumericID } from '../../value-objects';
+import { isNumericID } from '~/value-objects';
 import { User, UserRole } from './user';
 
 export const isValidUserRole = (value: any): value is UserRole =>

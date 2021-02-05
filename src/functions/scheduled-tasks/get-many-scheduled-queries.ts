@@ -6,8 +6,8 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { ScheduledQuery, ScheduledTask } from '../../models';
-import { NumericID } from '../../value-objects';
+import { ScheduledQuery, ScheduledTask } from '~/models';
+import { NumericID } from '~/value-objects';
 import { APIContext } from '../utils';
 import { makeGetManyScheduledTasks } from './get-many-scheduled-tasks';
 

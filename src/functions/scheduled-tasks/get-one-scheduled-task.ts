@@ -13,8 +13,8 @@ import {
 	ScheduledTask,
 	ScheduledTaskType,
 	toScheduledTask,
-} from '../../models';
-import { NumericID } from '../../value-objects';
+} from '~/models';
+import { NumericID } from '~/value-objects';
 import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 
 export const makeGetOneScheduledTask = (context: APIContext) => {

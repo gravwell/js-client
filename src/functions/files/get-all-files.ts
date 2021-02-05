@@ -6,7 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { FileMetadata, RawFileMetadata, toFileMetadata } from '../../models';
+import { FileMetadata, RawFileMetadata, toFileMetadata } from '~/models';
 import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 
 export const makeGetAllFiles = (context: APIContext) => {
