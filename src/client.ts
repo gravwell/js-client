@@ -84,7 +84,7 @@ export class GravwellClient {
 		this._host$.next(value);
 	}
 	public get host(): string {
-		return this._host.valueOf();
+		return this._host;
 	}
 	private _host = '';
 	private readonly _host$ = new BehaviorSubject<string>(this._host);
@@ -95,7 +95,7 @@ export class GravwellClient {
 		this._useEncryption$.next(value);
 	}
 	public get useEncryption(): boolean {
-		return this._useEncryption.valueOf();
+		return this._useEncryption;
 	}
 	private _useEncryption = true;
 	private readonly _useEncryption$ = new BehaviorSubject<boolean>(this._useEncryption);
@@ -114,7 +114,6 @@ export class GravwellClient {
 		this.authToken$,
 	).pipe(
 		map(([host, useEncryption, authToken]) => ({ host, useEncryption, authToken })),
-
 		distinctUntilChanged((a, b) => isEqual(a, b)),
 		shareReplay(1),
 	);
@@ -141,36 +140,41 @@ export class GravwellClient {
 		// I know this is duplicate content... but if we remove it, typescript
 		// doesn't know that we initialize all those properties on creation and
 		// thus fails to compile on strict mode
-		this._tags = createTagsService(this);
-		this._system = createSystemService(this);
-		this._users = createUsersService(this);
-		this._userPreferences = createUserPreferencesService(this);
-		this._auth = createAuthService(this);
-		this._notifications = createNotificationsService(this);
-		this._webServer = createWebServerService(this);
-		this._indexers = createIndexersService(this);
-		this._entries = createEntriesService(this);
-		this._logs = createLogsService(this);
-		this._searchStatus = createSearchStatusService(this);
-		this._searchHistory = createSearchHistoryService(this);
-		this._searches = createSearchesService(this);
-		this._searchModules = createSearchModulesService(this);
-		this._renderModules = createRenderModulesService(this);
-		this._scriptLibraries = createScriptLibrariesService(this);
-		this._groups = createGroupsService(this);
-		this._actionables = createActionablesService(this);
-		this._templates = createTemplatesService(this);
-		this._playbooks = createPlaybooksService(this);
-		this._resources = createResourcesService(this);
-		this._macros = createMacrosService(this);
-		this._dashboards = createDashboardsService(this);
-		this._autoExtractors = createAutoExtractorsService(this);
-		this._files = createFilesService(this);
-		this._savedQueries = createSavedQueriesService(this);
-		this._scheduledScripts = createScheduledScriptsService(this);
-		this._scheduledQueries = createScheduledQueriesService(this);
-		this._kits = createKitsService(this);
-		this._queries = createQueriesService(this);
+		const initialContext: APIContext = {
+			host: this.host,
+			useEncryption: this.useEncryption,
+			authToken: this.authToken,
+		};
+		this._tags = createTagsService(initialContext);
+		this._system = createSystemService(initialContext);
+		this._users = createUsersService(initialContext);
+		this._userPreferences = createUserPreferencesService(initialContext);
+		this._auth = createAuthService(initialContext);
+		this._notifications = createNotificationsService(initialContext);
+		this._webServer = createWebServerService(initialContext);
+		this._indexers = createIndexersService(initialContext);
+		this._entries = createEntriesService(initialContext);
+		this._logs = createLogsService(initialContext);
+		this._searchStatus = createSearchStatusService(initialContext);
+		this._searchHistory = createSearchHistoryService(initialContext);
+		this._searches = createSearchesService(initialContext);
+		this._searchModules = createSearchModulesService(initialContext);
+		this._renderModules = createRenderModulesService(initialContext);
+		this._scriptLibraries = createScriptLibrariesService(initialContext);
+		this._groups = createGroupsService(initialContext);
+		this._actionables = createActionablesService(initialContext);
+		this._templates = createTemplatesService(initialContext);
+		this._playbooks = createPlaybooksService(initialContext);
+		this._resources = createResourcesService(initialContext);
+		this._macros = createMacrosService(initialContext);
+		this._dashboards = createDashboardsService(initialContext);
+		this._autoExtractors = createAutoExtractorsService(initialContext);
+		this._files = createFilesService(initialContext);
+		this._savedQueries = createSavedQueriesService(initialContext);
+		this._scheduledScripts = createScheduledScriptsService(initialContext);
+		this._scheduledQueries = createScheduledQueriesService(initialContext);
+		this._kits = createKitsService(initialContext);
+		this._queries = createQueriesService(initialContext);
 
 		this._context$.subscribe(context => {
 			this._tags = createTagsService(context);
