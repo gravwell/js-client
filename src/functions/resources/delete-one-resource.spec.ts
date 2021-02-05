@@ -7,8 +7,7 @@
  **************************************************************************/
 
 import { CreatableResource, isResource } from '~/models';
-import { integrationTest } from '../../tests';
-import { TEST_BASE_API_CONTEXT } from '../../tests/config';
+import { integrationTest, TEST_BASE_API_CONTEXT } from '~/tests';
 import { makeCreateOneResource } from './create-one-resource';
 import { makeDeleteOneResource } from './delete-one-resource';
 import { makeGetOneResource } from './get-one-resource';

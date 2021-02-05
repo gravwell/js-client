@@ -7,8 +7,7 @@
  **************************************************************************/
 
 import { isScheduledTaskBase } from '~/models';
-import { integrationTest } from '../../tests';
-import { TEST_BASE_API_CONTEXT } from '../../tests/config';
+import { integrationTest, TEST_BASE_API_CONTEXT } from '~/tests';
 import { makeCreateManyScheduledScripts } from './create-many-scheduled-scripts';
 import { makeDeleteAllScheduledScripts } from './delete-all-scheduled-scripts';
 import { makeGetAllScheduledScripts } from './get-all-scheduled-scripts';

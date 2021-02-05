@@ -8,9 +8,8 @@
 
 import { random } from 'lodash';
 import { CreatableGroup, CreatableUser, isValidUser } from '~/models';
+import { integrationTest, TEST_BASE_API_CONTEXT } from '~/tests';
 import { NumericID } from '~/value-objects';
-import { integrationTest } from '../../tests';
-import { TEST_BASE_API_CONTEXT } from '../../tests/config';
 import { makeAddOneUserToManyGroups, makeCreateOneGroup, makeDeleteOneGroup, makeGetAllGroups } from '../groups';
 import { makeCreateOneUser } from './create-one-user';
 import { makeDeleteOneUser } from './delete-one-user';

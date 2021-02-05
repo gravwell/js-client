@@ -7,8 +7,7 @@
  **************************************************************************/
 
 import { isSearch2 } from '~/models';
-import { integrationTest } from '../../tests';
-import { TEST_BASE_API_CONTEXT } from '../../tests/config';
+import { integrationTest, TEST_BASE_API_CONTEXT } from '~/tests';
 import { makeBackgroundOneSearch } from './background-one-search';
 import { makeGetOnePersistentSearchStatus } from './get-one-persistent-search-status';
 import { makeGetPersistentSearchStatusRelatedToMe } from './get-persistent-search-status-related-to-me';

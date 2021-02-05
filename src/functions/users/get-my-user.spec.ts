@@ -7,8 +7,7 @@
  **************************************************************************/
 
 import { isValidUser } from '~/models';
-import { integrationTest } from '../../tests';
-import { TEST_BASE_API_CONTEXT } from '../../tests/config';
+import { integrationTest, TEST_BASE_API_CONTEXT } from '~/tests';
 import { makeGetMyUser } from './get-my-user';
 
 describe('getMyUser()', () => {

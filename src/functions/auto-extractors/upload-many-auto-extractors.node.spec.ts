@@ -9,8 +9,7 @@
 import { createReadStream } from 'fs';
 import { join } from 'path';
 import { isAutoExtractor } from '~/models';
-import { integrationTest } from '../../tests';
-import { TEST_ASSETS_PATH, TEST_BASE_API_CONTEXT } from '../../tests/config';
+import { integrationTest, TEST_ASSETS_PATH, TEST_BASE_API_CONTEXT } from '~/tests';
 import { makeDeleteOneAutoExtractor } from './delete-one-auto-extractor';
 import { makeGetAllAutoExtractors } from './get-all-auto-extractors';
 import { makeUploadManyAutoExtractors } from './upload-many-auto-extractors';

@@ -7,8 +7,7 @@
  **************************************************************************/
 
 import { CreatableDashboard } from '~/models';
-import { integrationTest } from '../../tests';
-import { TEST_BASE_API_CONTEXT } from '../../tests/config';
+import { integrationTest, TEST_BASE_API_CONTEXT } from '~/tests';
 import { makeCreateOneDashboard } from './create-one-dashboard';
 import { makeDeleteOneDashboard } from './delete-one-dashboard';
 import { makeGetAllDashboards } from './get-all-dashboards';

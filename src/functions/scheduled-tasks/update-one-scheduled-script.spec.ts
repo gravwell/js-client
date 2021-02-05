@@ -7,8 +7,7 @@
  **************************************************************************/
 
 import { isScheduledScript, ScheduledScript, UpdatableScheduledScript } from '~/models';
-import { integrationTest, myCustomMatchers } from '../../tests';
-import { TEST_BASE_API_CONTEXT } from '../../tests/config';
+import { integrationTest, myCustomMatchers, TEST_BASE_API_CONTEXT } from '~/tests';
 import { makeCreateOneScheduledScript } from './create-one-scheduled-script';
 import { makeDeleteAllScheduledScripts } from './delete-all-scheduled-scripts';
 import { makeUpdateOneScheduledScript } from './update-one-scheduled-script';

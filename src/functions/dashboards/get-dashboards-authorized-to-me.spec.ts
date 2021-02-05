@@ -8,8 +8,7 @@
 
 import { random, sortBy } from 'lodash';
 import { CreatableDashboard, CreatableUser, Dashboard, isDashboard, User } from '~/models';
-import { integrationTest } from '../../tests';
-import { TEST_BASE_API_CONTEXT } from '../../tests/config';
+import { integrationTest, TEST_BASE_API_CONTEXT } from '~/tests';
 import { makeLoginOneUser } from '../auth/login-one-user';
 import { makeCreateOneUser } from '../users';
 import { makeCreateOneDashboard } from './create-one-dashboard';

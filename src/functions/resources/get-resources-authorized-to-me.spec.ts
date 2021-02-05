@@ -7,9 +7,8 @@
  **************************************************************************/
 
 import { CreatableResource, isResource } from '~/models';
+import { integrationTest, TEST_BASE_API_CONTEXT } from '~/tests';
 import { UUID } from '~/value-objects';
-import { integrationTest } from '../../tests';
-import { TEST_BASE_API_CONTEXT } from '../../tests/config';
 import { makeCreateOneResource } from './create-one-resource';
 import { makeDeleteOneResource } from './delete-one-resource';
 import { makeGetResourcesAuthorizedToMe } from './get-resources-authorized-to-me';

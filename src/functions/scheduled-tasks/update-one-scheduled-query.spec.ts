@@ -7,8 +7,7 @@
  **************************************************************************/
 
 import { isScheduledQuery, ScheduledQuery, UpdatableScheduledQuery } from '~/models';
-import { integrationTest, myCustomMatchers } from '../../tests';
-import { TEST_BASE_API_CONTEXT } from '../../tests/config';
+import { integrationTest, myCustomMatchers, TEST_BASE_API_CONTEXT } from '~/tests';
 import { makeCreateOneScheduledQuery } from './create-one-scheduled-query';
 import { makeDeleteAllScheduledQueries } from './delete-all-scheduled-queries';
 import { makeUpdateOneScheduledQuery } from './update-one-scheduled-query';

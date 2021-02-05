@@ -7,8 +7,7 @@
  **************************************************************************/
 
 import { CreatableGroup, isGroup } from '~/models';
-import { integrationTest } from '../../tests';
-import { TEST_BASE_API_CONTEXT } from '../../tests/config';
+import { integrationTest, TEST_BASE_API_CONTEXT } from '~/tests';
 import { makeCreateOneGroup } from './create-one-group';
 import { makeDeleteOneGroup } from './delete-one-group';
 import { makeGetAllGroups } from './get-all-groups';

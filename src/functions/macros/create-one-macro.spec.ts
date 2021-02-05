@@ -7,8 +7,7 @@
  **************************************************************************/
 
 import { CreatableMacro, isMacro } from '~/models';
-import { integrationTest } from '../../tests';
-import { TEST_BASE_API_CONTEXT } from '../../tests/config';
+import { integrationTest, TEST_BASE_API_CONTEXT } from '~/tests';
 import { makeCreateOneMacro } from './create-one-macro';
 import { makeDeleteOneMacro } from './delete-one-macro';
 import { makeGetOneMacro } from './get-one-macro';

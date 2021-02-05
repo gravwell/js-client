@@ -7,9 +7,8 @@
  **************************************************************************/
 
 import { CreatableActionable, isActionable } from '~/models';
+import { integrationTest, TEST_BASE_API_CONTEXT } from '~/tests';
 import { UUID } from '~/value-objects';
-import { integrationTest } from '../../tests';
-import { TEST_BASE_API_CONTEXT } from '../../tests/config';
 import { makeCreateOneActionable } from './create-one-actionable';
 import { makeDeleteOneActionable } from './delete-one-actionable';
 import { makeGetAllActionables } from './get-all-actionables';

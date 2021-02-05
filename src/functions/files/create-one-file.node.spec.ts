@@ -9,9 +9,8 @@
 import { createReadStream } from 'fs';
 import { join } from 'path';
 import { CreatableFile, isFileMetadata } from '~/models';
+import { integrationTest, myCustomMatchers, TEST_ASSETS_PATH, TEST_BASE_API_CONTEXT } from '~/tests';
 import { NumericID } from '~/value-objects';
-import { integrationTest, myCustomMatchers } from '../../tests';
-import { TEST_ASSETS_PATH, TEST_BASE_API_CONTEXT } from '../../tests/config';
 import { makeCreateOneGroup } from '../groups/create-one-group';
 import { makeCreateOneFile } from './create-one-file';
 

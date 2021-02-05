@@ -8,8 +8,7 @@
 
 import { random } from 'lodash';
 import { CreatableGroup, CreatableMacro, CreatableUser, isMacro, User } from '~/models';
-import { integrationTest } from '../../tests';
-import { TEST_BASE_API_CONTEXT } from '../../tests/config';
+import { integrationTest, TEST_BASE_API_CONTEXT } from '~/tests';
 import { makeLoginOneUser } from '../auth/login-one-user';
 import { makeAddOneUserToManyGroups } from '../groups/add-one-user-to-many-groups';
 import { makeCreateOneGroup } from '../groups/create-one-group';

@@ -7,8 +7,7 @@
  **************************************************************************/
 
 import { CreatablePlaybook, isPlaybook } from '~/models';
-import { integrationTest } from '../../tests';
-import { TEST_BASE_API_CONTEXT } from '../../tests/config';
+import { integrationTest, TEST_BASE_API_CONTEXT } from '~/tests';
 import { makeCreateOnePlaybook } from './create-one-playbook';
 import { makeDeleteOnePlaybook } from './delete-one-playbook';
 

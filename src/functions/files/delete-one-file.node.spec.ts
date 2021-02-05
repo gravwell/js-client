@@ -9,8 +9,7 @@
 import { createReadStream } from 'fs';
 import { join } from 'path';
 import { CreatableFile } from '~/models';
-import { integrationTest } from '../../tests';
-import { TEST_ASSETS_PATH, TEST_BASE_API_CONTEXT } from '../../tests/config';
+import { integrationTest, TEST_ASSETS_PATH, TEST_BASE_API_CONTEXT } from '~/tests';
 import { makeCreateOneFile } from './create-one-file';
 import { makeDeleteOneFile } from './delete-one-file';
 import { makeGetAllFiles } from './get-all-files';

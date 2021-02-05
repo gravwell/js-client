@@ -7,8 +7,7 @@
  **************************************************************************/
 
 import { isScheduledTaskBase } from '~/models';
-import { integrationTest } from '../../tests';
-import { TEST_BASE_API_CONTEXT } from '../../tests/config';
+import { integrationTest, TEST_BASE_API_CONTEXT } from '~/tests';
 import { makeCreateManyScheduledQueries } from './create-many-scheduled-queries';
 import { makeDeleteAllScheduledQueries } from './delete-all-scheduled-queries';
 import { makeGetAllScheduledQueries } from './get-all-scheduled-queries';

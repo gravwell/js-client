@@ -7,9 +7,8 @@
  **************************************************************************/
 
 import { CreatableGroup, CreatableUser, User } from '~/models';
+import { integrationTest, TEST_BASE_API_CONTEXT } from '~/tests';
 import { NumericID } from '~/value-objects';
-import { integrationTest } from '../../tests';
-import { TEST_BASE_API_CONTEXT } from '../../tests/config';
 import { makeCreateOneUser, makeDeleteOneUser, makeGetOneUser } from '../users';
 import { makeAddOneUserToManyGroups } from './add-one-user-to-many-groups';
 import { makeCreateOneGroup } from './create-one-group';

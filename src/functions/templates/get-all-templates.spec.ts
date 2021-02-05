@@ -7,9 +7,8 @@
  **************************************************************************/
 
 import { CreatableTemplate, isTemplate } from '~/models';
+import { integrationTest, TEST_BASE_API_CONTEXT } from '~/tests';
 import { UUID } from '~/value-objects';
-import { integrationTest } from '../../tests';
-import { TEST_BASE_API_CONTEXT } from '../../tests/config';
 import { makeCreateOneTemplate } from './create-one-template';
 import { makeDeleteOneTemplate } from './delete-one-template';
 import { makeGetAllTemplates } from './get-all-templates';

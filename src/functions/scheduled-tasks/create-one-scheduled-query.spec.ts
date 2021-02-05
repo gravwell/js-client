@@ -7,9 +7,8 @@
  **************************************************************************/
 
 import { CreatableScheduledQuery, isScheduledQuery } from '~/models';
+import { integrationTest, myCustomMatchers, TEST_BASE_API_CONTEXT } from '~/tests';
 import { NumericID } from '~/value-objects';
-import { integrationTest, myCustomMatchers } from '../../tests';
-import { TEST_BASE_API_CONTEXT } from '../../tests/config';
 import { makeCreateOneGroup } from '../groups/create-one-group';
 import { makeCreateOneScheduledQuery } from './create-one-scheduled-query';
 import { makeDeleteAllScheduledQueries } from './delete-all-scheduled-queries';
