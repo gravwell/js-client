@@ -6,8 +6,8 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { MacrosFilter } from 'src/functions/macros';
-import { CreatableMacro, Macro, UpdatableMacro } from 'src/models/macro';
+import { MacrosFilter } from '../../functions/macros';
+import { CreatableMacro, Macro, UpdatableMacro } from '../../models/macro';
 
 export interface MacrosService {
 	readonly get: {

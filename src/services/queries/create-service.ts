@@ -6,7 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { makeValidateOneQuery } from 'src/functions/searches';
+import { makeValidateOneQuery } from '../../functions/searches';
 import { APIContext } from '../../functions/utils';
 import { QueriesService } from './service';
 
