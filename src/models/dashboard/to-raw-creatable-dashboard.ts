@@ -7,7 +7,7 @@
  **************************************************************************/
 
 import { isUndefined } from 'lodash';
-import { omitUndefinedShallow } from '../../functions/utils';
+import { omitUndefinedShallow } from '~/functions/utils';
 import { toRawNumericID } from '../../value-objects';
 import { toRawTimeframe } from '../timeframe';
 import { CreatableDashboard } from './creatable-dashboard';

@@ -6,7 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { omitUndefinedShallow } from '../../functions/utils';
+import { omitUndefinedShallow } from '~/functions/utils';
 import { RawSearch2, RawSearch2State } from './raw-search2';
 import { Search2, Search2State } from './search2';
 

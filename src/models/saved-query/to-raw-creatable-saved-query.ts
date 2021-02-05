@@ -7,7 +7,7 @@
  **************************************************************************/
 
 import { isNil } from 'lodash';
-import { omitUndefinedShallow } from '../../functions/utils';
+import { omitUndefinedShallow } from '~/functions/utils';
 import { toRawNumericID } from '../../value-objects';
 import { toRawTimeframe } from '../timeframe';
 import { CreatableSavedQuery } from './creatable-saved-query';

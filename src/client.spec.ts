@@ -8,7 +8,6 @@
 
 import { expectTypeOf } from 'expect-type';
 import { attempt } from 'lodash';
-import { GravwellClient } from './client';
 import {
 	AutoExtractorsFilter,
 	DashboardsFilter,
@@ -24,8 +23,9 @@ import {
 	SystemStatusMessageReceived,
 	SystemStatusMessageSent,
 	ValidatedQuery,
-} from './functions';
-import { APISubscription, downloadFromURL, DownloadReturn, File } from './functions/utils';
+} from '~/functions';
+import { APISubscription, downloadFromURL, DownloadReturn, File } from '~/functions/utils';
+import { GravwellClient } from './client';
 import {
 	Actionable,
 	AutoExtractor,

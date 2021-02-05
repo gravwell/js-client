@@ -6,7 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { File } from '../../functions/utils';
+import { File } from '~/functions/utils';
 import { NumericID, UUID } from '../../value-objects';
 
 export interface UpdatableResource {
