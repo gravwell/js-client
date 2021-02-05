@@ -7,7 +7,7 @@
  **************************************************************************/
 
 import { Macro, RawMacro, toMacro } from '~/models';
-import { NumericID } from '../../value-objects';
+import { NumericID } from '~/value-objects';
 import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 
 export const makeGetMacrosByUser = (context: APIContext) => {

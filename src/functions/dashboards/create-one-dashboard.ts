@@ -7,7 +7,7 @@
  **************************************************************************/
 
 import { CreatableDashboard, Dashboard, toRawCreatableDashboard } from '~/models';
-import { RawNumericID, toNumericID } from '../../value-objects';
+import { RawNumericID, toNumericID } from '~/value-objects';
 import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 import { makeGetOneDashboard } from './get-one-dashboard';
 

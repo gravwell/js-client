@@ -7,7 +7,7 @@
  **************************************************************************/
 
 import { LocalKit, RawLocalKit, toLocalKit } from '~/models';
-import { NumericID } from '../../value-objects';
+import { NumericID } from '~/value-objects';
 import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 
 export const makeGetOneLocalKit = (context: APIContext) => {

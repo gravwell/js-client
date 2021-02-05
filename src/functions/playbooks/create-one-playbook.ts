@@ -7,7 +7,7 @@
  **************************************************************************/
 
 import { CreatablePlaybook, Playbook, toRawCreatablePlaybook } from '~/models';
-import { UUID } from '../../value-objects';
+import { UUID } from '~/value-objects';
 import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 import { makeGetOnePlaybook } from './get-one-playbook';
 

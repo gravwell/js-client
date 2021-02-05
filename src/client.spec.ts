@@ -92,9 +92,9 @@ import {
 	UserPreferences,
 	UserSessions,
 } from '~/models';
+import { ID, NumericID, UUID } from '~/value-objects';
 import { GravwellClient } from './client';
 import { unitTest } from './tests';
-import { ID, NumericID, UUID } from './value-objects';
 
 describe('GravwellClient', () => {
 	it(

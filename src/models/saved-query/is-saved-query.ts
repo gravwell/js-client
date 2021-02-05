@@ -7,7 +7,7 @@
  **************************************************************************/
 
 import { isBoolean, isNull, isString } from 'lodash';
-import { isNumericID, isUUID } from '../../value-objects';
+import { isNumericID, isUUID } from '~/value-objects';
 import { isTimeframe } from '../timeframe';
 import { SavedQuery } from './saved-query';
 

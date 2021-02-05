@@ -7,7 +7,7 @@
  **************************************************************************/
 
 import { ConditionalPartial, PartialProps } from '~/functions/utils';
-import { NumericID } from '../../value-objects';
+import { NumericID } from '~/value-objects';
 import { ActionableAction, ActionableTrigger } from './actionable';
 
 export interface CreatableActionable {

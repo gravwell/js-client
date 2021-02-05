@@ -7,7 +7,7 @@
  **************************************************************************/
 
 import { CreatableTemplate, Template, toRawCreatableTemplate } from '~/models';
-import { UUID } from '../../value-objects';
+import { UUID } from '~/value-objects';
 import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 import { makeGetOneTemplate } from './get-one-template';
 

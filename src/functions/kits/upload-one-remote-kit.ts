@@ -7,7 +7,7 @@
  **************************************************************************/
 
 import { RawRemoteKit, RemoteKit, toRemoteKit } from '~/models';
-import { ID } from '../../value-objects';
+import { ID } from '~/value-objects';
 import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 
 export const makeUploadOneRemoteKit = (context: APIContext) => {

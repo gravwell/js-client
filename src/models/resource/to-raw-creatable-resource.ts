@@ -6,7 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { toRawNumericID } from '../../value-objects';
+import { toRawNumericID } from '~/value-objects';
 import { CreatableResource } from './creatable-resource';
 import { RawCreatableResource } from './raw-creatable-resource';
 

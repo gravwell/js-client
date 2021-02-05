@@ -7,7 +7,7 @@
  **************************************************************************/
 
 import { AutoExtractor, CreatableAutoExtractor, toRawCreatableAutoExtractor } from '~/models';
-import { RawNumericID, toNumericID } from '../../value-objects';
+import { RawNumericID, toNumericID } from '~/value-objects';
 import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 import { makeGetAllAutoExtractors } from './get-all-auto-extractors';
 

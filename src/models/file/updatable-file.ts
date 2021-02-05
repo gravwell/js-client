@@ -7,7 +7,7 @@
  **************************************************************************/
 
 import { File } from '~/functions/utils';
-import { NumericID, UUID } from '../../value-objects';
+import { NumericID, UUID } from '~/value-objects';
 
 export interface UpdatableFile {
 	id: UUID;

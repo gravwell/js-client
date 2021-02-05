@@ -7,9 +7,9 @@
  **************************************************************************/
 
 import { CreatablePlaybook, isPlaybook } from '~/models';
+import { UUID } from '~/value-objects';
 import { integrationTest } from '../../tests';
 import { TEST_BASE_API_CONTEXT } from '../../tests/config';
-import { UUID } from '../../value-objects';
 import { makeCreateOnePlaybook } from './create-one-playbook';
 import { makeDeleteOnePlaybook } from './delete-one-playbook';
 import { makeGetOnePlaybook } from './get-one-playbook';

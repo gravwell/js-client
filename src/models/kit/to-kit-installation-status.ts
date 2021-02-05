@@ -6,7 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { Percentage, toNumericID } from '../../value-objects';
+import { Percentage, toNumericID } from '~/value-objects';
 import { KitInstallationStatus } from './kit-installation-status';
 import { RawKitInstallationStatus } from './raw-kit-installation-status';
 

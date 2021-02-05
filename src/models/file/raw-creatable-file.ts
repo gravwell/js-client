@@ -7,7 +7,7 @@
  **************************************************************************/
 
 import { File } from '~/functions/utils';
-import { RawUUID } from '../../value-objects';
+import { RawUUID } from '~/value-objects';
 
 export interface RawCreatableFile {
 	/**

@@ -7,7 +7,7 @@
  **************************************************************************/
 
 import { isString } from 'lodash';
-import { toRegex } from '../../value-objects';
+import { toRegex } from '~/value-objects';
 import {
 	Actionable,
 	ActionableAction,

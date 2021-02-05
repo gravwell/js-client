@@ -7,7 +7,7 @@
  **************************************************************************/
 
 import { ScheduledQuery, ScheduledTask } from '~/models';
-import { NumericID } from '../../value-objects';
+import { NumericID } from '~/value-objects';
 import { APIContext } from '../utils';
 import { makeGetManyScheduledTasks } from './get-many-scheduled-tasks';
 

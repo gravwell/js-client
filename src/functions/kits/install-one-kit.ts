@@ -14,7 +14,7 @@ import {
 	toKitInstallationStatus,
 	toRawInstallableKit,
 } from '~/models';
-import { ID, NumericID, RawNumericID, toNumericID } from '../../value-objects';
+import { ID, NumericID, RawNumericID, toNumericID } from '~/value-objects';
 import {
 	APIContext,
 	APISubscription,

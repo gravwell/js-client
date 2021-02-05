@@ -7,7 +7,7 @@
  **************************************************************************/
 
 import { Macro } from '~/models';
-import { isNumericID, NumericID } from '../../value-objects';
+import { isNumericID, NumericID } from '~/value-objects';
 import { APIContext } from '../utils';
 import { makeGetAllMacros } from './get-all-macros';
 import { makeGetMacrosByGroup } from './get-macros-by-group';

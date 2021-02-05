@@ -7,7 +7,7 @@
  **************************************************************************/
 
 import { omitUndefinedShallow } from '~/functions/utils';
-import { toRawNumericID } from '../../value-objects';
+import { toRawNumericID } from '~/value-objects';
 import { CreatableTargetedNotification } from './creatable-targeted-notification';
 import {
 	RawCreatableBaseTargetedNotification,

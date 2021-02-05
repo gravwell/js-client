@@ -7,7 +7,7 @@
  **************************************************************************/
 
 import { omitUndefinedShallow } from '~/functions/utils';
-import { toRawNumericID } from '../../value-objects';
+import { toRawNumericID } from '~/value-objects';
 import { CreatableTemplate } from './creatable-template';
 import { RawCreatableTemplate } from './raw-creatable-template';
 

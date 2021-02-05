@@ -7,7 +7,7 @@
  **************************************************************************/
 
 import { RawSearch2, Search2, toSearch2 } from '~/models';
-import { NumericID } from '../../value-objects';
+import { NumericID } from '~/value-objects';
 import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 
 export const makeGetOnePersistentSearchStatus = (context: APIContext) => {

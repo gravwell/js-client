@@ -7,7 +7,7 @@
  **************************************************************************/
 
 import { CreatableMacro, Macro, toRawCreatableMacro } from '~/models';
-import { RawNumericID, toNumericID } from '../../value-objects';
+import { RawNumericID, toNumericID } from '~/value-objects';
 import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 import { makeGetOneMacro } from './get-one-macro';
 

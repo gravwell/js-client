@@ -6,7 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { ID, isID } from '../../value-objects';
+import { ID, isID } from '~/value-objects';
 import { isVersion, Version } from '../version';
 
 export type KitDependency = {

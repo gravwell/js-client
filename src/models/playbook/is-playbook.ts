@@ -7,7 +7,7 @@
  **************************************************************************/
 
 import { isBoolean, isDate, isNull, isString } from 'lodash';
-import { isMarkdown, isNumericID, isUUID } from '../../value-objects';
+import { isMarkdown, isNumericID, isUUID } from '~/value-objects';
 import { Playbook } from './playbook';
 
 export const isPlaybook = (value: any): value is Playbook => {

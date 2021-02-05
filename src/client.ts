@@ -11,7 +11,7 @@ import { BehaviorSubject } from 'rxjs';
 import * as f from '~/functions';
 import { APIContext } from '~/functions/utils';
 import { CreatableJSONEntry, Search } from '~/models';
-import { isNumericID, NumericID } from './value-objects';
+import { isNumericID, NumericID } from '~/value-objects';
 
 export interface GravwellClientOptions {
 	useEncryption: boolean;

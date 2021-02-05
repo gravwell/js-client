@@ -7,7 +7,7 @@
  **************************************************************************/
 
 import { omitUndefinedShallow } from '~/functions/utils';
-import { toRawNumericID } from '../../value-objects';
+import { toRawNumericID } from '~/value-objects';
 import { toRawActionableAction, toRawActionableTrigger } from '../actionable';
 import { ActionableAction } from './actionable';
 import { CreatableActionable } from './creatable-actionable';

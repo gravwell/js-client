@@ -7,7 +7,7 @@
  **************************************************************************/
 
 import { omitUndefinedShallow } from '~/functions/utils';
-import { isNumericID, toRawNumericID } from '../../value-objects';
+import { isNumericID, toRawNumericID } from '~/value-objects';
 import { toRawTimeframe } from '../timeframe';
 import { CreatableDashboardSearch } from './creatable-dashboard-search';
 import { RawCreatableDashboardSearch } from './raw-creatable-dashboard';

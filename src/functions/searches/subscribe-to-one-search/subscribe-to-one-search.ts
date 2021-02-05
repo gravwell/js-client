@@ -27,7 +27,7 @@ import {
 	SearchSubscription,
 	toSearchEntries,
 } from '~/models';
-import { Percentage, toNumericID } from '../../../value-objects';
+import { Percentage, toNumericID } from '~/value-objects';
 import { APIContext, promiseProgrammatically } from '../../utils';
 import { makeSubscribeToOneRawSearch } from './subscribe-to-one-raw-search';
 

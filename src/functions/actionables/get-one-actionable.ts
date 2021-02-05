@@ -7,7 +7,7 @@
  **************************************************************************/
 
 import { Actionable, RawActionable, toActionable } from '~/models';
-import { NumericID } from '../../value-objects';
+import { NumericID } from '~/value-objects';
 import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 
 export const makeGetOneActionable = (context: APIContext) => {

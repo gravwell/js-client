@@ -8,7 +8,7 @@
 
 import { encode as base64Encode } from 'base-64';
 import { omitUndefinedShallow } from '~/functions/utils';
-import { isUUID, toRawNumericID } from '../../value-objects';
+import { isUUID, toRawNumericID } from '~/value-objects';
 import { CreatablePlaybook } from './creatable-playbook';
 import { RawCreatablePlaybook } from './raw-creatable-playbook';
 import { RawPlaybookDecodedMetadata } from './raw-playbook-decoded-metadata';

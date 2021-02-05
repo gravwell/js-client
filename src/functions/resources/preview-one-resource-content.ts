@@ -7,7 +7,7 @@
  **************************************************************************/
 
 import { RawResourceContentPreview, ResourceContentPreview, toResourceContentPreview } from '~/models';
-import { UUID } from '../../value-objects';
+import { UUID } from '~/value-objects';
 import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 
 export const makePreviewOneResourceContent = (context: APIContext) => {

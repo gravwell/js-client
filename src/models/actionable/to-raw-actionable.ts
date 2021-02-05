@@ -7,7 +7,7 @@
  **************************************************************************/
 
 import { omitUndefinedShallow } from '~/functions/utils';
-import { toRawRegex } from '../../value-objects';
+import { toRawRegex } from '~/value-objects';
 import { ActionableAction, ActionableCommand, ActionableTimeVariable, ActionableTrigger } from './actionable';
 import {
 	RawActionableAction,

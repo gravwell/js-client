@@ -7,7 +7,7 @@
  **************************************************************************/
 
 import { Actionable, CreatableActionable, toRawCreatableActionable } from '~/models';
-import { UUID } from '../../value-objects';
+import { UUID } from '~/value-objects';
 import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 import { makeGetOneActionable } from './get-one-actionable';
 

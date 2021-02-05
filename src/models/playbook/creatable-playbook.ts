@@ -6,7 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { Markdown, NumericID, UUID } from '../../value-objects';
+import { Markdown, NumericID, UUID } from '~/value-objects';
 
 export interface CreatablePlaybook {
 	userID?: NumericID;

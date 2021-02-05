@@ -7,7 +7,7 @@
  **************************************************************************/
 
 import { isBlankRawResource, RawResource, Resource, toResource } from '~/models';
-import { UUID } from '../../value-objects';
+import { UUID } from '~/value-objects';
 import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 
 export const makeGetOneResource = (context: APIContext) => {
