@@ -182,7 +182,7 @@ describe('subscribeToOneSearch()', () => {
 			////
 			expect(stats.length).toBeGreaterThan(0);
 			expect(sum(statsOverview.map(x => x.count)))
-				.withContext('The sum of counts from statsZoom should equal the total count ingested')
+				.withContext('The sum of counts from statsOverview should equal the total count ingested')
 				.toEqual(count);
 			expect(sum(statsZoom.map(x => x.count)))
 				.withContext('The sum of counts from statsZoom should equal the total count ingested')
@@ -238,7 +238,7 @@ describe('subscribeToOneSearch()', () => {
 				expect(stats.length).withContext('expect to receive >0 stats from the stats observable').toBeGreaterThan(0);
 				expect(sum(statsOverview.map(x => x.count)))
 					.withContext(
-						'The sum of counts from statsZoom should equal the number of minutes -- 90 entries over 90 minutes',
+						'The sum of counts from statsOverview should equal the number of minutes -- 90 entries over 90 minutes',
 					)
 					.toEqual(minutes);
 				expect(statsOverview.every(x => x.count == 1))
@@ -272,7 +272,7 @@ describe('subscribeToOneSearch()', () => {
 				]);
 
 				expect(sum(statsOverview.map(x => x.count)))
-					.withContext('The sum of counts from statsZoom should equal the total count ingested')
+					.withContext('The sum of counts from statsOverview should equal the total count ingested')
 					.toEqual(count);
 				expect(sum(statsZoom.map(x => x.count)))
 					.withContext('The sum of counts from statsZoom should equal the total count ingested')
@@ -289,7 +289,7 @@ describe('subscribeToOneSearch()', () => {
 				]);
 
 				expect(sum(statsOverview.map(x => x.count)))
-					.withContext('The sum of counts from statsZoom should stay the same (total ingested)')
+					.withContext('The sum of counts from statsOverview should stay the same (total ingested)')
 					.toEqual(count);
 				expect(sum(statsZoom.map(x => x.count)))
 					.withContext('The sum of counts from statsZoom should be 500 less than total count ingested')
