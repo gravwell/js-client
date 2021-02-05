@@ -7,7 +7,6 @@
  **************************************************************************/
 
 import { expectTypeOf } from 'expect-type';
-import { attempt } from 'lodash';
 import { GravwellClient } from './client';
 import {
 	AutoExtractorsFilter,
