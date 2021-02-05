@@ -7,7 +7,7 @@
  **************************************************************************/
 
 import * as FormData from 'form-data';
-import { CreatableMultiLineEntry } from '../../models';
+import { CreatableMultiLineEntry } from '~/models';
 import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 
 export const makeIngestMultiLineEntry = (context: APIContext) => {

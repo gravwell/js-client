@@ -7,8 +7,8 @@
  **************************************************************************/
 
 import { isUndefined } from 'lodash';
-import { omitUndefinedShallow } from '../../functions/utils';
-import { toRawNumericID } from '../../value-objects';
+import { omitUndefinedShallow } from '~/functions/utils';
+import { toRawNumericID } from '~/value-objects';
 import { toRawTimeframe } from '../timeframe';
 import { Dashboard } from './dashboard';
 import { RawUpdatableDashboard } from './raw-updatable-dashboard';

@@ -8,9 +8,8 @@
 
 import { createReadStream, ReadStream } from 'fs';
 import { join } from 'path';
-import { CreatableFile, FileMetadata, isFileMetadata, UpdatableFile } from '../../models';
-import { integrationTest, myCustomMatchers } from '../../tests';
-import { TEST_ASSETS_PATH, TEST_BASE_API_CONTEXT } from '../../tests/config';
+import { CreatableFile, FileMetadata, isFileMetadata, UpdatableFile } from '~/models';
+import { integrationTest, myCustomMatchers, TEST_ASSETS_PATH, TEST_BASE_API_CONTEXT } from '~/tests';
 import { makeCreateOneFile } from './create-one-file';
 import { makeDeleteOneFile } from './delete-one-file';
 import { makeGetAllFiles } from './get-all-files';

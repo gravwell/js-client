@@ -6,28 +6,100 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { isUndefined } from 'lodash';
-import { BehaviorSubject } from 'rxjs';
-import * as f from './functions';
-import { APIContext } from './functions/utils';
-import { CreatableJSONEntry, Search } from './models';
-import { isNumericID, NumericID } from './value-objects';
+import { isEqual, isUndefined } from 'lodash';
+import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
+import { distinctUntilChanged, map, shareReplay } from 'rxjs/operators';
+import { APIContext } from '~/functions/utils';
+import {
+	ActionablesService,
+	AuthService,
+	AutoExtractorsService,
+	createActionablesService,
+	createAuthService,
+	createAutoExtractorsService,
+	createDashboardsService,
+	createEntriesService,
+	createFilesService,
+	createGroupsService,
+	createIndexersService,
+	createKitsService,
+	createLogsService,
+	createMacrosService,
+	createNotificationsService,
+	createPlaybooksService,
+	createQueriesService,
+	createRenderModulesService,
+	createResourcesService,
+	createSavedQueriesService,
+	createScheduledQueriesService,
+	createScheduledScriptsService,
+	createScriptLibrariesService,
+	createSearchesService,
+	createSearchHistoryService,
+	createSearchModulesService,
+	createSearchStatusService,
+	createSystemService,
+	createTagsService,
+	createTemplatesService,
+	createUserPreferencesService,
+	createUsersService,
+	createWebServerService,
+	DashboardsService,
+	EntriesService,
+	FilesService,
+	GroupsService,
+	IndexersService,
+	KitsService,
+	LogsService,
+	MacrosService,
+	NotificationsService,
+	PlaybooksService,
+	QueriesService,
+	RenderModulesService,
+	ResourcesService,
+	SavedQueriesService,
+	ScheduledQueriesService,
+	ScheduledScriptsService,
+	ScriptLibrariesService,
+	SearchesService,
+	SearchHistoryService,
+	SearchModulesService,
+	SearchStatusService,
+	SystemService,
+	TagsService,
+	TemplatesService,
+	UserPreferencesService,
+	UsersService,
+	WebServerService,
+} from '~/services';
 
 export interface GravwellClientOptions {
-	useEncryption: boolean;
+	useEncryption?: boolean;
 	authToken?: string;
 }
 
 export class GravwellClient {
 	public set host(value: string) {
 		this._host = value;
+		this._host$.next(value);
 	}
 	public get host(): string {
-		return this._host.valueOf();
+		return this._host;
 	}
-	private _host: string;
+	private _host = '';
+	private readonly _host$ = new BehaviorSubject<string>(this._host);
+	public readonly host$ = this._host$.asObservable().pipe(distinctUntilChanged());
 
-	public useEncryption = true;
+	public set useEncryption(value: boolean) {
+		this._useEncryption = value;
+		this._useEncryption$.next(value);
+	}
+	public get useEncryption(): boolean {
+		return this._useEncryption;
+	}
+	private _useEncryption = true;
+	private readonly _useEncryption$ = new BehaviorSubject<boolean>(this._useEncryption);
+	public readonly useEncryption$ = this._useEncryption$.asObservable().pipe(distinctUntilChanged());
 
 	public get authToken(): string | null {
 		return this._authToken;
@@ -36,13 +108,15 @@ export class GravwellClient {
 	protected _authToken$ = new BehaviorSubject<string | null>(this._authToken);
 	public readonly authToken$ = this._authToken$.asObservable();
 
-	constructor(host: string, options: GravwellClientOptions = { useEncryption: true }) {
-		this._host = host;
-		this.useEncryption = options.useEncryption;
-		if (!isUndefined(options.authToken)) this.authenticate(options.authToken);
-
-		this.authToken$.subscribe(authToken => (this._authToken = authToken));
-	}
+	private readonly _context$: Observable<APIContext> = combineLatest(
+		this.host$,
+		this.useEncryption$,
+		this.authToken$,
+	).pipe(
+		map(([host, useEncryption, authToken]) => ({ host, useEncryption, authToken })),
+		distinctUntilChanged((a, b) => isEqual(a, b)),
+		shareReplay(1),
+	);
 
 	public isAuthenticated(): boolean {
 		return this.authToken !== null;
@@ -56,633 +130,234 @@ export class GravwellClient {
 		this._authToken$.next(null);
 	}
 
-	private _makeFunction = <MakeF extends (context: APIContext) => (...args: Array<any>) => any>(
-		makeF: MakeF,
-	): ReturnType<MakeF> => {
-		return ((...args: Parameters<ReturnType<MakeF>>) => {
-			const context: APIContext = { host: this.host, useEncryption: this.useEncryption, authToken: this.authToken };
-			const f = makeF(context);
-			return f(...args);
-		}) as ReturnType<MakeF>;
-	};
-
-	public readonly tags = {
-		get: {
-			all: this._makeFunction(f.makeGetAllTags),
-		},
-	};
-
-	public readonly system = {
-		subscribeTo: {
-			information: this._makeFunction(f.makeSubscribeToManySystemInformations),
-		},
-
-		get: {
-			settings: this._makeFunction(f.makeGetSystemSettings),
-			apiVersion: this._makeFunction(f.makeGetAPIVersion),
-		},
-
-		is: {
-			connected: this._makeFunction(f.makeSystemIsConnected),
-		},
-	} as const;
-
-	public readonly users = {
-		get: {
-			me: this._makeFunction(f.makeGetMyUser),
-			one: this._makeFunction(f.makeGetOneUser),
-			many: this._makeFunction(f.makeGetManyUsers),
-			all: this._makeFunction(f.makeGetAllUsers),
-		},
-
-		create: { one: this._makeFunction(f.makeCreateOneUser) },
-
-		update: {
-			me: this._makeFunction(f.makeUpdateMyUser),
-			one: this._makeFunction(f.makeUpdateOneUser),
-		},
-
-		delete: {
-			one: this._makeFunction(f.makeDeleteOneUser),
-		},
-	} as const;
-
-	public readonly userPreferences = {
-		get: {
-			one: this._makeFunction(f.makeGetOneUserPreferences),
-			all: this._makeFunction(f.makeGetAllUserPreferences),
-		},
-
-		update: {
-			one: this._makeFunction(f.makeUpdateOneUserPreferences),
-		},
-
-		delete: {
-			one: this._makeFunction(f.makeDeleteOneUserPreferences),
-		},
-	} as const;
-
-	public readonly auth = {
-		login: {
-			one: this._makeFunction(f.makeLoginOneUser),
-		},
-
-		logout: {
-			one: this._makeFunction(f.makeLogoutOneUser),
-			all: this._makeFunction(f.makeLogoutAllUsers),
-		},
-
-		get: {
-			many: {
-				activeSessions: ({ userID }: { userID: string }) => this._makeFunction(f.makeGetOneUserActiveSessions)(userID),
-			},
-		},
-	} as const;
-
-	public readonly notifications = {
-		create: {
-			one: {
-				broadcasted: this._makeFunction(f.makeCreateOneBroadcastedNotification),
-				targeted: this._makeFunction(f.makeCreateOneTargetedNotification),
-			},
-		},
-
-		get: {
-			mine: this._makeFunction(f.makeGetMyNotifications),
-		},
-
-		subscribeTo: {
-			mine: this._makeFunction(f.makeSubscribeToMyNotifications),
-		},
-
-		update: {
-			one: this._makeFunction(f.makeUpdateOneNotification),
-		},
-
-		delete: {
-			one: this._makeFunction(f.makeDeleteOneUserPreferences),
-		},
-	} as const;
-
-	public readonly webServer = {
-		restart: this._makeFunction(f.makeRestartWebServer),
-
-		is: {
-			distributed: this._makeFunction(f.makeWebServerIsDistributed),
-		},
-	} as const;
-
-	public readonly indexers = {
-		restart: this._makeFunction(f.makeRestartIndexers),
-	} as const;
-
-	public readonly entries = {
-		ingest: {
-			one: {
-				json: (entry: CreatableJSONEntry) => this._makeFunction(f.makeIngestJSONEntries)([entry]),
-			},
-
-			many: {
-				json: this._makeFunction(f.makeIngestJSONEntries),
-			},
-
-			byLine: this._makeFunction(f.makeIngestMultiLineEntry),
-		},
-	} as const;
-
-	public readonly logs = {
-		get: {
-			levels: this._makeFunction(f.makeGetLogLevels),
-		},
-
-		set: {
-			level: this._makeFunction(f.makeSetLogLevel),
-		},
-
-		create: {
-			one: this._makeFunction(f.makeCreateOneLog),
-		},
-	} as const;
-
-	public readonly searchModules = {
-		get: {
-			all: this._makeFunction(f.makeGetAllSearchModules),
-		},
-	} as const;
-
-	public readonly renderModules = {
-		get: {
-			all: this._makeFunction(f.makeGetAllRenderModules),
-		},
-	} as const;
-
-	public readonly scriptLibraries = {
-		get: {
-			/**
-			 * Retrieves the code to a specific script library.
-			 */
-			one: this._makeFunction(f.makeGetOneScriptLibrary),
-		},
-
-		sync: {
-			/**
-			 * Updates all libraries to their latest versions. The promise resolves
-			 * when the command to sync them is successfully received by the
-			 * backend, not we they're all synced.
-			 */
-			all: this._makeFunction(f.makeSyncAllScriptLibraries),
-		},
-	} as const;
-
-	public readonly scripts = {
-		validate: {
-			one: this._makeFunction(f.makeValidateOneScript),
-		},
-	} as const;
-
-	public readonly searchStatus = {
-		get: {
-			authorizedTo: {
-				/**
-				 * Returns all persistent searches authorized to the current user.
-				 */
-				me: this._makeFunction(f.makeGetPersistentSearchStatusRelatedToMe),
-			},
-
-			/**
-			 * Returns the status of a specific persistent search.
-			 */
-			one: this._makeFunction(f.makeGetOnePersistentSearchStatus),
-
-			/**
-			 * Returns all persistent searches.
-			 */
-			all: this._makeFunction(f.makeGetAllPersistentSearchStatus),
-		},
-	};
-
-	public readonly searchHistory = {
-		get: {
-			/**
-			 * Returns all searches owned by the current authenticated user.
-			 */
-			mine: (): Promise<Array<Search>> => this._makeFunction(f.makeGetSearchHistory)({ target: 'myself' }),
-
-			many: async (filter: { userID?: string; groupID?: string } = {}): Promise<Array<Search>> => {
-				// TODO: Move it to /functions
-				const getSearchHistory = this._makeFunction(f.makeGetSearchHistory);
-
-				if (isNumericID(filter.userID) && isNumericID(filter.groupID)) {
-					const groupHistory = await getSearchHistory({ target: 'group', groupID: filter.groupID });
-					return groupHistory.filter(s => s.userID === filter.userID);
-				}
-
-				if (isNumericID(filter.userID)) return await getSearchHistory({ target: 'user', userID: filter.userID });
-
-				if (isNumericID(filter.groupID)) return await getSearchHistory({ target: 'group', groupID: filter.groupID });
-
-				return await getSearchHistory({ target: 'all' });
-			},
-
-			/**
-			 * Returns all searches owned by all users. Requires admin privilege.
-			 */
-			all: (): Promise<Array<Search>> => this._makeFunction(f.makeGetSearchHistory)({ target: 'all' }),
-
-			authorizedTo: {
-				/**
-				 * Returns all searches that a specific user has access to. Be it because
-				 * he made the search or because he's in the group that owns the search.
-				 */
-				user: (userID: string): Promise<Array<Search>> =>
-					this._makeFunction(f.makeGetSearchHistory)({ target: 'user related', userID }),
-			},
-		},
-	};
-
-	public readonly searches = {
-		background: {
-			/**
-			 * Sends a specific search to the background.
-			 */
-			one: this._makeFunction(f.makeBackgroundOneSearch),
-		},
-
-		save: {
-			/**
-			 * Saves a specific search.
-			 */
-			one: this._makeFunction(f.makeSaveOneSearch),
-		},
-
-		delete: {
-			/**
-			 * Deletes a specific search.
-			 */
-			one: this._makeFunction(f.makeDeleteOneSearch),
-		},
-
-		download: {
-			one: this._makeFunction(f.makeDownloadOneSearch),
-		},
-
-		create: {
-			one: this._makeFunction(f.makeSubscribeToOneSearch),
-		},
-	} as const;
-
-	public readonly groups = {
-		create: {
-			one: this._makeFunction(f.makeCreateOneGroup),
-		},
-
-		delete: {
-			one: this._makeFunction(f.makeDeleteOneGroup),
-		},
-
-		get: {
-			one: this._makeFunction(f.makeGetOneGroup),
-			many: this._makeFunction(f.makeGetManyGroups),
-			all: this._makeFunction(f.makeGetAllGroups),
-		},
-
-		update: {
-			one: this._makeFunction(f.makeUpdateOneGroup),
-		},
-
-		addUserTo: {
-			one: (userID: NumericID, groupID: NumericID) =>
-				this._makeFunction(f.makeAddOneUserToManyGroups)(userID, [groupID]),
-			many: this._makeFunction(f.makeAddOneUserToManyGroups),
-		},
-
-		removeUserFrom: {
-			one: this._makeFunction(f.makeRemoveOneUserFromOneGroup),
-		},
-	} as const;
-
-	public readonly actionables = {
-		get: {
-			one: this._makeFunction(f.makeGetOneActionable),
-			all: this._makeFunction(f.makeGetAllActionablesAsAdmin),
-			authorizedTo: {
-				me: this._makeFunction(f.makeGetAllActionables),
-			},
-		},
-
-		create: {
-			one: this._makeFunction(f.makeCreateOneActionable),
-		},
-
-		update: {
-			one: this._makeFunction(f.makeUpdateOneActionable),
-		},
-
-		delete: {
-			one: this._makeFunction(f.makeDeleteOneActionable),
-		},
-	} as const;
-
-	public readonly templates = {
-		get: {
-			one: this._makeFunction(f.makeGetOneTemplate),
-			all: this._makeFunction(f.makeGetAllTemplatesAsAdmin),
-			authorizedTo: {
-				me: this._makeFunction(f.makeGetAllTemplates),
-			},
-		},
-
-		create: {
-			one: this._makeFunction(f.makeCreateOneTemplate),
-		},
-
-		update: {
-			one: this._makeFunction(f.makeUpdateOneTemplate),
-		},
-
-		delete: {
-			one: this._makeFunction(f.makeDeleteOneTemplate),
-		},
-	} as const;
-
-	public readonly playbooks = {
-		get: {
-			one: this._makeFunction(f.makeGetOnePlaybook),
-			all: this._makeFunction(f.makeGetAllPlaybooks),
-			authorizedTo: {
-				me: this._makeFunction(f.makeGetAllPlaybooksRelatedToMe),
-			},
-		},
-
-		create: {
-			one: this._makeFunction(f.makeCreateOnePlaybook),
-		},
-
-		update: {
-			one: this._makeFunction(f.makeUpdateOnePlaybook),
-		},
-
-		delete: {
-			one: this._makeFunction(f.makeDeleteOnePlaybook),
-		},
-	} as const;
-
-	public readonly resources = {
-		get: {
-			one: this._makeFunction(f.makeGetOneResource),
-			all: this._makeFunction(f.makeGetAllResources),
-			authorizedTo: {
-				me: this._makeFunction(f.makeGetResourcesAuthorizedToMe),
-			},
-		},
-
-		preview: {
-			one: this._makeFunction(f.makePreviewOneResourceContent),
-		},
-
-		create: {
-			one: this._makeFunction(f.makeCreateOneResource),
-		},
-
-		update: {
-			one: this._makeFunction(f.makeUpdateOneResource),
-		},
-
-		delete: {
-			one: this._makeFunction(f.makeDeleteOneResource),
-		},
-	} as const;
-
-	public readonly macros = {
-		get: {
-			one: this._makeFunction(f.makeGetOneMacro),
-			many: this._makeFunction(f.makeGetManyMacros),
-			all: this._makeFunction(f.makeGetAllMacros),
-			authorizedTo: {
-				me: this._makeFunction(f.makeGetMacrosAuthorizedToMe),
-			},
-		},
-
-		create: {
-			one: this._makeFunction(f.makeCreateOneMacro),
-		},
-
-		update: {
-			one: this._makeFunction(f.makeUpdateOneMacro),
-		},
-
-		delete: {
-			one: this._makeFunction(f.makeDeleteOneMacro),
-		},
-	} as const;
-
-	public readonly dashboards = {
-		get: {
-			one: this._makeFunction(f.makeGetOneDashboard),
-			many: this._makeFunction(f.makeGetManyDashboards),
-			all: this._makeFunction(f.makeGetAllDashboards),
-			authorizedTo: {
-				me: this._makeFunction(f.makeGetDashboardsAuthorizedToMe),
-			},
-		},
-
-		create: {
-			one: this._makeFunction(f.makeCreateOneDashboard),
-		},
-
-		update: {
-			one: this._makeFunction(f.makeUpdateOneDashboard),
-		},
-
-		delete: {
-			one: this._makeFunction(f.makeDeleteOneDashboard),
-		},
-	} as const;
-
-	public readonly autoExtractors = {
-		get: {
-			validModules: this._makeFunction(f.makeGetAllAutoExtractorModules),
-			all: this._makeFunction(f.makeGetAllAutoExtractors),
-			authorizedTo: {
-				me: this._makeFunction(f.makeGetAutoExtractorsAuthorizedToMe),
-			},
-		},
-
-		create: {
-			one: this._makeFunction(f.makeCreateOneAutoExtractor),
-		},
-
-		update: {
-			one: this._makeFunction(f.makeUpdateOneAutoExtractor),
-		},
-
-		delete: {
-			one: this._makeFunction(f.makeDeleteOneAutoExtractor),
-		},
-
-		is: {
-			validSyntax: this._makeFunction(f.makeIsValidAutoExtractorSyntax),
-		},
-
-		upload: {
-			many: this._makeFunction(f.makeUploadManyAutoExtractors),
-		},
-
-		download: {
-			many: this._makeFunction(f.makeDownloadManyAutoExtractors),
-		},
-	} as const;
-
-	public readonly files = {
-		get: {
-			all: this._makeFunction(f.makeGetAllFiles),
-			authorizedTo: {
-				me: this._makeFunction(f.makeGetFilesAuthorizedToMe),
-			},
-		},
-
-		create: {
-			one: this._makeFunction(f.makeCreateOneFile),
-		},
-
-		update: {
-			one: this._makeFunction(f.makeUpdateOneFile),
-		},
-
-		delete: {
-			one: this._makeFunction(f.makeDeleteOneFile),
-		},
-	} as const;
-
-	public readonly savedQueries = {
-		get: {
-			one: this._makeFunction(f.makeGetOneSavedQuery),
-			all: this._makeFunction(f.makeGetAllSavedQueries),
-			authorizedTo: {
-				me: this._makeFunction(f.makeGetSavedQueriesAuthorizedToMe),
-			},
-		},
-
-		create: {
-			one: this._makeFunction(f.makeCreateOneSavedQuery),
-		},
-
-		update: {
-			one: this._makeFunction(f.makeUpdateOneSavedQuery),
-		},
-
-		delete: {
-			one: this._makeFunction(f.makeDeleteOneSavedQuery),
-		},
-	} as const;
-
-	public readonly scheduledScripts = {
-		get: {
-			one: this._makeFunction(f.makeGetOneScheduledScript),
-			many: this._makeFunction(f.makeGetManyScheduledScripts),
-			all: this._makeFunction(f.makeGetAllScheduledScripts),
-			authorizedTo: {
-				me: this._makeFunction(f.makeGetScheduledScriptsAuthorizedToMe),
-			},
-		},
-
-		create: {
-			one: this._makeFunction(f.makeCreateOneScheduledScript),
-			many: this._makeFunction(f.makeCreateManyScheduledScripts),
-		},
-
-		update: {
-			one: this._makeFunction(f.makeUpdateOneScheduledScript),
-		},
-
-		delete: {
-			one: this._makeFunction(f.makeDeleteOneScheduledScript),
-			many: this._makeFunction(f.makeDeleteManyScheduledScripts),
-			all: this._makeFunction(f.makeDeleteAllScheduledScripts),
-		},
-
-		clear: {
-			lastError: this._makeFunction(f.makeClearOneScheduledScriptError),
-			state: this._makeFunction(f.makeClearOneScheduledScriptState),
-		},
-	} as const;
-
-	public readonly scheduledQueries = {
-		get: {
-			one: this._makeFunction(f.makeGetOneScheduledQuery),
-			many: this._makeFunction(f.makeGetManyScheduledQueries),
-			all: this._makeFunction(f.makeGetAllScheduledQueries),
-			authorizedTo: {
-				me: this._makeFunction(f.makeGetScheduledQueriesAuthorizedToMe),
-			},
-		},
-
-		create: {
-			one: this._makeFunction(f.makeCreateOneScheduledQuery),
-			many: this._makeFunction(f.makeCreateManyScheduledQueries),
-		},
-
-		update: {
-			one: this._makeFunction(f.makeUpdateOneScheduledQuery),
-		},
-
-		delete: {
-			one: this._makeFunction(f.makeDeleteOneScheduledQuery),
-			many: this._makeFunction(f.makeDeleteManyScheduledQueries),
-			all: this._makeFunction(f.makeDeleteAllScheduledQueries),
-		},
-
-		clear: {
-			lastError: this._makeFunction(f.makeClearOneScheduledQueryError),
-			state: this._makeFunction(f.makeClearOneScheduledQueryState),
-		},
-	} as const;
-
-	public readonly queries = {
-		validate: {
-			one: this._makeFunction(f.makeValidateOneQuery),
-		},
-	} as const;
-
-	public readonly kits = {
-		get: {
-			one: {
-				local: this._makeFunction(f.makeGetOneLocalKit),
-				remote: this._makeFunction(f.makeGetOneRemoteKit),
-			},
-			all: {
-				local: this._makeFunction(f.makeGetAllLocalKits),
-				remote: this._makeFunction(f.makeGetAllRemoteKits),
-			},
-		},
-
-		build: {
-			one: {
-				local: this._makeFunction(f.makeBuildOneLocalKit),
-			},
-		},
-
-		upload: {
-			one: {
-				local: this._makeFunction(f.makeUploadOneLocalKit),
-				remote: this._makeFunction(f.makeUploadOneRemoteKit),
-			},
-		},
-
-		download: {
-			one: {
-				local: this._makeFunction(f.makeDownloadOneLocalKit),
-				remote: this._makeFunction(f.makeDownloadRemoteKit),
-			},
-		},
-
-		install: {
-			one: this._makeFunction(f.makeInstallOneKit),
-		},
-
-		uninstall: {
-			one: this._makeFunction(f.makeUninstallOneKit),
-			all: this._makeFunction(f.makeUninstallAllKits),
-		},
-	} as const;
+	constructor(host: string, options: GravwellClientOptions = {}) {
+		this.host = host;
+		if (!isUndefined(options.useEncryption)) this.useEncryption = options.useEncryption;
+		if (!isUndefined(options.authToken)) this.authenticate(options.authToken);
+
+		this.authToken$.subscribe(authToken => (this._authToken = authToken));
+
+		// I know this is duplicate content... but if we remove it, typescript
+		// doesn't know that we initialize all those properties on creation and
+		// thus fails to compile on strict mode
+		const initialContext: APIContext = {
+			host: this.host,
+			useEncryption: this.useEncryption,
+			authToken: this.authToken,
+		};
+		this._tags = createTagsService(initialContext);
+		this._system = createSystemService(initialContext);
+		this._users = createUsersService(initialContext);
+		this._userPreferences = createUserPreferencesService(initialContext);
+		this._auth = createAuthService(initialContext);
+		this._notifications = createNotificationsService(initialContext);
+		this._webServer = createWebServerService(initialContext);
+		this._indexers = createIndexersService(initialContext);
+		this._entries = createEntriesService(initialContext);
+		this._logs = createLogsService(initialContext);
+		this._searchStatus = createSearchStatusService(initialContext);
+		this._searchHistory = createSearchHistoryService(initialContext);
+		this._searches = createSearchesService(initialContext);
+		this._searchModules = createSearchModulesService(initialContext);
+		this._renderModules = createRenderModulesService(initialContext);
+		this._scriptLibraries = createScriptLibrariesService(initialContext);
+		this._groups = createGroupsService(initialContext);
+		this._actionables = createActionablesService(initialContext);
+		this._templates = createTemplatesService(initialContext);
+		this._playbooks = createPlaybooksService(initialContext);
+		this._resources = createResourcesService(initialContext);
+		this._macros = createMacrosService(initialContext);
+		this._dashboards = createDashboardsService(initialContext);
+		this._autoExtractors = createAutoExtractorsService(initialContext);
+		this._files = createFilesService(initialContext);
+		this._savedQueries = createSavedQueriesService(initialContext);
+		this._scheduledScripts = createScheduledScriptsService(initialContext);
+		this._scheduledQueries = createScheduledQueriesService(initialContext);
+		this._kits = createKitsService(initialContext);
+		this._queries = createQueriesService(initialContext);
+
+		this._context$.subscribe(context => {
+			this._tags = createTagsService(context);
+			this._system = createSystemService(context);
+			this._users = createUsersService(context);
+			this._userPreferences = createUserPreferencesService(context);
+			this._auth = createAuthService(context);
+			this._notifications = createNotificationsService(context);
+			this._webServer = createWebServerService(context);
+			this._indexers = createIndexersService(context);
+			this._entries = createEntriesService(context);
+			this._logs = createLogsService(context);
+			this._searchStatus = createSearchStatusService(context);
+			this._searchHistory = createSearchHistoryService(context);
+			this._searches = createSearchesService(context);
+			this._searchModules = createSearchModulesService(context);
+			this._renderModules = createRenderModulesService(context);
+			this._scriptLibraries = createScriptLibrariesService(context);
+			this._groups = createGroupsService(context);
+			this._actionables = createActionablesService(context);
+			this._templates = createTemplatesService(context);
+			this._playbooks = createPlaybooksService(context);
+			this._resources = createResourcesService(context);
+			this._macros = createMacrosService(context);
+			this._dashboards = createDashboardsService(context);
+			this._autoExtractors = createAutoExtractorsService(context);
+			this._files = createFilesService(context);
+			this._savedQueries = createSavedQueriesService(context);
+			this._scheduledScripts = createScheduledScriptsService(context);
+			this._scheduledQueries = createScheduledQueriesService(context);
+			this._kits = createKitsService(context);
+			this._queries = createQueriesService(context);
+		});
+	}
+
+	// *NOTE: Services
+	public get tags(): TagsService {
+		return this._tags;
+	}
+	private _tags: TagsService;
+
+	public get system(): SystemService {
+		return this._system;
+	}
+	private _system: SystemService;
+
+	public get users(): UsersService {
+		return this._users;
+	}
+	private _users: UsersService;
+
+	public get userPreferences(): UserPreferencesService {
+		return this._userPreferences;
+	}
+	private _userPreferences: UserPreferencesService;
+
+	public get auth(): AuthService {
+		return this._auth;
+	}
+	private _auth: AuthService;
+
+	public get notifications(): NotificationsService {
+		return this._notifications;
+	}
+	private _notifications: NotificationsService;
+
+	public get webServer(): WebServerService {
+		return this._webServer;
+	}
+	private _webServer: WebServerService;
+
+	public get indexers(): IndexersService {
+		return this._indexers;
+	}
+	private _indexers: IndexersService;
+
+	public get entries(): EntriesService {
+		return this._entries;
+	}
+	private _entries: EntriesService;
+
+	public get logs(): LogsService {
+		return this._logs;
+	}
+	private _logs: LogsService;
+
+	public get searchStatus(): SearchStatusService {
+		return this._searchStatus;
+	}
+	private _searchStatus: SearchStatusService;
+
+	public get searchHistory(): SearchHistoryService {
+		return this._searchHistory;
+	}
+	private _searchHistory: SearchHistoryService;
+
+	public get searches(): SearchesService {
+		return this._searches;
+	}
+	private _searches: SearchesService;
+
+	public get searchModules(): SearchModulesService {
+		return this._searchModules;
+	}
+	private _searchModules: SearchModulesService;
+
+	public get renderModules(): RenderModulesService {
+		return this._renderModules;
+	}
+	private _renderModules: RenderModulesService;
+
+	public get scriptLibraries(): ScriptLibrariesService {
+		return this._scriptLibraries;
+	}
+	private _scriptLibraries: ScriptLibrariesService;
+
+	public get groups(): GroupsService {
+		return this._groups;
+	}
+	private _groups: GroupsService;
+
+	public get actionables(): ActionablesService {
+		return this._actionables;
+	}
+	private _actionables: ActionablesService;
+
+	public get templates(): TemplatesService {
+		return this._templates;
+	}
+	private _templates: TemplatesService;
+
+	public get playbooks(): PlaybooksService {
+		return this._playbooks;
+	}
+	private _playbooks: PlaybooksService;
+
+	public get resources(): ResourcesService {
+		return this._resources;
+	}
+	private _resources: ResourcesService;
+
+	public get macros(): MacrosService {
+		return this._macros;
+	}
+	private _macros: MacrosService;
+
+	public get dashboards(): DashboardsService {
+		return this._dashboards;
+	}
+	private _dashboards: DashboardsService;
+
+	public get autoExtractors(): AutoExtractorsService {
+		return this._autoExtractors;
+	}
+	private _autoExtractors: AutoExtractorsService;
+
+	public get files(): FilesService {
+		return this._files;
+	}
+	private _files: FilesService;
+
+	public get savedQueries(): SavedQueriesService {
+		return this._savedQueries;
+	}
+	private _savedQueries: SavedQueriesService;
+
+	public get scheduledScripts(): ScheduledScriptsService {
+		return this._scheduledScripts;
+	}
+	private _scheduledScripts: ScheduledScriptsService;
+
+	public get scheduledQueries(): ScheduledQueriesService {
+		return this._scheduledQueries;
+	}
+	private _scheduledQueries: ScheduledQueriesService;
+
+	public get kits(): KitsService {
+		return this._kits;
+	}
+	private _kits: KitsService;
+
+	public get queries(): QueriesService {
+		return this._queries;
+	}
+	private _queries: QueriesService;
 }

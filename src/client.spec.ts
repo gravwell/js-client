@@ -7,8 +7,6 @@
  **************************************************************************/
 
 import { expectTypeOf } from 'expect-type';
-import { attempt } from 'lodash';
-import { GravwellClient } from './client';
 import {
 	AutoExtractorsFilter,
 	DashboardsFilter,
@@ -24,8 +22,8 @@ import {
 	SystemStatusMessageReceived,
 	SystemStatusMessageSent,
 	ValidatedQuery,
-} from './functions';
-import { APISubscription, downloadFromURL, DownloadReturn, File } from './functions/utils';
+} from '~/functions';
+import { APISubscription, downloadFromURL, DownloadReturn, File } from '~/functions/utils';
 import {
 	Actionable,
 	AutoExtractor,
@@ -72,6 +70,7 @@ import {
 	SearchFilter,
 	SearchModule,
 	SearchSubscription,
+	SystemSettings,
 	TargetedNotificationTargetType,
 	Template,
 	UpdatableActionable,
@@ -92,9 +91,10 @@ import {
 	User,
 	UserPreferences,
 	UserSessions,
-} from './models';
-import { unitTest } from './tests';
-import { ID, NumericID, UUID } from './value-objects';
+} from '~/models';
+import { unitTest } from '~/tests';
+import { ID, NumericID, UUID } from '~/value-objects';
+import { GravwellClient } from './client';
 
 describe('GravwellClient', () => {
 	it(
@@ -105,18 +105,20 @@ describe('GravwellClient', () => {
 		}),
 	);
 
-	xit(
+	it(
 		'Should update the functions host when the client host is updated',
 		unitTest(() => {
-			// spyOn(fetch);
 			const client = new GravwellClient('www.example-a.com');
-			attempt(() => client.tags.get.all());
-			client.host = 'www.example-b.com';
-			attempt(() => client.tags.get.all());
+			const fnA = client.tags.get.all;
 
-			// expect(fetch).toHaveBeenCalledTimes(2)
-			// expect(fetch).toHaveBeenCalledWith('www.example-a.com')
-			// expect(fetch).toHaveBeenCalledWith('www.example-b.com')
+			client.host = 'www.example-a.com';
+			expect(fnA === client.tags.get.all).toBeTrue();
+
+			client.host = 'www.example-b.com';
+			const fnB = client.tags.get.all;
+			expect(fnA === client.tags.get.all).toBeFalse();
+			expect(fnB === client.tags.get.all).toBeTrue();
+			expect(fnA === fnB).toBeFalse();
 		}),
 	);
 
@@ -135,6 +137,7 @@ describe('GravwellClient', () => {
 
 			// System
 			expectTypeOf(client.system.is.connected).toEqualTypeOf<() => Promise<boolean>>();
+			expectTypeOf(client.system.get.settings).toEqualTypeOf<() => Promise<SystemSettings>>();
 			expectTypeOf(client.system.get.apiVersion).toEqualTypeOf<() => Promise<GetAPIVersionResponse>>();
 			expectTypeOf(client.system.subscribeTo.information).toEqualTypeOf<
 				(

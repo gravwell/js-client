@@ -7,14 +7,16 @@
  **************************************************************************/
 
 import { Observable } from 'rxjs';
-import { Percentage } from '../../value-objects';
+import { Percentage } from '~/value-objects';
 import { SearchEntries } from './search-entries';
 import { SearchFilter } from './search-filter';
-import { SearchStats } from './search-stats';
+import { SearchFrequencyStats, SearchStats } from './search-stats';
 
 export interface SearchSubscription {
 	progress$: Observable<Percentage>;
 	entries$: Observable<SearchEntries>;
 	stats$: Observable<SearchStats>;
+	statsOverview$: Observable<Array<SearchFrequencyStats>>;
+	statsZoom$: Observable<Array<SearchFrequencyStats>>;
 	setFilter: (filter: SearchFilter) => void;
 }

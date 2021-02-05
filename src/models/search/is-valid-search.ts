@@ -7,7 +7,7 @@
  **************************************************************************/
 
 import { isDate, isString, isUndefined } from 'lodash';
-import { isNumericID } from '../../value-objects';
+import { isNumericID } from '~/value-objects';
 import { Search } from './search';
 
 export const isValidSearch = (value: any): value is Search => {

@@ -11,7 +11,7 @@ import {
 	CreatableTargetedNotificationByTargetType,
 	TargetedNotificationTargetType,
 	toRawCreatableTargetedNotification,
-} from '../../models';
+} from '~/models';
 import {
 	APIContext,
 	buildHTTPRequest,

@@ -7,8 +7,8 @@
  **************************************************************************/
 
 import { isUndefined } from 'lodash';
-import { FileMetadata } from '../../models';
-import { UUID } from '../../value-objects';
+import { FileMetadata } from '~/models';
+import { UUID } from '~/value-objects';
 import { APIContext } from '../utils';
 import { makeGetAllFiles } from './get-all-files';
 

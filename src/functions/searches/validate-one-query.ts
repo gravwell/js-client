@@ -8,7 +8,7 @@
 
 import { isNull, pick } from 'lodash';
 import { filter, first, map } from 'rxjs/operators';
-import { Query, RawQuery } from '../../models';
+import { Query, RawQuery } from '~/models';
 import { APIContext, APISubscription, apiSubscriptionFromWebSocket, buildURL, WebSocket } from '../utils';
 
 export const makeValidateOneQuery = (context: APIContext) => {

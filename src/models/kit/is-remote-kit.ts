@@ -7,7 +7,7 @@
  **************************************************************************/
 
 import { isBoolean, isDate, isNumber, isString } from 'lodash';
-import { isUUID } from '../../value-objects';
+import { isUUID } from '~/value-objects';
 import { isVersion } from '../version';
 import { isKitAsset } from './kit-asset';
 import { isKitDependency } from './kit-dependency';

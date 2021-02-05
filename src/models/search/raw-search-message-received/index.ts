@@ -7,7 +7,7 @@
  **************************************************************************/
 
 import { isArray, isString } from 'lodash';
-import { RawNumericID } from '../../../value-objects';
+import { RawNumericID } from '~/value-objects';
 import { RawQuery } from '../../query';
 import { SearchMessageCommands } from '../search-message-commands';
 import { RawSearchMessageReceivedRequestEntriesWithinRange } from './request-entries-within-range';

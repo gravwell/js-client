@@ -35,6 +35,7 @@ export type SearchEntries =
 export interface BaseSearchEntries {
 	start: Date;
 	end: Date;
+	finished: boolean;
 }
 
 export interface ChartSearchEntries extends BaseSearchEntries {
@@ -54,6 +55,7 @@ export const normalizeToChartSearchEntries = (
 	return {
 		start: new Date(v.EntryRange.StartTS),
 		end: new Date(v.EntryRange.EndTS),
+		finished: v.Finished,
 		type: 'chart',
 		names: v.Entries?.Categories ?? [],
 		data: (v.Entries?.Values ?? []).map(rawV => ({
@@ -78,6 +80,7 @@ export const normalizeToFDGSearchEntries = (
 	return {
 		start: new Date(v.EntryRange.StartTS),
 		end: new Date(v.EntryRange.EndTS),
+		finished: v.Finished,
 		type: 'fdg',
 		nodes: (v.Entries?.nodes ?? []).map(rawNode => ({
 			name: rawNode.name,
@@ -126,6 +129,7 @@ export const normalizeToGaugeSearchEntries = (
 	return {
 		start: new Date(v.EntryRange.StartTS),
 		end: new Date(v.EntryRange.EndTS),
+		finished: v.Finished,
 		type: 'gauge',
 		data: (v.Entries ?? []).map(rawEntry => ({
 			name: rawEntry.Name,
@@ -149,6 +153,7 @@ export const normalizeToHeatmapSearchEntries = (
 	return {
 		start: new Date(v.EntryRange.StartTS),
 		end: new Date(v.EntryRange.EndTS),
+		finished: v.Finished,
 		type: 'heatmap',
 		data: (v.Entries ?? []).map(rawEntry => ({
 			latitude: rawEntry.Lat,
@@ -177,6 +182,7 @@ export const normalizeToPointToPointSearchEntries = (
 	return {
 		start: new Date(v.EntryRange.StartTS),
 		end: new Date(v.EntryRange.EndTS),
+		finished: v.Finished,
 		type: 'point to point',
 		names: v.ValueNames,
 		data: (v.Entries ?? []).map(rawEntry => ({
@@ -213,6 +219,7 @@ export const normalizeToPointmapSearchEntries = (
 	return {
 		start: new Date(v.EntryRange.StartTS),
 		end: new Date(v.EntryRange.EndTS),
+		finished: v.Finished,
 		type: 'pointmap',
 		data: (v.Entries ?? []).map(rawEntry => ({
 			location: {
@@ -255,6 +262,7 @@ export const normalizeToRawSearchEntriess = (
 	return {
 		start: new Date(v.EntryRange.StartTS),
 		end: new Date(v.EntryRange.EndTS),
+		finished: v.Finished,
 		type: 'raw',
 		names: ['RAW'],
 		data: (v.Entries ?? []).map(rawEntry => ({
@@ -289,6 +297,7 @@ export const normalizeToTextSearchEntries = (
 	return {
 		start: new Date(v.EntryRange.StartTS),
 		end: new Date(v.EntryRange.EndTS),
+		finished: v.Finished,
 		type: 'text',
 		names: ['DATA'],
 		data: (v.Entries ?? []).map(rawEntry => ({
@@ -319,6 +328,7 @@ export const normalizeToStackGraphSearchEntries = (
 	return {
 		start: new Date(v.EntryRange.StartTS),
 		end: new Date(v.EntryRange.EndTS),
+		finished: v.Finished,
 		type: 'stack graph',
 		data: (v.Entries ?? []).map(rawEntry => ({
 			key: rawEntry.Key,
@@ -347,6 +357,7 @@ export const normalizeToTableSearchEntries = (
 	return {
 		start: new Date(v.EntryRange.StartTS),
 		end: new Date(v.EntryRange.EndTS),
+		finished: v.Finished,
 		type: 'table',
 		columns: v.Entries?.Columns ?? [],
 		rows: (v.Entries?.Rows ?? []).map(rawRow => ({

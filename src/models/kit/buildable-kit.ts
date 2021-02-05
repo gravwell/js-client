@@ -6,7 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { ID } from '../../value-objects';
+import { ID } from '~/value-objects';
 import { Version } from '../version';
 
 export interface BuildableKit {

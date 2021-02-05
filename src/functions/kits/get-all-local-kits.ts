@@ -6,7 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { LocalKit, RawLocalKit, toLocalKit } from '../../models';
+import { LocalKit, RawLocalKit, toLocalKit } from '~/models';
 import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 
 export const makeGetAllLocalKits = (context: APIContext) => {

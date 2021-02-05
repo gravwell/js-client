@@ -7,7 +7,7 @@
  **************************************************************************/
 
 import { isUndefined } from 'lodash';
-import { RawResource, Resource, toRawUpdatableResourceMetadata, toResource, UpdatableResource } from '../../models';
+import { RawResource, Resource, toRawUpdatableResourceMetadata, toResource, UpdatableResource } from '~/models';
 import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 import { makeGetOneResource } from './get-one-resource';
 import { makeSetOneResourceContent } from './set-one-resource-content';

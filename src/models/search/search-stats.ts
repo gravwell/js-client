@@ -6,11 +6,13 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { ID } from '../../value-objects';
+import { ID } from '~/value-objects';
 
 export interface SearchStats {
 	id: ID;
 	userID: ID;
+
+	finished: boolean;
 
 	entries: number;
 	duration: string;
@@ -36,4 +38,9 @@ export interface SearchStats {
 		entries: number;
 		bytes: number;
 	};
+}
+
+export interface SearchFrequencyStats {
+	timestamp: Date;
+	count: number;
 }

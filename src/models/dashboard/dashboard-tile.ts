@@ -6,7 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { NumericID } from '../../value-objects';
+import { NumericID } from '~/value-objects';
 import { DashboardRendererOptions } from './dashboard-renderer-options';
 
 export interface DashboardTile {

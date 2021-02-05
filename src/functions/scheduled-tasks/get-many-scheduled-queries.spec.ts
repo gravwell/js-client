@@ -7,9 +7,8 @@
  **************************************************************************/
 
 import { random } from 'lodash';
-import { CreatableUser, isScheduledQuery, User } from '../../models';
-import { integrationTest } from '../../tests';
-import { TEST_BASE_API_CONTEXT } from '../../tests/config';
+import { CreatableUser, isScheduledQuery, User } from '~/models';
+import { integrationTest, TEST_BASE_API_CONTEXT } from '~/tests';
 import { makeLoginOneUser } from '../auth/login-one-user';
 import { makeCreateOneUser } from '../users';
 import { makeCreateManyScheduledQueries } from './create-many-scheduled-queries';

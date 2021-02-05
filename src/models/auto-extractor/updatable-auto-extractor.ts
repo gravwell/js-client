@@ -6,7 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { NumericID } from '../../value-objects';
+import { NumericID } from '~/value-objects';
 import { AutoExtractorModule } from './auto-extractor';
 
 export interface UpdatableAutoExtractor {

@@ -7,7 +7,7 @@
  **************************************************************************/
 
 import { isNull, isString } from 'lodash';
-import { isNumericID } from '../../value-objects';
+import { isNumericID } from '~/value-objects';
 import { isTimeframe } from '../timeframe';
 import { DashboardSearch } from './dashboard-search';
 

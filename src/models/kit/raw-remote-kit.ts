@@ -6,7 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { RawID, RawUUID } from '../../value-objects';
+import { RawID, RawUUID } from '~/value-objects';
 import { RawVersionObject } from '../version';
 import { RawKitItem } from './raw-kit-item';
 

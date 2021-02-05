@@ -6,7 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { toNumericID } from '../../value-objects';
+import { toNumericID } from '~/value-objects';
 import { RawScheduledTask } from './raw-scheduled-task';
 import { ScheduledTaskBase } from './scheduled-task-base';
 
