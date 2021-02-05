@@ -119,10 +119,24 @@ export class GravwellClient {
 		shareReplay(1),
 	);
 
+	public isAuthenticated(): boolean {
+		return this.authToken !== null;
+	}
+
+	public authenticate(authToken: string): void {
+		this._authToken$.next(authToken);
+	}
+
+	public unauthenticate(): void {
+		this._authToken$.next(null);
+	}
+
 	constructor(host: string, options: GravwellClientOptions = {}) {
 		this.host = host;
 		if (!isUndefined(options.useEncryption)) this.useEncryption = options.useEncryption;
 		if (!isUndefined(options.authToken)) this.authenticate(options.authToken);
+
+		this.authToken$.subscribe(authToken => (this._authToken = authToken));
 
 		// I know this is duplicate content... but if we remove it, typescript
 		// doesn't know that we initialize all those properties on creation and
@@ -190,22 +204,9 @@ export class GravwellClient {
 			this._kits = createKitsService(context);
 			this._queries = createQueriesService(context);
 		});
-
-		this.authToken$.subscribe(authToken => (this._authToken = authToken));
 	}
 
-	public isAuthenticated(): boolean {
-		return this.authToken !== null;
-	}
-
-	public authenticate(authToken: string): void {
-		this._authToken$.next(authToken);
-	}
-
-	public unauthenticate(): void {
-		this._authToken$.next(null);
-	}
-
+	// *NOTE: Services
 	public get tags(): TagsService {
 		return this._tags;
 	}
