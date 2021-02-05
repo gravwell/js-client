@@ -96,7 +96,7 @@ describe('getDashboardsByUser()', () => {
 		await Promise.all(createPromises2);
 	});
 
-	it(
+	xit(
 		'Should return all dashboards of a user',
 		integrationTest(async () => {
 			const allDashboards = await getAllDashboards();
@@ -113,7 +113,7 @@ describe('getDashboardsByUser()', () => {
 		}),
 	);
 
-	it(
+	xit(
 		'Should return an empty array if the user has no dashboards',
 		integrationTest(async () => {
 			// Delete all dashboards
@@ -127,7 +127,7 @@ describe('getDashboardsByUser()', () => {
 		}),
 	);
 
-	it(
+	xit(
 		'Blocks non admin users from grabbing dashboards from other users other than themselves',
 		integrationTest(async () => {
 			const allDashboards = await getAllDashboards();

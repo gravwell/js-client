@@ -87,7 +87,7 @@ describe('deleteManyScheduledScripts()', () => {
 		]);
 	});
 
-	it(
+	xit(
 		'Should delete all scheduled scripts of a user',
 		integrationTest(async () => {
 			const allScheduledScriptsBefore = await getAllScheduledScripts();

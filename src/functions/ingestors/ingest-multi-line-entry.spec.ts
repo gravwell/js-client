@@ -13,7 +13,7 @@ import { makeIngestMultiLineEntry } from './ingest-multi-line-entry';
 describe('ingestMultiLineEntry()', () => {
 	const ingestMultiLineEntry = makeIngestMultiLineEntry(TEST_BASE_API_CONTEXT);
 
-	it(
+	xit(
 		'Should ingest the file entry',
 		integrationTest(async () => {
 			const entriesIngestedCount = await ingestMultiLineEntry({

@@ -19,7 +19,7 @@ describe('deleteOneUser()', () => {
 	const createOneUser = makeCreateOneUser(TEST_BASE_API_CONTEXT);
 	const getOneUser = makeGetOneUser(TEST_BASE_API_CONTEXT);
 
-	it(
+	xit(
 		'Should delete a user',
 		integrationTest(async () => {
 			const username = 'test-user-' + random(0, Number.MAX_SAFE_INTEGER);

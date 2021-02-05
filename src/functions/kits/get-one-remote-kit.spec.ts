@@ -16,7 +16,7 @@ describe('getOneRemoteKit()', () => {
 	const getOneRemoteKit = makeGetOneRemoteKit(TEST_BASE_API_CONTEXT);
 	const getAllRemoteKits = makeGetAllRemoteKits(TEST_BASE_API_CONTEXT);
 
-	it(
+	xit(
 		'Returns a remote kit',
 		integrationTest(async () => {
 			const kits = (await getAllRemoteKits()).slice(0, 6);

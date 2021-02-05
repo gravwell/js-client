@@ -74,7 +74,7 @@ describe('getMacrosAuthorizedToMe()', () => {
 		analystMacros = await Promise.all(createPromises2);
 	});
 
-	it(
+	xit(
 		'Returns all my macros',
 		integrationTest(async () => {
 			const actualAdminMacros = await getMacrosAuthorizedToMe();

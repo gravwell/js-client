@@ -56,7 +56,7 @@ describe('getGroupsByUser()', () => {
 		await deleteOneUser(user.id);
 	});
 
-	it(
+	xit(
 		'Should return all groups of a user',
 		integrationTest(async () => {
 			const allGroups = await getAllGroups();
@@ -82,7 +82,7 @@ describe('getGroupsByUser()', () => {
 		}),
 	);
 
-	it(
+	xit(
 		'Should return an empty array if the user belong to no groups',
 		integrationTest(async () => {
 			const groups = await getGroupsByUser(user.id);

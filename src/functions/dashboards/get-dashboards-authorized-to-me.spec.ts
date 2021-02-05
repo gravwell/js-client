@@ -99,7 +99,7 @@ describe('getDashboardsAuthorizedToMe()', () => {
 		analystDashboards = await Promise.all(createPromises2);
 	});
 
-	it(
+	xit(
 		'Returns all my dashboards',
 		integrationTest(async () => {
 			const actualAdminDashboards = await getDashboardsAuthorizedToMe();

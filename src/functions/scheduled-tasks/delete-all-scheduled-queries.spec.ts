@@ -91,7 +91,7 @@ describe('deleteAllScheduledQueries()', () => {
 		]);
 	});
 
-	it(
+	xit(
 		'Should delete all scheduled queries',
 		integrationTest(async () => {
 			const allScheduledQueriesBefore = await getAllScheduledQueries();
