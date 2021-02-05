@@ -6,9 +6,10 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-export * from './create-one-broadcasted-notification';
-export * from './create-one-targeted-notification';
-export * from './delete-one-notification';
-export * from './get-my-notifications';
-export * from './subscribe-to-my-notifications';
-export * from './update-one-notification';
+import { SearchModule } from '~/models/search-module';
+
+export interface SearchModulesService {
+	readonly get: {
+		readonly all: () => Promise<Array<SearchModule>>;
+	};
+}

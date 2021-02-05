@@ -6,9 +6,12 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-export * from './create-one-broadcasted-notification';
-export * from './create-one-targeted-notification';
-export * from './delete-one-notification';
-export * from './get-my-notifications';
-export * from './subscribe-to-my-notifications';
-export * from './update-one-notification';
+import { makeGetAllTags } from '~/functions/tags';
+import { APIContext } from '~/functions/utils';
+import { TagsService } from './service';
+
+export const createTagsService = (context: APIContext): TagsService => ({
+	get: {
+		all: makeGetAllTags(context),
+	},
+});

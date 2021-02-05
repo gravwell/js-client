@@ -6,9 +6,12 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-export * from './create-one-broadcasted-notification';
-export * from './create-one-targeted-notification';
-export * from './delete-one-notification';
-export * from './get-my-notifications';
-export * from './subscribe-to-my-notifications';
-export * from './update-one-notification';
+import { makeGetAllRenderModules } from '~/functions/render-modules';
+import { APIContext } from '~/functions/utils';
+import { RenderModulesService } from './service';
+
+export const createRenderModulesService = (context: APIContext): RenderModulesService => ({
+	get: {
+		all: makeGetAllRenderModules(context),
+	},
+});

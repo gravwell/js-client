@@ -6,9 +6,12 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-export * from './create-one-broadcasted-notification';
-export * from './create-one-targeted-notification';
-export * from './delete-one-notification';
-export * from './get-my-notifications';
-export * from './subscribe-to-my-notifications';
-export * from './update-one-notification';
+import { makeGetAllSearchModules } from '~/functions/search-modules';
+import { APIContext } from '~/functions/utils';
+import { SearchModulesService } from './service';
+
+export const createSearchModulesService = (context: APIContext): SearchModulesService => ({
+	get: {
+		all: makeGetAllSearchModules(context),
+	},
+});
