@@ -7,7 +7,7 @@
  **************************************************************************/
 
 import { isNil, isNumber, isString, isUndefined } from 'lodash';
-import { toNumericID } from '../../value-objects';
+import { toNumericID } from '~/value-objects';
 import { RawTimeframe, toTimeframe } from '../timeframe';
 import { toVersion } from '../version';
 import { Dashboard } from './dashboard';

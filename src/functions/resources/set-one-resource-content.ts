@@ -8,8 +8,8 @@
 
 import * as FormData from 'form-data';
 import { isString } from 'lodash';
-import { RawResource, Resource, toResource } from '../../models';
-import { UUID } from '../../value-objects';
+import { RawResource, Resource, toResource } from '~/models';
+import { UUID } from '~/value-objects';
 import { APIContext, buildHTTPRequest, buildURL, fetch, File, HTTPRequestOptions, parseJSONResponse } from '../utils';
 
 export const makeSetOneResourceContent = (context: APIContext) => {

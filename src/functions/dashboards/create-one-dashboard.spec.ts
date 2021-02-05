@@ -6,9 +6,8 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { CreatableDashboard, isDashboard } from '../../models';
-import { integrationTest, myCustomMatchers } from '../../tests';
-import { TEST_BASE_API_CONTEXT } from '../../tests/config';
+import { CreatableDashboard, isDashboard } from '~/models';
+import { integrationTest, myCustomMatchers, TEST_BASE_API_CONTEXT } from '~/tests';
 import { makeCreateOneGroup } from '../groups/create-one-group';
 import { makeCreateOneDashboard } from './create-one-dashboard';
 

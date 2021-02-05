@@ -6,7 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { Macro, RawMacro, toMacro, toRawUpdatableMacro, UpdatableMacro } from '../../models';
+import { Macro, RawMacro, toMacro, toRawUpdatableMacro, UpdatableMacro } from '~/models';
 import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 import { makeGetOneMacro } from './get-one-macro';
 

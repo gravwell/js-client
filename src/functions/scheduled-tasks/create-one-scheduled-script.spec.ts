@@ -6,10 +6,9 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { CreatableScheduledScript, isScheduledScript } from '../../models';
-import { integrationTest, myCustomMatchers } from '../../tests';
-import { TEST_BASE_API_CONTEXT } from '../../tests/config';
-import { NumericID } from '../../value-objects';
+import { CreatableScheduledScript, isScheduledScript } from '~/models';
+import { integrationTest, myCustomMatchers, TEST_BASE_API_CONTEXT } from '~/tests';
+import { NumericID } from '~/value-objects';
 import { makeCreateOneGroup } from '../groups/create-one-group';
 import { makeCreateOneScheduledScript } from './create-one-scheduled-script';
 import { makeDeleteAllScheduledScripts } from './delete-all-scheduled-scripts';

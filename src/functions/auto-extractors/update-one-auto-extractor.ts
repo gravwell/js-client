@@ -12,7 +12,7 @@ import {
 	toAutoExtractor,
 	toRawUpdatableAutoExtractor,
 	UpdatableAutoExtractor,
-} from '../../models';
+} from '~/models';
 import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 import { makeGetAllAutoExtractors } from './get-all-auto-extractors';
 

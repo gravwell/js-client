@@ -6,7 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { toRawNumericID } from '../../value-objects';
+import { toRawNumericID } from '~/value-objects';
 import { CreatableAutoExtractor } from './creatable-auto-extractor';
 import { RawCreatableAutoExtractor } from './raw-creatable-auto-extractor';
 

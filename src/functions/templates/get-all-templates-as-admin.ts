@@ -6,7 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { RawTemplate, Template, toTemplate } from '../../models';
+import { RawTemplate, Template, toTemplate } from '~/models';
 import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 
 export const makeGetAllTemplatesAsAdmin = (context: APIContext) => {

@@ -6,9 +6,8 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { isSearch2 } from '../../models';
-import { integrationTest } from '../../tests';
-import { TEST_BASE_API_CONTEXT } from '../../tests/config';
+import { isSearch2 } from '~/models';
+import { integrationTest, TEST_BASE_API_CONTEXT } from '~/tests';
 import { makeGetAllPersistentSearchStatus } from './get-all-persistent-search-status';
 
 describe('getAllPersistentSearchStatus()', () => {

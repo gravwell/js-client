@@ -7,7 +7,7 @@
  **************************************************************************/
 
 import { isNull } from 'lodash';
-import { omitUndefinedShallow } from '../../functions/utils';
+import { omitUndefinedShallow } from '~/functions/utils';
 import { RawUpdatableGroup } from './raw-updatable-group';
 import { UpdatableGroup } from './updatable-group';
 

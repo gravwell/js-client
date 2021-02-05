@@ -8,8 +8,8 @@
 
 import { encode as base64Encode } from 'base-64';
 import { isNull, isUndefined } from 'lodash';
-import { omitUndefinedShallow } from '../../functions/utils';
-import { isUUID, toRawNumericID } from '../../value-objects';
+import { omitUndefinedShallow } from '~/functions/utils';
+import { isUUID, toRawNumericID } from '~/value-objects';
 import { Playbook } from './playbook';
 import { RawPlaybookDecodedMetadata } from './raw-playbook-decoded-metadata';
 import { RawUpdatablePlaybook } from './raw-updatable-playbook';

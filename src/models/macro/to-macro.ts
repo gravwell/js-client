@@ -6,7 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { toNumericID } from '../../value-objects';
+import { toNumericID } from '~/value-objects';
 import { Macro } from './macro';
 import { RawMacro } from './raw-macro';
 

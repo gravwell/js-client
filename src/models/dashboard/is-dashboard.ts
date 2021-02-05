@@ -6,7 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { isNumericID } from '../../value-objects';
+import { isNumericID } from '~/value-objects';
 import { Dashboard } from './dashboard';
 
 export const isDashboard = (value: any): value is Dashboard => {

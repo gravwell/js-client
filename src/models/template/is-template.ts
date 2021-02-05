@@ -7,7 +7,7 @@
  **************************************************************************/
 
 import { isBoolean, isDate, isNull, isString } from 'lodash';
-import { isNumericID, isUUID } from '../../value-objects';
+import { isNumericID, isUUID } from '~/value-objects';
 import { Template } from './template';
 
 export const isTemplate = (value: any): value is Template => {

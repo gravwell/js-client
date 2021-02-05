@@ -6,8 +6,8 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { RawScheduledTask, ScheduledTask, toScheduledTask } from '../../models';
-import { NumericID } from '../../value-objects';
+import { RawScheduledTask, ScheduledTask, toScheduledTask } from '~/models';
+import { NumericID } from '~/value-objects';
 import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 
 export const makeGetScheduledTasksByUser = (context: APIContext) => {

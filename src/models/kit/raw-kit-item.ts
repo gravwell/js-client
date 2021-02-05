@@ -6,7 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { RawUUID } from '../../value-objects';
+import { RawUUID } from '~/value-objects';
 
 export interface RawKitItemBase {
 	Name: string;

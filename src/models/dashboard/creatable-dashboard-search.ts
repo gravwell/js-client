@@ -6,7 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { UUID } from '../../value-objects';
+import { UUID } from '~/value-objects';
 import { BaseDashboardSearch } from './dashboard-search';
 
 export type CreatableDashboardSearch = Partial<BaseDashboardSearch> &

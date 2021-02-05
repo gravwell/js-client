@@ -6,9 +6,8 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { isRemoteKit } from '../../models';
-import { integrationTest } from '../../tests';
-import { TEST_BASE_API_CONTEXT } from '../../tests/config';
+import { isRemoteKit } from '~/models';
+import { integrationTest, TEST_BASE_API_CONTEXT } from '~/tests';
 import { makeGetAllRemoteKits } from './get-all-remote-kits';
 import { makeGetOneRemoteKit } from './get-one-remote-kit';
 

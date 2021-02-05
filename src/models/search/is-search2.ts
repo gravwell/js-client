@@ -7,7 +7,7 @@
  **************************************************************************/
 
 import { isInteger, isUndefined } from 'lodash';
-import { isNumericID } from '../../value-objects';
+import { isNumericID } from '~/value-objects';
 import { Search2, Search2State } from './search2';
 
 export const isSearch2 = (value: any): value is Search2 => {

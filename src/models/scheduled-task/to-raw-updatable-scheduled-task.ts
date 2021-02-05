@@ -7,7 +7,7 @@
  **************************************************************************/
 
 import { isUndefined } from 'lodash';
-import { toRawNumericID } from '../../value-objects';
+import { toRawNumericID } from '~/value-objects';
 import { RawUpdatableScheduledTask } from './raw-updatable-scheduled-task';
 import { ScheduledQuery } from './scheduled-query';
 import { ScheduledScript } from './scheduled-script';

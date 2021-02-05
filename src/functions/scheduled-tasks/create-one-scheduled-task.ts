@@ -12,8 +12,8 @@ import {
 	ScheduledScript,
 	ScheduledTask,
 	toRawCreatableScheduledTask,
-} from '../../models';
-import { RawNumericID, toNumericID } from '../../value-objects';
+} from '~/models';
+import { RawNumericID, toNumericID } from '~/value-objects';
 import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 import { makeGetOneScheduledTask } from './get-one-scheduled-task';
 

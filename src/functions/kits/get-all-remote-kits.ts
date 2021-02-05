@@ -6,7 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { RawRemoteKit, RemoteKit, toRemoteKit } from '../../models';
+import { RawRemoteKit, RemoteKit, toRemoteKit } from '~/models';
 import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 
 export const makeGetAllRemoteKits = (context: APIContext) => {

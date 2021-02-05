@@ -6,8 +6,8 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { Dashboard, RawDashboard, toDashboard } from '../../models';
-import { NumericID } from '../../value-objects';
+import { Dashboard, RawDashboard, toDashboard } from '~/models';
+import { NumericID } from '~/value-objects';
 import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 
 export const makeGetDashboardsByGroup = (context: APIContext) => {

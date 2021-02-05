@@ -6,10 +6,9 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { CreatableGroup, isGroup } from '../../models';
-import { integrationTest } from '../../tests';
-import { TEST_BASE_API_CONTEXT } from '../../tests/config';
-import { NumericID } from '../../value-objects';
+import { CreatableGroup, isGroup } from '~/models';
+import { integrationTest, TEST_BASE_API_CONTEXT } from '~/tests';
+import { NumericID } from '~/value-objects';
 import { makeCreateOneGroup } from './create-one-group';
 import { makeDeleteOneGroup } from './delete-one-group';
 import { makeGetOneGroup } from './get-one-group';

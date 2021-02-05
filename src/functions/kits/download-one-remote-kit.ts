@@ -6,7 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { ID } from '../../value-objects';
+import { ID } from '~/value-objects';
 import { APIContext, buildURL, downloadFromURL, DownloadReturn } from '../utils';
 
 export const makeDownloadRemoteKit = (context: APIContext) => {

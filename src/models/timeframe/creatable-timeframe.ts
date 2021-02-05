@@ -6,7 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { PartialProps } from '../../functions/utils';
+import { PartialProps } from '~/functions/utils';
 import { Timeframe } from './timeframe';
 
 export type CreatableTimeframe = PartialProps<Timeframe, 'start' | 'end'>;

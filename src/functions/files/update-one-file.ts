@@ -7,7 +7,7 @@
  **************************************************************************/
 
 import * as FormData from 'form-data';
-import { FileMetadata, RawBaseFileMetadata, toRawUpdatableFile, UpdatableFile } from '../../models';
+import { FileMetadata, RawBaseFileMetadata, toRawUpdatableFile, UpdatableFile } from '~/models';
 import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 import { makeGetOneFile } from './get-one-file';
 

@@ -6,7 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { toRawUpdatableNotification, UpdatableNotification } from '../../models/notification';
+import { toRawUpdatableNotification, UpdatableNotification } from '~/models/notification';
 import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 
 export const makeUpdateOneNotification = (context: APIContext) => {

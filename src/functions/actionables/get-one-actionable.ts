@@ -6,8 +6,8 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { Actionable, RawActionable, toActionable } from '../../models';
-import { NumericID } from '../../value-objects';
+import { Actionable, RawActionable, toActionable } from '~/models';
+import { NumericID } from '~/value-objects';
 import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 
 export const makeGetOneActionable = (context: APIContext) => {

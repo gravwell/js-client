@@ -6,7 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { AutoExtractorModule, RawAutoExtractorModule } from '../../models';
+import { AutoExtractorModule, RawAutoExtractorModule } from '~/models';
 import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 
 export const makeGetAllAutoExtractorModules = (context: APIContext) => {

@@ -6,7 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { omitUndefinedShallow } from '../../functions/utils';
+import { omitUndefinedShallow } from '~/functions/utils';
 import { CreatableUser } from './creatable-user';
 import { RawCreatableUser } from './raw-creatable-user';
 

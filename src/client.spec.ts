@@ -8,7 +8,6 @@
 
 import { expectTypeOf } from 'expect-type';
 import { attempt } from 'lodash';
-import { GravwellClient } from './client';
 import {
 	AutoExtractorsFilter,
 	DashboardsFilter,
@@ -24,8 +23,8 @@ import {
 	SystemStatusMessageReceived,
 	SystemStatusMessageSent,
 	ValidatedQuery,
-} from './functions';
-import { APISubscription, downloadFromURL, DownloadReturn, File } from './functions/utils';
+} from '~/functions';
+import { APISubscription, downloadFromURL, DownloadReturn, File } from '~/functions/utils';
 import {
 	Actionable,
 	AutoExtractor,
@@ -92,9 +91,10 @@ import {
 	User,
 	UserPreferences,
 	UserSessions,
-} from './models';
-import { unitTest } from './tests';
-import { ID, NumericID, UUID } from './value-objects';
+} from '~/models';
+import { unitTest } from '~/tests';
+import { ID, NumericID, UUID } from '~/value-objects';
+import { GravwellClient } from './client';
 
 describe('GravwellClient', () => {
 	it(

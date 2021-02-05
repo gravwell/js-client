@@ -6,7 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { CreatableScheduledScript, ScheduledScript } from '../../models';
+import { CreatableScheduledScript, ScheduledScript } from '~/models';
 import { APIContext } from '../utils';
 import { makeCreateOneScheduledTask } from './create-one-scheduled-task';
 
