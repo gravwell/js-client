@@ -12,6 +12,8 @@ export interface SearchStats {
 	id: ID;
 	userID: ID;
 
+	finished: boolean;
+
 	entries: number;
 	duration: string;
 	start: Date;
@@ -36,4 +38,9 @@ export interface SearchStats {
 		entries: number;
 		bytes: number;
 	};
+}
+
+export interface SearchFrequencyStats {
+	timestamp: Date;
+	count: number;
 }
