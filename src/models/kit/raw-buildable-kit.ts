@@ -6,7 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { RawID, RawNumericID, RawUUID } from '../../value-objects';
+import { RawID, RawNumericID, RawUUID } from '~/value-objects';
 
 export interface RawBuildableKit {
 	ID: RawID;

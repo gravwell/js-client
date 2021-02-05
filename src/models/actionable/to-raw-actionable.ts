@@ -6,8 +6,8 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { omitUndefinedShallow } from '../../functions/utils';
-import { toRawRegex } from '../../value-objects';
+import { omitUndefinedShallow } from '~/functions/utils';
+import { toRawRegex } from '~/value-objects';
 import { ActionableAction, ActionableCommand, ActionableTimeVariable, ActionableTrigger } from './actionable';
 import {
 	RawActionableAction,

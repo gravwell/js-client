@@ -6,7 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { RawNumericID, RawPercentage } from '../../value-objects';
+import { RawNumericID, RawPercentage } from '~/value-objects';
 
 export interface RawKitInstallationStatus {
 	CurrentStep: string; // The last line in .Log

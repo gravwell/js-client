@@ -9,3 +9,4 @@
 export * from './config';
 export * from './custom-matchers';
 export * from './test-types';
+export * from './utils';

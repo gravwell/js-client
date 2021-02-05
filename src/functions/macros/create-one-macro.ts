@@ -6,8 +6,8 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { CreatableMacro, Macro, toRawCreatableMacro } from '../../models';
-import { RawNumericID, toNumericID } from '../../value-objects';
+import { CreatableMacro, Macro, toRawCreatableMacro } from '~/models';
+import { RawNumericID, toNumericID } from '~/value-objects';
 import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 import { makeGetOneMacro } from './get-one-macro';
 

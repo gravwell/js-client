@@ -8,8 +8,8 @@
 
 import * as FormData from 'form-data';
 import { isString } from 'lodash';
-import { AutoExtractor, UpdatableAutoExtractor, UploadableAutoExtractor } from '../../models';
-import { RawUUID } from '../../value-objects';
+import { AutoExtractor, UpdatableAutoExtractor, UploadableAutoExtractor } from '~/models';
+import { RawUUID } from '~/value-objects';
 import { APIContext, buildHTTPRequest, buildURL, fetch, File, HTTPRequestOptions, parseJSONResponse } from '../utils';
 import { makeGetAllAutoExtractors } from './get-all-auto-extractors';
 import { makeUpdateOneAutoExtractor } from './update-one-auto-extractor';

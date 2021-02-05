@@ -6,7 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { CreatableSavedQuery, RawSavedQuery, SavedQuery, toRawCreatableSavedQuery, toSavedQuery } from '../../models';
+import { CreatableSavedQuery, RawSavedQuery, SavedQuery, toRawCreatableSavedQuery, toSavedQuery } from '~/models';
 import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 
 export const makeCreateOneSavedQuery = (context: APIContext) => {

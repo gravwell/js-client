@@ -6,8 +6,8 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { UserRole } from '../../models';
-import { NumericID } from '../../value-objects';
+import { UserRole } from '~/models';
+import { NumericID } from '~/value-objects';
 import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 
 export const makeUpdateOneUserRole = (context: APIContext) => {

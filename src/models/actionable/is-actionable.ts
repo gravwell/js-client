@@ -7,7 +7,7 @@
  **************************************************************************/
 
 import { isBoolean, isDate, isInteger, isNull, isString } from 'lodash';
-import { isNumericID, isRegex, isUUID } from '../../value-objects';
+import { isNumericID, isRegex, isUUID } from '~/value-objects';
 import {
 	Actionable,
 	ActionableAction,

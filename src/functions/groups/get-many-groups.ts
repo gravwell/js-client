@@ -6,8 +6,8 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { Group } from '../../models';
-import { isNumericID, NumericID } from '../../value-objects';
+import { Group } from '~/models';
+import { isNumericID, NumericID } from '~/value-objects';
 import { APIContext } from '../utils';
 import { makeGetAllGroups } from './get-all-groups';
 import { makeGetGroupsByUser } from './get-groups-by-user';

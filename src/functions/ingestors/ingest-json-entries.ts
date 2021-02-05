@@ -6,7 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { CreatableJSONEntry, toRawCreatableJSONEntry } from '../../models';
+import { CreatableJSONEntry, toRawCreatableJSONEntry } from '~/models';
 import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 
 export const makeIngestJSONEntries = (context: APIContext) => {

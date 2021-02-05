@@ -7,7 +7,7 @@
  **************************************************************************/
 
 import { Observable } from 'rxjs';
-import { Percentage } from '../../value-objects';
+import { Percentage } from '~/value-objects';
 import { SearchEntries } from './search-entries';
 import { SearchFilter } from './search-filter';
 import { SearchStats } from './search-stats';

@@ -6,7 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { RawSearchModule, SearchModule, toSearchModule } from '../../models';
+import { RawSearchModule, SearchModule, toSearchModule } from '~/models';
 import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 
 export const makeGetAllSearchModules = (context: APIContext) => {

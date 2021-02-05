@@ -7,7 +7,7 @@
  **************************************************************************/
 
 import { isUndefined } from 'lodash';
-import { toRawNumericID } from '../../value-objects';
+import { toRawNumericID } from '~/value-objects';
 import { Macro } from './macro';
 import { RawUpdatableMacro } from './raw-updatable-macro';
 import { UpdatableMacro } from './updatable-macro';

@@ -6,7 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { CreatableScheduledQuery, ScheduledQuery } from '../../models';
+import { CreatableScheduledQuery, ScheduledQuery } from '~/models';
 import { APIContext } from '../utils';
 import { makeCreateOneScheduledQuery } from './create-one-scheduled-query';
 

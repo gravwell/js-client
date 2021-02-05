@@ -6,7 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { RawUserSessions, toUserSessions, UserSessions } from '../../models';
+import { RawUserSessions, toUserSessions, UserSessions } from '~/models';
 import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 
 export const makeGetOneUserActiveSessions = (context: APIContext) => {

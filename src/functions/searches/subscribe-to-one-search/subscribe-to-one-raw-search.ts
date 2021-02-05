@@ -6,7 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { RawSearchMessageReceived, RawSearchMessageSent } from '../../../models';
+import { RawSearchMessageReceived, RawSearchMessageSent } from '~/models';
 import { APIContext, APISubscription, apiSubscriptionFromWebSocket, buildURL, WebSocket } from '../../utils';
 
 export const makeSubscribeToOneRawSearch = (context: APIContext) => {

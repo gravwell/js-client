@@ -6,7 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { APIContext } from '../functions/utils';
+import { APIContext } from '~/functions/utils';
 import { getEnvVar } from './get-env-var';
 
 export * from './paths';

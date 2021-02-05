@@ -6,7 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { RawValidatedScript, Script, toValidatedScript, ValidatedScript } from '../../models';
+import { RawValidatedScript, Script, toValidatedScript, ValidatedScript } from '~/models';
 import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 
 export const makeValidateOneScript = (context: APIContext) => {

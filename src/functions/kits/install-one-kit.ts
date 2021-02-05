@@ -13,8 +13,8 @@ import {
 	RawKitInstallationStatus,
 	toKitInstallationStatus,
 	toRawInstallableKit,
-} from '../../models';
-import { ID, NumericID, RawNumericID, toNumericID } from '../../value-objects';
+} from '~/models';
+import { ID, NumericID, RawNumericID, toNumericID } from '~/value-objects';
 import {
 	APIContext,
 	APISubscription,

@@ -6,7 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { Playbook, RawPlaybook, toPlaybook, toRawUpdatablePlaybook, UpdatablePlaybook } from '../../models';
+import { Playbook, RawPlaybook, toPlaybook, toRawUpdatablePlaybook, UpdatablePlaybook } from '~/models';
 import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 import { makeGetOnePlaybook } from './get-one-playbook';
 

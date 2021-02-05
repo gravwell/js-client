@@ -7,9 +7,8 @@
  **************************************************************************/
 
 import { random } from 'lodash';
-import { CreatableMacro, CreatableUser, isMacro, User } from '../../models';
-import { integrationTest } from '../../tests';
-import { TEST_BASE_API_CONTEXT } from '../../tests/config';
+import { CreatableMacro, CreatableUser, isMacro, User } from '~/models';
+import { integrationTest, TEST_BASE_API_CONTEXT } from '~/tests';
 import { makeLoginOneUser } from '../auth/login-one-user';
 import { makeCreateOneUser } from '../users';
 import { makeCreateOneMacro } from './create-one-macro';

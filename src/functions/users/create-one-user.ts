@@ -6,7 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { CreatableUser, toRawCreatableUser, User } from '../../models';
+import { CreatableUser, toRawCreatableUser, User } from '~/models';
 import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 import { makeGetOneUser } from './get-one-user';
 

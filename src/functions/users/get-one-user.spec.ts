@@ -6,9 +6,8 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { isValidUser } from '../../models';
-import { integrationTest } from '../../tests';
-import { TEST_BASE_API_CONTEXT } from '../../tests/config';
+import { isValidUser } from '~/models';
+import { integrationTest, TEST_BASE_API_CONTEXT } from '~/tests';
 import { makeGetOneUser } from './get-one-user';
 
 describe('getOneUser()', () => {

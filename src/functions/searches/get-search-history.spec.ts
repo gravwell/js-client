@@ -7,9 +7,8 @@
  **************************************************************************/
 
 import { random } from 'lodash';
-import { CreatableUser, isValidSearch, User } from '../../models';
-import { integrationTest } from '../../tests';
-import { TEST_BASE_API_CONTEXT } from '../../tests/config';
+import { CreatableUser, isValidSearch, User } from '~/models';
+import { integrationTest, TEST_BASE_API_CONTEXT } from '~/tests';
 import { makeLoginOneUser } from '../auth/login-one-user';
 import { makeCreateOneUser, makeGetMyUser } from '../users';
 import { makeGetSearchHistory } from './get-search-history';

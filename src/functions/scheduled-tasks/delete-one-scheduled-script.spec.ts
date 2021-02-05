@@ -6,8 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { integrationTest } from '../../tests';
-import { TEST_BASE_API_CONTEXT } from '../../tests/config';
+import { integrationTest, TEST_BASE_API_CONTEXT } from '~/tests';
 import { makeCreateManyScheduledScripts } from './create-many-scheduled-scripts';
 import { makeDeleteAllScheduledScripts } from './delete-all-scheduled-scripts';
 import { makeDeleteOneScheduledScript } from './delete-one-scheduled-script';
