@@ -30,7 +30,7 @@ import {
 	SearchSubscription,
 	toSearchEntries,
 } from '~/models';
-import { Percentage, toNumericID } from '~/value-objects';
+import { Percentage, RawJSON, toNumericID } from '~/value-objects';
 import { APIContext, promiseProgrammatically } from '../../utils';
 import { makeSubscribeToOneRawSearch } from './subscribe-to-one-raw-search';
 
@@ -55,7 +55,7 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 	return async (
 		query: Query,
 		range: [Date, Date],
-		options: { filter?: SearchFilter } = {},
+		options: { filter?: SearchFilter; metadata?: RawJSON } = {},
 	): Promise<SearchSubscription> => {
 		if (isNull(rawSubscriptionP)) rawSubscriptionP = subscribeToOneRawSearch();
 		const rawSubscription = await rawSubscriptionP;
@@ -100,7 +100,7 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 			type: 'search',
 			data: {
 				Background: false,
-				Metadata: {} as any,
+				Metadata: options.metadata ?? {},
 				SearchStart: range[0].toISOString(),
 				SearchEnd: range[1].toISOString(),
 				SearchString: query,
@@ -301,6 +301,7 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 
 						finished: rawStats.data.Finished && rawDetails.data.Finished,
 
+						metadata: searchInitMsg.data.Metadata,
 						entries: rawStats.data.EntryCount,
 						duration: rawDetails.data.SearchInfo.Duration,
 						start: new Date(rawDetails.data.SearchInfo.StartRange),

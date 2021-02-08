@@ -6,8 +6,5 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-export * from './id';
-export * from './json';
-export * from './markdown';
-export * from './percentage';
-export * from './regex';
+// TODO(ts4): Use recurssive type = string | number | boolean | null | undefined | Array<RawJSON> | Record<string, RawJSON>;
+export type RawJSON = Record<string, unknown>;

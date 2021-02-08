@@ -60,7 +60,8 @@ describe('subscribeToOneSearch()', () => {
 			const subscribeToOneSearch = makeSubscribeToOneSearch(TEST_BASE_API_CONTEXT);
 			const query = `tag=${tag} json value | count`;
 			const range: [Date, Date] = [start, end];
-			const search = await subscribeToOneSearch(query, range);
+			const metadata = { test: 'abc' };
+			const search = await subscribeToOneSearch(query, range, { metadata });
 
 			const textEntriesP = search.entries$
 				.pipe(
@@ -103,6 +104,10 @@ describe('subscribeToOneSearch()', () => {
 			expect(countModule.output.entries)
 				.withContext('count module should produce 1 entry of output -- the count')
 				.toEqual(1);
+
+			expect(stats.metadata)
+				.withContext('the search metadata should be present in the stats and unchanged')
+				.toEqual(metadata);
 
 			////
 			// Check progress
