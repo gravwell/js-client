@@ -6,6 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
+import { RawJSON } from '~/value-objects';
 import { RawQuery } from '../query';
 import { SearchMessageCommands } from './search-message-commands';
 
@@ -17,7 +18,7 @@ export interface RawInitiateSearchMessageSent {
 	type: 'search';
 	data: {
 		Background: boolean;
-		Metadata: { durationString: string; timeframe: string };
+		Metadata: RawJSON;
 		SearchEnd: string; // timestamp
 		SearchStart: string; // timestamp
 		SearchString: RawQuery;
