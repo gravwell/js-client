@@ -7,7 +7,7 @@
  **************************************************************************/
 
 import { isArray, isString } from 'lodash';
-import { RawNumericID } from '~/value-objects';
+import { RawJSON, RawNumericID } from '~/value-objects';
 import { RawQuery } from '../../query';
 import { SearchMessageCommands } from '../search-message-commands';
 import { RawSearchMessageReceivedRequestEntriesWithinRange } from './request-entries-within-range';
@@ -16,7 +16,7 @@ export interface RawSearchInitiatedMessageReceived {
 	type: 'search';
 	data: {
 		CollapsingIndex: number;
-		Metadata: { durationString: string; timeframe: string };
+		Metadata: RawJSON;
 		ModuleHints: Array<{
 			Name: string;
 			Condensing: boolean;
@@ -67,10 +67,7 @@ export interface RawResponseForSearchDetailsMessageReceived {
 			Descending: boolean;
 			IndexSize: number;
 			ItemCount: number;
-			Metadata: {
-				durationString: string;
-				timeframe: string;
-			};
+			Metadata: RawJSON;
 			MinZoomWindow: number;
 			NoHistory: boolean;
 			RenderDownloadFormats: Array<string>;

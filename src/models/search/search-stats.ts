@@ -6,7 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { ID } from '~/value-objects';
+import { ID, RawJSON } from '~/value-objects';
 
 export interface SearchStats {
 	id: ID;
@@ -14,6 +14,7 @@ export interface SearchStats {
 
 	finished: boolean;
 
+	metadata: RawJSON;
 	entries: number;
 	duration: string;
 	start: Date;
