@@ -248,7 +248,7 @@ export interface RawSearchEntries extends BaseSearchEntries {
 		/** IP */
 		source: string;
 		timestamp: Date;
-		tag: string;
+		tag: number;
 		value: string;
 
 		// ?QUESTION: .Enumerated? What's that for?
@@ -283,7 +283,7 @@ export interface TextSearchEntries extends BaseSearchEntries {
 		/** IP */
 		source: string;
 		timestamp: Date;
-		tag: string;
+		tag: number;
 		value: string;
 
 		// ?QUESTION: .Enumerated? What's that for?

@@ -14,7 +14,7 @@ import { isArray, isNumber, isString } from 'lodash';
  */
 export interface RawSearchEntry {
 	TS: string;
-	Tag: string;
+	Tag: number;
 	SRC: string; // IP
 	Data: string; // base64
 	Enumerated: Array<RawEnumeratedPair>;
