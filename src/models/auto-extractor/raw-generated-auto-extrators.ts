@@ -9,12 +9,17 @@
 import { RawDataExplorerResult, RawSearchEntry } from '../search';
 import { RawAutoExtractor } from './raw-auto-extractor';
 
+/** Maps extractor module names to arrays of guesses */
+export interface RawGeneratedAutoExtractors {
+	[key: string]: Array<RawGeneratedAutoExtractor>;
+}
+
 // Named as GenerateAXResponse in the Go source
 /**
  * Contains an auto extractor and corresponding Element extractions as gathered
  * from a single extraction module
  */
-export interface RawAutoExtractorGuess {
+export interface RawGeneratedAutoExtractor {
 	Extractor: RawAutoExtractor;
 	Entries: Array<RawSearchEntry>;
 	Explore: Array<RawDataExplorerResult>;
