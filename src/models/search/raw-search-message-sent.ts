@@ -59,6 +59,20 @@ export interface RawRequestSearchEntriesWithinRangeMessageSent {
 	};
 }
 
+export interface RawRequestExplorerSearchEntriesWithinRangeMessageSent {
+	type: string; // Search subtype ID eg. "search2"
+	data: {
+		ID: SearchMessageCommands.RequestExplorerEntriesWithinRange;
+		Addendum: { customView?: string };
+		EntryRange: {
+			First: number;
+			Last: number;
+			StartTS: string; // timestamp
+			EndTS: string; // timestamp
+		};
+	};
+}
+
 export interface RawRequestSearchStatsMessageSent {
 	type: string; // Search subtype ID eg. "search2"
 	data: {
@@ -101,6 +115,7 @@ export type RawSearchMessageSent =
 	| RawRequestSearchDetailsMessageSent
 	| RawRequestSearchTagsMessageSent
 	| RawRequestSearchEntriesWithinRangeMessageSent
+	| RawRequestExplorerSearchEntriesWithinRangeMessageSent
 	| RawRequestSearchStatsMessageSent
 	| RawRequestSearchStatsWithinRangeMessageSent
 	| RawRequestSearchStatsSummaryMessageSent

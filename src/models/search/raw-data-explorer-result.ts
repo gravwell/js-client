@@ -10,7 +10,7 @@ import { isArray, isString, isUndefined } from 'lodash';
 
 // Named ExploreResult in Go
 export interface RawDataExplorerResult {
-	Elements: Array<RawDataExplorerElement>;
+	Elements: Array<RawDataExplorerElement> | null;
 	Module: string;
 	Tag: string;
 }

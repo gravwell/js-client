@@ -29,4 +29,4 @@ export interface RawAutoExtractor {
 	Accelerated: '';
 }
 
-export type RawAutoExtractorModule = 'csv' | 'fields' | 'regex' | 'slice';
+export type RawAutoExtractorModule = 'csv' | 'fields' | 'regex' | 'slice' | 'json';

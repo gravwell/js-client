@@ -9,8 +9,12 @@
 import { isArray, isString } from 'lodash';
 import { RawJSON, RawNumericID } from '~/value-objects';
 import { RawQuery } from '../../query';
+import { RawDataExplorerResult } from '../raw-data-explorer-result';
 import { SearchMessageCommands } from '../search-message-commands';
-import { RawSearchMessageReceivedRequestEntriesWithinRange } from './request-entries-within-range';
+import {
+	RawSearchMessageReceivedRequestEntriesWithinRange,
+	RawSearchMessageReceivedRequestEntriesWithinRangeData,
+} from './request-entries-within-range';
 
 export interface RawSearchInitiatedMessageReceived {
 	type: 'search';
@@ -237,6 +241,14 @@ export interface RawResponseForSearchStatsLocationMessageReceived {
 	};
 }
 
+export interface RawSearchMessageReceivedRequestExplorerEntriesWithinRange {
+	type: string; // Search subtype ID eg. "search2"
+	data: Omit<RawSearchMessageReceivedRequestEntriesWithinRangeData, 'ID'> & {
+		ID: SearchMessageCommands.RequestExplorerEntriesWithinRange;
+		Explore: Array<RawDataExplorerResult>;
+	};
+}
+
 export type RawSearchMessageReceived =
 	| RawSearchInitiatedMessageReceived
 	| RawResponseForSearchCloseMessageReceived
@@ -246,6 +258,7 @@ export type RawSearchMessageReceived =
 	| RawResponseForSearchStatsWithinRangeMessageReceived
 	| RawResponseForSearchStatsSummaryMessageReceived
 	| RawResponseForSearchStatsLocationMessageReceived
-	| RawSearchMessageReceivedRequestEntriesWithinRange;
+	| RawSearchMessageReceivedRequestEntriesWithinRange
+	| RawSearchMessageReceivedRequestExplorerEntriesWithinRange;
 
 export * from './request-entries-within-range';
