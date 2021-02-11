@@ -7,6 +7,7 @@
  **************************************************************************/
 
 import { mapValues } from 'lodash';
+import { toDataExplorerEntry } from '../search/to-data-explorer-entry';
 import { toSearchEntry } from '../search/to-search-entry';
 import { GeneratedAutoExtractor, GeneratedAutoExtractors } from './generated-auto-extractors';
 import { RawGeneratedAutoExtractors } from './raw-generated-auto-extrators';
@@ -17,7 +18,7 @@ export const toGeneratedAutoExtractors = (raw: RawGeneratedAutoExtractors): Gene
 		extractors.map(
 			(ex): GeneratedAutoExtractor => ({
 				entries: ex.Entries.map(toSearchEntry),
-				explorerElements: ex.Explore, // TODO: ex.Explore.map(toDataExplorerElement)
+				explorerEntries: ex.Explore.map(toDataExplorerEntry),
 				autoExtractor: toAutoExtractor(ex.Extractor),
 			}),
 		),

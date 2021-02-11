@@ -84,13 +84,13 @@ describe('generateAutoExtractors()', () => {
 				expect(ax.autoExtractor.parameters)
 					.withContext('the suggested AX module should break out the fields in the entries')
 					.toEqual('timestamp value');
-				expect(ax.explorerElements.length).withContext('explore should have >0 elements').toBeGreaterThan(0);
-				ax.explorerElements.forEach(exploreEntry => {
-					expect(exploreEntry.Elements.length)
+				expect(ax.explorerEntries.length).withContext('explore should have >0 elements').toBeGreaterThan(0);
+				ax.explorerEntries.forEach(exploreEntry => {
+					expect(exploreEntry.elements.length)
 						.withContext('explore should have two elements: one for each field (timestamp and value)')
 						.toEqual(2);
-					exploreEntry.Elements.forEach(elt => {
-						expect(elt.Filters.length).withContext('we should have filters on explore elements').toBeGreaterThan(0);
+					exploreEntry.elements.forEach(elt => {
+						expect(elt.filters.length).withContext('we should have filters on explore elements').toBeGreaterThan(0);
 					});
 				});
 			});
@@ -101,9 +101,9 @@ describe('generateAutoExtractors()', () => {
 				.flatten() // Flatten the array of arrays to an array
 				.value() // Get the result
 				.forEach(ax => {
-					expect(ax.explorerElements.length).withContext('explore should have >0 elements').toBeGreaterThan(0);
-					ax.explorerElements.forEach(exploreEntry => {
-						expect(exploreEntry.Elements).withContext('non-json AXes should have null elements').toBeNull();
+					expect(ax.explorerEntries.length).withContext('explore should have >0 elements').toBeGreaterThan(0);
+					ax.explorerEntries.forEach(exploreEntry => {
+						expect(exploreEntry.elements).withContext('non-json AXes should have no elements').toEqual([]);
 					});
 				});
 		}),
