@@ -6,13 +6,14 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { RawDataExplorerResult, RawSearchEntry } from '../search';
+import { RawDataExplorerResult } from '../search';
+import { SearchEntry } from '../search/search-entry';
 import { AutoExtractor } from './auto-extractor';
 
 export interface GeneratedAutoExtractor {
-	autoextractor: AutoExtractor;
-	entries: Array<RawSearchEntry>;
-	explore: Array<RawDataExplorerResult>;
+	autoExtractor: AutoExtractor;
+	entries: Array<SearchEntry>;
+	explorerElements: Array<RawDataExplorerResult>;
 }
 
 export interface GeneratedAutoExtractors {

@@ -79,13 +79,13 @@ describe('generateAutoExtractors()', () => {
 			expect(exploreResults['json'].length).withContext('we should have >0 JSON AX suggestions').toBeGreaterThan(0);
 
 			exploreResults['json'].forEach(ax => {
-				expect(ax.autoextractor.tag).withContext('the suggested AX tag should match the provided tag').toEqual(tag);
-				expect(ax.autoextractor.module).withContext('the suggested AX module should be json').toEqual('json');
-				expect(ax.autoextractor.parameters)
+				expect(ax.autoExtractor.tag).withContext('the suggested AX tag should match the provided tag').toEqual(tag);
+				expect(ax.autoExtractor.module).withContext('the suggested AX module should be json').toEqual('json');
+				expect(ax.autoExtractor.parameters)
 					.withContext('the suggested AX module should break out the fields in the entries')
 					.toEqual('timestamp value');
-				expect(ax.explore.length).withContext('explore should have >0 elements').toBeGreaterThan(0);
-				ax.explore.forEach(exploreEntry => {
+				expect(ax.explorerElements.length).withContext('explore should have >0 elements').toBeGreaterThan(0);
+				ax.explorerElements.forEach(exploreEntry => {
 					expect(exploreEntry.Elements.length)
 						.withContext('explore should have two elements: one for each field (timestamp and value)')
 						.toEqual(2);
@@ -101,8 +101,8 @@ describe('generateAutoExtractors()', () => {
 				.flatten() // Flatten the array of arrays to an array
 				.value() // Get the result
 				.forEach(ax => {
-					expect(ax.explore.length).withContext('explore should have >0 elements').toBeGreaterThan(0);
-					ax.explore.forEach(exploreEntry => {
+					expect(ax.explorerElements.length).withContext('explore should have >0 elements').toBeGreaterThan(0);
+					ax.explorerElements.forEach(exploreEntry => {
 						expect(exploreEntry.Elements).withContext('non-json AXes should have null elements').toBeNull();
 					});
 				});
