@@ -6,19 +6,21 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { isArray, isString, isUndefined } from 'lodash';
+import { isArray, isNull, isString, isUndefined } from 'lodash';
 
 // Named ExploreResult in Go
-export interface RawDataExplorerResult {
+export interface RawDataExplorerEntry {
 	Elements: Array<RawDataExplorerElement> | null;
 	Module: string;
 	Tag: string;
 }
 
-export const isRawDataExplorerResult = (v: unknown): v is RawDataExplorerResult => {
+export const isRawDataExplorerEntry = (v: unknown): v is RawDataExplorerEntry => {
 	try {
-		const c = v as RawDataExplorerResult;
-		return isArray(c.Elements) && c.Elements.every(isRawDataExplorerElement) && isString(c.Module) && isString(c.Tag);
+		const entry = v as RawDataExplorerEntry;
+		const elementsOK =
+			isNull(entry.Elements) || (isArray(entry.Elements) && entry.Elements.every(isRawDataExplorerElement));
+		return elementsOK && isString(entry.Module) && isString(entry.Tag);
 	} catch {
 		return false;
 	}

@@ -9,7 +9,7 @@
 import { isArray, isString } from 'lodash';
 import { RawJSON, RawNumericID } from '~/value-objects';
 import { RawQuery } from '../../query';
-import { RawDataExplorerResult } from '../raw-data-explorer-result';
+import { RawDataExplorerEntry } from '../raw-data-explorer-entry';
 import { SearchMessageCommands } from '../search-message-commands';
 import {
 	RawSearchMessageReceivedRequestEntriesWithinRange,
@@ -245,7 +245,7 @@ export interface RawSearchMessageReceivedRequestExplorerEntriesWithinRange {
 	type: string; // Search subtype ID eg. "search2"
 	data: Omit<RawSearchMessageReceivedRequestEntriesWithinRangeData, 'ID'> & {
 		ID: SearchMessageCommands.RequestExplorerEntriesWithinRange;
-		Explore: Array<RawDataExplorerResult>;
+		Explore: Array<RawDataExplorerEntry>;
 	};
 }
 

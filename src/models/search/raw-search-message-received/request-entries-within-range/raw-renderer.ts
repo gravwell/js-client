@@ -7,7 +7,7 @@
  **************************************************************************/
 
 import { isArray, isUndefined } from 'lodash';
-import { isRawDataExplorerResult } from '../../raw-data-explorer-result';
+import { isRawDataExplorerEntry } from '../../raw-data-explorer-entry';
 import { isRawSearchEntry, RawSearchEntry } from '../../raw-search-entry';
 import { RawSearchMessageReceivedRequestEntriesWithinRangeBaseData } from './base';
 
@@ -22,7 +22,7 @@ export const isRawSearchMessageReceivedRequestEntriesWithinRangeRawRenderer = (
 	try {
 		const t = v as RawSearchMessageReceivedRequestEntriesWithinRangeRawRenderer;
 		const entriesOK = isUndefined(t.Entries) || (isArray(t.Entries) && t.Entries.every(isRawSearchEntry));
-		const exploreOK = isUndefined(t.Explore) || (isArray(t.Explore) && t.Explore.every(isRawDataExplorerResult));
+		const exploreOK = isUndefined(t.Explore) || (isArray(t.Explore) && t.Explore.every(isRawDataExplorerEntry));
 		return entriesOK && exploreOK;
 	} catch {
 		return false;

@@ -6,7 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { RawDataExplorerResult, RawSearchEntry } from '../search';
+import { RawDataExplorerEntry, RawSearchEntry } from '../search';
 import { RawAutoExtractor } from './raw-auto-extractor';
 
 // Named as GenerateAXResponse in the Go source
@@ -17,5 +17,5 @@ import { RawAutoExtractor } from './raw-auto-extractor';
 export interface RawAutoExtractorGuess {
 	Extractor: RawAutoExtractor;
 	Entries: Array<RawSearchEntry>;
-	Explore: Array<RawDataExplorerResult>;
+	Explore: Array<RawDataExplorerEntry>;
 }
