@@ -49,6 +49,7 @@ import {
 	Dashboard,
 	DataExplorerEntry,
 	FileMetadata,
+	GeneratedAutoExtractors,
 	Group,
 	InstallableKit,
 	KitInstallationStatus,
@@ -96,6 +97,7 @@ import {
 import { unitTest } from '~/tests';
 import { ID, NumericID, UUID } from '~/value-objects';
 import { GravwellClient } from './client';
+import { GeneratableAutoExtractor } from './models/auto-extractor/generatable-auto-extractor';
 
 describe('GravwellClient', () => {
 	it(
@@ -326,6 +328,9 @@ describe('GravwellClient', () => {
 			expectTypeOf(client.autoExtractors.get.validModules).toEqualTypeOf<() => Promise<Array<AutoExtractorModule>>>();
 			expectTypeOf(client.autoExtractors.get.all).toEqualTypeOf<() => Promise<Array<AutoExtractor>>>();
 			expectTypeOf(client.autoExtractors.get.authorizedTo.me).toEqualTypeOf<() => Promise<Array<AutoExtractor>>>();
+			expectTypeOf(client.autoExtractors.guess.many).toEqualTypeOf<
+				(data: GeneratableAutoExtractor) => Promise<GeneratedAutoExtractors>
+			>();
 			expectTypeOf(client.autoExtractors.create.one).toEqualTypeOf<
 				(data: CreatableAutoExtractor) => Promise<AutoExtractor>
 			>();
