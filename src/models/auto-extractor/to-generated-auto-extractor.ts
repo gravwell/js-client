@@ -7,7 +7,9 @@
  **************************************************************************/
 
 import { mapValues } from 'lodash';
-import { GeneratedAutoExtractors, RawGeneratedAutoExtractors, toAutoExtractor } from '.';
+import { GeneratedAutoExtractors } from './generated-auto-extractors';
+import { RawGeneratedAutoExtractors } from './raw-generated-auto-extrators';
+import { toAutoExtractor } from './to-auto-extractor';
 
 export const toGeneratedAutoExtractors = (raw: RawGeneratedAutoExtractors): GeneratedAutoExtractors =>
 	mapValues(raw, extractors =>

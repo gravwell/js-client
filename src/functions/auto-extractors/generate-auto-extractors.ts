@@ -8,7 +8,7 @@
 
 import { GeneratedAutoExtractors, RawGeneratedAutoExtractors } from '~/models';
 import { GeneratableAutoExtractor } from '~/models/auto-extractor/generatable-auto-extractor';
-import { toGeneratedAutoExtractors } from '~/models/auto-extractor/to-generated-auto-extractor.';
+import { toGeneratedAutoExtractors } from '~/models/auto-extractor/to-generated-auto-extractor';
 import { toRawGeneratableAutoExtractor } from '~/models/auto-extractor/to-raw-generatable-auto-extractor';
 import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
 

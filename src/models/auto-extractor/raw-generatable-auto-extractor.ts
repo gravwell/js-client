@@ -6,7 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { RawSearchEntry } from '..';
+import { RawSearchEntry } from '~/models/search';
 
 // GenerateAXRequest in Go
 export interface RawGeneratableAutoExtractor {
