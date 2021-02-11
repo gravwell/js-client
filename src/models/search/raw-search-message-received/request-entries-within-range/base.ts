@@ -6,7 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { RawDataExplorerResult } from '../../raw-data-explorer-result';
+import { RawDataExplorerEntry } from '../../raw-data-explorer-entry';
 import { SearchMessageCommands } from '../../search-message-commands';
 
 export interface RawSearchMessageReceivedRequestEntriesWithinRangeBaseData {
@@ -23,5 +23,5 @@ export interface RawSearchMessageReceivedRequestEntriesWithinRangeBaseData {
 	Finished: boolean;
 	EntryCount: number;
 
-	Explore?: Array<RawDataExplorerResult>;
+	Explore?: Array<RawDataExplorerEntry>;
 }

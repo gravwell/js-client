@@ -6,19 +6,22 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { isArray, isString, isUndefined } from 'lodash';
+import { isArray, isNull, isString, isUndefined } from 'lodash';
+import { isRawFieldFilterOperation, RawFieldFilterOperation } from './field-filter-operation';
 
 // Named ExploreResult in Go
-export interface RawDataExplorerResult {
-	Elements: Array<RawDataExplorerElement>;
+export interface RawDataExplorerEntry {
+	Elements: Array<RawDataExplorerElement> | null;
 	Module: string;
 	Tag: string;
 }
 
-export const isRawDataExplorerResult = (v: unknown): v is RawDataExplorerResult => {
+export const isRawDataExplorerEntry = (v: unknown): v is RawDataExplorerEntry => {
 	try {
-		const c = v as RawDataExplorerResult;
-		return isArray(c.Elements) && c.Elements.every(isRawDataExplorerElement) && isString(c.Module) && isString(c.Tag);
+		const entry = v as RawDataExplorerEntry;
+		const elementsOK =
+			isNull(entry.Elements) || (isArray(entry.Elements) && entry.Elements.every(isRawDataExplorerElement));
+		return elementsOK && isString(entry.Module) && isString(entry.Tag);
 	} catch {
 		return false;
 	}
@@ -32,9 +35,9 @@ export const isRawDataExplorerResult = (v: unknown): v is RawDataExplorerResult 
 export interface RawDataExplorerElement {
 	Name: string;
 	Path: string;
-	Value: any;
+	Value: string;
 	SubElements?: Array<RawDataExplorerElement>;
-	Filters: Array<string>;
+	Filters: Array<RawFieldFilterOperation>;
 }
 
 const isRawDataExplorerElement = (v: unknown): v is RawDataExplorerElement => {
@@ -49,7 +52,7 @@ const isRawDataExplorerElement = (v: unknown): v is RawDataExplorerElement => {
 			!isUndefined(c.Value) &&
 			subElementsOK &&
 			isArray(c.Filters) &&
-			c.Filters.every(isString)
+			c.Filters.every(isRawFieldFilterOperation)
 		);
 	} catch {
 		return false;

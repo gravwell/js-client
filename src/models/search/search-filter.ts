@@ -6,6 +6,8 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
+import { FieldFilterOperation } from './field-filter-operation';
+
 /**
  * Declarative properties to filter data from a {@link SearchSubscription}.
  */
@@ -44,7 +46,6 @@ export interface SearchFilter {
 	// fieldFilters?: Array<FieldFilter>;
 }
 
-export type FieldFilterOperation = 'EQ' | 'NEQ' | 'GT' | 'LT' | 'GTE' | 'LTE';
 export interface FieldFilter {
 	field: string;
 	operation: FieldFilterOperation;
