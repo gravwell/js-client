@@ -10,6 +10,7 @@ import { addMinutes } from 'date-fns';
 import { isArray } from 'lodash';
 import { v4 as uuidv4 } from 'uuid';
 import { makeCreateOneAutoExtractor } from '~/functions/auto-extractors';
+import { isDataExplorerEntry } from '~/models/search/data-explorer-entry';
 import { integrationTest, sleep, TEST_BASE_API_CONTEXT } from '~/tests';
 import { makeIngestMultiLineEntry } from '../../ingestors/ingest-multi-line-entry';
 import { makeGetAllTags } from '../../tags/get-all-tags';
@@ -66,14 +67,47 @@ describe('exploreOneTag()', () => {
 		'Should return data explorer entries',
 		integrationTest(async () => {
 			const exploreOneTag = makeExploreOneTag(TEST_BASE_API_CONTEXT);
-			const explorerElements = await exploreOneTag(tag, { range: [start, end] });
+			const explorerEntries = await exploreOneTag(tag, { range: [start, end] });
 
-			expect(isArray(explorerElements)).toBeTrue();
+			expect(isArray(explorerEntries) && explorerEntries.every(isDataExplorerEntry))
+				.withContext('Expect a promise of an array of data explorer entries')
+				.toBeTrue();
+			expect(explorerEntries.length).withContext(`Expect ${count} entries`).toBe(count);
 
-			// console.log(
-			// 	'explore',
-			// 	explorerElements.map(e => e.Elements![1].SubElements),
-			// );
+			for (const entry of explorerEntries) {
+				expect(entry.tag).withContext(`Expect entry tag to be "${tag}"`).toBe(tag);
+				expect(entry.module).withContext(`Expect explorer module to be JSON`).toBe('json');
+
+				expect(entry.elements.length)
+					.withContext(`Expect to have 2 data explorer elements on first depth level`)
+					.toBe(2);
+				expect(entry.elements.map(el => el.name).sort())
+					.withContext(`Expect first depth data explorer elements to be "value" and "timestamp"`)
+					.toEqual(['timestamp', 'value']);
+
+				const timestampEl = entry.elements.find(el => el.name === 'timestamp')!;
+				const valueEl = entry.elements.find(el => el.name === 'value')!;
+
+				expect(timestampEl.children.length).withContext(`Expect the timestamp element to not have children`).toBe(0);
+				expect(valueEl.children.length).withContext(`Expect the value element to have one children`).toBe(1);
+				expect(valueEl.children[0].name)
+					.withContext(`Expect the value element child to be value.foo`)
+					.toBe('value.foo');
+			}
+		}),
+	);
+
+	it(
+		'Should respect limit options',
+		integrationTest(async () => {
+			const limit = 150;
+			const exploreOneTag = makeExploreOneTag(TEST_BASE_API_CONTEXT);
+			const explorerEntries = await exploreOneTag(tag, { range: [start, end], limit });
+
+			expect(isArray(explorerEntries) && explorerEntries.every(isDataExplorerEntry))
+				.withContext('Expect a promise of an array of data explorer entries')
+				.toBeTrue();
+			expect(explorerEntries.length).withContext(`Expect ${limit} entries`).toBe(limit);
 		}),
 	);
 });
