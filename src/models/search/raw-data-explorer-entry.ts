@@ -35,7 +35,7 @@ export const isRawDataExplorerEntry = (v: unknown): v is RawDataExplorerEntry =>
 export interface RawDataExplorerElement {
 	Name: string;
 	Path: string;
-	Value: any; // TODO
+	Value: string;
 	SubElements?: Array<RawDataExplorerElement>;
 	Filters: Array<RawFieldFilterOperation>;
 }

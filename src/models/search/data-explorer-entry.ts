@@ -32,7 +32,7 @@ export interface DataExplorerElement {
 	name: string;
 	path: string;
 
-	value: any; // TODO
+	value: string;
 	filters: Array<FieldFilterOperation>;
 
 	children: Array<DataExplorerElement>;
