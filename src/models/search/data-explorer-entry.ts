@@ -7,7 +7,7 @@
  **************************************************************************/
 
 import { isArray, isString, isUndefined } from 'lodash';
-import { FieldFilterOperation, isFieldFilterOperation } from './field-filter-operation';
+import { ElementFilterOperation, isElementFilterOperation } from './element-filter-operation';
 
 export interface DataExplorerEntry {
 	tag: string;
@@ -33,7 +33,7 @@ export interface DataExplorerElement {
 	path: string;
 
 	value: string;
-	filters: Array<FieldFilterOperation>;
+	filters: Array<ElementFilterOperation>;
 
 	children: Array<DataExplorerElement>;
 }
@@ -48,7 +48,7 @@ const isDataExplorerElement = (v: unknown): v is DataExplorerElement => {
 			isString(element.path) &&
 			!isUndefined(element.value) &&
 			isArray(element.filters) &&
-			element.filters.every(isFieldFilterOperation)
+			element.filters.every(isElementFilterOperation)
 		);
 	} catch {
 		return false;

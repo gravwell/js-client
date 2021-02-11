@@ -6,7 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { FieldFilterOperation } from './field-filter-operation';
+import { ElementFilterOperation } from './element-filter-operation';
 
 /**
  * Declarative properties to filter data from a {@link SearchSubscription}.
@@ -42,12 +42,12 @@ export interface SearchFilter {
 
 	desiredGranularity?: number;
 
-	// TODO: Implement field filters
-	// fieldFilters?: Array<FieldFilter>;
+	// TODO
+	// elementFilters?: Array<ElementFilter>;
 }
 
-export interface FieldFilter {
-	field: string;
-	operation: FieldFilterOperation;
+export interface ElementFilter {
+	path: string;
+	operation: ElementFilterOperation;
 	value: string;
 }

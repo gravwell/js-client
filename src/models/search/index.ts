@@ -7,7 +7,7 @@
  **************************************************************************/
 
 export * from './data-explorer-entry';
-export * from './field-filter-operation';
+export * from './element-filter-operation';
 export * from './is-search2';
 export * from './is-valid-search';
 export * from './raw-data-explorer-entry';
