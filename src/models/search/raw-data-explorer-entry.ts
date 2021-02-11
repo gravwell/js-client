@@ -7,7 +7,7 @@
  **************************************************************************/
 
 import { isArray, isNull, isString, isUndefined } from 'lodash';
-import { RawFieldFilterOperation } from './search-filter';
+import { isRawFieldFilterOperation, RawFieldFilterOperation } from './field-filter-operation';
 
 // Named ExploreResult in Go
 export interface RawDataExplorerEntry {
@@ -52,7 +52,7 @@ const isRawDataExplorerElement = (v: unknown): v is RawDataExplorerElement => {
 			!isUndefined(c.Value) &&
 			subElementsOK &&
 			isArray(c.Filters) &&
-			c.Filters.every(isString)
+			c.Filters.every(isRawFieldFilterOperation)
 		);
 	} catch {
 		return false;

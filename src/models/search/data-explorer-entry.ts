@@ -7,7 +7,7 @@
  **************************************************************************/
 
 import { isArray, isString, isUndefined } from 'lodash';
-import { FieldFilterOperation } from './search-filter';
+import { FieldFilterOperation, isFieldFilterOperation } from './field-filter-operation';
 
 export interface DataExplorerEntry {
 	tag: string;
@@ -48,7 +48,7 @@ const isDataExplorerElement = (v: unknown): v is DataExplorerElement => {
 			isString(element.path) &&
 			!isUndefined(element.value) &&
 			isArray(element.filters) &&
-			element.filters.every(isString) // TODO: isFieldFilterOperation
+			element.filters.every(isFieldFilterOperation)
 		);
 	} catch {
 		return false;
