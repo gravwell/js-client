@@ -47,6 +47,7 @@ import {
 	CreatableTemplate,
 	CreatableUser,
 	Dashboard,
+	DataExplorerEntry,
 	FileMetadata,
 	Group,
 	InstallableKit,
@@ -423,6 +424,9 @@ describe('GravwellClient', () => {
 
 			// Queries
 			expectTypeOf(client.queries.validate.one).toEqualTypeOf<(query: Query) => Promise<ValidatedQuery>>();
+
+			// Explorer
+			expectTypeOf(client.explorer.explore.one).toEqualTypeOf<(tag: string) => Promise<Array<DataExplorerEntry>>>();
 		}),
 	);
 });

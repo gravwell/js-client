@@ -6,6 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
+export * from './data-explorer-entry';
 export * from './is-search2';
 export * from './is-valid-search';
 export * from './raw-data-explorer-entry';

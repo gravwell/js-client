@@ -19,6 +19,7 @@ import {
 	createAutoExtractorsService,
 	createDashboardsService,
 	createEntriesService,
+	createExplorerService,
 	createFilesService,
 	createGroupsService,
 	createIndexersService,
@@ -46,6 +47,7 @@ import {
 	createWebServerService,
 	DashboardsService,
 	EntriesService,
+	ExplorerService,
 	FilesService,
 	GroupsService,
 	IndexersService,
@@ -175,6 +177,7 @@ export class GravwellClient {
 		this._scheduledQueries = createScheduledQueriesService(initialContext);
 		this._kits = createKitsService(initialContext);
 		this._queries = createQueriesService(initialContext);
+		this._explorer = createExplorerService(initialContext);
 
 		this._context$.subscribe(context => {
 			this._tags = createTagsService(context);
@@ -207,6 +210,7 @@ export class GravwellClient {
 			this._scheduledQueries = createScheduledQueriesService(context);
 			this._kits = createKitsService(context);
 			this._queries = createQueriesService(context);
+			this._explorer = createExplorerService(context);
 		});
 	}
 
@@ -360,4 +364,9 @@ export class GravwellClient {
 		return this._queries;
 	}
 	private _queries: QueriesService;
+
+	public get explorer(): ExplorerService {
+		return this._explorer;
+	}
+	private _explorer: ExplorerService;
 }
