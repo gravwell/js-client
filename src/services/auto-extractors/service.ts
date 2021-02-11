@@ -10,10 +10,12 @@ import { AutoExtractorsFilter, IsValidAutoExtractorSyntaxResponse } from '~/func
 import {
 	AutoExtractor,
 	CreatableAutoExtractor,
+	GeneratedAutoExtractors,
 	RawAutoExtractorModule,
 	UpdatableAutoExtractor,
 	UploadableAutoExtractor,
 } from '~/models/auto-extractor';
+import { GeneratableAutoExtractor } from '~/models/auto-extractor/generatable-auto-extractor';
 
 export interface AutoExtractorsService {
 	readonly get: {
@@ -22,6 +24,10 @@ export interface AutoExtractorsService {
 		readonly authorizedTo: {
 			readonly me: () => Promise<Array<AutoExtractor>>;
 		};
+	};
+
+	readonly guess: {
+		readonly many: (data: GeneratableAutoExtractor) => Promise<GeneratedAutoExtractors>;
 	};
 
 	readonly create: {

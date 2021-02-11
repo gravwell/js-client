@@ -6,16 +6,15 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { RawDataExplorerEntry, RawSearchEntry } from '../search';
-import { RawAutoExtractor } from './raw-auto-extractor';
+import { RawSearchEntry } from '../search';
 
-// Named as GenerateAXResponse in the Go source
+// Named as GenerateAXRequest in the Go source
 /**
- * Contains an auto extractor and corresponding Element extractions as gathered
- * from a single extraction module
+ * Contains a tag name and a set of entries.
+ * It is used by clients to request all possible extractions from the given entries.
+ * All entries should have the same tag.
  */
-export interface RawAutoExtractorGuess {
-	Extractor: RawAutoExtractor;
+export interface RawCreatableGeneratedAutoExtractors {
+	Tag: string;
 	Entries: Array<RawSearchEntry>;
-	Explore: Array<RawDataExplorerEntry>;
 }

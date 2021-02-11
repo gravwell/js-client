@@ -17,6 +17,7 @@ import {
 	makeUpdateOneAutoExtractor,
 	makeUploadManyAutoExtractors,
 } from '~/functions/auto-extractors';
+import { makeGenerateAutoExtractors } from '~/functions/auto-extractors/generate-auto-extractors';
 import { APIContext } from '~/functions/utils';
 import { AutoExtractorsService } from './service';
 
@@ -27,6 +28,10 @@ export const createAutoExtractorsService = (context: APIContext): AutoExtractors
 		authorizedTo: {
 			me: makeGetAutoExtractorsAuthorizedToMe(context),
 		},
+	},
+
+	guess: {
+		many: makeGenerateAutoExtractors(context),
 	},
 
 	create: {

@@ -37,7 +37,7 @@ import {
 	normalizeToHeatmapSearchEntries,
 	normalizeToPointmapSearchEntries,
 	normalizeToPointToPointSearchEntries,
-	normalizeToRawSearchEntriess,
+	normalizeToRawSearchEntries,
 	normalizeToStackGraphSearchEntries,
 	normalizeToTableSearchEntries,
 	normalizeToTextSearchEntries,
@@ -60,7 +60,7 @@ const NORMALIZERS: Record<SearchEntries['type'], RawEntryNormalizer> = {
 	'pointmap': ({ data }) =>
 		normalizeToPointmapSearchEntries(data as RawSearchMessageReceivedRequestEntriesWithinRangePointmapRenderer),
 	'raw': ({ data }) =>
-		normalizeToRawSearchEntriess(data as RawSearchMessageReceivedRequestEntriesWithinRangeRawRenderer),
+		normalizeToRawSearchEntries(data as RawSearchMessageReceivedRequestEntriesWithinRangeRawRenderer),
 	'text': ({ data }) =>
 		normalizeToTextSearchEntries(data as RawSearchMessageReceivedRequestEntriesWithinRangeTextRenderer),
 	'stack graph': ({ data }) =>
@@ -96,7 +96,7 @@ export function normalize(
 export function normalize(
 	renderer: 'raw',
 	msg: RawSearchMessageReceivedRequestEntriesWithinRange,
-): ReturnType<typeof normalizeToRawSearchEntriess>;
+): ReturnType<typeof normalizeToRawSearchEntries>;
 export function normalize(
 	renderer: 'text',
 	msg: RawSearchMessageReceivedRequestEntriesWithinRange,
@@ -164,7 +164,7 @@ export const inferSearchEntries = (msg: RawSearchMessageReceivedRequestEntriesWi
 	} else if (isRawSearchMessageReceivedRequestEntriesWithinRangePointToPointRenderer(msgData)) {
 		return normalizeToPointToPointSearchEntries(msgData);
 	} else if (isRawSearchMessageReceivedRequestEntriesWithinRangeRawRenderer(msgData)) {
-		return normalizeToRawSearchEntriess(msgData);
+		return normalizeToRawSearchEntries(msgData);
 	} else if (isRawSearchMessageReceivedRequestEntriesWithinRangeTextRenderer(msgData)) {
 		return normalizeToTextSearchEntries(msgData);
 	} else if (isRawSearchMessageReceivedRequestEntriesWithinRangeStackGraphRenderer(msgData)) {
