@@ -7,6 +7,7 @@
  **************************************************************************/
 
 import { isArray, isNull, isString, isUndefined } from 'lodash';
+import { RawFieldFilterOperation } from './search-filter';
 
 // Named ExploreResult in Go
 export interface RawDataExplorerEntry {
@@ -34,9 +35,9 @@ export const isRawDataExplorerEntry = (v: unknown): v is RawDataExplorerEntry =>
 export interface RawDataExplorerElement {
 	Name: string;
 	Path: string;
-	Value: any;
+	Value: any; // TODO
 	SubElements?: Array<RawDataExplorerElement>;
-	Filters: Array<string>;
+	Filters: Array<RawFieldFilterOperation>;
 }
 
 const isRawDataExplorerElement = (v: unknown): v is RawDataExplorerElement => {

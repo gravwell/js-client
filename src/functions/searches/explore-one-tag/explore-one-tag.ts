@@ -10,11 +10,12 @@ import { subDays } from 'date-fns';
 import { isNull } from 'lodash';
 import { filter, last, map, takeWhile } from 'rxjs/operators';
 import {
-	RawDataExplorerEntry,
 	RawRequestExplorerSearchEntriesWithinRangeMessageSent,
 	RawSearchMessageReceivedRequestExplorerEntriesWithinRange,
 	SearchMessageCommands,
 } from '~/models';
+import { DataExplorerEntry } from '~/models/search/data-explorer-entry';
+import { toDataExplorerEntry } from '~/models/search/to-data-explorer-entry';
 import { APIContext } from '../../utils';
 import { makeSubscribeToOneRawSearch } from '../subscribe-to-one-search/subscribe-to-one-raw-search';
 import { initiateSearch } from './initiate-search';
@@ -23,7 +24,10 @@ export const makeExploreOneTag = (context: APIContext) => {
 	const subscribeToOneRawSearch = makeSubscribeToOneRawSearch(context);
 	let rawSubscriptionP: ReturnType<typeof subscribeToOneRawSearch> | null = null;
 
-	return async (tag: string, options: { range?: [Date, Date]; limit?: number } = {}) => {
+	return async (
+		tag: string,
+		options: { range?: [Date, Date]; limit?: number } = {},
+	): Promise<Array<DataExplorerEntry>> => {
 		if (isNull(rawSubscriptionP)) rawSubscriptionP = subscribeToOneRawSearch();
 		const rawSubscription = await rawSubscriptionP;
 
@@ -35,7 +39,7 @@ export const makeExploreOneTag = (context: APIContext) => {
 		const searchTypeID = searchInitMsg.data.OutputSearchSubproto;
 		const searchMessages$ = rawSubscription.received$.pipe(filter(msg => msg.type === searchTypeID));
 
-		const exploredElementsP: Promise<Array<RawDataExplorerEntry>> = searchMessages$
+		const exploredElementsP: Promise<Array<DataExplorerEntry>> = searchMessages$
 			.pipe(
 				filter((msg): msg is RawSearchMessageReceivedRequestExplorerEntriesWithinRange => {
 					try {
@@ -46,7 +50,7 @@ export const makeExploreOneTag = (context: APIContext) => {
 					}
 				}),
 				takeWhile(msg => msg.data.Finished === false, true),
-				map(msg => msg.data.Explore),
+				map(msg => msg.data.Explore.map(toDataExplorerEntry)),
 				last(),
 			)
 			.toPromise();

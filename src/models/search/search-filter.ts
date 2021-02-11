@@ -44,7 +44,8 @@ export interface SearchFilter {
 	// fieldFilters?: Array<FieldFilter>;
 }
 
-export type FieldFilterOperation = 'EQ' | 'NEQ' | 'GT' | 'LT' | 'GTE' | 'LTE';
+export type RawFieldFilterOperation = '==' | '!=' | '>' | '<' | '>=' | '<=';
+export type FieldFilterOperation = RawFieldFilterOperation;
 export interface FieldFilter {
 	field: string;
 	operation: FieldFilterOperation;
