@@ -86,7 +86,7 @@ describe('updateOneFile()', () => {
 				}
 
 				expect(isFileMetadata(updated)).toBeTrue();
-				expect(updated).toPartiallyEqual(omit(data, ['file']));
+				expect(updated).toPartiallyEqual(omit(data, ['file', 'id']));
 			}),
 			20000,
 		);
