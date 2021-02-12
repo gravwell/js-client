@@ -6,8 +6,6 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { ElementFilterOperation } from './element-filter-operation';
-
 /**
  * Declarative properties to filter data from a {@link SearchSubscription}.
  */
@@ -44,10 +42,4 @@ export interface SearchFilter {
 
 	// TODO
 	// elementFilters?: Array<ElementFilter>;
-}
-
-export interface ElementFilter {
-	path: string;
-	operation: ElementFilterOperation;
-	value: string;
 }

@@ -8,7 +8,8 @@
 
 import { isNull, pick } from 'lodash';
 import { filter, first, map } from 'rxjs/operators';
-import { Query, RawQuery } from '~/models';
+import { ElementFilter, Query, RawQuery } from '~/models';
+import { RawElementFilter, toElementFilter } from '~/models/search';
 import { APIContext, APISubscription, apiSubscriptionFromWebSocket, buildURL, WebSocket } from '../utils';
 
 export const makeValidateOneQuery = (context: APIContext) => {
@@ -27,7 +28,7 @@ export const makeValidateOneQuery = (context: APIContext) => {
 				first(),
 			)
 			.toPromise();
-		querySub.send({ id, query });
+		querySub.send({ id, query, filters: [] });
 		return validationP;
 	};
 };
@@ -44,7 +45,9 @@ const makeSubscribeToOneQueryValidation = (context: APIContext) => {
 	const templatePath = '/api/ws/search';
 	const url = buildURL(templatePath, { ...context, protocol: 'ws' });
 
-	return async (): Promise<APISubscription<ValidatedQuery & { id: number }, { id: number; query: Query }>> => {
+	return async (): Promise<
+		APISubscription<ValidatedQuery & { id: number }, { id: number; query: Query; filters: Array<ElementFilter> }>
+	> => {
 		const socket = new WebSocket(url, context.authToken ?? undefined);
 		const rawSubscription = apiSubscriptionFromWebSocket<
 			RawQueryValidationMessageReceived,
@@ -71,18 +74,39 @@ const makeSubscribeToOneQueryValidation = (context: APIContext) => {
 					return false;
 				}
 			}),
-			map(msg => ({ id: msg.data.Sequence, query: msg.data.SearchString })),
+			map(msg => ({
+				id: msg.data.Sequence,
+				query: msg.data.SearchString,
+				filters: (msg.data.Filters ?? []).map(toElementFilter),
+			})),
 		);
 
 		const received: Array<ValidatedQuery & { id: number }> = [];
-		const sent: Array<{ id: number; query: Query }> = [];
+		const sent: Array<{ id: number; query: Query; filters: Array<ElementFilter> }> = [];
 
 		received$.subscribe(receivedMessage => received.push(receivedMessage));
 		sent$.subscribe(sentMessage => sent.push(sentMessage));
 
 		return {
 			close: () => rawSubscription.close(),
-			send: msg => rawSubscription.send({ type: 'parse', data: { SearchString: msg.query, Sequence: msg.id } }),
+			send: async msg => {
+				const rawMsg: RawQueryValidationMessageSent = {
+					type: 'parse',
+					data: {
+						SearchString: msg.query,
+						Sequence: msg.id,
+					},
+				};
+				if (msg.filters.length !== 0)
+					rawMsg.data.Filters = msg.filters.map(f => ({
+						Tag: f.tag,
+						Module: f.module,
+						Path: f.path,
+						Op: f.operation,
+						Value: f.value,
+					}));
+				await rawSubscription.send(rawMsg);
+			},
 			received$,
 			received,
 			sent$,
@@ -91,7 +115,15 @@ const makeSubscribeToOneQueryValidation = (context: APIContext) => {
 	};
 };
 
-type RawQueryValidationDesiredMessageSent = { type: 'parse'; data: { SearchString: string; Sequence: number } };
+type RawQueryValidationDesiredMessageSent = {
+	type: 'parse';
+	data: {
+		SearchString: string;
+		Sequence: number;
+		/** Include the Filters field during data exploration (data explorer) */
+		Filters?: Array<RawElementFilter>;
+	};
+};
 type RawQueryValidationMessageSent =
 	| RawQueryValidationDesiredMessageSent
 	| { Subs: Array<'PONG' | 'parse' | 'search' | 'attach'> };
