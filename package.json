@@ -81,7 +81,7 @@
 		"karma-jasmine-html-reporter": "^1.5.4",
 		"karma-safari-launcher": "^1.0.0",
 		"karma-webpack": "^5.0.0",
-		"license-check-and-add": "^3.0.4",
+		"license-check-and-add": "^4.0.1",
 		"prettier": "^2.2.1",
 		"rename-cli": "^6.2.1",
 		"rimraf": "^3.0.2",
