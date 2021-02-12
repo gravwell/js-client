@@ -29,3 +29,4 @@ export * from './to-element-filter';
 export * from './to-search';
 export * from './to-search-entries';
 export * from './to-search2';
+export * from './validated-query';

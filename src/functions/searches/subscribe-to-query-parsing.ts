@@ -8,7 +8,7 @@
 
 import { filter, map } from 'rxjs/operators';
 import { ElementFilter, Query, RawQuery } from '~/models';
-import { RawElementFilter, toElementFilter } from '~/models/search';
+import { RawElementFilter, toElementFilter, ValidatedQuery } from '~/models/search';
 import { APIContext, APISubscription, apiSubscriptionFromWebSocket, buildURL, WebSocket } from '../utils';
 
 export const makeSubscribeToOneQueryParsing = (context: APIContext) => {
@@ -129,15 +129,6 @@ interface RawRepprovedValidatedQuery extends RawValidatedQueryBase {
 }
 
 type RawValidatedQuery = RawApprovedValidatedQuery | RawRepprovedValidatedQuery;
-
-interface QueryError {
-	message: string;
-	module: number;
-}
-
-export type ValidatedQuery =
-	| { query: string; isValid: true; error: null }
-	| { query: string; isValid: false; error: QueryError };
 
 const toValidatedQuery = (raw: RawValidatedQuery): ValidatedQuery => {
 	switch (raw.GoodQuery) {

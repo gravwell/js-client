@@ -8,9 +8,9 @@
 
 import { isNull, pick } from 'lodash';
 import { filter, first, map } from 'rxjs/operators';
-import { Query } from '~/models';
+import { Query, ValidatedQuery } from '~/models';
 import { APIContext } from '../utils';
-import { makeSubscribeToOneQueryParsing, ValidatedQuery } from './subscribe-to-query-parsing';
+import { makeSubscribeToOneQueryParsing } from './subscribe-to-query-parsing';
 
 export const makeValidateOneQuery = (context: APIContext) => {
 	const subscribeToOneQueryValidation = makeSubscribeToOneQueryParsing(context);

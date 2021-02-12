@@ -9,8 +9,8 @@
 import { isNull, pick } from 'lodash';
 import { filter, first, map } from 'rxjs/operators';
 import { APIContext } from '~/functions/utils';
-import { ElementFilter, Query } from '~/models';
-import { makeSubscribeToOneQueryParsing, ValidatedQuery } from './subscribe-to-query-parsing';
+import { ElementFilter, Query, ValidatedQuery } from '~/models';
+import { makeSubscribeToOneQueryParsing } from './subscribe-to-query-parsing';
 
 export const makeModifyOneQuery = (context: APIContext) => {
 	const subscribeToOneQueryParsing = makeSubscribeToOneQueryParsing(context);
