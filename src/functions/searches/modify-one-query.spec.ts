@@ -73,8 +73,8 @@ describe('modifyOneQuery()', () => {
 			const validation = await validateOneQuery(query);
 			expect(validation.isValid).withContext(`Expect initial query to be valid`).toBeTrue();
 
-			const filter: ElementFilter = { path: 'value.foo', operation: '>=', value: '50' };
-			const newQuery = await modifyOneQuery(query, filter);
+			const filter: ElementFilter = { path: 'value.foo', operation: '>=', value: '50', tag, module: 'json' };
+			const newQuery = await modifyOneQuery(query, [filter]);
 			const newValidation = await validateOneQuery(newQuery);
 			expect(newValidation.isValid).withContext(`Expect new query to be valid`).toBeTrue();
 
