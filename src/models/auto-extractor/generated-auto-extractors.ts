@@ -11,6 +11,7 @@ import { SearchEntry } from '../search/search-entry';
 import { AutoExtractor } from './auto-extractor';
 
 export interface GeneratedAutoExtractor {
+	confidence?: number;
 	autoExtractor: AutoExtractor;
 	entries: Array<SearchEntry>;
 	explorerEntries: Array<DataExplorerEntry>;
