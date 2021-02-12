@@ -11,7 +11,7 @@ import { LOG_LEVEL_TO_RAW } from './log-level-to-raw';
 import { RawLogLevel } from './raw-log-level';
 
 export const toLogLevel = (rawLogLevel: RawLogLevel): LogLevel => {
-	const pair = Object.entries(LOG_LEVEL_TO_RAW).find(([, rawLevel]) => rawLevel === rawLogLevel);
+	const pair = Object.entries(LOG_LEVEL_TO_RAW).find(([, rawLevel]) => rawLevel === rawLogLevel)!;
 	const [level] = pair;
 	return <LogLevel>level;
 };
