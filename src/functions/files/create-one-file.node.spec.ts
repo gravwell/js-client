@@ -7,6 +7,7 @@
  **************************************************************************/
 
 import { createReadStream } from 'fs';
+import { omit } from 'lodash';
 import { join } from 'path';
 import { CreatableFile, isFileMetadata } from '~/models';
 import { integrationTest, myCustomMatchers, TEST_ASSETS_PATH, TEST_BASE_API_CONTEXT } from '~/tests';
@@ -51,10 +52,7 @@ describe('createOneFile()', () => {
 
 			const file = await createOneFile(data);
 			expect(isFileMetadata(file)).toBeTrue();
-
-			const _data = { ...data };
-			delete _data.file;
-			expect(file).toPartiallyEqual(_data);
+			expect(file).toPartiallyEqual(omit(data, ['file']));
 		}),
 	);
 });

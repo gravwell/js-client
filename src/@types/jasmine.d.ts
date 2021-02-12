@@ -10,6 +10,7 @@ export {};
 
 declare global {
 	namespace jasmine {
+		// eslint-disable-next-line @typescript-eslint/no-unused-vars
 		interface Matchers<T> {
 			toPartiallyEqual(expected: any, expectationFailOutput?: any): boolean;
 		}
