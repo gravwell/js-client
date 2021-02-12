@@ -10,8 +10,11 @@ import { LogLevel } from './log-level';
 import { LOG_LEVEL_TO_RAW } from './log-level-to-raw';
 import { RawLogLevel } from './raw-log-level';
 
-export const toLogLevel = (rawLogLevel: RawLogLevel): LogLevel => {
-	const pair = Object.entries(LOG_LEVEL_TO_RAW).find(([, rawLevel]) => rawLevel === rawLogLevel);
-	const [level] = pair;
-	return <LogLevel>level;
-};
+const LOG_LEVEL_FROM_RAW: Record<RawLogLevel, LogLevel> = Object.entries(LOG_LEVEL_TO_RAW)
+	.map(([logLevel, raw]) => ({ logLevel: logLevel as LogLevel, raw }))
+	.reduce((acc, { logLevel, raw }) => {
+		acc[raw] = logLevel;
+		return acc;
+	}, {} as Record<RawLogLevel, LogLevel>);
+
+export const toLogLevel = (rawLogLevel: RawLogLevel): LogLevel => LOG_LEVEL_FROM_RAW[rawLogLevel];
