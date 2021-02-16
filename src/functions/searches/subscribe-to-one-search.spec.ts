@@ -300,5 +300,45 @@ describe('subscribeToOneSearch()', () => {
 			}),
 			25000,
 		);
+
+		it(
+			'Should provide the minimum zoom window',
+			integrationTest(async () => {
+				const subscribeToOneSearch = makeSubscribeToOneSearch(TEST_BASE_API_CONTEXT);
+
+				const range: [Date, Date] = [start, end];
+
+				// Issue a query where the minzoomwindow is predictable (1 second)
+				const query1s = `tag=${tag} json value | stats mean(value) over 1s`;
+				const search1s = await subscribeToOneSearch(query1s, range, {
+					filter: { entriesOffset: { index: 0, count: count } },
+				});
+
+				const stats1s = await search1s.stats$
+					.pipe(
+						takeWhile(e => !e.finished, true),
+						last(),
+					)
+					.toPromise();
+
+				expect(stats1s.minZoomWindow).toEqual(1);
+
+				// Issue a query where the minzoomwindow is predictable (33 seconds, why not)
+				const query33s = `tag=${tag} json value | stats mean(value) over 33s`;
+				const search33s = await subscribeToOneSearch(query33s, range, {
+					filter: { entriesOffset: { index: 0, count: count } },
+				});
+
+				const stats33s = await search33s.stats$
+					.pipe(
+						takeWhile(e => !e.finished, true),
+						last(),
+					)
+					.toPromise();
+
+				expect(stats33s.minZoomWindow).toEqual(33);
+			}),
+			25000,
+		);
 	});
 });
