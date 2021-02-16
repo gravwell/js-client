@@ -306,6 +306,7 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 						duration: rawDetails.data.SearchInfo.Duration,
 						start: new Date(rawDetails.data.SearchInfo.StartRange),
 						end: new Date(rawDetails.data.SearchInfo.EndRange),
+						minZoomWindow: rawDetails.data.SearchInfo.MinZoomWindow,
 
 						storeSize: rawDetails.data.SearchInfo.StoreSize,
 						processed: {
