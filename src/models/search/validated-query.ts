@@ -6,10 +6,11 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { ValidatedQuery } from '~/models/search';
+export type ValidatedQuery =
+	| { query: string; isValid: true; error: null }
+	| { query: string; isValid: false; error: QueryError };
 
-export interface QueriesService {
-	readonly validate: {
-		readonly one: (query: string) => Promise<ValidatedQuery>;
-	};
+export interface QueryError {
+	message: string;
+	module: number;
 }

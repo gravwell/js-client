@@ -21,7 +21,6 @@ import {
 	SystemStatusCategory,
 	SystemStatusMessageReceived,
 	SystemStatusMessageSent,
-	ValidatedQuery,
 } from '~/functions';
 import { APISubscription, downloadFromURL, DownloadReturn, File } from '~/functions/utils';
 import {
@@ -93,6 +92,7 @@ import {
 	User,
 	UserPreferences,
 	UserSessions,
+	ValidatedQuery,
 } from '~/models';
 import { unitTest } from '~/tests';
 import { ID, NumericID, UUID } from '~/value-objects';

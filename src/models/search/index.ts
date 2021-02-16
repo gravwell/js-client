@@ -7,10 +7,12 @@
  **************************************************************************/
 
 export * from './data-explorer-entry';
-export * from './field-filter-operation';
+export * from './element-filter';
+export * from './element-filter-operation';
 export * from './is-search2';
 export * from './is-valid-search';
 export * from './raw-data-explorer-entry';
+export * from './raw-element-filter';
 export * from './raw-search';
 export * from './raw-search-entry';
 export * from './raw-search-message-received';
@@ -23,6 +25,8 @@ export * from './search-message-commands';
 export * from './search-stats';
 export * from './search-subscription';
 export * from './search2';
+export * from './to-element-filter';
 export * from './to-search';
 export * from './to-search-entries';
 export * from './to-search2';
+export * from './validated-query';
