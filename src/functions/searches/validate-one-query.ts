@@ -24,7 +24,7 @@ export const makeValidateOneQuery = (context: APIContext) => {
 		const validationP = querySub.received$
 			.pipe(
 				filter(msg => msg.id === id),
-				map(msg => pick(msg, ['isValid', 'error']) as ValidatedQuery),
+				map(msg => pick(msg, ['isValid', 'error', 'query']) as ValidatedQuery),
 				first(),
 			)
 			.toPromise();
