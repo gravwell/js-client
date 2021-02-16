@@ -19,6 +19,7 @@ export interface SearchStats {
 	duration: string;
 	start: Date;
 	end: Date;
+	minZoomWindow: number;
 
 	pipeline: Array<{
 		module: string;
