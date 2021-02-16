@@ -17,6 +17,7 @@ export const toGeneratedAutoExtractors = (raw: RawGeneratedAutoExtractors): Gene
 	mapValues(raw, extractors =>
 		extractors.map(
 			(ex): GeneratedAutoExtractor => ({
+				confidence: ex.Confidence,
 				entries: ex.Entries.map(toSearchEntry),
 				explorerEntries: ex.Explore.map(toDataExplorerEntry),
 				autoExtractor: toAutoExtractor(ex.Extractor),
