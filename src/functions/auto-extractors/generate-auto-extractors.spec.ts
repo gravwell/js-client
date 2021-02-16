@@ -7,7 +7,7 @@
  **************************************************************************/
 
 import { addMinutes } from 'date-fns';
-import { chain } from 'lodash';
+import { chain, isUndefined } from 'lodash';
 import { last, map, takeWhile } from 'rxjs/operators';
 import { v4 as uuidv4 } from 'uuid';
 import { RawSearchEntries } from '~/models';
@@ -81,6 +81,10 @@ describe('generateAutoExtractors()', () => {
 			exploreResults['json'].forEach(ax => {
 				expect(ax.autoExtractor.tag).withContext('the suggested AX tag should match the provided tag').toEqual(tag);
 				expect(ax.autoExtractor.module).withContext('the suggested AX module should be json').toEqual('json');
+				// TODO remove this check-for-undefined when 4.1.4 hits
+				if (!isUndefined(ax.confidence)) {
+					expect(ax.confidence).withContext('json is the right module, so its confidence should be 10').toEqual(10);
+				}
 				expect(ax.autoExtractor.parameters)
 					.withContext('the suggested AX module should break out the fields in the entries')
 					.toEqual('timestamp value');
@@ -105,6 +109,10 @@ describe('generateAutoExtractors()', () => {
 					ax.explorerEntries.forEach(exploreEntry => {
 						expect(exploreEntry.elements).withContext('non-json AXes should have no elements').toEqual([]);
 					});
+					// TODO remove this check-for-undefined when 4.1.4 hits
+					if (!isUndefined(ax.confidence)) {
+						expect(ax.confidence).withContext('json is the right module, every other module should be 0').toEqual(0);
+					}
 				});
 		}),
 		25000,
