@@ -70,6 +70,10 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 			},
 			// *NOTE: The default granularity is recalculate when we receive the renderer type
 			desiredGranularity: options.filter?.desiredGranularity ?? 100,
+
+			overviewGranularity: options.filter?.overviewGranularity ?? 90,
+
+			zoomGranularity: options.filter?.zoomGranularity ?? 90,
 		};
 
 		const searchInitMsgP = promiseProgrammatically<RawSearchInitiatedMessageReceived>();
@@ -155,6 +159,9 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 						end: curr.dateRange?.end ?? prev.dateRange?.end ?? initialFilter.dateRange.end,
 					},
 					desiredGranularity: curr.desiredGranularity ?? prev.desiredGranularity ?? initialFilter.desiredGranularity,
+					overviewGranularity:
+						curr.overviewGranularity ?? prev.overviewGranularity ?? initialFilter.overviewGranularity,
+					zoomGranularity: curr.zoomGranularity ?? prev.zoomGranularity ?? initialFilter.zoomGranularity,
 				}),
 			),
 			distinctUntilChanged((a, b) => isEqual(a, b)),
@@ -187,7 +194,7 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 				data: {
 					ID: SearchMessageCommands.RequestAllStats,
 					// TODO: That's what we send in the gravgui, IDK why
-					Stats: { SetCount: 90 },
+					Stats: { SetCount: filter.overviewGranularity },
 				},
 			};
 			const statsP = rawSubscription.send(requestStatsMessage);
@@ -204,7 +211,7 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 					ID: SearchMessageCommands.RequestStatsInRange,
 					Stats: {
 						// TODO: That's what we send in the gravgui for zoom granularity
-						SetCount: 90,
+						SetCount: filter.zoomGranularity,
 						SetEnd: end,
 						SetStart: start,
 					},
