@@ -193,7 +193,6 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 				type: searchTypeID,
 				data: {
 					ID: SearchMessageCommands.RequestAllStats,
-					// TODO: That's what we send in the gravgui, IDK why
 					Stats: { SetCount: filter.overviewGranularity },
 				},
 			};
@@ -210,7 +209,6 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 				data: {
 					ID: SearchMessageCommands.RequestStatsInRange,
 					Stats: {
-						// TODO: That's what we send in the gravgui for zoom granularity
 						SetCount: filter.zoomGranularity,
 						SetEnd: end,
 						SetStart: start,
