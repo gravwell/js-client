@@ -329,7 +329,15 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 
 		const statsZoom$ = rawStatsZoom$.pipe(map(set => countEntriesFromModules(set)));
 
-		return { progress$, entries$, stats$, statsOverview$, statsZoom$, setFilter };
+		return {
+			progress$,
+			entries$,
+			stats$,
+			statsOverview$,
+			statsZoom$,
+			setFilter,
+			searchID: searchInitMsg.data.SearchID.toString(),
+		};
 	};
 };
 
