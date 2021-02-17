@@ -6,10 +6,12 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { ValidatedQuery } from '~/models/search';
+import { makeExploreOneTag } from '~/functions/searches/explore-one-tag';
+import { APIContext } from '~/functions/utils';
+import { ExplorerService } from './service';
 
-export interface QueriesService {
-	readonly validate: {
-		readonly one: (query: string) => Promise<ValidatedQuery>;
-	};
-}
+export const createExplorerService = (context: APIContext): ExplorerService => ({
+	explore: {
+		one: makeExploreOneTag(context),
+	},
+});

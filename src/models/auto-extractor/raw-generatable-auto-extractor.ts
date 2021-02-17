@@ -6,10 +6,10 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { ValidatedQuery } from '~/models/search';
+import { RawSearchEntry } from '~/models/search';
 
-export interface QueriesService {
-	readonly validate: {
-		readonly one: (query: string) => Promise<ValidatedQuery>;
-	};
+// GenerateAXRequest in Go
+export interface RawGeneratableAutoExtractor {
+	Tag: string;
+	Entries: Array<RawSearchEntry>;
 }

@@ -18,6 +18,8 @@ import {
 	RawSearchMessageReceivedRequestEntriesWithinRangeTableRenderer,
 	RawSearchMessageReceivedRequestEntriesWithinRangeTextRenderer,
 } from './raw-search-message-received';
+import { SearchEntry } from './search-entry';
+import { toSearchEntry } from './to-search-entry';
 
 export type SearchEntries =
 	| ChartSearchEntries
@@ -244,19 +246,10 @@ export interface RawSearchEntries extends BaseSearchEntries {
 
 	// TODO
 	names: Array<string>;
-	data: Array<{
-		/** IP */
-		source: string;
-		timestamp: Date;
-		tag: string;
-		value: string;
-
-		// ?QUESTION: .Enumerated? What's that for?
-		// Enumerated: Array<EnumeratedPair>;
-	}>;
+	data: Array<SearchEntry>;
 }
 
-export const normalizeToRawSearchEntriess = (
+export const normalizeToRawSearchEntries = (
 	v: RawSearchMessageReceivedRequestEntriesWithinRangeRawRenderer,
 ): RawSearchEntries => {
 	return {
@@ -265,12 +258,7 @@ export const normalizeToRawSearchEntriess = (
 		finished: v.Finished,
 		type: 'raw',
 		names: ['RAW'],
-		data: (v.Entries ?? []).map(rawEntry => ({
-			source: rawEntry.SRC,
-			timestamp: new Date(rawEntry.TS),
-			tag: rawEntry.Tag,
-			value: rawEntry.Data,
-		})),
+		data: (v.Entries ?? []).map(toSearchEntry),
 	};
 };
 
@@ -283,7 +271,7 @@ export interface TextSearchEntries extends BaseSearchEntries {
 		/** IP */
 		source: string;
 		timestamp: Date;
-		tag: string;
+		tag: number;
 		value: string;
 
 		// ?QUESTION: .Enumerated? What's that for?

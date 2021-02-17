@@ -21,7 +21,6 @@ import {
 	SystemStatusCategory,
 	SystemStatusMessageReceived,
 	SystemStatusMessageSent,
-	ValidatedQuery,
 } from '~/functions';
 import { APISubscription, downloadFromURL, DownloadReturn, File } from '~/functions/utils';
 import {
@@ -47,7 +46,9 @@ import {
 	CreatableTemplate,
 	CreatableUser,
 	Dashboard,
+	DataExplorerEntry,
 	FileMetadata,
+	GeneratedAutoExtractors,
 	Group,
 	InstallableKit,
 	KitInstallationStatus,
@@ -91,10 +92,12 @@ import {
 	User,
 	UserPreferences,
 	UserSessions,
+	ValidatedQuery,
 } from '~/models';
 import { unitTest } from '~/tests';
 import { ID, NumericID, UUID } from '~/value-objects';
 import { GravwellClient } from './client';
+import { GeneratableAutoExtractor } from './models/auto-extractor/generatable-auto-extractor';
 
 describe('GravwellClient', () => {
 	it(
@@ -325,6 +328,9 @@ describe('GravwellClient', () => {
 			expectTypeOf(client.autoExtractors.get.validModules).toEqualTypeOf<() => Promise<Array<AutoExtractorModule>>>();
 			expectTypeOf(client.autoExtractors.get.all).toEqualTypeOf<() => Promise<Array<AutoExtractor>>>();
 			expectTypeOf(client.autoExtractors.get.authorizedTo.me).toEqualTypeOf<() => Promise<Array<AutoExtractor>>>();
+			expectTypeOf(client.autoExtractors.guess.many).toEqualTypeOf<
+				(data: GeneratableAutoExtractor) => Promise<GeneratedAutoExtractors>
+			>();
 			expectTypeOf(client.autoExtractors.create.one).toEqualTypeOf<
 				(data: CreatableAutoExtractor) => Promise<AutoExtractor>
 			>();
@@ -423,6 +429,9 @@ describe('GravwellClient', () => {
 
 			// Queries
 			expectTypeOf(client.queries.validate.one).toEqualTypeOf<(query: Query) => Promise<ValidatedQuery>>();
+
+			// Explorer
+			expectTypeOf(client.explorer.explore.one).toEqualTypeOf<(tag: string) => Promise<Array<DataExplorerEntry>>>();
 		}),
 	);
 });

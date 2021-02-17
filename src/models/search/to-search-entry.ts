@@ -6,10 +6,12 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { ValidatedQuery } from '~/models/search';
+import { RawSearchEntry } from './raw-search-entry';
+import { SearchEntry } from './search-entry';
 
-export interface QueriesService {
-	readonly validate: {
-		readonly one: (query: string) => Promise<ValidatedQuery>;
-	};
-}
+export const toSearchEntry = (raw: RawSearchEntry): SearchEntry => ({
+	source: raw.SRC,
+	timestamp: new Date(raw.TS),
+	tag: raw.Tag,
+	value: raw.Data,
+});

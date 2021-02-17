@@ -6,10 +6,4 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { ValidatedQuery } from '~/models/search';
-
-export interface QueriesService {
-	readonly validate: {
-		readonly one: (query: string) => Promise<ValidatedQuery>;
-	};
-}
+export * from './explore-one-tag';

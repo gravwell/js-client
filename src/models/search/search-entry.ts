@@ -6,10 +6,13 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { ValidatedQuery } from '~/models/search';
+export interface SearchEntry {
+	/** IP */
+	source: string;
+	timestamp: Date;
+	tag: number;
+	value: string;
 
-export interface QueriesService {
-	readonly validate: {
-		readonly one: (query: string) => Promise<ValidatedQuery>;
-	};
+	// ?QUESTION: .Enumerated? What's that for?
+	// Enumerated: Array<EnumeratedPair>;
 }

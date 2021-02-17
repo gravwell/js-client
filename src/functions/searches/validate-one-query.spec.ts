@@ -16,7 +16,7 @@ describe('validateOneQuery()', () => {
 			const validateOneQuery = makeValidateOneQuery(TEST_BASE_API_CONTEXT);
 			const query = 'tag=netflow netflow Src';
 			const validation = await validateOneQuery(query);
-			expect(validation).toEqual({ isValid: true, error: null });
+			expect(validation).toEqual({ query, isValid: true, error: null });
 		}),
 	);
 
@@ -27,6 +27,7 @@ describe('validateOneQuery()', () => {
 			const query = 'tag=non-existant';
 			const validation = await validateOneQuery(query);
 			expect(validation).toEqual({
+				query,
 				isValid: false,
 				error: { message: 'Could not match tag spec non-existant against any known tags', module: 0 },
 			});

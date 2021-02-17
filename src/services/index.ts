@@ -11,6 +11,7 @@ export * from './auth';
 export * from './auto-extractors';
 export * from './dashboards';
 export * from './entries';
+export * from './explorer';
 export * from './files';
 export * from './groups';
 export * from './indexers';

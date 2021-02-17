@@ -8,28 +8,30 @@
 
 import { isNull, pick } from 'lodash';
 import { filter, first, map } from 'rxjs/operators';
-import { Query, ValidatedQuery } from '~/models';
-import { APIContext } from '../utils';
+import { APIContext } from '~/functions/utils';
+import { ElementFilter, Query, ValidatedQuery } from '~/models';
 import { makeSubscribeToOneQueryParsing } from './subscribe-to-query-parsing';
 
-export const makeValidateOneQuery = (context: APIContext) => {
-	const subscribeToOneQueryValidation = makeSubscribeToOneQueryParsing(context);
-	let querySubP: ReturnType<typeof subscribeToOneQueryValidation> | null = null;
+export const makeModifyOneQuery = (context: APIContext) => {
+	const subscribeToOneQueryParsing = makeSubscribeToOneQueryParsing(context);
+	let querySubP: ReturnType<typeof subscribeToOneQueryParsing> | null = null;
 
-	return async (query: Query): Promise<ValidatedQuery> => {
-		if (isNull(querySubP)) querySubP = subscribeToOneQueryValidation();
+	return async (query: Query, filters: Array<ElementFilter>): Promise<Query> => {
+		if (isNull(querySubP)) querySubP = subscribeToOneQueryParsing();
 		const querySub = await querySubP;
 		const id = SEARCH_SOCKET_ID_GENERATOR.generate();
 
-		const validationP = querySub.received$
+		const parsingP = querySub.received$
 			.pipe(
 				filter(msg => msg.id === id),
 				map(msg => pick(msg, ['isValid', 'error', 'query']) as ValidatedQuery),
 				first(),
 			)
 			.toPromise();
-		querySub.send({ id, query, filters: [] });
-		return validationP;
+		querySub.send({ id, query, filters });
+
+		const parsed = await parsingP;
+		return parsed.query;
 	};
 };
 

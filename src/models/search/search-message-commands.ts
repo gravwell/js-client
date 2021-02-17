@@ -16,6 +16,9 @@ export enum SearchMessageCommands {
 	RequestEntries = 0x10, // Named REQ_GET_ENTRIES on docs
 	RequestEntriesWithinRange = 0x12, // Named REQ_TS_RANGE on docs
 
+	RequestExplorerEntries = 0xf010, // Named REQ_GET_EXPLORE_ENTRIES on docs
+	RequestExplorerEntriesWithinRange = 0xf012, // Named REQ_EXPLORE_TS_RANGE on docs
+
 	RequestEntryCount = 0x3, // Named REQUEST_ENTRY_COUNT on docs
 	RequestDetails = 0x4, // Named REQUEST_DETAILS on docs
 	RequestTags = 0x5, // Named REQUEST_TAGS on docs

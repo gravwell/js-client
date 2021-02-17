@@ -6,5 +6,5 @@
 		"lib": ["ES2020", "DOM"]
 	},
 	"include": ["../src/**/*"],
-	"exclude": ["../src/**/*.node.ts"]
+	"exclude": ["../src/**/*.node.ts", "../src/**/*.node.spec.ts"]
 }

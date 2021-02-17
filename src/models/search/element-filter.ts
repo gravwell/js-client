@@ -6,10 +6,13 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { ValidatedQuery } from '~/models/search';
+import { ElementFilterOperation } from './element-filter-operation';
 
-export interface QueriesService {
-	readonly validate: {
-		readonly one: (query: string) => Promise<ValidatedQuery>;
-	};
+export interface ElementFilter {
+	tag: string;
+	module: string;
+
+	path: string;
+	operation: ElementFilterOperation;
+	value: string;
 }

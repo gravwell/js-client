@@ -8,7 +8,7 @@
 
 import { ScheduledScriptsFilter } from '~/functions/scheduled-tasks';
 import { ScheduledTasksFilter } from '~/functions/scheduled-tasks/get-many-scheduled-tasks';
-import { CreatableScheduledScript, ScheduledScript, UpdatableScheduledQuery } from '~/models/scheduled-task';
+import { CreatableScheduledScript, ScheduledScript, UpdatableScheduledScript } from '~/models/scheduled-task';
 
 export interface ScheduledScriptsService {
 	readonly get: {
@@ -26,7 +26,7 @@ export interface ScheduledScriptsService {
 	};
 
 	readonly update: {
-		readonly one: (data: UpdatableScheduledQuery) => Promise<ScheduledScript>;
+		readonly one: (data: UpdatableScheduledScript) => Promise<ScheduledScript>;
 	};
 
 	readonly delete: {

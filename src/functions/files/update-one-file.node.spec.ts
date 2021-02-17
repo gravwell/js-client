@@ -7,6 +7,7 @@
  **************************************************************************/
 
 import { createReadStream, ReadStream } from 'fs';
+import { omit } from 'lodash';
 import { join } from 'path';
 import { CreatableFile, FileMetadata, isFileMetadata, UpdatableFile } from '~/models';
 import { integrationTest, myCustomMatchers, TEST_ASSETS_PATH, TEST_BASE_API_CONTEXT } from '~/tests';
@@ -83,11 +84,9 @@ describe('updateOneFile()', () => {
 					const actualContent = await getOneFileContent(data.id);
 					expect(actualContent).toBe(expectedContent);
 				}
-				delete data.file;
-				delete data.id;
 
 				expect(isFileMetadata(updated)).toBeTrue();
-				expect(updated).toPartiallyEqual(data);
+				expect(updated).toPartiallyEqual(omit(data, ['file', 'id']));
 			}),
 			20000,
 		);

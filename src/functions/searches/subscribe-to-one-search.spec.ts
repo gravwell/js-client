@@ -300,5 +300,148 @@ describe('subscribeToOneSearch()', () => {
 			}),
 			25000,
 		);
+
+		it(
+			'Should provide the minimum zoom window',
+			integrationTest(async () => {
+				const subscribeToOneSearch = makeSubscribeToOneSearch(TEST_BASE_API_CONTEXT);
+
+				const range: [Date, Date] = [start, end];
+
+				// Issue a query where the minzoomwindow is predictable (1 second)
+				const query1s = `tag=${tag} json value | stats mean(value) over 1s`;
+				const search1s = await subscribeToOneSearch(query1s, range, {
+					filter: { entriesOffset: { index: 0, count: count } },
+				});
+
+				const stats1s = await search1s.stats$
+					.pipe(
+						takeWhile(e => !e.finished, true),
+						last(),
+					)
+					.toPromise();
+
+				expect(stats1s.minZoomWindow).toEqual(1);
+
+				// Issue a query where the minzoomwindow is predictable (33 seconds, why not)
+				const query33s = `tag=${tag} json value | stats mean(value) over 33s`;
+				const search33s = await subscribeToOneSearch(query33s, range, {
+					filter: { entriesOffset: { index: 0, count: count } },
+				});
+
+				const stats33s = await search33s.stats$
+					.pipe(
+						takeWhile(e => !e.finished, true),
+						last(),
+					)
+					.toPromise();
+
+				expect(stats33s.minZoomWindow).toEqual(33);
+			}),
+			25000,
+		);
+
+		it(
+			'Should adjust when the zoom window adjusts with a different granularity',
+			integrationTest(async () => {
+				const subscribeToOneSearch = makeSubscribeToOneSearch(TEST_BASE_API_CONTEXT);
+				const query = `tag=${tag}`;
+				const range: [Date, Date] = [start, end];
+				const search = await subscribeToOneSearch(query, range, {
+					filter: { entriesOffset: { index: 0, count: count } },
+				});
+
+				let [statsOverview, statsZoom] = await Promise.all([
+					search.statsOverview$.pipe(first()).toPromise(),
+					search.statsZoom$.pipe(first()).toPromise(),
+				]);
+
+				expect(sum(statsOverview.map(x => x.count)))
+					.withContext('The sum of counts from statsOverview should equal the total count ingested')
+					.toEqual(count);
+				expect(sum(statsZoom.map(x => x.count)))
+					.withContext('The sum of counts from statsZoom should equal the total count ingested')
+					.toEqual(count);
+
+				// the default
+				expect(statsZoom.length).withContext('statsZoom should start with the default granularity').toEqual(90);
+
+				const delta = 500;
+
+				// Narrow the search window by moving the end date sooner by delta minutes using new granularity
+				const newZoomGranularity = 133;
+				search.setFilter({ dateRange: { start, end: subMinutes(end, delta) }, zoomGranularity: newZoomGranularity });
+
+				[statsOverview, statsZoom] = await Promise.all([
+					search.statsOverview$.pipe(first()).toPromise(),
+					search.statsZoom$.pipe(first()).toPromise(),
+				]);
+
+				expect(sum(statsOverview.map(x => x.count)))
+					.withContext('The sum of counts from statsOverview should stay the same (total ingested)')
+					.toEqual(count);
+				expect(sum(statsZoom.map(x => x.count)))
+					.withContext('The sum of counts from statsZoom should be 500 less than total count ingested')
+					.toEqual(count - delta);
+
+				expect(statsZoom.length).withContext('statsZoom should use the new granularity').toEqual(newZoomGranularity);
+				expect(statsOverview.length).withContext('statsZoom should use the default granularity').toEqual(90);
+			}),
+			25000,
+		);
+
+		it(
+			'Should adjust zoom granularity and overview granularity independently',
+			integrationTest(async () => {
+				const subscribeToOneSearch = makeSubscribeToOneSearch(TEST_BASE_API_CONTEXT);
+				const query = `tag=${tag}`;
+				const range: [Date, Date] = [start, end];
+				const overviewGranularity = 133;
+				const search = await subscribeToOneSearch(query, range, {
+					filter: { entriesOffset: { index: 0, count: count }, overviewGranularity },
+				});
+
+				let [statsOverview, statsZoom] = await Promise.all([
+					search.statsOverview$.pipe(first()).toPromise(),
+					search.statsZoom$.pipe(first()).toPromise(),
+				]);
+
+				expect(sum(statsOverview.map(x => x.count)))
+					.withContext('The sum of counts from statsOverview should equal the total count ingested')
+					.toEqual(count);
+				expect(sum(statsZoom.map(x => x.count)))
+					.withContext('The sum of counts from statsZoom should equal the total count ingested')
+					.toEqual(count);
+
+				expect(statsOverview.length)
+					.withContext('statsZoom should start with the default granularity')
+					.toEqual(overviewGranularity);
+				expect(statsZoom.length).withContext('statsZoom should start with the default granularity').toEqual(90);
+
+				const delta = 500;
+
+				// Narrow the search window by moving the end date sooner by delta minutes using a new zoom granularity
+				const newZoomGranularity = 133;
+				search.setFilter({ dateRange: { start, end: subMinutes(end, delta) }, zoomGranularity: newZoomGranularity });
+
+				[statsOverview, statsZoom] = await Promise.all([
+					search.statsOverview$.pipe(first()).toPromise(),
+					search.statsZoom$.pipe(first()).toPromise(),
+				]);
+
+				expect(sum(statsOverview.map(x => x.count)))
+					.withContext('The sum of counts from statsOverview should stay the same (total ingested)')
+					.toEqual(count);
+				expect(sum(statsZoom.map(x => x.count)))
+					.withContext('The sum of counts from statsZoom should be 500 less than total count ingested')
+					.toEqual(count - delta);
+
+				expect(statsZoom.length).withContext('statsZoom should use the new granularity').toEqual(newZoomGranularity);
+				expect(statsOverview.length)
+					.withContext('statsZoom should use the default granularity')
+					.toEqual(overviewGranularity);
+			}),
+			25000,
+		);
 	});
 });

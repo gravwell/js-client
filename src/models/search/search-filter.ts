@@ -40,13 +40,16 @@ export interface SearchFilter {
 
 	desiredGranularity?: number;
 
-	// TODO: Implement field filters
-	// fieldFilters?: Array<FieldFilter>;
-}
+	/**
+	 * The number of bins to use when requesting search stats over the original query range
+	 */
+	overviewGranularity?: number;
 
-export type FieldFilterOperation = 'EQ' | 'NEQ' | 'GT' | 'LT' | 'GTE' | 'LTE';
-export interface FieldFilter {
-	field: string;
-	operation: FieldFilterOperation;
-	value: string;
+	/**
+	 * The number of bins to use when requesting search stats over a modified (zoomed) query range
+	 */
+	zoomGranularity?: number;
+
+	// TODO
+	// elementFilters?: Array<ElementFilter>;
 }
