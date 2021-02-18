@@ -6,7 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { isBoolean, isEqual, isNil, isNull, isUndefined, last } from 'lodash';
+import { isBoolean, isEqual, isNil, isNull, isUndefined, last, uniqueId } from 'lodash';
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import { bufferCount, distinctUntilChanged, filter, first, map, startWith, tap } from 'rxjs/operators';
 import {
@@ -59,6 +59,7 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 	): Promise<SearchSubscription> => {
 		if (isNull(rawSubscriptionP)) rawSubscriptionP = subscribeToOneRawSearch();
 		const rawSubscription = await rawSubscriptionP;
+
 		const initialFilter = {
 			entriesOffset: {
 				index: options.filter?.entriesOffset?.index ?? 0,
@@ -75,6 +76,10 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 
 			zoomGranularity: options.filter?.zoomGranularity ?? 90,
 		};
+		const initialFilterID = uniqueId('search-filter-');
+
+		const filtersByID: Record<string, SearchFilter | undefined> = {};
+		filtersByID[initialFilterID] = initialFilter;
 
 		const searchInitMsgP = promiseProgrammatically<RawSearchInitiatedMessageReceived>();
 		rawSubscription.received$
@@ -103,6 +108,7 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 		rawSubscription.send(<RawInitiateSearchMessageSent>{
 			type: 'search',
 			data: {
+				Addendum: { filterID: initialFilterID },
 				Background: false,
 				Metadata: options.metadata ?? {},
 				SearchStart: range[0].toISOString(),
@@ -168,6 +174,9 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 		);
 
 		const requestEntries = async (filter: RequiredSearchFilter): Promise<void> => {
+			const filterID = uniqueId('search-filter-');
+			filtersByID[filterID] = filter;
+
 			const first = filter.entriesOffset.index;
 			const last = first + filter.entriesOffset.count;
 			const start = filter.dateRange.start.toISOString();
@@ -178,7 +187,7 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 				type: searchTypeID,
 				data: {
 					ID: SearchMessageCommands.RequestEntriesWithinRange,
-					Addendum: {},
+					Addendum: { filterID },
 					EntryRange: {
 						First: first,
 						Last: last,
@@ -193,6 +202,7 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 				type: searchTypeID,
 				data: {
 					ID: SearchMessageCommands.RequestAllStats,
+					Addendum: { filterID },
 					Stats: { SetCount: filter.overviewGranularity },
 				},
 			};
@@ -200,7 +210,7 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 
 			const requestDetailsMsg: RawRequestSearchDetailsMessageSent = {
 				type: searchTypeID,
-				data: { ID: SearchMessageCommands.RequestDetails },
+				data: { ID: SearchMessageCommands.RequestDetails, Addendum: { filterID } },
 			};
 			const detailsP = rawSubscription.send(requestDetailsMsg);
 
@@ -208,6 +218,7 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 				type: searchTypeID,
 				data: {
 					ID: SearchMessageCommands.RequestStatsInRange,
+					Addendum: { filterID },
 					Stats: {
 						SetCount: filter.zoomGranularity,
 						SetEnd: end,
