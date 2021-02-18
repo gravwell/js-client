@@ -68,7 +68,7 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 				start: options.filter?.dateRange?.start ?? range[0],
 				end: options.filter?.dateRange?.end ?? range[1],
 			},
-			// *NOTE: The default granularity is recalculate when we receive the renderer type
+			// *NOTE: The default granularity is recalculated when we receive the renderer type
 			desiredGranularity: options.filter?.desiredGranularity ?? 100,
 
 			overviewGranularity: options.filter?.overviewGranularity ?? 90,

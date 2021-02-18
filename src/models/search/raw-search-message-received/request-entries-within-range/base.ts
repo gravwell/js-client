@@ -6,12 +6,13 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
+import { RawJSON } from '~/value-objects';
 import { RawDataExplorerEntry } from '../../raw-data-explorer-entry';
 import { SearchMessageCommands } from '../../search-message-commands';
 
 export interface RawSearchMessageReceivedRequestEntriesWithinRangeBaseData {
 	ID: SearchMessageCommands.RequestEntriesWithinRange;
-	Addendum: { customView?: string };
+	Addendum?: RawJSON;
 	EntryRange: {
 		First: number;
 		Last: number;
