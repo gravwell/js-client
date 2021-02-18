@@ -46,10 +46,38 @@ export interface RawRequestSearchTagsMessageSent {
 	data: { ID: SearchMessageCommands.RequestTags; Addendum?: RawJSON };
 }
 
+export interface RawRequestSearchEntriesMessageSent {
+	type: string; // Search subtype ID eg. "search2"
+	data: {
+		ID: SearchMessageCommands.RequestEntries;
+		Addendum?: RawJSON;
+		EntryRange: {
+			First: number;
+			Last: number;
+			StartTS: string; // timestamp
+			EndTS: string; // timestamp
+		};
+	};
+}
+
 export interface RawRequestSearchEntriesWithinRangeMessageSent {
 	type: string; // Search subtype ID eg. "search2"
 	data: {
 		ID: SearchMessageCommands.RequestEntriesWithinRange;
+		Addendum?: RawJSON;
+		EntryRange: {
+			First: number;
+			Last: number;
+			StartTS: string; // timestamp
+			EndTS: string; // timestamp
+		};
+	};
+}
+
+export interface RawRequestExplorerSearchEntriesMessageSent {
+	type: string; // Search subtype ID eg. "search2"
+	data: {
+		ID: SearchMessageCommands.RequestExplorerEntries;
 		Addendum?: RawJSON;
 		EntryRange: {
 			First: number;
@@ -78,6 +106,7 @@ export interface RawRequestSearchStatsMessageSent {
 	type: string; // Search subtype ID eg. "search2"
 	data: {
 		ID: SearchMessageCommands.RequestAllStats;
+		Addendum?: RawJSON;
 		Stats: { SetCount: number };
 	};
 }
@@ -118,7 +147,9 @@ export type RawSearchMessageSent =
 	| RawRequestSearchCloseMessageSent
 	| RawRequestSearchDetailsMessageSent
 	| RawRequestSearchTagsMessageSent
+	| RawRequestSearchEntriesMessageSent
 	| RawRequestSearchEntriesWithinRangeMessageSent
+	| RawRequestExplorerSearchEntriesMessageSent
 	| RawRequestExplorerSearchEntriesWithinRangeMessageSent
 	| RawRequestSearchStatsMessageSent
 	| RawRequestSearchStatsWithinRangeMessageSent
