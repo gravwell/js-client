@@ -140,7 +140,14 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 					return false;
 				}
 			}),
-			map(msg => toSearchEntries(rendererType, msg)),
+			map(
+				(msg): SearchEntries => {
+					const base = toSearchEntries(rendererType, msg);
+					const filterID = msg.data.Addendum?.filterID as string;
+					const filter = filtersByID[filterID] ?? null;
+					return { ...base, filter } as SearchEntries;
+				},
+			),
 			tap(entries => {
 				const defDesiredGranularity = getDefaultGranularityByRendererType(entries.type);
 				initialFilter.desiredGranularity = defDesiredGranularity;
@@ -148,8 +155,8 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 		);
 
 		const _filter$ = new BehaviorSubject<SearchFilter>(initialFilter);
-		const setFilter = (filter: SearchFilter) => {
-			_filter$.next(filter);
+		const setFilter = (filter: SearchFilter | null) => {
+			_filter$.next(filter ?? initialFilter);
 		};
 		const filter$ = _filter$.asObservable().pipe(
 			startWith<SearchFilter>(initialFilter),
@@ -272,6 +279,12 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 		const stats$ = combineLatest(rawSearchStats$, rawSearchDetails$).pipe(
 			map(
 				([rawStats, rawDetails]): SearchStats => {
+					const filterID =
+						(rawStats.data.Addendum?.filterID as string) ??
+						(rawDetails.data.Addendum?.filterID as string) ??
+						initialFilterID;
+					const filter = filtersByID[filterID] ?? null;
+
 					const pipeline = rawStats.data.Stats.Set.map(s => s.Stats)
 						.reduce<
 							Array<Array<RawResponseForSearchStatsMessageReceived['data']['Stats']['Set'][number]['Stats'][number]>>
@@ -315,6 +328,7 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 						id: rawDetails.data.SearchInfo.ID,
 						userID: toNumericID(rawDetails.data.SearchInfo.UID),
 
+						filter,
 						finished: rawStats.data.Finished && rawDetails.data.Finished,
 
 						metadata: searchInitMsg.data.Metadata,
@@ -338,7 +352,13 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 
 		const statsOverview$ = rawSearchStats$.pipe(map(set => countEntriesFromModules(set)));
 
-		const statsZoom$ = rawStatsZoom$.pipe(map(set => countEntriesFromModules(set)));
+		const statsZoom$ = rawStatsZoom$.pipe(
+			map(set => {
+				const filterID = (set.data.Addendum?.filterID as string) ?? initialFilterID;
+				const filter = filtersByID[filterID] ?? null;
+				return { stats: countEntriesFromModules(set), filter };
+			}),
+		);
 
 		return { progress$, entries$, stats$, statsOverview$, statsZoom$, setFilter };
 	};

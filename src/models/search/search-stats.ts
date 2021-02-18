@@ -7,10 +7,13 @@
  **************************************************************************/
 
 import { ID, RawJSON } from '~/value-objects';
+import { SearchFilter } from './search-filter';
 
 export interface SearchStats {
 	id: ID;
 	userID: ID;
+
+	filter: SearchFilter | null;
 
 	finished: boolean;
 
@@ -43,6 +46,11 @@ export interface SearchStats {
 }
 
 export interface SearchFrequencyStats {
+	timestamp: Date;
+	count: number;
+}
+
+export interface FilteredSearchFrequencyStats {
 	timestamp: Date;
 	count: number;
 }

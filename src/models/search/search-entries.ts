@@ -19,6 +19,7 @@ import {
 	RawSearchMessageReceivedRequestEntriesWithinRangeTextRenderer,
 } from './raw-search-message-received';
 import { SearchEntry } from './search-entry';
+import { SearchFilter } from './search-filter';
 import { toSearchEntry } from './to-search-entry';
 
 export type SearchEntries =
@@ -35,6 +36,7 @@ export type SearchEntries =
 
 // TODO: Add render module to entries observable
 export interface BaseSearchEntries {
+	filter: SearchFilter | null;
 	start: Date;
 	end: Date;
 	finished: boolean;
@@ -53,7 +55,7 @@ export interface ChartSearchEntries extends BaseSearchEntries {
 
 export const normalizeToChartSearchEntries = (
 	v: RawSearchMessageReceivedRequestEntriesWithinRangeChartRenderer,
-): ChartSearchEntries => {
+): Omit<ChartSearchEntries, 'filter'> => {
 	return {
 		start: new Date(v.EntryRange.StartTS),
 		end: new Date(v.EntryRange.EndTS),
@@ -78,7 +80,7 @@ export interface FDGSearchEntries extends BaseSearchEntries {
 
 export const normalizeToFDGSearchEntries = (
 	v: RawSearchMessageReceivedRequestEntriesWithinRangeFDGRenderer,
-): FDGSearchEntries => {
+): Omit<FDGSearchEntries, 'filter'> => {
 	return {
 		start: new Date(v.EntryRange.StartTS),
 		end: new Date(v.EntryRange.EndTS),
@@ -127,7 +129,7 @@ export interface GaugeSearchEntries extends BaseSearchEntries {
 
 export const normalizeToGaugeSearchEntries = (
 	v: RawSearchMessageReceivedRequestEntriesWithinRangeGaugeRenderer,
-): GaugeSearchEntries => {
+): Omit<GaugeSearchEntries, 'filter'> => {
 	return {
 		start: new Date(v.EntryRange.StartTS),
 		end: new Date(v.EntryRange.EndTS),
@@ -151,7 +153,7 @@ export interface HeatmapSearchEntries extends BaseSearchEntries {
 
 export const normalizeToHeatmapSearchEntries = (
 	v: RawSearchMessageReceivedRequestEntriesWithinRangeHeatmapRenderer,
-): HeatmapSearchEntries => {
+): Omit<HeatmapSearchEntries, 'filter'> => {
 	return {
 		start: new Date(v.EntryRange.StartTS),
 		end: new Date(v.EntryRange.EndTS),
@@ -180,7 +182,7 @@ export interface PointToPointSearchEntries extends BaseSearchEntries {
 
 export const normalizeToPointToPointSearchEntries = (
 	v: RawSearchMessageReceivedRequestEntriesWithinRangePointToPointRenderer,
-): PointToPointSearchEntries => {
+): Omit<PointToPointSearchEntries, 'filter'> => {
 	return {
 		start: new Date(v.EntryRange.StartTS),
 		end: new Date(v.EntryRange.EndTS),
@@ -217,7 +219,7 @@ export interface PointmapSearchEntries extends BaseSearchEntries {
 
 export const normalizeToPointmapSearchEntries = (
 	v: RawSearchMessageReceivedRequestEntriesWithinRangePointmapRenderer,
-): PointmapSearchEntries => {
+): Omit<PointmapSearchEntries, 'filter'> => {
 	return {
 		start: new Date(v.EntryRange.StartTS),
 		end: new Date(v.EntryRange.EndTS),
@@ -251,7 +253,7 @@ export interface RawSearchEntries extends BaseSearchEntries {
 
 export const normalizeToRawSearchEntries = (
 	v: RawSearchMessageReceivedRequestEntriesWithinRangeRawRenderer,
-): RawSearchEntries => {
+): Omit<RawSearchEntries, 'filter'> => {
 	return {
 		start: new Date(v.EntryRange.StartTS),
 		end: new Date(v.EntryRange.EndTS),
@@ -281,7 +283,7 @@ export interface TextSearchEntries extends BaseSearchEntries {
 
 export const normalizeToTextSearchEntries = (
 	v: RawSearchMessageReceivedRequestEntriesWithinRangeTextRenderer,
-): TextSearchEntries => {
+): Omit<TextSearchEntries, 'filter'> => {
 	return {
 		start: new Date(v.EntryRange.StartTS),
 		end: new Date(v.EntryRange.EndTS),
@@ -312,7 +314,7 @@ export interface StackGraphSearchEntries extends BaseSearchEntries {
 
 export const normalizeToStackGraphSearchEntries = (
 	v: RawSearchMessageReceivedRequestEntriesWithinRangeStackGraphRenderer,
-): StackGraphSearchEntries => {
+): Omit<StackGraphSearchEntries, 'filter'> => {
 	return {
 		start: new Date(v.EntryRange.StartTS),
 		end: new Date(v.EntryRange.EndTS),
@@ -341,7 +343,7 @@ export interface TableSearchEntries extends BaseSearchEntries {
 
 export const normalizeToTableSearchEntries = (
 	v: RawSearchMessageReceivedRequestEntriesWithinRangeTableRenderer,
-): TableSearchEntries => {
+): Omit<TableSearchEntries, 'filter'> => {
 	return {
 		start: new Date(v.EntryRange.StartTS),
 		end: new Date(v.EntryRange.EndTS),

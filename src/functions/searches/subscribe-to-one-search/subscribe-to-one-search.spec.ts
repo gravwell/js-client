@@ -187,7 +187,7 @@ describe('subscribeToOneSearch()', () => {
 			expect(sum(statsOverview.map(x => x.count)))
 				.withContext('The sum of counts from statsOverview should equal the total count ingested')
 				.toEqual(count);
-			expect(sum(statsZoom.map(x => x.count)))
+			expect(sum(statsZoom.stats.map(x => x.count)))
 				.withContext('The sum of counts from statsZoom should equal the total count ingested')
 				.toEqual(count);
 		}),
@@ -247,12 +247,12 @@ describe('subscribeToOneSearch()', () => {
 				expect(statsOverview.every(x => x.count == 1))
 					.withContext('Every statsOverview element should be 1 -- 90 entries over 90 minutes')
 					.toBeTrue();
-				expect(sum(statsZoom.map(x => x.count)))
+				expect(sum(statsZoom.stats.map(x => x.count)))
 					.withContext(
 						'The sum of counts from statsZoom should equal the number of minutes -- 90 entries over 90 minutes',
 					)
 					.toEqual(minutes);
-				expect(statsZoom.every(x => x.count == 1))
+				expect(statsZoom.stats.every(x => x.count == 1))
 					.withContext('Every statsZoom element should be 1 -- 90 entries over 90 minutes')
 					.toBeTrue();
 			}),
@@ -277,7 +277,7 @@ describe('subscribeToOneSearch()', () => {
 				expect(sum(statsOverview.map(x => x.count)))
 					.withContext('The sum of counts from statsOverview should equal the total count ingested')
 					.toEqual(count);
-				expect(sum(statsZoom.map(x => x.count)))
+				expect(sum(statsZoom.stats.map(x => x.count)))
 					.withContext('The sum of counts from statsZoom should equal the total count ingested')
 					.toEqual(count);
 
@@ -294,7 +294,7 @@ describe('subscribeToOneSearch()', () => {
 				expect(sum(statsOverview.map(x => x.count)))
 					.withContext('The sum of counts from statsOverview should stay the same (total ingested)')
 					.toEqual(count);
-				expect(sum(statsZoom.map(x => x.count)))
+				expect(sum(statsZoom.stats.map(x => x.count)))
 					.withContext('The sum of counts from statsZoom should be 500 less than total count ingested')
 					.toEqual(count - delta);
 			}),
@@ -359,12 +359,12 @@ describe('subscribeToOneSearch()', () => {
 				expect(sum(statsOverview.map(x => x.count)))
 					.withContext('The sum of counts from statsOverview should equal the total count ingested')
 					.toEqual(count);
-				expect(sum(statsZoom.map(x => x.count)))
+				expect(sum(statsZoom.stats.map(x => x.count)))
 					.withContext('The sum of counts from statsZoom should equal the total count ingested')
 					.toEqual(count);
 
 				// the default
-				expect(statsZoom.length).withContext('statsZoom should start with the default granularity').toEqual(90);
+				expect(statsZoom.stats.length).withContext('statsZoom should start with the default granularity').toEqual(90);
 
 				const delta = 500;
 
@@ -380,11 +380,13 @@ describe('subscribeToOneSearch()', () => {
 				expect(sum(statsOverview.map(x => x.count)))
 					.withContext('The sum of counts from statsOverview should stay the same (total ingested)')
 					.toEqual(count);
-				expect(sum(statsZoom.map(x => x.count)))
+				expect(sum(statsZoom.stats.map(x => x.count)))
 					.withContext('The sum of counts from statsZoom should be 500 less than total count ingested')
 					.toEqual(count - delta);
 
-				expect(statsZoom.length).withContext('statsZoom should use the new granularity').toEqual(newZoomGranularity);
+				expect(statsZoom.stats.length)
+					.withContext('statsZoom should use the new granularity')
+					.toEqual(newZoomGranularity);
 				expect(statsOverview.length).withContext('statsZoom should use the default granularity').toEqual(90);
 			}),
 			25000,
@@ -409,14 +411,14 @@ describe('subscribeToOneSearch()', () => {
 				expect(sum(statsOverview.map(x => x.count)))
 					.withContext('The sum of counts from statsOverview should equal the total count ingested')
 					.toEqual(count);
-				expect(sum(statsZoom.map(x => x.count)))
+				expect(sum(statsZoom.stats.map(x => x.count)))
 					.withContext('The sum of counts from statsZoom should equal the total count ingested')
 					.toEqual(count);
 
 				expect(statsOverview.length)
 					.withContext('statsZoom should start with the default granularity')
 					.toEqual(overviewGranularity);
-				expect(statsZoom.length).withContext('statsZoom should start with the default granularity').toEqual(90);
+				expect(statsZoom.stats.length).withContext('statsZoom should start with the default granularity').toEqual(90);
 
 				const delta = 500;
 
@@ -432,11 +434,13 @@ describe('subscribeToOneSearch()', () => {
 				expect(sum(statsOverview.map(x => x.count)))
 					.withContext('The sum of counts from statsOverview should stay the same (total ingested)')
 					.toEqual(count);
-				expect(sum(statsZoom.map(x => x.count)))
+				expect(sum(statsZoom.stats.map(x => x.count)))
 					.withContext('The sum of counts from statsZoom should be 500 less than total count ingested')
 					.toEqual(count - delta);
 
-				expect(statsZoom.length).withContext('statsZoom should use the new granularity').toEqual(newZoomGranularity);
+				expect(statsZoom.stats.length)
+					.withContext('statsZoom should use the new granularity')
+					.toEqual(newZoomGranularity);
 				expect(statsOverview.length)
 					.withContext('statsZoom should use the default granularity')
 					.toEqual(overviewGranularity);
