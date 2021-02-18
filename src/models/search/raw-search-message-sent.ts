@@ -22,34 +22,35 @@ export interface RawInitiateSearchMessageSent {
 		SearchEnd: string; // timestamp
 		SearchStart: string; // timestamp
 		SearchString: RawQuery;
+		Addendum?: RawJSON;
 	};
 }
 
 export interface RawAcceptSearchMessageSent {
 	type: 'search';
-	data: { OK: true; OutputSearchSubproto: string };
+	data: { OK: true; OutputSearchSubproto: string; Addendum?: RawJSON };
 }
 
 export interface RawRequestSearchCloseMessageSent {
 	type: string; // Search subtype ID eg. "search2"
-	data: { ID: SearchMessageCommands.Close };
+	data: { ID: SearchMessageCommands.Close; Addendum?: RawJSON };
 }
 
 export interface RawRequestSearchDetailsMessageSent {
 	type: string; // Search subtype ID eg. "search2"
-	data: { ID: SearchMessageCommands.RequestDetails };
+	data: { ID: SearchMessageCommands.RequestDetails; Addendum?: RawJSON };
 }
 
 export interface RawRequestSearchTagsMessageSent {
 	type: string; // Search subtype ID eg. "search2"
-	data: { ID: SearchMessageCommands.RequestTags };
+	data: { ID: SearchMessageCommands.RequestTags; Addendum?: RawJSON };
 }
 
 export interface RawRequestSearchEntriesWithinRangeMessageSent {
 	type: string; // Search subtype ID eg. "search2"
 	data: {
 		ID: SearchMessageCommands.RequestEntriesWithinRange;
-		Addendum: { customView?: string };
+		Addendum?: RawJSON;
 		EntryRange: {
 			First: number;
 			Last: number;
@@ -63,7 +64,7 @@ export interface RawRequestExplorerSearchEntriesWithinRangeMessageSent {
 	type: string; // Search subtype ID eg. "search2"
 	data: {
 		ID: SearchMessageCommands.RequestExplorerEntriesWithinRange;
-		Addendum: { customView?: string };
+		Addendum?: RawJSON;
 		EntryRange: {
 			First: number;
 			Last: number;
@@ -85,6 +86,7 @@ export interface RawRequestSearchStatsWithinRangeMessageSent {
 	type: string; // Search subtype ID eg. "search2"
 	data: {
 		ID: SearchMessageCommands.RequestStatsInRange;
+		Addendum?: RawJSON;
 		Stats: {
 			SetCount: number;
 			SetEnd: string; // timestamp
@@ -97,6 +99,7 @@ export interface RawRequestSearchStatsSummaryMessageSent {
 	type: string; // Search subtype ID eg. "search2"
 	data: {
 		ID: SearchMessageCommands.RequestStatsSummary;
+		Addendum?: RawJSON;
 	};
 }
 
@@ -104,6 +107,7 @@ export interface RawRequestSearchStatsLocationMessageSent {
 	type: string; // Search subtype ID eg. "search2"
 	data: {
 		ID: SearchMessageCommands.RequestStatsLocation;
+		Addendum?: RawJSON;
 	};
 }
 
