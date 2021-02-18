@@ -13,9 +13,9 @@ import { first, last, map, takeWhile, toArray } from 'rxjs/operators';
 import { v4 as uuidv4 } from 'uuid';
 import { RawSearchEntries, TextSearchEntries } from '~/models/search/search-entries';
 import { integrationTest, sleep, TEST_BASE_API_CONTEXT } from '~/tests';
-import { makeIngestMultiLineEntry } from '../ingestors/ingest-multi-line-entry';
-import { makeGetAllTags } from '../tags/get-all-tags';
-import { makeSubscribeToOneSearch } from './subscribe-to-one-search/subscribe-to-one-search';
+import { makeIngestMultiLineEntry } from '../../ingestors/ingest-multi-line-entry';
+import { makeGetAllTags } from '../../tags/get-all-tags';
+import { makeSubscribeToOneSearch } from './subscribe-to-one-search';
 
 interface Entry {
 	timestamp: string;
