@@ -7,7 +7,7 @@
  **************************************************************************/
 
 import { Observable } from 'rxjs';
-import { Percentage } from '~/value-objects';
+import { NumericID, Percentage } from '~/value-objects';
 import { SearchEntries } from './search-entries';
 import { SearchFilter } from './search-filter';
 import { FilteredSearchFrequencyStats, SearchFrequencyStats, SearchStats } from './search-stats';
@@ -19,4 +19,5 @@ export interface SearchSubscription {
 	statsOverview$: Observable<Array<SearchFrequencyStats>>;
 	statsZoom$: Observable<{ filter: SearchFilter; stats: Array<FilteredSearchFrequencyStats> }>;
 	setFilter: (filter: SearchFilter | null) => void;
+	searchID: NumericID;
 }

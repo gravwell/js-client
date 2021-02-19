@@ -13,6 +13,7 @@ import {
 	makeSaveOneSearch,
 	makeSubscribeToOneSearch,
 } from '~/functions/searches';
+import { makeStopOneSearch } from '~/functions/searches/stop one-search';
 import { APIContext } from '~/functions/utils';
 import { SearchesService } from './service';
 
@@ -35,5 +36,9 @@ export const createSearchesService = (context: APIContext): SearchesService => (
 
 	create: {
 		one: makeSubscribeToOneSearch(context),
+	},
+
+	stop: {
+		one: makeStopOneSearch(context),
 	},
 });

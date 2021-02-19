@@ -43,4 +43,8 @@ export interface SearchesService {
 			},
 		) => Promise<SearchSubscription>;
 	};
+
+	readonly stop: {
+		readonly one: (searchID: string) => Promise<void>;
+	};
 }

@@ -360,7 +360,15 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 			}),
 		);
 
-		return { progress$, entries$, stats$, statsOverview$, statsZoom$, setFilter };
+		return {
+			progress$,
+			entries$,
+			stats$,
+			statsOverview$,
+			statsZoom$,
+			setFilter,
+			searchID: searchInitMsg.data.SearchID.toString(),
+		};
 	};
 };
 

@@ -239,6 +239,7 @@ describe('GravwellClient', () => {
 			expectTypeOf(client.searches.create.one).toEqualTypeOf<
 				(query: Query, range: [Date, Date], options?: { filter?: Partial<SearchFilter> }) => Promise<SearchSubscription>
 			>();
+			expectTypeOf(client.searches.stop.one).toEqualTypeOf<(searchID: string) => Promise<void>>();
 
 			// Search modules
 			expectTypeOf(client.searchModules.get.all).toEqualTypeOf<() => Promise<Array<SearchModule>>>();
