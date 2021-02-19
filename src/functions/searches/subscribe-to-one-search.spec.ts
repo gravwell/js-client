@@ -138,7 +138,7 @@ describe('subscribeToOneSearch()', () => {
 		'Should work with queries using the raw renderer',
 		integrationTest(async () => {
 			const subscribeToOneSearch = makeSubscribeToOneSearch(TEST_BASE_API_CONTEXT);
-			const query = `tag=${tag}`;
+			const query = `tag=${tag} json value timestamp | raw`;
 			const range: [Date, Date] = [start, end];
 			const search = await subscribeToOneSearch(query, range, {
 				filter: { entriesOffset: { index: 0, count: count } },
@@ -174,7 +174,24 @@ describe('subscribeToOneSearch()', () => {
 				.toEqual(count);
 
 			textEntries.data.forEach((entry, index) => {
-				const value: Entry = JSON.parse(base64.decode(entry.value));
+				const value: Entry = JSON.parse(base64.decode(entry.data));
+				const enumeratedValues = entry.values;
+				const [_timestamp, _value] = enumeratedValues;
+
+				expect(_timestamp).withContext(`Each entry should have an enumerated value called "timestamp"`).toEqual({
+					isEnumerated: true,
+					name: 'timestamp',
+					value: _timestamp.value,
+				});
+
+				expect(_value)
+					.withContext(`Each entry should have an enumerated value called "value"`)
+					.toEqual({
+						isEnumerated: true,
+						name: 'value',
+						value: (count - index - 1).toString(),
+					});
+
 				expect(value.value)
 					.withContext('Each value should match its index, descending')
 					.toEqual(count - index - 1);
@@ -231,7 +248,7 @@ describe('subscribeToOneSearch()', () => {
 				////
 				expect(textEntries.data.length).withContext("Should be 90 entries since it's a 90 minute window").toEqual(90);
 				textEntries.data.forEach((entry, index) => {
-					const value: Entry = JSON.parse(base64.decode(entry.value));
+					const value: Entry = JSON.parse(base64.decode(entry.data));
 					expect(value.value).toEqual(minutes - index - 1);
 				});
 
