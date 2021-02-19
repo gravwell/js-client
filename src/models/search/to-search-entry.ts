@@ -13,5 +13,14 @@ export const toSearchEntry = (raw: RawSearchEntry): SearchEntry => ({
 	source: raw.SRC,
 	timestamp: new Date(raw.TS),
 	tag: raw.Tag,
-	value: raw.Data,
+	data: raw.Data,
+	values: (raw.Enumerated ?? []).map(value => ({
+		name: value.Name,
+		value: value.ValueStr,
+		isEnumerated: isUniversalValue(value.Name) ? false : true,
+	})),
 });
+
+/** Reference https://docs.gravwell.io/#!search/processingmodules.md#Universal_Enumerated_Values */
+const UNIVERSAL_VALUES = new Set(['SRC', 'TAG', 'TIMESTAMP', 'DATA', 'NOW']);
+const isUniversalValue = (name: string): boolean => UNIVERSAL_VALUES.has(name);
