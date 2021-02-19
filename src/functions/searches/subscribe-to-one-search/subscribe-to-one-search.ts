@@ -283,7 +283,7 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 						(rawStats.data.Addendum?.filterID as string) ??
 						(rawDetails.data.Addendum?.filterID as string) ??
 						initialFilterID;
-					const filter = filtersByID[filterID] ?? null;
+					const filter = filtersByID[filterID] ?? initialFilter;
 
 					const pipeline = rawStats.data.Stats.Set.map(s => s.Stats)
 						.reduce<
@@ -355,7 +355,7 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 		const statsZoom$ = rawStatsZoom$.pipe(
 			map(set => {
 				const filterID = (set.data.Addendum?.filterID as string) ?? initialFilterID;
-				const filter = filtersByID[filterID] ?? null;
+				const filter = filtersByID[filterID] ?? initialFilter;
 				return { stats: countEntriesFromModules(set), filter };
 			}),
 		);
