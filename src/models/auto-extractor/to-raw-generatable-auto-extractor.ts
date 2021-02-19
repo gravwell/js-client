@@ -15,7 +15,7 @@ export const toRawGeneratableAutoExtractor = (data: GeneratableAutoExtractor): R
 		TS: e.timestamp.toISOString(),
 		Tag: e.tag,
 		SRC: e.source,
-		Data: e.value,
+		Data: e.data,
 		Enumerated: [],
 	})),
 });
