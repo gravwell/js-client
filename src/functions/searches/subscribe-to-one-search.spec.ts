@@ -127,7 +127,7 @@ describe('subscribeToOneSearch()', () => {
 				.toEqual(1);
 			const lastEntry = textEntries.data[0];
 			expect(lastEntry).toBeDefined();
-			expect(base64.decode(lastEntry.value))
+			expect(base64.decode(lastEntry.data))
 				.withContext('The total count of entries should equal what we ingested')
 				.toEqual(`count ${count}`);
 		}),
