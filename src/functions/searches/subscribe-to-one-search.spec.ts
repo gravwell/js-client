@@ -8,7 +8,7 @@
 
 import * as base64 from 'base-64';
 import { addMinutes, subMinutes } from 'date-fns';
-import { last as lastElt, sum } from 'lodash';
+import { isUndefined, last as lastElt, reverse, sum, zip } from 'lodash';
 import { first, last, map, takeWhile, toArray } from 'rxjs/operators';
 import { v4 as uuidv4 } from 'uuid';
 import { RawSearchEntries, TextSearchEntries } from '~/models/search/search-entries';
@@ -35,12 +35,15 @@ describe('subscribeToOneSearch()', () => {
 	// The end date for generated queries; one minute between each entry
 	const end = addMinutes(start, count - 1);
 
+	const originalData: Array<Entry> = [];
+
 	beforeAll(async () => {
 		// Generate and ingest some entries
 		const ingestMultiLineEntry = makeIngestMultiLineEntry(TEST_BASE_API_CONTEXT);
 		const values: Array<string> = [];
 		for (let i = 0; i < count; i++) {
 			const value: Entry = { timestamp: addMinutes(start, i).toISOString(), value: i };
+			originalData.push(value);
 			values.push(JSON.stringify(value));
 		}
 		const data: string = values.join('\n');
@@ -173,7 +176,12 @@ describe('subscribeToOneSearch()', () => {
 				.withContext('The number of entries should equal the total ingested')
 				.toEqual(count);
 
-			textEntries.data.forEach((entry, index) => {
+			zip(textEntries.data, reverse(originalData)).forEach(([entry, original], index) => {
+				if (isUndefined(entry) || isUndefined(original)) {
+					fail('Exptected all entries and original data to be defined');
+					return;
+				}
+
 				const value: Entry = JSON.parse(base64.decode(entry.data));
 				const enumeratedValues = entry.values;
 				const [_timestamp, _value] = enumeratedValues;
@@ -181,16 +189,14 @@ describe('subscribeToOneSearch()', () => {
 				expect(_timestamp).withContext(`Each entry should have an enumerated value called "timestamp"`).toEqual({
 					isEnumerated: true,
 					name: 'timestamp',
-					value: _timestamp.value,
+					value: original.timestamp,
 				});
 
-				expect(_value)
-					.withContext(`Each entry should have an enumerated value called "value"`)
-					.toEqual({
-						isEnumerated: true,
-						name: 'value',
-						value: (count - index - 1).toString(),
-					});
+				expect(_value).withContext(`Each entry should have an enumerated value called "value"`).toEqual({
+					isEnumerated: true,
+					name: 'value',
+					value: original.value.toString(),
+				});
 
 				expect(value.value)
 					.withContext('Each value should match its index, descending')
