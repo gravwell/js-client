@@ -38,18 +38,20 @@ export interface RawSearchInitiatedMessageReceived {
 		SearchString: RawQuery;
 		Tags: Array<string>;
 		TimeZoomDisabled: boolean;
+		Addendum?: RawJSON;
 	};
 }
 
 export interface RawResponseForSearchCloseMessageReceived {
 	type: string; // Search subtype ID eg. "search2"
-	data: { ID: SearchMessageCommands.Close };
+	data: { ID: SearchMessageCommands.Close; Addendum?: RawJSON };
 }
 
 export interface RawResponseForSearchDetailsMessageReceived {
 	type: string; // Search subtype ID eg. "search2"
 	data: {
 		ID: SearchMessageCommands.RequestDetails;
+		Addendum?: RawJSON;
 		AdditionalEntries: boolean;
 		EntryCount: number;
 		Finished: boolean;
@@ -85,6 +87,7 @@ export interface RawResponseForSearchTagsMessageReceived {
 	type: string; // Search subtype ID eg. "search2"
 	data: {
 		ID: SearchMessageCommands.RequestTags;
+		Addendum?: RawJSON;
 		Finished: boolean;
 		AdditionalEntries: boolean;
 		EntryCount: number;
@@ -147,6 +150,7 @@ export interface RawResponseForSearchStatsMessageReceived {
 	type: string; // Search subtype ID eg. "search2"
 	data: {
 		ID: SearchMessageCommands.RequestAllStats;
+		Addendum?: RawJSON;
 		AdditionalEntries: false;
 		EntryCount: number;
 		Finished: true;
@@ -175,6 +179,7 @@ export interface RawResponseForSearchStatsWithinRangeMessageReceived {
 	type: string; // Search subtype ID eg. "search2"
 	data: {
 		ID: SearchMessageCommands.RequestStatsInRange;
+		Addendum?: RawJSON;
 		AdditionalEntries: false;
 		EntryCount: number;
 		Finished: true;
@@ -203,6 +208,7 @@ export interface RawResponseForSearchStatsSummaryMessageReceived {
 	type: string; // Search subtype ID eg. "search2"
 	data: {
 		ID: SearchMessageCommands.RequestStatsSummary;
+		Addendum?: RawJSON;
 		AdditionalEntries: false;
 		EntryCount: number;
 		Finished: true;
@@ -228,6 +234,7 @@ export interface RawResponseForSearchStatsLocationMessageReceived {
 	type: string; // Search subtype ID eg. "search2"
 	data: {
 		ID: SearchMessageCommands.RequestStatsLocation;
+		Addendum?: RawJSON;
 		AdditionalEntries: false;
 		EntryCount: number;
 		Finished: true;
@@ -241,10 +248,26 @@ export interface RawResponseForSearchStatsLocationMessageReceived {
 	};
 }
 
+export interface RawSearchMessageReceivedRequestEntries {
+	type: string; // Search subtype ID eg. "search2"
+	data: Omit<RawSearchMessageReceivedRequestEntriesWithinRangeData, 'ID'> & {
+		ID: SearchMessageCommands.RequestEntries;
+	};
+}
+export interface RawSearchMessageReceivedRequestExplorerEntries {
+	type: string; // Search subtype ID eg. "search2"
+	data: Omit<RawSearchMessageReceivedRequestEntriesWithinRangeData, 'ID'> & {
+		ID: SearchMessageCommands.RequestExplorerEntries;
+		Tags: { [tag: string]: number };
+		Explore: Array<RawDataExplorerEntry>;
+	};
+}
+
 export interface RawSearchMessageReceivedRequestExplorerEntriesWithinRange {
 	type: string; // Search subtype ID eg. "search2"
 	data: Omit<RawSearchMessageReceivedRequestEntriesWithinRangeData, 'ID'> & {
 		ID: SearchMessageCommands.RequestExplorerEntriesWithinRange;
+		Tags: { [tag: string]: number };
 		Explore: Array<RawDataExplorerEntry>;
 	};
 }
@@ -258,7 +281,9 @@ export type RawSearchMessageReceived =
 	| RawResponseForSearchStatsWithinRangeMessageReceived
 	| RawResponseForSearchStatsSummaryMessageReceived
 	| RawResponseForSearchStatsLocationMessageReceived
+	| RawSearchMessageReceivedRequestEntries
 	| RawSearchMessageReceivedRequestEntriesWithinRange
+	| RawSearchMessageReceivedRequestExplorerEntries
 	| RawSearchMessageReceivedRequestExplorerEntriesWithinRange;
 
 export * from './request-entries-within-range';

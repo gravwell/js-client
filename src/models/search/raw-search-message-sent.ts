@@ -22,34 +22,57 @@ export interface RawInitiateSearchMessageSent {
 		SearchEnd: string; // timestamp
 		SearchStart: string; // timestamp
 		SearchString: RawQuery;
+		Addendum?: RawJSON;
 	};
 }
 
 export interface RawAcceptSearchMessageSent {
 	type: 'search';
-	data: { OK: true; OutputSearchSubproto: string };
+	data: { OK: true; OutputSearchSubproto: string; Addendum?: RawJSON };
 }
 
 export interface RawRequestSearchCloseMessageSent {
 	type: string; // Search subtype ID eg. "search2"
-	data: { ID: SearchMessageCommands.Close };
+	data: { ID: SearchMessageCommands.Close; Addendum?: RawJSON };
 }
 
 export interface RawRequestSearchDetailsMessageSent {
 	type: string; // Search subtype ID eg. "search2"
-	data: { ID: SearchMessageCommands.RequestDetails };
+	data: { ID: SearchMessageCommands.RequestDetails; Addendum?: RawJSON };
 }
 
 export interface RawRequestSearchTagsMessageSent {
 	type: string; // Search subtype ID eg. "search2"
-	data: { ID: SearchMessageCommands.RequestTags };
+	data: { ID: SearchMessageCommands.RequestTags; Addendum?: RawJSON };
+}
+
+export interface RawRequestSearchEntriesMessageSent {
+	type: string; // Search subtype ID eg. "search2"
+	data: {
+		ID: SearchMessageCommands.RequestEntries;
+		Addendum?: RawJSON;
+		EntryRange: {
+			/**
+			 * @default 0
+			 */
+			First?: number;
+
+			/**
+			 * @default 1
+			 */
+			Last?: number;
+
+			// StartTS?: string; // timestamp, this field is ignored, see gravwell#3064
+			// EndTS?: string; // timestamp, this field is ignored, see gravwell#3064
+		};
+	};
 }
 
 export interface RawRequestSearchEntriesWithinRangeMessageSent {
 	type: string; // Search subtype ID eg. "search2"
 	data: {
 		ID: SearchMessageCommands.RequestEntriesWithinRange;
-		Addendum: { customView?: string };
+		Addendum?: RawJSON;
 		EntryRange: {
 			First: number;
 			Last: number;
@@ -59,11 +82,33 @@ export interface RawRequestSearchEntriesWithinRangeMessageSent {
 	};
 }
 
+export interface RawRequestExplorerSearchEntriesMessageSent {
+	type: string; // Search subtype ID eg. "search2"
+	data: {
+		ID: SearchMessageCommands.RequestExplorerEntries;
+		Addendum?: RawJSON;
+		EntryRange: {
+			/**
+			 * @default 0
+			 */
+			First?: number;
+
+			/**
+			 * @default 1
+			 */
+			Last?: number;
+
+			// StartTS?: string; // timestamp, this field is ignored, see gravwell#3064
+			// EndTS?: string; // timestamp, this field is ignored, see gravwell#3064
+		};
+	};
+}
+
 export interface RawRequestExplorerSearchEntriesWithinRangeMessageSent {
 	type: string; // Search subtype ID eg. "search2"
 	data: {
 		ID: SearchMessageCommands.RequestExplorerEntriesWithinRange;
-		Addendum: { customView?: string };
+		Addendum?: RawJSON;
 		EntryRange: {
 			First: number;
 			Last: number;
@@ -77,6 +122,7 @@ export interface RawRequestSearchStatsMessageSent {
 	type: string; // Search subtype ID eg. "search2"
 	data: {
 		ID: SearchMessageCommands.RequestAllStats;
+		Addendum?: RawJSON;
 		Stats: { SetCount: number };
 	};
 }
@@ -85,6 +131,7 @@ export interface RawRequestSearchStatsWithinRangeMessageSent {
 	type: string; // Search subtype ID eg. "search2"
 	data: {
 		ID: SearchMessageCommands.RequestStatsInRange;
+		Addendum?: RawJSON;
 		Stats: {
 			SetCount: number;
 			SetEnd: string; // timestamp
@@ -97,6 +144,7 @@ export interface RawRequestSearchStatsSummaryMessageSent {
 	type: string; // Search subtype ID eg. "search2"
 	data: {
 		ID: SearchMessageCommands.RequestStatsSummary;
+		Addendum?: RawJSON;
 	};
 }
 
@@ -104,6 +152,7 @@ export interface RawRequestSearchStatsLocationMessageSent {
 	type: string; // Search subtype ID eg. "search2"
 	data: {
 		ID: SearchMessageCommands.RequestStatsLocation;
+		Addendum?: RawJSON;
 	};
 }
 
@@ -114,7 +163,9 @@ export type RawSearchMessageSent =
 	| RawRequestSearchCloseMessageSent
 	| RawRequestSearchDetailsMessageSent
 	| RawRequestSearchTagsMessageSent
+	| RawRequestSearchEntriesMessageSent
 	| RawRequestSearchEntriesWithinRangeMessageSent
+	| RawRequestExplorerSearchEntriesMessageSent
 	| RawRequestExplorerSearchEntriesWithinRangeMessageSent
 	| RawRequestSearchStatsMessageSent
 	| RawRequestSearchStatsWithinRangeMessageSent

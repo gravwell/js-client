@@ -44,7 +44,7 @@ import {
 	SearchEntries,
 } from './search-entries';
 
-type RawEntryNormalizer = (v: RawSearchMessageReceivedRequestEntriesWithinRange) => SearchEntries;
+type RawEntryNormalizer = (v: RawSearchMessageReceivedRequestEntriesWithinRange) => Omit<SearchEntries, 'filter'>;
 
 const NORMALIZERS: Record<SearchEntries['type'], RawEntryNormalizer> = {
 	'chart': ({ data }) =>
@@ -112,7 +112,7 @@ export function normalize(
 export function normalize(
 	renderer: SearchEntries['type'],
 	msg: RawSearchMessageReceivedRequestEntriesWithinRange,
-): SearchEntries {
+): Omit<SearchEntries, 'filter'> {
 	const normalizer = NORMALIZERS[renderer];
 	if (isUndefined(normalizer)) {
 		throw Error(`No such renderer type ${renderer}`);
@@ -129,7 +129,7 @@ export function normalize(
 export const toSearchEntries = (
 	renderer: string,
 	msg: RawSearchMessageReceivedRequestEntriesWithinRange,
-): SearchEntries => {
+): Omit<SearchEntries, 'filter'> => {
 	const normalizer = NORMALIZERS[renderer as SearchEntries['type']];
 	if (isUndefined(normalizer)) {
 		throw Error(`No such renderer type ${renderer}`);
@@ -149,7 +149,9 @@ export const toSearchEntries = (
  *
  * @throws an error if it wasn't possible to determine the SearchEntries type
  */
-export const inferSearchEntries = (msg: RawSearchMessageReceivedRequestEntriesWithinRange): SearchEntries => {
+export const inferSearchEntries = (
+	msg: RawSearchMessageReceivedRequestEntriesWithinRange,
+): Omit<SearchEntries, 'filter'> => {
 	const msgData = msg.data;
 	if (isRawSearchMessageReceivedRequestEntriesWithinRangeChartRenderer(msgData)) {
 		return normalizeToChartSearchEntries(msgData);

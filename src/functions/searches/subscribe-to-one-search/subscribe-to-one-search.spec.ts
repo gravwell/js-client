@@ -11,11 +11,12 @@ import { addMinutes, subMinutes } from 'date-fns';
 import { isUndefined, last as lastElt, reverse, sum, zip } from 'lodash';
 import { first, last, map, takeWhile, toArray } from 'rxjs/operators';
 import { v4 as uuidv4 } from 'uuid';
+import { SearchFilter } from '~/models';
 import { RawSearchEntries, TextSearchEntries } from '~/models/search/search-entries';
-import { integrationTest, sleep, TEST_BASE_API_CONTEXT } from '~/tests';
-import { makeIngestMultiLineEntry } from '../ingestors/ingest-multi-line-entry';
-import { makeGetAllTags } from '../tags/get-all-tags';
-import { makeSubscribeToOneSearch } from './subscribe-to-one-search/subscribe-to-one-search';
+import { integrationTest, myCustomMatchers, sleep, TEST_BASE_API_CONTEXT } from '~/tests';
+import { makeIngestMultiLineEntry } from '../../ingestors/ingest-multi-line-entry';
+import { makeGetAllTags } from '../../tags/get-all-tags';
+import { makeSubscribeToOneSearch } from './subscribe-to-one-search';
 
 interface Entry {
 	timestamp: string;
@@ -38,6 +39,8 @@ describe('subscribeToOneSearch()', () => {
 	const originalData: Array<Entry> = [];
 
 	beforeAll(async () => {
+		jasmine.addMatchers(myCustomMatchers);
+
 		// Generate and ingest some entries
 		const ingestMultiLineEntry = makeIngestMultiLineEntry(TEST_BASE_API_CONTEXT);
 		const values: Array<string> = [];
@@ -143,9 +146,8 @@ describe('subscribeToOneSearch()', () => {
 			const subscribeToOneSearch = makeSubscribeToOneSearch(TEST_BASE_API_CONTEXT);
 			const query = `tag=${tag} json value timestamp | raw`;
 			const range: [Date, Date] = [start, end];
-			const search = await subscribeToOneSearch(query, range, {
-				filter: { entriesOffset: { index: 0, count: count } },
-			});
+			const filter: SearchFilter = { entriesOffset: { index: 0, count: count } };
+			const search = await subscribeToOneSearch(query, range, { filter });
 
 			const textEntriesP = search.entries$
 				.pipe(
@@ -175,6 +177,12 @@ describe('subscribeToOneSearch()', () => {
 			expect(textEntries.data.length)
 				.withContext('The number of entries should equal the total ingested')
 				.toEqual(count);
+
+			if (isUndefined(textEntries.filter) === false) {
+				expect(textEntries.filter)
+					.withContext(`The filter should be equal to the one used, plus the default values for undefined properties`)
+					.toPartiallyEqual(filter);
+			}
 
 			zip(textEntries.data, reverse(originalData)).forEach(([entry, original], index) => {
 				if (isUndefined(entry) || isUndefined(original)) {
@@ -207,10 +215,22 @@ describe('subscribeToOneSearch()', () => {
 			// Check stats
 			////
 			expect(stats.length).toBeGreaterThan(0);
+
+			if (isUndefined(stats[0].filter) === false) {
+				expect(stats[0].filter)
+					.withContext(`The filter should be equal to the one used, plus the default values for undefined properties`)
+					.toPartiallyEqual(filter);
+			}
+			if (isUndefined(statsZoom.filter) === false) {
+				expect(statsZoom.filter)
+					.withContext(`The filter should be equal to the one used, plus the default values for undefined properties`)
+					.toPartiallyEqual(filter);
+			}
+
 			expect(sum(statsOverview.map(x => x.count)))
 				.withContext('The sum of counts from statsOverview should equal the total count ingested')
 				.toEqual(count);
-			expect(sum(statsZoom.map(x => x.count)))
+			expect(sum(statsZoom.stats.map(x => x.count)))
 				.withContext('The sum of counts from statsZoom should equal the total count ingested')
 				.toEqual(count);
 		}),
@@ -270,12 +290,12 @@ describe('subscribeToOneSearch()', () => {
 				expect(statsOverview.every(x => x.count == 1))
 					.withContext('Every statsOverview element should be 1 -- 90 entries over 90 minutes')
 					.toBeTrue();
-				expect(sum(statsZoom.map(x => x.count)))
+				expect(sum(statsZoom.stats.map(x => x.count)))
 					.withContext(
 						'The sum of counts from statsZoom should equal the number of minutes -- 90 entries over 90 minutes',
 					)
 					.toEqual(minutes);
-				expect(statsZoom.every(x => x.count == 1))
+				expect(statsZoom.stats.every(x => x.count == 1))
 					.withContext('Every statsZoom element should be 1 -- 90 entries over 90 minutes')
 					.toBeTrue();
 			}),
@@ -288,9 +308,8 @@ describe('subscribeToOneSearch()', () => {
 				const subscribeToOneSearch = makeSubscribeToOneSearch(TEST_BASE_API_CONTEXT);
 				const query = `tag=${tag}`;
 				const range: [Date, Date] = [start, end];
-				const search = await subscribeToOneSearch(query, range, {
-					filter: { entriesOffset: { index: 0, count: count } },
-				});
+				const filter: SearchFilter = { entriesOffset: { index: 0, count } };
+				const search = await subscribeToOneSearch(query, range, { filter });
 
 				let [statsOverview, statsZoom] = await Promise.all([
 					search.statsOverview$.pipe(first()).toPromise(),
@@ -300,14 +319,20 @@ describe('subscribeToOneSearch()', () => {
 				expect(sum(statsOverview.map(x => x.count)))
 					.withContext('The sum of counts from statsOverview should equal the total count ingested')
 					.toEqual(count);
-				expect(sum(statsZoom.map(x => x.count)))
+				expect(sum(statsZoom.stats.map(x => x.count)))
 					.withContext('The sum of counts from statsZoom should equal the total count ingested')
 					.toEqual(count);
+				if (isUndefined(statsZoom.filter) === false) {
+					expect(statsZoom.filter)
+						.withContext(`The filter should be equal to the one used, plus the default values for undefined properties`)
+						.toPartiallyEqual(filter);
+				}
 
 				const delta = 500;
 
 				// Narrow the search window by moving the end date sooner by delta minutes
-				search.setFilter({ dateRange: { start, end: subMinutes(end, delta) } });
+				const filter2: SearchFilter = { dateRange: { start, end: subMinutes(end, delta) } };
+				search.setFilter(filter2);
 
 				[statsOverview, statsZoom] = await Promise.all([
 					search.statsOverview$.pipe(first()).toPromise(),
@@ -317,9 +342,14 @@ describe('subscribeToOneSearch()', () => {
 				expect(sum(statsOverview.map(x => x.count)))
 					.withContext('The sum of counts from statsOverview should stay the same (total ingested)')
 					.toEqual(count);
-				expect(sum(statsZoom.map(x => x.count)))
+				expect(sum(statsZoom.stats.map(x => x.count)))
 					.withContext('The sum of counts from statsZoom should be 500 less than total count ingested')
 					.toEqual(count - delta);
+				if (isUndefined(statsZoom.filter) === false) {
+					expect(statsZoom.filter)
+						.withContext(`The filter should be equal to the one used, plus the default values for undefined properties`)
+						.toPartiallyEqual({ ...filter, ...filter2 });
+				}
 			}),
 			25000,
 		);
@@ -333,9 +363,8 @@ describe('subscribeToOneSearch()', () => {
 
 				// Issue a query where the minzoomwindow is predictable (1 second)
 				const query1s = `tag=${tag} json value | stats mean(value) over 1s`;
-				const search1s = await subscribeToOneSearch(query1s, range, {
-					filter: { entriesOffset: { index: 0, count: count } },
-				});
+				const filter1s: SearchFilter = { entriesOffset: { index: 0, count: count } };
+				const search1s = await subscribeToOneSearch(query1s, range, { filter: filter1s });
 
 				const stats1s = await search1s.stats$
 					.pipe(
@@ -345,12 +374,16 @@ describe('subscribeToOneSearch()', () => {
 					.toPromise();
 
 				expect(stats1s.minZoomWindow).toEqual(1);
+				if (isUndefined(stats1s.filter) === false) {
+					expect(stats1s.filter)
+						.withContext(`The filter should be equal to the one used, plus the default values for undefined properties`)
+						.toPartiallyEqual(filter1s);
+				}
 
 				// Issue a query where the minzoomwindow is predictable (33 seconds, why not)
 				const query33s = `tag=${tag} json value | stats mean(value) over 33s`;
-				const search33s = await subscribeToOneSearch(query33s, range, {
-					filter: { entriesOffset: { index: 0, count: count } },
-				});
+				const filter33s = { entriesOffset: { index: 0, count: count } };
+				const search33s = await subscribeToOneSearch(query33s, range, { filter: filter33s });
 
 				const stats33s = await search33s.stats$
 					.pipe(
@@ -360,6 +393,11 @@ describe('subscribeToOneSearch()', () => {
 					.toPromise();
 
 				expect(stats33s.minZoomWindow).toEqual(33);
+				if (isUndefined(stats33s.filter) === false) {
+					expect(stats33s.filter)
+						.withContext(`The filter should be equal to the one used, plus the default values for undefined properties`)
+						.toPartiallyEqual(filter33s);
+				}
 			}),
 			25000,
 		);
@@ -370,9 +408,8 @@ describe('subscribeToOneSearch()', () => {
 				const subscribeToOneSearch = makeSubscribeToOneSearch(TEST_BASE_API_CONTEXT);
 				const query = `tag=${tag}`;
 				const range: [Date, Date] = [start, end];
-				const search = await subscribeToOneSearch(query, range, {
-					filter: { entriesOffset: { index: 0, count: count } },
-				});
+				const filter1: SearchFilter = { entriesOffset: { index: 0, count: count } };
+				const search = await subscribeToOneSearch(query, range, { filter: filter1 });
 
 				let [statsOverview, statsZoom] = await Promise.all([
 					search.statsOverview$.pipe(first()).toPromise(),
@@ -382,18 +419,27 @@ describe('subscribeToOneSearch()', () => {
 				expect(sum(statsOverview.map(x => x.count)))
 					.withContext('The sum of counts from statsOverview should equal the total count ingested')
 					.toEqual(count);
-				expect(sum(statsZoom.map(x => x.count)))
+				expect(sum(statsZoom.stats.map(x => x.count)))
 					.withContext('The sum of counts from statsZoom should equal the total count ingested')
 					.toEqual(count);
+				if (isUndefined(statsZoom.filter) === false) {
+					expect(statsZoom.filter)
+						.withContext(`The filter should be equal to the one used, plus the default values for undefined properties`)
+						.toPartiallyEqual(filter1);
+				}
 
 				// the default
-				expect(statsZoom.length).withContext('statsZoom should start with the default granularity').toEqual(90);
+				expect(statsZoom.stats.length).withContext('statsZoom should start with the default granularity').toEqual(90);
 
 				const delta = 500;
 
 				// Narrow the search window by moving the end date sooner by delta minutes using new granularity
 				const newZoomGranularity = 133;
-				search.setFilter({ dateRange: { start, end: subMinutes(end, delta) }, zoomGranularity: newZoomGranularity });
+				const filter2: SearchFilter = {
+					dateRange: { start, end: subMinutes(end, delta) },
+					zoomGranularity: newZoomGranularity,
+				};
+				search.setFilter(filter2);
 
 				[statsOverview, statsZoom] = await Promise.all([
 					search.statsOverview$.pipe(first()).toPromise(),
@@ -403,11 +449,18 @@ describe('subscribeToOneSearch()', () => {
 				expect(sum(statsOverview.map(x => x.count)))
 					.withContext('The sum of counts from statsOverview should stay the same (total ingested)')
 					.toEqual(count);
-				expect(sum(statsZoom.map(x => x.count)))
+				expect(sum(statsZoom.stats.map(x => x.count)))
 					.withContext('The sum of counts from statsZoom should be 500 less than total count ingested')
 					.toEqual(count - delta);
+				if (isUndefined(statsZoom.filter) === false) {
+					expect(statsZoom.filter)
+						.withContext(`The filter should be equal to the one used, plus the default values for undefined properties`)
+						.toPartiallyEqual({ ...filter1, ...filter2 });
+				}
 
-				expect(statsZoom.length).withContext('statsZoom should use the new granularity').toEqual(newZoomGranularity);
+				expect(statsZoom.stats.length)
+					.withContext('statsZoom should use the new granularity')
+					.toEqual(newZoomGranularity);
 				expect(statsOverview.length).withContext('statsZoom should use the default granularity').toEqual(90);
 			}),
 			25000,
@@ -420,9 +473,8 @@ describe('subscribeToOneSearch()', () => {
 				const query = `tag=${tag}`;
 				const range: [Date, Date] = [start, end];
 				const overviewGranularity = 133;
-				const search = await subscribeToOneSearch(query, range, {
-					filter: { entriesOffset: { index: 0, count: count }, overviewGranularity },
-				});
+				const filter1: SearchFilter = { entriesOffset: { index: 0, count: count }, overviewGranularity };
+				const search = await subscribeToOneSearch(query, range, { filter: filter1 });
 
 				let [statsOverview, statsZoom] = await Promise.all([
 					search.statsOverview$.pipe(first()).toPromise(),
@@ -432,20 +484,29 @@ describe('subscribeToOneSearch()', () => {
 				expect(sum(statsOverview.map(x => x.count)))
 					.withContext('The sum of counts from statsOverview should equal the total count ingested')
 					.toEqual(count);
-				expect(sum(statsZoom.map(x => x.count)))
+				expect(sum(statsZoom.stats.map(x => x.count)))
 					.withContext('The sum of counts from statsZoom should equal the total count ingested')
 					.toEqual(count);
+				if (isUndefined(statsZoom.filter) === false) {
+					expect(statsZoom.filter)
+						.withContext(`The filter should be equal to the one used, plus the default values for undefined properties`)
+						.toPartiallyEqual(filter1);
+				}
 
 				expect(statsOverview.length)
 					.withContext('statsZoom should start with the default granularity')
 					.toEqual(overviewGranularity);
-				expect(statsZoom.length).withContext('statsZoom should start with the default granularity').toEqual(90);
+				expect(statsZoom.stats.length).withContext('statsZoom should start with the default granularity').toEqual(90);
 
 				const delta = 500;
 
 				// Narrow the search window by moving the end date sooner by delta minutes using a new zoom granularity
 				const newZoomGranularity = 133;
-				search.setFilter({ dateRange: { start, end: subMinutes(end, delta) }, zoomGranularity: newZoomGranularity });
+				const filter2: SearchFilter = {
+					dateRange: { start, end: subMinutes(end, delta) },
+					zoomGranularity: newZoomGranularity,
+				};
+				search.setFilter(filter2);
 
 				[statsOverview, statsZoom] = await Promise.all([
 					search.statsOverview$.pipe(first()).toPromise(),
@@ -455,11 +516,18 @@ describe('subscribeToOneSearch()', () => {
 				expect(sum(statsOverview.map(x => x.count)))
 					.withContext('The sum of counts from statsOverview should stay the same (total ingested)')
 					.toEqual(count);
-				expect(sum(statsZoom.map(x => x.count)))
+				expect(sum(statsZoom.stats.map(x => x.count)))
 					.withContext('The sum of counts from statsZoom should be 500 less than total count ingested')
 					.toEqual(count - delta);
+				if (isUndefined(statsZoom.filter) === false) {
+					expect(statsZoom.filter)
+						.withContext(`The filter should be equal to the one used, plus the default values for undefined properties`)
+						.toPartiallyEqual({ ...filter1, ...filter2 });
+				}
 
-				expect(statsZoom.length).withContext('statsZoom should use the new granularity').toEqual(newZoomGranularity);
+				expect(statsZoom.stats.length)
+					.withContext('statsZoom should use the new granularity')
+					.toEqual(newZoomGranularity);
 				expect(statsOverview.length)
 					.withContext('statsZoom should use the default granularity')
 					.toEqual(overviewGranularity);
