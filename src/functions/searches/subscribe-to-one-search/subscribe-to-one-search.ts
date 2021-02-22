@@ -6,7 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { isBoolean, isEqual, isNil, isNull, isString, isUndefined, last, uniqueId } from 'lodash';
+import { isBoolean, isEqual, isNil, isNull, isUndefined, last, uniqueId } from 'lodash';
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import { bufferCount, distinctUntilChanged, filter, first, map, startWith, tap } from 'rxjs/operators';
 import {
