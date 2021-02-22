@@ -6,7 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { isBoolean, isEqual, isNil, isNull, isUndefined, last } from 'lodash';
+import { isBoolean, isEqual, isNil, isNull, isUndefined, last, uniqueId } from 'lodash';
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import { bufferCount, distinctUntilChanged, filter, first, map, startWith, tap } from 'rxjs/operators';
 import {
@@ -48,6 +48,8 @@ const countEntriesFromModules = (
 	}));
 };
 
+const SEARCH_FILTER_PREFIX = 'search-filter-';
+
 export const makeSubscribeToOneSearch = (context: APIContext) => {
 	const subscribeToOneRawSearch = makeSubscribeToOneRawSearch(context);
 	let rawSubscriptionP: ReturnType<typeof subscribeToOneRawSearch> | null = null;
@@ -59,6 +61,7 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 	): Promise<SearchSubscription> => {
 		if (isNull(rawSubscriptionP)) rawSubscriptionP = subscribeToOneRawSearch();
 		const rawSubscription = await rawSubscriptionP;
+
 		const initialFilter = {
 			entriesOffset: {
 				index: options.filter?.entriesOffset?.index ?? 0,
@@ -75,6 +78,10 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 
 			zoomGranularity: options.filter?.zoomGranularity ?? 90,
 		};
+		const initialFilterID = uniqueId(SEARCH_FILTER_PREFIX);
+
+		const filtersByID: Record<string, SearchFilter | undefined> = {};
+		filtersByID[initialFilterID] = initialFilter;
 
 		const searchInitMsgP = promiseProgrammatically<RawSearchInitiatedMessageReceived>();
 		rawSubscription.received$
@@ -103,6 +110,7 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 		rawSubscription.send(<RawInitiateSearchMessageSent>{
 			type: 'search',
 			data: {
+				Addendum: { filterID: initialFilterID },
 				Background: false,
 				Metadata: options.metadata ?? {},
 				SearchStart: range[0].toISOString(),
@@ -134,7 +142,14 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 					return false;
 				}
 			}),
-			map(msg => toSearchEntries(rendererType, msg)),
+			map(
+				(msg): SearchEntries => {
+					const base = toSearchEntries(rendererType, msg);
+					const filterID = (msg.data.Addendum?.filterID as string | undefined) ?? null;
+					const filter = filtersByID[filterID ?? ''] ?? undefined;
+					return { ...base, filter } as SearchEntries;
+				},
+			),
 			tap(entries => {
 				const defDesiredGranularity = getDefaultGranularityByRendererType(entries.type);
 				initialFilter.desiredGranularity = defDesiredGranularity;
@@ -142,8 +157,8 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 		);
 
 		const _filter$ = new BehaviorSubject<SearchFilter>(initialFilter);
-		const setFilter = (filter: SearchFilter) => {
-			_filter$.next(filter);
+		const setFilter = (filter: SearchFilter | null) => {
+			_filter$.next(filter ?? initialFilter);
 		};
 		const filter$ = _filter$.asObservable().pipe(
 			startWith<SearchFilter>(initialFilter),
@@ -168,6 +183,9 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 		);
 
 		const requestEntries = async (filter: RequiredSearchFilter): Promise<void> => {
+			const filterID = uniqueId(SEARCH_FILTER_PREFIX);
+			filtersByID[filterID] = filter;
+
 			const first = filter.entriesOffset.index;
 			const last = first + filter.entriesOffset.count;
 			const start = filter.dateRange.start.toISOString();
@@ -178,7 +196,7 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 				type: searchTypeID,
 				data: {
 					ID: SearchMessageCommands.RequestEntriesWithinRange,
-					Addendum: {},
+					Addendum: { filterID },
 					EntryRange: {
 						First: first,
 						Last: last,
@@ -193,6 +211,7 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 				type: searchTypeID,
 				data: {
 					ID: SearchMessageCommands.RequestAllStats,
+					Addendum: { filterID },
 					Stats: { SetCount: filter.overviewGranularity },
 				},
 			};
@@ -200,7 +219,7 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 
 			const requestDetailsMsg: RawRequestSearchDetailsMessageSent = {
 				type: searchTypeID,
-				data: { ID: SearchMessageCommands.RequestDetails },
+				data: { ID: SearchMessageCommands.RequestDetails, Addendum: { filterID } },
 			};
 			const detailsP = rawSubscription.send(requestDetailsMsg);
 
@@ -208,6 +227,7 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 				type: searchTypeID,
 				data: {
 					ID: SearchMessageCommands.RequestStatsInRange,
+					Addendum: { filterID },
 					Stats: {
 						SetCount: filter.zoomGranularity,
 						SetEnd: end,
@@ -261,6 +281,12 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 		const stats$ = combineLatest(rawSearchStats$, rawSearchDetails$).pipe(
 			map(
 				([rawStats, rawDetails]): SearchStats => {
+					const filterID =
+						(rawStats.data.Addendum?.filterID as string | undefined) ??
+						(rawDetails.data.Addendum?.filterID as string | undefined) ??
+						null;
+					const filter = filtersByID[filterID ?? ''] ?? undefined;
+
 					const pipeline = rawStats.data.Stats.Set.map(s => s.Stats)
 						.reduce<
 							Array<Array<RawResponseForSearchStatsMessageReceived['data']['Stats']['Set'][number]['Stats'][number]>>
@@ -304,6 +330,7 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 						id: rawDetails.data.SearchInfo.ID,
 						userID: toNumericID(rawDetails.data.SearchInfo.UID),
 
+						filter,
 						finished: rawStats.data.Finished && rawDetails.data.Finished,
 
 						metadata: searchInitMsg.data.Metadata,
@@ -327,7 +354,13 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 
 		const statsOverview$ = rawSearchStats$.pipe(map(set => countEntriesFromModules(set)));
 
-		const statsZoom$ = rawStatsZoom$.pipe(map(set => countEntriesFromModules(set)));
+		const statsZoom$ = rawStatsZoom$.pipe(
+			map(set => {
+				const filterID = (set.data.Addendum?.filterID as string | undefined) ?? null;
+				const filter = filtersByID[filterID ?? ''] ?? undefined;
+				return { stats: countEntriesFromModules(set), filter };
+			}),
+		);
 
 		return {
 			progress$,
