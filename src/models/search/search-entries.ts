@@ -36,7 +36,7 @@ export type SearchEntries =
 
 // TODO: Add render module to entries observable
 export interface BaseSearchEntries {
-	filter: SearchFilter;
+	filter?: SearchFilter;
 	start: Date;
 	end: Date;
 	finished: boolean;

@@ -17,7 +17,7 @@ export interface SearchSubscription {
 	entries$: Observable<SearchEntries>;
 	stats$: Observable<SearchStats>;
 	statsOverview$: Observable<Array<SearchFrequencyStats>>;
-	statsZoom$: Observable<{ filter: SearchFilter; stats: Array<FilteredSearchFrequencyStats> }>;
+	statsZoom$: Observable<{ filter?: SearchFilter; stats: Array<FilteredSearchFrequencyStats> }>;
 	setFilter: (filter: SearchFilter | null) => void;
 	searchID: NumericID;
 }

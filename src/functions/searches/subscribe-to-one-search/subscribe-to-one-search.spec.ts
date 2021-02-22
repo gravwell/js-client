@@ -178,9 +178,11 @@ describe('subscribeToOneSearch()', () => {
 				.withContext('The number of entries should equal the total ingested')
 				.toEqual(count);
 
-			expect(textEntries.filter)
-				.withContext(`The filter should be equal to the one used, plus the default values for undefined properties`)
-				.toPartiallyEqual(filter);
+			if (isUndefined(textEntries.filter) === false) {
+				expect(textEntries.filter)
+					.withContext(`The filter should be equal to the one used, plus the default values for undefined properties`)
+					.toPartiallyEqual(filter);
+			}
 
 			zip(textEntries.data, reverse(originalData)).forEach(([entry, original], index) => {
 				if (isUndefined(entry) || isUndefined(original)) {
@@ -213,18 +215,24 @@ describe('subscribeToOneSearch()', () => {
 			// Check stats
 			////
 			expect(stats.length).toBeGreaterThan(0);
-			expect(stats[0].filter)
-				.withContext(`The filter should be equal to the one used, plus the default values for undefined properties`)
-				.toPartiallyEqual(filter);
+
+			if (isUndefined(stats[0].filter) === false) {
+				expect(stats[0].filter)
+					.withContext(`The filter should be equal to the one used, plus the default values for undefined properties`)
+					.toPartiallyEqual(filter);
+			}
+			if (isUndefined(statsZoom.filter) === false) {
+				expect(statsZoom.filter)
+					.withContext(`The filter should be equal to the one used, plus the default values for undefined properties`)
+					.toPartiallyEqual(filter);
+			}
+
 			expect(sum(statsOverview.map(x => x.count)))
 				.withContext('The sum of counts from statsOverview should equal the total count ingested')
 				.toEqual(count);
 			expect(sum(statsZoom.stats.map(x => x.count)))
 				.withContext('The sum of counts from statsZoom should equal the total count ingested')
 				.toEqual(count);
-			expect(statsZoom.filter)
-				.withContext(`The filter should be equal to the one used, plus the default values for undefined properties`)
-				.toPartiallyEqual(filter);
 		}),
 		25000,
 	);
@@ -314,9 +322,11 @@ describe('subscribeToOneSearch()', () => {
 				expect(sum(statsZoom.stats.map(x => x.count)))
 					.withContext('The sum of counts from statsZoom should equal the total count ingested')
 					.toEqual(count);
-				expect(statsZoom.filter)
-					.withContext(`The filter should be equal to the one used, plus the default values for undefined properties`)
-					.toPartiallyEqual(filter);
+				if (isUndefined(statsZoom.filter) === false) {
+					expect(statsZoom.filter)
+						.withContext(`The filter should be equal to the one used, plus the default values for undefined properties`)
+						.toPartiallyEqual(filter);
+				}
 
 				const delta = 500;
 
@@ -335,9 +345,11 @@ describe('subscribeToOneSearch()', () => {
 				expect(sum(statsZoom.stats.map(x => x.count)))
 					.withContext('The sum of counts from statsZoom should be 500 less than total count ingested')
 					.toEqual(count - delta);
-				expect(statsZoom.filter)
-					.withContext(`The filter should be equal to the one used, plus the default values for undefined properties`)
-					.toPartiallyEqual({ ...filter, ...filter2 });
+				if (isUndefined(statsZoom.filter) === false) {
+					expect(statsZoom.filter)
+						.withContext(`The filter should be equal to the one used, plus the default values for undefined properties`)
+						.toPartiallyEqual({ ...filter, ...filter2 });
+				}
 			}),
 			25000,
 		);
@@ -362,9 +374,11 @@ describe('subscribeToOneSearch()', () => {
 					.toPromise();
 
 				expect(stats1s.minZoomWindow).toEqual(1);
-				expect(stats1s.filter)
-					.withContext(`The filter should be equal to the one used, plus the default values for undefined properties`)
-					.toPartiallyEqual(filter1s);
+				if (isUndefined(stats1s.filter) === false) {
+					expect(stats1s.filter)
+						.withContext(`The filter should be equal to the one used, plus the default values for undefined properties`)
+						.toPartiallyEqual(filter1s);
+				}
 
 				// Issue a query where the minzoomwindow is predictable (33 seconds, why not)
 				const query33s = `tag=${tag} json value | stats mean(value) over 33s`;
@@ -379,9 +393,11 @@ describe('subscribeToOneSearch()', () => {
 					.toPromise();
 
 				expect(stats33s.minZoomWindow).toEqual(33);
-				expect(stats33s.filter)
-					.withContext(`The filter should be equal to the one used, plus the default values for undefined properties`)
-					.toPartiallyEqual(filter33s);
+				if (isUndefined(stats33s.filter) === false) {
+					expect(stats33s.filter)
+						.withContext(`The filter should be equal to the one used, plus the default values for undefined properties`)
+						.toPartiallyEqual(filter33s);
+				}
 			}),
 			25000,
 		);
@@ -406,9 +422,11 @@ describe('subscribeToOneSearch()', () => {
 				expect(sum(statsZoom.stats.map(x => x.count)))
 					.withContext('The sum of counts from statsZoom should equal the total count ingested')
 					.toEqual(count);
-				expect(statsZoom.filter)
-					.withContext(`The filter should be equal to the one used, plus the default values for undefined properties`)
-					.toPartiallyEqual(filter1);
+				if (isUndefined(statsZoom.filter) === false) {
+					expect(statsZoom.filter)
+						.withContext(`The filter should be equal to the one used, plus the default values for undefined properties`)
+						.toPartiallyEqual(filter1);
+				}
 
 				// the default
 				expect(statsZoom.stats.length).withContext('statsZoom should start with the default granularity').toEqual(90);
@@ -434,9 +452,11 @@ describe('subscribeToOneSearch()', () => {
 				expect(sum(statsZoom.stats.map(x => x.count)))
 					.withContext('The sum of counts from statsZoom should be 500 less than total count ingested')
 					.toEqual(count - delta);
-				expect(statsZoom.filter)
-					.withContext(`The filter should be equal to the one used, plus the default values for undefined properties`)
-					.toPartiallyEqual({ ...filter1, ...filter2 });
+				if (isUndefined(statsZoom.filter) === false) {
+					expect(statsZoom.filter)
+						.withContext(`The filter should be equal to the one used, plus the default values for undefined properties`)
+						.toPartiallyEqual({ ...filter1, ...filter2 });
+				}
 
 				expect(statsZoom.stats.length)
 					.withContext('statsZoom should use the new granularity')
@@ -467,9 +487,11 @@ describe('subscribeToOneSearch()', () => {
 				expect(sum(statsZoom.stats.map(x => x.count)))
 					.withContext('The sum of counts from statsZoom should equal the total count ingested')
 					.toEqual(count);
-				expect(statsZoom.filter)
-					.withContext(`The filter should be equal to the one used, plus the default values for undefined properties`)
-					.toPartiallyEqual(filter1);
+				if (isUndefined(statsZoom.filter) === false) {
+					expect(statsZoom.filter)
+						.withContext(`The filter should be equal to the one used, plus the default values for undefined properties`)
+						.toPartiallyEqual(filter1);
+				}
 
 				expect(statsOverview.length)
 					.withContext('statsZoom should start with the default granularity')
@@ -497,9 +519,11 @@ describe('subscribeToOneSearch()', () => {
 				expect(sum(statsZoom.stats.map(x => x.count)))
 					.withContext('The sum of counts from statsZoom should be 500 less than total count ingested')
 					.toEqual(count - delta);
-				expect(statsZoom.filter)
-					.withContext(`The filter should be equal to the one used, plus the default values for undefined properties`)
-					.toPartiallyEqual({ ...filter1, ...filter2 });
+				if (isUndefined(statsZoom.filter) === false) {
+					expect(statsZoom.filter)
+						.withContext(`The filter should be equal to the one used, plus the default values for undefined properties`)
+						.toPartiallyEqual({ ...filter1, ...filter2 });
+				}
 
 				expect(statsZoom.stats.length)
 					.withContext('statsZoom should use the new granularity')

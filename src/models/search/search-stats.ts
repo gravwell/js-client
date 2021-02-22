@@ -13,7 +13,7 @@ export interface SearchStats {
 	id: ID;
 	userID: ID;
 
-	filter: SearchFilter;
+	filter?: SearchFilter;
 
 	finished: boolean;
 
