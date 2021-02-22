@@ -23,9 +23,6 @@ const testVersionCompatibility = (version: string, color: DebugStyle = 'blue'): 
 		debug(`❌ FAILED`);
 		isCompatible = false;
 	} finally {
-		debug(`Uninstalling`);
-		execSync('npm uninstall typescript', { stdio: 'ignore' });
-
 		endDebugContext();
 		return isCompatible;
 	}
@@ -44,6 +41,9 @@ const testVersionCompatibility = (version: string, color: DebugStyle = 'blue'): 
 		isCompatible: testVersionCompatibility(version, versionColors[i % versionColors.length]),
 	}));
 	const allCompatible = versionsCompatibility.every(v => v.isCompatible);
+
+	debug(`Uninstalling`);
+	execSync('npm uninstall typescript', { stdio: 'ignore' });
 
 	startDebugContext('Report', allCompatible ? ['green', 'bold'] : ['red', 'bold']);
 	for (const v of versionsCompatibility)
