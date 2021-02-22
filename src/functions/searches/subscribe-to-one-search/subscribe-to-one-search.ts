@@ -6,7 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { isBoolean, isEqual, isNil, isNull, isUndefined, last, uniqueId } from 'lodash';
+import { isBoolean, isEqual, isNil, isNull, isString, isUndefined, last, uniqueId } from 'lodash';
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import { bufferCount, distinctUntilChanged, filter, first, map, startWith, tap } from 'rxjs/operators';
 import {
@@ -48,6 +48,8 @@ const countEntriesFromModules = (
 	}));
 };
 
+const SEARCH_FILTER_PREFIX = 'search-filter-';
+
 export const makeSubscribeToOneSearch = (context: APIContext) => {
 	const subscribeToOneRawSearch = makeSubscribeToOneRawSearch(context);
 	let rawSubscriptionP: ReturnType<typeof subscribeToOneRawSearch> | null = null;
@@ -76,7 +78,7 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 
 			zoomGranularity: options.filter?.zoomGranularity ?? 90,
 		};
-		const initialFilterID = uniqueId('search-filter-');
+		const initialFilterID = uniqueId(SEARCH_FILTER_PREFIX);
 
 		const filtersByID: Record<string, SearchFilter | undefined> = {};
 		filtersByID[initialFilterID] = initialFilter;
@@ -143,8 +145,8 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 			map(
 				(msg): SearchEntries => {
 					const base = toSearchEntries(rendererType, msg);
-					const filterID = msg.data.Addendum?.filterID as string;
-					const filter = filtersByID[filterID] ?? null;
+					const filterID = (msg.data.Addendum?.filterID as string | undefined) ?? null;
+					const filter = filtersByID[filterID ?? ''] ?? undefined;
 					return { ...base, filter } as SearchEntries;
 				},
 			),
@@ -181,7 +183,7 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 		);
 
 		const requestEntries = async (filter: RequiredSearchFilter): Promise<void> => {
-			const filterID = uniqueId('search-filter-');
+			const filterID = uniqueId(SEARCH_FILTER_PREFIX);
 			filtersByID[filterID] = filter;
 
 			const first = filter.entriesOffset.index;
@@ -280,10 +282,10 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 			map(
 				([rawStats, rawDetails]): SearchStats => {
 					const filterID =
-						(rawStats.data.Addendum?.filterID as string) ??
-						(rawDetails.data.Addendum?.filterID as string) ??
-						initialFilterID;
-					const filter = filtersByID[filterID] ?? initialFilter;
+						(rawStats.data.Addendum?.filterID as string | undefined) ??
+						(rawDetails.data.Addendum?.filterID as string | undefined) ??
+						null;
+					const filter = filtersByID[filterID ?? ''] ?? undefined;
 
 					const pipeline = rawStats.data.Stats.Set.map(s => s.Stats)
 						.reduce<
@@ -354,8 +356,8 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 
 		const statsZoom$ = rawStatsZoom$.pipe(
 			map(set => {
-				const filterID = (set.data.Addendum?.filterID as string) ?? initialFilterID;
-				const filter = filtersByID[filterID] ?? initialFilter;
+				const filterID = (set.data.Addendum?.filterID as string | undefined) ?? null;
+				const filter = filtersByID[filterID ?? ''] ?? undefined;
 				return { stats: countEntriesFromModules(set), filter };
 			}),
 		);
