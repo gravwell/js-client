@@ -71,27 +71,15 @@ export const isRawStringTagEntry = (v: unknown): v is RawStringTagEntry => {
 export interface RawEnumeratedPair {
 	Name: string;
 	ValueStr: string;
-	Value: RawEnumeratedValue;
+
+	// Kris: .Value is internal to Go an should NOT be exposed
+	// Value: RawEnumeratedValue;
 }
 
 export const isRawEnumeratedPair = (v: unknown): v is RawEnumeratedPair => {
 	try {
 		const e = v as RawEnumeratedPair;
-		return isString(e.Name) && isString(e.ValueStr) && isRawEnumeratedValue(e.Value);
-	} catch {
-		return false;
-	}
-};
-
-export interface RawEnumeratedValue {
-	Type: number;
-	Data: string; // base 64
-}
-
-export const isRawEnumeratedValue = (v: unknown): v is RawEnumeratedValue => {
-	try {
-		const r = v as RawEnumeratedValue;
-		return isNumber(r.Type) && isString(r.Data);
+		return isString(e.Name) && isString(e.ValueStr);
 	} catch {
 		return false;
 	}

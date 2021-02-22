@@ -11,8 +11,14 @@ export interface SearchEntry {
 	source: string;
 	timestamp: Date;
 	tag: number;
-	value: string;
+	/** Raw, binary or text data for the whole entry. Original data. */
+	data: string;
+	values: Array<SearchEntryValue>;
+}
 
-	// ?QUESTION: .Enumerated? What's that for?
-	// Enumerated: Array<EnumeratedPair>;
+export interface SearchEntryValue {
+	name: string;
+	value: string;
+	/** If it's not enumerated, it's universal. */
+	isEnumerated: boolean;
 }

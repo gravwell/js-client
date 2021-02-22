@@ -52,10 +52,18 @@ export interface RawRequestSearchEntriesMessageSent {
 		ID: SearchMessageCommands.RequestEntries;
 		Addendum?: RawJSON;
 		EntryRange: {
-			First: number;
-			Last: number;
-			StartTS: string; // timestamp
-			EndTS: string; // timestamp
+			/**
+			 * @default 0
+			 */
+			First?: number;
+
+			/**
+			 * @default 1
+			 */
+			Last?: number;
+
+			// StartTS?: string; // timestamp, this field is ignored, see gravwell#3064
+			// EndTS?: string; // timestamp, this field is ignored, see gravwell#3064
 		};
 	};
 }
@@ -80,10 +88,18 @@ export interface RawRequestExplorerSearchEntriesMessageSent {
 		ID: SearchMessageCommands.RequestExplorerEntries;
 		Addendum?: RawJSON;
 		EntryRange: {
-			First: number;
-			Last: number;
-			StartTS: string; // timestamp
-			EndTS: string; // timestamp
+			/**
+			 * @default 0
+			 */
+			First?: number;
+
+			/**
+			 * @default 1
+			 */
+			Last?: number;
+
+			// StartTS?: string; // timestamp, this field is ignored, see gravwell#3064
+			// EndTS?: string; // timestamp, this field is ignored, see gravwell#3064
 		};
 	};
 }

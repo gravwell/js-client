@@ -269,16 +269,7 @@ export interface TextSearchEntries extends BaseSearchEntries {
 
 	// TODO
 	names: Array<string>;
-	data: Array<{
-		/** IP */
-		source: string;
-		timestamp: Date;
-		tag: number;
-		value: string;
-
-		// ?QUESTION: .Enumerated? What's that for?
-		// Enumerated: Array<EnumeratedPair>;
-	}>;
+	data: Array<SearchEntry>;
 }
 
 export const normalizeToTextSearchEntries = (
@@ -290,12 +281,7 @@ export const normalizeToTextSearchEntries = (
 		finished: v.Finished,
 		type: 'text',
 		names: ['DATA'],
-		data: (v.Entries ?? []).map(rawEntry => ({
-			source: rawEntry.SRC,
-			timestamp: new Date(rawEntry.TS),
-			tag: rawEntry.Tag,
-			value: rawEntry.Data,
-		})),
+		data: (v.Entries ?? []).map(toSearchEntry),
 	};
 };
 
