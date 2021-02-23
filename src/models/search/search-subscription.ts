@@ -10,14 +10,14 @@ import { Observable } from 'rxjs';
 import { NumericID, Percentage } from '~/value-objects';
 import { SearchEntries } from './search-entries';
 import { SearchFilter } from './search-filter';
-import { FilteredSearchFrequencyStats, SearchFrequencyStats, SearchStats } from './search-stats';
+import { SearchFrequencyStats, SearchStats } from './search-stats';
 
 export interface SearchSubscription {
 	progress$: Observable<Percentage>;
 	entries$: Observable<SearchEntries>;
 	stats$: Observable<SearchStats>;
-	statsOverview$: Observable<Array<SearchFrequencyStats>>;
-	statsZoom$: Observable<{ filter?: SearchFilter; stats: Array<FilteredSearchFrequencyStats> }>;
+	statsOverview$: Observable<{ frequencyStats: Array<SearchFrequencyStats> }>;
+	statsZoom$: Observable<{ filter?: SearchFilter; frequencyStats: Array<SearchFrequencyStats> }>;
 	setFilter: (filter: SearchFilter | null) => void;
 	searchID: NumericID;
 }
