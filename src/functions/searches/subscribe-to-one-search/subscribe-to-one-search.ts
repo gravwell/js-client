@@ -333,6 +333,9 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 						filter,
 						finished: rawStats.data.Finished && rawDetails.data.Finished,
 
+						query: searchInitMsg.data.RawQuery,
+						effectiveQuery: searchInitMsg.data.SearchString,
+
 						metadata: searchInitMsg.data.Metadata,
 						entries: rawStats.data.EntryCount,
 						duration: rawDetails.data.SearchInfo.Duration,

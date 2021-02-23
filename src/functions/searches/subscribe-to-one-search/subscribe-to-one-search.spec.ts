@@ -11,6 +11,7 @@ import { addMinutes, subMinutes } from 'date-fns';
 import { isUndefined, last as lastElt, reverse, sum, zip } from 'lodash';
 import { first, last, map, takeWhile, toArray } from 'rxjs/operators';
 import { v4 as uuidv4 } from 'uuid';
+import { makeCreateOneMacro, makeDeleteOneMacro } from '~/functions/macros';
 import { SearchFilter } from '~/models';
 import { RawSearchEntries, TextSearchEntries } from '~/models/search/search-entries';
 import { integrationTest, myCustomMatchers, sleep, TEST_BASE_API_CONTEXT } from '~/tests';
@@ -63,8 +64,15 @@ describe('subscribeToOneSearch()', () => {
 	it(
 		'Should work with queries using the raw renderer w/ count module',
 		integrationTest(async () => {
+			// Create a macro to expand to "value" to test .query vs .effectiveQuery
+			const macroName = uuidv4().toUpperCase();
+			const createOneMacro = makeCreateOneMacro(TEST_BASE_API_CONTEXT);
+			const deleteOneMacro = makeDeleteOneMacro(TEST_BASE_API_CONTEXT);
+			const createdMacro = await createOneMacro({ name: macroName, expansion: 'value' });
+
 			const subscribeToOneSearch = makeSubscribeToOneSearch(TEST_BASE_API_CONTEXT);
-			const query = `tag=${tag} json value | count`;
+			const query = `tag=${tag} json $${macroName} | count`;
+			const effectiveQuery = `tag=${tag} json value | count`;
 			const range: [Date, Date] = [start, end];
 			const metadata = { test: 'abc' };
 			const search = await subscribeToOneSearch(query, range, { metadata });
@@ -115,6 +123,9 @@ describe('subscribeToOneSearch()', () => {
 				.withContext('the search metadata should be present in the stats and unchanged')
 				.toEqual(metadata);
 
+			expect(stats.query).withContext(`Stats should contain the user query`).toBe(query);
+			expect(stats.effectiveQuery).withContext(`Stats should contain the effective query`).toBe(effectiveQuery);
+
 			////
 			// Check progress
 			////
@@ -136,6 +147,8 @@ describe('subscribeToOneSearch()', () => {
 			expect(base64.decode(lastEntry.data))
 				.withContext('The total count of entries should equal what we ingested')
 				.toEqual(`count ${count}`);
+
+			await deleteOneMacro(createdMacro.id);
 		}),
 		25000,
 	);
