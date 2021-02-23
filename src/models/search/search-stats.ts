@@ -49,8 +49,3 @@ export interface SearchFrequencyStats {
 	timestamp: Date;
 	count: number;
 }
-
-export interface FilteredSearchFrequencyStats {
-	timestamp: Date;
-	count: number;
-}

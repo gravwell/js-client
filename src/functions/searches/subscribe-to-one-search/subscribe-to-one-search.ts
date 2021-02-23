@@ -352,13 +352,17 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 			),
 		);
 
-		const statsOverview$ = rawSearchStats$.pipe(map(set => countEntriesFromModules(set)));
+		const statsOverview$ = rawSearchStats$.pipe(
+			map(set => {
+				return { frequencyStats: countEntriesFromModules(set) };
+			}),
+		);
 
 		const statsZoom$ = rawStatsZoom$.pipe(
 			map(set => {
 				const filterID = (set.data.Addendum?.filterID as string | undefined) ?? null;
 				const filter = filtersByID[filterID ?? ''] ?? undefined;
-				return { stats: countEntriesFromModules(set), filter };
+				return { frequencyStats: countEntriesFromModules(set), filter };
 			}),
 		);
 
