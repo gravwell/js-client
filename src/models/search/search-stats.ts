@@ -7,6 +7,7 @@
  **************************************************************************/
 
 import { ID, RawJSON } from '~/value-objects';
+import { Query } from '../query';
 import { SearchFilter } from './search-filter';
 
 export interface SearchStats {
@@ -16,6 +17,16 @@ export interface SearchStats {
 	filter?: SearchFilter;
 
 	finished: boolean;
+
+	/**
+	 * Query typed by the user.
+	 */
+	query: Query;
+
+	/**
+	 * Final query (macros expanded).
+	 */
+	effectiveQuery: Query;
 
 	metadata: RawJSON;
 	entries: number;
@@ -46,11 +57,6 @@ export interface SearchStats {
 }
 
 export interface SearchFrequencyStats {
-	timestamp: Date;
-	count: number;
-}
-
-export interface FilteredSearchFrequencyStats {
 	timestamp: Date;
 	count: number;
 }
