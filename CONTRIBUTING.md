@@ -1,5 +1,7 @@
 # Contributing to the codebase
 
+test
+
 Before starting any work, make sure there's a github issue describing what will be done (if there's none, create one). In that issue, assign yourself as the responsible and tag it with `"In progress"`.
 
 With an existing issue associated with your work, create a branch for your work using the following convention:
