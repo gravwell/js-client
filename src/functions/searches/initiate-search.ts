@@ -30,7 +30,7 @@ const QUERY_QUEUE = new Subject<{
 	rawSubscription: APISubscription<RawSearchMessageReceived, RawSearchMessageSent>;
 	query: string;
 	range: [Date, Date];
-	options: { initialFilterID?: string; metadata?: RawJSON };
+	options: { initialFilterID?: string; metadata?: RawJSON; preview?: boolean };
 }>();
 
 /*
@@ -66,6 +66,7 @@ const QUERY_INIT_RESULTS: Observable<{
 							SearchStart: range[0].toISOString(),
 							SearchEnd: range[1].toISOString(),
 							SearchString: query,
+							Preview: options.preview === true,
 						},
 					}),
 				),
@@ -99,7 +100,7 @@ export const initiateSearch = (
 	rawSubscription: APISubscription<RawSearchMessageReceived, RawSearchMessageSent>,
 	query: string,
 	range: [Date, Date],
-	options: { initialFilterID?: string; metadata?: RawJSON } = {},
+	options: { initialFilterID?: string; metadata?: RawJSON; preview?: boolean } = {},
 ): Promise<RawSearchInitiatedMessageReceived> => {
 	// Generate a unique ID for the search initiating request
 	const requestID = uuidv4();
