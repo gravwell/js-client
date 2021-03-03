@@ -6,8 +6,10 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
+import { isEmpty, pick, uniqueId } from 'lodash';
 import { filter, first } from 'rxjs/operators';
 import {
+	Query,
 	RawAcceptSearchMessageSent,
 	RawInitiateSearchMessageSent,
 	RawSearchInitiatedMessageReceived,
@@ -17,12 +19,90 @@ import {
 import { RawJSON } from '~/value-objects';
 import { APISubscription, promiseProgrammatically } from '../utils';
 
+const TASK_ID_PREFIX = 'query-queue-task-id-';
+
+interface QueryQueueTask {
+	id: string;
+
+	isReadyPromise: Promise<void>;
+
+	isCompletePromise: Promise<void>;
+	complete: () => void;
+}
+
+interface InternalQueryQueueTask extends QueryQueueTask {
+	isComplete: boolean;
+	ready: () => void;
+}
+
+class QueryQueue {
+	private _tasksByQuery: Record<Query, undefined | Array<InternalQueryQueueTask>> = {};
+
+	public push(query: Query): QueryQueueTask {
+		// Create task
+		const taskID = uniqueId(TASK_ID_PREFIX);
+		const readyPromise = promiseProgrammatically();
+		const completePromise = promiseProgrammatically();
+		const internalTask: InternalQueryQueueTask = {
+			id: taskID,
+
+			isReadyPromise: readyPromise.promise,
+			ready: () => readyPromise.resolve(),
+
+			isComplete: false,
+			isCompletePromise: completePromise.promise,
+			complete: () => {
+				internalTask.isComplete = true;
+				completePromise.resolve();
+			},
+		};
+		console.log(`QueryQueue > Task created`, taskID);
+
+		// Insert
+		this._tasksByQuery[query] = this._tasksByQuery[query] ?? [];
+		this._tasksByQuery[query]?.push(internalTask);
+		this._checkQueryTasks(query);
+		console.log(`QueryQueue > Task inserted`, JSON.stringify(this._tasksByQuery, null, '\t'));
+
+		// Check query task once that's completed
+		internalTask.isCompletePromise.then(() => {
+			console.log(`QueryQueue > Task completed`, taskID);
+			this._checkQueryTasks(query);
+		});
+
+		// Convert to external task and return it
+		const task: QueryQueueTask = pick(internalTask, 'id', 'isReadyPromise', 'isCompletePromise', 'complete');
+		console.log(`QueryQueue > Task returning`, task);
+		return task;
+	}
+
+	private _checkQueryTasks(query: Query): void {
+		console.log(`QueryQueue > Will check query tasks`, query);
+
+		// Remove completed tasks from queue
+		this._tasksByQuery[query] = (this._tasksByQuery[query] ?? []).filter(t => t.isComplete === false);
+		if (isEmpty(this._tasksByQuery[query])) delete this._tasksByQuery[query];
+		console.log(`QueryQueue > Removed completed tasks`, query, JSON.stringify(this._tasksByQuery, null, '\t'));
+
+		// Mark next task as ready
+		const nextInternalTask = this._tasksByQuery[query]?.[0];
+		nextInternalTask?.ready();
+		console.log(`QueryQueue > Task marked as ready`, nextInternalTask?.id);
+	}
+}
+
+const QUERY_QUEUE = new QueryQueue();
+
 export const initiateSearch = async (
 	rawSubscription: APISubscription<RawSearchMessageReceived, RawSearchMessageSent>,
 	query: string,
 	range: [Date, Date],
 	options: { initialFilterID?: string; metadata?: RawJSON } = {},
 ): Promise<RawSearchInitiatedMessageReceived> => {
+	const queueTask = QUERY_QUEUE.push(query);
+	await queueTask.isReadyPromise;
+	console.log(`initiateSearch > Task marked as ready`, queueTask.id);
+
 	const searchInitMsgP = promiseProgrammatically<RawSearchInitiatedMessageReceived>();
 	rawSubscription.received$
 		.pipe(
@@ -59,5 +139,8 @@ export const initiateSearch = async (
 		},
 	});
 
-	return await searchInitMsgP.promise;
+	const searchInitMsg = await searchInitMsgP.promise;
+	console.log(`initiateSearch > Will complete task`, queueTask.id);
+	queueTask.complete();
+	return searchInitMsg;
 };

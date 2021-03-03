@@ -250,6 +250,119 @@ describe('subscribeToOneSearch()', () => {
 		25000,
 	);
 
+	fit(
+		'Should treat multiple searches with the same query independently',
+		integrationTest(async () => {
+			// Number of multiple searches to create at the same time
+			const SEARCHES_N = 2;
+
+			const subscribeToOneSearch = makeSubscribeToOneSearch(TEST_BASE_API_CONTEXT);
+			const query = `tag=${tag} json value timestamp | raw`;
+
+			const range: [Date, Date] = [start, end];
+			const filter: SearchFilter = { entriesOffset: { index: 0, count: count } };
+
+			const searches = await Promise.all(
+				Array.from({ length: SEARCHES_N }).map(() => subscribeToOneSearch(query, range, { filter: filter })),
+			);
+
+			const testsP = searches.map(async search => {
+				const textEntriesP = search.entries$
+					.pipe(
+						map(e => e as RawSearchEntries),
+						takeWhile(e => !e.finished, true),
+						last(),
+					)
+					.toPromise();
+
+				const statsP = search.stats$
+					.pipe(
+						takeWhile(e => !e.finished, true),
+						toArray(),
+					)
+					.toPromise();
+
+				const [textEntries, stats, statsOverview, statsZoom] = await Promise.all([
+					textEntriesP,
+					statsP,
+					search.statsOverview$.pipe(first()).toPromise(),
+					search.statsZoom$.pipe(first()).toPromise(),
+				]);
+
+				////
+				// Check entries
+				////
+				expect(textEntries.data.length)
+					.withContext('The number of entries should equal the total ingested')
+					.toEqual(count);
+
+				if (isUndefined(textEntries.filter) === false) {
+					expect(textEntries.filter)
+						.withContext(`The filter should be equal to the one used, plus the default values for undefined properties`)
+						.toPartiallyEqual(filter);
+				}
+
+				zip(textEntries.data, reverse(originalData)).forEach(([entry, original], index) => {
+					if (isUndefined(entry) || isUndefined(original)) {
+						fail('Exptected all entries and original data to be defined');
+						return;
+					}
+
+					const value: Entry = JSON.parse(base64.decode(entry.data));
+					const enumeratedValues = entry.values;
+					const [_timestamp, _value] = enumeratedValues;
+
+					if (index === 0) {
+						console.log('entry', entry);
+						console.log('enumeratedValues', enumeratedValues);
+
+						expect(_timestamp).withContext(`Each entry should have an enumerated value called "timestamp"`).toEqual({
+							isEnumerated: true,
+							name: 'timestamp',
+							value: original.timestamp,
+						});
+
+						expect(_value).withContext(`Each entry should have an enumerated value called "value"`).toEqual({
+							isEnumerated: true,
+							name: 'value',
+							value: original.value.toString(),
+						});
+					}
+
+					expect(value.value)
+						.withContext('Each value should match its index, descending')
+						.toEqual(count - index - 1);
+				});
+
+				////
+				// Check stats
+				////
+				expect(stats.length).toBeGreaterThan(0);
+
+				if (isUndefined(stats[0].filter) === false) {
+					expect(stats[0].filter)
+						.withContext(`The filter should be equal to the one used, plus the default values for undefined properties`)
+						.toPartiallyEqual(filter);
+				}
+				if (isUndefined(statsZoom.filter) === false) {
+					expect(statsZoom.filter)
+						.withContext(`The filter should be equal to the one used, plus the default values for undefined properties`)
+						.toPartiallyEqual(filter);
+				}
+
+				expect(sum(statsOverview.frequencyStats.map(x => x.count)))
+					.withContext('The sum of counts from statsOverview should equal the total count ingested')
+					.toEqual(count);
+				expect(sum(statsZoom.frequencyStats.map(x => x.count)))
+					.withContext('The sum of counts from statsZoom should equal the total count ingested')
+					.toEqual(count);
+			});
+
+			await Promise.all(testsP);
+		}),
+		25000,
+	);
+
 	describe('stats', () => {
 		it(
 			'Should be evenly spread over a window matching the zoom/overview granularity',

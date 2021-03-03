@@ -6,14 +6,14 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-interface ProgrammaticallyPromise<T> {
+interface ProgrammaticPromise<T> {
 	promise: Promise<T>;
 	resolve: (value: T) => void;
 	reject: (error: Error) => void;
 }
 
-export const promiseProgrammatically = <T = undefined>(): ProgrammaticallyPromise<T> => {
-	const obj = {} as ProgrammaticallyPromise<T>;
+export const promiseProgrammatically = <T = void>(): ProgrammaticPromise<T> => {
+	const obj = {} as ProgrammaticPromise<T>;
 	obj.promise = new Promise<T>((_resolve, _reject) => {
 		obj.resolve = (value: T) => _resolve(value);
 		obj.reject = (error: Error) => _reject(error);
