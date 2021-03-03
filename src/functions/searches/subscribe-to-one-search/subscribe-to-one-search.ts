@@ -8,11 +8,9 @@
 
 import { isBoolean, isEqual, isNil, isNull, isUndefined, last, uniqueId } from 'lodash';
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
-import { bufferCount, distinctUntilChanged, filter, first, map, startWith, tap } from 'rxjs/operators';
+import { bufferCount, distinctUntilChanged, filter, map, startWith, tap } from 'rxjs/operators';
 import {
 	Query,
-	RawAcceptSearchMessageSent,
-	RawInitiateSearchMessageSent,
 	RawRequestSearchDetailsMessageSent,
 	RawRequestSearchEntriesWithinRangeMessageSent,
 	RawRequestSearchStatsMessageSent,
@@ -20,7 +18,6 @@ import {
 	RawResponseForSearchDetailsMessageReceived,
 	RawResponseForSearchStatsMessageReceived,
 	RawResponseForSearchStatsWithinRangeMessageReceived,
-	RawSearchInitiatedMessageReceived,
 	RawSearchMessageReceivedRequestEntriesWithinRange,
 	SearchEntries,
 	SearchFilter,
@@ -31,7 +28,8 @@ import {
 	toSearchEntries,
 } from '~/models';
 import { Percentage, RawJSON, toNumericID } from '~/value-objects';
-import { APIContext, promiseProgrammatically } from '../../utils';
+import { APIContext } from '../../utils';
+import { initiateSearch } from '../initiate-search';
 import { makeSubscribeToOneRawSearch } from './subscribe-to-one-raw-search';
 
 type RequiredSearchFilter = Required<
@@ -83,47 +81,13 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 		const filtersByID: Record<string, SearchFilter | undefined> = {};
 		filtersByID[initialFilterID] = initialFilter;
 
-		const searchInitMsgP = promiseProgrammatically<RawSearchInitiatedMessageReceived>();
-		rawSubscription.received$
-			.pipe(
-				filter((msg): msg is RawSearchInitiatedMessageReceived => {
-					try {
-						const _msg = <RawSearchInitiatedMessageReceived>msg;
-						return _msg.type === 'search' && _msg.data.RawQuery === query;
-					} catch {
-						return false;
-					}
-				}),
-				first(),
-			)
-			.subscribe(
-				msg => {
-					searchInitMsgP.resolve(msg);
-					rawSubscription.send(<RawAcceptSearchMessageSent>{
-						type: 'search',
-						data: { OK: true, OutputSearchSubproto: msg.data.OutputSearchSubproto },
-					});
-				},
-				err => searchInitMsgP.reject(err),
-			);
-
-		rawSubscription.send(<RawInitiateSearchMessageSent>{
-			type: 'search',
-			data: {
-				Addendum: { filterID: initialFilterID },
-				Background: false,
-				Metadata: options.metadata ?? {},
-				SearchStart: range[0].toISOString(),
-				SearchEnd: range[1].toISOString(),
-				SearchString: query,
-			},
+		const searchInitMsg = await initiateSearch(rawSubscription, query, range, {
+			initialFilterID,
+			metadata: options.metadata,
 		});
-
-		const searchInitMsg = await searchInitMsgP.promise;
 		const searchTypeID = searchInitMsg.data.OutputSearchSubproto;
-		const rendererType = searchInitMsg.data.RenderModule;
-
 		const searchMessages$ = rawSubscription.received$.pipe(filter(msg => msg.type === searchTypeID));
+		const rendererType = searchInitMsg.data.RenderModule;
 
 		const progress$: Observable<Percentage> = searchMessages$.pipe(
 			map(msg => (msg as Partial<RawResponseForSearchDetailsMessageReceived>).data?.Finished ?? null),

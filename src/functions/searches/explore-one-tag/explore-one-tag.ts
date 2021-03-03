@@ -18,7 +18,7 @@ import { DataExplorerEntry } from '~/models/search/data-explorer-entry';
 import { toDataExplorerEntry } from '~/models/search/to-data-explorer-entry';
 import { APIContext } from '../../utils';
 import { makeSubscribeToOneRawSearch } from '../subscribe-to-one-search/subscribe-to-one-raw-search';
-import { initiateSearch } from './initiate-search';
+import { initiateSearch } from '../initiate-search';
 
 export const makeExploreOneTag = (context: APIContext) => {
 	const subscribeToOneRawSearch = makeSubscribeToOneRawSearch(context);

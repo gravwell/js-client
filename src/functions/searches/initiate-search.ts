@@ -14,12 +14,14 @@ import {
 	RawSearchMessageReceived,
 	RawSearchMessageSent,
 } from '~/models';
-import { APISubscription, promiseProgrammatically } from '../../utils';
+import { RawJSON } from '~/value-objects';
+import { APISubscription, promiseProgrammatically } from '../utils';
 
 export const initiateSearch = async (
 	rawSubscription: APISubscription<RawSearchMessageReceived, RawSearchMessageSent>,
 	query: string,
 	range: [Date, Date],
+	options: { initialFilterID?: string; metadata?: RawJSON } = {},
 ): Promise<RawSearchInitiatedMessageReceived> => {
 	const searchInitMsgP = promiseProgrammatically<RawSearchInitiatedMessageReceived>();
 	rawSubscription.received$
@@ -48,8 +50,9 @@ export const initiateSearch = async (
 	rawSubscription.send(<RawInitiateSearchMessageSent>{
 		type: 'search',
 		data: {
+			Addendum: options.initialFilterID ? { filterID: options.initialFilterID } : {},
 			Background: false,
-			Metadata: {} as any,
+			Metadata: options.metadata ?? {},
 			SearchStart: range[0].toISOString(),
 			SearchEnd: range[1].toISOString(),
 			SearchString: query,
