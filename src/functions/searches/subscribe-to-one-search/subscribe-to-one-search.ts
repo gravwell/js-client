@@ -6,7 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { isBoolean, isEqual, isNil, isNull, isUndefined, last, uniqueId } from 'lodash';
+import { isBoolean, isEqual, isNull, isUndefined, uniqueId } from 'lodash';
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import { bufferCount, distinctUntilChanged, filter, map, startWith, tap } from 'rxjs/operators';
 import {
@@ -17,11 +17,8 @@ import {
 	RawRequestSearchStatsWithinRangeMessageSent,
 	RawResponseForSearchDetailsMessageReceived,
 	RawResponseForSearchStatsMessageReceived,
-	RawResponseForSearchStatsWithinRangeMessageReceived,
-	RawSearchMessageReceivedRequestEntriesWithinRange,
 	SearchEntries,
 	SearchFilter,
-	SearchFrequencyStats,
 	SearchMessageCommands,
 	SearchStats,
 	SearchSubscription,
@@ -31,22 +28,13 @@ import { Percentage, RawJSON, toNumericID } from '~/value-objects';
 import { APIContext } from '../../utils';
 import { initiateSearch } from '../initiate-search';
 import { makeSubscribeToOneRawSearch } from '../subscribe-to-one-raw-search';
-
-type RequiredSearchFilter = Required<
-	Omit<SearchFilter, 'dateRange'> & { dateRange: Required<NonNullable<SearchFilter['dateRange']>> }
->;
-
-const countEntriesFromModules = (
-	msg: RawResponseForSearchStatsMessageReceived | RawResponseForSearchStatsWithinRangeMessageReceived,
-): Array<SearchFrequencyStats> => {
-	const statsSet = msg.data.Stats.Set;
-	return statsSet.map(set => ({
-		timestamp: new Date(set.TS),
-		count: last(set.Stats)?.OutputCount ?? 0,
-	}));
-};
-
-const SEARCH_FILTER_PREFIX = 'search-filter-';
+import {
+	countEntriesFromModules,
+	filterMessageByCommand,
+	getDefaultGranularityByRendererType,
+	RequiredSearchFilter,
+	SEARCH_FILTER_PREFIX,
+} from './helpers';
 
 export const makeSubscribeToOneSearch = (context: APIContext) => {
 	const subscribeToOneRawSearch = makeSubscribeToOneRawSearch(context);
@@ -98,14 +86,7 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 		);
 
 		const entries$: Observable<SearchEntries> = searchMessages$.pipe(
-			filter((msg): msg is RawSearchMessageReceivedRequestEntriesWithinRange => {
-				try {
-					const _msg = <RawSearchMessageReceivedRequestEntriesWithinRange>msg;
-					return _msg.data.ID === SearchMessageCommands.RequestEntriesWithinRange;
-				} catch {
-					return false;
-				}
-			}),
+			filter(filterMessageByCommand(SearchMessageCommands.RequestEntriesWithinRange)),
 			map(
 				(msg): SearchEntries => {
 					const base = toSearchEntries(rendererType, msg);
@@ -209,37 +190,14 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 			setTimeout(() => requestEntries(filter), 2000); // TODO: Change this
 		});
 
-		const rawSearchStats$ = searchMessages$.pipe(
-			filter((msg): msg is RawResponseForSearchStatsMessageReceived => {
-				try {
-					const _msg = <RawResponseForSearchStatsMessageReceived>msg;
-					return _msg.data.ID === SearchMessageCommands.RequestAllStats;
-				} catch {
-					return false;
-				}
-			}),
-		);
+		const rawSearchStats$ = searchMessages$.pipe(filter(filterMessageByCommand(SearchMessageCommands.RequestAllStats)));
 
 		const rawSearchDetails$ = searchMessages$.pipe(
-			filter((msg): msg is RawResponseForSearchDetailsMessageReceived => {
-				try {
-					const _msg = <RawResponseForSearchDetailsMessageReceived>msg;
-					return _msg.data.ID === SearchMessageCommands.RequestDetails;
-				} catch {
-					return false;
-				}
-			}),
+			filter(filterMessageByCommand(SearchMessageCommands.RequestDetails)),
 		);
 
 		const rawStatsZoom$ = searchMessages$.pipe(
-			filter((msg): msg is RawResponseForSearchStatsWithinRangeMessageReceived => {
-				try {
-					const _msg = <RawResponseForSearchStatsWithinRangeMessageReceived>msg;
-					return _msg.data.ID === SearchMessageCommands.RequestStatsInRange;
-				} catch {
-					return false;
-				}
-			}),
+			filter(filterMessageByCommand(SearchMessageCommands.RequestStatsInRange)),
 		);
 
 		const stats$ = combineLatest(rawSearchStats$, rawSearchDetails$).pipe(
@@ -343,26 +301,4 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 			searchID: searchInitMsg.data.SearchID.toString(),
 		};
 	};
-};
-
-const DEFAULT_GRANULARITY_MAP: Record<SearchEntries['type'], number> = {
-	'chart': 160,
-	'fdg': 2000,
-	'gauge': 100, // *NOTE: Couldn't find it in environments.ts, using the same as table
-	'heatmap': 10000,
-	'point to point': 1000, // *NOTE: Couldn't find it in environments.ts, using the same as pointmap
-	'pointmap': 1000,
-	'raw': 50,
-	'text': 50,
-	'stack graph': 150,
-	'table': 100,
-};
-
-const getDefaultGranularityByRendererType = (rendererType: SearchEntries['type']): number => {
-	const v = DEFAULT_GRANULARITY_MAP[rendererType];
-	if (isNil(v)) {
-		console.log(`Unknown renderer ${rendererType}, will use 100 as the default granularity`);
-		return 100;
-	}
-	return v;
 };

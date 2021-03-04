@@ -6,7 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { isBoolean, isEqual, isNil, isNull, isUndefined, last, uniqueId } from 'lodash';
+import { isBoolean, isEqual, isNull, isUndefined, uniqueId } from 'lodash';
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import { bufferCount, distinctUntilChanged, filter, first, map, startWith, tap } from 'rxjs/operators';
 import {
@@ -21,12 +21,9 @@ import {
 	RawRequestSearchStatsWithinRangeMessageSent,
 	RawResponseForSearchDetailsMessageReceived,
 	RawResponseForSearchStatsMessageReceived,
-	RawResponseForSearchStatsWithinRangeMessageReceived,
 	RawSearchInitiatedMessageReceived,
-	RawSearchMessageReceived,
 	SearchEntries,
 	SearchFilter,
-	SearchFrequencyStats,
 	SearchMessageCommands,
 	SearchStats,
 	toSearchEntries,
@@ -35,22 +32,13 @@ import { toDataExplorerEntry } from '~/models/search/to-data-explorer-entry';
 import { Percentage, RawJSON, toNumericID } from '~/value-objects';
 import { APIContext, promiseProgrammatically } from '../../utils';
 import { makeSubscribeToOneRawSearch } from '../subscribe-to-one-raw-search';
-
-type RequiredSearchFilter = Required<
-	Omit<SearchFilter, 'dateRange'> & { dateRange: Required<NonNullable<SearchFilter['dateRange']>> }
->;
-
-const countEntriesFromModules = (
-	msg: RawResponseForSearchStatsMessageReceived | RawResponseForSearchStatsWithinRangeMessageReceived,
-): Array<SearchFrequencyStats> => {
-	const statsSet = msg.data.Stats.Set;
-	return statsSet.map(set => ({
-		timestamp: new Date(set.TS),
-		count: last(set.Stats)?.OutputCount ?? 0,
-	}));
-};
-
-const SEARCH_FILTER_PREFIX = 'search-filter-';
+import {
+	countEntriesFromModules,
+	filterMessageByCommand,
+	getDefaultGranularityByRendererType,
+	RequiredSearchFilter,
+	SEARCH_FILTER_PREFIX,
+} from '../subscribe-to-one-search/helpers';
 
 export const makeSubscribeToOneExplorerSearch = (context: APIContext) => {
 	const subscribeToOneRawSearch = makeSubscribeToOneRawSearch(context);
@@ -353,39 +341,4 @@ export const makeSubscribeToOneExplorerSearch = (context: APIContext) => {
 			searchID: searchInitMsg.data.SearchID.toString(),
 		};
 	};
-};
-
-const DEFAULT_GRANULARITY_MAP: Record<SearchEntries['type'], number> = {
-	'chart': 160,
-	'fdg': 2000,
-	'gauge': 100, // *NOTE: Couldn't find it in environments.ts, using the same as table
-	'heatmap': 10000,
-	'point to point': 1000, // *NOTE: Couldn't find it in environments.ts, using the same as pointmap
-	'pointmap': 1000,
-	'raw': 50,
-	'text': 50,
-	'stack graph': 150,
-	'table': 100,
-};
-
-const getDefaultGranularityByRendererType = (rendererType: SearchEntries['type']): number => {
-	const v = DEFAULT_GRANULARITY_MAP[rendererType];
-	if (isNil(v)) {
-		console.log(`Unknown renderer ${rendererType}, will use 100 as the default granularity`);
-		return 100;
-	}
-	return v;
-};
-
-const filterMessageByCommand = <Command extends SearchMessageCommands>(command: Command) => <
-	M extends RawSearchMessageReceived
->(
-	msg: M,
-): msg is Extract<M, { data: { ID: Command } }> => {
-	try {
-		const _msg = msg as Exclude<RawSearchMessageReceived, RawSearchInitiatedMessageReceived>;
-		return _msg.data?.ID === command;
-	} catch {
-		return false;
-	}
 };
