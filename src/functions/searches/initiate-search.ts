@@ -6,7 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { isEmpty, pick, uniqueId } from 'lodash';
+import { isEmpty, isNil } from 'lodash';
 import { filter, first } from 'rxjs/operators';
 import {
 	Query,
@@ -19,57 +19,46 @@ import {
 import { RawJSON } from '~/value-objects';
 import { APISubscription, createProgrammaticPromise } from '../utils';
 
-const TASK_ID_PREFIX = 'query-queue-task-id-';
-
 interface QueryQueueTask {
-	id: string;
-
-	isReadyPromise: Promise<void>;
-
-	isCompletePromise: Promise<void>;
-	complete: () => void;
-}
-
-interface InternalQueryQueueTask extends QueryQueueTask {
+	run: () => Promise<void>;
+	isRunning: boolean;
 	isComplete: boolean;
-	ready: () => void;
 }
 
 class QueryQueue {
-	private _tasksByQuery: Record<Query, undefined | Array<InternalQueryQueueTask>> = {};
+	private _tasksByQuery: Record<Query, undefined | Array<QueryQueueTask>> = {};
 
-	public push(query: Query): QueryQueueTask {
+	public push<T>(query: Query, fn: () => Promise<T>): Promise<T> {
 		// Create task
-		const taskID = uniqueId(TASK_ID_PREFIX);
-		const readyPromise = createProgrammaticPromise();
-		const completePromise = createProgrammaticPromise();
-		const internalTask: InternalQueryQueueTask = {
-			id: taskID,
+		const taskPromise = createProgrammaticPromise<T>();
 
-			isReadyPromise: readyPromise.promise,
-			ready: () => readyPromise.resolve(),
-
-			isComplete: false,
-			isCompletePromise: completePromise.promise,
-			complete: () => {
-				internalTask.isComplete = true;
-				completePromise.resolve();
+		const task: QueryQueueTask = {
+			run: async () => {
+				task.isRunning = true;
+				try {
+					const result = await fn();
+					taskPromise.resolve(result);
+					task.isComplete = true;
+				} catch (err) {
+					taskPromise.reject(err);
+					task.isComplete = true;
+				}
 			},
+			isRunning: false,
+			isComplete: false,
 		};
 
-		// Insert
-		this._tasksByQuery[query] = this._tasksByQuery[query] ?? [];
-		this._tasksByQuery[query]?.push(internalTask);
-		this._checkQueryTasks(query);
-
-		// Check query task once that's completed
-		internalTask.isCompletePromise.then(() => {
+		// Check query tasks once that's completed
+		taskPromise.promise.then(() => {
 			this._checkQueryTasks(query);
 		});
 
-		// Convert to external task and return it
-		const task: QueryQueueTask = pick(internalTask, 'id', 'isReadyPromise', 'isCompletePromise', 'complete');
-		return task;
+		// Insert
+		this._tasksByQuery[query] = this._tasksByQuery[query] ?? [];
+		this._tasksByQuery[query]?.push(task);
+		this._checkQueryTasks(query);
+
+		return taskPromise.promise;
 	}
 
 	private _checkQueryTasks(query: Query): void {
@@ -77,9 +66,10 @@ class QueryQueue {
 		this._tasksByQuery[query] = (this._tasksByQuery[query] ?? []).filter(t => t.isComplete === false);
 		if (isEmpty(this._tasksByQuery[query])) delete this._tasksByQuery[query];
 
-		// Mark next task as ready
-		const nextInternalTask = this._tasksByQuery[query]?.[0];
-		nextInternalTask?.ready();
+		// Run next task
+		const nextInternalTask = this._tasksByQuery[query]?.[0] ?? null;
+		if (isNil(nextInternalTask)) return;
+		if (nextInternalTask.isRunning === false) nextInternalTask.run();
 	}
 }
 
@@ -91,46 +81,46 @@ export const initiateSearch = async (
 	range: [Date, Date],
 	options: { initialFilterID?: string; metadata?: RawJSON } = {},
 ): Promise<RawSearchInitiatedMessageReceived> => {
-	const queueTask = QUERY_QUEUE.push(query);
-	await queueTask.isReadyPromise;
+	const task = async (): Promise<RawSearchInitiatedMessageReceived> => {
+		const searchInitMsgP = createProgrammaticPromise<RawSearchInitiatedMessageReceived>();
+		rawSubscription.received$
+			.pipe(
+				filter((msg): msg is RawSearchInitiatedMessageReceived => {
+					try {
+						const _msg = <RawSearchInitiatedMessageReceived>msg;
+						return _msg.type === 'search' && _msg.data.RawQuery === query;
+					} catch {
+						return false;
+					}
+				}),
+				first(),
+			)
+			.subscribe(
+				msg => {
+					searchInitMsgP.resolve(msg);
+					rawSubscription.send(<RawAcceptSearchMessageSent>{
+						type: 'search',
+						data: { OK: true, OutputSearchSubproto: msg.data.OutputSearchSubproto },
+					});
+				},
+				err => searchInitMsgP.reject(err),
+			);
 
-	const searchInitMsgP = createProgrammaticPromise<RawSearchInitiatedMessageReceived>();
-	rawSubscription.received$
-		.pipe(
-			filter((msg): msg is RawSearchInitiatedMessageReceived => {
-				try {
-					const _msg = <RawSearchInitiatedMessageReceived>msg;
-					return _msg.type === 'search' && _msg.data.RawQuery === query;
-				} catch {
-					return false;
-				}
-			}),
-			first(),
-		)
-		.subscribe(
-			msg => {
-				searchInitMsgP.resolve(msg);
-				rawSubscription.send(<RawAcceptSearchMessageSent>{
-					type: 'search',
-					data: { OK: true, OutputSearchSubproto: msg.data.OutputSearchSubproto },
-				});
+		rawSubscription.send(<RawInitiateSearchMessageSent>{
+			type: 'search',
+			data: {
+				Addendum: options.initialFilterID ? { filterID: options.initialFilterID } : {},
+				Background: false,
+				Metadata: options.metadata ?? {},
+				SearchStart: range[0].toISOString(),
+				SearchEnd: range[1].toISOString(),
+				SearchString: query,
 			},
-			err => searchInitMsgP.reject(err),
-		);
+		});
 
-	rawSubscription.send(<RawInitiateSearchMessageSent>{
-		type: 'search',
-		data: {
-			Addendum: options.initialFilterID ? { filterID: options.initialFilterID } : {},
-			Background: false,
-			Metadata: options.metadata ?? {},
-			SearchStart: range[0].toISOString(),
-			SearchEnd: range[1].toISOString(),
-			SearchString: query,
-		},
-	});
+		const searchInitMsg = await searchInitMsgP.promise;
+		return searchInitMsg;
+	};
 
-	const searchInitMsg = await searchInitMsgP.promise;
-	queueTask.complete();
-	return searchInitMsg;
+	return await QUERY_QUEUE.push(query, task);
 };
