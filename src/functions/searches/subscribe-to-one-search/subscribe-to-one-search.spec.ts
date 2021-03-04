@@ -8,7 +8,7 @@
 
 import * as base64 from 'base-64';
 import { addMinutes, subMinutes } from 'date-fns';
-import { isUndefined, last as lastElt, reverse, sum, zip } from 'lodash';
+import { isUndefined, last as lastElt, sum, zip } from 'lodash';
 import { first, last, map, takeWhile, toArray } from 'rxjs/operators';
 import { v4 as uuidv4 } from 'uuid';
 import { makeCreateOneMacro, makeDeleteOneMacro } from '~/functions/macros';
@@ -197,7 +197,10 @@ describe('subscribeToOneSearch()', () => {
 					.toPartiallyEqual(filter);
 			}
 
-			zip(textEntries.data, reverse(originalData)).forEach(([entry, original], index) => {
+			// Concat first because .reverse modifies the array
+			const reversedData = originalData.concat().reverse();
+
+			zip(textEntries.data, reversedData).forEach(([entry, original], index) => {
 				if (isUndefined(entry) || isUndefined(original)) {
 					fail('Exptected all entries and original data to be defined');
 					return;
@@ -250,11 +253,11 @@ describe('subscribeToOneSearch()', () => {
 		25000,
 	);
 
-	fit(
+	it(
 		'Should treat multiple searches with the same query independently',
 		integrationTest(async () => {
 			// Number of multiple searches to create at the same time
-			const SEARCHES_N = 2;
+			const SEARCHES_N = 4;
 
 			const subscribeToOneSearch = makeSubscribeToOneSearch(TEST_BASE_API_CONTEXT);
 			const query = `tag=${tag} json value timestamp | raw`;
@@ -266,7 +269,10 @@ describe('subscribeToOneSearch()', () => {
 				Array.from({ length: SEARCHES_N }).map(() => subscribeToOneSearch(query, range, { filter: filter })),
 			);
 
-			const testsP = searches.map(async search => {
+			// Concat first because .reverse modifies the array
+			const reversedData = originalData.concat().reverse();
+
+			const testsP = searches.map(async (search, i) => {
 				const textEntriesP = search.entries$
 					.pipe(
 						map(e => e as RawSearchEntries),
@@ -302,7 +308,7 @@ describe('subscribeToOneSearch()', () => {
 						.toPartiallyEqual(filter);
 				}
 
-				zip(textEntries.data, reverse(originalData)).forEach(([entry, original], index) => {
+				zip(textEntries.data, reversedData).forEach(([entry, original], index) => {
 					if (isUndefined(entry) || isUndefined(original)) {
 						fail('Exptected all entries and original data to be defined');
 						return;
@@ -310,24 +316,20 @@ describe('subscribeToOneSearch()', () => {
 
 					const value: Entry = JSON.parse(base64.decode(entry.data));
 					const enumeratedValues = entry.values;
-					const [_timestamp, _value] = enumeratedValues;
+					const _timestamp = enumeratedValues.find(v => v.name === 'timestamp')!;
+					const _value = enumeratedValues.find(v => v.name === 'value')!;
 
-					if (index === 0) {
-						console.log('entry', entry);
-						console.log('enumeratedValues', enumeratedValues);
+					expect(_timestamp).withContext(`Each entry should have an enumerated value called "timestamp"`).toEqual({
+						isEnumerated: true,
+						name: 'timestamp',
+						value: original.timestamp,
+					});
 
-						expect(_timestamp).withContext(`Each entry should have an enumerated value called "timestamp"`).toEqual({
-							isEnumerated: true,
-							name: 'timestamp',
-							value: original.timestamp,
-						});
-
-						expect(_value).withContext(`Each entry should have an enumerated value called "value"`).toEqual({
-							isEnumerated: true,
-							name: 'value',
-							value: original.value.toString(),
-						});
-					}
+					expect(_value).withContext(`Each entry should have an enumerated value called "value"`).toEqual({
+						isEnumerated: true,
+						name: 'value',
+						value: original.value.toString(),
+					});
 
 					expect(value.value)
 						.withContext('Each value should match its index, descending')
