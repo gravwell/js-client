@@ -23,7 +23,7 @@ import {
 	RawResponseForSearchStatsMessageReceived,
 	RawResponseForSearchStatsWithinRangeMessageReceived,
 	RawSearchInitiatedMessageReceived,
-	RawSearchMessageReceivedRequestExplorerEntriesWithinRange,
+	RawSearchMessageReceived,
 	SearchEntries,
 	SearchFilter,
 	SearchFrequencyStats,
@@ -136,14 +136,7 @@ export const makeSubscribeToOneExplorerSearch = (context: APIContext) => {
 		);
 
 		const entries$: Observable<ExplorerSearchEntries> = searchMessages$.pipe(
-			filter((msg): msg is RawSearchMessageReceivedRequestExplorerEntriesWithinRange => {
-				try {
-					const _msg = <RawSearchMessageReceivedRequestExplorerEntriesWithinRange>msg;
-					return _msg.data.ID === SearchMessageCommands.RequestExplorerEntriesWithinRange;
-				} catch {
-					return false;
-				}
-			}),
+			filter(filterMessageByCommand(SearchMessageCommands.RequestExplorerEntriesWithinRange)),
 			map(
 				(msg): ExplorerSearchEntries => {
 					const base = toSearchEntries(rendererType, msg);
@@ -249,37 +242,14 @@ export const makeSubscribeToOneExplorerSearch = (context: APIContext) => {
 			setTimeout(() => requestEntries(filter), 2000); // TODO: Change this
 		});
 
-		const rawSearchStats$ = searchMessages$.pipe(
-			filter((msg): msg is RawResponseForSearchStatsMessageReceived => {
-				try {
-					const _msg = <RawResponseForSearchStatsMessageReceived>msg;
-					return _msg.data.ID === SearchMessageCommands.RequestAllStats;
-				} catch {
-					return false;
-				}
-			}),
-		);
+		const rawSearchStats$ = searchMessages$.pipe(filter(filterMessageByCommand(SearchMessageCommands.RequestAllStats)));
 
 		const rawSearchDetails$ = searchMessages$.pipe(
-			filter((msg): msg is RawResponseForSearchDetailsMessageReceived => {
-				try {
-					const _msg = <RawResponseForSearchDetailsMessageReceived>msg;
-					return _msg.data.ID === SearchMessageCommands.RequestDetails;
-				} catch {
-					return false;
-				}
-			}),
+			filter(filterMessageByCommand(SearchMessageCommands.RequestDetails)),
 		);
 
 		const rawStatsZoom$ = searchMessages$.pipe(
-			filter((msg): msg is RawResponseForSearchStatsWithinRangeMessageReceived => {
-				try {
-					const _msg = <RawResponseForSearchStatsWithinRangeMessageReceived>msg;
-					return _msg.data.ID === SearchMessageCommands.RequestStatsInRange;
-				} catch {
-					return false;
-				}
-			}),
+			filter(filterMessageByCommand(SearchMessageCommands.RequestStatsInRange)),
 		);
 
 		const stats$ = combineLatest(rawSearchStats$, rawSearchDetails$).pipe(
@@ -405,4 +375,17 @@ const getDefaultGranularityByRendererType = (rendererType: SearchEntries['type']
 		return 100;
 	}
 	return v;
+};
+
+const filterMessageByCommand = <Command extends SearchMessageCommands>(command: Command) => <
+	M extends RawSearchMessageReceived
+>(
+	msg: M,
+): msg is Extract<M, { data: { ID: Command } }> => {
+	try {
+		const _msg = msg as Exclude<RawSearchMessageReceived, RawSearchInitiatedMessageReceived>;
+		return _msg.data?.ID === command;
+	} catch {
+		return false;
+	}
 };
