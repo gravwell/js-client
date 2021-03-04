@@ -6,6 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
+import { DataExplorerEntry } from './data-explorer-entry';
 import {
 	RawSearchMessageReceivedRequestEntriesWithinRangeChartRenderer,
 	RawSearchMessageReceivedRequestEntriesWithinRangeFDGRenderer,
@@ -33,6 +34,8 @@ export type SearchEntries =
 	| TextSearchEntries
 	| StackGraphSearchEntries
 	| TableSearchEntries;
+
+export type ExplorerSearchEntries = SearchEntries & { explorerEntries: Array<DataExplorerEntry> };
 
 // TODO: Add render module to entries observable
 export interface BaseSearchEntries {

@@ -14,5 +14,6 @@ export * from './get-one-persistent-search-status';
 export * from './get-persistent-search-status-related-to-me';
 export * from './get-search-history';
 export * from './save-one-search';
+export * from './subscribe-to-one-explorer-search';
 export * from './subscribe-to-one-search';
 export * from './validate-one-query';

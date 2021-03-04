@@ -1,0 +1,200 @@
+/*************************************************************************
+ * Copyright 2020 Gravwell, Inc. All rights reserved.
+ * Contact: <legal@gravwell.io>
+ *
+ * This software may be modified and distributed under the terms of the
+ * MIT license. See the LICENSE file for details.
+ **************************************************************************/
+
+import * as base64 from 'base-64';
+import { addMinutes } from 'date-fns';
+import { isArray, isUndefined, reverse, sum, zip } from 'lodash';
+import { first, last, map, takeWhile, toArray } from 'rxjs/operators';
+import { v4 as uuidv4 } from 'uuid';
+import { makeCreateOneAutoExtractor } from '~/functions/auto-extractors';
+import { DataExplorerEntry, isDataExplorerEntry, SearchFilter } from '~/models';
+import { RawSearchEntries } from '~/models/search/search-entries';
+import { integrationTest, myCustomMatchers, sleep, TEST_BASE_API_CONTEXT } from '~/tests';
+import { makeIngestMultiLineEntry } from '../../ingestors/ingest-multi-line-entry';
+import { makeGetAllTags } from '../../tags/get-all-tags';
+import { makeSubscribeToOneExplorerSearch } from './subscribe-to-one-explorer-search';
+
+interface Entry {
+	timestamp: string;
+	value: { foo: number };
+}
+
+describe('subscribeToOneExplorerSearch()', () => {
+	// Use a randomly generated tag, so that we know exactly what we're going to query
+	const tag = uuidv4();
+
+	// The number of entries to generate
+	const count = 1000;
+
+	// The start date for generated queries
+	const start = new Date(2010, 0, 0);
+
+	// The end date for generated queries; one minute between each entry
+	const end = addMinutes(start, count - 1);
+
+	const originalData: Array<Entry> = [];
+
+	beforeAll(async () => {
+		jasmine.addMatchers(myCustomMatchers);
+
+		// Generate and ingest some entries
+		const ingestMultiLineEntry = makeIngestMultiLineEntry(TEST_BASE_API_CONTEXT);
+		const values: Array<string> = [];
+		for (let i = 0; i < count; i++) {
+			const value: Entry = { timestamp: addMinutes(start, i).toISOString(), value: { foo: i } };
+			originalData.push(value);
+			values.push(JSON.stringify(value));
+		}
+		const data: string = values.join('\n');
+		await ingestMultiLineEntry({ data, tag, assumeLocalTimezone: false });
+
+		// Check the list of tags until our new tag appears
+		const getAllTags = makeGetAllTags(TEST_BASE_API_CONTEXT);
+		while (!(await getAllTags()).includes(tag)) {
+			// Give the backend a moment to catch up
+			await sleep(1000);
+		}
+
+		// Create an AX definition for the generated tag
+		const createOneAutoExtractor = makeCreateOneAutoExtractor(TEST_BASE_API_CONTEXT);
+		await createOneAutoExtractor({
+			tag: tag,
+			name: `${tag} - JSON`,
+			description: '-',
+			module: 'json',
+			parameters: 'timestamp value value.foo',
+		});
+	}, 25000);
+
+	it(
+		'Should work with queries using the raw renderer',
+		integrationTest(async () => {
+			const subscribeToOneExplorerSearch = makeSubscribeToOneExplorerSearch(TEST_BASE_API_CONTEXT);
+			const query = `tag=${tag} ax | raw`;
+			const range: [Date, Date] = [start, end];
+			const filter: SearchFilter = { entriesOffset: { index: 0, count: count } };
+			const search = await subscribeToOneExplorerSearch(query, range, { filter });
+
+			const textEntriesP = search.entries$
+				.pipe(
+					map(e => e as RawSearchEntries & { explorerEntries: Array<DataExplorerEntry> }),
+					takeWhile(e => !e.finished, true),
+					last(),
+				)
+				.toPromise();
+
+			const statsP = search.stats$
+				.pipe(
+					takeWhile(e => !e.finished, true),
+					toArray(),
+				)
+				.toPromise();
+
+			const [textEntries, stats, statsOverview, statsZoom] = await Promise.all([
+				textEntriesP,
+				statsP,
+				search.statsOverview$.pipe(first()).toPromise(),
+				search.statsZoom$.pipe(first()).toPromise(),
+			]);
+
+			////
+			// Check entries
+			////
+			expect(textEntries.data.length)
+				.withContext('The number of entries should equal the total ingested')
+				.toEqual(count);
+
+			if (isUndefined(textEntries.filter) === false) {
+				expect(textEntries.filter)
+					.withContext(`The filter should be equal to the one used, plus the default values for undefined properties`)
+					.toPartiallyEqual(filter);
+			}
+
+			const explorerEntries = textEntries.explorerEntries;
+			expect(isArray(explorerEntries) && explorerEntries.every(isDataExplorerEntry))
+				.withContext('Expect a promise of an array of data explorer entries')
+				.toBeTrue();
+			expect(explorerEntries.length).withContext(`Expect ${count} entries`).toBe(count);
+
+			for (const entry of explorerEntries) {
+				expect(entry.tag).withContext(`Expect entry tag to be "${tag}"`).toBe(tag);
+				expect(entry.module).withContext(`Expect explorer module to be JSON`).toBe('json');
+
+				expect(entry.elements.length)
+					.withContext(`Expect to have 2 data explorer elements on first depth level`)
+					.toBe(2);
+				expect(entry.elements.map(el => el.name).sort())
+					.withContext(`Expect first depth data explorer elements to be "value" and "timestamp"`)
+					.toEqual(['timestamp', 'value']);
+
+				const timestampEl = entry.elements.find(el => el.name === 'timestamp')!;
+				const valueEl = entry.elements.find(el => el.name === 'value')!;
+
+				expect(timestampEl.children.length).withContext(`Expect the timestamp element to not have children`).toBe(0);
+				expect(valueEl.children.length).withContext(`Expect the value element to have one children`).toBe(1);
+				expect(valueEl.children[0].name)
+					.withContext(`Expect the value element child to be value.foo`)
+					.toBe('value.foo');
+			}
+
+			zip(textEntries.data, reverse(originalData)).forEach(([entry, original], index) => {
+				if (isUndefined(entry) || isUndefined(original)) {
+					fail('Exptected all entries and original data to be defined');
+					return;
+				}
+
+				const value: Entry = JSON.parse(base64.decode(entry.data));
+				const enumeratedValues = entry.values;
+				const _timestamp = enumeratedValues.find(v => v.name === 'timestamp');
+				const _value = enumeratedValues.find(v => v.name === 'value');
+
+				expect(_timestamp).withContext(`Each entry should have an enumerated value called "timestamp"`).toEqual({
+					isEnumerated: true,
+					name: 'timestamp',
+					value: original.timestamp,
+				});
+
+				expect(_value)
+					.withContext(`Each entry should have an enumerated value called "value"`)
+					.toEqual({
+						isEnumerated: true,
+						name: 'value',
+						value: JSON.stringify(original.value),
+					});
+
+				expect(value.value.foo)
+					.withContext('Each value should match its index, descending')
+					.toEqual(count - index - 1);
+			});
+
+			////
+			// Check stats
+			////
+			expect(stats.length).toBeGreaterThan(0);
+
+			if (isUndefined(stats[0].filter) === false) {
+				expect(stats[0].filter)
+					.withContext(`The filter should be equal to the one used, plus the default values for undefined properties`)
+					.toPartiallyEqual(filter);
+			}
+			if (isUndefined(statsZoom.filter) === false) {
+				expect(statsZoom.filter)
+					.withContext(`The filter should be equal to the one used, plus the default values for undefined properties`)
+					.toPartiallyEqual(filter);
+			}
+
+			expect(sum(statsOverview.frequencyStats.map(x => x.count)))
+				.withContext('The sum of counts from statsOverview should equal the total count ingested')
+				.toEqual(count);
+			expect(sum(statsZoom.frequencyStats.map(x => x.count)))
+				.withContext('The sum of counts from statsZoom should equal the total count ingested')
+				.toEqual(count);
+		}),
+		25000,
+	);
+});

@@ -7,7 +7,7 @@
  **************************************************************************/
 
 import { RawSearchMessageReceived, RawSearchMessageSent } from '~/models';
-import { APIContext, APISubscription, apiSubscriptionFromWebSocket, buildURL, WebSocket } from '../../utils';
+import { APIContext, APISubscription, apiSubscriptionFromWebSocket, buildURL, WebSocket } from '../utils';
 
 export const makeSubscribeToOneRawSearch = (context: APIContext) => {
 	const templatePath = '/api/ws/search';

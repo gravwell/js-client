@@ -6,10 +6,22 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { DataExplorerEntry } from '~/models/search';
+import { DataExplorerEntry, ExplorerSearchSubscription, SearchFilter } from '~/models/search';
+import { RawJSON } from '~/value-objects';
 
 export interface ExplorerService {
 	readonly explore: {
 		readonly one: (tag: string) => Promise<Array<DataExplorerEntry>>;
+	};
+
+	readonly searchAndExplore: {
+		readonly one: (
+			query: string,
+			range: [Date, Date],
+			options?: {
+				filter?: SearchFilter | undefined;
+				metadata?: RawJSON | undefined;
+			},
+		) => Promise<ExplorerSearchSubscription>;
 	};
 }
