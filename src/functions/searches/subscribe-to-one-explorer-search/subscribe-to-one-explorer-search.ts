@@ -30,7 +30,7 @@ import {
 } from '~/models';
 import { toDataExplorerEntry } from '~/models/search/to-data-explorer-entry';
 import { Percentage, RawJSON, toNumericID } from '~/value-objects';
-import { APIContext, promiseProgrammatically } from '../../utils';
+import { APIContext, createProgrammaticPromise } from '../../utils';
 import { makeSubscribeToOneRawSearch } from '../subscribe-to-one-raw-search';
 import {
 	countEntriesFromModules,
@@ -73,7 +73,7 @@ export const makeSubscribeToOneExplorerSearch = (context: APIContext) => {
 		const filtersByID: Record<string, SearchFilter | undefined> = {};
 		filtersByID[initialFilterID] = initialFilter;
 
-		const searchInitMsgP = promiseProgrammatically<RawSearchInitiatedMessageReceived>();
+		const searchInitMsgP = createProgrammaticPromise<RawSearchInitiatedMessageReceived>();
 		rawSubscription.received$
 			.pipe(
 				filter((msg): msg is RawSearchInitiatedMessageReceived => {
