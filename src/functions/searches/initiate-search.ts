@@ -30,17 +30,17 @@ class QueryQueue {
 
 	public push<T>(query: Query, fn: () => Promise<T>): Promise<T> {
 		// Create task
-		const taskPromise = createProgrammaticPromise<T>();
+		const { promise: taskPromise, resolve: resolveTask, reject: rejectTask } = createProgrammaticPromise<T>();
 
 		const task: QueryQueueTask = {
 			run: async () => {
 				task.isRunning = true;
 				try {
 					const result = await fn();
-					taskPromise.resolve(result);
+					resolveTask(result);
 					task.isComplete = true;
 				} catch (err) {
-					taskPromise.reject(err);
+					rejectTask(err);
 					task.isComplete = true;
 				}
 			},
@@ -49,7 +49,7 @@ class QueryQueue {
 		};
 
 		// Check query tasks once that's completed
-		taskPromise.promise.then(() => {
+		taskPromise.then(() => {
 			this._checkQueryTasks(query);
 		});
 
@@ -58,7 +58,7 @@ class QueryQueue {
 		this._tasksByQuery[query]?.push(task);
 		this._checkQueryTasks(query);
 
-		return taskPromise.promise;
+		return taskPromise;
 	}
 
 	private _checkQueryTasks(query: Query): void {
