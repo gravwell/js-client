@@ -71,7 +71,7 @@ describe('subscribeToOneExplorerSearch()', () => {
 		});
 	}, 25000);
 
-	fit(
+	it(
 		'Should work with queries using the raw renderer',
 		integrationTest(async () => {
 			const subscribeToOneExplorerSearch = makeSubscribeToOneExplorerSearch(TEST_BASE_API_CONTEXT);

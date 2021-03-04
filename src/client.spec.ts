@@ -47,6 +47,7 @@ import {
 	CreatableUser,
 	Dashboard,
 	DataExplorerEntry,
+	ExplorerSearchSubscription,
 	FileMetadata,
 	GeneratedAutoExtractors,
 	Group,
@@ -95,7 +96,7 @@ import {
 	ValidatedQuery,
 } from '~/models';
 import { unitTest } from '~/tests';
-import { ID, NumericID, UUID } from '~/value-objects';
+import { ID, NumericID, RawJSON, UUID } from '~/value-objects';
 import { GravwellClient } from './client';
 import { GeneratableAutoExtractor } from './models/auto-extractor/generatable-auto-extractor';
 
@@ -237,7 +238,11 @@ describe('GravwellClient', () => {
 				(searchID: ID, downloadFormat: SearchDownloadFormat) => ReturnType<typeof downloadFromURL>
 			>();
 			expectTypeOf(client.searches.create.one).toEqualTypeOf<
-				(query: Query, range: [Date, Date], options?: { filter?: Partial<SearchFilter> }) => Promise<SearchSubscription>
+				(
+					query: Query,
+					range: [Date, Date],
+					options?: { filter?: Partial<SearchFilter>; metadata?: RawJSON },
+				) => Promise<SearchSubscription>
 			>();
 			expectTypeOf(client.searches.stop.one).toEqualTypeOf<(searchID: string) => Promise<void>>();
 
@@ -433,6 +438,13 @@ describe('GravwellClient', () => {
 
 			// Explorer
 			expectTypeOf(client.explorer.explore.one).toEqualTypeOf<(tag: string) => Promise<Array<DataExplorerEntry>>>();
+			expectTypeOf(client.explorer.searchAndExplore.one).toEqualTypeOf<
+				(
+					query: Query,
+					range: [Date, Date],
+					options?: { filter?: Partial<SearchFilter>; metadata?: RawJSON },
+				) => Promise<ExplorerSearchSubscription>
+			>();
 		}),
 	);
 });
