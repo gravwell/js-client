@@ -9,6 +9,7 @@
 export * from './data-explorer-entry';
 export * from './element-filter';
 export * from './element-filter-operation';
+export * from './explorer-search-subscription';
 export * from './is-search2';
 export * from './is-valid-search';
 export * from './raw-data-explorer-entry';
