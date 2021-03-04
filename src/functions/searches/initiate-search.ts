@@ -56,38 +56,30 @@ class QueryQueue {
 				completePromise.resolve();
 			},
 		};
-		console.log(`QueryQueue > Task created`, taskID);
 
 		// Insert
 		this._tasksByQuery[query] = this._tasksByQuery[query] ?? [];
 		this._tasksByQuery[query]?.push(internalTask);
 		this._checkQueryTasks(query);
-		console.log(`QueryQueue > Task inserted`, JSON.stringify(this._tasksByQuery, null, '\t'));
 
 		// Check query task once that's completed
 		internalTask.isCompletePromise.then(() => {
-			console.log(`QueryQueue > Task completed`, taskID);
 			this._checkQueryTasks(query);
 		});
 
 		// Convert to external task and return it
 		const task: QueryQueueTask = pick(internalTask, 'id', 'isReadyPromise', 'isCompletePromise', 'complete');
-		console.log(`QueryQueue > Task returning`, task);
 		return task;
 	}
 
 	private _checkQueryTasks(query: Query): void {
-		console.log(`QueryQueue > Will check query tasks`, query);
-
 		// Remove completed tasks from queue
 		this._tasksByQuery[query] = (this._tasksByQuery[query] ?? []).filter(t => t.isComplete === false);
 		if (isEmpty(this._tasksByQuery[query])) delete this._tasksByQuery[query];
-		console.log(`QueryQueue > Removed completed tasks`, query, JSON.stringify(this._tasksByQuery, null, '\t'));
 
 		// Mark next task as ready
 		const nextInternalTask = this._tasksByQuery[query]?.[0];
 		nextInternalTask?.ready();
-		console.log(`QueryQueue > Task marked as ready`, nextInternalTask?.id);
 	}
 }
 
@@ -101,7 +93,6 @@ export const initiateSearch = async (
 ): Promise<RawSearchInitiatedMessageReceived> => {
 	const queueTask = QUERY_QUEUE.push(query);
 	await queueTask.isReadyPromise;
-	console.log(`initiateSearch > Task marked as ready`, queueTask.id);
 
 	const searchInitMsgP = promiseProgrammatically<RawSearchInitiatedMessageReceived>();
 	rawSubscription.received$
@@ -140,7 +131,6 @@ export const initiateSearch = async (
 	});
 
 	const searchInitMsg = await searchInitMsgP.promise;
-	console.log(`initiateSearch > Will complete task`, queueTask.id);
 	queueTask.complete();
 	return searchInitMsg;
 };
