@@ -29,6 +29,7 @@ import {
 	RawSearchMessageReceivedRequestEntriesWithinRangeStackGraphRenderer,
 	RawSearchMessageReceivedRequestEntriesWithinRangeTableRenderer,
 	RawSearchMessageReceivedRequestEntriesWithinRangeTextRenderer,
+	RawSearchMessageReceivedRequestExplorerEntriesWithinRange,
 } from './raw-search-message-received';
 import {
 	normalizeToChartSearchEntries,
@@ -44,7 +45,9 @@ import {
 	SearchEntries,
 } from './search-entries';
 
-type RawEntryNormalizer = (v: RawSearchMessageReceivedRequestEntriesWithinRange) => Omit<SearchEntries, 'filter'>;
+type RawEntryNormalizer = (
+	v: RawSearchMessageReceivedRequestEntriesWithinRange | RawSearchMessageReceivedRequestExplorerEntriesWithinRange,
+) => Omit<SearchEntries, 'filter'>;
 
 const NORMALIZERS: Record<SearchEntries['type'], RawEntryNormalizer> = {
 	'chart': ({ data }) =>
@@ -128,7 +131,7 @@ export function normalize(
 
 export const toSearchEntries = (
 	renderer: string,
-	msg: RawSearchMessageReceivedRequestEntriesWithinRange,
+	msg: RawSearchMessageReceivedRequestEntriesWithinRange | RawSearchMessageReceivedRequestExplorerEntriesWithinRange,
 ): Omit<SearchEntries, 'filter'> => {
 	const normalizer = NORMALIZERS[renderer as SearchEntries['type']];
 	if (isUndefined(normalizer)) {
