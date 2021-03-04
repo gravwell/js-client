@@ -17,7 +17,7 @@ import {
 	RawSearchMessageSent,
 } from '~/models';
 import { RawJSON } from '~/value-objects';
-import { APISubscription, promiseProgrammatically } from '../utils';
+import { APISubscription, createProgrammaticPromise } from '../utils';
 
 const TASK_ID_PREFIX = 'query-queue-task-id-';
 
@@ -41,8 +41,8 @@ class QueryQueue {
 	public push(query: Query): QueryQueueTask {
 		// Create task
 		const taskID = uniqueId(TASK_ID_PREFIX);
-		const readyPromise = promiseProgrammatically();
-		const completePromise = promiseProgrammatically();
+		const readyPromise = createProgrammaticPromise();
+		const completePromise = createProgrammaticPromise();
 		const internalTask: InternalQueryQueueTask = {
 			id: taskID,
 
@@ -94,7 +94,7 @@ export const initiateSearch = async (
 	const queueTask = QUERY_QUEUE.push(query);
 	await queueTask.isReadyPromise;
 
-	const searchInitMsgP = promiseProgrammatically<RawSearchInitiatedMessageReceived>();
+	const searchInitMsgP = createProgrammaticPromise<RawSearchInitiatedMessageReceived>();
 	rawSubscription.received$
 		.pipe(
 			filter((msg): msg is RawSearchInitiatedMessageReceived => {

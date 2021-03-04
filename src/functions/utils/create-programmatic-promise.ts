@@ -12,7 +12,7 @@ interface ProgrammaticPromise<T> {
 	reject: (error: Error) => void;
 }
 
-export const promiseProgrammatically = <T = void>(): ProgrammaticPromise<T> => {
+export const createProgrammaticPromise = <T = void>(): ProgrammaticPromise<T> => {
 	const obj = {} as ProgrammaticPromise<T>;
 	obj.promise = new Promise<T>((_resolve, _reject) => {
 		obj.resolve = (value: T) => _resolve(value);
