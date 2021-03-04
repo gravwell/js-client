@@ -126,6 +126,10 @@ describe('subscribeToOneSearch()', () => {
 			expect(stats.query).withContext(`Stats should contain the user query`).toBe(query);
 			expect(stats.effectiveQuery).withContext(`Stats should contain the effective query`).toBe(effectiveQuery);
 
+			expect(stats.downloadFormats.sort())
+				.withContext(`Download formats should include .json', .text', .csv' and .archive`)
+				.toEqual(['archive', 'csv', 'json', 'text']);
+
 			////
 			// Check progress
 			////
