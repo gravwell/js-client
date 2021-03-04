@@ -32,7 +32,7 @@ import {
 } from '~/models';
 import { Percentage, RawJSON, toNumericID } from '~/value-objects';
 import { APIContext, promiseProgrammatically } from '../../utils';
-import { makeSubscribeToOneRawSearch } from './subscribe-to-one-raw-search';
+import { makeSubscribeToOneRawSearch } from '../subscribe-to-one-raw-search';
 
 type RequiredSearchFilter = Required<
 	Omit<SearchFilter, 'dateRange'> & { dateRange: Required<NonNullable<SearchFilter['dateRange']>> }
