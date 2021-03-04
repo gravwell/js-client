@@ -7,6 +7,7 @@
  **************************************************************************/
 
 import { SearchFilter, SearchSubscription } from '~/models/search';
+import { RawJSON } from '~/value-objects';
 
 export interface SearchesService {
 	readonly background: {
@@ -40,6 +41,7 @@ export interface SearchesService {
 			range: [Date, Date],
 			options?: {
 				filter?: SearchFilter | undefined;
+				metadata?: RawJSON | undefined;
 			},
 		) => Promise<SearchSubscription>;
 	};
