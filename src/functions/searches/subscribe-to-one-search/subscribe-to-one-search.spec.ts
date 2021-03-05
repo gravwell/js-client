@@ -246,6 +246,7 @@ describe('subscribeToOneSearch()', () => {
 					.withContext(`The filter should be equal to the one used, plus the default values for undefined properties`)
 					.toPartiallyEqual(filter);
 			}
+			expect(stats[0].tags).withContext('Tag should match tag from query').toEqual([tag]);
 
 			expect(sum(statsOverview.frequencyStats.map(x => x.count)))
 				.withContext('The sum of counts from statsOverview should equal the total count ingested')
