@@ -35,6 +35,7 @@ export interface SearchStats {
 	end: Date;
 	minZoomWindow: number;
 	downloadFormats: Array<string>;
+	tags: Array<string>;
 
 	pipeline: Array<{
 		module: string;
