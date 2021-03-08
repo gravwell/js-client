@@ -131,7 +131,7 @@ export const makeSubscribeToOneExplorerSearch = (context: APIContext) => {
 					const filterID = (msg.data.Addendum?.filterID as string | undefined) ?? null;
 					const filter = filtersByID[filterID ?? ''] ?? undefined;
 					const searchEntries = { ...base, filter } as SearchEntries;
-					const explorerEntries = msg.data.Explore.map(toDataExplorerEntry);
+					const explorerEntries = (msg.data.Explore ?? []).map(toDataExplorerEntry);
 					return { ...searchEntries, explorerEntries };
 				},
 			),
