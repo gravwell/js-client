@@ -6,10 +6,14 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { ValidatedQuery } from '~/models/search';
+import { ElementFilter, ValidatedQuery } from '~/models/search';
 
 export interface QueriesService {
 	readonly validate: {
 		readonly one: (query: string) => Promise<ValidatedQuery>;
+	};
+
+	readonly modify: {
+		readonly one: (query: string, filters: Array<ElementFilter>) => Promise<string>;
 	};
 }

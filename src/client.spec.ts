@@ -47,6 +47,7 @@ import {
 	CreatableUser,
 	Dashboard,
 	DataExplorerEntry,
+	ElementFilter,
 	ExplorerSearchSubscription,
 	FileMetadata,
 	GeneratedAutoExtractors,
@@ -435,6 +436,9 @@ describe('GravwellClient', () => {
 
 			// Queries
 			expectTypeOf(client.queries.validate.one).toEqualTypeOf<(query: Query) => Promise<ValidatedQuery>>();
+			expectTypeOf(client.queries.modify.one).toEqualTypeOf<
+				(query: string, filters: Array<ElementFilter>) => Promise<string>
+			>();
 
 			// Explorer
 			expectTypeOf(client.explorer.explore.one).toEqualTypeOf<(tag: string) => Promise<Array<DataExplorerEntry>>>();
