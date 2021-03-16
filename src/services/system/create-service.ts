@@ -7,8 +7,10 @@
  **************************************************************************/
 
 import {
+	makeBackup,
 	makeGetAPIVersion,
 	makeGetSystemSettings,
+	makeRestore,
 	makeSubscribeToManySystemInformations,
 	makeSystemIsConnected,
 } from '~/functions/system';
@@ -28,4 +30,8 @@ export const createSystemService = (context: APIContext): SystemService => ({
 	is: {
 		connected: makeSystemIsConnected(context),
 	},
+
+	backup: makeBackup(context),
+
+	restore: makeRestore(context),
 });
