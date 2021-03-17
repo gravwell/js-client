@@ -30,4 +30,8 @@ export interface SystemService {
 	readonly is: {
 		readonly connected: () => Promise<boolean>;
 	};
+
+	readonly backup: (includeSavedSearches: boolean) => Promise<File>;
+
+	readonly restore: (backup: File, signal?: AbortSignal) => Promise<void>;
 }
