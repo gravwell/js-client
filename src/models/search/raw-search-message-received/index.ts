@@ -39,6 +39,7 @@ export interface RawSearchInitiatedMessageReceived {
 		Tags: Array<string>;
 		TimeZoomDisabled: boolean;
 		Addendum?: RawJSON;
+		Error?: string;
 	};
 }
 

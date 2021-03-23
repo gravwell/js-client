@@ -370,6 +370,32 @@ describe('subscribeToOneSearch()', () => {
 		25000,
 	);
 
+	it(
+		'Should handle a bad query string',
+		integrationTest(async () => {
+			const subscribeToOneSearch = makeSubscribeToOneSearch(TEST_BASE_API_CONTEXT);
+			const query = `this is an invalid query`;
+			const range: [Date, Date] = [start, end];
+			const filter: SearchFilter = { entriesOffset: { index: 0, count: count } };
+
+			await expectAsync(subscribeToOneSearch(query, range, { filter })).toBeRejected();
+		}),
+		25000,
+	);
+
+	it(
+		'Should handle a bad query range (end is before start)',
+		integrationTest(async () => {
+			const subscribeToOneSearch = makeSubscribeToOneSearch(TEST_BASE_API_CONTEXT);
+			const query = `tag=${tag}`;
+			const range: [Date, Date] = [start, subMinutes(start, 10)];
+			const filter: SearchFilter = { entriesOffset: { index: 0, count: count } };
+
+			await expectAsync(subscribeToOneSearch(query, range, { filter })).toBeRejected();
+		}),
+		25000,
+	);
+
 	describe('stats', () => {
 		it(
 			'Should be evenly spread over a window matching the zoom/overview granularity',

@@ -7,7 +7,8 @@
  **************************************************************************/
 
 import { isEmpty, isNil } from 'lodash';
-import { filter, first } from 'rxjs/operators';
+import { iif, of, throwError } from 'rxjs';
+import { concatMap, filter, first } from 'rxjs/operators';
 import {
 	Query,
 	RawAcceptSearchMessageSent,
@@ -49,9 +50,13 @@ class QueryQueue {
 		};
 
 		// Check query tasks once that's completed
-		taskPromise.then(() => {
-			this._checkQueryTasks(query);
-		});
+		taskPromise
+			.then(() => {
+				this._checkQueryTasks(query);
+			})
+			.catch(() => {
+				return;
+			});
 
 		// Insert
 		this._tasksByQuery[query] = this._tasksByQuery[query] ?? [];
@@ -88,11 +93,19 @@ export const initiateSearch = async (
 				filter((msg): msg is RawSearchInitiatedMessageReceived => {
 					try {
 						const _msg = <RawSearchInitiatedMessageReceived>msg;
-						return _msg.type === 'search' && _msg.data.RawQuery === query;
+						return _msg.type === 'search';
 					} catch {
 						return false;
 					}
 				}),
+				concatMap(msg =>
+					iif(
+						() => isEmpty(msg.data.Error),
+						of(msg), // If 'Error' is empty, just proceed as usual
+						throwError({ name: 'Error initiating search', message: msg.data.Error }), // If it's not empty, fail out
+					),
+				),
+				filter(msg => msg.data.RawQuery === query),
 				first(),
 			)
 			.subscribe(
