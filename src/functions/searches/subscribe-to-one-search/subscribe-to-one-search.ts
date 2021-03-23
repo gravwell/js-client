@@ -6,7 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { isBoolean, isEqual, isNull, isUndefined, uniqueId } from 'lodash';
+import { isBoolean, isEmpty, isEqual, isNull, isUndefined, uniqueId } from 'lodash';
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import { bufferCount, distinctUntilChanged, filter, map, startWith, tap } from 'rxjs/operators';
 import {
@@ -17,6 +17,7 @@ import {
 	RawRequestSearchStatsWithinRangeMessageSent,
 	RawResponseForSearchDetailsMessageReceived,
 	RawResponseForSearchStatsMessageReceived,
+	RawSearchErrorResponseReceived,
 	SearchEntries,
 	SearchFilter,
 	SearchMessageCommands,
@@ -301,12 +302,24 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 			}),
 		);
 
+		const errors$: Observable<RawSearchErrorResponseReceived> = searchMessages$.pipe(
+			filter((msg): msg is RawSearchErrorResponseReceived => {
+				try {
+					const _msg = <RawSearchErrorResponseReceived>msg;
+					return _msg.data.ID === SearchMessageCommands.ResponseError && isEmpty(_msg.data.Error) === false;
+				} catch {
+					return false;
+				}
+			}),
+		);
+
 		return {
 			progress$,
 			entries$,
 			stats$,
 			statsOverview$,
 			statsZoom$,
+			errors$,
 			setFilter,
 			searchID: searchInitMsg.data.SearchID.toString(),
 		};

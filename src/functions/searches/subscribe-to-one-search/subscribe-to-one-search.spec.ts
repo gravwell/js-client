@@ -12,7 +12,7 @@ import { isUndefined, last as lastElt, sum, zip } from 'lodash';
 import { first, last, map, takeWhile, toArray } from 'rxjs/operators';
 import { v4 as uuidv4 } from 'uuid';
 import { makeCreateOneMacro, makeDeleteOneMacro } from '~/functions/macros';
-import { SearchFilter } from '~/models';
+import { SearchFilter, SearchMessageCommands } from '~/models';
 import { RawSearchEntries, TextSearchEntries } from '~/models/search/search-entries';
 import { integrationTest, myCustomMatchers, sleep, TEST_BASE_API_CONTEXT } from '~/tests';
 import { makeIngestMultiLineEntry } from '../../ingestors/ingest-multi-line-entry';
@@ -392,6 +392,26 @@ describe('subscribeToOneSearch()', () => {
 			const filter: SearchFilter = { entriesOffset: { index: 0, count: count } };
 
 			await expectAsync(subscribeToOneSearch(query, range, { filter })).toBeRejected();
+		}),
+		25000,
+	);
+
+	it(
+		'Should send error over error$ when Last is less than First',
+		integrationTest(async () => {
+			const subscribeToOneSearch = makeSubscribeToOneSearch(TEST_BASE_API_CONTEXT);
+			const query = `tag=${tag} chart`;
+			const range: [Date, Date] = [start, end];
+
+			// Use an invalid filter, where Last is less than First
+			const filter: SearchFilter = { entriesOffset: { index: 1, count: -1 } };
+
+			const search = await subscribeToOneSearch(query, range, { filter });
+			const error = await search.errors$.pipe(first()).toPromise();
+
+			expect(error.data.ID).toEqual(SearchMessageCommands.ResponseError);
+			expect(error.data.Error).toBeDefined();
+			expect(error.data.Error.length).toBeGreaterThan(0);
 		}),
 		25000,
 	);

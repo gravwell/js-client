@@ -43,6 +43,14 @@ export interface RawSearchInitiatedMessageReceived {
 	};
 }
 
+export interface RawSearchErrorResponseReceived {
+	type: string; // Search subtype ID eg. "search2"
+	data: {
+		ID: SearchMessageCommands.ResponseError;
+		Error: string;
+	};
+}
+
 export interface RawResponseForSearchCloseMessageReceived {
 	type: string; // Search subtype ID eg. "search2"
 	data: { ID: SearchMessageCommands.Close; Addendum?: RawJSON };
@@ -285,6 +293,7 @@ export type RawSearchMessageReceived =
 	| RawSearchMessageReceivedRequestEntries
 	| RawSearchMessageReceivedRequestEntriesWithinRange
 	| RawSearchMessageReceivedRequestExplorerEntries
-	| RawSearchMessageReceivedRequestExplorerEntriesWithinRange;
+	| RawSearchMessageReceivedRequestExplorerEntriesWithinRange
+	| RawSearchErrorResponseReceived;
 
 export * from './request-entries-within-range';
