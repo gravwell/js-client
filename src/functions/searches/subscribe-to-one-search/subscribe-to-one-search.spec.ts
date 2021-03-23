@@ -371,7 +371,7 @@ describe('subscribeToOneSearch()', () => {
 	);
 
 	it(
-		'Should handle a bad query string',
+		'Should reject on a bad query string',
 		integrationTest(async () => {
 			const subscribeToOneSearch = makeSubscribeToOneSearch(TEST_BASE_API_CONTEXT);
 			const query = `this is an invalid query`;
@@ -384,7 +384,7 @@ describe('subscribeToOneSearch()', () => {
 	);
 
 	it(
-		'Should handle a bad query range (end is before start)',
+		'Should reject on a bad query range (end is before start)',
 		integrationTest(async () => {
 			const subscribeToOneSearch = makeSubscribeToOneSearch(TEST_BASE_API_CONTEXT);
 			const query = `tag=${tag}`;
