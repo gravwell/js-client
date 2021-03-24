@@ -397,6 +397,37 @@ describe('subscribeToOneSearch()', () => {
 	);
 
 	it(
+		'Should reject bad searches without affecting good ones',
+		integrationTest(async () => {
+			const subscribeToOneSearch = makeSubscribeToOneSearch(TEST_BASE_API_CONTEXT);
+			const query = `tag=${tag}`;
+			const range: [Date, Date] = [start, end];
+			const badRange: [Date, Date] = [start, subMinutes(start, 10)];
+			const filter: SearchFilter = { entriesOffset: { index: 0, count: count } };
+
+			// Start a bunch of search subscriptions to race them
+			await Promise.all([
+				expectAsync(subscribeToOneSearch(query, badRange, { filter }))
+					.withContext('query with bad range should reject')
+					.toBeRejected(),
+				expectAsync(subscribeToOneSearch(query, badRange, { filter }))
+					.withContext('query with bad range should reject')
+					.toBeRejected(),
+				expectAsync(subscribeToOneSearch(query, range, { filter }))
+					.withContext('good query should resolve')
+					.toBeResolved(),
+				expectAsync(subscribeToOneSearch(query, badRange, { filter }))
+					.withContext('query with bad range should reject')
+					.toBeRejected(),
+				expectAsync(subscribeToOneSearch(query, badRange, { filter }))
+					.withContext('query with bad range should reject')
+					.toBeRejected(),
+			]);
+		}),
+		25000,
+	);
+
+	it(
 		'Should send error over error$ when Last is less than First',
 		integrationTest(async () => {
 			const subscribeToOneSearch = makeSubscribeToOneSearch(TEST_BASE_API_CONTEXT);
