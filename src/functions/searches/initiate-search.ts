@@ -52,10 +52,14 @@ class QueryQueue {
 		// Check query tasks once that's completed
 		taskPromise
 			.then(() => {
-				this._checkQueryTasks(query);
+				return;
 			})
 			.catch(() => {
 				return;
+			})
+			.finally(() => {
+				// success or not, check the query tasks
+				this._checkQueryTasks(query);
 			});
 
 		// Insert
