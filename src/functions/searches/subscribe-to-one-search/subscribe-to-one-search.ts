@@ -27,6 +27,7 @@ import {
 import { Percentage, RawJSON, toNumericID } from '~/value-objects';
 import { APIContext } from '../../utils';
 import { initiateSearch } from '../initiate-search';
+import { makeModifyOneQuery } from '../modify-one-query';
 import { makeSubscribeToOneRawSearch } from '../subscribe-to-one-raw-search';
 import {
 	countEntriesFromModules,
@@ -37,6 +38,7 @@ import {
 } from './helpers';
 
 export const makeSubscribeToOneSearch = (context: APIContext) => {
+	const modifyOneQuery = makeModifyOneQuery(context);
 	const subscribeToOneRawSearch = makeSubscribeToOneRawSearch(context);
 	let rawSubscriptionP: ReturnType<typeof subscribeToOneRawSearch> | null = null;
 
@@ -71,7 +73,10 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 		const filtersByID: Record<string, SearchFilter | undefined> = {};
 		filtersByID[initialFilterID] = initialFilter;
 
-		const searchInitMsg = await initiateSearch(rawSubscription, query, range, {
+		const modifiedQuery =
+			initialFilter.elementFilters.length === 0 ? query : await modifyOneQuery(query, initialFilter.elementFilters);
+
+		const searchInitMsg = await initiateSearch(rawSubscription, modifiedQuery, range, {
 			initialFilterID,
 			metadata: options.metadata,
 		});

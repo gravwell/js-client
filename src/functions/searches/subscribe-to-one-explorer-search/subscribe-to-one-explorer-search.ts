@@ -31,6 +31,7 @@ import {
 import { toDataExplorerEntry } from '~/models/search/to-data-explorer-entry';
 import { Percentage, RawJSON, toNumericID } from '~/value-objects';
 import { APIContext, createProgrammaticPromise } from '../../utils';
+import { makeModifyOneQuery } from '../modify-one-query';
 import { makeSubscribeToOneRawSearch } from '../subscribe-to-one-raw-search';
 import {
 	countEntriesFromModules,
@@ -41,6 +42,7 @@ import {
 } from '../subscribe-to-one-search/helpers';
 
 export const makeSubscribeToOneExplorerSearch = (context: APIContext) => {
+	const modifyOneQuery = makeModifyOneQuery(context);
 	const subscribeToOneRawSearch = makeSubscribeToOneRawSearch(context);
 	let rawSubscriptionP: ReturnType<typeof subscribeToOneRawSearch> | null = null;
 
@@ -75,13 +77,16 @@ export const makeSubscribeToOneExplorerSearch = (context: APIContext) => {
 		const filtersByID: Record<string, SearchFilter | undefined> = {};
 		filtersByID[initialFilterID] = initialFilter;
 
+		const modifiedQuery =
+			initialFilter.elementFilters.length === 0 ? query : await modifyOneQuery(query, initialFilter.elementFilters);
+
 		const searchInitMsgP = createProgrammaticPromise<RawSearchInitiatedMessageReceived>();
 		rawSubscription.received$
 			.pipe(
 				filter((msg): msg is RawSearchInitiatedMessageReceived => {
 					try {
 						const _msg = <RawSearchInitiatedMessageReceived>msg;
-						return _msg.type === 'search' && _msg.data.RawQuery === query;
+						return _msg.type === 'search' && _msg.data.RawQuery === modifiedQuery;
 					} catch {
 						return false;
 					}
@@ -107,7 +112,7 @@ export const makeSubscribeToOneExplorerSearch = (context: APIContext) => {
 				Metadata: options.metadata ?? {},
 				SearchStart: range[0].toISOString(),
 				SearchEnd: range[1].toISOString(),
-				SearchString: query,
+				SearchString: modifiedQuery,
 			},
 		});
 
