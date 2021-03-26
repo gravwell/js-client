@@ -8,20 +8,17 @@
 
 import { isBoolean, isEqual, isNull, isUndefined, uniqueId } from 'lodash';
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
-import { bufferCount, distinctUntilChanged, filter, first, map, startWith, tap } from 'rxjs/operators';
+import { bufferCount, distinctUntilChanged, filter, map, startWith, tap } from 'rxjs/operators';
 import {
 	ExplorerSearchEntries,
 	ExplorerSearchSubscription,
 	Query,
-	RawAcceptSearchMessageSent,
-	RawInitiateSearchMessageSent,
 	RawRequestExplorerSearchEntriesWithinRangeMessageSent,
 	RawRequestSearchDetailsMessageSent,
 	RawRequestSearchStatsMessageSent,
 	RawRequestSearchStatsWithinRangeMessageSent,
 	RawResponseForSearchDetailsMessageReceived,
 	RawResponseForSearchStatsMessageReceived,
-	RawSearchInitiatedMessageReceived,
 	SearchEntries,
 	SearchFilter,
 	SearchMessageCommands,
@@ -30,7 +27,9 @@ import {
 } from '~/models';
 import { toDataExplorerEntry } from '~/models/search/to-data-explorer-entry';
 import { Percentage, RawJSON, toNumericID } from '~/value-objects';
-import { APIContext, createProgrammaticPromise } from '../../utils';
+import { APIContext } from '../../utils';
+import { initiateSearch } from '../initiate-search';
+import { makeModifyOneQuery } from '../modify-one-query';
 import { makeSubscribeToOneRawSearch } from '../subscribe-to-one-raw-search';
 import {
 	countEntriesFromModules,
@@ -41,6 +40,7 @@ import {
 } from '../subscribe-to-one-search/helpers';
 
 export const makeSubscribeToOneExplorerSearch = (context: APIContext) => {
+	const modifyOneQuery = makeModifyOneQuery(context);
 	const subscribeToOneRawSearch = makeSubscribeToOneRawSearch(context);
 	let rawSubscriptionP: ReturnType<typeof subscribeToOneRawSearch> | null = null;
 
@@ -67,53 +67,24 @@ export const makeSubscribeToOneExplorerSearch = (context: APIContext) => {
 			overviewGranularity: options.filter?.overviewGranularity ?? 90,
 
 			zoomGranularity: options.filter?.zoomGranularity ?? 90,
+
+			elementFilters: options.filter?.elementFilters ?? [],
 		};
 		const initialFilterID = uniqueId(SEARCH_FILTER_PREFIX);
 
 		const filtersByID: Record<string, SearchFilter | undefined> = {};
 		filtersByID[initialFilterID] = initialFilter;
 
-		const searchInitMsgP = createProgrammaticPromise<RawSearchInitiatedMessageReceived>();
-		rawSubscription.received$
-			.pipe(
-				filter((msg): msg is RawSearchInitiatedMessageReceived => {
-					try {
-						const _msg = <RawSearchInitiatedMessageReceived>msg;
-						return _msg.type === 'search' && _msg.data.RawQuery === query;
-					} catch {
-						return false;
-					}
-				}),
-				first(),
-			)
-			.subscribe(
-				msg => {
-					searchInitMsgP.resolve(msg);
-					rawSubscription.send(<RawAcceptSearchMessageSent>{
-						type: 'search',
-						data: { OK: true, OutputSearchSubproto: msg.data.OutputSearchSubproto },
-					});
-				},
-				err => searchInitMsgP.reject(err),
-			);
+		const modifiedQuery =
+			initialFilter.elementFilters.length === 0 ? query : await modifyOneQuery(query, initialFilter.elementFilters);
 
-		rawSubscription.send(<RawInitiateSearchMessageSent>{
-			type: 'search',
-			data: {
-				Addendum: { filterID: initialFilterID },
-				Background: false,
-				Metadata: options.metadata ?? {},
-				SearchStart: range[0].toISOString(),
-				SearchEnd: range[1].toISOString(),
-				SearchString: query,
-			},
+		const searchInitMsg = await initiateSearch(rawSubscription, modifiedQuery, range, {
+			initialFilterID,
+			metadata: options.metadata,
 		});
-
-		const searchInitMsg = await searchInitMsgP.promise;
 		const searchTypeID = searchInitMsg.data.OutputSearchSubproto;
-		const rendererType = searchInitMsg.data.RenderModule;
-
 		const searchMessages$ = rawSubscription.received$.pipe(filter(msg => msg.type === searchTypeID));
+		const rendererType = searchInitMsg.data.RenderModule;
 
 		const progress$: Observable<Percentage> = searchMessages$.pipe(
 			map(msg => (msg as Partial<RawResponseForSearchDetailsMessageReceived>).data?.Finished ?? null),
@@ -142,7 +113,7 @@ export const makeSubscribeToOneExplorerSearch = (context: APIContext) => {
 		);
 
 		const _filter$ = new BehaviorSubject<SearchFilter>(initialFilter);
-		const setFilter = (filter: SearchFilter | null) => {
+		const setFilter = (filter: Omit<SearchFilter, 'elementFilters'> | null) => {
 			_filter$.next(filter ?? initialFilter);
 		};
 		const filter$ = _filter$.asObservable().pipe(
@@ -162,6 +133,7 @@ export const makeSubscribeToOneExplorerSearch = (context: APIContext) => {
 					overviewGranularity:
 						curr.overviewGranularity ?? prev.overviewGranularity ?? initialFilter.overviewGranularity,
 					zoomGranularity: curr.zoomGranularity ?? prev.zoomGranularity ?? initialFilter.zoomGranularity,
+					elementFilters: initialFilter.elementFilters,
 				}),
 			),
 			distinctUntilChanged((a, b) => isEqual(a, b)),

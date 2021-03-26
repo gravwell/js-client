@@ -27,6 +27,7 @@ import {
 import { Percentage, RawJSON, toNumericID } from '~/value-objects';
 import { APIContext } from '../../utils';
 import { initiateSearch } from '../initiate-search';
+import { makeModifyOneQuery } from '../modify-one-query';
 import { makeSubscribeToOneRawSearch } from '../subscribe-to-one-raw-search';
 import {
 	countEntriesFromModules,
@@ -37,6 +38,7 @@ import {
 } from './helpers';
 
 export const makeSubscribeToOneSearch = (context: APIContext) => {
+	const modifyOneQuery = makeModifyOneQuery(context);
 	const subscribeToOneRawSearch = makeSubscribeToOneRawSearch(context);
 	let rawSubscriptionP: ReturnType<typeof subscribeToOneRawSearch> | null = null;
 
@@ -63,13 +65,18 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 			overviewGranularity: options.filter?.overviewGranularity ?? 90,
 
 			zoomGranularity: options.filter?.zoomGranularity ?? 90,
+
+			elementFilters: options.filter?.elementFilters ?? [],
 		};
 		const initialFilterID = uniqueId(SEARCH_FILTER_PREFIX);
 
 		const filtersByID: Record<string, SearchFilter | undefined> = {};
 		filtersByID[initialFilterID] = initialFilter;
 
-		const searchInitMsg = await initiateSearch(rawSubscription, query, range, {
+		const modifiedQuery =
+			initialFilter.elementFilters.length === 0 ? query : await modifyOneQuery(query, initialFilter.elementFilters);
+
+		const searchInitMsg = await initiateSearch(rawSubscription, modifiedQuery, range, {
 			initialFilterID,
 			metadata: options.metadata,
 		});
@@ -122,6 +129,7 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 					overviewGranularity:
 						curr.overviewGranularity ?? prev.overviewGranularity ?? initialFilter.overviewGranularity,
 					zoomGranularity: curr.zoomGranularity ?? prev.zoomGranularity ?? initialFilter.zoomGranularity,
+					elementFilters: initialFilter.elementFilters,
 				}),
 			),
 			distinctUntilChanged((a, b) => isEqual(a, b)),

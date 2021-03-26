@@ -12,7 +12,7 @@ import { isArray, isUndefined, reverse, sum, zip } from 'lodash';
 import { first, last, map, takeWhile, toArray } from 'rxjs/operators';
 import { v4 as uuidv4 } from 'uuid';
 import { makeCreateOneAutoExtractor } from '~/functions/auto-extractors';
-import { DataExplorerEntry, isDataExplorerEntry, SearchFilter } from '~/models';
+import { DataExplorerEntry, ElementFilter, isDataExplorerEntry, SearchFilter } from '~/models';
 import { RawSearchEntries } from '~/models/search/search-entries';
 import { integrationTest, myCustomMatchers, sleep, TEST_BASE_API_CONTEXT } from '~/tests';
 import { makeIngestMultiLineEntry } from '../../ingestors/ingest-multi-line-entry';
@@ -197,4 +197,61 @@ describe('subscribeToOneExplorerSearch()', () => {
 		}),
 		25000,
 	);
+
+	it('Should be able to apply element filters', async () => {
+		const subscribeToOneExplorerSearch = makeSubscribeToOneExplorerSearch(TEST_BASE_API_CONTEXT);
+
+		const unfilteredQuery = `tag=${tag} ax | raw`;
+		const elementFilters: Array<ElementFilter> = [
+			{ path: 'value.foo', operation: '!=', value: '50', tag, module: 'json' },
+		];
+		const query = `tag=${tag} json value.foo!="50" as "value.foo" | ax | raw`;
+		const countAfterFilter = count - 1;
+
+		const range: [Date, Date] = [start, end];
+		const filter: SearchFilter = { entriesOffset: { index: 0, count: count }, elementFilters };
+		const search = await subscribeToOneExplorerSearch(unfilteredQuery, range, { filter });
+
+		const textEntriesP = search.entries$
+			.pipe(
+				map(e => e as RawSearchEntries & { explorerEntries: Array<DataExplorerEntry> }),
+				takeWhile(e => !e.finished, true),
+				last(),
+			)
+			.toPromise();
+
+		const statsP = search.stats$
+			.pipe(
+				takeWhile(e => !e.finished, true),
+				toArray(),
+			)
+			.toPromise();
+
+		const [textEntries, stats] = await Promise.all([textEntriesP, statsP]);
+
+		////
+		// Check entries
+		////
+		expect(textEntries.data.length)
+			.withContext('The number of entries should equal the total ingested')
+			.toEqual(countAfterFilter);
+
+		if (isUndefined(textEntries.filter) === false) {
+			expect(textEntries.filter)
+				.withContext(`The filter should be equal to the one used, plus the default values for undefined properties`)
+				.toPartiallyEqual(filter);
+		}
+
+		const explorerEntries = textEntries.explorerEntries;
+		expect(isArray(explorerEntries) && explorerEntries.every(isDataExplorerEntry))
+			.withContext('Expect a promise of an array of data explorer entries')
+			.toBeTrue();
+		expect(explorerEntries.length).withContext(`Expect ${countAfterFilter} entries`).toBe(countAfterFilter);
+
+		////
+		// Check stats
+		////
+		expect(stats.length).toBeGreaterThan(0);
+		expect(stats[0].query).toBe(query);
+	});
 });
