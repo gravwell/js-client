@@ -18,6 +18,6 @@ export interface ExplorerSearchSubscription {
 	stats$: Observable<SearchStats>;
 	statsOverview$: Observable<{ frequencyStats: Array<SearchFrequencyStats> }>;
 	statsZoom$: Observable<{ filter?: SearchFilter; frequencyStats: Array<SearchFrequencyStats> }>;
-	setFilter: (filter: SearchFilter | null) => void;
+	setFilter: (filter: Omit<SearchFilter, 'elementFilters'> | null) => void;
 	searchID: NumericID;
 }
