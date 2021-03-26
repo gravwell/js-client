@@ -6,6 +6,8 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
+import { ElementFilter } from './element-filter';
+
 /**
  * Declarative properties to filter data from a {@link SearchSubscription}.
  */
@@ -50,6 +52,10 @@ export interface SearchFilter {
 	 */
 	zoomGranularity?: number;
 
-	// TODO
-	// elementFilters?: Array<ElementFilter>;
+	/**
+	 * Array of element filters applied when launching the search. Those can't
+	 * be set with `SearchSubscription.setFilter()` because they require
+	 * launching a new search.
+	 */
+	elementFilters?: Array<ElementFilter>;
 }

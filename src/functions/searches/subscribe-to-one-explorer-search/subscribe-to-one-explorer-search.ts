@@ -67,6 +67,8 @@ export const makeSubscribeToOneExplorerSearch = (context: APIContext) => {
 			overviewGranularity: options.filter?.overviewGranularity ?? 90,
 
 			zoomGranularity: options.filter?.zoomGranularity ?? 90,
+
+			elementFilters: options.filter?.elementFilters ?? [],
 		};
 		const initialFilterID = uniqueId(SEARCH_FILTER_PREFIX);
 
@@ -142,7 +144,7 @@ export const makeSubscribeToOneExplorerSearch = (context: APIContext) => {
 		);
 
 		const _filter$ = new BehaviorSubject<SearchFilter>(initialFilter);
-		const setFilter = (filter: SearchFilter | null) => {
+		const setFilter = (filter: Omit<SearchFilter, 'elementFilters'> | null) => {
 			_filter$.next(filter ?? initialFilter);
 		};
 		const filter$ = _filter$.asObservable().pipe(
@@ -162,6 +164,7 @@ export const makeSubscribeToOneExplorerSearch = (context: APIContext) => {
 					overviewGranularity:
 						curr.overviewGranularity ?? prev.overviewGranularity ?? initialFilter.overviewGranularity,
 					zoomGranularity: curr.zoomGranularity ?? prev.zoomGranularity ?? initialFilter.zoomGranularity,
+					elementFilters: initialFilter.elementFilters,
 				}),
 			),
 			distinctUntilChanged((a, b) => isEqual(a, b)),
