@@ -8,7 +8,6 @@
 
 import { Observable } from 'rxjs';
 import { NumericID, Percentage } from '~/value-objects';
-import { RawSearchErrorResponseReceived } from './raw-search-message-received';
 import { ExplorerSearchEntries } from './search-entries';
 import { SearchFilter } from './search-filter';
 import { SearchFrequencyStats, SearchStats } from './search-stats';
@@ -16,7 +15,7 @@ import { SearchFrequencyStats, SearchStats } from './search-stats';
 export interface ExplorerSearchSubscription {
 	progress$: Observable<Percentage>;
 	entries$: Observable<ExplorerSearchEntries>;
-	errors$: Observable<RawSearchErrorResponseReceived>;
+	errors$: Observable<Error>;
 	stats$: Observable<SearchStats>;
 	statsOverview$: Observable<{ frequencyStats: Array<SearchFrequencyStats> }>;
 	statsZoom$: Observable<{ filter?: SearchFilter; frequencyStats: Array<SearchFrequencyStats> }>;

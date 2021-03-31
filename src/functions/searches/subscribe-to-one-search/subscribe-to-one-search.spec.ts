@@ -487,11 +487,22 @@ describe('subscribeToOneSearch()', () => {
 			const filter: SearchFilter = { entriesOffset: { index: 1, count: -1 } };
 
 			const search = await subscribeToOneSearch(query, range, { filter });
-			const error = await search.errors$.pipe(first()).toPromise();
 
-			expect(error.data.ID).toEqual(SearchMessageCommands.ResponseError);
-			expect(error.data.Error).toBeDefined();
-			expect(error.data.Error.length).toBeGreaterThan(0);
+			// Non-error observables should error
+			await Promise.all([
+				expectAsync(search.progress$.toPromise()).withContext('progress$ should error').toBeRejected(),
+				expectAsync(search.entries$.toPromise()).withContext('entries$ should error').toBeRejected(),
+				expectAsync(search.stats$.toPromise()).withContext('stats$ should error').toBeRejected(),
+				expectAsync(search.statsOverview$.toPromise()).withContext('statsOverview$ should error').toBeRejected(),
+				expectAsync(search.statsZoom$.toPromise()).withContext('statsZoom$ should error').toBeRejected(),
+			]);
+
+			// errors$ should emit one item (the error) and resolve
+			const error = await search.errors$.toPromise();
+
+			expect(error).toBeDefined();
+			expect(error.name.length).toBeGreaterThan(0);
+			expect(error.message.length).toBeGreaterThan(0);
 		}),
 		25000,
 	);

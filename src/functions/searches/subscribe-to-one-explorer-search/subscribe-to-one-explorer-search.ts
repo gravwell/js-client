@@ -6,9 +6,9 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { isBoolean, isEmpty, isEqual, isNull, isUndefined, uniqueId } from 'lodash';
-import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
-import { bufferCount, distinctUntilChanged, filter, map, startWith, tap } from 'rxjs/operators';
+import { isBoolean, isEqual, isNull, isUndefined, uniqueId } from 'lodash';
+import { BehaviorSubject, combineLatest, NEVER, Observable, of } from 'rxjs';
+import { bufferCount, catchError, distinctUntilChanged, filter, map, skipUntil, startWith, tap } from 'rxjs/operators';
 import {
 	ExplorerSearchEntries,
 	ExplorerSearchSubscription,
@@ -19,7 +19,6 @@ import {
 	RawRequestSearchStatsWithinRangeMessageSent,
 	RawResponseForSearchDetailsMessageReceived,
 	RawResponseForSearchStatsMessageReceived,
-	RawSearchErrorResponseReceived,
 	SearchEntries,
 	SearchFilter,
 	SearchMessageCommands,
@@ -84,7 +83,16 @@ export const makeSubscribeToOneExplorerSearch = (context: APIContext) => {
 			metadata: options.metadata,
 		});
 		const searchTypeID = searchInitMsg.data.OutputSearchSubproto;
-		const searchMessages$ = rawSubscription.received$.pipe(filter(msg => msg.type === searchTypeID));
+		const isResponseError = filterMessageByCommand(SearchMessageCommands.ResponseError);
+		const searchMessages$ = rawSubscription.received$.pipe(
+			filter(msg => msg.type === searchTypeID),
+			tap(msg => {
+				// Throw if the search message command is Error
+				if (isResponseError(msg)) {
+					throw new Error(msg.data.Error);
+				}
+			}),
+		);
 		const rendererType = searchInitMsg.data.RenderModule;
 
 		const progress$: Observable<Percentage> = searchMessages$.pipe(
@@ -306,15 +314,12 @@ export const makeSubscribeToOneExplorerSearch = (context: APIContext) => {
 			}),
 		);
 
-		const errors$: Observable<RawSearchErrorResponseReceived> = searchMessages$.pipe(
-			filter((msg): msg is RawSearchErrorResponseReceived => {
-				try {
-					const _msg = <RawSearchErrorResponseReceived>msg;
-					return _msg.data.ID === SearchMessageCommands.ResponseError && isEmpty(_msg.data.Error) === false;
-				} catch {
-					return false;
-				}
-			}),
+		const errors$: Observable<Error> = searchMessages$.pipe(
+			// Skip every regular message. We only want to emit when there's an error
+			skipUntil(NEVER),
+
+			// When there's an error, catch it and emit it
+			catchError(err => of(err)),
 		);
 
 		return {
