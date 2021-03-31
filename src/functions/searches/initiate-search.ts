@@ -87,7 +87,6 @@ const QUERY_INIT_RESULTS: Observable<{
 
 			// Include the internal "request" ID
 			map(msg => {
-				//delete msg.data.Metadata[REQUEST_ID_METADATA_FIELD];
 				return { requestID, msg };
 			}),
 
@@ -118,7 +117,9 @@ export const initiateSearch = (
 		// There's only one response to the request, so we're done after the first
 		first(),
 
-		// If
+		// If msg is null, the search initiation timed out - reject
+		// If msg.data.Error is NON-nil, the backend has a problem with the search - reject
+		// Otherwise we're good to go
 		concatMap(({ msg }) =>
 			isNil(msg)
 				? throwError({
