@@ -8,7 +8,7 @@
 
 import * as base64 from 'base-64';
 import { addMinutes, subMinutes } from 'date-fns';
-import { isUndefined, last as lastElt, sum, zip } from 'lodash';
+import { isUndefined, last as lastElt, range as rangeLeft, sum, zip } from 'lodash';
 import { first, last, map, takeWhile, toArray } from 'rxjs/operators';
 import { v4 as uuidv4 } from 'uuid';
 import { makeCreateOneMacro, makeDeleteOneMacro } from '~/functions/macros';
@@ -397,7 +397,37 @@ describe('subscribeToOneSearch()', () => {
 	);
 
 	it(
-		'Should reject bad searches without affecting good ones',
+		'Should reject bad searches without affecting good ones (different queries)',
+		integrationTest(async () => {
+			const subscribeToOneSearch = makeSubscribeToOneSearch(TEST_BASE_API_CONTEXT);
+			const range: [Date, Date] = [start, end];
+			const badRange: [Date, Date] = [start, subMinutes(start, 10)];
+			const filter: SearchFilter = { entriesOffset: { index: 0, count: count } };
+
+			// Start a bunch of search subscriptions with different queries to race them
+			await Promise.all([
+				expectAsync(subscribeToOneSearch(`tag=${tag} regex "a"`, badRange, { filter }))
+					.withContext('query with bad range should reject')
+					.toBeRejected(),
+				expectAsync(subscribeToOneSearch(`tag=${tag} regex "b"`, badRange, { filter }))
+					.withContext('query with bad range should reject')
+					.toBeRejected(),
+				expectAsync(subscribeToOneSearch(`tag=${tag} regex "c"`, range, { filter }))
+					.withContext('good query should resolve')
+					.toBeResolved(),
+				expectAsync(subscribeToOneSearch(`tag=${tag} regex "d"`, badRange, { filter }))
+					.withContext('query with bad range should reject')
+					.toBeRejected(),
+				expectAsync(subscribeToOneSearch(`tag=${tag} regex "e"`, badRange, { filter }))
+					.withContext('query with bad range should reject')
+					.toBeRejected(),
+			]);
+		}),
+		25000,
+	);
+
+	it(
+		'Should reject bad searches without affecting good ones (same query)',
 		integrationTest(async () => {
 			const subscribeToOneSearch = makeSubscribeToOneSearch(TEST_BASE_API_CONTEXT);
 			const query = `tag=${tag}`;
@@ -423,6 +453,25 @@ describe('subscribeToOneSearch()', () => {
 					.withContext('query with bad range should reject')
 					.toBeRejected(),
 			]);
+		}),
+		25000,
+	);
+
+	it(
+		'Should work with several searches initiated simultaneously',
+		integrationTest(async () => {
+			const subscribeToOneSearch = makeSubscribeToOneSearch(TEST_BASE_API_CONTEXT);
+			const range: [Date, Date] = [start, end];
+			const filter: SearchFilter = { entriesOffset: { index: 0, count: count } };
+
+			// Start a bunch of search subscriptions to race them
+			await Promise.all(
+				rangeLeft(0, 20).map(x =>
+					expectAsync(subscribeToOneSearch(`tag=${tag} regex ${x}`, range, { filter }))
+						.withContext('good query should resolve')
+						.toBeResolved(),
+				),
+			);
 		}),
 		25000,
 	);

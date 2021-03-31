@@ -282,7 +282,37 @@ describe('subscribeToOneExplorerSearch()', () => {
 	);
 
 	it(
-		'Should reject bad searches without affecting good ones',
+		'Should reject bad searches without affecting good ones (different queries)',
+		integrationTest(async () => {
+			const subscribeToOneExplorerSearch = makeSubscribeToOneExplorerSearch(TEST_BASE_API_CONTEXT);
+			const range: [Date, Date] = [start, end];
+			const badRange: [Date, Date] = [start, subMinutes(start, 10)];
+			const filter: SearchFilter = { entriesOffset: { index: 0, count: count } };
+
+			// Start a bunch of search subscriptions with different queries to race them
+			await Promise.all([
+				expectAsync(subscribeToOneExplorerSearch(`tag=${tag} regex "a"`, badRange, { filter }))
+					.withContext('query with bad range should reject')
+					.toBeRejected(),
+				expectAsync(subscribeToOneExplorerSearch(`tag=${tag} regex "b"`, badRange, { filter }))
+					.withContext('query with bad range should reject')
+					.toBeRejected(),
+				expectAsync(subscribeToOneExplorerSearch(`tag=${tag} regex "c"`, range, { filter }))
+					.withContext('good query should resolve')
+					.toBeResolved(),
+				expectAsync(subscribeToOneExplorerSearch(`tag=${tag} regex "d"`, badRange, { filter }))
+					.withContext('query with bad range should reject')
+					.toBeRejected(),
+				expectAsync(subscribeToOneExplorerSearch(`tag=${tag} regex "e"`, badRange, { filter }))
+					.withContext('query with bad range should reject')
+					.toBeRejected(),
+			]);
+		}),
+		25000,
+	);
+
+	it(
+		'Should reject bad searches without affecting good ones (same query)',
 		integrationTest(async () => {
 			const subscribeToOneExplorerSearch = makeSubscribeToOneExplorerSearch(TEST_BASE_API_CONTEXT);
 			const query = `tag=${tag}`;
