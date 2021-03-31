@@ -8,7 +8,7 @@
 
 import { isNil } from 'lodash';
 import { defer, Observable, of, Subject, throwError } from 'rxjs';
-import { concatMap, filter, first, map, share, tap, timeoutWith, withLatestFrom } from 'rxjs/operators';
+import { concatMap, filter, first, map, share, tap, withLatestFrom } from 'rxjs/operators';
 import { v4 as uuidv4 } from 'uuid';
 import {
 	RawAcceptSearchMessageSent,
@@ -46,10 +46,11 @@ const QUERY_QUEUE = new Subject<{
  */
 const QUERY_INIT_RESULTS: Observable<{
 	requestID: string;
-	msg: RawSearchInitiatedMessageReceived | null;
+	msg: RawSearchInitiatedMessageReceived;
 }> = QUERY_QUEUE.pipe(
-	// As "requests" are received, create an Observable to listen to incoming RawSearchInitiatedMessageReceived,
-	// and send a RawInitiateSearchMessageSent when ready
+	// When a "request" is received, create an Observable to listen to incoming RawSearchInitiatedMessageReceived,
+	// and send a RawInitiateSearchMessageSent when ready. concatMap ensures we only have one sender/listener at a time.
+	// We won't send the next request until we've heard a response for the current request.
 	concatMap(({ requestID, rawSubscription, query, range, options }) =>
 		// Listen for incoming messages on the search websocket
 		rawSubscription.received$.pipe(
@@ -72,10 +73,12 @@ const QUERY_INIT_RESULTS: Observable<{
 				(msg: RawSearchMessageReceived) => msg,
 			),
 
-			// Filter to only RawSearchInitiatedMessageReceived messages with the right requestID
+			// Filter to only RawSearchInitiatedMessageReceived messages
 			filter((msg): msg is RawSearchInitiatedMessageReceived => {
 				try {
 					const _msg = <RawSearchInitiatedMessageReceived>msg;
+
+					// the type is about all we can count on -- in Error cases, Metadata and Addendum are unavailable.
 					return _msg.type === 'search';
 				} catch {
 					return false;
@@ -86,15 +89,7 @@ const QUERY_INIT_RESULTS: Observable<{
 			first(),
 
 			// Include the internal "request" ID
-			map(msg => {
-				return { requestID, msg };
-			}),
-
-			// If the backend takes too long, we bail by emitting "null"
-			timeoutWith(
-				30000,
-				defer(() => of({ requestID, msg: null })),
-			),
+			map(msg => ({ requestID, msg })),
 		),
 	),
 	share(),
@@ -117,19 +112,9 @@ export const initiateSearch = (
 		// There's only one response to the request, so we're done after the first
 		first(),
 
-		// If msg is null, the search initiation timed out - reject
-		// If msg.data.Error is NON-nil, the backend has a problem with the search - reject
-		// Otherwise we're good to go
-		concatMap(({ msg }) =>
-			isNil(msg)
-				? throwError({
-						name: 'Search Initiation Timed Out',
-						message: "Didn't receive a search initiation response from the backend in time.",
-				  })
-				: !isNil(msg.data.Error)
-				? throwError(msg)
-				: of(msg),
-		),
+		// If msg.data.Error is nil, the backend is happy  - continue
+		// If msg.data.Error is NON-nil, there's a problem - reject
+		concatMap(({ msg }) => (isNil(msg.data.Error) ? of(msg) : throwError(msg))),
 
 		// If we didn't throw, everything is fine. Send a RawAcceptSearchMessageSent to continue setting up the search
 		tap(msg =>
