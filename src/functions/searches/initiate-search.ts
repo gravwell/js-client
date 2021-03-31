@@ -20,8 +20,6 @@ import {
 import { RawJSON } from '~/value-objects';
 import { APISubscription } from '../utils';
 
-const REQUEST_ID_METADATA_FIELD = '_requestID';
-
 /*
  * A queue of "requests" to initiate searches.
  *
@@ -63,7 +61,7 @@ const QUERY_INIT_RESULTS: Observable<{
 						data: {
 							Addendum: options.initialFilterID ? { filterID: options.initialFilterID } : {},
 							Background: false,
-							Metadata: { ...options.metadata, [REQUEST_ID_METADATA_FIELD]: requestID }, // Include the request ID for extra safety
+							Metadata: options.metadata ?? {},
 							SearchStart: range[0].toISOString(),
 							SearchEnd: range[1].toISOString(),
 							SearchString: query,
@@ -78,7 +76,7 @@ const QUERY_INIT_RESULTS: Observable<{
 			filter((msg): msg is RawSearchInitiatedMessageReceived => {
 				try {
 					const _msg = <RawSearchInitiatedMessageReceived>msg;
-					return _msg.type === 'search' && _msg.data.Metadata[REQUEST_ID_METADATA_FIELD] === requestID;
+					return _msg.type === 'search';
 				} catch {
 					return false;
 				}
