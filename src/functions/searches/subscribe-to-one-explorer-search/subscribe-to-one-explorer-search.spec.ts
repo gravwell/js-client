@@ -7,7 +7,7 @@
  **************************************************************************/
 
 import * as base64 from 'base-64';
-import { addMinutes } from 'date-fns';
+import { addMinutes, subMinutes } from 'date-fns';
 import { isArray, isUndefined, reverse, sum, zip } from 'lodash';
 import { first, last, map, takeWhile, toArray } from 'rxjs/operators';
 import { v4 as uuidv4 } from 'uuid';
@@ -254,4 +254,122 @@ describe('subscribeToOneExplorerSearch()', () => {
 		expect(stats.length).toBeGreaterThan(0);
 		expect(stats[0].query).toBe(query);
 	});
+
+	it(
+		'Should reject on a bad query string',
+		integrationTest(async () => {
+			const subscribeToOneExplorerSearch = makeSubscribeToOneExplorerSearch(TEST_BASE_API_CONTEXT);
+			const query = `this is an invalid query`;
+			const range: [Date, Date] = [start, end];
+			const filter: SearchFilter = { entriesOffset: { index: 0, count: count } };
+
+			await expectAsync(subscribeToOneExplorerSearch(query, range, { filter })).toBeRejected();
+		}),
+		25000,
+	);
+
+	it(
+		'Should reject on a bad query range (end is before start)',
+		integrationTest(async () => {
+			const subscribeToOneExplorerSearch = makeSubscribeToOneExplorerSearch(TEST_BASE_API_CONTEXT);
+			const query = `tag=${tag}`;
+			const range: [Date, Date] = [start, subMinutes(start, 10)];
+			const filter: SearchFilter = { entriesOffset: { index: 0, count: count } };
+
+			await expectAsync(subscribeToOneExplorerSearch(query, range, { filter })).toBeRejected();
+		}),
+		25000,
+	);
+
+	it(
+		'Should reject bad searches without affecting good ones (different queries)',
+		integrationTest(async () => {
+			const subscribeToOneExplorerSearch = makeSubscribeToOneExplorerSearch(TEST_BASE_API_CONTEXT);
+			const range: [Date, Date] = [start, end];
+			const badRange: [Date, Date] = [start, subMinutes(start, 10)];
+			const filter: SearchFilter = { entriesOffset: { index: 0, count: count } };
+
+			// Start a bunch of search subscriptions with different queries to race them
+			await Promise.all([
+				expectAsync(subscribeToOneExplorerSearch(`tag=${tag} regex "a"`, badRange, { filter }))
+					.withContext('query with bad range should reject')
+					.toBeRejected(),
+				expectAsync(subscribeToOneExplorerSearch(`tag=${tag} regex "b"`, badRange, { filter }))
+					.withContext('query with bad range should reject')
+					.toBeRejected(),
+				expectAsync(subscribeToOneExplorerSearch(`tag=${tag} regex "c"`, range, { filter }))
+					.withContext('good query should resolve')
+					.toBeResolved(),
+				expectAsync(subscribeToOneExplorerSearch(`tag=${tag} regex "d"`, badRange, { filter }))
+					.withContext('query with bad range should reject')
+					.toBeRejected(),
+				expectAsync(subscribeToOneExplorerSearch(`tag=${tag} regex "e"`, badRange, { filter }))
+					.withContext('query with bad range should reject')
+					.toBeRejected(),
+			]);
+		}),
+		25000,
+	);
+
+	it(
+		'Should reject bad searches without affecting good ones (same query)',
+		integrationTest(async () => {
+			const subscribeToOneExplorerSearch = makeSubscribeToOneExplorerSearch(TEST_BASE_API_CONTEXT);
+			const query = `tag=${tag}`;
+			const range: [Date, Date] = [start, end];
+			const badRange: [Date, Date] = [start, subMinutes(start, 10)];
+			const filter: SearchFilter = { entriesOffset: { index: 0, count: count } };
+
+			// Start a bunch of search subscriptions to race them
+			await Promise.all([
+				expectAsync(subscribeToOneExplorerSearch(query, badRange, { filter }))
+					.withContext('query with bad range should reject')
+					.toBeRejected(),
+				expectAsync(subscribeToOneExplorerSearch(query, badRange, { filter }))
+					.withContext('query with bad range should reject')
+					.toBeRejected(),
+				expectAsync(subscribeToOneExplorerSearch(query, range, { filter }))
+					.withContext('good query should resolve')
+					.toBeResolved(),
+				expectAsync(subscribeToOneExplorerSearch(query, badRange, { filter }))
+					.withContext('query with bad range should reject')
+					.toBeRejected(),
+				expectAsync(subscribeToOneExplorerSearch(query, badRange, { filter }))
+					.withContext('query with bad range should reject')
+					.toBeRejected(),
+			]);
+		}),
+		25000,
+	);
+
+	it(
+		'Should send error over error$ when Last is less than First',
+		integrationTest(async () => {
+			const subscribeToOneExplorerSearch = makeSubscribeToOneExplorerSearch(TEST_BASE_API_CONTEXT);
+			const query = `tag=${tag}`;
+			const range: [Date, Date] = [start, end];
+
+			// Use an invalid filter, where Last is less than First
+			const filter: SearchFilter = { entriesOffset: { index: 1, count: -1 } };
+
+			const search = await subscribeToOneExplorerSearch(query, range, { filter });
+
+			// Non-error observables should error
+			await Promise.all([
+				expectAsync(search.progress$.toPromise()).withContext('progress$ should error').toBeRejected(),
+				expectAsync(search.entries$.toPromise()).withContext('entries$ should error').toBeRejected(),
+				expectAsync(search.stats$.toPromise()).withContext('stats$ should error').toBeRejected(),
+				expectAsync(search.statsOverview$.toPromise()).withContext('statsOverview$ should error').toBeRejected(),
+				expectAsync(search.statsZoom$.toPromise()).withContext('statsZoom$ should error').toBeRejected(),
+			]);
+
+			// errors$ should emit one item (the error) and resolve
+			const error = await search.errors$.toPromise();
+
+			expect(error).toBeDefined();
+			expect(error.name.length).toBeGreaterThan(0);
+			expect(error.message.length).toBeGreaterThan(0);
+		}),
+		25000,
+	);
 });

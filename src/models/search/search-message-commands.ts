@@ -38,4 +38,6 @@ export enum SearchMessageCommands {
 	RequestStatsSummary = 0x7f000005, // Named REQ_STATS_GET_SUMMARY on docs
 	/** Requests current timestamp for search progress */
 	RequestStatsLocation = 0x7f000006, // Named REQ_STATS_GET_LOCATION on docs
+	/** Error response from the backend */
+	ResponseError = 0xffffffff, // Named RESP_ERROR on docs
 }

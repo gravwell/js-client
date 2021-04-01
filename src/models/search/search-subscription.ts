@@ -15,6 +15,7 @@ import { SearchFrequencyStats, SearchStats } from './search-stats';
 export interface SearchSubscription {
 	progress$: Observable<Percentage>;
 	entries$: Observable<SearchEntries>;
+	errors$: Observable<Error>;
 	stats$: Observable<SearchStats>;
 	statsOverview$: Observable<{ frequencyStats: Array<SearchFrequencyStats> }>;
 	statsZoom$: Observable<{ filter?: SearchFilter; frequencyStats: Array<SearchFrequencyStats> }>;

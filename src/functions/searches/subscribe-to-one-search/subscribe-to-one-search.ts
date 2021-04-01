@@ -7,8 +7,8 @@
  **************************************************************************/
 
 import { isBoolean, isEqual, isNull, isUndefined, uniqueId } from 'lodash';
-import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
-import { bufferCount, distinctUntilChanged, filter, map, startWith, tap } from 'rxjs/operators';
+import { BehaviorSubject, combineLatest, NEVER, Observable, of } from 'rxjs';
+import { bufferCount, catchError, distinctUntilChanged, filter, map, skipUntil, startWith, tap } from 'rxjs/operators';
 import {
 	Query,
 	RawRequestSearchDetailsMessageSent,
@@ -81,7 +81,16 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 			metadata: options.metadata,
 		});
 		const searchTypeID = searchInitMsg.data.OutputSearchSubproto;
-		const searchMessages$ = rawSubscription.received$.pipe(filter(msg => msg.type === searchTypeID));
+		const isResponseError = filterMessageByCommand(SearchMessageCommands.ResponseError);
+		const searchMessages$ = rawSubscription.received$.pipe(
+			filter(msg => msg.type === searchTypeID),
+			tap(msg => {
+				// Throw if the search message command is Error
+				if (isResponseError(msg)) {
+					throw new Error(msg.data.Error);
+				}
+			}),
+		);
 		const rendererType = searchInitMsg.data.RenderModule;
 
 		const progress$: Observable<Percentage> = searchMessages$.pipe(
@@ -301,12 +310,21 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 			}),
 		);
 
+		const errors$: Observable<Error> = searchMessages$.pipe(
+			// Skip every regular message. We only want to emit when there's an error
+			skipUntil(NEVER),
+
+			// When there's an error, catch it and emit it
+			catchError(err => of(err)),
+		);
+
 		return {
 			progress$,
 			entries$,
 			stats$,
 			statsOverview$,
 			statsZoom$,
+			errors$,
 			setFilter,
 			searchID: searchInitMsg.data.SearchID.toString(),
 		};

@@ -8,11 +8,11 @@
 
 import * as base64 from 'base-64';
 import { addMinutes, subMinutes } from 'date-fns';
-import { isUndefined, last as lastElt, sum, zip } from 'lodash';
+import { isUndefined, last as lastElt, range as rangeLeft, sum, zip } from 'lodash';
 import { first, last, map, takeWhile, toArray } from 'rxjs/operators';
 import { v4 as uuidv4 } from 'uuid';
 import { makeCreateOneMacro, makeDeleteOneMacro } from '~/functions/macros';
-import { SearchFilter } from '~/models';
+import { SearchFilter, SearchMessageCommands } from '~/models';
 import { RawSearchEntries, TextSearchEntries } from '~/models/search/search-entries';
 import { integrationTest, myCustomMatchers, sleep, TEST_BASE_API_CONTEXT } from '~/tests';
 import { makeIngestMultiLineEntry } from '../../ingestors/ingest-multi-line-entry';
@@ -366,6 +366,143 @@ describe('subscribeToOneSearch()', () => {
 			});
 
 			await Promise.all(testsP);
+		}),
+		25000,
+	);
+
+	it(
+		'Should reject on a bad query string',
+		integrationTest(async () => {
+			const subscribeToOneSearch = makeSubscribeToOneSearch(TEST_BASE_API_CONTEXT);
+			const query = `this is an invalid query`;
+			const range: [Date, Date] = [start, end];
+			const filter: SearchFilter = { entriesOffset: { index: 0, count: count } };
+
+			await expectAsync(subscribeToOneSearch(query, range, { filter })).toBeRejected();
+		}),
+		25000,
+	);
+
+	it(
+		'Should reject on a bad query range (end is before start)',
+		integrationTest(async () => {
+			const subscribeToOneSearch = makeSubscribeToOneSearch(TEST_BASE_API_CONTEXT);
+			const query = `tag=${tag}`;
+			const range: [Date, Date] = [start, subMinutes(start, 10)];
+			const filter: SearchFilter = { entriesOffset: { index: 0, count: count } };
+
+			await expectAsync(subscribeToOneSearch(query, range, { filter })).toBeRejected();
+		}),
+		25000,
+	);
+
+	it(
+		'Should reject bad searches without affecting good ones (different queries)',
+		integrationTest(async () => {
+			const subscribeToOneSearch = makeSubscribeToOneSearch(TEST_BASE_API_CONTEXT);
+			const range: [Date, Date] = [start, end];
+			const badRange: [Date, Date] = [start, subMinutes(start, 10)];
+			const filter: SearchFilter = { entriesOffset: { index: 0, count: count } };
+
+			// Start a bunch of search subscriptions with different queries to race them
+			await Promise.all([
+				expectAsync(subscribeToOneSearch(`tag=${tag} regex "a"`, badRange, { filter }))
+					.withContext('query with bad range should reject')
+					.toBeRejected(),
+				expectAsync(subscribeToOneSearch(`tag=${tag} regex "b"`, badRange, { filter }))
+					.withContext('query with bad range should reject')
+					.toBeRejected(),
+				expectAsync(subscribeToOneSearch(`tag=${tag} regex "c"`, range, { filter }))
+					.withContext('good query should resolve')
+					.toBeResolved(),
+				expectAsync(subscribeToOneSearch(`tag=${tag} regex "d"`, badRange, { filter }))
+					.withContext('query with bad range should reject')
+					.toBeRejected(),
+				expectAsync(subscribeToOneSearch(`tag=${tag} regex "e"`, badRange, { filter }))
+					.withContext('query with bad range should reject')
+					.toBeRejected(),
+			]);
+		}),
+		25000,
+	);
+
+	it(
+		'Should reject bad searches without affecting good ones (same query)',
+		integrationTest(async () => {
+			const subscribeToOneSearch = makeSubscribeToOneSearch(TEST_BASE_API_CONTEXT);
+			const query = `tag=${tag}`;
+			const range: [Date, Date] = [start, end];
+			const badRange: [Date, Date] = [start, subMinutes(start, 10)];
+			const filter: SearchFilter = { entriesOffset: { index: 0, count: count } };
+
+			// Start a bunch of search subscriptions to race them
+			await Promise.all([
+				expectAsync(subscribeToOneSearch(query, badRange, { filter }))
+					.withContext('query with bad range should reject')
+					.toBeRejected(),
+				expectAsync(subscribeToOneSearch(query, badRange, { filter }))
+					.withContext('query with bad range should reject')
+					.toBeRejected(),
+				expectAsync(subscribeToOneSearch(query, range, { filter }))
+					.withContext('good query should resolve')
+					.toBeResolved(),
+				expectAsync(subscribeToOneSearch(query, badRange, { filter }))
+					.withContext('query with bad range should reject')
+					.toBeRejected(),
+				expectAsync(subscribeToOneSearch(query, badRange, { filter }))
+					.withContext('query with bad range should reject')
+					.toBeRejected(),
+			]);
+		}),
+		25000,
+	);
+
+	it(
+		'Should work with several searches initiated simultaneously',
+		integrationTest(async () => {
+			const subscribeToOneSearch = makeSubscribeToOneSearch(TEST_BASE_API_CONTEXT);
+			const range: [Date, Date] = [start, end];
+			const filter: SearchFilter = { entriesOffset: { index: 0, count: count } };
+
+			// Start a bunch of search subscriptions to race them
+			await Promise.all(
+				rangeLeft(0, 20).map(x =>
+					expectAsync(subscribeToOneSearch(`tag=${tag} regex ${x}`, range, { filter }))
+						.withContext('good query should resolve')
+						.toBeResolved(),
+				),
+			);
+		}),
+		25000,
+	);
+
+	it(
+		'Should send error over error$ when Last is less than First',
+		integrationTest(async () => {
+			const subscribeToOneSearch = makeSubscribeToOneSearch(TEST_BASE_API_CONTEXT);
+			const query = `tag=${tag} chart`;
+			const range: [Date, Date] = [start, end];
+
+			// Use an invalid filter, where Last is less than First
+			const filter: SearchFilter = { entriesOffset: { index: 1, count: -1 } };
+
+			const search = await subscribeToOneSearch(query, range, { filter });
+
+			// Non-error observables should error
+			await Promise.all([
+				expectAsync(search.progress$.toPromise()).withContext('progress$ should error').toBeRejected(),
+				expectAsync(search.entries$.toPromise()).withContext('entries$ should error').toBeRejected(),
+				expectAsync(search.stats$.toPromise()).withContext('stats$ should error').toBeRejected(),
+				expectAsync(search.statsOverview$.toPromise()).withContext('statsOverview$ should error').toBeRejected(),
+				expectAsync(search.statsZoom$.toPromise()).withContext('statsZoom$ should error').toBeRejected(),
+			]);
+
+			// errors$ should emit one item (the error) and resolve
+			const error = await search.errors$.toPromise();
+
+			expect(error).toBeDefined();
+			expect(error.name.length).toBeGreaterThan(0);
+			expect(error.message.length).toBeGreaterThan(0);
 		}),
 		25000,
 	);
