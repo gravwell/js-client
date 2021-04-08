@@ -372,4 +372,105 @@ describe('subscribeToOneExplorerSearch()', () => {
 		}),
 		25000,
 	);
+
+	it(
+		'Should work with queries using the raw renderer and preview flag',
+		integrationTest(async () => {
+			const subscribeToOneExplorerSearch = makeSubscribeToOneExplorerSearch(TEST_BASE_API_CONTEXT);
+			const query = `tag=${tag} json value timestamp | raw`;
+			const range: [Date, Date] = [start, end];
+			const filter: SearchFilter = { entriesOffset: { index: 0, count: count } };
+			const search = await subscribeToOneExplorerSearch(query, range, { filter, preview: true });
+
+			const textEntriesP = search.entries$
+				.pipe(
+					map(e => e as RawSearchEntries),
+					takeWhile(e => !e.finished, true),
+					last(),
+				)
+				.toPromise();
+
+			const statsP = search.stats$
+				.pipe(
+					takeWhile(e => !e.finished, true),
+					toArray(),
+				)
+				.toPromise();
+
+			const [textEntries, stats, statsOverview, statsZoom] = await Promise.all([
+				textEntriesP,
+				statsP,
+				search.statsOverview$.pipe(first()).toPromise(),
+				search.statsZoom$.pipe(first()).toPromise(),
+			]);
+
+			////
+			// Check entries
+			////
+			expect(textEntries.data.length)
+				.withContext('The number of entries should be less than the total ingested for preview mode')
+				.toBeLessThan(count);
+			expect(textEntries.data.length).withContext('The number of entries should be more than zero').toBeGreaterThan(0);
+
+			// Concat first because .reverse modifies the array
+			const reversedData = originalData.concat().reverse();
+
+			// Zip the results with the orignal, slicing the original to the length of the results, since
+			// the preview flag limits the number of results we get back
+			const trimmedOriginal = reversedData.slice(0, textEntries.data.length);
+			expect(trimmedOriginal.length)
+				.withContext('Lengths should match (sanity check)')
+				.toEqual(textEntries.data.length);
+
+			zip(textEntries.data, trimmedOriginal).forEach(([entry, original], index) => {
+				if (isUndefined(entry) || isUndefined(original)) {
+					fail("All data should be defined, since we've sliced the original data to match the preview results");
+					return;
+				}
+
+				const value: Entry = JSON.parse(base64.decode(entry.data));
+				const enumeratedValues = entry.values;
+				const [_timestamp, _value] = enumeratedValues;
+
+				expect(_timestamp).withContext(`Each entry should have an enumerated value called "timestamp"`).toEqual({
+					isEnumerated: true,
+					name: 'timestamp',
+					value: original.timestamp,
+				});
+
+				expect(_value).withContext(`Each entry should have an enumerated value called "value"`).toEqual({
+					isEnumerated: true,
+					name: 'value',
+					value: JSON.stringify(original.value),
+				});
+
+				expect(value.value)
+					.withContext('Each value should match its index, descending')
+					.toEqual({ foo: count - index - 1 });
+			});
+
+			////
+			// Check stats
+			////
+			expect(stats.length).toBeGreaterThan(0);
+
+			expect(sum(statsOverview.frequencyStats.map(x => x.count)))
+				.withContext(
+					'The sum of counts from statsOverview should be less than the total count ingested in preview mode',
+				)
+				.toBeLessThan(count);
+			// TODO include this test when backend is ready
+			// expect(sum(statsOverview.frequencyStats.map(x => x.count)))
+			// 	.withContext('The sum of counts from statsOverview should equal the number of results returned by preview mode')
+			// 	.toEqual(textEntries.data.length);
+			expect(sum(statsZoom.frequencyStats.map(x => x.count)))
+				.withContext('The sum of counts from statsZoom should be less than the total count ingested in preview mode')
+				.toBeLessThan(count);
+			// TODO include this test when backend is ready
+			// expect(sum(statsZoom.frequencyStats.map(x => x.count)))
+			// 	.withContext('The sum of counts from statsZoom should equal the number of results returned by preview mode')
+			// 	.toEqual(textEntries.data.length);
+		}),
+		25000,
+	);
 });
