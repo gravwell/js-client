@@ -47,7 +47,7 @@ export const makeSubscribeToOneExplorerSearch = (context: APIContext) => {
 	return async (
 		query: Query,
 		range: [Date, Date],
-		options: { filter?: SearchFilter; metadata?: RawJSON } = {},
+		options: { filter?: SearchFilter; metadata?: RawJSON; preview?: boolean } = {},
 	): Promise<ExplorerSearchSubscription> => {
 		if (isNull(rawSubscriptionP)) rawSubscriptionP = subscribeToOneRawSearch();
 		const rawSubscription = await rawSubscriptionP;
@@ -81,6 +81,7 @@ export const makeSubscribeToOneExplorerSearch = (context: APIContext) => {
 		const searchInitMsg = await initiateSearch(rawSubscription, modifiedQuery, range, {
 			initialFilterID,
 			metadata: options.metadata,
+			preview: options.preview,
 		});
 		const searchTypeID = searchInitMsg.data.OutputSearchSubproto;
 		const isResponseError = filterMessageByCommand(SearchMessageCommands.ResponseError);
