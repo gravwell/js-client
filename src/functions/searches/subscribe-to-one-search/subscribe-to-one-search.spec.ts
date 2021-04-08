@@ -8,11 +8,11 @@
 
 import * as base64 from 'base-64';
 import { addMinutes, subMinutes } from 'date-fns';
-import { isUndefined, last as lastElt, range as rangeLeft, sum, zip } from 'lodash';
+import { isUndefined, last as lastElt, range as rangeLeft, reverse, sum, zip } from 'lodash';
 import { first, last, map, takeWhile, toArray } from 'rxjs/operators';
 import { v4 as uuidv4 } from 'uuid';
 import { makeCreateOneMacro, makeDeleteOneMacro } from '~/functions/macros';
-import { SearchFilter, SearchMessageCommands } from '~/models';
+import { SearchFilter } from '~/models';
 import { RawSearchEntries, TextSearchEntries } from '~/models/search/search-entries';
 import { integrationTest, myCustomMatchers, sleep, TEST_BASE_API_CONTEXT } from '~/tests';
 import { makeIngestMultiLineEntry } from '../../ingestors/ingest-multi-line-entry';
@@ -544,6 +544,7 @@ describe('subscribeToOneSearch()', () => {
 			expect(textEntries.data.length)
 				.withContext('The number of entries should be less than the total ingested for preview mode')
 				.toBeLessThan(count);
+			expect(textEntries.data.length).withContext('The number of entries should be more than zero').toBeGreaterThan(0);
 
 			// Zip the results with the orignal, slicing the original to the length of the results, since
 			// the preview flag limits the number of results we get back
