@@ -438,11 +438,13 @@ describe('subscribeToOneExplorerSearch()', () => {
 					value: original.timestamp,
 				});
 
-				expect(_value).withContext(`Each entry should have an enumerated value called "value"`).toEqual({
-					isEnumerated: true,
-					name: 'value',
-					value: JSON.stringify(original.value),
-				});
+				expect(_value)
+					.withContext(`Each entry should have an enumerated value called "value"`)
+					.toEqual({
+						isEnumerated: true,
+						name: 'value',
+						value: JSON.stringify(original.value),
+					});
 
 				expect(value.value)
 					.withContext('Each value should match its index, descending')
