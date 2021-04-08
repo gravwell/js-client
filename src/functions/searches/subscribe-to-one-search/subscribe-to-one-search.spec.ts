@@ -8,7 +8,7 @@
 
 import * as base64 from 'base-64';
 import { addMinutes, subMinutes } from 'date-fns';
-import { isUndefined, last as lastElt, range as rangeLeft, reverse, sum, zip } from 'lodash';
+import { isUndefined, last as lastElt, range as rangeLeft, sum, zip } from 'lodash';
 import { first, last, map, takeWhile, toArray } from 'rxjs/operators';
 import { v4 as uuidv4 } from 'uuid';
 import { makeCreateOneMacro, makeDeleteOneMacro } from '~/functions/macros';
@@ -546,9 +546,12 @@ describe('subscribeToOneSearch()', () => {
 				.toBeLessThan(count);
 			expect(textEntries.data.length).withContext('The number of entries should be more than zero').toBeGreaterThan(0);
 
+			// Concat first because .reverse modifies the array
+			const reversedData = originalData.concat().reverse();
+
 			// Zip the results with the orignal, slicing the original to the length of the results, since
 			// the preview flag limits the number of results we get back
-			const trimmedOriginal = reverse(originalData).slice(0, textEntries.data.length);
+			const trimmedOriginal = reversedData.slice(0, textEntries.data.length);
 			expect(trimmedOriginal.length)
 				.withContext('Lengths should match (sanity check)')
 				.toEqual(textEntries.data.length);
