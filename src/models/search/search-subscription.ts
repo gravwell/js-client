@@ -13,12 +13,16 @@ import { SearchFilter } from './search-filter';
 import { SearchFrequencyStats, SearchStats } from './search-stats';
 
 export interface SearchSubscription {
+	// TODO: maybe use a getSearchID() instead. To indicate that it's mutable
+	searchID: NumericID;
+
 	progress$: Observable<Percentage>;
 	entries$: Observable<SearchEntries>;
 	errors$: Observable<Error>;
 	stats$: Observable<SearchStats>;
 	statsOverview$: Observable<{ frequencyStats: Array<SearchFrequencyStats> }>;
 	statsZoom$: Observable<{ filter?: SearchFilter; frequencyStats: Array<SearchFrequencyStats> }>;
+
 	setFilter: (filter: Omit<SearchFilter, 'elementFilters'> | null) => void;
-	searchID: NumericID;
+	relaunch: (relaunchOptions?: { range?: [Date, Date]; filter?: SearchFilter }) => Promise<void>;
 }
