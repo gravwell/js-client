@@ -68,7 +68,7 @@ export const toActionableCommand = (raw: RawActionableCommand): ActionableComman
 			return { type: 'savedQuery', queryUUID: raw.reference };
 		case 'dashboard':
 			return { type: 'dashboard', dashboardUUID: raw.reference, dashboardVariable: raw.options?.variable ?? null };
-		case 'url':
+		case 'url': {
 			const modalWidth = raw.options?.modalWidth;
 			return {
 				type: 'url',
@@ -76,6 +76,7 @@ export const toActionableCommand = (raw: RawActionableCommand): ActionableComman
 				modal: raw.options?.modal ?? false,
 				modalWidthPercentage: isString(modalWidth) ? parseInt(modalWidth, 10) : null,
 			};
+		}
 	}
 };
 
