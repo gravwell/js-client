@@ -49,4 +49,4 @@ export type RawActionableCommand =
 	| { type: 'template'; reference: RawUUID; options?: {} }
 	| { type: 'savedQuery'; reference: RawUUID; options?: {} }
 	| { type: 'dashboard'; reference: RawUUID; options?: { variable?: string } }
-	| { type: 'url'; reference: string; options: { modal?: boolean; modalWidth?: string } };
+	| { type: 'url'; reference: string; options?: { modal?: boolean; modalWidth?: string } };
