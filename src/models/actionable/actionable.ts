@@ -7,6 +7,7 @@
  **************************************************************************/
 
 import { NumericID, UUID } from '~/value-objects';
+import { ActionableCommand } from './actionable-command';
 
 export interface Actionable {
 	uuid: UUID;
@@ -46,10 +47,3 @@ export interface ActionableAction {
 export type ActionableTimeVariable =
 	| { type: 'timestamp'; placeholder: null | string }
 	| { type: 'stringFormat'; format: null | string; placeholder: null | string };
-
-export type ActionableCommand =
-	| { type: 'query'; userQuery: string }
-	| { type: 'template'; templateUUID: UUID }
-	| { type: 'savedQuery'; queryUUID: UUID }
-	| { type: 'dashboard'; dashboardUUID: UUID; dashboardVariable: string | null }
-	| { type: 'url'; urlTemplate: string; modal: boolean; modalWidthPercentage: number | null };
