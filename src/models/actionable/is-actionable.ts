@@ -8,13 +8,8 @@
 
 import { isBoolean, isDate, isInteger, isNull, isString } from 'lodash';
 import { isNumericID, isRegex, isUUID } from '~/value-objects';
-import {
-	Actionable,
-	ActionableAction,
-	ActionableCommand,
-	ActionableTimeVariable,
-	ActionableTrigger,
-} from './actionable';
+import { Actionable, ActionableAction, ActionableTimeVariable, ActionableTrigger } from './actionable';
+import { ActionableCommand } from './actionable-command';
 
 export const isActionable = (value: any): value is Actionable => {
 	try {
