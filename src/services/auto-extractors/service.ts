@@ -24,6 +24,7 @@ export interface AutoExtractorsService {
 		readonly authorizedTo: {
 			readonly me: () => Promise<Array<AutoExtractor>>;
 		};
+		readonly forTag: (tag: string) => Promise<AutoExtractor>;
 	};
 
 	readonly guess: {
