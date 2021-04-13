@@ -425,6 +425,37 @@ describe('subscribeToOneExplorerSearch()', () => {
 				.withContext('Lengths should match (sanity check)')
 				.toEqual(textEntries.data.length);
 
+			expect(
+				zip(trimmedOriginal.slice(0, trimmedOriginal.length - 1), trimmedOriginal.slice(1)).reduce(
+					(isDesc, [prev, cur]) => {
+						if (prev === undefined || cur === undefined) {
+							throw new Error('Zipped values were not the same length.');
+						}
+						return prev.value.foo > cur.value.foo && isDesc;
+					},
+					true,
+				),
+			)
+				.withContext('original (trimmed and reversed) data should have values in descending order')
+				.toBeTrue();
+
+			expect(
+				zip(textEntries.data.slice(0, textEntries.data.length - 1), textEntries.data.slice(1)).reduce(
+					(isDesc, [prevEntry, curEntry]) => {
+						if (prevEntry === undefined || curEntry === undefined) {
+							throw new Error('Zipped values were not the same length.');
+						}
+						const prevValue: Entry = JSON.parse(base64.decode(prevEntry.data));
+						const curValue: Entry = JSON.parse(base64.decode(curEntry.data));
+
+						return prevValue.value.foo > curValue.value.foo && isDesc;
+					},
+					true,
+				),
+			)
+				.withContext('received entry data should have values in descending order')
+				.toBeTrue();
+
 			zip(textEntries.data, trimmedOriginal).forEach(([entry, original], index) => {
 				if (isUndefined(entry) || isUndefined(original)) {
 					fail("All data should be defined, since we've sliced the original data to match the preview results");
