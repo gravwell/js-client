@@ -8,20 +8,10 @@
 
 import { isString } from 'lodash';
 import { toRegex } from '~/value-objects';
-import {
-	Actionable,
-	ActionableAction,
-	ActionableCommand,
-	ActionableTimeVariable,
-	ActionableTrigger,
-} from './actionable';
-import {
-	RawActionable,
-	RawActionableAction,
-	RawActionableCommand,
-	RawActionableTimeVariable,
-	RawActionableTrigger,
-} from './raw-actionable';
+import { Actionable, ActionableAction, ActionableTimeVariable, ActionableTrigger } from './actionable';
+import { ActionableCommand } from './actionable-command';
+import { RawActionable, RawActionableAction, RawActionableTimeVariable, RawActionableTrigger } from './raw-actionable';
+import { RawActionableCommand } from './raw-actionable-command';
 
 export const toActionable = (raw: RawActionable): Actionable => ({
 	uuid: raw.GUID,

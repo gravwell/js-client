@@ -8,7 +8,7 @@
 
 import * as base64 from 'base-64';
 import { addMinutes, subMinutes } from 'date-fns';
-import { isArray, isUndefined, reverse, sum, zip } from 'lodash';
+import { isArray, isUndefined, sum, zip } from 'lodash';
 import { first, last, map, takeWhile, toArray } from 'rxjs/operators';
 import { v4 as uuidv4 } from 'uuid';
 import { makeCreateOneAutoExtractor } from '~/functions/auto-extractors';
@@ -142,7 +142,10 @@ describe('subscribeToOneExplorerSearch()', () => {
 					.toBe('value.foo');
 			}
 
-			zip(textEntries.data, reverse(originalData)).forEach(([entry, original], index) => {
+			// Concat first because .reverse modifies the array
+			const reversedData = originalData.concat().reverse();
+
+			zip(textEntries.data, reversedData).forEach(([entry, original], index) => {
 				if (isUndefined(entry) || isUndefined(original)) {
 					fail('Exptected all entries and original data to be defined');
 					return;
@@ -421,6 +424,37 @@ describe('subscribeToOneExplorerSearch()', () => {
 			expect(trimmedOriginal.length)
 				.withContext('Lengths should match (sanity check)')
 				.toEqual(textEntries.data.length);
+
+			expect(
+				zip(trimmedOriginal.slice(0, trimmedOriginal.length - 1), trimmedOriginal.slice(1)).reduce(
+					(isDesc, [prev, cur]) => {
+						if (prev === undefined || cur === undefined) {
+							throw new Error('Zipped values were not the same length.');
+						}
+						return prev.value.foo > cur.value.foo && isDesc;
+					},
+					true,
+				),
+			)
+				.withContext('original (trimmed and reversed) data should have values in descending order')
+				.toBeTrue();
+
+			expect(
+				zip(textEntries.data.slice(0, textEntries.data.length - 1), textEntries.data.slice(1)).reduce(
+					(isDesc, [prevEntry, curEntry]) => {
+						if (prevEntry === undefined || curEntry === undefined) {
+							throw new Error('Zipped values were not the same length.');
+						}
+						const prevValue: Entry = JSON.parse(base64.decode(prevEntry.data));
+						const curValue: Entry = JSON.parse(base64.decode(curEntry.data));
+
+						return prevValue.value.foo > curValue.value.foo && isDesc;
+					},
+					true,
+				),
+			)
+				.withContext('received entry data should have values in descending order')
+				.toBeTrue();
 
 			zip(textEntries.data, trimmedOriginal).forEach(([entry, original], index) => {
 				if (isUndefined(entry) || isUndefined(original)) {
