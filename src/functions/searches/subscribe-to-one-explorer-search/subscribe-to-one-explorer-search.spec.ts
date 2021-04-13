@@ -8,7 +8,7 @@
 
 import * as base64 from 'base-64';
 import { addMinutes, subMinutes } from 'date-fns';
-import { isArray, isUndefined, reverse, sum, zip } from 'lodash';
+import { isArray, isUndefined, sum, zip } from 'lodash';
 import { first, last, map, takeWhile, toArray } from 'rxjs/operators';
 import { v4 as uuidv4 } from 'uuid';
 import { makeCreateOneAutoExtractor } from '~/functions/auto-extractors';
@@ -142,7 +142,10 @@ describe('subscribeToOneExplorerSearch()', () => {
 					.toBe('value.foo');
 			}
 
-			zip(textEntries.data, reverse(originalData)).forEach(([entry, original], index) => {
+			// Concat first because .reverse modifies the array
+			const reversedData = originalData.concat().reverse();
+
+			zip(textEntries.data, reversedData).forEach(([entry, original], index) => {
 				if (isUndefined(entry) || isUndefined(original)) {
 					fail('Exptected all entries and original data to be defined');
 					return;
