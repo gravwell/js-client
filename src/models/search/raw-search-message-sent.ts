@@ -23,6 +23,15 @@ export interface RawInitiateSearchMessageSent {
 		SearchStart: string; // timestamp
 		SearchString: RawQuery;
 		Addendum?: RawJSON;
+
+		/**
+		 * Per the Go client docs:
+		 *
+		 * > Preview indicates that the renderer should only capture enough to show some usage of data
+		 *   A raw, text, hex renderer will grab a few hundred or thousand entries
+		 *   charts will grab enough to draw something useful everything else will get "enough"
+		 */
+		Preview: boolean;
 	};
 }
 

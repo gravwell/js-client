@@ -8,20 +8,10 @@
 
 import { isString } from 'lodash';
 import { toRegex } from '~/value-objects';
-import {
-	Actionable,
-	ActionableAction,
-	ActionableCommand,
-	ActionableTimeVariable,
-	ActionableTrigger,
-} from './actionable';
-import {
-	RawActionable,
-	RawActionableAction,
-	RawActionableCommand,
-	RawActionableTimeVariable,
-	RawActionableTrigger,
-} from './raw-actionable';
+import { Actionable, ActionableAction, ActionableTimeVariable, ActionableTrigger } from './actionable';
+import { ActionableCommand } from './actionable-command';
+import { RawActionable, RawActionableAction, RawActionableTimeVariable, RawActionableTrigger } from './raw-actionable';
+import { RawActionableCommand } from './raw-actionable-command';
 
 export const toActionable = (raw: RawActionable): Actionable => ({
 	uuid: raw.GUID,
@@ -68,13 +58,15 @@ export const toActionableCommand = (raw: RawActionableCommand): ActionableComman
 			return { type: 'savedQuery', queryUUID: raw.reference };
 		case 'dashboard':
 			return { type: 'dashboard', dashboardUUID: raw.reference, dashboardVariable: raw.options?.variable ?? null };
-		case 'url':
+		case 'url': {
+			const modalWidth = raw.options?.modalWidth;
 			return {
 				type: 'url',
 				urlTemplate: raw.reference,
 				modal: raw.options?.modal ?? false,
-				modalWidthPercentage: isString(raw.options?.modalWidth) ? parseInt(raw.options.modalWidth, 10) : null,
+				modalWidthPercentage: isString(modalWidth) ? parseInt(modalWidth, 10) : null,
 			};
+		}
 	}
 };
 

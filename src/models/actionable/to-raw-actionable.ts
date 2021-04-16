@@ -8,13 +8,10 @@
 
 import { omitUndefinedShallow } from '~/functions/utils';
 import { toRawRegex } from '~/value-objects';
-import { ActionableAction, ActionableCommand, ActionableTimeVariable, ActionableTrigger } from './actionable';
-import {
-	RawActionableAction,
-	RawActionableCommand,
-	RawActionableTimeVariable,
-	RawActionableTrigger,
-} from './raw-actionable';
+import { ActionableAction, ActionableTimeVariable, ActionableTrigger } from './actionable';
+import { ActionableCommand } from './actionable-command';
+import { RawActionableAction, RawActionableTimeVariable, RawActionableTrigger } from './raw-actionable';
+import { RawActionableCommand } from './raw-actionable-command';
 
 export const toRawActionableTrigger = (trigger: ActionableTrigger): RawActionableTrigger => ({
 	pattern: toRawRegex(trigger.pattern),

@@ -7,6 +7,7 @@
  **************************************************************************/
 
 import { RawNumericID, RawUUID } from '~/value-objects';
+import { RawActionableCommand } from './raw-actionable-command';
 
 export interface RawActionable {
 	GUID: RawUUID;
@@ -43,10 +44,3 @@ export interface RawActionableTrigger {
 export type RawActionableTimeVariable =
 	| { type: 'timestamp'; format: null | string; placeholder: null | string }
 	| { type: 'string'; format: null | string; placeholder: null | string };
-
-export type RawActionableCommand =
-	| { type: 'query'; reference: string; options?: {} }
-	| { type: 'template'; reference: RawUUID; options?: {} }
-	| { type: 'savedQuery'; reference: RawUUID; options?: {} }
-	| { type: 'dashboard'; reference: RawUUID; options?: { variable?: string } }
-	| { type: 'url'; reference: string; options: { modal?: boolean; modalWidth?: string } };

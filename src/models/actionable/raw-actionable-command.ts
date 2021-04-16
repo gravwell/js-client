@@ -1,0 +1,46 @@
+/*************************************************************************
+ * Copyright 2020 Gravwell, Inc. All rights reserved.
+ * Contact: <legal@gravwell.io>
+ *
+ * This software may be modified and distributed under the terms of the
+ * MIT license. See the LICENSE file for details.
+ **************************************************************************/
+
+import { RawUUID } from '~/value-objects';
+
+export type RawActionableCommand =
+	| RawActionableQueryCommand
+	| RawActionableTemplateCommand
+	| RawActionableSavedQueryCommand
+	| RawActionableDashboardCommand
+	| RawActionableURLCommand;
+
+export interface RawActionableQueryCommand {
+	type: 'query';
+	reference: string;
+	options?: {};
+}
+
+export interface RawActionableTemplateCommand {
+	type: 'template';
+	reference: RawUUID;
+	options?: {};
+}
+
+export interface RawActionableSavedQueryCommand {
+	type: 'savedQuery';
+	reference: RawUUID;
+	options?: {};
+}
+
+export interface RawActionableDashboardCommand {
+	type: 'dashboard';
+	reference: RawUUID;
+	options?: { variable?: string };
+}
+
+export interface RawActionableURLCommand {
+	type: 'url';
+	reference: string;
+	options?: { modal?: boolean; modalWidth?: string };
+}

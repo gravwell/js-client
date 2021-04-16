@@ -7,9 +7,11 @@
  **************************************************************************/
 
 export * from './actionable';
+export * from './actionable-command';
 export * from './creatable-actionable';
 export * from './is-actionable';
 export * from './raw-actionable';
+export * from './raw-actionable-command';
 export * from './raw-creatable-actionable';
 export * from './raw-updatable-actionable';
 export * from './to-actionable';
