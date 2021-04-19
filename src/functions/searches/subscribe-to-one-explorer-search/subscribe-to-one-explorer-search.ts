@@ -14,6 +14,7 @@ import {
 	ExplorerSearchSubscription,
 	Query,
 	RawRequestExplorerSearchEntriesWithinRangeMessageSent,
+	RawRequestSearchCloseMessageSent,
 	RawRequestSearchDetailsMessageSent,
 	RawRequestSearchStatsMessageSent,
 	RawRequestSearchStatsWithinRangeMessageSent,
@@ -212,6 +213,14 @@ export const makeSubscribeToOneExplorerSearch = (context: APIContext) => {
 			setTimeout(() => requestEntries(filter), 2000); // TODO: Change this
 		});
 
+		const close = async (): Promise<void> => {
+			const closeMsg: RawRequestSearchCloseMessageSent = {
+				type: searchTypeID,
+				data: { ID: SearchMessageCommands.Close },
+			};
+			await rawSubscription.send(closeMsg);
+		};
+
 		const rawSearchStats$ = searchMessages$.pipe(filter(filterMessageByCommand(SearchMessageCommands.RequestAllStats)));
 
 		const rawSearchDetails$ = searchMessages$.pipe(
@@ -324,14 +333,17 @@ export const makeSubscribeToOneExplorerSearch = (context: APIContext) => {
 		);
 
 		return {
+			searchID: searchInitMsg.data.SearchID.toString(),
+
 			progress$,
 			entries$,
 			stats$,
 			statsOverview$,
 			statsZoom$,
 			errors$,
+
 			setFilter,
-			searchID: searchInitMsg.data.SearchID.toString(),
+			close,
 		};
 	};
 };
