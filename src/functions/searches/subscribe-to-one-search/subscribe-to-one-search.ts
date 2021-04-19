@@ -11,6 +11,7 @@ import { BehaviorSubject, combineLatest, NEVER, Observable, of } from 'rxjs';
 import { bufferCount, catchError, distinctUntilChanged, filter, map, skipUntil, startWith, tap } from 'rxjs/operators';
 import {
 	Query,
+	RawRequestSearchCloseMessageSent,
 	RawRequestSearchDetailsMessageSent,
 	RawRequestSearchEntriesWithinRangeMessageSent,
 	RawRequestSearchStatsMessageSent,
@@ -208,6 +209,14 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 			setTimeout(() => requestEntries(filter), 2000); // TODO: Change this
 		});
 
+		const close = async (): Promise<void> => {
+			const closeMsg: RawRequestSearchCloseMessageSent = {
+				type: searchTypeID,
+				data: { ID: SearchMessageCommands.Close },
+			};
+			await rawSubscription.send(closeMsg);
+		};
+
 		const rawSearchStats$ = searchMessages$.pipe(filter(filterMessageByCommand(SearchMessageCommands.RequestAllStats)));
 
 		const rawSearchDetails$ = searchMessages$.pipe(
@@ -320,14 +329,17 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 		);
 
 		return {
+			searchID: searchInitMsg.data.SearchID.toString(),
+
 			progress$,
 			entries$,
 			stats$,
 			statsOverview$,
 			statsZoom$,
 			errors$,
+
 			setFilter,
-			searchID: searchInitMsg.data.SearchID.toString(),
+			close,
 		};
 	};
 };
