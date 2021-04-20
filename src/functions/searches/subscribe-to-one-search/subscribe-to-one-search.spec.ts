@@ -76,6 +76,8 @@ describe('subscribeToOneSearch()', () => {
 				search.stats$,
 				search.statsOverview$,
 				search.statsZoom$,
+				search.progress$,
+				search.errors$,
 			];
 			for (const observable of observables) {
 				observable.subscribe({
