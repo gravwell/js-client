@@ -85,6 +85,7 @@ describe('subscribeToOneSearch()', () => {
 				});
 			}
 
+			expect(complete).toBe(0);
 			await search.close();
 			expect(complete).toBe(observables.length);
 		}),

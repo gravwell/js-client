@@ -9,6 +9,7 @@
 import * as base64 from 'base-64';
 import { addMinutes, subMinutes } from 'date-fns';
 import { isArray, isUndefined, sum, zip } from 'lodash';
+import { Observable } from 'rxjs';
 import { first, last, map, takeWhile, toArray } from 'rxjs/operators';
 import { v4 as uuidv4 } from 'uuid';
 import { makeCreateOneAutoExtractor } from '~/functions/auto-extractors';
@@ -70,6 +71,36 @@ describe('subscribeToOneExplorerSearch()', () => {
 			parameters: 'timestamp value value.foo',
 		});
 	}, 25000);
+
+	it(
+		'Should complete the observables when the search closes',
+		integrationTest(async () => {
+			const subscribeToOneExplorerSearch = makeSubscribeToOneExplorerSearch(TEST_BASE_API_CONTEXT);
+			const query = `tag=${tag}`;
+			const range: [Date, Date] = [start, end];
+			const search = await subscribeToOneExplorerSearch(query, range);
+
+			let complete = 0;
+			const observables: Array<Observable<any>> = [
+				search.entries$,
+				search.stats$,
+				search.statsOverview$,
+				search.statsZoom$,
+				search.progress$,
+				search.errors$,
+			];
+			for (const observable of observables) {
+				observable.subscribe({
+					complete: () => complete++,
+				});
+			}
+
+			expect(complete).toBe(0);
+			await search.close();
+			expect(complete).toBe(observables.length);
+		}),
+		25000,
+	);
 
 	it(
 		'Should work with queries using the raw renderer',

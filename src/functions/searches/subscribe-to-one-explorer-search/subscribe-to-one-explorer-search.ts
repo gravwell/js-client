@@ -7,8 +7,18 @@
  **************************************************************************/
 
 import { isBoolean, isEqual, isNull, isUndefined, uniqueId } from 'lodash';
-import { BehaviorSubject, combineLatest, NEVER, Observable, of } from 'rxjs';
-import { bufferCount, catchError, distinctUntilChanged, filter, map, skipUntil, startWith, tap } from 'rxjs/operators';
+import { BehaviorSubject, combineLatest, NEVER, Observable, of, Subject } from 'rxjs';
+import {
+	bufferCount,
+	catchError,
+	distinctUntilChanged,
+	filter,
+	map,
+	skipUntil,
+	startWith,
+	takeUntil,
+	tap,
+} from 'rxjs/operators';
 import {
 	ExplorerSearchEntries,
 	ExplorerSearchSubscription,
@@ -97,12 +107,26 @@ export const makeSubscribeToOneExplorerSearch = (context: APIContext) => {
 		);
 		const rendererType = searchInitMsg.data.RenderModule;
 
+		const close$ = new Subject<void>();
+		const close = async (): Promise<void> => {
+			const closeMsg: RawRequestSearchCloseMessageSent = {
+				type: searchTypeID,
+				data: { ID: SearchMessageCommands.Close },
+			};
+			await rawSubscription.send(closeMsg);
+			close$.next();
+			close$.complete();
+		};
+
 		const progress$: Observable<Percentage> = searchMessages$.pipe(
 			map(msg => (msg as Partial<RawResponseForSearchDetailsMessageReceived>).data?.Finished ?? null),
 			filter(isBoolean),
 			map(done => (done ? 1 : 0)),
 			distinctUntilChanged(),
 			map(rawPercentage => new Percentage(rawPercentage)),
+
+			// Complete when/if the user calls .close()
+			takeUntil(close$),
 		);
 
 		const entries$: Observable<ExplorerSearchEntries> = searchMessages$.pipe(
@@ -121,6 +145,9 @@ export const makeSubscribeToOneExplorerSearch = (context: APIContext) => {
 				const defDesiredGranularity = getDefaultGranularityByRendererType(entries.type);
 				initialFilter.desiredGranularity = defDesiredGranularity;
 			}),
+
+			// Complete when/if the user calls .close()
+			takeUntil(close$),
 		);
 
 		const _filter$ = new BehaviorSubject<SearchFilter>(initialFilter);
@@ -213,14 +240,6 @@ export const makeSubscribeToOneExplorerSearch = (context: APIContext) => {
 			setTimeout(() => requestEntries(filter), 2000); // TODO: Change this
 		});
 
-		const close = async (): Promise<void> => {
-			const closeMsg: RawRequestSearchCloseMessageSent = {
-				type: searchTypeID,
-				data: { ID: SearchMessageCommands.Close },
-			};
-			await rawSubscription.send(closeMsg);
-		};
-
 		const rawSearchStats$ = searchMessages$.pipe(filter(filterMessageByCommand(SearchMessageCommands.RequestAllStats)));
 
 		const rawSearchDetails$ = searchMessages$.pipe(
@@ -308,12 +327,18 @@ export const makeSubscribeToOneExplorerSearch = (context: APIContext) => {
 					};
 				},
 			),
+
+			// Complete when/if the user calls .close()
+			takeUntil(close$),
 		);
 
 		const statsOverview$ = rawSearchStats$.pipe(
 			map(set => {
 				return { frequencyStats: countEntriesFromModules(set) };
 			}),
+
+			// Complete when/if the user calls .close()
+			takeUntil(close$),
 		);
 
 		const statsZoom$ = rawStatsZoom$.pipe(
@@ -322,6 +347,9 @@ export const makeSubscribeToOneExplorerSearch = (context: APIContext) => {
 				const filter = filtersByID[filterID ?? ''] ?? undefined;
 				return { frequencyStats: countEntriesFromModules(set), filter };
 			}),
+
+			// Complete when/if the user calls .close()
+			takeUntil(close$),
 		);
 
 		const errors$: Observable<Error> = searchMessages$.pipe(
@@ -330,6 +358,9 @@ export const makeSubscribeToOneExplorerSearch = (context: APIContext) => {
 
 			// When there's an error, catch it and emit it
 			catchError(err => of(err)),
+
+			// Complete when/if the user calls .close()
+			takeUntil(close$),
 		);
 
 		return {
