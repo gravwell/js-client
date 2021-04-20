@@ -13,6 +13,7 @@ import {
 	catchError,
 	distinctUntilChanged,
 	filter,
+	first,
 	map,
 	skipUntil,
 	startWith,
@@ -63,19 +64,6 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 
 		let closed = false;
 		const close$ = new Subject<void>();
-		const close = async (): Promise<void> => {
-			const closeMsg: RawRequestSearchCloseMessageSent = {
-				type: searchTypeID,
-				data: { ID: SearchMessageCommands.Close },
-			};
-			await rawSubscription.send(closeMsg);
-			close$.next();
-			close$.complete();
-			closed = true;
-		};
-
-		rawSubscription.sent$.subscribe(sent => console.log('sent', sent));
-		rawSubscription.received$.subscribe(received => console.log('received', received));
 
 		const initialFilter = {
 			entriesOffset: {
@@ -123,6 +111,31 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 			takeUntil(close$),
 		);
 		const rendererType = searchInitMsg.data.RenderModule;
+
+		let closing = false;
+		const close = async (): Promise<void> => {
+			if (closing || closed) return undefined;
+
+			try {
+				closing = true;
+				const closeMsg: RawRequestSearchCloseMessageSent = {
+					type: searchTypeID,
+					data: { ID: SearchMessageCommands.Close },
+				};
+				await rawSubscription.send(closeMsg);
+
+				// Wait for closed message to be received
+				await searchMessages$.pipe(filter(filterMessageByCommand(SearchMessageCommands.Close)), first()).toPromise();
+
+				close$.next();
+				close$.complete();
+				closing = false;
+				closed = true;
+			} catch (err) {
+				closing = false;
+				throw err;
+			}
+		};
 
 		const progress$: Observable<Percentage> = searchMessages$.pipe(
 			map(msg => (msg as Partial<RawResponseForSearchDetailsMessageReceived>).data?.Finished ?? null),
