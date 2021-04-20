@@ -13,7 +13,6 @@ import {
 	catchError,
 	distinctUntilChanged,
 	filter,
-	first,
 	map,
 	skipUntil,
 	startWith,
@@ -105,6 +104,14 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 				if (isResponseError(msg)) {
 					throw new Error(msg.data.Error);
 				}
+
+				// Listen for close messages and emit on close$
+				const isCloseMsg = filterMessageByCommand(SearchMessageCommands.Close);
+				if (isCloseMsg(msg)) {
+					close$.next();
+					close$.complete();
+					closed = true;
+				}
 			}),
 
 			// Complete when/if the user calls .close()
@@ -112,29 +119,17 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 		);
 		const rendererType = searchInitMsg.data.RenderModule;
 
-		let closing = false;
 		const close = async (): Promise<void> => {
-			if (closing || closed) return undefined;
+			if (closed) return undefined;
 
-			try {
-				closing = true;
-				const closeMsg: RawRequestSearchCloseMessageSent = {
-					type: searchTypeID,
-					data: { ID: SearchMessageCommands.Close },
-				};
-				await rawSubscription.send(closeMsg);
+			const closeMsg: RawRequestSearchCloseMessageSent = {
+				type: searchTypeID,
+				data: { ID: SearchMessageCommands.Close },
+			};
+			await rawSubscription.send(closeMsg);
 
-				// Wait for closed message to be received
-				await searchMessages$.pipe(filter(filterMessageByCommand(SearchMessageCommands.Close)), first()).toPromise();
-
-				close$.next();
-				close$.complete();
-				closing = false;
-				closed = true;
-			} catch (err) {
-				closing = false;
-				throw err;
-			}
+			// Wait for closed message to be received
+			await close$.toPromise();
 		};
 
 		const progress$: Observable<Percentage> = searchMessages$.pipe(
