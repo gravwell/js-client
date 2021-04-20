@@ -63,6 +63,9 @@ export const makeSubscribeToOneExplorerSearch = (context: APIContext) => {
 		if (isNull(rawSubscriptionP)) rawSubscriptionP = subscribeToOneRawSearch();
 		const rawSubscription = await rawSubscriptionP;
 
+		let closed = false;
+		const close$ = new Subject<void>();
+
 		const initialFilter = {
 			entriesOffset: {
 				index: options.filter?.entriesOffset?.index ?? 0,
@@ -103,19 +106,32 @@ export const makeSubscribeToOneExplorerSearch = (context: APIContext) => {
 				if (isResponseError(msg)) {
 					throw new Error(msg.data.Error);
 				}
+
+				// Listen for close messages and emit on close$
+				const isCloseMsg = filterMessageByCommand(SearchMessageCommands.Close);
+				if (isCloseMsg(msg)) {
+					close$.next();
+					close$.complete();
+					closed = true;
+				}
 			}),
+
+			// Complete when/if the user calls .close()
+			takeUntil(close$),
 		);
 		const rendererType = searchInitMsg.data.RenderModule;
 
-		const close$ = new Subject<void>();
 		const close = async (): Promise<void> => {
+			if (closed) return undefined;
+
 			const closeMsg: RawRequestSearchCloseMessageSent = {
 				type: searchTypeID,
 				data: { ID: SearchMessageCommands.Close },
 			};
 			await rawSubscription.send(closeMsg);
-			close$.next();
-			close$.complete();
+
+			// Wait for closed message to be received
+			await close$.toPromise();
 		};
 
 		const progress$: Observable<Percentage> = searchMessages$.pipe(
@@ -151,7 +167,8 @@ export const makeSubscribeToOneExplorerSearch = (context: APIContext) => {
 		);
 
 		const _filter$ = new BehaviorSubject<SearchFilter>(initialFilter);
-		const setFilter = (filter: Omit<SearchFilter, 'elementFilters'> | null) => {
+		const setFilter = (filter: SearchFilter | null): void => {
+			if (closed) return undefined;
 			_filter$.next(filter ?? initialFilter);
 		};
 		const filter$ = _filter$.asObservable().pipe(
@@ -175,9 +192,14 @@ export const makeSubscribeToOneExplorerSearch = (context: APIContext) => {
 				}),
 			),
 			distinctUntilChanged((a, b) => isEqual(a, b)),
+
+			// Complete when/if the user calls .close()
+			takeUntil(close$),
 		);
 
 		const requestEntries = async (filter: RequiredSearchFilter): Promise<void> => {
+			if (closed) return undefined;
+
 			const filterID = uniqueId(SEARCH_FILTER_PREFIX);
 			filtersByID[filterID] = filter;
 
@@ -240,14 +262,25 @@ export const makeSubscribeToOneExplorerSearch = (context: APIContext) => {
 			setTimeout(() => requestEntries(filter), 2000); // TODO: Change this
 		});
 
-		const rawSearchStats$ = searchMessages$.pipe(filter(filterMessageByCommand(SearchMessageCommands.RequestAllStats)));
+		const rawSearchStats$ = searchMessages$.pipe(
+			filter(filterMessageByCommand(SearchMessageCommands.RequestAllStats)),
+
+			// Complete when/if the user calls .close()
+			takeUntil(close$),
+		);
 
 		const rawSearchDetails$ = searchMessages$.pipe(
 			filter(filterMessageByCommand(SearchMessageCommands.RequestDetails)),
+
+			// Complete when/if the user calls .close()
+			takeUntil(close$),
 		);
 
 		const rawStatsZoom$ = searchMessages$.pipe(
 			filter(filterMessageByCommand(SearchMessageCommands.RequestStatsInRange)),
+
+			// Complete when/if the user calls .close()
+			takeUntil(close$),
 		);
 
 		const stats$ = combineLatest(rawSearchStats$, rawSearchDetails$).pipe(
