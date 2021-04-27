@@ -13,12 +13,15 @@ import { SearchFilter } from './search-filter';
 import { SearchFrequencyStats, SearchStats } from './search-stats';
 
 export interface ExplorerSearchSubscription {
+	searchID: NumericID;
+
 	progress$: Observable<Percentage>;
 	entries$: Observable<ExplorerSearchEntries>;
 	errors$: Observable<Error>;
 	stats$: Observable<SearchStats>;
 	statsOverview$: Observable<{ frequencyStats: Array<SearchFrequencyStats> }>;
 	statsZoom$: Observable<{ filter?: SearchFilter; frequencyStats: Array<SearchFrequencyStats> }>;
+
 	setFilter: (filter: Omit<SearchFilter, 'elementFilters'> | null) => void;
-	searchID: NumericID;
+	close: () => Promise<void>;
 }

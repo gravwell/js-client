@@ -9,6 +9,7 @@
 import * as base64 from 'base-64';
 import { addMinutes, subMinutes } from 'date-fns';
 import { isUndefined, last as lastElt, range as rangeLeft, sum, zip } from 'lodash';
+import { Observable } from 'rxjs';
 import { first, last, map, takeWhile, toArray } from 'rxjs/operators';
 import { v4 as uuidv4 } from 'uuid';
 import { makeCreateOneMacro, makeDeleteOneMacro } from '~/functions/macros';
@@ -60,6 +61,36 @@ describe('subscribeToOneSearch()', () => {
 			await sleep(1000);
 		}
 	}, 25000);
+
+	it(
+		'Should complete the observables when the search closes',
+		integrationTest(async () => {
+			const subscribeToOneSearch = makeSubscribeToOneSearch(TEST_BASE_API_CONTEXT);
+			const query = `tag=${tag}`;
+			const range: [Date, Date] = [start, end];
+			const search = await subscribeToOneSearch(query, range);
+
+			let complete = 0;
+			const observables: Array<Observable<any>> = [
+				search.entries$,
+				search.stats$,
+				search.statsOverview$,
+				search.statsZoom$,
+				search.progress$,
+				search.errors$,
+			];
+			for (const observable of observables) {
+				observable.subscribe({
+					complete: () => complete++,
+				});
+			}
+
+			expect(complete).toBe(0);
+			await search.close();
+			expect(complete).toBe(observables.length);
+		}),
+		25000,
+	);
 
 	it(
 		'Should work with queries using the raw renderer w/ count module',
