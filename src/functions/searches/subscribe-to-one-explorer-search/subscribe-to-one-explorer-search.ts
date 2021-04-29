@@ -7,13 +7,24 @@
  **************************************************************************/
 
 import { isBoolean, isEqual, isNull, isUndefined, uniqueId } from 'lodash';
-import { BehaviorSubject, combineLatest, NEVER, Observable, of } from 'rxjs';
-import { bufferCount, catchError, distinctUntilChanged, filter, map, skipUntil, startWith, tap } from 'rxjs/operators';
+import { BehaviorSubject, combineLatest, NEVER, Observable, of, Subject } from 'rxjs';
+import {
+	bufferCount,
+	catchError,
+	distinctUntilChanged,
+	filter,
+	map,
+	skipUntil,
+	startWith,
+	takeUntil,
+	tap,
+} from 'rxjs/operators';
 import {
 	ExplorerSearchEntries,
 	ExplorerSearchSubscription,
 	Query,
 	RawRequestExplorerSearchEntriesWithinRangeMessageSent,
+	RawRequestSearchCloseMessageSent,
 	RawRequestSearchDetailsMessageSent,
 	RawRequestSearchStatsMessageSent,
 	RawRequestSearchStatsWithinRangeMessageSent,
@@ -51,6 +62,9 @@ export const makeSubscribeToOneExplorerSearch = (context: APIContext) => {
 	): Promise<ExplorerSearchSubscription> => {
 		if (isNull(rawSubscriptionP)) rawSubscriptionP = subscribeToOneRawSearch();
 		const rawSubscription = await rawSubscriptionP;
+
+		let closed = false;
+		const close$ = new Subject<void>();
 
 		const initialFilter = {
 			entriesOffset: {
@@ -92,9 +106,33 @@ export const makeSubscribeToOneExplorerSearch = (context: APIContext) => {
 				if (isResponseError(msg)) {
 					throw new Error(msg.data.Error);
 				}
+
+				// Listen for close messages and emit on close$
+				const isCloseMsg = filterMessageByCommand(SearchMessageCommands.Close);
+				if (isCloseMsg(msg)) {
+					close$.next();
+					close$.complete();
+					closed = true;
+				}
 			}),
+
+			// Complete when/if the user calls .close()
+			takeUntil(close$),
 		);
 		const rendererType = searchInitMsg.data.RenderModule;
+
+		const close = async (): Promise<void> => {
+			if (closed) return undefined;
+
+			const closeMsg: RawRequestSearchCloseMessageSent = {
+				type: searchTypeID,
+				data: { ID: SearchMessageCommands.Close },
+			};
+			await rawSubscription.send(closeMsg);
+
+			// Wait for closed message to be received
+			await close$.toPromise();
+		};
 
 		const progress$: Observable<Percentage> = searchMessages$.pipe(
 			map(msg => (msg as Partial<RawResponseForSearchDetailsMessageReceived>).data?.Finished ?? null),
@@ -102,6 +140,9 @@ export const makeSubscribeToOneExplorerSearch = (context: APIContext) => {
 			map(done => (done ? 1 : 0)),
 			distinctUntilChanged(),
 			map(rawPercentage => new Percentage(rawPercentage)),
+
+			// Complete when/if the user calls .close()
+			takeUntil(close$),
 		);
 
 		const entries$: Observable<ExplorerSearchEntries> = searchMessages$.pipe(
@@ -120,10 +161,14 @@ export const makeSubscribeToOneExplorerSearch = (context: APIContext) => {
 				const defDesiredGranularity = getDefaultGranularityByRendererType(entries.type);
 				initialFilter.desiredGranularity = defDesiredGranularity;
 			}),
+
+			// Complete when/if the user calls .close()
+			takeUntil(close$),
 		);
 
 		const _filter$ = new BehaviorSubject<SearchFilter>(initialFilter);
-		const setFilter = (filter: Omit<SearchFilter, 'elementFilters'> | null) => {
+		const setFilter = (filter: SearchFilter | null): void => {
+			if (closed) return undefined;
 			_filter$.next(filter ?? initialFilter);
 		};
 		const filter$ = _filter$.asObservable().pipe(
@@ -147,9 +192,14 @@ export const makeSubscribeToOneExplorerSearch = (context: APIContext) => {
 				}),
 			),
 			distinctUntilChanged((a, b) => isEqual(a, b)),
+
+			// Complete when/if the user calls .close()
+			takeUntil(close$),
 		);
 
 		const requestEntries = async (filter: RequiredSearchFilter): Promise<void> => {
+			if (closed) return undefined;
+
 			const filterID = uniqueId(SEARCH_FILTER_PREFIX);
 			filtersByID[filterID] = filter;
 
@@ -212,14 +262,25 @@ export const makeSubscribeToOneExplorerSearch = (context: APIContext) => {
 			setTimeout(() => requestEntries(filter), 2000); // TODO: Change this
 		});
 
-		const rawSearchStats$ = searchMessages$.pipe(filter(filterMessageByCommand(SearchMessageCommands.RequestAllStats)));
+		const rawSearchStats$ = searchMessages$.pipe(
+			filter(filterMessageByCommand(SearchMessageCommands.RequestAllStats)),
+
+			// Complete when/if the user calls .close()
+			takeUntil(close$),
+		);
 
 		const rawSearchDetails$ = searchMessages$.pipe(
 			filter(filterMessageByCommand(SearchMessageCommands.RequestDetails)),
+
+			// Complete when/if the user calls .close()
+			takeUntil(close$),
 		);
 
 		const rawStatsZoom$ = searchMessages$.pipe(
 			filter(filterMessageByCommand(SearchMessageCommands.RequestStatsInRange)),
+
+			// Complete when/if the user calls .close()
+			takeUntil(close$),
 		);
 
 		const stats$ = combineLatest(rawSearchStats$, rawSearchDetails$).pipe(
@@ -299,12 +360,18 @@ export const makeSubscribeToOneExplorerSearch = (context: APIContext) => {
 					};
 				},
 			),
+
+			// Complete when/if the user calls .close()
+			takeUntil(close$),
 		);
 
 		const statsOverview$ = rawSearchStats$.pipe(
 			map(set => {
 				return { frequencyStats: countEntriesFromModules(set) };
 			}),
+
+			// Complete when/if the user calls .close()
+			takeUntil(close$),
 		);
 
 		const statsZoom$ = rawStatsZoom$.pipe(
@@ -313,6 +380,9 @@ export const makeSubscribeToOneExplorerSearch = (context: APIContext) => {
 				const filter = filtersByID[filterID ?? ''] ?? undefined;
 				return { frequencyStats: countEntriesFromModules(set), filter };
 			}),
+
+			// Complete when/if the user calls .close()
+			takeUntil(close$),
 		);
 
 		const errors$: Observable<Error> = searchMessages$.pipe(
@@ -321,17 +391,23 @@ export const makeSubscribeToOneExplorerSearch = (context: APIContext) => {
 
 			// When there's an error, catch it and emit it
 			catchError(err => of(err)),
+
+			// Complete when/if the user calls .close()
+			takeUntil(close$),
 		);
 
 		return {
+			searchID: searchInitMsg.data.SearchID.toString(),
+
 			progress$,
 			entries$,
 			stats$,
 			statsOverview$,
 			statsZoom$,
 			errors$,
+
 			setFilter,
-			searchID: searchInitMsg.data.SearchID.toString(),
+			close,
 		};
 	};
 };
