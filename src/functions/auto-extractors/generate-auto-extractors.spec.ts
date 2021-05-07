@@ -61,8 +61,7 @@ describe('generateAutoExtractors()', () => {
 		integrationTest(async () => {
 			const subscribeToOneSearch = makeSubscribeToOneSearch(TEST_BASE_API_CONTEXT);
 			const query = `tag=${tag} limit 10`;
-			const range: [Date, Date] = [start, end];
-			const search = await subscribeToOneSearch(query, range);
+			const search = await subscribeToOneSearch(query, { filter: { dateRange: { start, end } } });
 
 			const entries = await search.entries$
 				.pipe(

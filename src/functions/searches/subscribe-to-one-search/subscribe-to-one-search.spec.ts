@@ -67,8 +67,7 @@ describe('subscribeToOneSearch()', () => {
 		integrationTest(async () => {
 			const subscribeToOneSearch = makeSubscribeToOneSearch(TEST_BASE_API_CONTEXT);
 			const query = `tag=${tag}`;
-			const range: [Date, Date] = [start, end];
-			const search = await subscribeToOneSearch(query, range);
+			const search = await subscribeToOneSearch(query, { filter: { dateRange: { start, end } } });
 
 			let complete = 0;
 			const observables: Array<Observable<any>> = [
@@ -104,9 +103,8 @@ describe('subscribeToOneSearch()', () => {
 			const subscribeToOneSearch = makeSubscribeToOneSearch(TEST_BASE_API_CONTEXT);
 			const query = `tag=${tag} json $${macroName} | count`;
 			const effectiveQuery = `tag=${tag} json value | count`;
-			const range: [Date, Date] = [start, end];
 			const metadata = { test: 'abc' };
-			const search = await subscribeToOneSearch(query, range, { metadata });
+			const search = await subscribeToOneSearch(query, { metadata, filter: { dateRange: { start, end } } });
 
 			const textEntriesP = search.entries$
 				.pipe(
@@ -193,9 +191,8 @@ describe('subscribeToOneSearch()', () => {
 		integrationTest(async () => {
 			const subscribeToOneSearch = makeSubscribeToOneSearch(TEST_BASE_API_CONTEXT);
 			const query = `tag=${tag} json value timestamp | raw`;
-			const range: [Date, Date] = [start, end];
-			const filter: SearchFilter = { entriesOffset: { index: 0, count: count } };
-			const search = await subscribeToOneSearch(query, range, { filter });
+			const filter: SearchFilter = { entriesOffset: { index: 0, count: count }, dateRange: { start, end } };
+			const search = await subscribeToOneSearch(query, { filter });
 
 			const textEntriesP = search.entries$
 				.pipe(
@@ -297,12 +294,10 @@ describe('subscribeToOneSearch()', () => {
 
 			const subscribeToOneSearch = makeSubscribeToOneSearch(TEST_BASE_API_CONTEXT);
 			const query = `tag=${tag} json value timestamp | raw`;
-
-			const range: [Date, Date] = [start, end];
-			const filter: SearchFilter = { entriesOffset: { index: 0, count: count } };
+			const filter: SearchFilter = { entriesOffset: { index: 0, count: count }, dateRange: { start, end } };
 
 			const searches = await Promise.all(
-				Array.from({ length: SEARCHES_N }).map(() => subscribeToOneSearch(query, range, { filter: filter })),
+				Array.from({ length: SEARCHES_N }).map(() => subscribeToOneSearch(query, { filter })),
 			);
 
 			// Concat first because .reverse modifies the array
@@ -406,10 +401,9 @@ describe('subscribeToOneSearch()', () => {
 		integrationTest(async () => {
 			const subscribeToOneSearch = makeSubscribeToOneSearch(TEST_BASE_API_CONTEXT);
 			const query = `this is an invalid query`;
-			const range: [Date, Date] = [start, end];
-			const filter: SearchFilter = { entriesOffset: { index: 0, count: count } };
+			const filter: SearchFilter = { entriesOffset: { index: 0, count: count }, dateRange: { start, end } };
 
-			await expectAsync(subscribeToOneSearch(query, range, { filter })).toBeRejected();
+			await expectAsync(subscribeToOneSearch(query, { filter })).toBeRejected();
 		}),
 		25000,
 	);
@@ -419,10 +413,12 @@ describe('subscribeToOneSearch()', () => {
 		integrationTest(async () => {
 			const subscribeToOneSearch = makeSubscribeToOneSearch(TEST_BASE_API_CONTEXT);
 			const query = `tag=${tag}`;
-			const range: [Date, Date] = [start, subMinutes(start, 10)];
-			const filter: SearchFilter = { entriesOffset: { index: 0, count: count } };
+			const filter: SearchFilter = {
+				entriesOffset: { index: 0, count: count },
+				dateRange: { start, end: subMinutes(start, 10) },
+			};
 
-			await expectAsync(subscribeToOneSearch(query, range, { filter })).toBeRejected();
+			await expectAsync(subscribeToOneSearch(query, { filter })).toBeRejected();
 		}),
 		25000,
 	);
@@ -431,25 +427,25 @@ describe('subscribeToOneSearch()', () => {
 		'Should reject bad searches without affecting good ones (different queries)',
 		integrationTest(async () => {
 			const subscribeToOneSearch = makeSubscribeToOneSearch(TEST_BASE_API_CONTEXT);
-			const range: [Date, Date] = [start, end];
-			const badRange: [Date, Date] = [start, subMinutes(start, 10)];
-			const filter: SearchFilter = { entriesOffset: { index: 0, count: count } };
+			const goodRange = { start, end };
+			const badRange = { start, end: subMinutes(start, 10) };
+			const baseFilter: SearchFilter = { entriesOffset: { index: 0, count: count } };
 
 			// Start a bunch of search subscriptions with different queries to race them
 			await Promise.all([
-				expectAsync(subscribeToOneSearch(`tag=${tag} regex "a"`, badRange, { filter }))
+				expectAsync(subscribeToOneSearch(`tag=${tag} regex "a"`, { filter: { ...baseFilter, dateRange: badRange } }))
 					.withContext('query with bad range should reject')
 					.toBeRejected(),
-				expectAsync(subscribeToOneSearch(`tag=${tag} regex "b"`, badRange, { filter }))
+				expectAsync(subscribeToOneSearch(`tag=${tag} regex "b"`, { filter: { ...baseFilter, dateRange: badRange } }))
 					.withContext('query with bad range should reject')
 					.toBeRejected(),
-				expectAsync(subscribeToOneSearch(`tag=${tag} regex "c"`, range, { filter }))
+				expectAsync(subscribeToOneSearch(`tag=${tag} regex "c"`, { filter: { ...baseFilter, dateRange: goodRange } }))
 					.withContext('good query should resolve')
 					.toBeResolved(),
-				expectAsync(subscribeToOneSearch(`tag=${tag} regex "d"`, badRange, { filter }))
+				expectAsync(subscribeToOneSearch(`tag=${tag} regex "d"`, { filter: { ...baseFilter, dateRange: badRange } }))
 					.withContext('query with bad range should reject')
 					.toBeRejected(),
-				expectAsync(subscribeToOneSearch(`tag=${tag} regex "e"`, badRange, { filter }))
+				expectAsync(subscribeToOneSearch(`tag=${tag} regex "e"`, { filter: { ...baseFilter, dateRange: badRange } }))
 					.withContext('query with bad range should reject')
 					.toBeRejected(),
 			]);
@@ -462,25 +458,25 @@ describe('subscribeToOneSearch()', () => {
 		integrationTest(async () => {
 			const subscribeToOneSearch = makeSubscribeToOneSearch(TEST_BASE_API_CONTEXT);
 			const query = `tag=${tag}`;
-			const range: [Date, Date] = [start, end];
-			const badRange: [Date, Date] = [start, subMinutes(start, 10)];
-			const filter: SearchFilter = { entriesOffset: { index: 0, count: count } };
+			const goodRange = { start, end };
+			const badRange = { start, end: subMinutes(start, 10) };
+			const baseFilter: SearchFilter = { entriesOffset: { index: 0, count: count } };
 
 			// Start a bunch of search subscriptions to race them
 			await Promise.all([
-				expectAsync(subscribeToOneSearch(query, badRange, { filter }))
+				expectAsync(subscribeToOneSearch(query, { filter: { ...baseFilter, dateRange: badRange } }))
 					.withContext('query with bad range should reject')
 					.toBeRejected(),
-				expectAsync(subscribeToOneSearch(query, badRange, { filter }))
+				expectAsync(subscribeToOneSearch(query, { filter: { ...baseFilter, dateRange: badRange } }))
 					.withContext('query with bad range should reject')
 					.toBeRejected(),
-				expectAsync(subscribeToOneSearch(query, range, { filter }))
+				expectAsync(subscribeToOneSearch(query, { filter: { ...baseFilter, dateRange: goodRange } }))
 					.withContext('good query should resolve')
 					.toBeResolved(),
-				expectAsync(subscribeToOneSearch(query, badRange, { filter }))
+				expectAsync(subscribeToOneSearch(query, { filter: { ...baseFilter, dateRange: badRange } }))
 					.withContext('query with bad range should reject')
 					.toBeRejected(),
-				expectAsync(subscribeToOneSearch(query, badRange, { filter }))
+				expectAsync(subscribeToOneSearch(query, { filter: { ...baseFilter, dateRange: badRange } }))
 					.withContext('query with bad range should reject')
 					.toBeRejected(),
 			]);
@@ -492,13 +488,12 @@ describe('subscribeToOneSearch()', () => {
 		'Should work with several searches initiated simultaneously',
 		integrationTest(async () => {
 			const subscribeToOneSearch = makeSubscribeToOneSearch(TEST_BASE_API_CONTEXT);
-			const range: [Date, Date] = [start, end];
-			const filter: SearchFilter = { entriesOffset: { index: 0, count: count } };
+			const filter: SearchFilter = { entriesOffset: { index: 0, count: count }, dateRange: { start, end } };
 
 			// Start a bunch of search subscriptions to race them
 			await Promise.all(
 				rangeLeft(0, 20).map(x =>
-					expectAsync(subscribeToOneSearch(`tag=${tag} regex ${x}`, range, { filter }))
+					expectAsync(subscribeToOneSearch(`tag=${tag} regex ${x}`, { filter }))
 						.withContext('good query should resolve')
 						.toBeResolved(),
 				),
@@ -512,12 +507,11 @@ describe('subscribeToOneSearch()', () => {
 		integrationTest(async () => {
 			const subscribeToOneSearch = makeSubscribeToOneSearch(TEST_BASE_API_CONTEXT);
 			const query = `tag=${tag} chart`;
-			const range: [Date, Date] = [start, end];
 
 			// Use an invalid filter, where Last is less than First
-			const filter: SearchFilter = { entriesOffset: { index: 1, count: -1 } };
+			const filter: SearchFilter = { entriesOffset: { index: 1, count: -1 }, dateRange: { start, end } };
 
-			const search = await subscribeToOneSearch(query, range, { filter });
+			const search = await subscribeToOneSearch(query, { filter });
 
 			// Non-error observables should error
 			await Promise.all([
@@ -543,9 +537,12 @@ describe('subscribeToOneSearch()', () => {
 		integrationTest(async () => {
 			const subscribeToOneSearch = makeSubscribeToOneSearch(TEST_BASE_API_CONTEXT);
 			const query = `tag=${tag} json value timestamp | raw`;
-			const range: [Date, Date] = [start, end];
-			const filter: SearchFilter = { entriesOffset: { index: 0, count: count } };
-			const search = await subscribeToOneSearch(query, range, { filter, preview: true });
+			const filter: SearchFilter = {
+				entriesOffset: { index: 0, count: count },
+				previewMode: true,
+				dateRange: { start, end },
+			};
+			const search = await subscribeToOneSearch(query, { filter });
 
 			const textEntriesP = search.entries$
 				.pipe(
@@ -646,8 +643,8 @@ describe('subscribeToOneSearch()', () => {
 				const subscribeToOneSearch = makeSubscribeToOneSearch(TEST_BASE_API_CONTEXT);
 				const query = `tag=${tag}`;
 				const minutes = 90;
-				const range: [Date, Date] = [start, addMinutes(start, minutes - 1)];
-				const search = await subscribeToOneSearch(query, range);
+				const dateRange = { start, end: addMinutes(start, minutes - 1) };
+				const search = await subscribeToOneSearch(query, { filter: { dateRange } });
 
 				const textEntriesP = search.entries$
 					.pipe(
@@ -709,9 +706,8 @@ describe('subscribeToOneSearch()', () => {
 			integrationTest(async () => {
 				const subscribeToOneSearch = makeSubscribeToOneSearch(TEST_BASE_API_CONTEXT);
 				const query = `tag=${tag}`;
-				const range: [Date, Date] = [start, end];
-				const filter: SearchFilter = { entriesOffset: { index: 0, count } };
-				const search = await subscribeToOneSearch(query, range, { filter });
+				const filter: SearchFilter = { entriesOffset: { index: 0, count }, dateRange: { start, end } };
+				const search = await subscribeToOneSearch(query, { filter });
 
 				let [statsOverview, statsZoom] = await Promise.all([
 					search.statsOverview$.pipe(first()).toPromise(),
@@ -761,12 +757,12 @@ describe('subscribeToOneSearch()', () => {
 			integrationTest(async () => {
 				const subscribeToOneSearch = makeSubscribeToOneSearch(TEST_BASE_API_CONTEXT);
 
-				const range: [Date, Date] = [start, end];
+				const dateRange = { start, end };
 
 				// Issue a query where the minzoomwindow is predictable (1 second)
 				const query1s = `tag=${tag} json value | stats mean(value) over 1s`;
-				const filter1s: SearchFilter = { entriesOffset: { index: 0, count: count } };
-				const search1s = await subscribeToOneSearch(query1s, range, { filter: filter1s });
+				const filter1s: SearchFilter = { entriesOffset: { index: 0, count: count }, dateRange };
+				const search1s = await subscribeToOneSearch(query1s, { filter: filter1s });
 
 				const stats1s = await search1s.stats$
 					.pipe(
@@ -784,8 +780,8 @@ describe('subscribeToOneSearch()', () => {
 
 				// Issue a query where the minzoomwindow is predictable (33 seconds, why not)
 				const query33s = `tag=${tag} json value | stats mean(value) over 33s`;
-				const filter33s = { entriesOffset: { index: 0, count: count } };
-				const search33s = await subscribeToOneSearch(query33s, range, { filter: filter33s });
+				const filter33s = { entriesOffset: { index: 0, count: count }, dateRange };
+				const search33s = await subscribeToOneSearch(query33s, { filter: filter33s });
 
 				const stats33s = await search33s.stats$
 					.pipe(
@@ -809,9 +805,8 @@ describe('subscribeToOneSearch()', () => {
 			integrationTest(async () => {
 				const subscribeToOneSearch = makeSubscribeToOneSearch(TEST_BASE_API_CONTEXT);
 				const query = `tag=${tag}`;
-				const range: [Date, Date] = [start, end];
-				const filter1: SearchFilter = { entriesOffset: { index: 0, count: count } };
-				const search = await subscribeToOneSearch(query, range, { filter: filter1 });
+				const filter1: SearchFilter = { entriesOffset: { index: 0, count: count }, dateRange: { start, end } };
+				const search = await subscribeToOneSearch(query, { filter: filter1 });
 
 				let [statsOverview, statsZoom] = await Promise.all([
 					search.statsOverview$.pipe(first()).toPromise(),
@@ -877,10 +872,13 @@ describe('subscribeToOneSearch()', () => {
 			integrationTest(async () => {
 				const subscribeToOneSearch = makeSubscribeToOneSearch(TEST_BASE_API_CONTEXT);
 				const query = `tag=${tag}`;
-				const range: [Date, Date] = [start, end];
 				const overviewGranularity = 133;
-				const filter1: SearchFilter = { entriesOffset: { index: 0, count: count }, overviewGranularity };
-				const search = await subscribeToOneSearch(query, range, { filter: filter1 });
+				const filter1: SearchFilter = {
+					entriesOffset: { index: 0, count: count },
+					overviewGranularity,
+					dateRange: { start, end },
+				};
+				const search = await subscribeToOneSearch(query, { filter: filter1 });
 
 				let [statsOverview, statsZoom] = await Promise.all([
 					search.statsOverview$.pipe(first()).toPromise(),

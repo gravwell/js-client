@@ -35,7 +35,7 @@ export const makeExploreOneTag = (context: APIContext) => {
 		const limit = options.limit ?? 1000;
 		const query = `tag=${tag} ax`;
 
-		const searchInitMsg = await initiateSearch(rawSubscription, query, range);
+		const searchInitMsg = await initiateSearch(rawSubscription, query, { range });
 		const searchTypeID = searchInitMsg.data.OutputSearchSubproto;
 		const searchMessages$ = rawSubscription.received$.pipe(filter(msg => msg.type === searchTypeID));
 

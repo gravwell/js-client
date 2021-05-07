@@ -77,8 +77,7 @@ describe('subscribeToOneExplorerSearch()', () => {
 		integrationTest(async () => {
 			const subscribeToOneExplorerSearch = makeSubscribeToOneExplorerSearch(TEST_BASE_API_CONTEXT);
 			const query = `tag=${tag}`;
-			const range: [Date, Date] = [start, end];
-			const search = await subscribeToOneExplorerSearch(query, range);
+			const search = await subscribeToOneExplorerSearch(query, { filter: { dateRange: { start, end } } });
 
 			let complete = 0;
 			const observables: Array<Observable<any>> = [
@@ -107,9 +106,8 @@ describe('subscribeToOneExplorerSearch()', () => {
 		integrationTest(async () => {
 			const subscribeToOneExplorerSearch = makeSubscribeToOneExplorerSearch(TEST_BASE_API_CONTEXT);
 			const query = `tag=${tag} ax | raw`;
-			const range: [Date, Date] = [start, end];
-			const filter: SearchFilter = { entriesOffset: { index: 0, count: count } };
-			const search = await subscribeToOneExplorerSearch(query, range, { filter });
+			const filter: SearchFilter = { entriesOffset: { index: 0, count: count }, dateRange: { start, end } };
+			const search = await subscribeToOneExplorerSearch(query, { filter });
 
 			const textEntriesP = search.entries$
 				.pipe(
@@ -242,9 +240,12 @@ describe('subscribeToOneExplorerSearch()', () => {
 		const query = `tag=${tag} json value.foo!="50" as "value.foo" | ax | raw`;
 		const countAfterFilter = count - 1;
 
-		const range: [Date, Date] = [start, end];
-		const filter: SearchFilter = { entriesOffset: { index: 0, count: count }, elementFilters };
-		const search = await subscribeToOneExplorerSearch(unfilteredQuery, range, { filter });
+		const filter: SearchFilter = {
+			entriesOffset: { index: 0, count: count },
+			elementFilters,
+			dateRange: { start, end },
+		};
+		const search = await subscribeToOneExplorerSearch(unfilteredQuery, { filter });
 
 		const textEntriesP = search.entries$
 			.pipe(
@@ -295,9 +296,9 @@ describe('subscribeToOneExplorerSearch()', () => {
 			const subscribeToOneExplorerSearch = makeSubscribeToOneExplorerSearch(TEST_BASE_API_CONTEXT);
 			const query = `this is an invalid query`;
 			const range: [Date, Date] = [start, end];
-			const filter: SearchFilter = { entriesOffset: { index: 0, count: count } };
+			const filter: SearchFilter = { entriesOffset: { index: 0, count: count }, dateRange: { start, end } };
 
-			await expectAsync(subscribeToOneExplorerSearch(query, range, { filter })).toBeRejected();
+			await expectAsync(subscribeToOneExplorerSearch(query, { filter })).toBeRejected();
 		}),
 		25000,
 	);
@@ -307,10 +308,12 @@ describe('subscribeToOneExplorerSearch()', () => {
 		integrationTest(async () => {
 			const subscribeToOneExplorerSearch = makeSubscribeToOneExplorerSearch(TEST_BASE_API_CONTEXT);
 			const query = `tag=${tag}`;
-			const range: [Date, Date] = [start, subMinutes(start, 10)];
-			const filter: SearchFilter = { entriesOffset: { index: 0, count: count } };
+			const filter: SearchFilter = {
+				entriesOffset: { index: 0, count: count },
+				dateRange: { start, end: subMinutes(start, 10) },
+			};
 
-			await expectAsync(subscribeToOneExplorerSearch(query, range, { filter })).toBeRejected();
+			await expectAsync(subscribeToOneExplorerSearch(query, { filter })).toBeRejected();
 		}),
 		25000,
 	);
@@ -319,25 +322,35 @@ describe('subscribeToOneExplorerSearch()', () => {
 		'Should reject bad searches without affecting good ones (different queries)',
 		integrationTest(async () => {
 			const subscribeToOneExplorerSearch = makeSubscribeToOneExplorerSearch(TEST_BASE_API_CONTEXT);
-			const range: [Date, Date] = [start, end];
-			const badRange: [Date, Date] = [start, subMinutes(start, 10)];
-			const filter: SearchFilter = { entriesOffset: { index: 0, count: count } };
+			const goodRange = { start, end };
+			const badRange = { start, end: subMinutes(start, 10) };
+			const baseFilter: SearchFilter = { entriesOffset: { index: 0, count: count } };
 
 			// Start a bunch of search subscriptions with different queries to race them
 			await Promise.all([
-				expectAsync(subscribeToOneExplorerSearch(`tag=${tag} regex "a"`, badRange, { filter }))
+				expectAsync(
+					subscribeToOneExplorerSearch(`tag=${tag} regex "a"`, { filter: { ...baseFilter, dateRange: badRange } }),
+				)
 					.withContext('query with bad range should reject')
 					.toBeRejected(),
-				expectAsync(subscribeToOneExplorerSearch(`tag=${tag} regex "b"`, badRange, { filter }))
+				expectAsync(
+					subscribeToOneExplorerSearch(`tag=${tag} regex "b"`, { filter: { ...baseFilter, dateRange: badRange } }),
+				)
 					.withContext('query with bad range should reject')
 					.toBeRejected(),
-				expectAsync(subscribeToOneExplorerSearch(`tag=${tag} regex "c"`, range, { filter }))
+				expectAsync(
+					subscribeToOneExplorerSearch(`tag=${tag} regex "c"`, { filter: { ...baseFilter, dateRange: goodRange } }),
+				)
 					.withContext('good query should resolve')
 					.toBeResolved(),
-				expectAsync(subscribeToOneExplorerSearch(`tag=${tag} regex "d"`, badRange, { filter }))
+				expectAsync(
+					subscribeToOneExplorerSearch(`tag=${tag} regex "d"`, { filter: { ...baseFilter, dateRange: badRange } }),
+				)
 					.withContext('query with bad range should reject')
 					.toBeRejected(),
-				expectAsync(subscribeToOneExplorerSearch(`tag=${tag} regex "e"`, badRange, { filter }))
+				expectAsync(
+					subscribeToOneExplorerSearch(`tag=${tag} regex "e"`, { filter: { ...baseFilter, dateRange: badRange } }),
+				)
 					.withContext('query with bad range should reject')
 					.toBeRejected(),
 			]);
@@ -350,25 +363,25 @@ describe('subscribeToOneExplorerSearch()', () => {
 		integrationTest(async () => {
 			const subscribeToOneExplorerSearch = makeSubscribeToOneExplorerSearch(TEST_BASE_API_CONTEXT);
 			const query = `tag=${tag}`;
-			const range: [Date, Date] = [start, end];
-			const badRange: [Date, Date] = [start, subMinutes(start, 10)];
-			const filter: SearchFilter = { entriesOffset: { index: 0, count: count } };
+			const goodRange = { start, end };
+			const badRange = { start, end: subMinutes(start, 10) };
+			const baseFilter: SearchFilter = { entriesOffset: { index: 0, count: count } };
 
 			// Start a bunch of search subscriptions to race them
 			await Promise.all([
-				expectAsync(subscribeToOneExplorerSearch(query, badRange, { filter }))
+				expectAsync(subscribeToOneExplorerSearch(query, { filter: { ...baseFilter, dateRange: badRange } }))
 					.withContext('query with bad range should reject')
 					.toBeRejected(),
-				expectAsync(subscribeToOneExplorerSearch(query, badRange, { filter }))
+				expectAsync(subscribeToOneExplorerSearch(query, { filter: { ...baseFilter, dateRange: badRange } }))
 					.withContext('query with bad range should reject')
 					.toBeRejected(),
-				expectAsync(subscribeToOneExplorerSearch(query, range, { filter }))
+				expectAsync(subscribeToOneExplorerSearch(query, { filter: { ...baseFilter, dateRange: goodRange } }))
 					.withContext('good query should resolve')
 					.toBeResolved(),
-				expectAsync(subscribeToOneExplorerSearch(query, badRange, { filter }))
+				expectAsync(subscribeToOneExplorerSearch(query, { filter: { ...baseFilter, dateRange: badRange } }))
 					.withContext('query with bad range should reject')
 					.toBeRejected(),
-				expectAsync(subscribeToOneExplorerSearch(query, badRange, { filter }))
+				expectAsync(subscribeToOneExplorerSearch(query, { filter: { ...baseFilter, dateRange: badRange } }))
 					.withContext('query with bad range should reject')
 					.toBeRejected(),
 			]);
@@ -381,12 +394,11 @@ describe('subscribeToOneExplorerSearch()', () => {
 		integrationTest(async () => {
 			const subscribeToOneExplorerSearch = makeSubscribeToOneExplorerSearch(TEST_BASE_API_CONTEXT);
 			const query = `tag=${tag}`;
-			const range: [Date, Date] = [start, end];
 
 			// Use an invalid filter, where Last is less than First
-			const filter: SearchFilter = { entriesOffset: { index: 1, count: -1 } };
+			const filter: SearchFilter = { entriesOffset: { index: 1, count: -1 }, dateRange: { start, end } };
 
-			const search = await subscribeToOneExplorerSearch(query, range, { filter });
+			const search = await subscribeToOneExplorerSearch(query, { filter });
 
 			// Non-error observables should error
 			await Promise.all([
@@ -412,9 +424,12 @@ describe('subscribeToOneExplorerSearch()', () => {
 		integrationTest(async () => {
 			const subscribeToOneExplorerSearch = makeSubscribeToOneExplorerSearch(TEST_BASE_API_CONTEXT);
 			const query = `tag=${tag} json value timestamp | raw`;
-			const range: [Date, Date] = [start, end];
-			const filter: SearchFilter = { entriesOffset: { index: 0, count: count } };
-			const search = await subscribeToOneExplorerSearch(query, range, { filter, preview: true });
+			const filter: SearchFilter = {
+				entriesOffset: { index: 0, count: count },
+				previewMode: true,
+				dateRange: { start, end },
+			};
+			const search = await subscribeToOneExplorerSearch(query, { filter });
 
 			const textEntriesP = search.entries$
 				.pipe(
