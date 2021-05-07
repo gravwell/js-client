@@ -239,11 +239,7 @@ describe('GravwellClient', () => {
 				(searchID: ID, downloadFormat: SearchDownloadFormat) => ReturnType<typeof downloadFromURL>
 			>();
 			expectTypeOf(client.searches.create.one).toEqualTypeOf<
-				(
-					query: Query,
-					range: [Date, Date],
-					options?: { filter?: Partial<SearchFilter>; metadata?: RawJSON },
-				) => Promise<SearchSubscription>
+				(query: Query, options?: { filter?: Partial<SearchFilter>; metadata?: RawJSON }) => Promise<SearchSubscription>
 			>();
 			expectTypeOf(client.searches.stop.one).toEqualTypeOf<(searchID: string) => Promise<void>>();
 
@@ -445,7 +441,6 @@ describe('GravwellClient', () => {
 			expectTypeOf(client.explorer.searchAndExplore.one).toEqualTypeOf<
 				(
 					query: Query,
-					range: [Date, Date],
 					options?: { filter?: Partial<SearchFilter>; metadata?: RawJSON },
 				) => Promise<ExplorerSearchSubscription>
 			>();
