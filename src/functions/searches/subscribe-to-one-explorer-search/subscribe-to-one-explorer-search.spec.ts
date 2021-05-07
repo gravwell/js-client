@@ -308,7 +308,10 @@ describe('subscribeToOneExplorerSearch()', () => {
 		integrationTest(async () => {
 			const subscribeToOneExplorerSearch = makeSubscribeToOneExplorerSearch(TEST_BASE_API_CONTEXT);
 			const query = `tag=${tag}`;
-			const filter: SearchFilter = { entriesOffset: { index: 0, count: count }, dateRange: { start, end } };
+			const filter: SearchFilter = {
+				entriesOffset: { index: 0, count: count },
+				dateRange: { start, end: subMinutes(start, 10) },
+			};
 
 			await expectAsync(subscribeToOneExplorerSearch(query, { filter })).toBeRejected();
 		}),
