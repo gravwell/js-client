@@ -6,6 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
+import { subHours } from 'date-fns';
 import { isBoolean, isEqual, isNull, isUndefined, uniqueId } from 'lodash';
 import { BehaviorSubject, combineLatest, NEVER, Observable, of, Subject } from 'rxjs';
 import {
@@ -55,11 +56,16 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 
 	return async (
 		query: Query,
-		range: [Date, Date],
-		options: { filter?: SearchFilter; metadata?: RawJSON; preview?: boolean } = {},
+		options: { filter?: SearchFilter; metadata?: RawJSON } = {},
 	): Promise<SearchSubscription> => {
 		if (isNull(rawSubscriptionP)) rawSubscriptionP = subscribeToOneRawSearch();
 		const rawSubscription = await rawSubscriptionP;
+
+		// The default end date is now
+		const defaultEnd = new Date();
+
+		// The default start date is one hour ago
+		const defaultStart = subHours(defaultEnd, 1);
 
 		let closed = false;
 		const close$ = new Subject<void>();
@@ -69,9 +75,10 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 				index: options.filter?.entriesOffset?.index ?? 0,
 				count: options.filter?.entriesOffset?.count ?? 100,
 			},
+			previewMode: options.filter?.previewMode ?? false,
 			dateRange: {
-				start: options.filter?.dateRange?.start ?? range[0],
-				end: options.filter?.dateRange?.end ?? range[1],
+				start: options.filter?.dateRange?.start ?? defaultStart,
+				end: options.filter?.dateRange?.end ?? defaultEnd,
 			},
 			// *NOTE: The default granularity is recalculated when we receive the renderer type
 			desiredGranularity: options.filter?.desiredGranularity ?? 100,
@@ -90,10 +97,11 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 		const modifiedQuery =
 			initialFilter.elementFilters.length === 0 ? query : await modifyOneQuery(query, initialFilter.elementFilters);
 
-		const searchInitMsg = await initiateSearch(rawSubscription, modifiedQuery, range, {
+		const searchInitMsg = await initiateSearch(rawSubscription, modifiedQuery, {
 			initialFilterID,
 			metadata: options.metadata,
-			preview: options.preview,
+			preview: initialFilter.previewMode,
+			range: [initialFilter.dateRange.start, initialFilter.dateRange.end],
 		});
 		const searchTypeID = searchInitMsg.data.OutputSearchSubproto;
 		const isResponseError = filterMessageByCommand(SearchMessageCommands.ResponseError);
@@ -176,6 +184,7 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 						index: curr.entriesOffset?.index ?? prev.entriesOffset?.index ?? initialFilter.entriesOffset.index,
 						count: curr.entriesOffset?.count ?? prev.entriesOffset?.count ?? initialFilter.entriesOffset.count,
 					},
+					previewMode: curr.previewMode ?? prev.previewMode ?? initialFilter.previewMode,
 					dateRange: {
 						start: curr.dateRange?.start ?? prev.dateRange?.start ?? initialFilter.dateRange.start,
 						end: curr.dateRange?.end ?? prev.dateRange?.end ?? initialFilter.dateRange.end,

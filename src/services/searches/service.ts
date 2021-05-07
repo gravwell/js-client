@@ -38,7 +38,6 @@ export interface SearchesService {
 	readonly create: {
 		readonly one: (
 			query: string,
-			range: [Date, Date],
 			options?: {
 				filter?: SearchFilter | undefined;
 				metadata?: RawJSON | undefined;
