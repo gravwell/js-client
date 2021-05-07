@@ -64,9 +64,8 @@ describe('stopOneSearch()', () => {
 			const stopOneSearch = makeStopOneSearch(TEST_BASE_API_CONTEXT);
 			const subscribeToOneSearch = makeSubscribeToOneSearch(TEST_BASE_API_CONTEXT);
 			const query = `tag=${tag} sleep 40ms`;
-			const range: [Date, Date] = [start, end];
-			const search = await subscribeToOneSearch(query, range, {
-				filter: { entriesOffset: { index: 0, count: count } },
+			const search = await subscribeToOneSearch(query, {
+				filter: { entriesOffset: { index: 0, count: count }, dateRange: { start, end } },
 			});
 
 			expect(async () => await stopOneSearch(search.searchID)).not.toThrow();

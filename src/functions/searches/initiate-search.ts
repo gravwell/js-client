@@ -29,8 +29,7 @@ const QUERY_QUEUE = new Subject<{
 	requestID: string;
 	rawSubscription: APISubscription<RawSearchMessageReceived, RawSearchMessageSent>;
 	query: string;
-	range: [Date, Date];
-	options: { initialFilterID?: string; metadata?: RawJSON; preview?: boolean };
+	options: InitiateSearchOptions;
 }>();
 
 /*
@@ -51,7 +50,7 @@ const QUERY_INIT_RESULTS: Observable<{
 	// When a "request" is received, create an Observable to listen to incoming RawSearchInitiatedMessageReceived,
 	// and send a RawInitiateSearchMessageSent when ready. concatMap ensures we only have one sender/listener at a time.
 	// We won't send the next request until we've heard a response for the current request.
-	concatMap(({ requestID, rawSubscription, query, range, options }) =>
+	concatMap(({ requestID, rawSubscription, query, options }) =>
 		// Listen for incoming messages on the search websocket
 		rawSubscription.received$.pipe(
 			withLatestFrom(
@@ -63,8 +62,8 @@ const QUERY_INIT_RESULTS: Observable<{
 							Addendum: options.initialFilterID ? { filterID: options.initialFilterID } : {},
 							Background: false,
 							Metadata: options.metadata ?? {},
-							SearchStart: range[0].toISOString(),
-							SearchEnd: range[1].toISOString(),
+							SearchStart: options.range?.[0]?.toISOString() ?? null,
+							SearchEnd: options.range?.[1]?.toISOString() ?? null,
 							SearchString: query,
 							Preview: options.preview === true,
 						},
@@ -96,11 +95,14 @@ const QUERY_INIT_RESULTS: Observable<{
 	share(),
 );
 
+export type InitiateSearchOptions =
+	| { initialFilterID?: string; metadata?: RawJSON; preview: true; range?: [Date, Date] }
+	| { initialFilterID?: string; metadata?: RawJSON; preview?: boolean; range: [Date, Date] };
+
 export const initiateSearch = (
 	rawSubscription: APISubscription<RawSearchMessageReceived, RawSearchMessageSent>,
 	query: string,
-	range: [Date, Date],
-	options: { initialFilterID?: string; metadata?: RawJSON; preview?: boolean } = {},
+	options: InitiateSearchOptions,
 ): Promise<RawSearchInitiatedMessageReceived> => {
 	// Generate a unique ID for the search initiating request
 	const requestID = uuidv4();
@@ -127,7 +129,7 @@ export const initiateSearch = (
 	).toPromise();
 
 	// Now that we're ready to receive results (with resultsP), we can push on the queue to kick off the search initiation process
-	QUERY_QUEUE.next({ requestID, rawSubscription, query, range, options });
+	QUERY_QUEUE.next({ requestID, rawSubscription, query, options });
 
 	return resultsP;
 };
