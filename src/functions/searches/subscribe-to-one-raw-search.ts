@@ -20,7 +20,7 @@ export const makeSubscribeToOneRawSearch = (context: APIContext) => {
 		const rawSubscription = apiSubscriptionFromWebSocket<RawSearchMessageReceived, RawSearchMessageSent>(socket);
 
 		rawSubscription.send({ Subs: ['PONG', 'parse', 'search', 'attach'] });
-		const wsClosed$: Observable<void> = rawSubscription.sent$.pipe(last(), startWith(undefined), mapTo(undefined));
+		const wsClosed$: Observable<void> = rawSubscription.sent$.pipe(startWith(undefined), mapTo(undefined), last());
 		timer(1000, 10000)
 			.pipe(takeUntil(wsClosed$))
 			.subscribe(() => {
