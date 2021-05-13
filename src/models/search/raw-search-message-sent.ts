@@ -14,6 +14,11 @@ export interface RawInformSubscriptionsMessageSent {
 	Subs: Array<'PONG' | 'parse' | 'search' | 'attach'>;
 }
 
+export interface RawPongMessageSent {
+	type: 'PONG';
+	data: {};
+}
+
 export interface RawInitiateSearchMessageSent {
 	type: 'search';
 	data: {
@@ -167,6 +172,7 @@ export interface RawRequestSearchStatsLocationMessageSent {
 
 export type RawSearchMessageSent =
 	| RawInformSubscriptionsMessageSent
+	| RawPongMessageSent
 	| RawInitiateSearchMessageSent
 	| RawAcceptSearchMessageSent
 	| RawRequestSearchCloseMessageSent
