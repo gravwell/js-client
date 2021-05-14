@@ -10,7 +10,7 @@ import { UUID } from '~/value-objects';
 
 export type ActionableCommand =
 	| { type: 'query'; userQuery: string }
-	| { type: 'template'; templateUUID: UUID }
+	| { type: 'template'; templateUUID: UUID; templateVariable: string | null }
 	| { type: 'savedQuery'; queryUUID: UUID }
 	| { type: 'dashboard'; dashboardUUID: UUID; dashboardVariable: string | null }
 	| { type: 'url'; urlTemplate: string; modal: boolean; modalWidthPercentage: number | null };
