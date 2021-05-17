@@ -22,6 +22,6 @@ export interface RawGeneratedAutoExtractors {
 export interface RawGeneratedAutoExtractor {
 	Extractor: RawAutoExtractor;
 	Confidence?: number;
-	Entries: Array<RawSearchEntry>;
-	Explore: Array<RawDataExplorerEntry>;
+	Entries: Array<RawSearchEntry> | null;
+	Explore: Array<RawDataExplorerEntry> | null;
 }
