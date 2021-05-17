@@ -24,7 +24,7 @@ export interface RawActionableQueryCommand {
 export interface RawActionableTemplateCommand {
 	type: 'template';
 	reference: RawUUID;
-	options?: {};
+	options?: { variable?: string };
 }
 
 export interface RawActionableSavedQueryCommand {
