@@ -32,7 +32,11 @@ export const toRawActionableCommand = (cmd: ActionableCommand): RawActionableCom
 		case 'query':
 			return { type: 'query', reference: cmd.userQuery };
 		case 'template':
-			return { type: 'template', reference: cmd.templateUUID };
+			return {
+				type: 'template',
+				reference: cmd.templateUUID,
+				options: omitUndefinedShallow({ variable: cmd.templateVariable ?? undefined }),
+			};
 		case 'savedQuery':
 			return { type: 'savedQuery', reference: cmd.queryUUID };
 		case 'dashboard':
