@@ -539,8 +539,7 @@ describe('subscribeToOneSearch()', () => {
 			const query = `tag=${tag} json value timestamp | raw`;
 			const filter: SearchFilter = {
 				entriesOffset: { index: 0, count: count },
-				previewMode: true,
-				dateRange: { start, end },
+				dateRange: 'preview',
 			};
 			const search = await subscribeToOneSearch(query, { filter });
 
