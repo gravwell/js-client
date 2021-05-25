@@ -32,16 +32,15 @@ export interface SearchFilter {
 		count: number;
 	};
 
-	/** .dateRange is ignored when using the preview mode */
-	previewMode?: boolean;
+	dateRange?:
+		| {
+				/** Only accept entries with timestamps equal or after that. */
+				start?: Date;
 
-	dateRange?: {
-		/** Only accept entries with timestamps equal or after that. */
-		start?: Date;
-
-		/** Only accept entries with timestamps equal or past that. */
-		end?: Date;
-	};
+				/** Only accept entries with timestamps equal or past that. */
+				end?: Date;
+		  }
+		| 'preview';
 
 	desiredGranularity?: number;
 
