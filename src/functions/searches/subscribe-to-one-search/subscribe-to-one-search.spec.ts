@@ -7,10 +7,10 @@
  **************************************************************************/
 
 import * as base64 from 'base-64';
-import { addMinutes, subMinutes } from 'date-fns';
+import { addMinutes, isEqual as datesAreEqual, subMinutes } from 'date-fns';
 import { isUndefined, last as lastElt, range as rangeLeft, sum, zip } from 'lodash';
-import { Observable } from 'rxjs';
-import { first, last, map, takeWhile, toArray } from 'rxjs/operators';
+import { Observable, timer } from 'rxjs';
+import { first, last, map, takeUntil, takeWhile, toArray } from 'rxjs/operators';
 import { v4 as uuidv4 } from 'uuid';
 import { makeCreateOneMacro, makeDeleteOneMacro } from '~/functions/macros';
 import { SearchFilter } from '~/models';
@@ -631,6 +631,19 @@ describe('subscribeToOneSearch()', () => {
 			// expect(sum(statsZoom.frequencyStats.map(x => x.count)))
 			// 	.withContext('The sum of counts from statsZoom should equal the number of results returned by preview mode')
 			// 	.toEqual(textEntries.data.length);
+
+			// See if we can change the date range
+			const lastEntriesP = search.entries$
+				.pipe(takeUntil(timer(10000)), toArray())
+				.toPromise()
+				.then(entries => entries[entries.length - 1]);
+			search.setFilter({ dateRange: { start, end } });
+			const lastEntries = await lastEntriesP;
+
+			expect(datesAreEqual(lastEntries.start, start))
+				.withContext(`Start date should be the one we just set`)
+				.toBeTrue();
+			expect(datesAreEqual(lastEntries.end, end)).withContext(`End date should be the one we just set`).toBeTrue();
 		}),
 		25000,
 	);
