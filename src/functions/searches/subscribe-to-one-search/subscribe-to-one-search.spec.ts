@@ -9,8 +9,8 @@
 import * as base64 from 'base-64';
 import { addMinutes, isEqual as datesAreEqual, subMinutes } from 'date-fns';
 import { isUndefined, last as lastElt, range as rangeLeft, sum, zip } from 'lodash';
-import { Observable, timer } from 'rxjs';
-import { first, last, map, takeUntil, takeWhile, toArray } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { first, last, map, takeWhile, toArray } from 'rxjs/operators';
 import { v4 as uuidv4 } from 'uuid';
 import { makeCreateOneMacro, makeDeleteOneMacro } from '~/functions/macros';
 import { SearchFilter } from '~/models';
@@ -634,9 +634,11 @@ describe('subscribeToOneSearch()', () => {
 
 			// See if we can change the date range
 			const lastEntriesP = search.entries$
-				.pipe(takeUntil(timer(10000)), toArray())
-				.toPromise()
-				.then(entries => entries[entries.length - 1]);
+				.pipe(
+					takeWhile(e => datesAreEqual(e.start, start) === false, true),
+					last(),
+				)
+				.toPromise();
 			search.setFilter({ dateRange: { start, end } });
 			const lastEntries = await lastEntriesP;
 
