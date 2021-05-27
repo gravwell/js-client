@@ -55,20 +55,20 @@ const QUERY_INIT_RESULTS: Observable<{
 		rawSubscription.received$.pipe(
 			withLatestFrom(
 				// Wait to send RawInitiateSearchMessageSent until concatMap has subscribed to the outer Observable
-				defer(() =>
-					rawSubscription.send(<RawInitiateSearchMessageSent>{
+				defer(() => {
+					return rawSubscription.send(<RawInitiateSearchMessageSent>{
 						type: 'search',
 						data: {
 							Addendum: options.initialFilterID ? { filterID: options.initialFilterID } : {},
 							Background: false,
 							Metadata: options.metadata ?? {},
-							SearchStart: options.range?.[0]?.toISOString() ?? null,
-							SearchEnd: options.range?.[1]?.toISOString() ?? null,
+							SearchStart: options.range === 'preview' ? null : options.range?.[0]?.toISOString() ?? null,
+							SearchEnd: options.range === 'preview' ? null : options.range?.[1]?.toISOString() ?? null,
 							SearchString: query,
-							Preview: options.preview === true,
+							Preview: options.range === 'preview',
 						},
-					}),
-				),
+					});
+				}),
 				// Discard the (void) result from rawSubscription.send(). We only need the messages coming from received$
 				(msg: RawSearchMessageReceived) => msg,
 			),
@@ -95,9 +95,7 @@ const QUERY_INIT_RESULTS: Observable<{
 	share(),
 );
 
-export type InitiateSearchOptions =
-	| { initialFilterID?: string; metadata?: RawJSON; preview: true; range?: [Date, Date] }
-	| { initialFilterID?: string; metadata?: RawJSON; preview?: boolean; range: [Date, Date] };
+export type InitiateSearchOptions = { initialFilterID?: string; metadata?: RawJSON; range: [Date, Date] | 'preview' };
 
 export const initiateSearch = (
 	rawSubscription: APISubscription<RawSearchMessageReceived, RawSearchMessageSent>,

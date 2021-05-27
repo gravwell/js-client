@@ -50,7 +50,7 @@ export const makeExploreOneTag = (context: APIContext) => {
 					}
 				}),
 				takeWhile(msg => msg.data.Finished === false, true),
-				map(msg => msg.data.Explore.map(toDataExplorerEntry)),
+				map(msg => (msg.data.Explore ?? []).map(toDataExplorerEntry)),
 				last(),
 			)
 			.toPromise();

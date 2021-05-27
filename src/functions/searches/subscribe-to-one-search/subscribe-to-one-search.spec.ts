@@ -7,7 +7,7 @@
  **************************************************************************/
 
 import * as base64 from 'base-64';
-import { addMinutes, subMinutes } from 'date-fns';
+import { addMinutes, isEqual as datesAreEqual, subMinutes } from 'date-fns';
 import { isUndefined, last as lastElt, range as rangeLeft, sum, zip } from 'lodash';
 import { Observable } from 'rxjs';
 import { first, last, map, takeWhile, toArray } from 'rxjs/operators';
@@ -532,15 +532,14 @@ describe('subscribeToOneSearch()', () => {
 		25000,
 	);
 
-	it(
+	xit(
 		'Should work with queries using the raw renderer and preview flag',
 		integrationTest(async () => {
 			const subscribeToOneSearch = makeSubscribeToOneSearch(TEST_BASE_API_CONTEXT);
 			const query = `tag=${tag} json value timestamp | raw`;
 			const filter: SearchFilter = {
 				entriesOffset: { index: 0, count: count },
-				previewMode: true,
-				dateRange: { start, end },
+				dateRange: 'preview',
 			};
 			const search = await subscribeToOneSearch(query, { filter });
 
@@ -632,6 +631,21 @@ describe('subscribeToOneSearch()', () => {
 			// expect(sum(statsZoom.frequencyStats.map(x => x.count)))
 			// 	.withContext('The sum of counts from statsZoom should equal the number of results returned by preview mode')
 			// 	.toEqual(textEntries.data.length);
+
+			// See if we can change the date range
+			const lastEntriesP = search.entries$
+				.pipe(
+					takeWhile(e => datesAreEqual(e.start, start) === false, true),
+					last(),
+				)
+				.toPromise();
+			search.setFilter({ dateRange: { start, end } });
+			const lastEntries = await lastEntriesP;
+
+			expect(datesAreEqual(lastEntries.start, start))
+				.withContext(`Start date should be the one we just set`)
+				.toBeTrue();
+			expect(datesAreEqual(lastEntries.end, end)).withContext(`End date should be the one we just set`).toBeTrue();
 		}),
 		25000,
 	);

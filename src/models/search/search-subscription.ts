@@ -22,6 +22,6 @@ export interface SearchSubscription {
 	statsOverview$: Observable<{ frequencyStats: Array<SearchFrequencyStats> }>;
 	statsZoom$: Observable<{ filter?: SearchFilter; frequencyStats: Array<SearchFrequencyStats> }>;
 
-	setFilter: (filter: Omit<SearchFilter, 'elementFilters'> | null) => void;
+	setFilter: (filter: Omit<SearchFilter, 'elementFilters' | 'previewMode'> | null) => void;
 	close: () => Promise<void>;
 }

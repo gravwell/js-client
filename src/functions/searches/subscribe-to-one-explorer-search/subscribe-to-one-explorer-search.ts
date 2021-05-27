@@ -14,6 +14,7 @@ import {
 	catchError,
 	distinctUntilChanged,
 	filter,
+	first,
 	map,
 	skipUntil,
 	startWith,
@@ -77,11 +78,13 @@ export const makeSubscribeToOneExplorerSearch = (context: APIContext) => {
 				index: options.filter?.entriesOffset?.index ?? 0,
 				count: options.filter?.entriesOffset?.count ?? 100,
 			},
-			previewMode: options.filter?.previewMode ?? false,
-			dateRange: {
-				start: options.filter?.dateRange?.start ?? defaultStart,
-				end: options.filter?.dateRange?.end ?? defaultEnd,
-			},
+			dateRange:
+				options.filter?.dateRange === 'preview'
+					? ('preview' as const)
+					: {
+							start: options.filter?.dateRange?.start ?? defaultStart,
+							end: options.filter?.dateRange?.end ?? defaultEnd,
+					  },
 			// *NOTE: The default granularity is recalculated when we receive the renderer type
 			desiredGranularity: options.filter?.desiredGranularity ?? 100,
 
@@ -102,8 +105,10 @@ export const makeSubscribeToOneExplorerSearch = (context: APIContext) => {
 		const searchInitMsg = await initiateSearch(rawSubscription, modifiedQuery, {
 			initialFilterID,
 			metadata: options.metadata,
-			preview: initialFilter.previewMode,
-			range: [initialFilter.dateRange.start, initialFilter.dateRange.end],
+			range:
+				initialFilter.dateRange === 'preview'
+					? 'preview'
+					: [initialFilter.dateRange.start, initialFilter.dateRange.end],
 		});
 		const searchTypeID = searchInitMsg.data.OutputSearchSubproto;
 		const isResponseError = filterMessageByCommand(SearchMessageCommands.ResponseError);
@@ -128,6 +133,28 @@ export const makeSubscribeToOneExplorerSearch = (context: APIContext) => {
 			takeUntil(close$),
 		);
 		const rendererType = searchInitMsg.data.RenderModule;
+
+		type DateRange = { start: Date; end: Date };
+		const previewDateRange: DateRange = await (async (): Promise<DateRange> => {
+			// Not in preview mode, so return the initial filter date range, whatever, it won't be used
+			if (initialFilter.dateRange !== 'preview') return initialFilter.dateRange;
+
+			// In preview mode, so we need to request search details and use the timerange that we get back
+			const detailsP = searchMessages$
+				.pipe(filter(filterMessageByCommand(SearchMessageCommands.RequestDetails)), first())
+				.toPromise();
+			const requestDetailsMsg: RawRequestSearchDetailsMessageSent = {
+				type: searchTypeID,
+				data: { ID: SearchMessageCommands.RequestDetails },
+			};
+			rawSubscription.send(requestDetailsMsg);
+			const details = await detailsP;
+
+			return {
+				start: new Date(details.data.SearchInfo.StartRange),
+				end: new Date(details.data.SearchInfo.EndRange),
+			};
+		})();
 
 		const close = async (): Promise<void> => {
 			if (closed) return undefined;
@@ -174,6 +201,11 @@ export const makeSubscribeToOneExplorerSearch = (context: APIContext) => {
 			takeUntil(close$),
 		);
 
+		const expandDateRange = (dateRange: SearchFilter['dateRange']): Partial<DateRange> => {
+			if (dateRange === 'preview') return previewDateRange;
+			return dateRange ?? {};
+		};
+
 		const _filter$ = new BehaviorSubject<SearchFilter>(initialFilter);
 		const setFilter = (filter: SearchFilter | null): void => {
 			if (closed) return undefined;
@@ -188,10 +220,12 @@ export const makeSubscribeToOneExplorerSearch = (context: APIContext) => {
 						index: curr.entriesOffset?.index ?? prev.entriesOffset?.index ?? initialFilter.entriesOffset.index,
 						count: curr.entriesOffset?.count ?? prev.entriesOffset?.count ?? initialFilter.entriesOffset.count,
 					},
-					previewMode: curr.previewMode ?? prev.previewMode ?? initialFilter.previewMode,
 					dateRange: {
-						start: curr.dateRange?.start ?? prev.dateRange?.start ?? initialFilter.dateRange.start,
-						end: curr.dateRange?.end ?? prev.dateRange?.end ?? initialFilter.dateRange.end,
+						start: defaultStart,
+						end: defaultEnd,
+						...expandDateRange(initialFilter.dateRange),
+						...expandDateRange(prev.dateRange),
+						...expandDateRange(curr.dateRange),
 					},
 					desiredGranularity: curr.desiredGranularity ?? prev.desiredGranularity ?? initialFilter.desiredGranularity,
 					overviewGranularity:
@@ -214,8 +248,8 @@ export const makeSubscribeToOneExplorerSearch = (context: APIContext) => {
 
 			const first = filter.entriesOffset.index;
 			const last = first + filter.entriesOffset.count;
-			const start = filter.dateRange.start.toISOString();
-			const end = filter.dateRange.end.toISOString();
+			const start = (filter.dateRange === 'preview' ? previewDateRange.start : filter.dateRange.start).toISOString();
+			const end = (filter.dateRange === 'preview' ? previewDateRange.end : filter.dateRange.end).toISOString();
 			// TODO: Filter by .desiredGranularity and .fieldFilters
 
 			const requestEntriesMsg: RawRequestExplorerSearchEntriesWithinRangeMessageSent = {

@@ -95,6 +95,7 @@ describe('exploreOneTag()', () => {
 					.toBe('value.foo');
 			}
 		}),
+		25000,
 	);
 
 	it(
@@ -109,5 +110,6 @@ describe('exploreOneTag()', () => {
 				.toBeTrue();
 			expect(explorerEntries.length).withContext(`Expect ${limit} entries`).toBe(limit);
 		}),
+		25000,
 	);
 });
