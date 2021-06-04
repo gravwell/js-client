@@ -161,7 +161,7 @@ describe('subscribeToOneExplorerSearch()', () => {
 					.toEqual(['timestamp', 'value']);
 				expect(entry.elements.map(el => el.module))
 					.withContext(`Expect explorer module to be JSON`)
-					.toBe(['json', 'json']);
+					.toEqual(['json', 'json']);
 
 				const timestampEl = entry.elements.find(el => el.name === 'timestamp')!;
 				const valueEl = entry.elements.find(el => el.name === 'value')!;
