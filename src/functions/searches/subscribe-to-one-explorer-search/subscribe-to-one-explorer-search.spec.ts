@@ -105,7 +105,7 @@ describe('subscribeToOneExplorerSearch()', () => {
 		'Should work with queries using the raw renderer',
 		integrationTest(async () => {
 			const subscribeToOneExplorerSearch = makeSubscribeToOneExplorerSearch(TEST_BASE_API_CONTEXT);
-			const query = `tag=${tag} ax | raw`;
+			const query = `tag=${tag} raw`;
 			const filter: SearchFilter = { entriesOffset: { index: 0, count: count }, dateRange: { start, end } };
 			const search = await subscribeToOneExplorerSearch(query, { filter });
 
@@ -235,11 +235,11 @@ describe('subscribeToOneExplorerSearch()', () => {
 	it('Should be able to apply element filters', async () => {
 		const subscribeToOneExplorerSearch = makeSubscribeToOneExplorerSearch(TEST_BASE_API_CONTEXT);
 
-		const unfilteredQuery = `tag=${tag} ax | raw`;
+		const unfilteredQuery = `tag=${tag} raw`;
 		const elementFilters: Array<ElementFilter> = [
 			{ path: 'value.foo', operation: '!=', value: '50', tag, module: 'json' },
 		];
-		const query = `tag=${tag} json value.foo!="50" as "value.foo" | ax | raw`;
+		const query = `tag=${tag} json value.foo!="50" as "value.foo" | raw`;
 		const countAfterFilter = count - 1;
 
 		const filter: SearchFilter = {

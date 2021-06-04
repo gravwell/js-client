@@ -33,7 +33,7 @@ export const makeExploreOneTag = (context: APIContext) => {
 
 		const range = options.range ?? [subDays(new Date(), 7), new Date()];
 		const limit = options.limit ?? 1000;
-		const query = `tag=${tag} ax`;
+		const query = `tag=${tag}`;
 
 		const searchInitMsg = await initiateSearch(rawSubscription, query, { range });
 		const searchTypeID = searchInitMsg.data.OutputSearchSubproto;
