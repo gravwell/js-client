@@ -16,6 +16,7 @@ export const toDataExplorerEntry = (raw: RawDataExplorerEntry): DataExplorerEntr
 });
 
 export const toDataExplorerElement = (raw: RawDataExplorerElement): DataExplorerElement => ({
+	module: raw.Module,
 	name: raw.Name,
 	path: raw.Path,
 

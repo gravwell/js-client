@@ -6,7 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { isArray, isString, isUndefined } from 'lodash';
+import { isArray, isBoolean, isNull, isNumber, isString } from 'lodash';
 import { ElementFilterOperation, isElementFilterOperation } from './element-filter-operation';
 
 export interface DataExplorerEntry {
@@ -29,10 +29,11 @@ export const isDataExplorerEntry = (v: unknown): v is DataExplorerEntry => {
  * Item extracted from an entry using the data exploration system.
  */
 export interface DataExplorerElement {
+	module: string;
 	name: string;
 	path: string;
 
-	value: string;
+	value: string | number | boolean | null;
 	filters: Array<ElementFilterOperation>;
 
 	children: Array<DataExplorerElement>;
@@ -44,9 +45,10 @@ const isDataExplorerElement = (v: unknown): v is DataExplorerElement => {
 		const childrenOK = isArray(element.children) && element.children.every(isDataExplorerElement);
 		return (
 			childrenOK &&
+			isString(element.module) &&
 			isString(element.name) &&
 			isString(element.path) &&
-			!isUndefined(element.value) &&
+			(isString(element.value) || isNumber(element.value) || isBoolean(element.value) || isNull(element.value)) &&
 			isArray(element.filters) &&
 			element.filters.every(isElementFilterOperation)
 		);
