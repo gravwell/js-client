@@ -105,7 +105,7 @@ describe('subscribeToOneExplorerSearch()', () => {
 		'Should work with queries using the raw renderer',
 		integrationTest(async () => {
 			const subscribeToOneExplorerSearch = makeSubscribeToOneExplorerSearch(TEST_BASE_API_CONTEXT);
-			const query = `tag=${tag} raw`;
+			const query = `tag=${tag} ax | raw`;
 			const filter: SearchFilter = { entriesOffset: { index: 0, count: count }, dateRange: { start, end } };
 			const search = await subscribeToOneExplorerSearch(query, { filter });
 
