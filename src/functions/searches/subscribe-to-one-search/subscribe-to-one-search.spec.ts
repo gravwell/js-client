@@ -240,7 +240,8 @@ describe('subscribeToOneSearch()', () => {
 
 				const value: Entry = JSON.parse(base64.decode(entry.data));
 				const enumeratedValues = entry.values;
-				const [_timestamp, _value] = enumeratedValues;
+				const _timestamp = enumeratedValues.find(v => v.name === 'timestamp')!;
+				const _value = enumeratedValues.find(v => v.name === 'value')!;
 
 				expect(_timestamp).withContext(`Each entry should have an enumerated value called "timestamp"`).toEqual({
 					isEnumerated: true,

@@ -239,7 +239,7 @@ describe('subscribeToOneExplorerSearch()', () => {
 		const elementFilters: Array<ElementFilter> = [
 			{ path: 'value.foo', operation: '!=', value: '50', tag, module: 'json' },
 		];
-		const query = `tag=${tag} json value.foo!="50" as "value.foo" | raw`;
+		const query = `tag=${tag} json value.foo != "50" as "foo" | raw`;
 		const countAfterFilter = count - 1;
 
 		const filter: SearchFilter = {
@@ -395,7 +395,7 @@ describe('subscribeToOneExplorerSearch()', () => {
 		'Should send error over error$ when Last is less than First',
 		integrationTest(async () => {
 			const subscribeToOneExplorerSearch = makeSubscribeToOneExplorerSearch(TEST_BASE_API_CONTEXT);
-			const query = `tag=${tag}`;
+			const query = `tag=${tag} chart`;
 
 			// Use an invalid filter, where Last is less than First
 			const filter: SearchFilter = { entriesOffset: { index: 1, count: -1 }, dateRange: { start, end } };

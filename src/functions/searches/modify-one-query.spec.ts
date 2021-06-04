@@ -81,7 +81,7 @@ describe('modifyOneQuery()', () => {
 			expect(newQuery).withContext(`Expect new query to be different than initial one`).not.toBe(query);
 			expect(newQuery)
 				.withContext(`Expect new query to contain the applied filter`)
-				.toBe(`tag=${tag} json value.foo=="50" as "value.foo" | table`);
+				.toBe(`tag=${tag} json value.foo == "50" as "foo" | table`);
 		}),
 	);
 });
