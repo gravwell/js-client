@@ -12,7 +12,6 @@ import { isRawElementFilterOperation, RawElementFilterOperation } from './elemen
 // Named ExploreResult in Go
 export interface RawDataExplorerEntry {
 	Elements: Array<RawDataExplorerElement> | null;
-	Module: string;
 	Tag: string;
 }
 
@@ -21,7 +20,7 @@ export const isRawDataExplorerEntry = (v: unknown): v is RawDataExplorerEntry =>
 		const entry = v as RawDataExplorerEntry;
 		const elementsOK =
 			isNull(entry.Elements) || (isArray(entry.Elements) && entry.Elements.every(isRawDataExplorerElement));
-		return elementsOK && isString(entry.Module) && isString(entry.Tag);
+		return elementsOK && isString(entry.Tag);
 	} catch {
 		return false;
 	}
@@ -33,9 +32,9 @@ export const isRawDataExplorerEntry = (v: unknown): v is RawDataExplorerEntry =>
  * data exploration system.
  */
 export interface RawDataExplorerElement {
-	Module: string; // MIght be an empty string
+	Module: string; // Might be an empty string
 	Name: string;
-	Path: string; // MIght be an empty string
+	Path: string; // Might be an empty string
 	Value: string | number | boolean | null;
 	SubElements?: Array<RawDataExplorerElement>;
 	Filters: Array<RawElementFilterOperation> | null;

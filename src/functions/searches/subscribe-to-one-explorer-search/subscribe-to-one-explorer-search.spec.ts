@@ -152,7 +152,6 @@ describe('subscribeToOneExplorerSearch()', () => {
 
 			for (const entry of explorerEntries) {
 				expect(entry.tag).withContext(`Expect entry tag to be "${tag}"`).toBe(tag);
-				expect(entry.module).withContext(`Expect explorer module to be JSON`).toBe('json');
 
 				expect(entry.elements.length)
 					.withContext(`Expect to have 2 data explorer elements on first depth level`)
@@ -160,6 +159,9 @@ describe('subscribeToOneExplorerSearch()', () => {
 				expect(entry.elements.map(el => el.name).sort())
 					.withContext(`Expect first depth data explorer elements to be "value" and "timestamp"`)
 					.toEqual(['timestamp', 'value']);
+				expect(entry.elements.map(el => el.module))
+					.withContext(`Expect explorer module to be JSON`)
+					.toBe(['json', 'json']);
 
 				const timestampEl = entry.elements.find(el => el.name === 'timestamp')!;
 				const valueEl = entry.elements.find(el => el.name === 'value')!;

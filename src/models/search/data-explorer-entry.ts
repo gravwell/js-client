@@ -11,7 +11,6 @@ import { ElementFilterOperation, isElementFilterOperation } from './element-filt
 
 export interface DataExplorerEntry {
 	tag: string;
-	module: string;
 	elements: Array<DataExplorerElement>;
 }
 
@@ -19,7 +18,7 @@ export const isDataExplorerEntry = (v: unknown): v is DataExplorerEntry => {
 	try {
 		const entry = v as DataExplorerEntry;
 		const elementsOK = isArray(entry.elements) && entry.elements.every(isDataExplorerElement);
-		return elementsOK && isString(entry.module) && isString(entry.tag);
+		return elementsOK && isString(entry.tag);
 	} catch {
 		return false;
 	}

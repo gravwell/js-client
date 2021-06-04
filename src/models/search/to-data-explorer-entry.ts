@@ -11,7 +11,6 @@ import { RawDataExplorerElement, RawDataExplorerEntry } from './raw-data-explore
 
 export const toDataExplorerEntry = (raw: RawDataExplorerEntry): DataExplorerEntry => ({
 	tag: raw.Tag,
-	module: raw.Module,
 	elements: (raw.Elements ?? []).map(toDataExplorerElement),
 });
 
