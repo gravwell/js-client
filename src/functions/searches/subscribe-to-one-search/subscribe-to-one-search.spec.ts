@@ -741,7 +741,10 @@ describe('subscribeToOneSearch()', () => {
 						.toPartiallyEqual(filter);
 				}
 
-				const delta = 500;
+				// Choose a delta that lines up nicely with the minZoomWindow buckets.
+				// The timeframe of the query is wide enough that we get a minZoomWindow > 1, which makes assertions tricky without
+				// this compensation.
+				const delta = 399;
 
 				// Narrow the search window by moving the end date sooner by delta minutes
 				const filter2: SearchFilter = { dateRange: { start, end: subMinutes(end, delta) } };
@@ -756,7 +759,7 @@ describe('subscribeToOneSearch()', () => {
 					.withContext('The sum of counts from statsOverview should stay the same (total ingested)')
 					.toEqual(count);
 				expect(sum(statsZoom.frequencyStats.map(x => x.count)))
-					.withContext('The sum of counts from statsZoom should be 500 less than total count ingested')
+					.withContext('The sum of counts from statsZoom should "delta" less than the total count ingested')
 					.toEqual(count - delta);
 				if (isUndefined(statsZoom.filter) === false) {
 					expect(statsZoom.filter)
@@ -845,7 +848,10 @@ describe('subscribeToOneSearch()', () => {
 					.withContext('statsZoom should start with the default granularity')
 					.toEqual(90);
 
-				const delta = 500;
+				// Choose a delta that lines up nicely with the minZoomWindow buckets.
+				// The timeframe of the query is wide enough that we get a minZoomWindow > 1, which makes assertions tricky without
+				// this compensation.
+				const delta = 530;
 
 				// Narrow the search window by moving the end date sooner by delta minutes using new granularity
 				const newZoomGranularity = 133;
@@ -919,7 +925,10 @@ describe('subscribeToOneSearch()', () => {
 					.withContext('statsZoom should start with the default granularity')
 					.toEqual(90);
 
-				const delta = 500;
+				// Choose a delta that lines up nicely with the minZoomWindow buckets.
+				// The timeframe of the query is wide enough that we get a minZoomWindow > 1, which makes assertions tricky without
+				// this compensation.
+				const delta = 530;
 
 				// Narrow the search window by moving the end date sooner by delta minutes using a new zoom granularity
 				const newZoomGranularity = 133;
