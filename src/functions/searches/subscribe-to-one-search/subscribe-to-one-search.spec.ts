@@ -717,7 +717,7 @@ describe('subscribeToOneSearch()', () => {
 		);
 
 		it(
-			'Should adjust when the zoom window adjusts',
+			'Should adjust when the zoom window adjusts for nicely-aligned bins',
 			integrationTest(async () => {
 				const subscribeToOneSearch = makeSubscribeToOneSearch(TEST_BASE_API_CONTEXT);
 				const query = `tag=${tag}`;
@@ -759,8 +759,60 @@ describe('subscribeToOneSearch()', () => {
 					.withContext('The sum of counts from statsOverview should stay the same (total ingested)')
 					.toEqual(count);
 				expect(sum(statsZoom.frequencyStats.map(x => x.count)))
-					.withContext('The sum of counts from statsZoom should "delta" less than the total count ingested')
+					.withContext('The sum of counts from statsZoom should be "delta" less than the total count ingested')
 					.toEqual(count - delta);
+				if (isUndefined(statsZoom.filter) === false) {
+					expect(statsZoom.filter)
+						.withContext(`The filter should be equal to the one used, plus the default values for undefined properties`)
+						.toPartiallyEqual({ ...filter, ...filter2 });
+				}
+			}),
+			25000,
+		);
+
+		it(
+			'Should adjust when the zoom window adjusts for odd bins',
+			integrationTest(async () => {
+				const subscribeToOneSearch = makeSubscribeToOneSearch(TEST_BASE_API_CONTEXT);
+				const query = `tag=${tag}`;
+				const filter: SearchFilter = { entriesOffset: { index: 0, count }, dateRange: { start, end } };
+				const search = await subscribeToOneSearch(query, { filter });
+
+				let [statsOverview, statsZoom] = await Promise.all([
+					search.statsOverview$.pipe(first()).toPromise(),
+					search.statsZoom$.pipe(first()).toPromise(),
+				]);
+
+				expect(sum(statsOverview.frequencyStats.map(x => x.count)))
+					.withContext('The sum of counts from statsOverview should equal the total count ingested')
+					.toEqual(count);
+				expect(sum(statsZoom.frequencyStats.map(x => x.count)))
+					.withContext('The sum of counts from statsZoom should equal the total count ingested')
+					.toEqual(count);
+				if (isUndefined(statsZoom.filter) === false) {
+					expect(statsZoom.filter)
+						.withContext(`The filter should be equal to the one used, plus the default values for undefined properties`)
+						.toPartiallyEqual(filter);
+				}
+
+				// Choose a delta that doesn't line up nicely with the minZoomWindow buckets.
+				const delta = 500;
+
+				// Narrow the search window by moving the end date sooner by delta minutes
+				const filter2: SearchFilter = { dateRange: { start, end: subMinutes(end, delta) } };
+				search.setFilter(filter2);
+
+				[statsOverview, statsZoom] = await Promise.all([
+					search.statsOverview$.pipe(first()).toPromise(),
+					search.statsZoom$.pipe(first()).toPromise(),
+				]);
+
+				expect(sum(statsOverview.frequencyStats.map(x => x.count)))
+					.withContext('The sum of counts from statsOverview should stay the same (total ingested)')
+					.toEqual(count);
+				expect(sum(statsZoom.frequencyStats.map(x => x.count)))
+					.withContext('The sum of counts from statsZoom should be at least "count - delta"')
+					.toBeGreaterThanOrEqual(count - delta);
 				if (isUndefined(statsZoom.filter) === false) {
 					expect(statsZoom.filter)
 						.withContext(`The filter should be equal to the one used, plus the default values for undefined properties`)
@@ -819,7 +871,7 @@ describe('subscribeToOneSearch()', () => {
 		);
 
 		it(
-			'Should adjust when the zoom window adjusts with a different granularity',
+			'Should adjust when the zoom window adjusts with a different granularity for nicely-aligned bins',
 			integrationTest(async () => {
 				const subscribeToOneSearch = makeSubscribeToOneSearch(TEST_BASE_API_CONTEXT);
 				const query = `tag=${tag}`;
@@ -870,7 +922,7 @@ describe('subscribeToOneSearch()', () => {
 					.withContext('The sum of counts from statsOverview should stay the same (total ingested)')
 					.toEqual(count);
 				expect(sum(statsZoom.frequencyStats.map(x => x.count)))
-					.withContext('The sum of counts from statsZoom should be 500 less than total count ingested')
+					.withContext('The sum of counts from statsZoom should be "delta" less than total count ingested')
 					.toEqual(count - delta);
 				if (isUndefined(statsZoom.filter) === false) {
 					expect(statsZoom.filter)
@@ -889,7 +941,78 @@ describe('subscribeToOneSearch()', () => {
 		);
 
 		it(
-			'Should adjust zoom granularity and overview granularity independently',
+			'Should adjust when the zoom window adjusts with a different granularity for odd bins',
+			integrationTest(async () => {
+				const subscribeToOneSearch = makeSubscribeToOneSearch(TEST_BASE_API_CONTEXT);
+				const query = `tag=${tag}`;
+				const filter1: SearchFilter = { entriesOffset: { index: 0, count: count }, dateRange: { start, end } };
+				const search = await subscribeToOneSearch(query, { filter: filter1 });
+
+				let [statsOverview, statsZoom] = await Promise.all([
+					search.statsOverview$.pipe(first()).toPromise(),
+					search.statsZoom$.pipe(first()).toPromise(),
+				]);
+
+				expect(sum(statsOverview.frequencyStats.map(x => x.count)))
+					.withContext('The sum of counts from statsOverview should equal the total count ingested')
+					.toEqual(count);
+				expect(sum(statsZoom.frequencyStats.map(x => x.count)))
+					.withContext('The sum of counts from statsZoom should equal the total count ingested')
+					.toEqual(count);
+				if (isUndefined(statsZoom.filter) === false) {
+					expect(statsZoom.filter)
+						.withContext(`The filter should be equal to the one used, plus the default values for undefined properties`)
+						.toPartiallyEqual(filter1);
+				}
+
+				// the default
+				expect(statsZoom.frequencyStats.length)
+					.withContext('statsZoom should start with the default granularity')
+					.toEqual(90);
+
+				// Choose a delta that doesn't line up nicely with the minZoomWindow buckets.
+				const delta = 500;
+
+				// Narrow the search window by moving the end date sooner by delta minutes using new granularity
+				const newZoomGranularity = 133;
+				const filter2: SearchFilter = {
+					dateRange: { start, end: subMinutes(end, delta) },
+					zoomGranularity: newZoomGranularity,
+				};
+				search.setFilter(filter2);
+
+				[statsOverview, statsZoom] = await Promise.all([
+					search.statsOverview$.pipe(first()).toPromise(),
+					search.statsZoom$.pipe(first()).toPromise(),
+				]);
+
+				expect(sum(statsOverview.frequencyStats.map(x => x.count)))
+					.withContext('The sum of counts from statsOverview should stay the same (total ingested)')
+					.toEqual(count);
+				expect(sum(statsZoom.frequencyStats.map(x => x.count)))
+					.withContext('The sum of counts from statsZoom should be at least "count - delta"')
+					.toBeGreaterThanOrEqual(count - delta);
+				if (isUndefined(statsZoom.filter) === false) {
+					expect(statsZoom.filter)
+						.withContext(`The filter should be equal to the one used, plus the default values for undefined properties`)
+						.toPartiallyEqual({ ...filter1, ...filter2 });
+				}
+
+				expect(statsZoom.frequencyStats.length)
+					.withContext('statsZoom should be less than or equal to the new granularity')
+					.toBeLessThanOrEqual(newZoomGranularity);
+				expect(statsZoom.frequencyStats.length)
+					.withContext('statsZoom should be close to the new granularity')
+					.toBeGreaterThanOrEqual(newZoomGranularity - 2);
+				expect(statsOverview.frequencyStats.length)
+					.withContext('statsZoom should use the default granularity')
+					.toEqual(90);
+			}),
+			25000,
+		);
+
+		it(
+			'Should adjust zoom granularity and overview granularity independently for nicely-aligned bins',
 			integrationTest(async () => {
 				const subscribeToOneSearch = makeSubscribeToOneSearch(TEST_BASE_API_CONTEXT);
 				const query = `tag=${tag}`;
@@ -947,7 +1070,7 @@ describe('subscribeToOneSearch()', () => {
 					.withContext('The sum of counts from statsOverview should stay the same (total ingested)')
 					.toEqual(count);
 				expect(sum(statsZoom.frequencyStats.map(x => x.count)))
-					.withContext('The sum of counts from statsZoom should be 500 less than total count ingested')
+					.withContext('The sum of counts from statsZoom should be "delta" less than total count ingested')
 					.toEqual(count - delta);
 				if (isUndefined(statsZoom.filter) === false) {
 					expect(statsZoom.filter)
@@ -958,6 +1081,84 @@ describe('subscribeToOneSearch()', () => {
 				expect(statsZoom.frequencyStats.length)
 					.withContext('statsZoom should use the new granularity')
 					.toEqual(newZoomGranularity);
+				expect(statsOverview.frequencyStats.length)
+					.withContext('statsZoom should use the default granularity')
+					.toEqual(overviewGranularity);
+			}),
+			25000,
+		);
+
+		it(
+			'Should adjust zoom granularity and overview granularity independently for odd bins',
+			integrationTest(async () => {
+				const subscribeToOneSearch = makeSubscribeToOneSearch(TEST_BASE_API_CONTEXT);
+				const query = `tag=${tag}`;
+				const overviewGranularity = 133;
+				const filter1: SearchFilter = {
+					entriesOffset: { index: 0, count: count },
+					overviewGranularity,
+					dateRange: { start, end },
+				};
+				const search = await subscribeToOneSearch(query, { filter: filter1 });
+
+				let [statsOverview, statsZoom] = await Promise.all([
+					search.statsOverview$.pipe(first()).toPromise(),
+					search.statsZoom$.pipe(first()).toPromise(),
+				]);
+
+				expect(sum(statsOverview.frequencyStats.map(x => x.count)))
+					.withContext('The sum of counts from statsOverview should equal the total count ingested')
+					.toEqual(count);
+				expect(sum(statsZoom.frequencyStats.map(x => x.count)))
+					.withContext('The sum of counts from statsZoom should equal the total count ingested')
+					.toEqual(count);
+				if (isUndefined(statsZoom.filter) === false) {
+					expect(statsZoom.filter)
+						.withContext(`The filter should be equal to the one used, plus the default values for undefined properties`)
+						.toPartiallyEqual(filter1);
+				}
+
+				expect(statsOverview.frequencyStats.length)
+					.withContext('statsZoom should start with the default granularity')
+					.toEqual(overviewGranularity);
+				expect(statsZoom.frequencyStats.length)
+					.withContext('statsZoom should start with the default granularity')
+					.toEqual(90);
+
+				// Choose a delta that doesn't line up nicely with the minZoomWindow buckets.
+				const delta = 500;
+
+				// Narrow the search window by moving the end date sooner by delta minutes using a new zoom granularity
+				const newZoomGranularity = 133;
+				const filter2: SearchFilter = {
+					dateRange: { start, end: subMinutes(end, delta) },
+					zoomGranularity: newZoomGranularity,
+				};
+				search.setFilter(filter2);
+
+				[statsOverview, statsZoom] = await Promise.all([
+					search.statsOverview$.pipe(first()).toPromise(),
+					search.statsZoom$.pipe(first()).toPromise(),
+				]);
+
+				expect(sum(statsOverview.frequencyStats.map(x => x.count)))
+					.withContext('The sum of counts from statsOverview should stay the same (total ingested)')
+					.toEqual(count);
+				expect(sum(statsZoom.frequencyStats.map(x => x.count)))
+					.withContext('The sum of counts from statsZoom should be at least "count - delta"')
+					.toBeGreaterThanOrEqual(count - delta);
+				if (isUndefined(statsZoom.filter) === false) {
+					expect(statsZoom.filter)
+						.withContext(`The filter should be equal to the one used, plus the default values for undefined properties`)
+						.toPartiallyEqual({ ...filter1, ...filter2 });
+				}
+
+				expect(statsZoom.frequencyStats.length)
+					.withContext('statsZoom should be less than or equal to the new granularity')
+					.toBeLessThanOrEqual(newZoomGranularity);
+				expect(statsZoom.frequencyStats.length)
+					.withContext('statsZoom should be close to the new granularity')
+					.toBeGreaterThanOrEqual(newZoomGranularity - 2);
 				expect(statsOverview.frequencyStats.length)
 					.withContext('statsZoom should use the default granularity')
 					.toEqual(overviewGranularity);
