@@ -84,4 +84,21 @@ describe('modifyOneQuery()', () => {
 				.toBe(`tag=${tag} json value.foo == "50" as "foo" | table`);
 		}),
 	);
+
+	it(
+		'Should throw if the filters are invalid',
+		integrationTest(async () => {
+			const validateOneQuery = makeValidateOneQuery(TEST_BASE_API_CONTEXT);
+			const modifyOneQuery = makeModifyOneQuery(TEST_BASE_API_CONTEXT);
+
+			const query = `tag=${tag} table`;
+			const validation = await validateOneQuery(query);
+			expect(validation.isValid).withContext(`Expect initial query to be valid`).toBeTrue();
+
+			const filter: ElementFilter = { path: 'Src', operation: '==', value: '50', tag, module: 'netflow' };
+			await expectAsync(modifyOneQuery(query, [filter]))
+				.withContext(`Expect invalid filter to cause an error`)
+				.toBeRejectedWithError(Error, 'netflow (module idx 0) error: Malformed IPv4 Address');
+		}),
+	);
 });
