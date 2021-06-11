@@ -31,6 +31,9 @@ export const makeModifyOneQuery = (context: APIContext) => {
 		querySub.send({ id, query, filters });
 
 		const parsed = await parsingP;
+		if (parsed.isValid === false) {
+			throw new Error(parsed.error.message);
+		}
 		return parsed.query;
 	};
 };
