@@ -21,7 +21,7 @@ export const makeSubscribeToOneRawSearch = (context: APIContext) => {
 
 		rawSubscription.send({ Subs: ['PONG', 'parse', 'search', 'attach'] });
 		const wsClosed$: Observable<void> = rawSubscription.sent$.pipe(startWith(undefined), mapTo(undefined), last());
-		timer(1000, 10000)
+		timer(1000, 5000)
 			.pipe(takeUntil(wsClosed$))
 			.subscribe(() => {
 				rawSubscription.send({ type: 'PONG', data: {} });
