@@ -6,9 +6,10 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { filter, map } from 'rxjs/operators';
+import { Observable, timer } from 'rxjs';
+import { filter, last, map, mapTo, startWith, takeUntil } from 'rxjs/operators';
 import { ElementFilter, Query, RawQuery } from '~/models';
-import { RawElementFilter, toElementFilter, ValidatedQuery } from '~/models/search';
+import { RawElementFilter, RawPongMessageSent, toElementFilter, ValidatedQuery } from '~/models/search';
 import { APIContext, APISubscription, apiSubscriptionFromWebSocket, buildURL, WebSocket } from '../utils';
 
 export const makeSubscribeToOneQueryParsing = (context: APIContext) => {
@@ -24,6 +25,12 @@ export const makeSubscribeToOneQueryParsing = (context: APIContext) => {
 			RawQueryValidationMessageSent
 		>(socket);
 		rawSubscription.send({ Subs: ['PONG', 'parse', 'search', 'attach'] });
+		const wsClosed$: Observable<void> = rawSubscription.sent$.pipe(startWith(undefined), mapTo(undefined), last());
+		timer(1000, 5000)
+			.pipe(takeUntil(wsClosed$))
+			.subscribe(() => {
+				rawSubscription.send({ type: 'PONG', data: {} });
+			});
 
 		const received$ = rawSubscription.received$.pipe(
 			filter((msg): msg is RawQueryValidationDesiredMessageReceived => {
@@ -96,6 +103,7 @@ type RawQueryValidationDesiredMessageSent = {
 };
 type RawQueryValidationMessageSent =
 	| RawQueryValidationDesiredMessageSent
+	| RawPongMessageSent
 	| { Subs: Array<'PONG' | 'parse' | 'search' | 'attach'> };
 
 type RawQueryValidationDesiredMessageReceived = { type: 'parse'; data: RawValidatedQuery };
