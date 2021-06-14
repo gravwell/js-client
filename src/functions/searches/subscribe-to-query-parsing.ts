@@ -79,6 +79,7 @@ export const makeSubscribeToOneQueryParsing = (context: APIContext) => {
 						Tag: f.tag,
 						Module: f.module,
 						Path: f.path,
+						Args: f.arguments ?? undefined,
 						Op: f.operation,
 						Value: f.value,
 					}));

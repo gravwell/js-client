@@ -18,6 +18,7 @@ export const toDataExplorerElement = (raw: RawDataExplorerElement): DataExplorer
 	module: raw.Module,
 	name: raw.Name,
 	path: raw.Path,
+	arguments: raw.Args ?? null,
 
 	value: raw.Value,
 	filters: raw.Filters ?? [],

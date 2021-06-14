@@ -31,6 +31,7 @@ export interface DataExplorerElement {
 	module: string;
 	name: string;
 	path: string;
+	arguments: string | null;
 
 	value: string | number | boolean | null;
 	filters: Array<ElementFilterOperation>;
@@ -47,6 +48,7 @@ const isDataExplorerElement = (v: unknown): v is DataExplorerElement => {
 			isString(element.module) &&
 			isString(element.name) &&
 			isString(element.path) &&
+			(isString(element.arguments) || isNull(element.arguments)) &&
 			(isString(element.value) || isNumber(element.value) || isBoolean(element.value) || isNull(element.value)) &&
 			isArray(element.filters) &&
 			element.filters.every(isElementFilterOperation)

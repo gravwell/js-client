@@ -73,7 +73,14 @@ describe('modifyOneQuery()', () => {
 			const validation = await validateOneQuery(query);
 			expect(validation.isValid).withContext(`Expect initial query to be valid`).toBeTrue();
 
-			const filter: ElementFilter = { path: 'value.foo', operation: '==', value: '50', tag, module: 'json' };
+			const filter: ElementFilter = {
+				path: 'value.foo',
+				operation: '==',
+				value: '50',
+				tag,
+				module: 'json',
+				arguments: null,
+			};
 			const newQuery = await modifyOneQuery(query, [filter]);
 			const newValidation = await validateOneQuery(newQuery);
 			expect(newValidation.isValid).withContext(`Expect new query to be valid`).toBeTrue();
@@ -95,7 +102,14 @@ describe('modifyOneQuery()', () => {
 			const validation = await validateOneQuery(query);
 			expect(validation.isValid).withContext(`Expect initial query to be valid`).toBeTrue();
 
-			const filter: ElementFilter = { path: 'Src', operation: '==', value: '50', tag, module: 'netflow' };
+			const filter: ElementFilter = {
+				path: 'Src',
+				operation: '==',
+				value: '50',
+				tag,
+				module: 'netflow',
+				arguments: null,
+			};
 			await expectAsync(modifyOneQuery(query, [filter]))
 				.withContext(`Expect invalid filter to cause an error`)
 				.toBeRejectedWithError(Error, 'netflow (module idx 0) error: Malformed IPv4 Address');

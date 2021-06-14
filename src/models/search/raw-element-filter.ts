@@ -19,6 +19,7 @@ export interface RawElementFilter {
 	Tag: string;
 	Module: string;
 	Path: string;
+	Args?: string | undefined;
 	Op: RawElementFilterOperation;
 	Value: string;
 }

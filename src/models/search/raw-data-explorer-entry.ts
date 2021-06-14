@@ -35,6 +35,7 @@ export interface RawDataExplorerElement {
 	Module: string; // Might be an empty string
 	Name: string;
 	Path: string; // Might be an empty string
+	Args?: string | undefined;
 	Value: string | number | boolean | null;
 	SubElements?: Array<RawDataExplorerElement>;
 	Filters: Array<RawElementFilterOperation> | null;
@@ -49,6 +50,7 @@ const isRawDataExplorerElement = (v: unknown): v is RawDataExplorerElement => {
 		return (
 			isString(c.Name) &&
 			isString(c.Path) &&
+			(isString(c.Args) || isUndefined(c.Args)) &&
 			!isUndefined(c.Value) &&
 			subElementsOK &&
 			isArray(c.Filters) &&
