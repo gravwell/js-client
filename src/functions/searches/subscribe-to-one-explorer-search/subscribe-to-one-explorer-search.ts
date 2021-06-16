@@ -6,7 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { subHours } from 'date-fns';
+import { isAfter, subHours } from 'date-fns';
 import { isBoolean, isNull, isUndefined, uniqueId } from 'lodash';
 import { BehaviorSubject, combineLatest, NEVER, Observable, of, Subject } from 'rxjs';
 import {
