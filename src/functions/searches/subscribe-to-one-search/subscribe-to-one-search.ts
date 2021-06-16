@@ -7,7 +7,7 @@
  **************************************************************************/
 
 import { subHours } from 'date-fns';
-import { isBoolean, isEqual, isNull, isUndefined, uniqueId } from 'lodash';
+import { isBoolean, isNull, isUndefined, uniqueId } from 'lodash';
 import { BehaviorSubject, combineLatest, NEVER, Observable, of, Subject } from 'rxjs';
 import {
 	bufferCount,
@@ -230,7 +230,6 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 					elementFilters: initialFilter.elementFilters,
 				}),
 			),
-			distinctUntilChanged((a, b) => isEqual(a, b)),
 
 			// Complete when/if the user calls .close()
 			takeUntil(close$),
