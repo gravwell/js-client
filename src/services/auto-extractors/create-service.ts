@@ -12,6 +12,7 @@ import {
 	makeDownloadManyAutoExtractors,
 	makeGetAllAutoExtractorModules,
 	makeGetAllAutoExtractors,
+	makeGetAutoExtractorForTag,
 	makeGetAutoExtractorsAuthorizedToMe,
 	makeIsValidAutoExtractorSyntax,
 	makeUpdateOneAutoExtractor,
@@ -28,6 +29,7 @@ export const createAutoExtractorsService = (context: APIContext): AutoExtractors
 		authorizedTo: {
 			me: makeGetAutoExtractorsAuthorizedToMe(context),
 		},
+		forTag: makeGetAutoExtractorForTag(context),
 	},
 
 	guess: {

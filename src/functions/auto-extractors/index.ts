@@ -11,6 +11,7 @@ export * from './delete-one-auto-extractor';
 export * from './download-many-auto-extractors';
 export * from './get-all-auto-extractor-modules';
 export * from './get-all-auto-extractors';
+export * from './get-auto-extractor-for-tag';
 export * from './get-auto-extractors-authorized-to-me';
 export * from './is-valid-auto-extractor-syntax';
 export * from './update-one-auto-extractor';
