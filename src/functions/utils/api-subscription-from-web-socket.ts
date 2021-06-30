@@ -6,8 +6,8 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { fromEvent, iif, Subject } from 'rxjs';
-import { bufferWhen } from 'rxjs/operators';
+import { from, fromEvent, iif, Subject } from 'rxjs';
+import { bufferWhen, concatMap } from 'rxjs/operators';
 import { APISubscription } from './api-subscription';
 import { WebSocket } from './web-socket';
 
@@ -44,20 +44,21 @@ export const apiSubscriptionFromWebSocket = <MessageReceived, MessageSent>(
 			// If the socket is still connecting, buffer until the socket is open. Once open, send the buffer through.
 			// If the socket is already open, buffer until _toSend$ emits. Since _toSend$ is the source, each buffer contains exactly one item.
 			bufferWhen(() => iif(() => getWebSocketState(socket) === 'connecting', fromEvent(socket, 'open'), _toSend$)),
+
+			// Flatten the arrays of messages, so that the Observer gets one message at a time
+			concatMap(messages => from(messages)),
 		)
-		.subscribe(messages => {
+		.subscribe(message => {
 			if (getWebSocketState(socket) !== 'open') {
 				return;
 			}
 
-			messages.forEach(message => {
-				if (message === undefined) {
-					return;
-				}
-				const stringMessage = typeof message === 'string' ? message : JSON.stringify(message);
-				socket.send(stringMessage);
-				_sent$.next(message);
-			});
+			if (message === undefined) {
+				return;
+			}
+			const stringMessage = typeof message === 'string' ? message : JSON.stringify(message);
+			socket.send(stringMessage);
+			_sent$.next(message);
 		});
 
 	return {
