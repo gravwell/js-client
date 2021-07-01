@@ -13,6 +13,7 @@ export interface ElementFilter {
 	module: string;
 
 	path: string;
+	arguments: string | null;
 	operation: ElementFilterOperation;
 	value: string;
 }

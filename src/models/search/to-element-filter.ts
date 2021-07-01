@@ -13,6 +13,7 @@ export const toElementFilter = (raw: RawElementFilter): ElementFilter => ({
 	tag: raw.Tag,
 	module: raw.Module,
 	path: raw.Path,
+	arguments: raw.Args ?? null,
 	operation: raw.Op,
 	value: raw.Value,
 });

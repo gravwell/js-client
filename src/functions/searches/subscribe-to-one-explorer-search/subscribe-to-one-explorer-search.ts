@@ -6,12 +6,13 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { subHours } from 'date-fns';
+import { isAfter, subHours } from 'date-fns';
 import { isBoolean, isNull, isUndefined, uniqueId } from 'lodash';
-import { BehaviorSubject, combineLatest, NEVER, Observable, of, Subject } from 'rxjs';
+import { BehaviorSubject, combineLatest, from, NEVER, Observable, of, Subject, Subscription } from 'rxjs';
 import {
 	bufferCount,
 	catchError,
+	concatMap,
 	distinctUntilChanged,
 	filter,
 	first,
@@ -48,6 +49,7 @@ import {
 	countEntriesFromModules,
 	filterMessageByCommand,
 	getDefaultGranularityByRendererType,
+	recalculateZoomEnd,
 	RequiredSearchFilter,
 	SEARCH_FILTER_PREFIX,
 } from '../subscribe-to-one-search/helpers';
@@ -56,12 +58,27 @@ export const makeSubscribeToOneExplorerSearch = (context: APIContext) => {
 	const modifyOneQuery = makeModifyOneQuery(context);
 	const subscribeToOneRawSearch = makeSubscribeToOneRawSearch(context);
 	let rawSubscriptionP: ReturnType<typeof subscribeToOneRawSearch> | null = null;
+	let closedSub: Subscription | null = null;
 
 	return async (
 		query: Query,
 		options: { filter?: SearchFilter; metadata?: RawJSON } = {},
 	): Promise<ExplorerSearchSubscription> => {
-		if (isNull(rawSubscriptionP)) rawSubscriptionP = subscribeToOneRawSearch();
+		if (isNull(rawSubscriptionP)) {
+			rawSubscriptionP = subscribeToOneRawSearch();
+			if (closedSub?.closed === false) {
+				closedSub.unsubscribe();
+			}
+
+			// Handles websocket hangups
+			closedSub = from(rawSubscriptionP)
+				.pipe(concatMap(rawSubscription => rawSubscription.received$))
+				.subscribe({
+					complete: () => {
+						rawSubscriptionP = null;
+					},
+				});
+		}
 		const rawSubscription = await rawSubscriptionP;
 
 		// The default end date is now
@@ -239,6 +256,16 @@ export const makeSubscribeToOneExplorerSearch = (context: APIContext) => {
 			takeUntil(close$),
 		);
 
+		const nextDetailsMsg = () =>
+			searchMessages$
+				.pipe(
+					filter(filterMessageByCommand(SearchMessageCommands.RequestDetails)),
+					first(),
+					// cleanup: Complete when/if the user calls .close()
+					takeUntil(close$),
+				)
+				.toPromise();
+
 		const requestEntries = async (filter: RequiredSearchFilter): Promise<void> => {
 			if (closed) return undefined;
 
@@ -247,9 +274,24 @@ export const makeSubscribeToOneExplorerSearch = (context: APIContext) => {
 
 			const first = filter.entriesOffset.index;
 			const last = first + filter.entriesOffset.count;
-			const start = (filter.dateRange === 'preview' ? previewDateRange.start : filter.dateRange.start).toISOString();
-			const end = (filter.dateRange === 'preview' ? previewDateRange.end : filter.dateRange.end).toISOString();
+			const startDate = filter.dateRange === 'preview' ? previewDateRange.start : filter.dateRange.start;
+			const start = startDate.toISOString();
+			const endDate = filter.dateRange === 'preview' ? previewDateRange.end : filter.dateRange.end;
+			const end = endDate.toISOString();
 			// TODO: Filter by .desiredGranularity and .fieldFilters
+
+			// Set up a promise to wait for the next details message
+			const detailsMsgP = nextDetailsMsg();
+			// Send a request for details
+			const requestDetailsMsg: RawRequestSearchDetailsMessageSent = {
+				type: searchTypeID,
+				data: { ID: SearchMessageCommands.RequestDetails, Addendum: { filterID } },
+			};
+			const detailsP = rawSubscription.send(requestDetailsMsg);
+
+			// Grab the results from the details response (we need it later)
+			const detailsResults = await Promise.all([detailsP, detailsMsgP]);
+			const detailsMsg = detailsResults[1];
 
 			const requestEntriesMsg: RawRequestExplorerSearchEntriesWithinRangeMessageSent = {
 				type: searchTypeID,
@@ -276,12 +318,6 @@ export const makeSubscribeToOneExplorerSearch = (context: APIContext) => {
 			};
 			const statsP = rawSubscription.send(requestStatsMessage);
 
-			const requestDetailsMsg: RawRequestSearchDetailsMessageSent = {
-				type: searchTypeID,
-				data: { ID: SearchMessageCommands.RequestDetails, Addendum: { filterID } },
-			};
-			const detailsP = rawSubscription.send(requestDetailsMsg);
-
 			const requestStatsWithinRangeMsg: RawRequestSearchStatsWithinRangeMessageSent = {
 				type: searchTypeID,
 				data: {
@@ -289,7 +325,12 @@ export const makeSubscribeToOneExplorerSearch = (context: APIContext) => {
 					Addendum: { filterID },
 					Stats: {
 						SetCount: filter.zoomGranularity,
-						SetEnd: end,
+						SetEnd: recalculateZoomEnd(
+							detailsMsg.data.SearchInfo.MinZoomWindow,
+							filter.zoomGranularity,
+							startDate,
+							endDate,
+						).toISOString(),
 						SetStart: start,
 					},
 				},
@@ -420,7 +461,15 @@ export const makeSubscribeToOneExplorerSearch = (context: APIContext) => {
 			map(set => {
 				const filterID = (set.data.Addendum?.filterID as string | undefined) ?? null;
 				const filter = filtersByID[filterID ?? ''] ?? undefined;
-				return { frequencyStats: countEntriesFromModules(set), filter };
+
+				const filterEnd = filter?.dateRange === 'preview' ? previewDateRange.end : filter?.dateRange?.end;
+				const initialEnd = initialFilter.dateRange === 'preview' ? previewDateRange.end : initialFilter.dateRange.end;
+				const endDate = filterEnd ?? initialEnd;
+
+				return {
+					frequencyStats: countEntriesFromModules(set).filter(f => !isAfter(f.timestamp, endDate)),
+					filter,
+				};
 			}),
 
 			// Complete when/if the user calls .close()

@@ -8,7 +8,7 @@
 
 import { isNil } from 'lodash';
 import { defer, Observable, of, Subject, throwError } from 'rxjs';
-import { concatMap, filter, first, map, share, tap, withLatestFrom } from 'rxjs/operators';
+import { concatMap, delay, filter, first, map, share, tap, withLatestFrom } from 'rxjs/operators';
 import { v4 as uuidv4 } from 'uuid';
 import {
 	RawAcceptSearchMessageSent,
@@ -124,6 +124,9 @@ export const initiateSearch = (
 				data: { OK: true, OutputSearchSubproto: msg.data.OutputSearchSubproto },
 			}),
 		),
+
+		// It takes the backend a fraction of a second to be ready for requests after we set up the search
+		delay(200),
 	).toPromise();
 
 	// Now that we're ready to receive results (with resultsP), we can push on the queue to kick off the search initiation process
