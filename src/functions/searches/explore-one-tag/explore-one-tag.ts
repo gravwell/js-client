@@ -8,7 +8,8 @@
 
 import { subDays } from 'date-fns';
 import { isNull } from 'lodash';
-import { filter, last, map, takeWhile } from 'rxjs/operators';
+import { from, Subscription } from 'rxjs';
+import { concatMap, filter, last, map, takeWhile } from 'rxjs/operators';
 import {
 	RawRequestExplorerSearchEntriesWithinRangeMessageSent,
 	RawSearchMessageReceivedRequestExplorerEntriesWithinRange,
@@ -23,12 +24,27 @@ import { makeSubscribeToOneRawSearch } from '../subscribe-to-one-raw-search';
 export const makeExploreOneTag = (context: APIContext) => {
 	const subscribeToOneRawSearch = makeSubscribeToOneRawSearch(context);
 	let rawSubscriptionP: ReturnType<typeof subscribeToOneRawSearch> | null = null;
+	let closedSub: Subscription | null = null;
 
 	return async (
 		tag: string,
 		options: { range?: [Date, Date]; limit?: number } = {},
 	): Promise<Array<DataExplorerEntry>> => {
-		if (isNull(rawSubscriptionP)) rawSubscriptionP = subscribeToOneRawSearch();
+		if (isNull(rawSubscriptionP)) {
+			rawSubscriptionP = subscribeToOneRawSearch();
+			if (closedSub?.closed === false) {
+				closedSub.unsubscribe();
+			}
+
+			// Handles websocket hangups
+			closedSub = from(rawSubscriptionP)
+				.pipe(concatMap(rawSubscription => rawSubscription.received$))
+				.subscribe({
+					complete: () => {
+						rawSubscriptionP = null;
+					},
+				});
+		}
 		const rawSubscription = await rawSubscriptionP;
 
 		const range = options.range ?? [subDays(new Date(), 7), new Date()];
