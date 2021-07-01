@@ -8,10 +8,11 @@
 
 import { isAfter, subHours } from 'date-fns';
 import { isBoolean, isNull, isUndefined, uniqueId } from 'lodash';
-import { BehaviorSubject, combineLatest, NEVER, Observable, of, Subject } from 'rxjs';
+import { BehaviorSubject, combineLatest, from, NEVER, Observable, of, Subject, Subscription } from 'rxjs';
 import {
 	bufferCount,
 	catchError,
+	concatMap,
 	distinctUntilChanged,
 	filter,
 	first,
@@ -55,12 +56,27 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 	const modifyOneQuery = makeModifyOneQuery(context);
 	const subscribeToOneRawSearch = makeSubscribeToOneRawSearch(context);
 	let rawSubscriptionP: ReturnType<typeof subscribeToOneRawSearch> | null = null;
+	let closedSub: Subscription | null = null;
 
 	return async (
 		query: Query,
 		options: { filter?: SearchFilter; metadata?: RawJSON } = {},
 	): Promise<SearchSubscription> => {
-		if (isNull(rawSubscriptionP)) rawSubscriptionP = subscribeToOneRawSearch();
+		if (isNull(rawSubscriptionP)) {
+			rawSubscriptionP = subscribeToOneRawSearch();
+			if (closedSub?.closed === false) {
+				closedSub.unsubscribe();
+			}
+
+			// Handles websocket hangups
+			closedSub = from(rawSubscriptionP)
+				.pipe(concatMap(rawSubscription => rawSubscription.received$))
+				.subscribe({
+					complete: () => {
+						rawSubscriptionP = null;
+					},
+				});
+		}
 		const rawSubscription = await rawSubscriptionP;
 
 		// The default end date is now
