@@ -44,6 +44,7 @@ export const toActionableAction = (raw: RawActionableAction): ActionableAction =
 	description: raw.description,
 	placeholder: raw.placeholder,
 	command: toActionableCommand(raw.command),
+	noValueUrlEncode: raw.noValueUrlEncode,
 	start: raw.start ? toActionableTimeVariable(raw.start) : { type: 'stringFormat', placeholder: null, format: null },
 	end: raw.end ? toActionableTimeVariable(raw.end) : { type: 'stringFormat', placeholder: null, format: null },
 });
