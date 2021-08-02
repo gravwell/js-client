@@ -39,7 +39,8 @@ export interface ActionableAction {
 	name: string;
 	description: string | null;
 	placeholder: string | null;
-	noValueUrlEncode: boolean; // Applicable to URL opening action. False by default. True means url won't be encoded when opening a URL
+	/** Applicable to URL opening action. False by default. True means url won't be encoded when opening a URL */
+	noValueUrlEncode: boolean;
 	start: ActionableTimeVariable;
 	end: ActionableTimeVariable;
 	command: ActionableCommand;
