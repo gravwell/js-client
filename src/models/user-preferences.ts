@@ -6,29 +6,41 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-export interface UserPreferences {
-	system?: {
-		dismiss?: Array<string>;
-		views?: { [key: string]: number };
-		favs?: Array<string>;
-		welcome?: number;
-		onboarding?: {
-			percentage?: number;
-			completed?: Array<string>;
-		};
+export type UserPreferences = Partial<{
+	system: SystemPreferences;
+	editor: EditorPreferences;
+	menu: 'hide' | 'sticky';
+	interfaceTheme: string;
+	chartTheme: string;
+	point2PointTheme: string;
+	homepage: string;
+	rendererSubstitutions: PreferencesRendererSubstitutions;
+	maps: MapPreferences;
+	dashboardAutosave: boolean;
+	developer: boolean;
+	experimental: boolean;
+}>
+
+export type SystemPreferences = Partial<{
+	dismiss: Array<string>;
+	views: { [key: string]: number };
+	favs: Array<string>;
+	welcome: number;
+	onboarding: {
+		percentage?: number;
+		completed?: Array<string>;
 	};
-	editor?: {
-		fontSize?: null;
-		theme?: null | 'dracula' | 'chrome';
-	};
-	menu?: 'hide' | 'sticky';
-	interfaceTheme?: 'dark-blue';
-	chartTheme?: 'default';
-	point2PointTheme?: null;
-	homepage?: string;
-	rendererSubstitutions?: { emptyCoords?: { lat: number; lng: number } };
-	maps?: { center?: { zoom?: number; lat?: number; lng?: number } };
-	dashboardAutosave?: boolean;
-	developer?: boolean;
-	experimental?: boolean;
-}
+}>
+
+export type EditorPreferences = Partial<{
+	fontSize: number | null;
+	theme: null | 'dracula' | 'chrome' | 'cobalt' | 'monokai';
+}>
+
+export type PreferencesRendererSubstitutions = Partial<{
+	emptyCoords: { lat: number; lng: number };
+}>
+
+export type MapPreferences = Partial<{
+	center: Partial<{ zoom: number; lat: number; lng: number }>;
+}>
