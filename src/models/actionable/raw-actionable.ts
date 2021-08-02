@@ -31,6 +31,8 @@ export interface RawActionableAction {
 	name: string;
 	description: string | null;
 	placeholder: string | null;
+	/** Applicable to URL opening action. False by default. True means url won't be encoded when opening a URL */
+	noValueUrlEncode: boolean;
 	start?: RawActionableTimeVariable;
 	end?: RawActionableTimeVariable;
 	command: RawActionableCommand;

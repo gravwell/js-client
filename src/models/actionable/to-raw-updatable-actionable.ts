@@ -32,6 +32,7 @@ export const toRawUpdatableActionable = (
 				...action,
 				description: action.description ?? null,
 				placeholder: action.placeholder ?? null,
+				noValueUrlEncode: action.noValueUrlEncode ?? false,
 				start: action.start ?? { type: 'stringFormat', placeholder: null, format: null },
 				end: action.end ?? { type: 'stringFormat', placeholder: null, format: null },
 			}))
