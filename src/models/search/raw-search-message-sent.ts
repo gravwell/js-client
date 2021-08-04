@@ -37,6 +37,13 @@ export interface RawInitiateSearchMessageSent {
 		 *   charts will grab enough to draw something useful everything else will get "enough"
 		 */
 		Preview: boolean;
+
+		/**
+		 * Set to `true` to avoid saving the search query in the history.
+		 *
+		 * @default false
+		 */
+		NoHistory?: boolean;
 	};
 }
 

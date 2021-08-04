@@ -20,6 +20,7 @@ export interface ExplorerService {
 			options?: {
 				filter?: SearchFilter | undefined;
 				metadata?: RawJSON | undefined;
+				noHistory?: boolean;
 			},
 		) => Promise<ExplorerSearchSubscription>;
 	};

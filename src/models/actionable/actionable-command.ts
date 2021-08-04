@@ -13,7 +13,19 @@ export type ActionableCommand =
 	| { type: 'template'; templateUUID: UUID; templateVariable: string | null }
 	| { type: 'savedQuery'; queryUUID: UUID }
 	| { type: 'dashboard'; dashboardUUID: UUID; dashboardVariable: string | null }
-	| { type: 'url'; urlTemplate: string; modal: boolean; modalWidthPercentage: number | null };
+	| {
+			type: 'url';
+			urlTemplate: string;
+			modal: boolean;
+			modalWidthPercentage: number | null;
+
+			/**
+			 * True means that the actionable value won't be encoded when opening the URL.
+			 *
+			 * @default false
+			 */
+			noValueUrlEncode: boolean;
+	  };
 
 export interface ActionableQueryCommand {
 	type: 'query';
@@ -41,4 +53,11 @@ export interface ActionableURLCommand {
 	urlTemplate: string;
 	modal: boolean;
 	modalWidthPercentage: number | null;
+
+	/**
+	 * True means that the actionable value won't be encoded when opening the URL.
+	 *
+	 * @default false
+	 */
+	noValueUrlEncode: boolean;
 }

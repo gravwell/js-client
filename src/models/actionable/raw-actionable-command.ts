@@ -42,5 +42,15 @@ export interface RawActionableDashboardCommand {
 export interface RawActionableURLCommand {
 	type: 'url';
 	reference: string;
-	options?: { modal?: boolean; modalWidth?: string };
+	options?: {
+		modal?: boolean;
+		modalWidth?: string;
+
+		/**
+		 * True means that the actionable value won't be encoded when opening the URL.
+		 *
+		 * @default false
+		 */
+		noValueUrlEncode?: boolean;
+	};
 }
