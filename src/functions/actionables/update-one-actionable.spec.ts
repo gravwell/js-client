@@ -60,7 +60,13 @@ describe('updateOneActionable()', () => {
 				{
 					name: 'New action',
 					description: 'New action description',
-					command: { type: 'url', urlTemplate: 'http://google__VALUE__', modal: false, modalWidthPercentage: null },
+					command: {
+						type: 'url',
+						urlTemplate: 'http://google__VALUE__',
+						modal: false,
+						modalWidthPercentage: null,
+						noValueUrlEncode: false,
+					},
 				},
 			],
 		},

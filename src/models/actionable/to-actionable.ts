@@ -44,7 +44,6 @@ export const toActionableAction = (raw: RawActionableAction): ActionableAction =
 	description: raw.description,
 	placeholder: raw.placeholder,
 	command: toActionableCommand(raw.command),
-	noValueUrlEncode: raw.noValueUrlEncode ?? false,
 	start: raw.start ? toActionableTimeVariable(raw.start) : { type: 'stringFormat', placeholder: null, format: null },
 	end: raw.end ? toActionableTimeVariable(raw.end) : { type: 'stringFormat', placeholder: null, format: null },
 });
@@ -66,6 +65,7 @@ export const toActionableCommand = (raw: RawActionableCommand): ActionableComman
 				urlTemplate: raw.reference,
 				modal: raw.options?.modal ?? false,
 				modalWidthPercentage: isString(modalWidth) ? parseInt(modalWidth, 10) : null,
+				noValueUrlEncode: raw.options?.noValueUrlEncode ?? false,
 			};
 		}
 	}
