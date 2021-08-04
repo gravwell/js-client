@@ -66,6 +66,7 @@ const QUERY_INIT_RESULTS: Observable<{
 							SearchEnd: options.range === 'preview' ? null : options.range?.[1]?.toISOString() ?? null,
 							SearchString: query,
 							Preview: options.range === 'preview',
+							NoHistory: options.noHistory ?? false,
 						},
 					});
 				}),
@@ -95,7 +96,12 @@ const QUERY_INIT_RESULTS: Observable<{
 	share(),
 );
 
-export type InitiateSearchOptions = { initialFilterID?: string; metadata?: RawJSON; range: [Date, Date] | 'preview' };
+export type InitiateSearchOptions = {
+	range: [Date, Date] | 'preview';
+	initialFilterID?: string;
+	metadata?: RawJSON;
+	noHistory?: boolean;
+};
 
 export const initiateSearch = (
 	rawSubscription: APISubscription<RawSearchMessageReceived, RawSearchMessageSent>,

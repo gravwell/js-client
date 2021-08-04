@@ -60,7 +60,7 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 
 	return async (
 		query: Query,
-		options: { filter?: SearchFilter; metadata?: RawJSON } = {},
+		options: { filter?: SearchFilter; metadata?: RawJSON; noHistory?: boolean } = {},
 	): Promise<SearchSubscription> => {
 		if (isNull(rawSubscriptionP)) {
 			rawSubscriptionP = subscribeToOneRawSearch();
@@ -124,6 +124,7 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 				initialFilter.dateRange === 'preview'
 					? 'preview'
 					: [initialFilter.dateRange.start, initialFilter.dateRange.end],
+			noHistory: options.noHistory,
 		});
 		const searchTypeID = searchInitMsg.data.OutputSearchSubproto;
 		const isResponseError = filterMessageByCommand(SearchMessageCommands.ResponseError);

@@ -28,7 +28,7 @@ export const makeExploreOneTag = (context: APIContext) => {
 
 	return async (
 		tag: string,
-		options: { range?: [Date, Date]; limit?: number } = {},
+		options: { range?: [Date, Date]; limit?: number; noHistory?: boolean } = {},
 	): Promise<Array<DataExplorerEntry>> => {
 		if (isNull(rawSubscriptionP)) {
 			rawSubscriptionP = subscribeToOneRawSearch();
@@ -51,7 +51,7 @@ export const makeExploreOneTag = (context: APIContext) => {
 		const limit = options.limit ?? 1000;
 		const query = `tag=${tag}`;
 
-		const searchInitMsg = await initiateSearch(rawSubscription, query, { range });
+		const searchInitMsg = await initiateSearch(rawSubscription, query, { range, noHistory: options.noHistory });
 		const searchTypeID = searchInitMsg.data.OutputSearchSubproto;
 		const searchMessages$ = rawSubscription.received$.pipe(filter(msg => msg.type === searchTypeID));
 
