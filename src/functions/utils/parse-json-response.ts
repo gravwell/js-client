@@ -33,7 +33,6 @@ export const parseJSONResponse = async <T, Expect extends ResponseExpectation = 
 				if (!isEmpty(text.trim())) {
 					error = new Error(text);
 				}
-				console.log(error)
 			}
 			throw error;
 		}
