@@ -6,7 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { attempt, isString } from 'lodash';
+import {isEmpty, isString} from 'lodash';
 import { Response } from './response';
 
 type ResponseExpectation = 'void' | 'json' | 'text';
@@ -25,11 +25,16 @@ export const parseJSONResponse = async <T, Expect extends ResponseExpectation = 
 
 		if (status >= 400 && returnError === false) {
 			let error = createStatusError(status);
-			attempt(() => {
+			try {
 				const json = JSON.parse(text);
-				const errorMessage = json.Error;
+				const errorMessage = json?.Error ?? text;
 				if (isString(errorMessage)) error = new Error(errorMessage);
-			});
+			} catch (e) { // API may just return a string in the response
+				if (!isEmpty(text.trim())) {
+					error = new Error(text);
+				}
+				console.log(error)
+			}
 			throw error;
 		}
 
