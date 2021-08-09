@@ -163,7 +163,7 @@ describe('GravwellClient', () => {
 			// User preferences
 			expectTypeOf(client.userPreferences.get.one).toEqualTypeOf<(userID: string) => Promise<UserPreferences>>();
 			expectTypeOf(client.userPreferences.get.all).toEqualTypeOf<() => Promise<Array<UserPreferences>>>();
-			expectTypeOf(client.userPreferences.update.one).toEqualTypeOf<(userID: string) => Promise<UserPreferences>>();
+			expectTypeOf(client.userPreferences.update.one).toEqualTypeOf<(userID: string, preferences: UserPreferences) => Promise<void>>();
 			expectTypeOf(client.userPreferences.delete.one).toEqualTypeOf<(userID: string) => Promise<void>>();
 
 			// Auth
@@ -239,7 +239,7 @@ describe('GravwellClient', () => {
 				(searchID: ID, downloadFormat: SearchDownloadFormat) => ReturnType<typeof downloadFromURL>
 			>();
 			expectTypeOf(client.searches.create.one).toEqualTypeOf<
-				(query: Query, options?: { filter?: Partial<SearchFilter>; metadata?: RawJSON }) => Promise<SearchSubscription>
+				(query: Query, options?: { filter?: Partial<SearchFilter>; metadata?: RawJSON, noHistory?: boolean }) => Promise<SearchSubscription>
 			>();
 			expectTypeOf(client.searches.stop.one).toEqualTypeOf<(searchID: string) => Promise<void>>();
 
@@ -441,9 +441,13 @@ describe('GravwellClient', () => {
 			expectTypeOf(client.explorer.searchAndExplore.one).toEqualTypeOf<
 				(
 					query: Query,
-					options?: { filter?: Partial<SearchFilter>; metadata?: RawJSON },
+					options?: { filter?: Partial<SearchFilter>; metadata?: RawJSON; noHistory?: boolean },
 				) => Promise<ExplorerSearchSubscription>
 			>();
+
+			// Search Groups
+			expectTypeOf(client.searchGroups.get.one).toEqualTypeOf<(id: NumericID) => Promise<NumericID>>();
 		}),
+
 	);
 });
