@@ -51,7 +51,7 @@
 		"ws": "^7.4.3"
 	},
 	"peerDependencies": {
-		"rxjs": "^6.6.7"
+		"rxjs": "^6.4"
 	},
 	"devDependencies": {
 		"@types/base-64": "^0.1.3",
