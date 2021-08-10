@@ -7,18 +7,19 @@
  **************************************************************************/
 
 import { UserPreferences } from '~/models';
+import { NumericID } from '../../value-objects';
 
 export interface UserPreferencesService {
 	readonly get: {
-		readonly one: (userID: string) => Promise<UserPreferences>;
+		readonly one: (userID: NumericID) => Promise<UserPreferences>;
 		readonly all: () => Promise<Array<UserPreferences>>;
 	};
 
 	readonly update: {
-		readonly one: (userID: string) => Promise<UserPreferences>;
+		readonly one: (userID: NumericID, preferences: UserPreferences) => Promise<void>;
 	};
 
 	readonly delete: {
-		readonly one: (userID: string) => Promise<void>;
+		readonly one: (userID: NumericID) => Promise<void>;
 	};
 }

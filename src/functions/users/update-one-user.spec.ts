@@ -173,4 +173,14 @@ describe('updateOneUser()', () => {
 			await expectAsync(login(user.username, newPassword)).toBeResolved();
 		}),
 	);
+
+	xit(
+		'Should update the user search group ID',
+		integrationTest(async () => {
+			expect(isValidUser(user)).toBeTrue();
+
+			// Update the password
+			await expectAsync(updateOneUser({ id: user.id, searchGroupID: '1' })).toBeResolved();
+		}),
+	);
 });

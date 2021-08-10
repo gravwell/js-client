@@ -7,19 +7,9 @@
  **************************************************************************/
 
 import { NumericID } from '~/value-objects';
-import { UserRole } from './user';
 
-export interface UpdatableUser {
-	id: NumericID;
-	username?: string;
-	name?: string;
-	email?: string;
-
-	password?: string;
-	currentPassword?: string;
-
-	role?: UserRole;
-	locked?: boolean;
-
-	searchGroupID?: NumericID;
+export interface SearchGroupsService {
+	readonly get: {
+		readonly one: (userID: NumericID) => Promise<NumericID>;
+	};
 }

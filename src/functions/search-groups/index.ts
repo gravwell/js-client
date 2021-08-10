@@ -6,20 +6,5 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { NumericID } from '~/value-objects';
-import { UserRole } from './user';
-
-export interface UpdatableUser {
-	id: NumericID;
-	username?: string;
-	name?: string;
-	email?: string;
-
-	password?: string;
-	currentPassword?: string;
-
-	role?: UserRole;
-	locked?: boolean;
-
-	searchGroupID?: NumericID;
-}
+export * from './get-one-user-search-group';
+export * from './update-one-user-search-group';

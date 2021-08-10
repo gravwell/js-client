@@ -6,20 +6,12 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { NumericID } from '~/value-objects';
-import { UserRole } from './user';
+import { makeGetOneUserSearchGroup } from '../../functions/search-groups/get-one-user-search-group';
+import { APIContext } from '../../functions/utils';
+import { SearchGroupsService } from './service';
 
-export interface UpdatableUser {
-	id: NumericID;
-	username?: string;
-	name?: string;
-	email?: string;
-
-	password?: string;
-	currentPassword?: string;
-
-	role?: UserRole;
-	locked?: boolean;
-
-	searchGroupID?: NumericID;
-}
+export const createSearchGroupsService = (context: APIContext): SearchGroupsService => ({
+	get: {
+		one: makeGetOneUserSearchGroup(context),
+	},
+});

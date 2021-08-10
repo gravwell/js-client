@@ -8,6 +8,8 @@
 
 import { isBoolean, isString, isUndefined, negate } from 'lodash';
 import { isValidUserRole, UpdatableUser, User } from '~/models';
+import { isNumericID } from '../../value-objects';
+import { makeUpdateOneUserSearchGroup } from '../search-groups/update-one-user-search-group';
 import { APIContext } from '../utils';
 import { makeGetOneUser } from './get-one-user';
 import { makeUpdateOneUserInformation } from './update-one-user-information';
@@ -21,6 +23,7 @@ export const makeUpdateOneUser = (context: APIContext) => {
 	const updateOneUserRole = makeUpdateOneUserRole(context);
 	const updateOneUserPassword = makeUpdateOneUserPassword(context);
 	const getOneUser = makeGetOneUser(context);
+	const updateOneUserSearchGroup = makeUpdateOneUserSearchGroup(context);
 
 	return async (data: UpdatableUser): Promise<User> => {
 		try {
@@ -38,6 +41,9 @@ export const makeUpdateOneUser = (context: APIContext) => {
 
 			// Update password
 			if (isString(data.password)) promises.push(updateOneUserPassword(data.id, data.password, data.currentPassword));
+
+			// Search group ID
+			if (isNumericID(data.searchGroupID)) promises.push(updateOneUserSearchGroup(data.id, data.searchGroupID));
 
 			await Promise.all(promises);
 			return await getOneUser(data.id);
