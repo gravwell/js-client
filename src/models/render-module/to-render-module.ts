@@ -13,6 +13,4 @@ export const toRenderModule = (raw: RawRenderModule): RenderModule => ({
 	name: raw.Name,
 	description: raw.Description,
 	examples: raw.Examples,
-
-	sortingRequired: raw.SortRequired,
 });
