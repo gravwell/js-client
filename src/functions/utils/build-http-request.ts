@@ -6,7 +6,6 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { APIContext } from './api-context';
 import { HTTPRequestOptions } from './http-request-options';
 import { omitUndefinedShallow } from './omit-undefined-shallow';
 import { RequestInit } from './request-init';
@@ -17,19 +16,4 @@ export const buildHTTPRequest = (base: HTTPRequestOptions): RequestInit => {
 	});
 	const body = base.body ?? undefined;
 	return { headers, body };
-};
-
-/**
- * Builds a request and adds the auth token
- * @param context
- * @param base
- */
-export const buildAuthorizedHTTPRequest = (context: APIContext, base: HTTPRequestOptions = {}): RequestInit => {
-	const headers = omitUndefinedShallow({
-		...(base.headers ?? {}),
-		Authorization: context.authToken ? `Bearer ${context.authToken}` : undefined,
-	});
-
-	base.headers = headers;
-	return buildHTTPRequest(base);
 };

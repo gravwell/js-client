@@ -7,12 +7,13 @@
  **************************************************************************/
 
 import { isNumber } from 'lodash';
-import { NumericID } from '../../value-objects';
+import { NumericID } from '~/value-objects';
 import {
 	APIContext,
-	buildAuthorizedHTTPRequest,
+	buildHTTPRequest,
 	buildURL,
 	fetch,
+	HTTPRequestOptions,
 	omitUndefinedShallow,
 	parseJSONResponse,
 } from '../utils';
@@ -27,9 +28,11 @@ export const makeUpdateOneUserSearchGroup = (context: APIContext) => {
 				GID: isNumber(groupID) ? groupID : parseInt(groupID, 10),
 			});
 
-			const req = buildAuthorizedHTTPRequest(context, {
+			const baseRequestOptions: HTTPRequestOptions = {
+				headers: { Authorization: context.authToken ? `Bearer ${context.authToken}` : undefined },
 				body: JSON.stringify(body),
-			});
+			};
+			const req = buildHTTPRequest(baseRequestOptions);
 
 			const raw = await fetch(url, { ...req, method: 'PUT' });
 			return parseJSONResponse(raw, { expect: 'void' });
