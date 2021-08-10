@@ -74,7 +74,7 @@ import {
 	UsersService,
 	WebServerService,
 } from '~/services';
-import {createSearchGroupsService, SearchGroupsService} from './services/search-groups';
+import { createSearchGroupsService, SearchGroupsService } from './services/search-groups';
 
 export interface GravwellClientOptions {
 	useEncryption?: boolean;

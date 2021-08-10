@@ -6,10 +6,10 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
+import { APIContext } from './api-context';
 import { HTTPRequestOptions } from './http-request-options';
 import { omitUndefinedShallow } from './omit-undefined-shallow';
 import { RequestInit } from './request-init';
-import {APIContext} from './api-context';
 
 export const buildHTTPRequest = (base: HTTPRequestOptions): RequestInit => {
 	const headers = omitUndefinedShallow({

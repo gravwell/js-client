@@ -7,7 +7,7 @@
  **************************************************************************/
 
 import { UserPreferences } from '~/models';
-import {NumericID} from '../../value-objects';
+import { NumericID } from '../../value-objects';
 
 export interface UserPreferencesService {
 	readonly get: {

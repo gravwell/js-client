@@ -6,16 +6,16 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import {NumericID} from '../../value-objects';
+import { isNumber } from 'lodash';
+import { NumericID } from '../../value-objects';
 import {
 	APIContext,
 	buildAuthorizedHTTPRequest,
 	buildURL,
 	fetch,
 	omitUndefinedShallow,
-	parseJSONResponse
+	parseJSONResponse,
 } from '../utils';
-import {isNumber} from 'lodash';
 
 export const makeUpdateOneUserSearchGroup = (context: APIContext) => {
 	return async (userID: NumericID, groupID: NumericID): Promise<void> => {
@@ -37,8 +37,8 @@ export const makeUpdateOneUserSearchGroup = (context: APIContext) => {
 			if (err instanceof Error) throw err;
 			throw Error('Unknown error');
 		}
-	}
-}
+	};
+};
 
 interface UpdateOneUserSearchGroupRawRequest {
 	GID: number;

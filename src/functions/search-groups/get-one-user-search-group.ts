@@ -6,13 +6,8 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import {NumericID} from '../../value-objects';
-import {
-	APIContext, buildAuthorizedHTTPRequest,
-	buildURL,
-	fetch,
-	parseJSONResponse
-} from '../utils';
+import { NumericID } from '../../value-objects';
+import { APIContext, buildAuthorizedHTTPRequest, buildURL, fetch, parseJSONResponse } from '../utils';
 
 export const makeGetOneUserSearchGroup = (context: APIContext) => {
 	return async (userID: NumericID): Promise<NumericID> => {
@@ -29,6 +24,5 @@ export const makeGetOneUserSearchGroup = (context: APIContext) => {
 			if (err instanceof Error) throw err;
 			throw Error('Unknown error');
 		}
-	}
-}
-
+	};
+};

@@ -8,14 +8,14 @@
 
 import { isBoolean, isString, isUndefined, negate } from 'lodash';
 import { isValidUserRole, UpdatableUser, User } from '~/models';
+import { isNumericID } from '../../value-objects';
+import { makeUpdateOneUserSearchGroup } from '../search-groups/update-one-user-search-group';
 import { APIContext } from '../utils';
 import { makeGetOneUser } from './get-one-user';
 import { makeUpdateOneUserInformation } from './update-one-user-information';
 import { makeUpdateOneUserLockedState } from './update-one-user-locked-state';
 import { makeUpdateOneUserPassword } from './update-one-user-password';
 import { makeUpdateOneUserRole } from './update-one-user-role';
-import {isNumericID} from '../../value-objects';
-import {makeUpdateOneUserSearchGroup} from '../search-groups/update-one-user-search-group';
 
 export const makeUpdateOneUser = (context: APIContext) => {
 	const updateOneUserLockedState = makeUpdateOneUserLockedState(context);

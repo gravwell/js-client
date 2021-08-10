@@ -180,10 +180,7 @@ describe('updateOneUser()', () => {
 			expect(isValidUser(user)).toBeTrue();
 
 			// Update the password
-			await expectAsync(updateOneUser({ id: user.id, searchGroupID : '1' })).toBeResolved();
-
+			await expectAsync(updateOneUser({ id: user.id, searchGroupID: '1' })).toBeResolved();
 		}),
 	);
-
-
 });
