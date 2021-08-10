@@ -36,7 +36,7 @@ describe('subscribeToOneSearch()', () => {
 	const start = new Date(2010, 0, 0);
 
 	// The end date for generated queries; one minute between each entry
-	const end = addMinutes(start, count - 1);
+	const end = addMinutes(start, count);
 
 	const originalData: Array<Entry> = [];
 
@@ -658,7 +658,7 @@ describe('subscribeToOneSearch()', () => {
 				const subscribeToOneSearch = makeSubscribeToOneSearch(TEST_BASE_API_CONTEXT);
 				const query = `tag=${tag}`;
 				const minutes = 90;
-				const dateRange = { start, end: addMinutes(start, minutes - 1) };
+				const dateRange = { start, end: addMinutes(start, minutes) };
 				const search = await subscribeToOneSearch(query, { filter: { dateRange } });
 
 				const textEntriesP = search.entries$
@@ -744,7 +744,7 @@ describe('subscribeToOneSearch()', () => {
 				// Choose a delta that lines up nicely with the minZoomWindow buckets.
 				// The timeframe of the query is wide enough that we get a minZoomWindow > 1, which makes assertions tricky without
 				// this compensation.
-				const delta = 399;
+				const delta = 640;
 
 				// Narrow the search window by moving the end date sooner by delta minutes
 				const filter2: SearchFilter = { dateRange: { start, end: subMinutes(end, delta) } };
@@ -760,7 +760,7 @@ describe('subscribeToOneSearch()', () => {
 					.toEqual(count);
 				expect(sum(statsZoom.frequencyStats.map(x => x.count)))
 					.withContext('The sum of counts from statsZoom should be "delta" less than the total count ingested')
-					.toEqual(count - delta);
+					.toEqual(count - delta + 1); // Account for inclusive end
 				if (isUndefined(statsZoom.filter) === false) {
 					expect(statsZoom.filter)
 						.withContext(`The filter should be equal to the one used, plus the default values for undefined properties`)
@@ -903,7 +903,7 @@ describe('subscribeToOneSearch()', () => {
 				// Choose a delta that lines up nicely with the minZoomWindow buckets.
 				// The timeframe of the query is wide enough that we get a minZoomWindow > 1, which makes assertions tricky without
 				// this compensation.
-				const delta = 530;
+				const delta = 468;
 
 				// Narrow the search window by moving the end date sooner by delta minutes using new granularity
 				const newZoomGranularity = 133;
@@ -923,7 +923,7 @@ describe('subscribeToOneSearch()', () => {
 					.toEqual(count);
 				expect(sum(statsZoom.frequencyStats.map(x => x.count)))
 					.withContext('The sum of counts from statsZoom should be "delta" less than total count ingested')
-					.toEqual(count - delta);
+					.toEqual(count - delta + 1); // Account for inclusive end
 				if (isUndefined(statsZoom.filter) === false) {
 					expect(statsZoom.filter)
 						.withContext(`The filter should be equal to the one used, plus the default values for undefined properties`)
@@ -1051,7 +1051,7 @@ describe('subscribeToOneSearch()', () => {
 				// Choose a delta that lines up nicely with the minZoomWindow buckets.
 				// The timeframe of the query is wide enough that we get a minZoomWindow > 1, which makes assertions tricky without
 				// this compensation.
-				const delta = 530;
+				const delta = 468;
 
 				// Narrow the search window by moving the end date sooner by delta minutes using a new zoom granularity
 				const newZoomGranularity = 133;
@@ -1071,7 +1071,7 @@ describe('subscribeToOneSearch()', () => {
 					.toEqual(count);
 				expect(sum(statsZoom.frequencyStats.map(x => x.count)))
 					.withContext('The sum of counts from statsZoom should be "delta" less than total count ingested')
-					.toEqual(count - delta);
+					.toEqual(count - delta + 1); // Account for inclusive end
 				if (isUndefined(statsZoom.filter) === false) {
 					expect(statsZoom.filter)
 						.withContext(`The filter should be equal to the one used, plus the default values for undefined properties`)

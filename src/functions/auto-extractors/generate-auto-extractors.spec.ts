@@ -7,12 +7,12 @@
  **************************************************************************/
 
 import { addMinutes } from 'date-fns';
-import { chain, isUndefined } from 'lodash';
+import { range } from 'lodash';
 import { last, map, takeWhile } from 'rxjs/operators';
 import { v4 as uuidv4 } from 'uuid';
-import { RawSearchEntries } from '~/models';
+import { CreatableJSONEntry, RawSearchEntries } from '~/models';
 import { integrationTest, sleep, TEST_BASE_API_CONTEXT } from '~/tests';
-import { makeIngestMultiLineEntry } from '../ingestors';
+import { makeIngestJSONEntries } from '../ingestors';
 import { makeSubscribeToOneSearch } from '../searches';
 import { makeGetAllTags } from '../tags';
 import { makeGenerateAutoExtractors } from './generate-auto-extractors';
@@ -39,14 +39,17 @@ describe('generateAutoExtractors()', () => {
 
 	beforeAll(async () => {
 		// Generate and ingest some entries
-		const ingestMultiLineEntry = makeIngestMultiLineEntry(TEST_BASE_API_CONTEXT);
-		const values: Array<string> = [];
-		for (let i = 0; i < count; i++) {
-			const value: Entry = { timestamp: addMinutes(start, i).toISOString(), value: i };
-			values.push(JSON.stringify(value));
-		}
-		const data: string = values.join('\n');
-		await ingestMultiLineEntry({ data, tag, assumeLocalTimezone: false });
+		const ingestJSONEntries = makeIngestJSONEntries(TEST_BASE_API_CONTEXT);
+		const values: Array<CreatableJSONEntry> = range(0, count).map(i => {
+			const timestamp = addMinutes(start, i).toISOString();
+			return {
+				timestamp,
+				tag,
+				data: JSON.stringify({ timestamp, value: i }, null, 2), // Add vertical whitespace, so that JSON is recommended over CSV
+			};
+		});
+
+		await ingestJSONEntries(values);
 
 		// Check the list of tags until our new tag appears
 		const getAllTags = makeGetAllTags(TEST_BASE_API_CONTEXT);
@@ -80,10 +83,7 @@ describe('generateAutoExtractors()', () => {
 			exploreResults['json'].forEach(ax => {
 				expect(ax.autoExtractor.tag).withContext('the suggested AX tag should match the provided tag').toEqual(tag);
 				expect(ax.autoExtractor.module).withContext('the suggested AX module should be json').toEqual('json');
-				// TODO remove this check-for-undefined when 4.1.4 hits
-				if (!isUndefined(ax.confidence)) {
-					expect(ax.confidence).withContext('json is the right module, so its confidence should be 10').toEqual(10);
-				}
+				expect(ax.confidence).withContext('json is the right module, so its confidence should be 10').toEqual(10);
 				expect(ax.autoExtractor.parameters)
 					.withContext('the suggested AX module should break out the fields in the entries')
 					.toEqual('timestamp value');
@@ -98,21 +98,7 @@ describe('generateAutoExtractors()', () => {
 				});
 			});
 
-			chain(exploreResults)
-				.omit('json') // Every AX set except 'json'
-				.values() // Just the arrays of generated AXes. We don't need the keys
-				.flatten() // Flatten the array of arrays to an array
-				.value() // Get the result
-				.forEach(ax => {
-					expect(ax.explorerEntries.length).withContext('explore should have >0 elements').toBeGreaterThan(0);
-					ax.explorerEntries.forEach(exploreEntry => {
-						expect(exploreEntry.elements).withContext('non-json AXes should have no elements').toEqual([]);
-					});
-					// TODO remove this check-for-undefined when 4.1.4 hits
-					if (!isUndefined(ax.confidence)) {
-						expect(ax.confidence).withContext('json is the right module, every other module should be 0').toEqual(0);
-					}
-				});
+			// We can't really make assertions about what the other AX generators are going to do when we look at JSON data
 		}),
 		25000,
 	);
