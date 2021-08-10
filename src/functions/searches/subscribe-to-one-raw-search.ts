@@ -1,5 +1,5 @@
 /*************************************************************************
- * Copyright 2020 Gravwell, Inc. All rights reserved.
+ * Copyright 2021 Gravwell, Inc. All rights reserved.
  * Contact: <legal@gravwell.io>
  *
  * This software may be modified and distributed under the terms of the
@@ -21,7 +21,7 @@ export const makeSubscribeToOneRawSearch = (context: APIContext) => {
 
 		rawSubscription.send({ Subs: ['PONG', 'parse', 'search', 'attach'] });
 		const wsClosed$: Observable<void> = rawSubscription.sent$.pipe(startWith(undefined), mapTo(undefined), last());
-		timer(1000, 10000)
+		timer(1000, 5000)
 			.pipe(takeUntil(wsClosed$))
 			.subscribe(() => {
 				rawSubscription.send({ type: 'PONG', data: {} });

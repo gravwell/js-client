@@ -1,11 +1,12 @@
 /*************************************************************************
- * Copyright 2020 Gravwell, Inc. All rights reserved.
+ * Copyright 2021 Gravwell, Inc. All rights reserved.
  * Contact: <legal@gravwell.io>
  *
  * This software may be modified and distributed under the terms of the
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
+import { add } from 'date-fns';
 import { isNil, last } from 'lodash';
 import {
 	RawResponseForSearchStatsMessageReceived,
@@ -68,3 +69,11 @@ export type RequiredSearchFilter = Required<
 >;
 
 export const SEARCH_FILTER_PREFIX = 'search-filter-';
+
+export const recalculateZoomEnd = (minZoomWindow: number, count: number, start: Date, end: Date): Date => {
+	const origDeltaS = end.getTime() / 1000 - start.getTime() / 1000;
+	const deltaS = Math.ceil(origDeltaS / (minZoomWindow * count)) * (minZoomWindow * count);
+	const newEnd = add(start, { seconds: deltaS });
+
+	return newEnd;
+};

@@ -1,5 +1,5 @@
 /*************************************************************************
- * Copyright 2020 Gravwell, Inc. All rights reserved.
+ * Copyright 2021 Gravwell, Inc. All rights reserved.
  * Contact: <legal@gravwell.io>
  *
  * This software may be modified and distributed under the terms of the
@@ -37,6 +37,13 @@ export interface RawInitiateSearchMessageSent {
 		 *   charts will grab enough to draw something useful everything else will get "enough"
 		 */
 		Preview: boolean;
+
+		/**
+		 * Set to `true` to avoid saving the search query in the history.
+		 *
+		 * @default false
+		 */
+		NoHistory?: boolean;
 	};
 }
 

@@ -1,5 +1,5 @@
 /*************************************************************************
- * Copyright 2020 Gravwell, Inc. All rights reserved.
+ * Copyright 2021 Gravwell, Inc. All rights reserved.
  * Contact: <legal@gravwell.io>
  *
  * This software may be modified and distributed under the terms of the
@@ -12,7 +12,6 @@ import { isRawElementFilterOperation, RawElementFilterOperation } from './elemen
 // Named ExploreResult in Go
 export interface RawDataExplorerEntry {
 	Elements: Array<RawDataExplorerElement> | null;
-	Module: string;
 	Tag: string;
 }
 
@@ -21,7 +20,7 @@ export const isRawDataExplorerEntry = (v: unknown): v is RawDataExplorerEntry =>
 		const entry = v as RawDataExplorerEntry;
 		const elementsOK =
 			isNull(entry.Elements) || (isArray(entry.Elements) && entry.Elements.every(isRawDataExplorerElement));
-		return elementsOK && isString(entry.Module) && isString(entry.Tag);
+		return elementsOK && isString(entry.Tag);
 	} catch {
 		return false;
 	}
@@ -33,11 +32,13 @@ export const isRawDataExplorerEntry = (v: unknown): v is RawDataExplorerEntry =>
  * data exploration system.
  */
 export interface RawDataExplorerElement {
+	Module: string; // Might be an empty string
 	Name: string;
-	Path: string;
-	Value: string;
+	Path: string; // Might be an empty string
+	Args?: string | undefined;
+	Value: string | number | boolean | null;
 	SubElements?: Array<RawDataExplorerElement>;
-	Filters: Array<RawElementFilterOperation>;
+	Filters: Array<RawElementFilterOperation> | null;
 }
 
 const isRawDataExplorerElement = (v: unknown): v is RawDataExplorerElement => {
@@ -49,6 +50,7 @@ const isRawDataExplorerElement = (v: unknown): v is RawDataExplorerElement => {
 		return (
 			isString(c.Name) &&
 			isString(c.Path) &&
+			(isString(c.Args) || isUndefined(c.Args)) &&
 			!isUndefined(c.Value) &&
 			subElementsOK &&
 			isArray(c.Filters) &&

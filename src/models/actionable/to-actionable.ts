@@ -1,5 +1,5 @@
 /*************************************************************************
- * Copyright 2020 Gravwell, Inc. All rights reserved.
+ * Copyright 2021 Gravwell, Inc. All rights reserved.
  * Contact: <legal@gravwell.io>
  *
  * This software may be modified and distributed under the terms of the
@@ -65,6 +65,7 @@ export const toActionableCommand = (raw: RawActionableCommand): ActionableComman
 				urlTemplate: raw.reference,
 				modal: raw.options?.modal ?? false,
 				modalWidthPercentage: isString(modalWidth) ? parseInt(modalWidth, 10) : null,
+				noValueUrlEncode: raw.options?.noValueUrlEncode ?? false,
 			};
 		}
 	}
