@@ -1,5 +1,5 @@
 /*************************************************************************
- * Copyright 2020 Gravwell, Inc. All rights reserved.
+ * Copyright 2021 Gravwell, Inc. All rights reserved.
  * Contact: <legal@gravwell.io>
  *
  * This software may be modified and distributed under the terms of the
@@ -8,7 +8,8 @@
 
 import { subDays } from 'date-fns';
 import { isNull } from 'lodash';
-import { filter, last, map, takeWhile } from 'rxjs/operators';
+import { from, Subscription } from 'rxjs';
+import { concatMap, filter, last, map, takeWhile } from 'rxjs/operators';
 import {
 	RawRequestExplorerSearchEntriesWithinRangeMessageSent,
 	RawSearchMessageReceivedRequestExplorerEntriesWithinRange,
@@ -23,19 +24,34 @@ import { makeSubscribeToOneRawSearch } from '../subscribe-to-one-raw-search';
 export const makeExploreOneTag = (context: APIContext) => {
 	const subscribeToOneRawSearch = makeSubscribeToOneRawSearch(context);
 	let rawSubscriptionP: ReturnType<typeof subscribeToOneRawSearch> | null = null;
+	let closedSub: Subscription | null = null;
 
 	return async (
 		tag: string,
-		options: { range?: [Date, Date]; limit?: number } = {},
+		options: { range?: [Date, Date]; limit?: number; noHistory?: boolean } = {},
 	): Promise<Array<DataExplorerEntry>> => {
-		if (isNull(rawSubscriptionP)) rawSubscriptionP = subscribeToOneRawSearch();
+		if (isNull(rawSubscriptionP)) {
+			rawSubscriptionP = subscribeToOneRawSearch();
+			if (closedSub?.closed === false) {
+				closedSub.unsubscribe();
+			}
+
+			// Handles websocket hangups
+			closedSub = from(rawSubscriptionP)
+				.pipe(concatMap(rawSubscription => rawSubscription.received$))
+				.subscribe({
+					complete: () => {
+						rawSubscriptionP = null;
+					},
+				});
+		}
 		const rawSubscription = await rawSubscriptionP;
 
 		const range = options.range ?? [subDays(new Date(), 7), new Date()];
 		const limit = options.limit ?? 1000;
-		const query = `tag=${tag} ax`;
+		const query = `tag=${tag}`;
 
-		const searchInitMsg = await initiateSearch(rawSubscription, query, { range });
+		const searchInitMsg = await initiateSearch(rawSubscription, query, { range, noHistory: options.noHistory });
 		const searchTypeID = searchInitMsg.data.OutputSearchSubproto;
 		const searchMessages$ = rawSubscription.received$.pipe(filter(msg => msg.type === searchTypeID));
 
@@ -50,7 +66,7 @@ export const makeExploreOneTag = (context: APIContext) => {
 					}
 				}),
 				takeWhile(msg => msg.data.Finished === false, true),
-				map(msg => msg.data.Explore.map(toDataExplorerEntry)),
+				map(msg => (msg.data.Explore ?? []).map(toDataExplorerEntry)),
 				last(),
 			)
 			.toPromise();

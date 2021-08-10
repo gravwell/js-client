@@ -1,5 +1,5 @@
 /*************************************************************************
- * Copyright 2020 Gravwell, Inc. All rights reserved.
+ * Copyright 2021 Gravwell, Inc. All rights reserved.
  * Contact: <legal@gravwell.io>
  *
  * This software may be modified and distributed under the terms of the
@@ -73,7 +73,14 @@ describe('modifyOneQuery()', () => {
 			const validation = await validateOneQuery(query);
 			expect(validation.isValid).withContext(`Expect initial query to be valid`).toBeTrue();
 
-			const filter: ElementFilter = { path: 'value.foo', operation: '==', value: '50', tag, module: 'json' };
+			const filter: ElementFilter = {
+				path: 'value.foo',
+				operation: '==',
+				value: '50',
+				tag,
+				module: 'json',
+				arguments: null,
+			};
 			const newQuery = await modifyOneQuery(query, [filter]);
 			const newValidation = await validateOneQuery(newQuery);
 			expect(newValidation.isValid).withContext(`Expect new query to be valid`).toBeTrue();
@@ -81,7 +88,31 @@ describe('modifyOneQuery()', () => {
 			expect(newQuery).withContext(`Expect new query to be different than initial one`).not.toBe(query);
 			expect(newQuery)
 				.withContext(`Expect new query to contain the applied filter`)
-				.toBe(`tag=${tag} json value.foo=="50" as "value.foo" | table`);
+				.toBe(`tag=${tag} json value.foo == "50" as "foo" | table`);
+		}),
+	);
+
+	it(
+		'Should throw if the filters are invalid',
+		integrationTest(async () => {
+			const validateOneQuery = makeValidateOneQuery(TEST_BASE_API_CONTEXT);
+			const modifyOneQuery = makeModifyOneQuery(TEST_BASE_API_CONTEXT);
+
+			const query = `tag=${tag} table`;
+			const validation = await validateOneQuery(query);
+			expect(validation.isValid).withContext(`Expect initial query to be valid`).toBeTrue();
+
+			const filter: ElementFilter = {
+				path: 'Src',
+				operation: '==',
+				value: '50',
+				tag,
+				module: 'netflow',
+				arguments: null,
+			};
+			await expectAsync(modifyOneQuery(query, [filter]))
+				.withContext(`Expect invalid filter to cause an error`)
+				.toBeRejectedWithError(Error, 'netflow (module idx 0) error: Malformed IPv4 Address');
 		}),
 	);
 });

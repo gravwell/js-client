@@ -1,5 +1,5 @@
 /*************************************************************************
- * Copyright 2020 Gravwell, Inc. All rights reserved.
+ * Copyright 2021 Gravwell, Inc. All rights reserved.
  * Contact: <legal@gravwell.io>
  *
  * This software may be modified and distributed under the terms of the
@@ -42,5 +42,15 @@ export interface RawActionableDashboardCommand {
 export interface RawActionableURLCommand {
 	type: 'url';
 	reference: string;
-	options?: { modal?: boolean; modalWidth?: string };
+	options?: {
+		modal?: boolean;
+		modalWidth?: string;
+
+		/**
+		 * True means that the actionable value won't be encoded when opening the URL.
+		 *
+		 * @default false
+		 */
+		noValueUrlEncode?: boolean;
+	};
 }

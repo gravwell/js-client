@@ -1,5 +1,5 @@
 /*************************************************************************
- * Copyright 2020 Gravwell, Inc. All rights reserved.
+ * Copyright 2021 Gravwell, Inc. All rights reserved.
  * Contact: <legal@gravwell.io>
  *
  * This software may be modified and distributed under the terms of the
@@ -60,7 +60,13 @@ describe('updateOneActionable()', () => {
 				{
 					name: 'New action',
 					description: 'New action description',
-					command: { type: 'url', urlTemplate: 'http://google__VALUE__', modal: false, modalWidthPercentage: null },
+					command: {
+						type: 'url',
+						urlTemplate: 'http://google__VALUE__',
+						modal: false,
+						modalWidthPercentage: null,
+						noValueUrlEncode: false,
+					},
 				},
 			],
 		},

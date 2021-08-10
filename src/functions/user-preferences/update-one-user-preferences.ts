@@ -1,5 +1,5 @@
 /*************************************************************************
- * Copyright 2020 Gravwell, Inc. All rights reserved.
+ * Copyright 2021 Gravwell, Inc. All rights reserved.
  * Contact: <legal@gravwell.io>
  *
  * This software may be modified and distributed under the terms of the
@@ -11,14 +11,16 @@ import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, pars
 
 export const makeUpdateOneUserPreferences = (context: APIContext) => async (
 	userID: string,
-): Promise<UserPreferences> => {
+	preferences: UserPreferences,
+): Promise<void> => {
 	const templatePath = '/api/users/{userID}/preferences';
 	const url = buildURL(templatePath, { ...context, protocol: 'http', pathParams: { userID } });
 	const baseRequestOptions: HTTPRequestOptions = {
 		headers: { Authorization: context.authToken ? `Bearer ${context.authToken}` : undefined },
+		body: JSON.stringify(preferences ?? {}),
 	};
 	const req = buildHTTPRequest(baseRequestOptions);
 
 	const raw = await fetch(url, { ...req, method: 'PUT' });
-	return parseJSONResponse(raw);
+	return parseJSONResponse(raw, { expect: 'void' });
 };

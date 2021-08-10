@@ -1,5 +1,5 @@
 /*************************************************************************
- * Copyright 2020 Gravwell, Inc. All rights reserved.
+ * Copyright 2021 Gravwell, Inc. All rights reserved.
  * Contact: <legal@gravwell.io>
  *
  * This software may be modified and distributed under the terms of the
@@ -20,4 +20,6 @@ export interface UpdatableUser {
 
 	role?: UserRole;
 	locked?: boolean;
+
+	searchGroupID?: NumericID;
 }

@@ -1,5 +1,5 @@
 /*************************************************************************
- * Copyright 2020 Gravwell, Inc. All rights reserved.
+ * Copyright 2021 Gravwell, Inc. All rights reserved.
  * Contact: <legal@gravwell.io>
  *
  * This software may be modified and distributed under the terms of the
@@ -10,6 +10,4 @@ export interface RawRenderModule {
 	Name: string;
 	Description: string;
 	Examples: Array<string>;
-
-	SortRequired: boolean;
 }

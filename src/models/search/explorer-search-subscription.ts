@@ -1,5 +1,5 @@
 /*************************************************************************
- * Copyright 2020 Gravwell, Inc. All rights reserved.
+ * Copyright 2021 Gravwell, Inc. All rights reserved.
  * Contact: <legal@gravwell.io>
  *
  * This software may be modified and distributed under the terms of the
@@ -22,6 +22,6 @@ export interface ExplorerSearchSubscription {
 	statsOverview$: Observable<{ frequencyStats: Array<SearchFrequencyStats> }>;
 	statsZoom$: Observable<{ filter?: SearchFilter; frequencyStats: Array<SearchFrequencyStats> }>;
 
-	setFilter: (filter: Omit<SearchFilter, 'elementFilters'> | null) => void;
+	setFilter: (filter: Omit<SearchFilter, 'elementFilters' | 'previewMode'> | null) => void;
 	close: () => Promise<void>;
 }

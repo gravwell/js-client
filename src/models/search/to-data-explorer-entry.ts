@@ -1,5 +1,5 @@
 /*************************************************************************
- * Copyright 2020 Gravwell, Inc. All rights reserved.
+ * Copyright 2021 Gravwell, Inc. All rights reserved.
  * Contact: <legal@gravwell.io>
  *
  * This software may be modified and distributed under the terms of the
@@ -11,13 +11,14 @@ import { RawDataExplorerElement, RawDataExplorerEntry } from './raw-data-explore
 
 export const toDataExplorerEntry = (raw: RawDataExplorerEntry): DataExplorerEntry => ({
 	tag: raw.Tag,
-	module: raw.Module,
 	elements: (raw.Elements ?? []).map(toDataExplorerElement),
 });
 
 export const toDataExplorerElement = (raw: RawDataExplorerElement): DataExplorerElement => ({
+	module: raw.Module,
 	name: raw.Name,
 	path: raw.Path,
+	arguments: raw.Args ?? null,
 
 	value: raw.Value,
 	filters: raw.Filters ?? [],

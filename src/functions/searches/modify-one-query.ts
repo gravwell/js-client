@@ -1,5 +1,5 @@
 /*************************************************************************
- * Copyright 2020 Gravwell, Inc. All rights reserved.
+ * Copyright 2021 Gravwell, Inc. All rights reserved.
  * Contact: <legal@gravwell.io>
  *
  * This software may be modified and distributed under the terms of the
@@ -31,6 +31,9 @@ export const makeModifyOneQuery = (context: APIContext) => {
 		querySub.send({ id, query, filters });
 
 		const parsed = await parsingP;
+		if (parsed.isValid === false) {
+			throw new Error(parsed.error.message);
+		}
 		return parsed.query;
 	};
 };

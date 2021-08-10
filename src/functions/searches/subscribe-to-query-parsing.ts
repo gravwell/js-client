@@ -1,14 +1,15 @@
 /*************************************************************************
- * Copyright 2020 Gravwell, Inc. All rights reserved.
+ * Copyright 2021 Gravwell, Inc. All rights reserved.
  * Contact: <legal@gravwell.io>
  *
  * This software may be modified and distributed under the terms of the
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { filter, map } from 'rxjs/operators';
+import { Observable, timer } from 'rxjs';
+import { filter, last, map, mapTo, startWith, takeUntil } from 'rxjs/operators';
 import { ElementFilter, Query, RawQuery } from '~/models';
-import { RawElementFilter, toElementFilter, ValidatedQuery } from '~/models/search';
+import { RawElementFilter, RawPongMessageSent, toElementFilter, ValidatedQuery } from '~/models/search';
 import { APIContext, APISubscription, apiSubscriptionFromWebSocket, buildURL, WebSocket } from '../utils';
 
 export const makeSubscribeToOneQueryParsing = (context: APIContext) => {
@@ -24,6 +25,12 @@ export const makeSubscribeToOneQueryParsing = (context: APIContext) => {
 			RawQueryValidationMessageSent
 		>(socket);
 		rawSubscription.send({ Subs: ['PONG', 'parse', 'search', 'attach'] });
+		const wsClosed$: Observable<void> = rawSubscription.sent$.pipe(startWith(undefined), mapTo(undefined), last());
+		timer(1000, 5000)
+			.pipe(takeUntil(wsClosed$))
+			.subscribe(() => {
+				rawSubscription.send({ type: 'PONG', data: {} });
+			});
 
 		const received$ = rawSubscription.received$.pipe(
 			filter((msg): msg is RawQueryValidationDesiredMessageReceived => {
@@ -72,6 +79,7 @@ export const makeSubscribeToOneQueryParsing = (context: APIContext) => {
 						Tag: f.tag,
 						Module: f.module,
 						Path: f.path,
+						Args: f.arguments ?? undefined,
 						Op: f.operation,
 						Value: f.value,
 					}));
@@ -96,6 +104,7 @@ type RawQueryValidationDesiredMessageSent = {
 };
 type RawQueryValidationMessageSent =
 	| RawQueryValidationDesiredMessageSent
+	| RawPongMessageSent
 	| { Subs: Array<'PONG' | 'parse' | 'search' | 'attach'> };
 
 type RawQueryValidationDesiredMessageReceived = { type: 'parse'; data: RawValidatedQuery };

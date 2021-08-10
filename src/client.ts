@@ -1,5 +1,5 @@
 /*************************************************************************
- * Copyright 2020 Gravwell, Inc. All rights reserved.
+ * Copyright 2021 Gravwell, Inc. All rights reserved.
  * Contact: <legal@gravwell.io>
  *
  * This software may be modified and distributed under the terms of the
@@ -74,6 +74,7 @@ import {
 	UsersService,
 	WebServerService,
 } from '~/services';
+import { createSearchGroupsService, SearchGroupsService } from './services/search-groups';
 
 export interface GravwellClientOptions {
 	useEncryption?: boolean;
@@ -178,6 +179,7 @@ export class GravwellClient {
 		this._kits = createKitsService(initialContext);
 		this._queries = createQueriesService(initialContext);
 		this._explorer = createExplorerService(initialContext);
+		this._searchGroups = createSearchGroupsService(initialContext);
 
 		this._context$.subscribe(context => {
 			this._tags = createTagsService(context);
@@ -211,6 +213,7 @@ export class GravwellClient {
 			this._kits = createKitsService(context);
 			this._queries = createQueriesService(context);
 			this._explorer = createExplorerService(context);
+			this._searchGroups = createSearchGroupsService(context);
 		});
 	}
 
@@ -369,4 +372,9 @@ export class GravwellClient {
 		return this._explorer;
 	}
 	private _explorer: ExplorerService;
+
+	public get searchGroups(): SearchGroupsService {
+		return this._searchGroups;
+	}
+	private _searchGroups: SearchGroupsService;
 }

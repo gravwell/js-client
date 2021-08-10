@@ -1,19 +1,23 @@
 /*************************************************************************
- * Copyright 2020 Gravwell, Inc. All rights reserved.
+ * Copyright 2021 Gravwell, Inc. All rights reserved.
  * Contact: <legal@gravwell.io>
  *
  * This software may be modified and distributed under the terms of the
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { subHours } from 'date-fns';
-import { isBoolean, isEqual, isNull, isUndefined, uniqueId } from 'lodash';
-import { BehaviorSubject, combineLatest, NEVER, Observable, of, Subject } from 'rxjs';
+import { isAfter, subHours } from 'date-fns';
+import { isBoolean, isNil, isNull, isUndefined, uniqueId } from 'lodash';
+import { BehaviorSubject, combineLatest, EMPTY, from, NEVER, Observable, of, Subject, Subscription } from 'rxjs';
 import {
 	bufferCount,
 	catchError,
+	concatMap,
+	debounceTime,
 	distinctUntilChanged,
 	filter,
+	filter as rxjsFilter,
+	first,
 	map,
 	skipUntil,
 	startWith,
@@ -47,6 +51,7 @@ import {
 	countEntriesFromModules,
 	filterMessageByCommand,
 	getDefaultGranularityByRendererType,
+	recalculateZoomEnd,
 	RequiredSearchFilter,
 	SEARCH_FILTER_PREFIX,
 } from '../subscribe-to-one-search/helpers';
@@ -55,12 +60,27 @@ export const makeSubscribeToOneExplorerSearch = (context: APIContext) => {
 	const modifyOneQuery = makeModifyOneQuery(context);
 	const subscribeToOneRawSearch = makeSubscribeToOneRawSearch(context);
 	let rawSubscriptionP: ReturnType<typeof subscribeToOneRawSearch> | null = null;
+	let closedSub: Subscription | null = null;
 
 	return async (
 		query: Query,
-		options: { filter?: SearchFilter; metadata?: RawJSON } = {},
+		options: { filter?: SearchFilter; metadata?: RawJSON; noHistory?: boolean } = {},
 	): Promise<ExplorerSearchSubscription> => {
-		if (isNull(rawSubscriptionP)) rawSubscriptionP = subscribeToOneRawSearch();
+		if (isNull(rawSubscriptionP)) {
+			rawSubscriptionP = subscribeToOneRawSearch();
+			if (closedSub?.closed === false) {
+				closedSub.unsubscribe();
+			}
+
+			// Handles websocket hangups
+			closedSub = from(rawSubscriptionP)
+				.pipe(concatMap(rawSubscription => rawSubscription.received$))
+				.subscribe({
+					complete: () => {
+						rawSubscriptionP = null;
+					},
+				});
+		}
 		const rawSubscription = await rawSubscriptionP;
 
 		// The default end date is now
@@ -77,11 +97,13 @@ export const makeSubscribeToOneExplorerSearch = (context: APIContext) => {
 				index: options.filter?.entriesOffset?.index ?? 0,
 				count: options.filter?.entriesOffset?.count ?? 100,
 			},
-			previewMode: options.filter?.previewMode ?? false,
-			dateRange: {
-				start: options.filter?.dateRange?.start ?? defaultStart,
-				end: options.filter?.dateRange?.end ?? defaultEnd,
-			},
+			dateRange:
+				options.filter?.dateRange === 'preview'
+					? ('preview' as const)
+					: {
+							start: options.filter?.dateRange?.start ?? defaultStart,
+							end: options.filter?.dateRange?.end ?? defaultEnd,
+					  },
 			// *NOTE: The default granularity is recalculated when we receive the renderer type
 			desiredGranularity: options.filter?.desiredGranularity ?? 100,
 
@@ -102,8 +124,11 @@ export const makeSubscribeToOneExplorerSearch = (context: APIContext) => {
 		const searchInitMsg = await initiateSearch(rawSubscription, modifiedQuery, {
 			initialFilterID,
 			metadata: options.metadata,
-			preview: initialFilter.previewMode,
-			range: [initialFilter.dateRange.start, initialFilter.dateRange.end],
+			range:
+				initialFilter.dateRange === 'preview'
+					? 'preview'
+					: [initialFilter.dateRange.start, initialFilter.dateRange.end],
+			noHistory: options.noHistory,
 		});
 		const searchTypeID = searchInitMsg.data.OutputSearchSubproto;
 		const isResponseError = filterMessageByCommand(SearchMessageCommands.ResponseError);
@@ -128,6 +153,28 @@ export const makeSubscribeToOneExplorerSearch = (context: APIContext) => {
 			takeUntil(close$),
 		);
 		const rendererType = searchInitMsg.data.RenderModule;
+
+		type DateRange = { start: Date; end: Date };
+		const previewDateRange: DateRange = await (async (): Promise<DateRange> => {
+			// Not in preview mode, so return the initial filter date range, whatever, it won't be used
+			if (initialFilter.dateRange !== 'preview') return initialFilter.dateRange;
+
+			// In preview mode, so we need to request search details and use the timerange that we get back
+			const detailsP = searchMessages$
+				.pipe(filter(filterMessageByCommand(SearchMessageCommands.RequestDetails)), first())
+				.toPromise();
+			const requestDetailsMsg: RawRequestSearchDetailsMessageSent = {
+				type: searchTypeID,
+				data: { ID: SearchMessageCommands.RequestDetails },
+			};
+			rawSubscription.send(requestDetailsMsg);
+			const details = await detailsP;
+
+			return {
+				start: new Date(details.data.SearchInfo.StartRange),
+				end: new Date(details.data.SearchInfo.EndRange),
+			};
+		})();
 
 		const close = async (): Promise<void> => {
 			if (closed) return undefined;
@@ -174,6 +221,11 @@ export const makeSubscribeToOneExplorerSearch = (context: APIContext) => {
 			takeUntil(close$),
 		);
 
+		const expandDateRange = (dateRange: SearchFilter['dateRange']): Partial<DateRange> => {
+			if (dateRange === 'preview') return previewDateRange;
+			return dateRange ?? {};
+		};
+
 		const _filter$ = new BehaviorSubject<SearchFilter>(initialFilter);
 		const setFilter = (filter: SearchFilter | null): void => {
 			if (closed) return undefined;
@@ -188,10 +240,12 @@ export const makeSubscribeToOneExplorerSearch = (context: APIContext) => {
 						index: curr.entriesOffset?.index ?? prev.entriesOffset?.index ?? initialFilter.entriesOffset.index,
 						count: curr.entriesOffset?.count ?? prev.entriesOffset?.count ?? initialFilter.entriesOffset.count,
 					},
-					previewMode: curr.previewMode ?? prev.previewMode ?? initialFilter.previewMode,
 					dateRange: {
-						start: curr.dateRange?.start ?? prev.dateRange?.start ?? initialFilter.dateRange.start,
-						end: curr.dateRange?.end ?? prev.dateRange?.end ?? initialFilter.dateRange.end,
+						start: defaultStart,
+						end: defaultEnd,
+						...expandDateRange(initialFilter.dateRange),
+						...expandDateRange(prev.dateRange),
+						...expandDateRange(curr.dateRange),
 					},
 					desiredGranularity: curr.desiredGranularity ?? prev.desiredGranularity ?? initialFilter.desiredGranularity,
 					overviewGranularity:
@@ -200,23 +254,68 @@ export const makeSubscribeToOneExplorerSearch = (context: APIContext) => {
 					elementFilters: initialFilter.elementFilters,
 				}),
 			),
-			distinctUntilChanged((a, b) => isEqual(a, b)),
 
 			// Complete when/if the user calls .close()
 			takeUntil(close$),
 		);
 
+		const nextDetailsMsg = () =>
+			searchMessages$
+				.pipe(
+					filter(filterMessageByCommand(SearchMessageCommands.RequestDetails)),
+					first(),
+					// cleanup: Complete when/if the user calls .close()
+					takeUntil(close$),
+				)
+				.toPromise();
+
+		let pollingSubs: Subscription;
+
 		const requestEntries = async (filter: RequiredSearchFilter): Promise<void> => {
 			if (closed) return undefined;
+
+			if (!isNil(pollingSubs)) {
+				pollingSubs.unsubscribe();
+			}
+			pollingSubs = new Subscription();
 
 			const filterID = uniqueId(SEARCH_FILTER_PREFIX);
 			filtersByID[filterID] = filter;
 
 			const first = filter.entriesOffset.index;
 			const last = first + filter.entriesOffset.count;
-			const start = filter.dateRange.start.toISOString();
-			const end = filter.dateRange.end.toISOString();
+			const startDate = filter.dateRange === 'preview' ? previewDateRange.start : filter.dateRange.start;
+			const start = startDate.toISOString();
+			const endDate = filter.dateRange === 'preview' ? previewDateRange.end : filter.dateRange.end;
+			const end = endDate.toISOString();
 			// TODO: Filter by .desiredGranularity and .fieldFilters
+
+			// Set up a promise to wait for the next details message
+			const detailsMsgP = nextDetailsMsg();
+			// Send a request for details
+			const requestDetailsMsg: RawRequestSearchDetailsMessageSent = {
+				type: searchTypeID,
+				data: { ID: SearchMessageCommands.RequestDetails, Addendum: { filterID } },
+			};
+			const detailsP = rawSubscription.send(requestDetailsMsg);
+
+			// Grab the results from the details response (we need it later)
+			const detailsResults = await Promise.all([detailsP, detailsMsgP]);
+			const detailsMsg = detailsResults[1];
+
+			// Keep sending requests for search details until Finished is true
+			pollingSubs.add(
+				rawSearchDetails$
+					.pipe(
+						startWith(detailsMsg), // We've already received one details message - use it to start
+						rxjsFilter(details => !details.data.Finished),
+						debounceTime(500),
+						concatMap(() => rawSubscription.send(requestDetailsMsg)),
+						catchError(() => EMPTY),
+						takeUntil(close$),
+					)
+					.subscribe(),
+			);
 
 			const requestEntriesMsg: RawRequestExplorerSearchEntriesWithinRangeMessageSent = {
 				type: searchTypeID,
@@ -231,6 +330,18 @@ export const makeSubscribeToOneExplorerSearch = (context: APIContext) => {
 					},
 				},
 			};
+			// Keep sending requests for entries until finished is true
+			pollingSubs.add(
+				entries$
+					.pipe(
+						rxjsFilter(entries => !entries.finished),
+						debounceTime(500),
+						concatMap(() => rawSubscription.send(requestEntriesMsg)),
+						catchError(() => EMPTY),
+						takeUntil(close$),
+					)
+					.subscribe(),
+			);
 			const entriesP = rawSubscription.send(requestEntriesMsg);
 
 			const requestStatsMessage: RawRequestSearchStatsMessageSent = {
@@ -241,13 +352,19 @@ export const makeSubscribeToOneExplorerSearch = (context: APIContext) => {
 					Stats: { SetCount: filter.overviewGranularity },
 				},
 			};
+			// Keep sending requests for stats until finished is true
+			pollingSubs.add(
+				rawSearchStats$
+					.pipe(
+						rxjsFilter(stats => !stats.data.Finished),
+						debounceTime(500),
+						concatMap(() => rawSubscription.send(requestStatsMessage)),
+						catchError(() => EMPTY),
+						takeUntil(close$),
+					)
+					.subscribe(),
+			);
 			const statsP = rawSubscription.send(requestStatsMessage);
-
-			const requestDetailsMsg: RawRequestSearchDetailsMessageSent = {
-				type: searchTypeID,
-				data: { ID: SearchMessageCommands.RequestDetails, Addendum: { filterID } },
-			};
-			const detailsP = rawSubscription.send(requestDetailsMsg);
 
 			const requestStatsWithinRangeMsg: RawRequestSearchStatsWithinRangeMessageSent = {
 				type: searchTypeID,
@@ -256,11 +373,28 @@ export const makeSubscribeToOneExplorerSearch = (context: APIContext) => {
 					Addendum: { filterID },
 					Stats: {
 						SetCount: filter.zoomGranularity,
-						SetEnd: end,
+						SetEnd: recalculateZoomEnd(
+							detailsMsg.data.SearchInfo.MinZoomWindow,
+							filter.zoomGranularity,
+							startDate,
+							endDate,
+						).toISOString(),
 						SetStart: start,
 					},
 				},
 			};
+			// Keep sending requests for stats-within-range until finished is true
+			pollingSubs.add(
+				rawStatsZoom$
+					.pipe(
+						rxjsFilter(stats => !stats.data.Finished),
+						debounceTime(500),
+						concatMap(() => rawSubscription.send(requestStatsWithinRangeMsg)),
+						catchError(() => EMPTY),
+						takeUntil(close$),
+					)
+					.subscribe(),
+			);
 			const statsRangeP = rawSubscription.send(requestStatsWithinRangeMsg);
 
 			await Promise.all([entriesP, statsP, detailsP, statsRangeP]);
@@ -387,7 +521,15 @@ export const makeSubscribeToOneExplorerSearch = (context: APIContext) => {
 			map(set => {
 				const filterID = (set.data.Addendum?.filterID as string | undefined) ?? null;
 				const filter = filtersByID[filterID ?? ''] ?? undefined;
-				return { frequencyStats: countEntriesFromModules(set), filter };
+
+				const filterEnd = filter?.dateRange === 'preview' ? previewDateRange.end : filter?.dateRange?.end;
+				const initialEnd = initialFilter.dateRange === 'preview' ? previewDateRange.end : initialFilter.dateRange.end;
+				const endDate = filterEnd ?? initialEnd;
+
+				return {
+					frequencyStats: countEntriesFromModules(set).filter(f => !isAfter(f.timestamp, endDate)),
+					filter,
+				};
 			}),
 
 			// Complete when/if the user calls .close()

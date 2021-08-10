@@ -1,5 +1,5 @@
 /*************************************************************************
- * Copyright 2020 Gravwell, Inc. All rights reserved.
+ * Copyright 2021 Gravwell, Inc. All rights reserved.
  * Contact: <legal@gravwell.io>
  *
  * This software may be modified and distributed under the terms of the
@@ -7,7 +7,7 @@
  **************************************************************************/
 
 import * as base64 from 'base-64';
-import { addMinutes, subMinutes } from 'date-fns';
+import { addMinutes, isEqual as datesAreEqual, subMinutes } from 'date-fns';
 import { isArray, isUndefined, sum, zip } from 'lodash';
 import { Observable } from 'rxjs';
 import { first, last, map, takeWhile, toArray } from 'rxjs/operators';
@@ -36,7 +36,7 @@ describe('subscribeToOneExplorerSearch()', () => {
 	const start = new Date(2010, 0, 0);
 
 	// The end date for generated queries; one minute between each entry
-	const end = addMinutes(start, count - 1);
+	const end = addMinutes(start, count);
 
 	const originalData: Array<Entry> = [];
 
@@ -152,7 +152,6 @@ describe('subscribeToOneExplorerSearch()', () => {
 
 			for (const entry of explorerEntries) {
 				expect(entry.tag).withContext(`Expect entry tag to be "${tag}"`).toBe(tag);
-				expect(entry.module).withContext(`Expect explorer module to be JSON`).toBe('json');
 
 				expect(entry.elements.length)
 					.withContext(`Expect to have 2 data explorer elements on first depth level`)
@@ -160,6 +159,9 @@ describe('subscribeToOneExplorerSearch()', () => {
 				expect(entry.elements.map(el => el.name).sort())
 					.withContext(`Expect first depth data explorer elements to be "value" and "timestamp"`)
 					.toEqual(['timestamp', 'value']);
+				expect(entry.elements.map(el => el.module))
+					.withContext(`Expect explorer module to be JSON`)
+					.toEqual(['json', 'json']);
 
 				const timestampEl = entry.elements.find(el => el.name === 'timestamp')!;
 				const valueEl = entry.elements.find(el => el.name === 'value')!;
@@ -233,11 +235,11 @@ describe('subscribeToOneExplorerSearch()', () => {
 	it('Should be able to apply element filters', async () => {
 		const subscribeToOneExplorerSearch = makeSubscribeToOneExplorerSearch(TEST_BASE_API_CONTEXT);
 
-		const unfilteredQuery = `tag=${tag} ax | raw`;
+		const unfilteredQuery = `tag=${tag} raw`;
 		const elementFilters: Array<ElementFilter> = [
-			{ path: 'value.foo', operation: '!=', value: '50', tag, module: 'json' },
+			{ path: 'value.foo', operation: '!=', value: '50', tag, module: 'json', arguments: null },
 		];
-		const query = `tag=${tag} json value.foo!="50" as "value.foo" | ax | raw`;
+		const query = `tag=${tag} json value.foo != "50" as "foo" | raw`;
 		const countAfterFilter = count - 1;
 
 		const filter: SearchFilter = {
@@ -393,7 +395,7 @@ describe('subscribeToOneExplorerSearch()', () => {
 		'Should send error over error$ when Last is less than First',
 		integrationTest(async () => {
 			const subscribeToOneExplorerSearch = makeSubscribeToOneExplorerSearch(TEST_BASE_API_CONTEXT);
-			const query = `tag=${tag}`;
+			const query = `tag=${tag} chart`;
 
 			// Use an invalid filter, where Last is less than First
 			const filter: SearchFilter = { entriesOffset: { index: 1, count: -1 }, dateRange: { start, end } };
@@ -419,15 +421,14 @@ describe('subscribeToOneExplorerSearch()', () => {
 		25000,
 	);
 
-	it(
+	xit(
 		'Should work with queries using the raw renderer and preview flag',
 		integrationTest(async () => {
 			const subscribeToOneExplorerSearch = makeSubscribeToOneExplorerSearch(TEST_BASE_API_CONTEXT);
 			const query = `tag=${tag} json value timestamp | raw`;
 			const filter: SearchFilter = {
 				entriesOffset: { index: 0, count: count },
-				previewMode: true,
-				dateRange: { start, end },
+				dateRange: 'preview',
 			};
 			const search = await subscribeToOneExplorerSearch(query, { filter });
 
@@ -552,6 +553,21 @@ describe('subscribeToOneExplorerSearch()', () => {
 			// expect(sum(statsZoom.frequencyStats.map(x => x.count)))
 			// 	.withContext('The sum of counts from statsZoom should equal the number of results returned by preview mode')
 			// 	.toEqual(textEntries.data.length);
+
+			// See if we can change the date range
+			const lastEntriesP = search.entries$
+				.pipe(
+					takeWhile(e => datesAreEqual(e.start, start) === false, true),
+					last(),
+				)
+				.toPromise();
+			search.setFilter({ dateRange: { start, end } });
+			const lastEntries = await lastEntriesP;
+
+			expect(datesAreEqual(lastEntries.start, start))
+				.withContext(`Start date should be the one we just set`)
+				.toBeTrue();
+			expect(datesAreEqual(lastEntries.end, end)).withContext(`End date should be the one we just set`).toBeTrue();
 		}),
 		25000,
 	);
