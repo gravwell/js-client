@@ -299,6 +299,20 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 			const detailsResults = await Promise.all([detailsP, detailsMsgP]);
 			const detailsMsg = detailsResults[1];
 
+			// Keep sending requests for search details until Finished is true
+			pollingSubs.add(
+				rawSearchDetails$
+					.pipe(
+						startWith(detailsMsg), // We've already received one details message - use it to start
+						rxjsFilter(details => !details.data.Finished),
+						debounceTime(500),
+						concatMap(() => rawSubscription.send(requestDetailsMsg)),
+						catchError(() => EMPTY),
+						takeUntil(close$),
+					)
+					.subscribe(),
+			);
+
 			const requestEntriesMsg: RawRequestSearchEntriesWithinRangeMessageSent = {
 				type: searchTypeID,
 				data: {
