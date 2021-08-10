@@ -270,6 +270,11 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 		const requestEntries = async (filter: RequiredSearchFilter): Promise<void> => {
 			if (closed) return undefined;
 
+			if (!isNil(pollingSubs)) {
+				pollingSubs.unsubscribe();
+			}
+			pollingSubs = new Subscription();
+
 			const filterID = uniqueId(SEARCH_FILTER_PREFIX);
 			filtersByID[filterID] = filter;
 
@@ -307,6 +312,18 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 					},
 				},
 			};
+			// Keep sending requests for entries until finished is true
+			pollingSubs.add(
+				entries$
+					.pipe(
+						rxjsFilter(entries => !entries.finished),
+						debounceTime(500),
+						concatMap(() => rawSubscription.send(requestEntriesMsg)),
+						catchError(() => EMPTY),
+						takeUntil(close$),
+					)
+					.subscribe(),
+			);
 			const entriesP = rawSubscription.send(requestEntriesMsg);
 
 			const requestStatsMessage: RawRequestSearchStatsMessageSent = {
@@ -317,6 +334,18 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 					Stats: { SetCount: filter.overviewGranularity },
 				},
 			};
+			// Keep sending requests for stats until finished is true
+			pollingSubs.add(
+				rawSearchStats$
+					.pipe(
+						rxjsFilter(stats => !stats.data.Finished),
+						debounceTime(500),
+						concatMap(() => rawSubscription.send(requestStatsMessage)),
+						catchError(() => EMPTY),
+						takeUntil(close$),
+					)
+					.subscribe(),
+			);
 			const statsP = rawSubscription.send(requestStatsMessage);
 
 			const requestStatsWithinRangeMsg: RawRequestSearchStatsWithinRangeMessageSent = {
@@ -336,39 +365,6 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 					},
 				},
 			};
-			const statsRangeP = rawSubscription.send(requestStatsWithinRangeMsg);
-
-			if (!isNil(pollingSubs)) {
-				pollingSubs.unsubscribe();
-			}
-			pollingSubs = new Subscription();
-
-			// Keep sending requests for entries until finished is true
-			pollingSubs.add(
-				entries$
-					.pipe(
-						rxjsFilter(entries => !entries.finished),
-						debounceTime(500),
-						concatMap(() => rawSubscription.send(requestEntriesMsg)),
-						catchError(() => EMPTY),
-						takeUntil(close$),
-					)
-					.subscribe(),
-			);
-
-			// Keep sending requests for stats until finished is true
-			pollingSubs.add(
-				rawSearchStats$
-					.pipe(
-						rxjsFilter(stats => !stats.data.Finished),
-						debounceTime(500),
-						concatMap(() => rawSubscription.send(requestStatsMessage)),
-						catchError(() => EMPTY),
-						takeUntil(close$),
-					)
-					.subscribe(),
-			);
-
 			// Keep sending requests for stats-within-range until finished is true
 			pollingSubs.add(
 				rawStatsZoom$
@@ -381,6 +377,7 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 					)
 					.subscribe(),
 			);
+			const statsRangeP = rawSubscription.send(requestStatsWithinRangeMsg);
 
 			await Promise.all([entriesP, statsP, detailsP, statsRangeP]);
 		};
