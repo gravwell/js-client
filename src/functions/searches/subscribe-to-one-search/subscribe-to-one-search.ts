@@ -7,14 +7,16 @@
  **************************************************************************/
 
 import { isAfter, subHours } from 'date-fns';
-import { isBoolean, isNull, isUndefined, uniqueId } from 'lodash';
-import { BehaviorSubject, combineLatest, from, NEVER, Observable, of, Subject, Subscription } from 'rxjs';
+import { isBoolean, isNil, isNull, isUndefined, uniqueId } from 'lodash';
+import { BehaviorSubject, combineLatest, EMPTY, from, NEVER, Observable, of, Subject, Subscription } from 'rxjs';
 import {
 	bufferCount,
 	catchError,
 	concatMap,
+	debounceTime,
 	distinctUntilChanged,
 	filter,
+	filter as rxjsFilter,
 	first,
 	map,
 	skipUntil,
@@ -263,6 +265,8 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 				)
 				.toPromise();
 
+		let pollingSubs: Subscription;
+
 		const requestEntries = async (filter: RequiredSearchFilter): Promise<void> => {
 			if (closed) return undefined;
 
@@ -333,6 +337,50 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 				},
 			};
 			const statsRangeP = rawSubscription.send(requestStatsWithinRangeMsg);
+
+			if (!isNil(pollingSubs)) {
+				pollingSubs.unsubscribe();
+			}
+			pollingSubs = new Subscription();
+
+			// Keep sending requests for entries until finished is true
+			pollingSubs.add(
+				entries$
+					.pipe(
+						rxjsFilter(entries => !entries.finished),
+						debounceTime(500),
+						concatMap(() => rawSubscription.send(requestEntriesMsg)),
+						catchError(() => EMPTY),
+						takeUntil(close$),
+					)
+					.subscribe(),
+			);
+
+			// Keep sending requests for stats until finished is true
+			pollingSubs.add(
+				rawSearchStats$
+					.pipe(
+						rxjsFilter(stats => !stats.data.Finished),
+						debounceTime(500),
+						concatMap(() => rawSubscription.send(requestStatsMessage)),
+						catchError(() => EMPTY),
+						takeUntil(close$),
+					)
+					.subscribe(),
+			);
+
+			// Keep sending requests for stats-within-range until finished is true
+			pollingSubs.add(
+				rawStatsZoom$
+					.pipe(
+						rxjsFilter(stats => !stats.data.Finished),
+						debounceTime(500),
+						concatMap(() => rawSubscription.send(requestStatsWithinRangeMsg)),
+						catchError(() => EMPTY),
+						takeUntil(close$),
+					)
+					.subscribe(),
+			);
 
 			await Promise.all([entriesP, statsP, detailsP, statsRangeP]);
 		};
