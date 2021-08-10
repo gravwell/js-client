@@ -10,6 +10,4 @@ export interface RenderModule {
 	name: string;
 	description: string;
 	examples: Array<string>;
-
-	sortingRequired: boolean;
 }

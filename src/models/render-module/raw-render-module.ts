@@ -10,6 +10,4 @@ export interface RawRenderModule {
 	Name: string;
 	Description: string;
 	Examples: Array<string>;
-
-	SortRequired: boolean;
 }
