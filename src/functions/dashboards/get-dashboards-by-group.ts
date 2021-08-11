@@ -8,13 +8,7 @@
 
 import { Dashboard, RawDashboard, toDashboard } from '~/models';
 import { NumericID } from '~/value-objects';
-import {
-	APIContext,
-	buildHTTPRequestWithContextToken,
-	buildURL,
-	fetch,
-	parseJSONResponse
-} from '../utils';
+import { APIContext, buildHTTPRequestWithContextToken, buildURL, fetch, parseJSONResponse } from '../utils';
 
 export const makeGetDashboardsByGroup = (context: APIContext) => {
 	return async (groupID: NumericID): Promise<Array<Dashboard>> => {

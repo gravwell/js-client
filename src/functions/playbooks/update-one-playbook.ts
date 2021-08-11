@@ -13,7 +13,7 @@ import {
 	buildURL,
 	fetch,
 	HTTPRequestOptions,
-	parseJSONResponse
+	parseJSONResponse,
 } from '../utils';
 import { makeGetOnePlaybook } from './get-one-playbook';
 

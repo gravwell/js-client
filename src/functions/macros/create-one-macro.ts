@@ -14,7 +14,7 @@ import {
 	buildURL,
 	fetch,
 	HTTPRequestOptions,
-	parseJSONResponse
+	parseJSONResponse,
 } from '../utils';
 import { makeGetOneMacro } from './get-one-macro';
 

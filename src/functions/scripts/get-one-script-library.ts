@@ -7,13 +7,7 @@
  **************************************************************************/
 
 import { Script } from '~/models';
-import {
-	APIContext,
-	buildHTTPRequestWithContextToken,
-	buildURL,
-	fetch,
-	parseJSONResponse
-} from '../utils';
+import { APIContext, buildHTTPRequestWithContextToken, buildURL, fetch, parseJSONResponse } from '../utils';
 
 export const makeGetOneScriptLibrary = (context: APIContext) => {
 	return async (path: string, options: { repository?: string; commitID?: string } = {}): Promise<Script> => {

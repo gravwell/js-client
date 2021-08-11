@@ -17,7 +17,7 @@ import {
 	fetch,
 	File,
 	HTTPRequestOptions,
-	parseJSONResponse
+	parseJSONResponse,
 } from '../utils';
 import { makeGetAllAutoExtractors } from './get-all-auto-extractors';
 import { makeUpdateOneAutoExtractor } from './update-one-auto-extractor';

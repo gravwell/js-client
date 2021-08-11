@@ -14,7 +14,7 @@ import {
 	buildURL,
 	fetch,
 	HTTPRequestOptions,
-	parseJSONResponse
+	parseJSONResponse,
 } from '../utils';
 import { makeGetAllAutoExtractors } from './get-all-auto-extractors';
 

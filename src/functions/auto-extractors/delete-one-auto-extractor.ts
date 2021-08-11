@@ -7,13 +7,7 @@
  **************************************************************************/
 
 import { NumericID } from '~/value-objects';
-import {
-	APIContext,
-	buildHTTPRequestWithContextToken,
-	buildURL,
-	fetch,
-	parseJSONResponse
-} from '../utils';
+import { APIContext, buildHTTPRequestWithContextToken, buildURL, fetch, parseJSONResponse } from '../utils';
 
 export const makeDeleteOneAutoExtractor = (context: APIContext) => {
 	return async (autoExtractorID: NumericID): Promise<void> => {

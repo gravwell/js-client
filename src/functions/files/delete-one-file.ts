@@ -7,13 +7,7 @@
  **************************************************************************/
 
 import { UUID } from '~/value-objects';
-import {
-	APIContext,
-	buildHTTPRequestWithContextToken,
-	buildURL,
-	fetch,
-	parseJSONResponse
-} from '../utils';
+import { APIContext, buildHTTPRequestWithContextToken, buildURL, fetch, parseJSONResponse } from '../utils';
 
 // !WARNING gravwell/gravwell#2505 can't use ThingUUID
 export const makeDeleteOneFile = (context: APIContext) => {

@@ -13,7 +13,7 @@ import {
 	buildURL,
 	fetch,
 	HTTPRequestOptions,
-	parseJSONResponse
+	parseJSONResponse,
 } from '../utils';
 import { makeGetOneGroup } from './get-one-group';
 

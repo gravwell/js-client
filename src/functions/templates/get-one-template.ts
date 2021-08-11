@@ -8,13 +8,7 @@
 
 import { RawTemplate, Template, toTemplate } from '~/models';
 import { NumericID } from '~/value-objects';
-import {
-	APIContext,
-	buildHTTPRequestWithContextToken,
-	buildURL,
-	fetch,
-	parseJSONResponse
-} from '../utils';
+import { APIContext, buildHTTPRequestWithContextToken, buildURL, fetch, parseJSONResponse } from '../utils';
 
 export const makeGetOneTemplate = (context: APIContext) => {
 	return async (templateID: NumericID): Promise<Template> => {

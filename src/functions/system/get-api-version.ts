@@ -7,13 +7,7 @@
  **************************************************************************/
 
 import { Version } from '~/models';
-import {
-	APIContext,
-	buildHTTPRequestWithContextToken,
-	buildURL,
-	fetch,
-	parseJSONResponse
-} from '../utils';
+import { APIContext, buildHTTPRequestWithContextToken, buildURL, fetch, parseJSONResponse } from '../utils';
 
 export const makeGetAPIVersion = (context: APIContext) => {
 	const templatePath = '/api/version/';

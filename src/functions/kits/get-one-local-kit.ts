@@ -8,13 +8,7 @@
 
 import { LocalKit, RawLocalKit, toLocalKit } from '~/models';
 import { NumericID } from '~/value-objects';
-import {
-	APIContext,
-	buildHTTPRequestWithContextToken,
-	buildURL,
-	fetch,
-	parseJSONResponse
-} from '../utils';
+import { APIContext, buildHTTPRequestWithContextToken, buildURL, fetch, parseJSONResponse } from '../utils';
 
 export const makeGetOneLocalKit = (context: APIContext) => {
 	return async (kitID: NumericID): Promise<LocalKit> => {

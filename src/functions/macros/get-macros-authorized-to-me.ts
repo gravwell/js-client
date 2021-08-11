@@ -7,13 +7,7 @@
  **************************************************************************/
 
 import { Macro, RawMacro, toMacro } from '~/models';
-import {
-	APIContext,
-	buildHTTPRequestWithContextToken,
-	buildURL,
-	fetch,
-	parseJSONResponse
-} from '../utils';
+import { APIContext, buildHTTPRequestWithContextToken, buildURL, fetch, parseJSONResponse } from '../utils';
 
 export const makeGetMacrosAuthorizedToMe = (context: APIContext) => {
 	const path = '/api/macros';

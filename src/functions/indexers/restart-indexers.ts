@@ -6,13 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import {
-	APIContext,
-	buildHTTPRequestWithContextToken,
-	buildURL,
-	fetch,
-	parseJSONResponse
-} from '../utils';
+import { APIContext, buildHTTPRequestWithContextToken, buildURL, fetch, parseJSONResponse } from '../utils';
 
 // TODO: Test this when gravwell/gravwell#2277 gets fixed
 export const makeRestartIndexers = (context: APIContext) => {

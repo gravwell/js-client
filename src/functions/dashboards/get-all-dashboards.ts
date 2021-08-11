@@ -7,13 +7,7 @@
  **************************************************************************/
 
 import { Dashboard, RawDashboard, toDashboard } from '~/models';
-import {
-	APIContext,
-	buildHTTPRequestWithContextToken,
-	buildURL,
-	fetch,
-	parseJSONResponse
-} from '../utils';
+import { APIContext, buildHTTPRequestWithContextToken, buildURL, fetch, parseJSONResponse } from '../utils';
 
 export const makeGetAllDashboards = (context: APIContext) => {
 	const path = '/api/dashboards/all';

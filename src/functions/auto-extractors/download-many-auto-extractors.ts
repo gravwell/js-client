@@ -7,13 +7,7 @@
  **************************************************************************/
 
 import { UUID } from '~/value-objects';
-import {
-	APIContext,
-	buildHTTPRequestWithContextToken,
-	buildURL,
-	fetch,
-	parseJSONResponse
-} from '../utils';
+import { APIContext, buildHTTPRequestWithContextToken, buildURL, fetch, parseJSONResponse } from '../utils';
 
 export const makeDownloadManyAutoExtractors = (context: APIContext) => {
 	return async (filter: AutoExtractorsFilter): Promise<string> => {

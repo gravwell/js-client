@@ -13,7 +13,7 @@ import {
 	buildURL,
 	fetch,
 	HTTPRequestOptions,
-	parseJSONResponse
+	parseJSONResponse,
 } from '../utils';
 
 export const makeUpdateOneUserPreferences = (context: APIContext) => async (

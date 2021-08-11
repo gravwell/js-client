@@ -8,13 +8,7 @@
 
 import { Dashboard, RawDashboard, toDashboard } from '~/models';
 import { NumericID } from '~/value-objects';
-import {
-	APIContext,
-	buildHTTPRequestWithContextToken,
-	buildURL,
-	fetch,
-	parseJSONResponse
-} from '../utils';
+import { APIContext, buildHTTPRequestWithContextToken, buildURL, fetch, parseJSONResponse } from '../utils';
 
 export const makeGetOneDashboard = (context: APIContext) => {
 	return async (dashboardID: NumericID): Promise<Dashboard> => {

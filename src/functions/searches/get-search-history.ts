@@ -7,13 +7,7 @@
  **************************************************************************/
 
 import { RawSearch, Search, toSearch } from '~/models';
-import {
-	APIContext,
-	buildHTTPRequestWithContextToken,
-	buildURL,
-	fetch,
-	parseJSONResponse
-} from '../utils';
+import { APIContext, buildHTTPRequestWithContextToken, buildURL, fetch, parseJSONResponse } from '../utils';
 
 export const makeGetSearchHistory = (context: APIContext) => {
 	return async (filter: SearchHistoryFilter): Promise<Array<Search>> => {

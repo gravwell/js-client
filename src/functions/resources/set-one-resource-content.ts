@@ -17,7 +17,7 @@ import {
 	fetch,
 	File,
 	HTTPRequestOptions,
-	parseJSONResponse
+	parseJSONResponse,
 } from '../utils';
 
 export const makeSetOneResourceContent = (context: APIContext) => {

@@ -7,13 +7,7 @@
  **************************************************************************/
 
 import { RawUser, toUser, User } from '~/models';
-import {
-	APIContext,
-	buildHTTPRequestWithContextToken,
-	buildURL,
-	fetch,
-	parseJSONResponse
-} from '../utils';
+import { APIContext, buildHTTPRequestWithContextToken, buildURL, fetch, parseJSONResponse } from '../utils';
 
 export const makeGetOneUser = (context: APIContext) => {
 	return async (userID: string): Promise<User> => {

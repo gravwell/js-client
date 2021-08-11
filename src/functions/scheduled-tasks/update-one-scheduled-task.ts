@@ -21,7 +21,7 @@ import {
 	buildURL,
 	fetch,
 	HTTPRequestOptions,
-	parseJSONResponse
+	parseJSONResponse,
 } from '../utils';
 import { makeGetOneScheduledTask } from './get-one-scheduled-task';
 

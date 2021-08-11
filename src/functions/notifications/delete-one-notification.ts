@@ -6,13 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import {
-	APIContext,
-	buildHTTPRequestWithContextToken,
-	buildURL,
-	fetch,
-	parseJSONResponse
-} from '../utils';
+import { APIContext, buildHTTPRequestWithContextToken, buildURL, fetch, parseJSONResponse } from '../utils';
 
 export const makeDeleteOneNotification = (context: APIContext) => async (notificationID: string): Promise<void> => {
 	const templatePath = '/api/notifications/{notificationID}';

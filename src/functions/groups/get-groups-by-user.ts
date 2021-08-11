@@ -8,13 +8,7 @@
 
 import { Group, RawGroup, toGroup } from '~/models';
 import { NumericID } from '~/value-objects';
-import {
-	APIContext,
-	buildHTTPRequestWithContextToken,
-	buildURL,
-	fetch,
-	parseJSONResponse
-} from '../utils';
+import { APIContext, buildHTTPRequestWithContextToken, buildURL, fetch, parseJSONResponse } from '../utils';
 
 export const makeGetGroupsByUser = (context: APIContext) => {
 	return async (userID: NumericID): Promise<Array<Group>> => {

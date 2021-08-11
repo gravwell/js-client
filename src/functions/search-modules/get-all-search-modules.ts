@@ -7,13 +7,7 @@
  **************************************************************************/
 
 import { RawSearchModule, SearchModule, toSearchModule } from '~/models';
-import {
-	APIContext,
-	buildHTTPRequestWithContextToken,
-	buildURL,
-	fetch,
-	parseJSONResponse
-} from '../utils';
+import { APIContext, buildHTTPRequestWithContextToken, buildURL, fetch, parseJSONResponse } from '../utils';
 
 export const makeGetAllSearchModules = (context: APIContext) => {
 	const templatePath = '/api/info/searchmodules';

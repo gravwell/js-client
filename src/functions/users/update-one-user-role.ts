@@ -8,13 +8,7 @@
 
 import { UserRole } from '~/models';
 import { NumericID } from '~/value-objects';
-import {
-	APIContext,
-	buildHTTPRequestWithContextToken,
-	buildURL,
-	fetch,
-	parseJSONResponse
-} from '../utils';
+import { APIContext, buildHTTPRequestWithContextToken, buildURL, fetch, parseJSONResponse } from '../utils';
 
 export const makeUpdateOneUserRole = (context: APIContext) => {
 	return async (userID: NumericID, role: UserRole): Promise<void> => {

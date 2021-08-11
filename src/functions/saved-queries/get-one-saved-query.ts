@@ -8,13 +8,7 @@
 
 import { RawSavedQuery, SavedQuery, toSavedQuery } from '~/models';
 import { NumericID } from '~/value-objects';
-import {
-	APIContext,
-	buildHTTPRequestWithContextToken,
-	buildURL,
-	fetch,
-	parseJSONResponse
-} from '../utils';
+import { APIContext, buildHTTPRequestWithContextToken, buildURL, fetch, parseJSONResponse } from '../utils';
 
 export const makeGetOneSavedQuery = (context: APIContext) => {
 	return async (savedQueryID: NumericID): Promise<SavedQuery> => {

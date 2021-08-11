@@ -8,13 +8,7 @@
 
 import { RawRemoteKit, RemoteKit, toRemoteKit } from '~/models';
 import { NumericID } from '~/value-objects';
-import {
-	APIContext,
-	buildHTTPRequestWithContextToken,
-	buildURL,
-	fetch,
-	parseJSONResponse
-} from '../utils';
+import { APIContext, buildHTTPRequestWithContextToken, buildURL, fetch, parseJSONResponse } from '../utils';
 
 export const makeGetOneRemoteKit = (context: APIContext) => {
 	return async (kitID: NumericID): Promise<RemoteKit> => {

@@ -7,13 +7,7 @@
  **************************************************************************/
 
 import { Tag } from '~/models';
-import {
-	APIContext,
-	buildHTTPRequestWithContextToken,
-	buildURL,
-	fetch,
-	parseJSONResponse
-} from '../utils';
+import { APIContext, buildHTTPRequestWithContextToken, buildURL, fetch, parseJSONResponse } from '../utils';
 
 export const makeGetAllTags = (context: APIContext) => {
 	const templatePath = '/api/tags';

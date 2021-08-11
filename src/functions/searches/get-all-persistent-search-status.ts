@@ -7,13 +7,7 @@
  **************************************************************************/
 
 import { RawSearch2, Search2, toSearch2 } from '~/models';
-import {
-	APIContext,
-	buildHTTPRequestWithContextToken,
-	buildURL,
-	fetch,
-	parseJSONResponse
-} from '../utils';
+import { APIContext, buildHTTPRequestWithContextToken, buildURL, fetch, parseJSONResponse } from '../utils';
 
 export const makeGetAllPersistentSearchStatus = (context: APIContext) => {
 	const templatePath = '/api/searchctrl/all';

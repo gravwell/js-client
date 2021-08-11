@@ -8,13 +8,7 @@
 
 import { RawSearch2, Search2, toSearch2 } from '~/models';
 import { NumericID } from '~/value-objects';
-import {
-	APIContext,
-	buildHTTPRequestWithContextToken,
-	buildURL,
-	fetch,
-	parseJSONResponse
-} from '../utils';
+import { APIContext, buildHTTPRequestWithContextToken, buildURL, fetch, parseJSONResponse } from '../utils';
 
 export const makeGetOnePersistentSearchStatus = (context: APIContext) => {
 	return async (searchID: NumericID): Promise<Search2> => {

@@ -8,13 +8,7 @@
 
 import { RawResourceContentPreview, ResourceContentPreview, toResourceContentPreview } from '~/models';
 import { UUID } from '~/value-objects';
-import {
-	APIContext,
-	buildHTTPRequestWithContextToken,
-	buildURL,
-	fetch,
-	parseJSONResponse
-} from '../utils';
+import { APIContext, buildHTTPRequestWithContextToken, buildURL, fetch, parseJSONResponse } from '../utils';
 
 export const makePreviewOneResourceContent = (context: APIContext) => {
 	return async (resourceID: UUID, options: { bytes?: number } = {}): Promise<ResourceContentPreview> => {

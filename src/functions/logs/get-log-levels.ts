@@ -7,13 +7,7 @@
  **************************************************************************/
 
 import { LogLevels, RawLogLevels, toLogLevels } from '~/models';
-import {
-	APIContext,
-	buildHTTPRequestWithContextToken,
-	buildURL,
-	fetch,
-	parseJSONResponse
-} from '../utils';
+import { APIContext, buildHTTPRequestWithContextToken, buildURL, fetch, parseJSONResponse } from '../utils';
 
 export const makeGetLogLevels = (context: APIContext) => {
 	const templatePath = '/api/logging';

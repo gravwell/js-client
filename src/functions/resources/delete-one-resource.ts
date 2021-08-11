@@ -7,13 +7,7 @@
  **************************************************************************/
 
 import { NumericID } from '~/value-objects';
-import {
-	APIContext,
-	buildHTTPRequestWithContextToken,
-	buildURL,
-	fetch,
-	parseJSONResponse
-} from '../utils';
+import { APIContext, buildHTTPRequestWithContextToken, buildURL, fetch, parseJSONResponse } from '../utils';
 
 export const makeDeleteOneResource = (context: APIContext) => {
 	return async (resourceID: NumericID): Promise<void> => {

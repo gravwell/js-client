@@ -7,12 +7,7 @@
  **************************************************************************/
 
 import { NumericID } from '~/value-objects';
-import {
-	APIContext,
-	buildHTTPRequestWithContextToken,
-	buildURL,
-	fetch,
-} from '../utils';
+import { APIContext, buildHTTPRequestWithContextToken, buildURL, fetch } from '../utils';
 
 export const makeStopOneSearch = (context: APIContext) => {
 	return async (searchID: NumericID): Promise<void> => {

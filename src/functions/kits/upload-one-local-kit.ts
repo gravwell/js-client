@@ -16,7 +16,7 @@ import {
 	fetch,
 	File,
 	HTTPRequestOptions,
-	parseJSONResponse
+	parseJSONResponse,
 } from '../utils';
 
 export const makeUploadOneLocalKit = (context: APIContext) => {

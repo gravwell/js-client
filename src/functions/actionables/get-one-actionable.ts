@@ -8,13 +8,7 @@
 
 import { Actionable, RawActionable, toActionable } from '~/models';
 import { NumericID } from '~/value-objects';
-import {
-	APIContext,
-	buildHTTPRequestWithContextToken,
-	buildURL,
-	fetch,
-	parseJSONResponse
-} from '../utils';
+import { APIContext, buildHTTPRequestWithContextToken, buildURL, fetch, parseJSONResponse } from '../utils';
 
 export const makeGetOneActionable = (context: APIContext) => {
 	return async (actionableID: NumericID): Promise<Actionable> => {

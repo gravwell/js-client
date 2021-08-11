@@ -7,13 +7,7 @@
  **************************************************************************/
 
 import { Playbook, RawPlaybook, toPlaybook } from '~/models';
-import {
-	APIContext,
-	buildHTTPRequestWithContextToken,
-	buildURL,
-	fetch,
-	parseJSONResponse
-} from '../utils';
+import { APIContext, buildHTTPRequestWithContextToken, buildURL, fetch, parseJSONResponse } from '../utils';
 
 export const makeGetAllPlaybooksRelatedToMe = (context: APIContext) => {
 	const playbookPath = '/api/playbooks';

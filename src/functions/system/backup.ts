@@ -6,12 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import {
-	APIContext,
-	buildHTTPRequestWithContextToken,
-	buildURL,
-	fetch,
-} from '../utils';
+import { APIContext, buildHTTPRequestWithContextToken, buildURL, fetch } from '../utils';
 
 export const makeBackup = (context: APIContext) => {
 	const templatePath = '/api/backup';

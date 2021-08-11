@@ -14,7 +14,7 @@ import {
 	buildURL,
 	fetch,
 	HTTPRequestOptions,
-	parseJSONResponse
+	parseJSONResponse,
 } from '../utils';
 import { makeGetOneResource } from './get-one-resource';
 import { makeSetOneResourceContent } from './set-one-resource-content';

@@ -6,13 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import {
-	APIContext,
-	buildHTTPRequestWithContextToken,
-	buildURL,
-	fetch,
-	parseJSONResponse
-} from '../utils';
+import { APIContext, buildHTTPRequestWithContextToken, buildURL, fetch, parseJSONResponse } from '../utils';
 
 export const makeDeleteOneUser = (context: APIContext) => {
 	return async (userID: string): Promise<void> => {

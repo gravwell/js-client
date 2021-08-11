@@ -8,13 +8,7 @@
 
 import { Playbook, RawPlaybook, toPlaybook } from '~/models';
 import { UUID } from '~/value-objects';
-import {
-	APIContext,
-	buildHTTPRequestWithContextToken,
-	buildURL,
-	fetch,
-	parseJSONResponse
-} from '../utils';
+import { APIContext, buildHTTPRequestWithContextToken, buildURL, fetch, parseJSONResponse } from '../utils';
 
 export const makeGetOnePlaybook = (context: APIContext) => {
 	return async (playbookID: UUID): Promise<Playbook> => {

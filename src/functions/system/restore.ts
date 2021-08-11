@@ -7,14 +7,7 @@
  **************************************************************************/
 
 import * as FormData from 'form-data';
-import {
-	APIContext,
-	buildHTTPRequestWithContextToken,
-	buildURL,
-	fetch,
-	File,
-	HTTPRequestOptions
-} from '../utils';
+import { APIContext, buildHTTPRequestWithContextToken, buildURL, fetch, File, HTTPRequestOptions } from '../utils';
 
 export const makeRestore = (context: APIContext) => {
 	const templatePath = '/api/backup';

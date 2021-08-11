@@ -7,13 +7,7 @@
  **************************************************************************/
 
 import { RawRemoteKit, RemoteKit, toRemoteKit } from '~/models';
-import {
-	APIContext,
-	buildHTTPRequestWithContextToken,
-	buildURL,
-	fetch,
-	parseJSONResponse
-} from '../utils';
+import { APIContext, buildHTTPRequestWithContextToken, buildURL, fetch, parseJSONResponse } from '../utils';
 
 export const makeGetAllRemoteKits = (context: APIContext) => {
 	const path = '/api/kits/remote/list';

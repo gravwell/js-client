@@ -16,7 +16,7 @@ import {
 	buildURL,
 	fetch,
 	HTTPRequestOptions,
-	parseJSONResponse
+	parseJSONResponse,
 } from '../utils';
 
 export const makeGenerateAutoExtractors = (context: APIContext) => {

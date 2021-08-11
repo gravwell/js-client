@@ -7,13 +7,7 @@
  **************************************************************************/
 
 import { RawSavedQuery, SavedQuery, toSavedQuery } from '~/models';
-import {
-	APIContext,
-	buildHTTPRequestWithContextToken,
-	buildURL,
-	fetch,
-	parseJSONResponse
-} from '../utils';
+import { APIContext, buildHTTPRequestWithContextToken, buildURL, fetch, parseJSONResponse } from '../utils';
 
 export const makeGetAllSavedQueries = (context: APIContext) => {
 	const path = '/api/library?admin=true';

@@ -7,13 +7,7 @@
  **************************************************************************/
 
 import { FileMetadata, RawFileMetadata, toFileMetadata } from '~/models';
-import {
-	APIContext,
-	buildHTTPRequestWithContextToken,
-	buildURL,
-	fetch,
-	parseJSONResponse
-} from '../utils';
+import { APIContext, buildHTTPRequestWithContextToken, buildURL, fetch, parseJSONResponse } from '../utils';
 
 export const makeGetFilesAuthorizedToMe = (context: APIContext) => {
 	const path = '/api/files';

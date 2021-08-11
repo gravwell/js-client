@@ -7,13 +7,7 @@
  **************************************************************************/
 
 import { ID } from '~/value-objects';
-import {
-	APIContext,
-	buildHTTPRequestWithContextToken,
-	buildURL,
-	fetch,
-	parseJSONResponse
-} from '../utils';
+import { APIContext, buildHTTPRequestWithContextToken, buildURL, fetch, parseJSONResponse } from '../utils';
 
 export const makeUninstallOneKit = (context: APIContext) => {
 	return async (kitID: ID): Promise<void> => {

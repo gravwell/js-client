@@ -6,13 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import {
-	APIContext,
-	buildHTTPRequestWithToken,
-	buildURL,
-	fetch,
-	parseJSONResponse
-} from '../utils';
+import { APIContext, buildHTTPRequestWithToken, buildURL, fetch, parseJSONResponse } from '../utils';
 
 export const makeLogoutOneUser = (context: APIContext) => {
 	const templatePath = '/api/logout';

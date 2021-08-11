@@ -7,13 +7,7 @@
  **************************************************************************/
 
 import { RawUserSessions, toUserSessions, UserSessions } from '~/models';
-import {
-	APIContext,
-	buildHTTPRequestWithContextToken,
-	buildURL,
-	fetch,
-	parseJSONResponse
-} from '../utils';
+import { APIContext, buildHTTPRequestWithContextToken, buildURL, fetch, parseJSONResponse } from '../utils';
 
 export const makeGetOneUserActiveSessions = (context: APIContext) => {
 	return async (userID: string): Promise<UserSessions> => {

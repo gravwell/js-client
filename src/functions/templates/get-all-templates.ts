@@ -7,13 +7,7 @@
  **************************************************************************/
 
 import { RawTemplate, Template, toTemplate } from '~/models';
-import {
-	APIContext,
-	buildHTTPRequestWithContextToken,
-	buildURL,
-	fetch,
-	parseJSONResponse
-} from '../utils';
+import { APIContext, buildHTTPRequestWithContextToken, buildURL, fetch, parseJSONResponse } from '../utils';
 
 export const makeGetAllTemplates = (context: APIContext) => {
 	const templatePath = '/api/templates';

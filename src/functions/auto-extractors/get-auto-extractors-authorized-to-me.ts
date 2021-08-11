@@ -7,13 +7,7 @@
  **************************************************************************/
 
 import { AutoExtractor, RawAutoExtractor, toAutoExtractor } from '~/models';
-import {
-	APIContext,
-	buildHTTPRequestWithContextToken,
-	buildURL,
-	fetch,
-	parseJSONResponse
-} from '../utils';
+import { APIContext, buildHTTPRequestWithContextToken, buildURL, fetch, parseJSONResponse } from '../utils';
 
 export const makeGetAutoExtractorsAuthorizedToMe = (context: APIContext) => {
 	const path = '/api/autoextractors';

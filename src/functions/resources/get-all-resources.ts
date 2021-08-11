@@ -7,13 +7,7 @@
  **************************************************************************/
 
 import { RawResource, Resource, toResource } from '~/models';
-import {
-	APIContext,
-	buildHTTPRequestWithContextToken,
-	buildURL,
-	fetch,
-	parseJSONResponse
-} from '../utils';
+import { APIContext, buildHTTPRequestWithContextToken, buildURL, fetch, parseJSONResponse } from '../utils';
 
 export const makeGetAllResources = (context: APIContext) => {
 	const resourcePath = '/api/resources?admin=true';

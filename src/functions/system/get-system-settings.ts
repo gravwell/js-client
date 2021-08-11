@@ -7,13 +7,7 @@
  **************************************************************************/
 
 import { RawSystemSettings, SystemSettings, toSystemSettings } from '~/models';
-import {
-	APIContext,
-	buildHTTPRequestWithContextToken,
-	buildURL,
-	fetch,
-	parseJSONResponse
-} from '../utils';
+import { APIContext, buildHTTPRequestWithContextToken, buildURL, fetch, parseJSONResponse } from '../utils';
 
 export const makeGetSystemSettings = (context: APIContext) => {
 	const templatePath = '/api/settings';

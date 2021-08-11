@@ -7,13 +7,7 @@
  **************************************************************************/
 
 import { Actionable, RawActionable, toActionable } from '~/models';
-import {
-	APIContext,
-	buildHTTPRequestWithContextToken,
-	buildURL,
-	fetch,
-	parseJSONResponse
-} from '../utils';
+import { APIContext, buildHTTPRequestWithContextToken, buildURL, fetch, parseJSONResponse } from '../utils';
 
 export const makeGetAllActionablesAsAdmin = (context: APIContext) => {
 	const templatePath = '/api/pivots?admin=true';
