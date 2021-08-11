@@ -7,17 +7,20 @@
  **************************************************************************/
 
 import { RawTemplate, Template, toTemplate } from '~/models';
-import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
+import {
+	APIContext,
+	buildHTTPRequestWithContextToken,
+	buildURL,
+	fetch,
+	parseJSONResponse
+} from '../utils';
 
 export const makeGetAllTemplatesAsAdmin = (context: APIContext) => {
 	const templatePath = '/api/templates?admin=true';
 	const url = buildURL(templatePath, { ...context, protocol: 'http' });
 
 	return async (): Promise<Array<Template>> => {
-		const baseRequestOptions: HTTPRequestOptions = {
-			headers: { Authorization: context.authToken ? `Bearer ${context.authToken}` : undefined },
-		};
-		const req = buildHTTPRequest(baseRequestOptions);
+		const req = buildHTTPRequestWithContextToken(context);
 
 		const raw = await fetch(url, { ...req, method: 'GET' });
 		const rawRes = (await parseJSONResponse<Array<RawTemplate> | null>(raw)) ?? [];

@@ -7,7 +7,14 @@
  **************************************************************************/
 
 import { CreatableBroadcastNotification, toRawCreatableBroadcastedNotification } from '~/models';
-import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
+import {
+	APIContext,
+	buildHTTPRequestWithContextToken,
+	buildURL,
+	fetch,
+	HTTPRequestOptions,
+	parseJSONResponse
+} from '../utils';
 
 export const makeCreateOneBroadcastedNotification = (context: APIContext) => {
 	const templatePath = '/api/notifications/broadcast';
@@ -16,10 +23,9 @@ export const makeCreateOneBroadcastedNotification = (context: APIContext) => {
 	return async (creatable: CreatableBroadcastNotification): Promise<void> => {
 		try {
 			const baseRequestOptions: HTTPRequestOptions = {
-				headers: { Authorization: context.authToken ? `Bearer ${context.authToken}` : undefined },
 				body: JSON.stringify(toRawCreatableBroadcastedNotification(creatable)),
 			};
-			const req = buildHTTPRequest(baseRequestOptions);
+			const req = buildHTTPRequestWithContextToken(context, baseRequestOptions);
 
 			const raw = await fetch(url, { ...req, method: 'POST' });
 			return parseJSONResponse(raw, { expect: 'void' });

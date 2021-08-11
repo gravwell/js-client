@@ -7,7 +7,14 @@
  **************************************************************************/
 
 import { CreatableResource, RawResource, Resource, toRawCreatableResource, toResource } from '~/models';
-import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
+import {
+	APIContext,
+	buildHTTPRequestWithContextToken,
+	buildURL,
+	fetch,
+	HTTPRequestOptions,
+	parseJSONResponse
+} from '../utils';
 
 export const makeCreateOneResource = (context: APIContext) => {
 	const resourcePath = '/api/resources';
@@ -16,10 +23,9 @@ export const makeCreateOneResource = (context: APIContext) => {
 	return async (data: CreatableResource): Promise<Resource> => {
 		try {
 			const baseRequestOptions: HTTPRequestOptions = {
-				headers: { Authorization: context.authToken ? `Bearer ${context.authToken}` : undefined },
 				body: JSON.stringify(toRawCreatableResource(data)),
 			};
-			const req = buildHTTPRequest(baseRequestOptions);
+			const req = buildHTTPRequestWithContextToken(context, baseRequestOptions);
 
 			const raw = await fetch(url, { ...req, method: 'POST' });
 			const rawRes = await parseJSONResponse<RawResource>(raw);

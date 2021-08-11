@@ -7,7 +7,14 @@
  **************************************************************************/
 
 import { LogLevel, toRawLogLevel } from '~/models';
-import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
+import {
+	APIContext,
+	buildHTTPRequestWithContextToken,
+	buildURL,
+	fetch,
+	HTTPRequestOptions,
+	parseJSONResponse
+} from '../utils';
 
 export const makeCreateOneLog = (context: APIContext) => {
 	return async (level: LogLevel, message: string): Promise<void> => {
@@ -16,10 +23,9 @@ export const makeCreateOneLog = (context: APIContext) => {
 		const url = buildURL(templatePath, { ...context, protocol: 'http', pathParams: { lowerCaseRawLogLevel } });
 
 		const baseRequestOptions: HTTPRequestOptions = {
-			headers: { Authorization: context.authToken ? `Bearer ${context.authToken}` : undefined },
 			body: JSON.stringify({ Body: message }),
 		};
-		const req = buildHTTPRequest(baseRequestOptions);
+		const req = buildHTTPRequestWithContextToken(context, baseRequestOptions);
 
 		const raw = await fetch(url, { ...req, method: 'POST' });
 		const success = await parseJSONResponse<boolean>(raw);

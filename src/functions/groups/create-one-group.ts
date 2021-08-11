@@ -7,7 +7,14 @@
  **************************************************************************/
 
 import { CreatableGroup, Group, toRawCreatableGroup } from '~/models';
-import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
+import {
+	APIContext,
+	buildHTTPRequestWithContextToken,
+	buildURL,
+	fetch,
+	HTTPRequestOptions,
+	parseJSONResponse
+} from '../utils';
 import { makeGetOneGroup } from './get-one-group';
 
 export const makeCreateOneGroup = (context: APIContext) => {
@@ -19,10 +26,9 @@ export const makeCreateOneGroup = (context: APIContext) => {
 	return async (data: CreatableGroup): Promise<Group> => {
 		try {
 			const baseRequestOptions: HTTPRequestOptions = {
-				headers: { Authorization: context.authToken ? `Bearer ${context.authToken}` : undefined },
 				body: JSON.stringify(toRawCreatableGroup(data)),
 			};
-			const req = buildHTTPRequest(baseRequestOptions);
+			const req = buildHTTPRequestWithContextToken(context, baseRequestOptions);
 
 			const raw = await fetch(url, { ...req, method: 'POST' });
 			const rawID = await parseJSONResponse<number>(raw);

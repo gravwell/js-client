@@ -7,7 +7,14 @@
  **************************************************************************/
 
 import { RawSavedQuery, SavedQuery, toRawUpdatableSavedQuery, toSavedQuery, UpdatableSavedQuery } from '~/models';
-import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
+import {
+	APIContext,
+	buildHTTPRequestWithContextToken,
+	buildURL,
+	fetch,
+	HTTPRequestOptions,
+	parseJSONResponse
+} from '../utils';
 import { makeGetOneSavedQuery } from './get-one-saved-query';
 
 export const makeUpdateOneSavedQuery = (context: APIContext) => {
@@ -21,10 +28,9 @@ export const makeUpdateOneSavedQuery = (context: APIContext) => {
 			const current = await getOneSavedQuery(data.id);
 
 			const baseRequestOptions: HTTPRequestOptions = {
-				headers: { Authorization: context.authToken ? `Bearer ${context.authToken}` : undefined },
 				body: JSON.stringify(toRawUpdatableSavedQuery(data, current)),
 			};
-			const req = buildHTTPRequest(baseRequestOptions);
+			const req = buildHTTPRequestWithContextToken(context, baseRequestOptions);
 
 			const raw = await fetch(url, { ...req, method: 'PUT' });
 			const rawSavedQuery = await parseJSONResponse<RawSavedQuery>(raw);

@@ -8,7 +8,14 @@
 
 import { BuildableKit, toRawBuildableKit } from '~/models';
 import { RawNumericID, RawUUID, UUID } from '~/value-objects';
-import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
+import {
+	APIContext,
+	buildHTTPRequestWithContextToken,
+	buildURL,
+	fetch,
+	HTTPRequestOptions,
+	parseJSONResponse
+} from '../utils';
 
 export const makeBuildOneLocalKit = (context: APIContext) => {
 	const templatePath = '/api/kits/build';
@@ -17,10 +24,9 @@ export const makeBuildOneLocalKit = (context: APIContext) => {
 	return async (data: BuildableKit): Promise<UUID> => {
 		try {
 			const baseRequestOptions: HTTPRequestOptions = {
-				headers: { Authorization: context.authToken ? `Bearer ${context.authToken}` : undefined },
 				body: JSON.stringify(toRawBuildableKit(data)),
 			};
-			const req = buildHTTPRequest(baseRequestOptions);
+			const req = buildHTTPRequestWithContextToken(context, baseRequestOptions);
 
 			const raw = await fetch(url, { ...req, method: 'POST' });
 			const rawRes = await parseJSONResponse<BuildOneKitRawResponse>(raw);

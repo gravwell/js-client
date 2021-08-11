@@ -9,7 +9,15 @@
 import * as FormData from 'form-data';
 import { isString } from 'lodash';
 import { LocalKit, RawLocalKit, toLocalKit } from '~/models';
-import { APIContext, buildHTTPRequest, buildURL, fetch, File, HTTPRequestOptions, parseJSONResponse } from '../utils';
+import {
+	APIContext,
+	buildHTTPRequestWithContextToken,
+	buildURL,
+	fetch,
+	File,
+	HTTPRequestOptions,
+	parseJSONResponse
+} from '../utils';
 
 export const makeUploadOneLocalKit = (context: APIContext) => {
 	return async (kit: File): Promise<LocalKit> => {
@@ -18,10 +26,9 @@ export const makeUploadOneLocalKit = (context: APIContext) => {
 
 		try {
 			const baseRequestOptions: HTTPRequestOptions = {
-				headers: { Authorization: context.authToken ? `Bearer ${context.authToken}` : undefined },
 				body: toFormData(kit) as any,
 			};
-			const req = buildHTTPRequest(baseRequestOptions);
+			const req = buildHTTPRequestWithContextToken(context, baseRequestOptions);
 
 			const raw = await fetch(url, { ...req, method: 'POST' });
 			const rawRes = await parseJSONResponse<RawLocalKit>(raw);

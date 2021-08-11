@@ -15,7 +15,14 @@ import {
 	toScheduledTask,
 	UpdatableScheduledTask,
 } from '~/models';
-import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
+import {
+	APIContext,
+	buildHTTPRequestWithContextToken,
+	buildURL,
+	fetch,
+	HTTPRequestOptions,
+	parseJSONResponse
+} from '../utils';
 import { makeGetOneScheduledTask } from './get-one-scheduled-task';
 
 export const makeUpdateOneScheduledTask = (context: APIContext) => {
@@ -33,10 +40,9 @@ export const makeUpdateOneScheduledTask = (context: APIContext) => {
 			const current = await getOneScheduledTask(data.id);
 
 			const baseRequestOptions: HTTPRequestOptions = {
-				headers: { Authorization: context.authToken ? `Bearer ${context.authToken}` : undefined },
 				body: JSON.stringify(toRawUpdatableScheduledTask(data, current)),
 			};
-			const req = buildHTTPRequest(baseRequestOptions);
+			const req = buildHTTPRequestWithContextToken(context, baseRequestOptions);
 
 			const raw = await fetch(url, { ...req, method: 'PUT' });
 			const rawScheduledTask = await parseJSONResponse<RawScheduledTask>(raw);

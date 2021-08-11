@@ -7,17 +7,20 @@
  **************************************************************************/
 
 import { Playbook, RawPlaybook, toPlaybook } from '~/models';
-import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
+import {
+	APIContext,
+	buildHTTPRequestWithContextToken,
+	buildURL,
+	fetch,
+	parseJSONResponse
+} from '../utils';
 
 export const makeGetAllPlaybooksRelatedToMe = (context: APIContext) => {
 	const playbookPath = '/api/playbooks';
 	const url = buildURL(playbookPath, { ...context, protocol: 'http' });
 
 	return async (): Promise<Array<Omit<Playbook, 'body'>>> => {
-		const baseRequestOptions: HTTPRequestOptions = {
-			headers: { Authorization: context.authToken ? `Bearer ${context.authToken}` : undefined },
-		};
-		const req = buildHTTPRequest(baseRequestOptions);
+		const req = buildHTTPRequestWithContextToken(context);
 
 		const raw = await fetch(url, { ...req, method: 'GET' });
 		const rawRes = (await parseJSONResponse<Array<RawPlaybook> | null>(raw)) ?? [];

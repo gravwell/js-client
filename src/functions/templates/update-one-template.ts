@@ -7,7 +7,14 @@
  **************************************************************************/
 
 import { RawTemplate, Template, toRawUpdatableTemplate, toTemplate, UpdatableTemplate } from '~/models';
-import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
+import {
+	APIContext,
+	buildHTTPRequestWithContextToken,
+	buildURL,
+	fetch,
+	HTTPRequestOptions,
+	parseJSONResponse
+} from '../utils';
 import { makeGetOneTemplate } from './get-one-template';
 
 export const makeUpdateOneTemplate = (context: APIContext) => {
@@ -25,10 +32,9 @@ export const makeUpdateOneTemplate = (context: APIContext) => {
 			});
 
 			const baseRequestOptions: HTTPRequestOptions = {
-				headers: { Authorization: context.authToken ? `Bearer ${context.authToken}` : undefined },
 				body: JSON.stringify(toRawUpdatableTemplate(data, current)),
 			};
-			const req = buildHTTPRequest(baseRequestOptions);
+			const req = buildHTTPRequestWithContextToken(context, baseRequestOptions);
 
 			const raw = await fetch(url, { ...req, method: 'PUT' });
 			const rawRes = await parseJSONResponse<RawTemplate>(raw);

@@ -7,17 +7,20 @@
  **************************************************************************/
 
 import { NumericID } from '~/value-objects';
-import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
+import {
+	APIContext,
+	buildHTTPRequestWithContextToken,
+	buildURL,
+	fetch,
+	parseJSONResponse
+} from '../utils';
 
 export const makeClearOneScheduledTaskState = (context: APIContext) => {
 	return async (scheduledTaskID: NumericID): Promise<void> => {
 		const templatePath = '/api/scheduledsearches/{scheduledTaskID}/state';
 		const url = buildURL(templatePath, { ...context, protocol: 'http', pathParams: { scheduledTaskID } });
 
-		const baseRequestOptions: HTTPRequestOptions = {
-			headers: { Authorization: context.authToken ? `Bearer ${context.authToken}` : undefined },
-		};
-		const req = buildHTTPRequest(baseRequestOptions);
+		const req = buildHTTPRequestWithContextToken(context);
 
 		const raw = await fetch(url, { ...req, method: 'DELETE' });
 		return parseJSONResponse(raw, { expect: 'void' });

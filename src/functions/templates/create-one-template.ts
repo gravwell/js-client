@@ -8,7 +8,14 @@
 
 import { CreatableTemplate, Template, toRawCreatableTemplate } from '~/models';
 import { UUID } from '~/value-objects';
-import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
+import {
+	APIContext,
+	buildHTTPRequestWithContextToken,
+	buildURL,
+	fetch,
+	HTTPRequestOptions,
+	parseJSONResponse
+} from '../utils';
 import { makeGetOneTemplate } from './get-one-template';
 
 export const makeCreateOneTemplate = (context: APIContext) => {
@@ -20,10 +27,9 @@ export const makeCreateOneTemplate = (context: APIContext) => {
 	return async (data: CreatableTemplate): Promise<Template> => {
 		try {
 			const baseRequestOptions: HTTPRequestOptions = {
-				headers: { Authorization: context.authToken ? `Bearer ${context.authToken}` : undefined },
 				body: JSON.stringify(toRawCreatableTemplate(data)),
 			};
-			const req = buildHTTPRequest(baseRequestOptions);
+			const req = buildHTTPRequestWithContextToken(context, baseRequestOptions);
 
 			const raw = await fetch(url, { ...req, method: 'POST' });
 			const rawID = await parseJSONResponse<UUID>(raw);

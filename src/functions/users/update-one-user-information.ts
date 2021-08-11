@@ -9,7 +9,7 @@
 import { NumericID } from '~/value-objects';
 import {
 	APIContext,
-	buildHTTPRequest,
+	buildHTTPRequestWithContextToken,
 	buildURL,
 	fetch,
 	HTTPRequestOptions,
@@ -24,10 +24,9 @@ export const makeUpdateOneUserInformation = (context: APIContext) => {
 			const url = buildURL(templatePath, { ...context, protocol: 'http', pathParams: { userID: data.id } });
 
 			const baseRequestOptions: HTTPRequestOptions = {
-				headers: { Authorization: context.authToken ? `Bearer ${context.authToken}` : undefined },
 				body: JSON.stringify(toRawUpdatableUserInformation(data)),
 			};
-			const req = buildHTTPRequest(baseRequestOptions);
+			const req = buildHTTPRequestWithContextToken(context, baseRequestOptions);
 
 			const raw = await fetch(url, { ...req, method: 'PUT' });
 			return parseJSONResponse(raw, { expect: 'void' });

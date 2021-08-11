@@ -10,7 +10,7 @@ import { isNumber } from 'lodash';
 import { NumericID } from '~/value-objects';
 import {
 	APIContext,
-	buildHTTPRequest,
+	buildHTTPRequestWithContextToken,
 	buildURL,
 	fetch,
 	HTTPRequestOptions,
@@ -29,10 +29,9 @@ export const makeUpdateOneUserSearchGroup = (context: APIContext) => {
 			});
 
 			const baseRequestOptions: HTTPRequestOptions = {
-				headers: { Authorization: context.authToken ? `Bearer ${context.authToken}` : undefined },
 				body: JSON.stringify(body),
 			};
-			const req = buildHTTPRequest(baseRequestOptions);
+			const req = buildHTTPRequestWithContextToken(context, baseRequestOptions);
 
 			const raw = await fetch(url, { ...req, method: 'PUT' });
 			return parseJSONResponse(raw, { expect: 'void' });

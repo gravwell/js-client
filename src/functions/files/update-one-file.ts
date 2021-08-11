@@ -8,7 +8,14 @@
 
 import * as FormData from 'form-data';
 import { FileMetadata, RawBaseFileMetadata, toRawUpdatableFile, UpdatableFile } from '~/models';
-import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
+import {
+	APIContext,
+	buildHTTPRequestWithContextToken,
+	buildURL,
+	fetch,
+	HTTPRequestOptions,
+	parseJSONResponse
+} from '../utils';
 import { makeGetOneFile } from './get-one-file';
 
 export const makeUpdateOneFile = (context: APIContext) => {
@@ -35,10 +42,9 @@ export const makeUpdateOneFile = (context: APIContext) => {
 				if (!hasTargettedKey) return Promise.resolve();
 
 				const baseRequestOptions: HTTPRequestOptions = {
-					headers: { Authorization: context.authToken ? `Bearer ${context.authToken}` : undefined },
 					body: JSON.stringify(toRawUpdatableFile(data, current)),
 				};
-				const req = buildHTTPRequest(baseRequestOptions);
+				const req = buildHTTPRequestWithContextToken(context, baseRequestOptions);
 
 				const raw = await fetch(url, { ...req, method: 'PATCH' });
 				await parseJSONResponse<RawBaseFileMetadata>(raw);
@@ -53,10 +59,9 @@ export const makeUpdateOneFile = (context: APIContext) => {
 				formData.append('file', data.file);
 
 				const baseRequestOptions: HTTPRequestOptions = {
-					headers: { Authorization: context.authToken ? `Bearer ${context.authToken}` : undefined },
 					body: formData as any,
 				};
-				const req = buildHTTPRequest(baseRequestOptions);
+				const req = buildHTTPRequestWithContextToken(context, baseRequestOptions);
 
 				const raw = await fetch(url, { ...req, method: 'POST' });
 				await parseJSONResponse<RawBaseFileMetadata>(raw);

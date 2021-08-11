@@ -7,7 +7,14 @@
  **************************************************************************/
 
 import { UserPreferences } from '~/models';
-import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
+import {
+	APIContext,
+	buildHTTPRequestWithContextToken,
+	buildURL,
+	fetch,
+	HTTPRequestOptions,
+	parseJSONResponse
+} from '../utils';
 
 export const makeUpdateOneUserPreferences = (context: APIContext) => async (
 	userID: string,
@@ -16,10 +23,9 @@ export const makeUpdateOneUserPreferences = (context: APIContext) => async (
 	const templatePath = '/api/users/{userID}/preferences';
 	const url = buildURL(templatePath, { ...context, protocol: 'http', pathParams: { userID } });
 	const baseRequestOptions: HTTPRequestOptions = {
-		headers: { Authorization: context.authToken ? `Bearer ${context.authToken}` : undefined },
 		body: JSON.stringify(preferences ?? {}),
 	};
-	const req = buildHTTPRequest(baseRequestOptions);
+	const req = buildHTTPRequestWithContextToken(context, baseRequestOptions);
 
 	const raw = await fetch(url, { ...req, method: 'PUT' });
 	return parseJSONResponse(raw, { expect: 'void' });

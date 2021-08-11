@@ -7,7 +7,14 @@
  **************************************************************************/
 
 import { Playbook, RawPlaybook, toPlaybook, toRawUpdatablePlaybook, UpdatablePlaybook } from '~/models';
-import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
+import {
+	APIContext,
+	buildHTTPRequestWithContextToken,
+	buildURL,
+	fetch,
+	HTTPRequestOptions,
+	parseJSONResponse
+} from '../utils';
 import { makeGetOnePlaybook } from './get-one-playbook';
 
 export const makeUpdateOnePlaybook = (context: APIContext) => {
@@ -26,10 +33,9 @@ export const makeUpdateOnePlaybook = (context: APIContext) => {
 			});
 
 			const baseRequestOptions: HTTPRequestOptions = {
-				headers: { Authorization: context.authToken ? `Bearer ${context.authToken}` : undefined },
 				body: JSON.stringify(toRawUpdatablePlaybook(data, current)),
 			};
-			const req = buildHTTPRequest(baseRequestOptions);
+			const req = buildHTTPRequestWithContextToken(context, baseRequestOptions);
 
 			const raw = await fetch(url, { ...req, method: 'PUT' });
 			const rawRes = await parseJSONResponse<RawPlaybook>(raw);

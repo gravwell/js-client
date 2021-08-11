@@ -7,7 +7,13 @@
  **************************************************************************/
 
 import { Script } from '~/models';
-import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
+import {
+	APIContext,
+	buildHTTPRequestWithContextToken,
+	buildURL,
+	fetch,
+	parseJSONResponse
+} from '../utils';
 
 export const makeGetOneScriptLibrary = (context: APIContext) => {
 	return async (path: string, options: { repository?: string; commitID?: string } = {}): Promise<Script> => {
@@ -18,10 +24,7 @@ export const makeGetOneScriptLibrary = (context: APIContext) => {
 			queryParams: { path, repo: options.repository, commit: options.commitID },
 		});
 
-		const baseRequestOptions: HTTPRequestOptions = {
-			headers: { Authorization: context.authToken ? `Bearer ${context.authToken}` : undefined },
-		};
-		const req = buildHTTPRequest(baseRequestOptions);
+		const req = buildHTTPRequestWithContextToken(context);
 
 		const raw = await fetch(url, { ...req, method: 'GET' });
 		return parseJSONResponse(raw, { expect: 'text' });

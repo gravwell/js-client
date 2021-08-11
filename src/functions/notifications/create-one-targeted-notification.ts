@@ -14,7 +14,7 @@ import {
 } from '~/models';
 import {
 	APIContext,
-	buildHTTPRequest,
+	buildHTTPRequestWithContextToken,
 	buildURL,
 	fetch,
 	HTTPRequestOptions,
@@ -32,10 +32,9 @@ export const makeCreateOneTargetedNotification = (context: APIContext) => {
 			const url = _buildURL(_creatable, { ...context, protocol: 'http' });
 
 			const baseRequestOptions: HTTPRequestOptions = {
-				headers: { Authorization: context.authToken ? `Bearer ${context.authToken}` : undefined },
 				body: JSON.stringify(toRawCreatableTargetedNotification(_creatable)),
 			};
-			const req = buildHTTPRequest(baseRequestOptions);
+			const req = buildHTTPRequestWithContextToken(context, baseRequestOptions);
 
 			const raw = await fetch(url, { ...req, method: 'POST' });
 			return parseJSONResponse(raw, { expect: 'void' });

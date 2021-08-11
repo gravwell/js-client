@@ -7,7 +7,14 @@
  **************************************************************************/
 
 import { Macro, RawMacro, toMacro, toRawUpdatableMacro, UpdatableMacro } from '~/models';
-import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
+import {
+	APIContext,
+	buildHTTPRequestWithContextToken,
+	buildURL,
+	fetch,
+	HTTPRequestOptions,
+	parseJSONResponse
+} from '../utils';
 import { makeGetOneMacro } from './get-one-macro';
 
 export const makeUpdateOneMacro = (context: APIContext) => {
@@ -21,10 +28,9 @@ export const makeUpdateOneMacro = (context: APIContext) => {
 			const current = await getOneMacro(data.id);
 
 			const baseRequestOptions: HTTPRequestOptions = {
-				headers: { Authorization: context.authToken ? `Bearer ${context.authToken}` : undefined },
 				body: JSON.stringify(toRawUpdatableMacro(data, current)),
 			};
-			const req = buildHTTPRequest(baseRequestOptions);
+			const req = buildHTTPRequestWithContextToken(context, baseRequestOptions);
 
 			const raw = await fetch(url, { ...req, method: 'PUT' });
 			const rawMacro = await parseJSONResponse<RawMacro>(raw);

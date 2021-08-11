@@ -10,7 +10,15 @@ import * as FormData from 'form-data';
 import { isString } from 'lodash';
 import { AutoExtractor, UpdatableAutoExtractor, UploadableAutoExtractor } from '~/models';
 import { RawUUID } from '~/value-objects';
-import { APIContext, buildHTTPRequest, buildURL, fetch, File, HTTPRequestOptions, parseJSONResponse } from '../utils';
+import {
+	APIContext,
+	buildHTTPRequestWithContextToken,
+	buildURL,
+	fetch,
+	File,
+	HTTPRequestOptions,
+	parseJSONResponse
+} from '../utils';
 import { makeGetAllAutoExtractors } from './get-all-auto-extractors';
 import { makeUpdateOneAutoExtractor } from './update-one-auto-extractor';
 
@@ -24,10 +32,9 @@ export const makeUploadManyAutoExtractors = (context: APIContext) => {
 	return async (data: UploadableAutoExtractor): Promise<Array<AutoExtractor>> => {
 		try {
 			const baseRequestOptions: HTTPRequestOptions = {
-				headers: { Authorization: context.authToken ? `Bearer ${context.authToken}` : undefined },
 				body: toFormData(data.file) as any,
 			};
-			const req = buildHTTPRequest(baseRequestOptions);
+			const req = buildHTTPRequestWithContextToken(context, baseRequestOptions);
 
 			const raw = await fetch(url, { ...req, method: 'POST' });
 			const createdIDs = new Set(await parseJSONResponse<Array<RawUUID>>(raw));

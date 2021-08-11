@@ -7,17 +7,20 @@
  **************************************************************************/
 
 import { Macro, RawMacro, toMacro } from '~/models';
-import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
+import {
+	APIContext,
+	buildHTTPRequestWithContextToken,
+	buildURL,
+	fetch,
+	parseJSONResponse
+} from '../utils';
 
 export const makeGetMacrosAuthorizedToMe = (context: APIContext) => {
 	const path = '/api/macros';
 	const url = buildURL(path, { ...context, protocol: 'http' });
 
 	return async (): Promise<Array<Macro>> => {
-		const baseRequestOptions: HTTPRequestOptions = {
-			headers: { Authorization: context.authToken ? `Bearer ${context.authToken}` : undefined },
-		};
-		const req = buildHTTPRequest(baseRequestOptions);
+		const req = buildHTTPRequestWithContextToken(context);
 
 		const raw = await fetch(url, { ...req, method: 'GET' });
 		const rawRes = (await parseJSONResponse<Array<RawMacro> | null>(raw)) ?? [];

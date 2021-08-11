@@ -10,7 +10,14 @@ import { GeneratedAutoExtractors, RawGeneratedAutoExtractors } from '~/models';
 import { GeneratableAutoExtractor } from '~/models/auto-extractor/generatable-auto-extractor';
 import { toGeneratedAutoExtractors } from '~/models/auto-extractor/to-generated-auto-extractor';
 import { toRawGeneratableAutoExtractor } from '~/models/auto-extractor/to-raw-generatable-auto-extractor';
-import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
+import {
+	APIContext,
+	buildHTTPRequestWithContextToken,
+	buildURL,
+	fetch,
+	HTTPRequestOptions,
+	parseJSONResponse
+} from '../utils';
 
 export const makeGenerateAutoExtractors = (context: APIContext) => {
 	const templatePath = '/api/explore/generate';
@@ -19,10 +26,9 @@ export const makeGenerateAutoExtractors = (context: APIContext) => {
 	return async (data: GeneratableAutoExtractor): Promise<GeneratedAutoExtractors> => {
 		try {
 			const baseRequestOptions: HTTPRequestOptions = {
-				headers: { Authorization: context.authToken ? `Bearer ${context.authToken}` : undefined },
 				body: JSON.stringify(toRawGeneratableAutoExtractor(data)),
 			};
-			const req = buildHTTPRequest(baseRequestOptions);
+			const req = buildHTTPRequestWithContextToken(context, baseRequestOptions);
 
 			const raw = await fetch(url, { ...req, method: 'POST' });
 			const rawRes = await parseJSONResponse<RawGeneratedAutoExtractors>(raw);

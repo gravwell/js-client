@@ -10,7 +10,15 @@ import * as FormData from 'form-data';
 import { isString } from 'lodash';
 import { RawResource, Resource, toResource } from '~/models';
 import { UUID } from '~/value-objects';
-import { APIContext, buildHTTPRequest, buildURL, fetch, File, HTTPRequestOptions, parseJSONResponse } from '../utils';
+import {
+	APIContext,
+	buildHTTPRequestWithContextToken,
+	buildURL,
+	fetch,
+	File,
+	HTTPRequestOptions,
+	parseJSONResponse
+} from '../utils';
 
 export const makeSetOneResourceContent = (context: APIContext) => {
 	return async (resourceID: UUID, file: File): Promise<Resource> => {
@@ -19,10 +27,9 @@ export const makeSetOneResourceContent = (context: APIContext) => {
 
 		try {
 			const baseRequestOptions: HTTPRequestOptions = {
-				headers: { Authorization: context.authToken ? `Bearer ${context.authToken}` : undefined },
 				body: toFormData(file) as any,
 			};
-			const req = buildHTTPRequest(baseRequestOptions);
+			const req = buildHTTPRequestWithContextToken(context, baseRequestOptions);
 
 			const raw = await fetch(url, { ...req, method: 'PUT' });
 			const rawRes = await parseJSONResponse<RawResource>(raw);

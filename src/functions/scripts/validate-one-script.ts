@@ -7,7 +7,14 @@
  **************************************************************************/
 
 import { RawValidatedScript, Script, toValidatedScript, ValidatedScript } from '~/models';
-import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
+import {
+	APIContext,
+	buildHTTPRequestWithContextToken,
+	buildURL,
+	fetch,
+	HTTPRequestOptions,
+	parseJSONResponse
+} from '../utils';
 
 export const makeValidateOneScript = (context: APIContext) => {
 	const templatePath = '/api/scheduledsearches/parse';
@@ -15,10 +22,9 @@ export const makeValidateOneScript = (context: APIContext) => {
 
 	return async (script: Script): Promise<ValidatedScript> => {
 		const baseRequestOptions: HTTPRequestOptions = {
-			headers: { Authorization: context.authToken ? `Bearer ${context.authToken}` : undefined },
 			body: JSON.stringify({ Script: script }),
 		};
-		const req = buildHTTPRequest(baseRequestOptions);
+		const req = buildHTTPRequestWithContextToken(context, baseRequestOptions);
 
 		const raw = await fetch(url, { ...req, method: 'PUT' });
 		const rawRes = await parseJSONResponse<RawValidatedScript>(raw);
