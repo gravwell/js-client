@@ -22,7 +22,7 @@ export const buildHTTPRequest = (base: HTTPRequestOptions): RequestInit => {
 };
 
 export const buildHTTPRequestWithContextToken = (context: APIContext, base: HTTPRequestOptions = {}): RequestInit => {
-	return isString(context.authToken) ? buildHTTPRequestWithToken(context.authToken) : buildHTTPRequest(base);
+	return isString(context.authToken) ? buildHTTPRequestWithToken(context.authToken, base) : buildHTTPRequest(base);
 };
 
 export const buildHTTPRequestWithToken = (authToken: string, base: HTTPRequestOptions = {}): RequestInit => {
