@@ -9,7 +9,7 @@
 import { RawValidatedScript, Script, toValidatedScript, ValidatedScript } from '~/models';
 import {
 	APIContext,
-	buildHTTPRequestWithContextToken,
+	buildHTTPRequestWithAuthFromContext,
 	buildURL,
 	fetch,
 	HTTPRequestOptions,
@@ -24,7 +24,7 @@ export const makeValidateOneScript = (context: APIContext) => {
 		const baseRequestOptions: HTTPRequestOptions = {
 			body: JSON.stringify({ Script: script }),
 		};
-		const req = buildHTTPRequestWithContextToken(context, baseRequestOptions);
+		const req = buildHTTPRequestWithAuthFromContext(context, baseRequestOptions);
 
 		const raw = await fetch(url, { ...req, method: 'PUT' });
 		const rawRes = await parseJSONResponse<RawValidatedScript>(raw);

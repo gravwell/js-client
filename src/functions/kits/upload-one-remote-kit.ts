@@ -10,7 +10,7 @@ import { RawRemoteKit, RemoteKit, toRemoteKit } from '~/models';
 import { ID } from '~/value-objects';
 import {
 	APIContext,
-	buildHTTPRequestWithContextToken,
+	buildHTTPRequestWithAuthFromContext,
 	buildURL,
 	fetch,
 	HTTPRequestOptions,
@@ -26,7 +26,7 @@ export const makeUploadOneRemoteKit = (context: APIContext) => {
 			const baseRequestOptions: HTTPRequestOptions = {
 				body: JSON.stringify({ remote: kitID }),
 			};
-			const req = buildHTTPRequestWithContextToken(context, baseRequestOptions);
+			const req = buildHTTPRequestWithAuthFromContext(context, baseRequestOptions);
 
 			const raw = await fetch(url, { ...req, method: 'POST' });
 			const rawRes = await parseJSONResponse<RawRemoteKit>(raw);

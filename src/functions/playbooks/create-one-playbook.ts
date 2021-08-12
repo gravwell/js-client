@@ -10,7 +10,7 @@ import { CreatablePlaybook, Playbook, toRawCreatablePlaybook } from '~/models';
 import { UUID } from '~/value-objects';
 import {
 	APIContext,
-	buildHTTPRequestWithContextToken,
+	buildHTTPRequestWithAuthFromContext,
 	buildURL,
 	fetch,
 	HTTPRequestOptions,
@@ -29,7 +29,7 @@ export const makeCreateOnePlaybook = (context: APIContext) => {
 			const baseRequestOptions: HTTPRequestOptions = {
 				body: JSON.stringify(toRawCreatablePlaybook(data)),
 			};
-			const req = buildHTTPRequestWithContextToken(context, baseRequestOptions);
+			const req = buildHTTPRequestWithAuthFromContext(context, baseRequestOptions);
 
 			const raw = await fetch(url, { ...req, method: 'POST' });
 			const rawID = await parseJSONResponse<UUID>(raw);

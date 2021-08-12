@@ -17,7 +17,7 @@ import {
 } from '~/models';
 import {
 	APIContext,
-	buildHTTPRequestWithContextToken,
+	buildHTTPRequestWithAuthFromContext,
 	buildURL,
 	fetch,
 	HTTPRequestOptions,
@@ -42,7 +42,7 @@ export const makeUpdateOneScheduledTask = (context: APIContext) => {
 			const baseRequestOptions: HTTPRequestOptions = {
 				body: JSON.stringify(toRawUpdatableScheduledTask(data, current)),
 			};
-			const req = buildHTTPRequestWithContextToken(context, baseRequestOptions);
+			const req = buildHTTPRequestWithAuthFromContext(context, baseRequestOptions);
 
 			const raw = await fetch(url, { ...req, method: 'PUT' });
 			const rawScheduledTask = await parseJSONResponse<RawScheduledTask>(raw);

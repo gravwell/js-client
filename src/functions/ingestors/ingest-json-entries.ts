@@ -9,7 +9,7 @@
 import { CreatableJSONEntry, toRawCreatableJSONEntry } from '~/models';
 import {
 	APIContext,
-	buildHTTPRequestWithContextToken,
+	buildHTTPRequestWithAuthFromContext,
 	buildURL,
 	fetch,
 	HTTPRequestOptions,
@@ -25,7 +25,7 @@ export const makeIngestJSONEntries = (context: APIContext) => {
 			const baseRequestOptions: HTTPRequestOptions = {
 				body: JSON.stringify(entries.map(toRawCreatableJSONEntry)),
 			};
-			const req = buildHTTPRequestWithContextToken(context, baseRequestOptions);
+			const req = buildHTTPRequestWithAuthFromContext(context, baseRequestOptions);
 
 			const raw = await fetch(url, { ...req, method: 'PUT' });
 			return parseJSONResponse(raw);

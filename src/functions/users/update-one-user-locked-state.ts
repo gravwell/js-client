@@ -7,7 +7,7 @@
  **************************************************************************/
 
 import { NumericID } from '~/value-objects';
-import { APIContext, buildHTTPRequestWithContextToken, buildURL, fetch, parseJSONResponse } from '../utils';
+import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, fetch, parseJSONResponse } from '../utils';
 
 export const makeUpdateOneUserLockedState = (context: APIContext) => {
 	return async (userID: NumericID, lock: boolean): Promise<void> => {
@@ -15,7 +15,7 @@ export const makeUpdateOneUserLockedState = (context: APIContext) => {
 			const templatePath = '/api/users/{userID}/lock';
 			const url = buildURL(templatePath, { ...context, protocol: 'http', pathParams: { userID } });
 
-			const req = buildHTTPRequestWithContextToken(context);
+			const req = buildHTTPRequestWithAuthFromContext(context);
 
 			const method = lock ? 'PUT' : 'DELETE';
 			const raw = await fetch(url, { ...req, method });

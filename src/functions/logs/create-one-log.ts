@@ -9,7 +9,7 @@
 import { LogLevel, toRawLogLevel } from '~/models';
 import {
 	APIContext,
-	buildHTTPRequestWithContextToken,
+	buildHTTPRequestWithAuthFromContext,
 	buildURL,
 	fetch,
 	HTTPRequestOptions,
@@ -25,7 +25,7 @@ export const makeCreateOneLog = (context: APIContext) => {
 		const baseRequestOptions: HTTPRequestOptions = {
 			body: JSON.stringify({ Body: message }),
 		};
-		const req = buildHTTPRequestWithContextToken(context, baseRequestOptions);
+		const req = buildHTTPRequestWithAuthFromContext(context, baseRequestOptions);
 
 		const raw = await fetch(url, { ...req, method: 'POST' });
 		const success = await parseJSONResponse<boolean>(raw);

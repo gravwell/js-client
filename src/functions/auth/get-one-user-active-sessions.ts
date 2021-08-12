@@ -7,14 +7,14 @@
  **************************************************************************/
 
 import { RawUserSessions, toUserSessions, UserSessions } from '~/models';
-import { APIContext, buildHTTPRequestWithContextToken, buildURL, fetch, parseJSONResponse } from '../utils';
+import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, fetch, parseJSONResponse } from '../utils';
 
 export const makeGetOneUserActiveSessions = (context: APIContext) => {
 	return async (userID: string): Promise<UserSessions> => {
 		const templatePath = '/api/users/{userID}/sessions';
 		const url = buildURL(templatePath, { ...context, protocol: 'http', pathParams: { userID } });
 
-		const req = buildHTTPRequestWithContextToken(context);
+		const req = buildHTTPRequestWithAuthFromContext(context);
 
 		try {
 			const raw = await fetch(url, { ...req, method: 'GET' });

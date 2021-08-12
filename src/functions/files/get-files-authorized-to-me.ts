@@ -7,14 +7,14 @@
  **************************************************************************/
 
 import { FileMetadata, RawFileMetadata, toFileMetadata } from '~/models';
-import { APIContext, buildHTTPRequestWithContextToken, buildURL, fetch, parseJSONResponse } from '../utils';
+import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, fetch, parseJSONResponse } from '../utils';
 
 export const makeGetFilesAuthorizedToMe = (context: APIContext) => {
 	const path = '/api/files';
 	const url = buildURL(path, { ...context, protocol: 'http' });
 
 	return async (): Promise<Array<FileMetadata>> => {
-		const req = buildHTTPRequestWithContextToken(context);
+		const req = buildHTTPRequestWithAuthFromContext(context);
 
 		const raw = await fetch(url, { ...req, method: 'GET' });
 		const rawRes = (await parseJSONResponse<Array<RawFileMetadata> | null>(raw)) ?? [];

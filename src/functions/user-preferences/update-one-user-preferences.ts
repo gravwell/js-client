@@ -9,7 +9,7 @@
 import { UserPreferences } from '~/models';
 import {
 	APIContext,
-	buildHTTPRequestWithContextToken,
+	buildHTTPRequestWithAuthFromContext,
 	buildURL,
 	fetch,
 	HTTPRequestOptions,
@@ -25,7 +25,7 @@ export const makeUpdateOneUserPreferences = (context: APIContext) => async (
 	const baseRequestOptions: HTTPRequestOptions = {
 		body: JSON.stringify(preferences ?? {}),
 	};
-	const req = buildHTTPRequestWithContextToken(context, baseRequestOptions);
+	const req = buildHTTPRequestWithAuthFromContext(context, baseRequestOptions);
 
 	const raw = await fetch(url, { ...req, method: 'PUT' });
 	return parseJSONResponse(raw, { expect: 'void' });

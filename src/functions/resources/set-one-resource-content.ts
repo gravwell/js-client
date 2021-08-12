@@ -12,7 +12,7 @@ import { RawResource, Resource, toResource } from '~/models';
 import { UUID } from '~/value-objects';
 import {
 	APIContext,
-	buildHTTPRequestWithContextToken,
+	buildHTTPRequestWithAuthFromContext,
 	buildURL,
 	fetch,
 	File,
@@ -29,7 +29,7 @@ export const makeSetOneResourceContent = (context: APIContext) => {
 			const baseRequestOptions: HTTPRequestOptions = {
 				body: toFormData(file) as any,
 			};
-			const req = buildHTTPRequestWithContextToken(context, baseRequestOptions);
+			const req = buildHTTPRequestWithAuthFromContext(context, baseRequestOptions);
 
 			const raw = await fetch(url, { ...req, method: 'PUT' });
 			const rawRes = await parseJSONResponse<RawResource>(raw);

@@ -10,7 +10,7 @@ import * as FormData from 'form-data';
 import { CreatableMultiLineEntry } from '~/models';
 import {
 	APIContext,
-	buildHTTPRequestWithContextToken,
+	buildHTTPRequestWithAuthFromContext,
 	buildURL,
 	fetch,
 	HTTPRequestOptions,
@@ -26,7 +26,7 @@ export const makeIngestMultiLineEntry = (context: APIContext) => {
 			const baseRequestOptions: HTTPRequestOptions = {
 				body: toFormData(entry) as any,
 			};
-			const req = buildHTTPRequestWithContextToken(context, baseRequestOptions);
+			const req = buildHTTPRequestWithAuthFromContext(context, baseRequestOptions);
 
 			const raw = await fetch(url, { ...req, method: 'POST' });
 			return parseJSONResponse(raw);

@@ -11,7 +11,7 @@ import { isString } from 'lodash';
 import { LocalKit, RawLocalKit, toLocalKit } from '~/models';
 import {
 	APIContext,
-	buildHTTPRequestWithContextToken,
+	buildHTTPRequestWithAuthFromContext,
 	buildURL,
 	fetch,
 	File,
@@ -28,7 +28,7 @@ export const makeUploadOneLocalKit = (context: APIContext) => {
 			const baseRequestOptions: HTTPRequestOptions = {
 				body: toFormData(kit) as any,
 			};
-			const req = buildHTTPRequestWithContextToken(context, baseRequestOptions);
+			const req = buildHTTPRequestWithAuthFromContext(context, baseRequestOptions);
 
 			const raw = await fetch(url, { ...req, method: 'POST' });
 			const rawRes = await parseJSONResponse<RawLocalKit>(raw);

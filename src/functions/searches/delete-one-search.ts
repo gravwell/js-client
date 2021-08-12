@@ -7,14 +7,14 @@
  **************************************************************************/
 
 import { NumericID } from '~/value-objects';
-import { APIContext, buildHTTPRequestWithContextToken, buildURL, fetch, parseJSONResponse } from '../utils';
+import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, fetch, parseJSONResponse } from '../utils';
 
 export const makeDeleteOneSearch = (context: APIContext) => {
 	return async (searchID: NumericID): Promise<void> => {
 		const templatePath = '/api/searchctrl/{searchID}';
 		const url = buildURL(templatePath, { ...context, protocol: 'http', pathParams: { searchID } });
 
-		const req = buildHTTPRequestWithContextToken(context);
+		const req = buildHTTPRequestWithAuthFromContext(context);
 
 		const raw = await fetch(url, { ...req, method: 'DELETE' });
 		return parseJSONResponse(raw, { expect: 'void' });

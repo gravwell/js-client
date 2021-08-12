@@ -8,14 +8,14 @@
 
 import { Macro, RawMacro, toMacro } from '~/models';
 import { NumericID } from '~/value-objects';
-import { APIContext, buildHTTPRequestWithContextToken, buildURL, fetch, parseJSONResponse } from '../utils';
+import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, fetch, parseJSONResponse } from '../utils';
 
 export const makeGetMacrosByUser = (context: APIContext) => {
 	return async (userID: NumericID): Promise<Array<Macro>> => {
 		const path = '/api/users/{userID}/macros';
 		const url = buildURL(path, { ...context, protocol: 'http', pathParams: { userID } });
 
-		const req = buildHTTPRequestWithContextToken(context);
+		const req = buildHTTPRequestWithAuthFromContext(context);
 
 		const raw = await fetch(url, { ...req, method: 'GET' });
 		const rawRes = (await parseJSONResponse<Array<RawMacro> | null>(raw)) ?? [];

@@ -7,14 +7,14 @@
  **************************************************************************/
 
 import { RawRenderModule, RenderModule, toRenderModule } from '~/models';
-import { APIContext, buildHTTPRequestWithContextToken, buildURL, fetch, parseJSONResponse } from '../utils';
+import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, fetch, parseJSONResponse } from '../utils';
 
 export const makeGetAllRenderModules = (context: APIContext) => {
 	const templatePath = '/api/info/rendermodules';
 	const url = buildURL(templatePath, { ...context, protocol: 'http' });
 
 	return async (): Promise<Array<RenderModule>> => {
-		const req = buildHTTPRequestWithContextToken(context);
+		const req = buildHTTPRequestWithAuthFromContext(context);
 
 		const raw = await fetch(url, { ...req, method: 'GET' });
 		const rawRes = (await parseJSONResponse<RawResponse>(raw)) ?? [];

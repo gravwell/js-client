@@ -18,7 +18,7 @@ import { ID, NumericID, RawNumericID, toNumericID } from '~/value-objects';
 import {
 	APIContext,
 	APISubscription,
-	buildHTTPRequestWithContextToken,
+	buildHTTPRequestWithAuthFromContext,
 	buildURL,
 	fetch,
 	HTTPRequestOptions,
@@ -83,7 +83,7 @@ const makeGetOneKitInstallationStatus = (context: APIContext) => {
 		const templatePath = '/api/kits/status/{installationID}';
 		const url = buildURL(templatePath, { ...context, protocol: 'http', pathParams: { installationID } });
 
-		const req = buildHTTPRequestWithContextToken(context);
+		const req = buildHTTPRequestWithAuthFromContext(context);
 
 		const raw = await fetch(url, { ...req, method: 'GET' });
 		const rawRes = await parseJSONResponse<RawKitInstallationStatus>(raw);
@@ -100,7 +100,7 @@ const makeQueueOneKitForInstallation = (context: APIContext) => {
 			const baseRequestOptions: HTTPRequestOptions = {
 				body: JSON.stringify(toRawInstallableKit(data)),
 			};
-			const req = buildHTTPRequestWithContextToken(context, baseRequestOptions);
+			const req = buildHTTPRequestWithAuthFromContext(context, baseRequestOptions);
 
 			const raw = await fetch(url, { ...req, method: 'POST' });
 			const rawStatusID = await parseJSONResponse<RawNumericID>(raw);

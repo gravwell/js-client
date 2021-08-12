@@ -7,14 +7,14 @@
  **************************************************************************/
 
 import { Actionable, RawActionable, toActionable } from '~/models';
-import { APIContext, buildHTTPRequestWithContextToken, buildURL, fetch, parseJSONResponse } from '../utils';
+import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, fetch, parseJSONResponse } from '../utils';
 
 export const makeGetAllActionables = (context: APIContext) => {
 	const templatePath = '/api/pivots';
 	const url = buildURL(templatePath, { ...context, protocol: 'http' });
 
 	return async (): Promise<Array<Actionable>> => {
-		const req = buildHTTPRequestWithContextToken(context);
+		const req = buildHTTPRequestWithAuthFromContext(context);
 
 		const raw = await fetch(url, { ...req, method: 'GET' });
 		const rawRes = (await parseJSONResponse<Array<RawActionable> | null>(raw)) ?? [];

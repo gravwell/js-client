@@ -15,7 +15,7 @@ import {
 	toScheduledTask,
 } from '~/models';
 import { NumericID } from '~/value-objects';
-import { APIContext, buildHTTPRequestWithContextToken, buildURL, fetch, parseJSONResponse } from '../utils';
+import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, fetch, parseJSONResponse } from '../utils';
 
 export const makeGetOneScheduledTask = (context: APIContext) => {
 	return async <Type extends ScheduledTaskType = ScheduledTaskType>(
@@ -24,7 +24,7 @@ export const makeGetOneScheduledTask = (context: APIContext) => {
 		const templatePath = '/api/scheduledsearches/{scheduledTaskID}';
 		const url = buildURL(templatePath, { ...context, protocol: 'http', pathParams: { scheduledTaskID } });
 
-		const req = buildHTTPRequestWithContextToken(context);
+		const req = buildHTTPRequestWithAuthFromContext(context);
 
 		const raw = await fetch(url, { ...req, method: 'GET' });
 		const rawRes = await parseJSONResponse<RawScheduledTask>(raw);

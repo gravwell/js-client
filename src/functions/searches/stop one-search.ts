@@ -7,14 +7,14 @@
  **************************************************************************/
 
 import { NumericID } from '~/value-objects';
-import { APIContext, buildHTTPRequestWithContextToken, buildURL, fetch } from '../utils';
+import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, fetch } from '../utils';
 
 export const makeStopOneSearch = (context: APIContext) => {
 	return async (searchID: NumericID): Promise<void> => {
 		const templatePath = '/api/searchctrl/{searchID}/stop';
 		const url = buildURL(templatePath, { ...context, protocol: 'http', pathParams: { searchID } });
 
-		const req = buildHTTPRequestWithContextToken(context);
+		const req = buildHTTPRequestWithAuthFromContext(context);
 
 		await fetch(url, { ...req, method: 'PUT' });
 	};

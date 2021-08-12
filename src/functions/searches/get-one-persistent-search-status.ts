@@ -8,14 +8,14 @@
 
 import { RawSearch2, Search2, toSearch2 } from '~/models';
 import { NumericID } from '~/value-objects';
-import { APIContext, buildHTTPRequestWithContextToken, buildURL, fetch, parseJSONResponse } from '../utils';
+import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, fetch, parseJSONResponse } from '../utils';
 
 export const makeGetOnePersistentSearchStatus = (context: APIContext) => {
 	return async (searchID: NumericID): Promise<Search2> => {
 		const templatePath = '/api/searchctrl/{searchID}';
 		const url = buildURL(templatePath, { ...context, protocol: 'http', pathParams: { searchID } });
 
-		const req = buildHTTPRequestWithContextToken(context);
+		const req = buildHTTPRequestWithAuthFromContext(context);
 
 		const raw = await fetch(url, { ...req, method: 'GET' });
 		const rawRes = await parseJSONResponse<RawSearch2>(raw);

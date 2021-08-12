@@ -7,14 +7,14 @@
  **************************************************************************/
 
 import { RawResource, Resource, toResource } from '~/models';
-import { APIContext, buildHTTPRequestWithContextToken, buildURL, fetch, parseJSONResponse } from '../utils';
+import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, fetch, parseJSONResponse } from '../utils';
 
 export const makeGetAllResources = (context: APIContext) => {
 	const resourcePath = '/api/resources?admin=true';
 	const url = buildURL(resourcePath, { ...context, protocol: 'http' });
 
 	return async (): Promise<Array<Omit<Resource, 'body'>>> => {
-		const req = buildHTTPRequestWithContextToken(context);
+		const req = buildHTTPRequestWithAuthFromContext(context);
 
 		const raw = await fetch(url, { ...req, method: 'GET' });
 		const rawRes = (await parseJSONResponse<Array<RawResource> | null>(raw)) ?? [];

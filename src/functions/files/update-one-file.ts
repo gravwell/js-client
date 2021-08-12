@@ -10,7 +10,7 @@ import * as FormData from 'form-data';
 import { FileMetadata, RawBaseFileMetadata, toRawUpdatableFile, UpdatableFile } from '~/models';
 import {
 	APIContext,
-	buildHTTPRequestWithContextToken,
+	buildHTTPRequestWithAuthFromContext,
 	buildURL,
 	fetch,
 	HTTPRequestOptions,
@@ -44,7 +44,7 @@ export const makeUpdateOneFile = (context: APIContext) => {
 				const baseRequestOptions: HTTPRequestOptions = {
 					body: JSON.stringify(toRawUpdatableFile(data, current)),
 				};
-				const req = buildHTTPRequestWithContextToken(context, baseRequestOptions);
+				const req = buildHTTPRequestWithAuthFromContext(context, baseRequestOptions);
 
 				const raw = await fetch(url, { ...req, method: 'PATCH' });
 				await parseJSONResponse<RawBaseFileMetadata>(raw);
@@ -61,7 +61,7 @@ export const makeUpdateOneFile = (context: APIContext) => {
 				const baseRequestOptions: HTTPRequestOptions = {
 					body: formData as any,
 				};
-				const req = buildHTTPRequestWithContextToken(context, baseRequestOptions);
+				const req = buildHTTPRequestWithAuthFromContext(context, baseRequestOptions);
 
 				const raw = await fetch(url, { ...req, method: 'POST' });
 				await parseJSONResponse<RawBaseFileMetadata>(raw);

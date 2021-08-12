@@ -7,14 +7,14 @@
  **************************************************************************/
 
 import { Dashboard, RawDashboard, toDashboard } from '~/models';
-import { APIContext, buildHTTPRequestWithContextToken, buildURL, fetch, parseJSONResponse } from '../utils';
+import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, fetch, parseJSONResponse } from '../utils';
 
 export const makeGetAllDashboards = (context: APIContext) => {
 	const path = '/api/dashboards/all';
 	const url = buildURL(path, { ...context, protocol: 'http' });
 
 	return async (): Promise<Array<Dashboard>> => {
-		const req = buildHTTPRequestWithContextToken(context);
+		const req = buildHTTPRequestWithAuthFromContext(context);
 
 		const raw = await fetch(url, { ...req, method: 'GET' });
 		const rawRes = (await parseJSONResponse<Array<RawDashboard> | null>(raw)) ?? [];

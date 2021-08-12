@@ -7,13 +7,13 @@
  **************************************************************************/
 
 import { UserPreferences } from '~/models';
-import { APIContext, buildHTTPRequestWithContextToken, buildURL, fetch, parseJSONResponse } from '../utils';
+import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, fetch, parseJSONResponse } from '../utils';
 
 export const makeGetOneUserPreferences = (context: APIContext) => async (userID: string): Promise<UserPreferences> => {
 	const templatePath = '/api/users/{userID}/preferences';
 	const url = buildURL(templatePath, { ...context, protocol: 'http', pathParams: { userID } });
 
-	const req = buildHTTPRequestWithContextToken(context);
+	const req = buildHTTPRequestWithAuthFromContext(context);
 
 	const raw = await fetch(url, { ...req, method: 'GET' });
 	return parseJSONResponse(raw);

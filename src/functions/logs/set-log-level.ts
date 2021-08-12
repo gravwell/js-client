@@ -9,7 +9,7 @@
 import { LogLevel, toRawLogLevel } from '~/models';
 import {
 	APIContext,
-	buildHTTPRequestWithContextToken,
+	buildHTTPRequestWithAuthFromContext,
 	buildURL,
 	fetch,
 	HTTPRequestOptions,
@@ -24,7 +24,7 @@ export const makeSetLogLevel = (context: APIContext) => {
 		const baseRequestOptions: HTTPRequestOptions = {
 			body: JSON.stringify({ Level: level === 'off' ? 'Off' : toRawLogLevel(level) }),
 		};
-		const req = buildHTTPRequestWithContextToken(context, baseRequestOptions);
+		const req = buildHTTPRequestWithAuthFromContext(context, baseRequestOptions);
 
 		const raw = await fetch(url, { ...req, method: 'PUT' });
 		await parseJSONResponse(raw, { expect: 'void' });

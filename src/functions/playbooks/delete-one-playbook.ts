@@ -7,13 +7,13 @@
  **************************************************************************/
 
 import { NumericID } from '~/value-objects';
-import { APIContext, buildHTTPRequestWithContextToken, buildURL, fetch, parseJSONResponse } from '../utils';
+import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, fetch, parseJSONResponse } from '../utils';
 
 export const makeDeleteOnePlaybook = (context: APIContext) => {
 	return async (playbookID: NumericID): Promise<void> => {
 		const playbookPath = '/api/playbooks/{playbookID}';
 		const url = buildURL(playbookPath, { ...context, protocol: 'http', pathParams: { playbookID } });
-		const req = buildHTTPRequestWithContextToken(context);
+		const req = buildHTTPRequestWithAuthFromContext(context);
 
 		const raw = await fetch(url, { ...req, method: 'DELETE' });
 		return parseJSONResponse(raw, { expect: 'void' });

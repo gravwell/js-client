@@ -8,14 +8,14 @@
 
 import { RawSavedQuery, SavedQuery, toSavedQuery } from '~/models';
 import { NumericID } from '~/value-objects';
-import { APIContext, buildHTTPRequestWithContextToken, buildURL, fetch, parseJSONResponse } from '../utils';
+import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, fetch, parseJSONResponse } from '../utils';
 
 export const makeGetOneSavedQuery = (context: APIContext) => {
 	return async (savedQueryID: NumericID): Promise<SavedQuery> => {
 		const templatePath = '/api/library/{savedQueryID}';
 		const url = buildURL(templatePath, { ...context, protocol: 'http', pathParams: { savedQueryID } });
 
-		const req = buildHTTPRequestWithContextToken(context);
+		const req = buildHTTPRequestWithAuthFromContext(context);
 
 		const raw = await fetch(url, { ...req, method: 'GET' });
 		const rawRes = await parseJSONResponse<RawSavedQuery>(raw);

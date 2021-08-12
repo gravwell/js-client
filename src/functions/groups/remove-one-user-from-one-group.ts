@@ -7,7 +7,7 @@
  **************************************************************************/
 
 import { NumericID } from '~/value-objects';
-import { APIContext, buildHTTPRequestWithContextToken, buildURL, fetch, parseJSONResponse } from '../utils';
+import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, fetch, parseJSONResponse } from '../utils';
 
 export const makeRemoveOneUserFromOneGroup = (context: APIContext) => {
 	return async (userID: NumericID, groupID: NumericID): Promise<void> => {
@@ -15,7 +15,7 @@ export const makeRemoveOneUserFromOneGroup = (context: APIContext) => {
 		const url = buildURL(templatePath, { ...context, protocol: 'http', pathParams: { userID, groupID } });
 
 		try {
-			const req = buildHTTPRequestWithContextToken(context);
+			const req = buildHTTPRequestWithAuthFromContext(context);
 
 			const raw = await fetch(url, { ...req, method: 'DELETE' });
 			return parseJSONResponse(raw, { expect: 'void' });

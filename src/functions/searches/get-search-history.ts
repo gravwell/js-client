@@ -7,7 +7,7 @@
  **************************************************************************/
 
 import { RawSearch, Search, toSearch } from '~/models';
-import { APIContext, buildHTTPRequestWithContextToken, buildURL, fetch, parseJSONResponse } from '../utils';
+import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, fetch, parseJSONResponse } from '../utils';
 
 export const makeGetSearchHistory = (context: APIContext) => {
 	return async (filter: SearchHistoryFilter): Promise<Array<Search>> => {
@@ -37,7 +37,7 @@ export const makeGetSearchHistory = (context: APIContext) => {
 			}
 		})();
 
-		const req = buildHTTPRequestWithContextToken(context);
+		const req = buildHTTPRequestWithAuthFromContext(context);
 
 		const raw = await fetch(url, { ...req, method: 'GET' });
 		const rawSearches = (await parseJSONResponse<Array<RawSearch> | null>(raw)) ?? [];

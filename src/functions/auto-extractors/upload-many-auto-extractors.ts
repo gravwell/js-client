@@ -12,7 +12,7 @@ import { AutoExtractor, UpdatableAutoExtractor, UploadableAutoExtractor } from '
 import { RawUUID } from '~/value-objects';
 import {
 	APIContext,
-	buildHTTPRequestWithContextToken,
+	buildHTTPRequestWithAuthFromContext,
 	buildURL,
 	fetch,
 	File,
@@ -34,7 +34,7 @@ export const makeUploadManyAutoExtractors = (context: APIContext) => {
 			const baseRequestOptions: HTTPRequestOptions = {
 				body: toFormData(data.file) as any,
 			};
-			const req = buildHTTPRequestWithContextToken(context, baseRequestOptions);
+			const req = buildHTTPRequestWithAuthFromContext(context, baseRequestOptions);
 
 			const raw = await fetch(url, { ...req, method: 'POST' });
 			const createdIDs = new Set(await parseJSONResponse<Array<RawUUID>>(raw));

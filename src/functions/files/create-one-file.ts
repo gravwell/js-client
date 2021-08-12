@@ -11,7 +11,7 @@ import { isString, pick } from 'lodash';
 import { CreatableFile, FileMetadata, RawBaseFileMetadata, toRawCreatableFile } from '~/models';
 import {
 	APIContext,
-	buildHTTPRequestWithContextToken,
+	buildHTTPRequestWithAuthFromContext,
 	buildURL,
 	fetch,
 	HTTPRequestOptions,
@@ -32,7 +32,7 @@ export const makeCreateOneFile = (context: APIContext) => {
 			const baseRequestOptions: HTTPRequestOptions = {
 				body: toFormData(data) as any,
 			};
-			const req = buildHTTPRequestWithContextToken(context, baseRequestOptions);
+			const req = buildHTTPRequestWithAuthFromContext(context, baseRequestOptions);
 
 			const raw = await fetch(url, { ...req, method: 'POST' });
 			const rawRes = await parseJSONResponse<RawBaseFileMetadata>(raw);
