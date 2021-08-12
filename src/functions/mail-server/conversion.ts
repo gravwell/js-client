@@ -1,4 +1,5 @@
-import {MailServerConfig, RawMailServerConfig} from '../../models/mail-server';
+import {MailServerConfig, RawMailServerConfig, MailServerTestData, RawMailServerTestData} from '../../models/mail-server';
+import {isString} from 'lodash';
 
 export const toMailServerConfig = (raw: RawMailServerConfig): MailServerConfig => {
 	return {
@@ -20,4 +21,13 @@ export const toRawMailServerConfig = (config: MailServerConfig): RawMailServerCo
 		UseTLS: config.useTLS,
 		Username: config.username,
 	}
+}
+
+export const toRawMailServerTestData = (data: MailServerTestData): RawMailServerTestData => {
+	return {
+		From: data.from,
+		To: isString(data.to) ? [ data.to ] : data.to,
+		Subject: data.subject,
+		Body: data.body,
+	};
 }

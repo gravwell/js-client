@@ -73,8 +73,11 @@ import {
 	UserPreferencesService,
 	UsersService,
 	WebServerService,
+	MailServerService,
+	createSearchGroupsService,
+	SearchGroupsService,
+	createMailServerService,
 } from '~/services';
-import { createSearchGroupsService, SearchGroupsService } from './services/search-groups';
 
 export interface GravwellClientOptions {
 	useEncryption?: boolean;
@@ -180,6 +183,7 @@ export class GravwellClient {
 		this._queries = createQueriesService(initialContext);
 		this._explorer = createExplorerService(initialContext);
 		this._searchGroups = createSearchGroupsService(initialContext);
+		this._mailServer = createMailServerService(initialContext);
 
 		this._context$.subscribe(context => {
 			this._tags = createTagsService(context);
@@ -214,6 +218,7 @@ export class GravwellClient {
 			this._queries = createQueriesService(context);
 			this._explorer = createExplorerService(context);
 			this._searchGroups = createSearchGroupsService(context);
+			this._mailServer = createMailServerService(context);
 		});
 	}
 
@@ -377,4 +382,9 @@ export class GravwellClient {
 		return this._searchGroups;
 	}
 	private _searchGroups: SearchGroupsService;
+
+	public get mailServer(): MailServerService {
+		return this._mailServer;
+	}
+	private _mailServer: MailServerService;
 }

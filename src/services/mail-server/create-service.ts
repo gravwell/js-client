@@ -9,7 +9,7 @@ import {MailServerService} from './service';
 import {APIContext} from '../../functions/utils';
 import {makeGetConfig, makeCreateTest, makeUpdateConfig} from '../../functions/mail-server';
 
-export const makeMailServerService = (context: APIContext): MailServerService => {
+export const createMailServerService = (context: APIContext): MailServerService => {
 	return {
 		get: {
 			config: makeGetConfig(context),
@@ -18,7 +18,7 @@ export const makeMailServerService = (context: APIContext): MailServerService =>
 			config: makeUpdateConfig(context),
 		},
 		create: {
-			test: () => makeCreateTest(context),
+			test: makeCreateTest(context),
 		},
 	}
 }

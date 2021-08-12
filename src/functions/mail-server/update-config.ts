@@ -6,7 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import {APIContext, buildAuthorizedHTTPRequest, fetch, parseJSONResponse} from '../utils';
+import {APIContext, buildHTTPRequestWithContextToken, fetch, parseJSONResponse} from '../utils';
 import {MAIL_CONFIG_PATH} from './paths';
 import {MailServerConfig, RawMailServerConfig} from '../../models/mail-server';
 import {toMailServerConfig, toRawMailServerConfig} from './conversion';
@@ -14,10 +14,10 @@ import {toMailServerConfig, toRawMailServerConfig} from './conversion';
 export const makeUpdateConfig = (context: APIContext) => {
 	return async (config: MailServerConfig): Promise<MailServerConfig> => {
 		try {
-			const req = buildAuthorizedHTTPRequest({
+			const req = buildHTTPRequestWithContextToken(context, {
 				body: JSON.stringify(toRawMailServerConfig(config)),
 			});
-			const rawRes = await fetch(MAIL_CONFIG_PATH, {...req, method: 'PUT'});
+			const rawRes = await fetch(MAIL_CONFIG_PATH, {...req, method: 'POST'});
 			const rawObj = await parseJSONResponse<RawMailServerConfig>(rawRes);
 			return toMailServerConfig(rawObj);
 		} catch (err) {

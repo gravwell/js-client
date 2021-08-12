@@ -16,6 +16,7 @@ export * from './jwt';
 export * from './kit';
 export * from './log-level';
 export * from './macro';
+export * from './mail-server';
 export * from './notification';
 export * from './playbook';
 export * from './query';
