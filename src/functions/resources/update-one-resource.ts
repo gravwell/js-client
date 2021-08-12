@@ -8,7 +8,14 @@
 
 import { isUndefined } from 'lodash';
 import { RawResource, Resource, toRawUpdatableResourceMetadata, toResource, UpdatableResource } from '~/models';
-import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
+import {
+	APIContext,
+	buildHTTPRequestWithAuthFromContext,
+	buildURL,
+	fetch,
+	HTTPRequestOptions,
+	parseJSONResponse,
+} from '../utils';
 import { makeGetOneResource } from './get-one-resource';
 import { makeSetOneResourceContent } from './set-one-resource-content';
 
@@ -32,10 +39,9 @@ export const makeUpdateOneResource = (context: APIContext) => {
 			const url = buildURL(resourcePath, { ...context, protocol: 'http', pathParams: { resourceID: data.id } });
 
 			const baseRequestOptions: HTTPRequestOptions = {
-				headers: { Authorization: context.authToken ? `Bearer ${context.authToken}` : undefined },
 				body: JSON.stringify(toRawUpdatableResourceMetadata(data, current)),
 			};
-			const req = buildHTTPRequest(baseRequestOptions);
+			const req = buildHTTPRequestWithAuthFromContext(context, baseRequestOptions);
 
 			const metadataP = fetch(url, { ...req, method: 'PUT' })
 				.then(res => parseJSONResponse<RawResource>(res))

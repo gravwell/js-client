@@ -8,17 +8,14 @@
 
 import { isBlankRawResource, RawResource, Resource, toResource } from '~/models';
 import { UUID } from '~/value-objects';
-import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
+import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, fetch, parseJSONResponse } from '../utils';
 
 export const makeGetOneResource = (context: APIContext) => {
 	return async (resourceID: UUID): Promise<Resource> => {
 		const resourcePath = '/api/resources/{resourceID}';
 		const url = buildURL(resourcePath, { ...context, protocol: 'http', pathParams: { resourceID } });
 
-		const baseRequestOptions: HTTPRequestOptions = {
-			headers: { Authorization: context.authToken ? `Bearer ${context.authToken}` : undefined },
-		};
-		const req = buildHTTPRequest(baseRequestOptions);
+		const req = buildHTTPRequestWithAuthFromContext(context);
 
 		const raw = await fetch(url, { ...req, method: 'GET' });
 		const rawResource = await parseJSONResponse<RawResource>(raw);

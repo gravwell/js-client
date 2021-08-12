@@ -13,7 +13,14 @@ import {
 	toRawUpdatableAutoExtractor,
 	UpdatableAutoExtractor,
 } from '~/models';
-import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
+import {
+	APIContext,
+	buildHTTPRequestWithAuthFromContext,
+	buildURL,
+	fetch,
+	HTTPRequestOptions,
+	parseJSONResponse,
+} from '../utils';
 import { makeGetAllAutoExtractors } from './get-all-auto-extractors';
 
 export const makeUpdateOneAutoExtractor = (context: APIContext) => {
@@ -28,10 +35,9 @@ export const makeUpdateOneAutoExtractor = (context: APIContext) => {
 			const current = <AutoExtractor>allAutoExtractors.find(ae => ae.id === data.id);
 
 			const baseRequestOptions: HTTPRequestOptions = {
-				headers: { Authorization: context.authToken ? `Bearer ${context.authToken}` : undefined },
 				body: JSON.stringify(toRawUpdatableAutoExtractor(data, current)),
 			};
-			const req = buildHTTPRequest(baseRequestOptions);
+			const req = buildHTTPRequestWithAuthFromContext(context, baseRequestOptions);
 
 			const raw = await fetch(url, { ...req, method: 'PUT' });
 			const rawAutoExtractor = await parseJSONResponse<RawAutoExtractor>(raw);

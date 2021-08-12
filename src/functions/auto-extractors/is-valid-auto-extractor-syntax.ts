@@ -7,7 +7,14 @@
  **************************************************************************/
 
 import { CreatableAutoExtractor, toRawCreatableAutoExtractor } from '~/models';
-import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
+import {
+	APIContext,
+	buildHTTPRequestWithAuthFromContext,
+	buildURL,
+	fetch,
+	HTTPRequestOptions,
+	parseJSONResponse,
+} from '../utils';
 
 export const makeIsValidAutoExtractorSyntax = (context: APIContext) => {
 	const templatePath = '/api/autoextractors';
@@ -16,10 +23,9 @@ export const makeIsValidAutoExtractorSyntax = (context: APIContext) => {
 	return async (data: CreatableAutoExtractor): Promise<IsValidAutoExtractorSyntaxResponse> => {
 		try {
 			const baseRequestOptions: HTTPRequestOptions = {
-				headers: { Authorization: context.authToken ? `Bearer ${context.authToken}` : undefined },
 				body: JSON.stringify(toRawCreatableAutoExtractor(data)),
 			};
-			const req = buildHTTPRequest(baseRequestOptions);
+			const req = buildHTTPRequestWithAuthFromContext(context, baseRequestOptions);
 
 			const raw = await fetch(url, { ...req, method: 'POST' });
 			const rawRes = await parseJSONResponse<RawIsValidAutoExtractorSyntaxResponse>(raw, { returnError: true });

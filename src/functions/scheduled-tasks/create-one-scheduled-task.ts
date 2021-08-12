@@ -14,7 +14,14 @@ import {
 	toRawCreatableScheduledTask,
 } from '~/models';
 import { RawNumericID, toNumericID } from '~/value-objects';
-import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
+import {
+	APIContext,
+	buildHTTPRequestWithAuthFromContext,
+	buildURL,
+	fetch,
+	HTTPRequestOptions,
+	parseJSONResponse,
+} from '../utils';
 import { makeGetOneScheduledTask } from './get-one-scheduled-task';
 
 export const makeCreateOneScheduledTask = (context: APIContext) => {
@@ -30,10 +37,9 @@ export const makeCreateOneScheduledTask = (context: APIContext) => {
 	> => {
 		try {
 			const baseRequestOptions: HTTPRequestOptions = {
-				headers: { Authorization: context.authToken ? `Bearer ${context.authToken}` : undefined },
 				body: JSON.stringify(toRawCreatableScheduledTask(data)),
 			};
-			const req = buildHTTPRequest(baseRequestOptions);
+			const req = buildHTTPRequestWithAuthFromContext(context, baseRequestOptions);
 
 			const raw = await fetch(url, { ...req, method: 'POST' });
 			const rawID = await parseJSONResponse<RawNumericID>(raw);

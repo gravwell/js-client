@@ -7,17 +7,14 @@
  **************************************************************************/
 
 import { NumericID } from '~/value-objects';
-import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
+import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, fetch, parseJSONResponse } from '../utils';
 
 export const makeBackgroundOneSearch = (context: APIContext) => {
 	return async (searchID: NumericID): Promise<void> => {
 		const templatePath = '/api/searchctrl/{searchID}/background';
 		const url = buildURL(templatePath, { ...context, protocol: 'http', pathParams: { searchID } });
 
-		const baseRequestOptions: HTTPRequestOptions = {
-			headers: { Authorization: context.authToken ? `Bearer ${context.authToken}` : undefined },
-		};
-		const req = buildHTTPRequest(baseRequestOptions);
+		const req = buildHTTPRequestWithAuthFromContext(context);
 
 		const raw = await fetch(url, { ...req, method: 'PATCH' });
 		return parseJSONResponse(raw, { expect: 'void' });

@@ -7,7 +7,14 @@
  **************************************************************************/
 
 import { Dashboard, RawDashboard, toDashboard, toRawUpdatableDashboard, UpdatableDashboard } from '~/models';
-import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
+import {
+	APIContext,
+	buildHTTPRequestWithAuthFromContext,
+	buildURL,
+	fetch,
+	HTTPRequestOptions,
+	parseJSONResponse,
+} from '../utils';
 import { makeGetOneDashboard } from './get-one-dashboard';
 
 export const makeUpdateOneDashboard = (context: APIContext) => {
@@ -21,10 +28,9 @@ export const makeUpdateOneDashboard = (context: APIContext) => {
 			const current = await getOneDashboard(data.id);
 
 			const baseRequestOptions: HTTPRequestOptions = {
-				headers: { Authorization: context.authToken ? `Bearer ${context.authToken}` : undefined },
 				body: JSON.stringify(toRawUpdatableDashboard(data, current)),
 			};
-			const req = buildHTTPRequest(baseRequestOptions);
+			const req = buildHTTPRequestWithAuthFromContext(context, baseRequestOptions);
 
 			const raw = await fetch(url, { ...req, method: 'PUT' });
 			const rawDashboard = await parseJSONResponse<RawDashboard>(raw);

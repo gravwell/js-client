@@ -8,7 +8,14 @@
 
 import { Actionable, CreatableActionable, toRawCreatableActionable } from '~/models';
 import { UUID } from '~/value-objects';
-import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
+import {
+	APIContext,
+	buildHTTPRequestWithAuthFromContext,
+	buildURL,
+	fetch,
+	HTTPRequestOptions,
+	parseJSONResponse,
+} from '../utils';
 import { makeGetOneActionable } from './get-one-actionable';
 
 export const makeCreateOneActionable = (context: APIContext) => {
@@ -20,10 +27,9 @@ export const makeCreateOneActionable = (context: APIContext) => {
 	return async (data: CreatableActionable): Promise<Actionable> => {
 		try {
 			const baseRequestOptions: HTTPRequestOptions = {
-				headers: { Authorization: context.authToken ? `Bearer ${context.authToken}` : undefined },
 				body: JSON.stringify(toRawCreatableActionable(data)),
 			};
-			const req = buildHTTPRequest(baseRequestOptions);
+			const req = buildHTTPRequestWithAuthFromContext(context, baseRequestOptions);
 
 			const raw = await fetch(url, { ...req, method: 'POST' });
 			const rawID = await parseJSONResponse<UUID>(raw);

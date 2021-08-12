@@ -7,7 +7,14 @@
  **************************************************************************/
 
 import { Group, toRawUpdatableGroup, UpdatableGroup } from '~/models';
-import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
+import {
+	APIContext,
+	buildHTTPRequestWithAuthFromContext,
+	buildURL,
+	fetch,
+	HTTPRequestOptions,
+	parseJSONResponse,
+} from '../utils';
 import { makeGetOneGroup } from './get-one-group';
 
 export const makeUpdateOneGroup = (context: APIContext) => {
@@ -19,10 +26,9 @@ export const makeUpdateOneGroup = (context: APIContext) => {
 
 		try {
 			const baseRequestOptions: HTTPRequestOptions = {
-				headers: { Authorization: context.authToken ? `Bearer ${context.authToken}` : undefined },
 				body: JSON.stringify(toRawUpdatableGroup(data)),
 			};
-			const req = buildHTTPRequest(baseRequestOptions);
+			const req = buildHTTPRequestWithAuthFromContext(context, baseRequestOptions);
 
 			const raw = await fetch(url, { ...req, method: 'PUT' });
 			await parseJSONResponse(raw, { expect: 'void' });

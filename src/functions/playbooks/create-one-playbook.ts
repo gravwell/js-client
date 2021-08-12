@@ -8,7 +8,14 @@
 
 import { CreatablePlaybook, Playbook, toRawCreatablePlaybook } from '~/models';
 import { UUID } from '~/value-objects';
-import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
+import {
+	APIContext,
+	buildHTTPRequestWithAuthFromContext,
+	buildURL,
+	fetch,
+	HTTPRequestOptions,
+	parseJSONResponse,
+} from '../utils';
 import { makeGetOnePlaybook } from './get-one-playbook';
 
 export const makeCreateOnePlaybook = (context: APIContext) => {
@@ -20,10 +27,9 @@ export const makeCreateOnePlaybook = (context: APIContext) => {
 	return async (data: CreatablePlaybook): Promise<Playbook> => {
 		try {
 			const baseRequestOptions: HTTPRequestOptions = {
-				headers: { Authorization: context.authToken ? `Bearer ${context.authToken}` : undefined },
 				body: JSON.stringify(toRawCreatablePlaybook(data)),
 			};
-			const req = buildHTTPRequest(baseRequestOptions);
+			const req = buildHTTPRequestWithAuthFromContext(context, baseRequestOptions);
 
 			const raw = await fetch(url, { ...req, method: 'POST' });
 			const rawID = await parseJSONResponse<UUID>(raw);
