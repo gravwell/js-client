@@ -8,7 +8,14 @@
 
 import * as FormData from 'form-data';
 import { CreatableMultiLineEntry } from '~/models';
-import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
+import {
+	APIContext,
+	buildHTTPRequestWithAuthFromContext,
+	buildURL,
+	fetch,
+	HTTPRequestOptions,
+	parseJSONResponse,
+} from '../utils';
 
 export const makeIngestMultiLineEntry = (context: APIContext) => {
 	const templatePath = '/api/ingest/lines';
@@ -17,10 +24,9 @@ export const makeIngestMultiLineEntry = (context: APIContext) => {
 	return async (entry: CreatableMultiLineEntry): Promise<number> => {
 		try {
 			const baseRequestOptions: HTTPRequestOptions = {
-				headers: { Authorization: context.authToken ? `Bearer ${context.authToken}` : undefined },
 				body: toFormData(entry) as any,
 			};
-			const req = buildHTTPRequest(baseRequestOptions);
+			const req = buildHTTPRequestWithAuthFromContext(context, baseRequestOptions);
 
 			const raw = await fetch(url, { ...req, method: 'POST' });
 			return parseJSONResponse(raw);

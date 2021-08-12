@@ -7,7 +7,14 @@
  **************************************************************************/
 
 import { CreatableJSONEntry, toRawCreatableJSONEntry } from '~/models';
-import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
+import {
+	APIContext,
+	buildHTTPRequestWithAuthFromContext,
+	buildURL,
+	fetch,
+	HTTPRequestOptions,
+	parseJSONResponse,
+} from '../utils';
 
 export const makeIngestJSONEntries = (context: APIContext) => {
 	const templatePath = '/api/ingest/json';
@@ -16,10 +23,9 @@ export const makeIngestJSONEntries = (context: APIContext) => {
 	return async (entries: Array<CreatableJSONEntry>): Promise<number> => {
 		try {
 			const baseRequestOptions: HTTPRequestOptions = {
-				headers: { Authorization: context.authToken ? `Bearer ${context.authToken}` : undefined },
 				body: JSON.stringify(entries.map(toRawCreatableJSONEntry)),
 			};
-			const req = buildHTTPRequest(baseRequestOptions);
+			const req = buildHTTPRequestWithAuthFromContext(context, baseRequestOptions);
 
 			const raw = await fetch(url, { ...req, method: 'PUT' });
 			return parseJSONResponse(raw);

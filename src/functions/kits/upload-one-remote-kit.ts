@@ -8,7 +8,14 @@
 
 import { RawRemoteKit, RemoteKit, toRemoteKit } from '~/models';
 import { ID } from '~/value-objects';
-import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
+import {
+	APIContext,
+	buildHTTPRequestWithAuthFromContext,
+	buildURL,
+	fetch,
+	HTTPRequestOptions,
+	parseJSONResponse,
+} from '../utils';
 
 export const makeUploadOneRemoteKit = (context: APIContext) => {
 	return async (kitID: ID): Promise<RemoteKit> => {
@@ -17,10 +24,9 @@ export const makeUploadOneRemoteKit = (context: APIContext) => {
 
 		try {
 			const baseRequestOptions: HTTPRequestOptions = {
-				headers: { Authorization: context.authToken ? `Bearer ${context.authToken}` : undefined },
 				body: JSON.stringify({ remote: kitID }),
 			};
-			const req = buildHTTPRequest(baseRequestOptions);
+			const req = buildHTTPRequestWithAuthFromContext(context, baseRequestOptions);
 
 			const raw = await fetch(url, { ...req, method: 'POST' });
 			const rawRes = await parseJSONResponse<RawRemoteKit>(raw);
