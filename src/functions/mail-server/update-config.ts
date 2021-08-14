@@ -8,7 +8,7 @@
 
 import { MailServerConfig } from '../../models/mail-server';
 import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, fetch } from '../utils';
-import { toMailServerConfig } from './conversion';
+import { toRawMailServerConfig } from './conversion';
 import { MAIL_CONFIG_PATH } from './paths';
 
 export const makeUpdateConfig = (context: APIContext) => {
