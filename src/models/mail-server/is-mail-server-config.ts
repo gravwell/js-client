@@ -6,8 +6,8 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
+import {isBoolean, isNil,isNumber, isPlainObject, isString} from 'lodash';
 import {MailServerConfig} from './mail-server-config';
-import {isPlainObject, isBoolean, isString, isNumber, isNil} from 'lodash';
 
 export const isMailServerConfig = (v: any): v is MailServerConfig => {
 	if (isPlainObject(v)) {

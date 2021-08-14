@@ -26,6 +26,7 @@ import {
 	createKitsService,
 	createLogsService,
 	createMacrosService,
+	createMailServerService,
 	createNotificationsService,
 	createPlaybooksService,
 	createQueriesService,
@@ -36,6 +37,7 @@ import {
 	createScheduledScriptsService,
 	createScriptLibrariesService,
 	createSearchesService,
+	createSearchGroupsService,
 	createSearchHistoryService,
 	createSearchModulesService,
 	createSearchStatusService,
@@ -54,6 +56,7 @@ import {
 	KitsService,
 	LogsService,
 	MacrosService,
+	MailServerService,
 	NotificationsService,
 	PlaybooksService,
 	QueriesService,
@@ -64,6 +67,7 @@ import {
 	ScheduledScriptsService,
 	ScriptLibrariesService,
 	SearchesService,
+	SearchGroupsService,
 	SearchHistoryService,
 	SearchModulesService,
 	SearchStatusService,
@@ -73,10 +77,6 @@ import {
 	UserPreferencesService,
 	UsersService,
 	WebServerService,
-	MailServerService,
-	createSearchGroupsService,
-	SearchGroupsService,
-	createMailServerService,
 } from '~/services';
 
 export interface GravwellClientOptions {

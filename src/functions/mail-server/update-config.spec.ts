@@ -6,7 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { MailServerConfig, isMailServerConfig } from '~/models';
+import { isMailServerConfig,MailServerConfig } from '~/models';
 import { integrationTest, TEST_BASE_API_CONTEXT } from '~/tests';
 import { makeUpdateConfig } from './update-config';
 

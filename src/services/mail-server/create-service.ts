@@ -5,9 +5,9 @@
  * This software may be modified and distributed under the terms of the
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
-import {MailServerService} from './service';
+import {makeCreateServerTest, makeGetConfig, makeUpdateConfig} from '../../functions/mail-server';
 import {APIContext} from '../../functions/utils';
-import {makeGetConfig, makeCreateServerTest, makeUpdateConfig} from '../../functions/mail-server';
+import {MailServerService} from './service';
 
 export const createMailServerService = (context: APIContext): MailServerService => {
 	return {

@@ -6,16 +6,16 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
+import {MailServerConfig, RawMailServerConfig} from '../../models/mail-server';
 import {
 	APIContext,
-	fetch,
-	buildURL,
-	parseJSONResponse,
 	buildHTTPRequestWithAuthFromContext,
+	buildURL,
+	fetch,
+	parseJSONResponse,
 } from '../utils';
-import {MailServerConfig, RawMailServerConfig} from '../../models/mail-server';
-import {MAIL_CONFIG_PATH} from './paths';
 import {toMailServerConfig} from './conversion';
+import {MAIL_CONFIG_PATH} from './paths';
 
 /**
  * Makes request to get mail server config

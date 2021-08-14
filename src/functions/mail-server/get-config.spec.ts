@@ -6,11 +6,11 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { integrationTest, TEST_BASE_API_CONTEXT } from '~/tests';
+import { omit } from 'lodash';
 import { MailServerConfig } from "~/models";
+import { integrationTest, TEST_BASE_API_CONTEXT } from '~/tests';
 import { makeGetConfig } from './get-config';
 import { makeUpdateConfig } from './update-config';
-import { omit } from 'lodash';
 
 describe('getMailServerConfig()', () => {
 

@@ -6,10 +6,10 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { integrationTest, TEST_BASE_API_CONTEXT } from '~/tests';
-import { MailServerTestData, isMailServerConfig } from '~/models';
-import { makeCreateServerTest } from './create-server-test';
 import { isString } from 'lodash';
+import { isMailServerConfig,MailServerTestData } from '~/models';
+import { integrationTest, TEST_BASE_API_CONTEXT } from '~/tests';
+import { makeCreateServerTest } from './create-server-test';
 
 describe('makeCreateServerTest()', () => {
 	const createServerTest = makeCreateServerTest(TEST_BASE_API_CONTEXT);

@@ -6,10 +6,10 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import {APIContext, buildHTTPRequestWithAuthFromContext, fetch, buildURL, parseJSONResponse} from '../utils';
+import {MailServerConfig} from '../../models/mail-server';
+import {APIContext, buildHTTPRequestWithAuthFromContext, buildURL, fetch} from '../utils';
+import {toMailServerConfig} from './conversion';
 import {MAIL_CONFIG_PATH} from './paths';
-import {MailServerConfig, RawMailServerConfig} from '../../models/mail-server';
-import {toMailServerConfig, toRawMailServerConfig} from './conversion';
 
 export const makeUpdateConfig = (context: APIContext) => {
 	return async (config: MailServerConfig): Promise<boolean> => {

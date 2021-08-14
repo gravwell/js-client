@@ -6,8 +6,8 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import {MailServerConfig, RawMailServerConfig, MailServerTestData, RawMailServerTestData} from '../../models/mail-server';
 import {isString} from 'lodash';
+import {MailServerConfig, MailServerTestData, RawMailServerConfig, RawMailServerTestData} from '../../models/mail-server';
 
 export const toMailServerConfig = (raw: RawMailServerConfig): MailServerConfig => {
 	return {
