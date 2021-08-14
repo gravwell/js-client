@@ -7,7 +7,7 @@
  **************************************************************************/
 
 import { isString } from 'lodash';
-import { isMailServerConfig,MailServerTestData } from '~/models';
+import { isMailServerConfig, MailServerTestData } from '~/models';
 import { integrationTest, TEST_BASE_API_CONTEXT } from '~/tests';
 import { makeCreateServerTest } from './create-server-test';
 
@@ -17,7 +17,6 @@ describe('makeCreateServerTest()', () => {
 	it(
 		'Should test the mail server config',
 		integrationTest(async () => {
-
 			const data: MailServerTestData = {
 				from: 'someone@gravwell.io',
 				to: 'someone@gravwell.io',
@@ -25,7 +24,6 @@ describe('makeCreateServerTest()', () => {
 				subject: 'This is a subject',
 			};
 			const test = await createServerTest(data);
-
 		}),
 	);
 });

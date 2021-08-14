@@ -6,10 +6,10 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { MailServerTestData } from "~/models";
-import {APIContext, buildHTTPRequestWithAuthFromContext, buildURL, fetch, parseJSONResponse} from '../utils';
+import { MailServerTestData } from '~/models';
+import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, fetch, parseJSONResponse } from '../utils';
 import { toRawMailServerTestData } from './conversion';
-import {MAIL_PATH} from './paths';
+import { MAIL_PATH } from './paths';
 
 export const makeCreateServerTest = (context: APIContext) => {
 	return async (data: MailServerTestData): Promise<string> => {
@@ -19,10 +19,10 @@ export const makeCreateServerTest = (context: APIContext) => {
 				body: JSON.stringify(toRawMailServerTestData(data)),
 			});
 			const rawRes = await fetch(url, { ...req, method: 'POST' });
-			return parseJSONResponse(rawRes, { expect: 'text'});
+			return parseJSONResponse(rawRes, { expect: 'text' });
 		} catch (err) {
 			if (err instanceof Error) throw err;
 			throw Error('Unknown error');
 		}
-	}
-}
+	};
+};

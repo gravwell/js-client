@@ -6,16 +6,10 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import {MailServerConfig, RawMailServerConfig} from '../../models/mail-server';
-import {
-	APIContext,
-	buildHTTPRequestWithAuthFromContext,
-	buildURL,
-	fetch,
-	parseJSONResponse,
-} from '../utils';
-import {toMailServerConfig} from './conversion';
-import {MAIL_CONFIG_PATH} from './paths';
+import { MailServerConfig, RawMailServerConfig } from '../../models/mail-server';
+import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, fetch, parseJSONResponse } from '../utils';
+import { toMailServerConfig } from './conversion';
+import { MAIL_CONFIG_PATH } from './paths';
 
 /**
  * Makes request to get mail server config
@@ -29,4 +23,4 @@ export const makeGetConfig = (context: APIContext) => {
 		const rawObj = await parseJSONResponse<RawMailServerConfig>(res);
 		return toMailServerConfig(rawObj);
 	};
-}
+};

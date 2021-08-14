@@ -7,13 +7,12 @@
  **************************************************************************/
 
 import { omit } from 'lodash';
-import { MailServerConfig } from "~/models";
+import { MailServerConfig } from '~/models';
 import { integrationTest, TEST_BASE_API_CONTEXT } from '~/tests';
 import { makeGetConfig } from './get-config';
 import { makeUpdateConfig } from './update-config';
 
 describe('getMailServerConfig()', () => {
-
 	it(
 		'Should return the mail server config',
 		integrationTest(async () => {
@@ -34,7 +33,6 @@ describe('getMailServerConfig()', () => {
 			// api doesn't return password on get so we omit it
 			const omitted = ['password'];
 			expect(omit(createdConfig, omitted)).toEqual(omit(config, omitted));
-
 		}),
 	);
 });

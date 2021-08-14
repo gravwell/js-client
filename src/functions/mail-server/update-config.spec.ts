@@ -6,12 +6,11 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { isMailServerConfig,MailServerConfig } from '~/models';
+import { isMailServerConfig, MailServerConfig } from '~/models';
 import { integrationTest, TEST_BASE_API_CONTEXT } from '~/tests';
 import { makeUpdateConfig } from './update-config';
 
 describe('makeUpdateConfig()', () => {
-
 	it(
 		'Should update the mail server config',
 		integrationTest(async () => {
@@ -27,7 +26,6 @@ describe('makeUpdateConfig()', () => {
 
 			const created = await updateConfig(config);
 			expect(created).toBeTrue();
-
 		}),
 	);
 });

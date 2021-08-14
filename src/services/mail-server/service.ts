@@ -6,16 +6,16 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import {MailServerConfig, MailServerTestData} from '../../models';
+import { MailServerConfig, MailServerTestData } from '../../models';
 
 export interface MailServerService {
 	get: {
-		config: () => Promise<MailServerConfig>,
-	},
+		config: () => Promise<MailServerConfig>;
+	};
 	update: {
-		config: (config: MailServerConfig) => Promise<boolean>,
-	},
+		config: (config: MailServerConfig) => Promise<boolean>;
+	};
 	create: {
-		test: (data: MailServerTestData) => Promise<string>,
-	},
+		test: (data: MailServerTestData) => Promise<string>;
+	};
 }

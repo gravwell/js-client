@@ -6,8 +6,13 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import {isString} from 'lodash';
-import {MailServerConfig, MailServerTestData, RawMailServerConfig, RawMailServerTestData} from '../../models/mail-server';
+import { isString } from 'lodash';
+import {
+	MailServerConfig,
+	MailServerTestData,
+	RawMailServerConfig,
+	RawMailServerTestData,
+} from '../../models/mail-server';
 
 export const toMailServerConfig = (raw: RawMailServerConfig): MailServerConfig => {
 	return {
@@ -17,8 +22,8 @@ export const toMailServerConfig = (raw: RawMailServerConfig): MailServerConfig =
 		server: raw.Server,
 		useTLS: raw.UseTLS,
 		username: raw.Username,
-	}
-}
+	};
+};
 
 export const toRawMailServerConfig = (config: MailServerConfig): RawMailServerConfig => {
 	return {
@@ -28,14 +33,14 @@ export const toRawMailServerConfig = (config: MailServerConfig): RawMailServerCo
 		Server: config.server,
 		UseTLS: config.useTLS,
 		Username: config.username,
-	}
-}
+	};
+};
 
 export const toRawMailServerTestData = (data: MailServerTestData): RawMailServerTestData => {
 	return {
 		From: data.from,
-		To: isString(data.to) ? [ data.to ] : data.to,
+		To: isString(data.to) ? [data.to] : data.to,
 		Subject: data.subject,
 		Body: data.body,
 	};
-}
+};
