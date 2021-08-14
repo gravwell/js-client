@@ -13,7 +13,7 @@ export interface MailServerService {
 		config: () => Promise<MailServerConfig>,
 	},
 	update: {
-		config: (config: MailServerConfig) => Promise<MailServerConfig>,
+		config: (config: MailServerConfig) => Promise<boolean>,
 	},
 	create: {
 		test: (data: MailServerTestData) => Promise<string>,

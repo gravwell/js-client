@@ -17,6 +17,7 @@ export * from './ingestors';
 export * from './kits';
 export * from './logs';
 export * from './macros';
+export * from './mail-server';
 export * from './notifications';
 export * from './playbooks';
 export * from './render-modules';

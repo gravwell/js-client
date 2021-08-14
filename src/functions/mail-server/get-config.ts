@@ -9,8 +9,9 @@
 import {
 	APIContext,
 	fetch,
+	buildURL,
 	parseJSONResponse,
-	buildHTTPRequestWithContextToken,
+	buildHTTPRequestWithAuthFromContext,
 } from '../utils';
 import {MailServerConfig, RawMailServerConfig} from '../../models/mail-server';
 import {MAIL_CONFIG_PATH} from './paths';
@@ -22,10 +23,10 @@ import {toMailServerConfig} from './conversion';
  */
 export const makeGetConfig = (context: APIContext) => {
 	return async (): Promise<MailServerConfig> => {
-		const req = buildHTTPRequestWithContextToken(context);
-		const rawRes = await fetch(MAIL_CONFIG_PATH, { ...req, method: 'GET' });
-		const rawObj = await parseJSONResponse<RawMailServerConfig>(rawRes);
+		const url = buildURL(MAIL_CONFIG_PATH, { ...context, protocol: 'http' });
+		const req = buildHTTPRequestWithAuthFromContext(context);
+		const res = await fetch(url, { ...req, method: 'GET' });
+		const rawObj = await parseJSONResponse<RawMailServerConfig>(res);
 		return toMailServerConfig(rawObj);
 	};
 }
-

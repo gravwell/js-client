@@ -6,6 +6,6 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-export * from './create-test';
+export * from './create-server-test';
 export * from './get-config';
 export * from './update-config';
