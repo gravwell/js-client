@@ -19,6 +19,13 @@ export interface RawPongMessageSent {
 	data: {};
 }
 
+export interface RawAttachSearchMessage {
+	type: 'attach';
+	data: {
+		ID: string; // It's a RawNumericID but sent as a string instead of a number
+	};
+}
+
 export interface RawInitiateSearchMessageSent {
 	type: 'search';
 	data: {
@@ -180,6 +187,7 @@ export interface RawRequestSearchStatsLocationMessageSent {
 export type RawSearchMessageSent =
 	| RawInformSubscriptionsMessageSent
 	| RawPongMessageSent
+	| RawAttachSearchMessage
 	| RawInitiateSearchMessageSent
 	| RawAcceptSearchMessageSent
 	| RawRequestSearchCloseMessageSent
