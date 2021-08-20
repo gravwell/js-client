@@ -11,6 +11,7 @@ import { isNil, last } from 'lodash';
 import {
 	RawResponseForSearchStatsMessageReceived,
 	RawResponseForSearchStatsWithinRangeMessageReceived,
+	RawSearchAttachedMessageReceived,
 	RawSearchInitiatedMessageReceived,
 	RawSearchMessageReceived,
 	SearchEntries,
@@ -57,7 +58,10 @@ export const filterMessageByCommand = <Command extends SearchMessageCommands>(co
 	msg: M,
 ): msg is Extract<M, { data: { ID: Command } }> => {
 	try {
-		const _msg = msg as Exclude<RawSearchMessageReceived, RawSearchInitiatedMessageReceived>;
+		const _msg = msg as Exclude<
+			RawSearchMessageReceived,
+			RawSearchInitiatedMessageReceived | RawSearchAttachedMessageReceived
+		>;
 		return _msg.data?.ID === command;
 	} catch {
 		return false;
