@@ -43,6 +43,50 @@ export interface RawSearchInitiatedMessageReceived {
 	};
 }
 
+export interface RawSearchAttachedMessageReceived {
+	type: 'attach';
+	data: {
+		Subproto: string;
+		RendererMod: string;
+		RendererCmd: string;
+		Info: {
+			ID: string;
+			UID: RawNumericID;
+
+			UserQuery: RawQuery;
+			EffectiveQuery: RawQuery;
+
+			Preview: boolean;
+			StartRange: string; // timestamp
+			EndRange: string; // timestamp
+
+			Started: string; // timestamp
+			LastUpdate: string; // timestamp
+			Duration: string; // eg. "0s" or "150.21ms"
+
+			CollapsingIndex: number;
+			Descending: boolean;
+			IndexSize: number;
+			ItemCount: number;
+			Metadata?: RawJSON;
+			MinZoomWindow?: number;
+			NoHistory: boolean;
+			RenderDownloadFormats: Array<string>;
+			StoreSize: number; // integer
+			TimeZoomDisabled: boolean;
+			Tags: Array<string>;
+
+			Import: {
+				Imported: boolean;
+				Time: string; // timestamp
+				BatchName: string;
+				BatchInfo: string;
+			};
+		};
+		Error?: string;
+	};
+}
+
 export interface RawSearchErrorResponseReceived {
 	type: string; // Search subtype ID eg. "search2"
 	data: {
@@ -283,6 +327,7 @@ export interface RawSearchMessageReceivedRequestExplorerEntriesWithinRange {
 
 export type RawSearchMessageReceived =
 	| RawSearchInitiatedMessageReceived
+	| RawSearchAttachedMessageReceived
 	| RawResponseForSearchCloseMessageReceived
 	| RawResponseForSearchDetailsMessageReceived
 	| RawResponseForSearchTagsMessageReceived
