@@ -7,7 +7,7 @@
  **************************************************************************/
 
 import { SearchFilter, SearchSubscription } from '~/models/search';
-import { RawJSON } from '~/value-objects';
+import { ID, RawJSON } from '~/value-objects';
 
 export interface SearchesService {
 	readonly background: {
@@ -33,6 +33,10 @@ export interface SearchesService {
 
 	readonly download: {
 		readonly one: (searchID: string, downloadFormat: string) => Promise<string>;
+	};
+
+	readonly get: {
+		readonly one: (searchID: ID) => Promise<SearchSubscription>;
 	};
 
 	readonly create: {
