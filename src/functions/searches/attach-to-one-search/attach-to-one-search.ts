@@ -6,7 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { isAfter, subHours } from 'date-fns';
+import { isAfter } from 'date-fns';
 import { isBoolean, isNil, isNull, isUndefined, uniqueId } from 'lodash';
 import { BehaviorSubject, combineLatest, EMPTY, from, NEVER, Observable, of, Subject, Subscription } from 'rxjs';
 import {
@@ -57,7 +57,10 @@ export const makeAttachToOneSearch = (context: APIContext) => {
 	let rawSubscriptionP: ReturnType<typeof subscribeToOneRawSearch> | null = null;
 	let closedSub: Subscription | null = null;
 
-	return async (searchID: ID): Promise<SearchSubscription> => {
+	return async (
+		searchID: ID,
+		options: { filter?: Omit<SearchFilter, 'elementFilters'> } = {},
+	): Promise<SearchSubscription> => {
 		if (isNull(rawSubscriptionP)) {
 			rawSubscriptionP = subscribeToOneRawSearch();
 			if (closedSub?.closed === false) {
@@ -75,22 +78,32 @@ export const makeAttachToOneSearch = (context: APIContext) => {
 		}
 		const rawSubscription = await rawSubscriptionP;
 
-		// The default end date is now
-		const defaultEnd = new Date();
+		const searchAttachMsg = await attachSearch(rawSubscription, searchID);
+		const searchTypeID = searchAttachMsg.data.Subproto;
 
-		// The default start date is one hour ago
-		const defaultStart = subHours(defaultEnd, 1);
+		// The default dates are the StartRange and EndRange used to create the search
+		const defaultStart = new Date(searchAttachMsg.data.Info.StartRange);
+		const defaultEnd = new Date(searchAttachMsg.data.Info.EndRange);
 
 		let closed = false;
 		const close$ = new Subject<void>();
 
 		const initialFilter: RequiredSearchFilter = {
-			entriesOffset: { index: 0, count: 100 },
-			dateRange: { start: defaultStart, end: defaultEnd },
+			entriesOffset: {
+				index: options.filter?.entriesOffset?.index ?? 0,
+				count: options.filter?.entriesOffset?.count ?? 100,
+			},
+			dateRange:
+				options.filter?.dateRange === 'preview'
+					? ('preview' as const)
+					: {
+							start: options.filter?.dateRange?.start ?? defaultStart,
+							end: options.filter?.dateRange?.end ?? defaultEnd,
+					  },
 			// *NOTE: The default granularity is recalculated when we receive the renderer type
-			desiredGranularity: 100,
-			overviewGranularity: 90,
-			zoomGranularity: 90,
+			desiredGranularity: options.filter?.desiredGranularity ?? 100,
+			overviewGranularity: options.filter?.overviewGranularity ?? 90,
+			zoomGranularity: options.filter?.zoomGranularity ?? 90,
 			elementFilters: [],
 		};
 		const initialFilterID = uniqueId(SEARCH_FILTER_PREFIX);
@@ -98,8 +111,6 @@ export const makeAttachToOneSearch = (context: APIContext) => {
 		const filtersByID: Record<string, SearchFilter | undefined> = {};
 		filtersByID[initialFilterID] = initialFilter;
 
-		const searchAttachMsg = await attachSearch(rawSubscription, searchID);
-		const searchTypeID = searchAttachMsg.data.Subproto;
 		const isResponseError = filterMessageByCommand(SearchMessageCommands.ResponseError);
 		const searchMessages$ = rawSubscription.received$.pipe(
 			filter(msg => msg.type === searchTypeID),
