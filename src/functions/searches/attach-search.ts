@@ -71,7 +71,9 @@ const SEARCH_ATTACH_RESULTS: Observable<{
 			filter((msg): msg is RawSearchAttachedMessageReceived => {
 				try {
 					const _msg = <RawSearchAttachedMessageReceived>msg;
-					return _msg.type === 'attach' && _msg.data.Info.ID === searchID;
+					// We only check the type so that we don't discard error messages
+					// eg. { type: 'attach', data: { Error: 'Search ID is not found' }
+					return _msg.type === 'attach';
 				} catch {
 					return false;
 				}
