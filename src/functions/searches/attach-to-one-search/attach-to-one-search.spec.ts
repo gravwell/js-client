@@ -159,9 +159,9 @@ describe('attachToOneSearch()', () => {
 			expect(stats.metadata)
 				.withContext('the search metadata should be present in the stats and unchanged')
 				.toEqual(metadata);
-
 			expect(stats.query).withContext(`Stats should contain the user query`).toBe(query);
-			expect(stats.effectiveQuery).withContext(`Stats should contain the effective query`).toBe(effectiveQuery);
+			// TODO: Waiting on gravwell/gravwell#3677
+			// expect(stats.effectiveQuery).withContext(`Stats should contain the effective query`).toBe(effectiveQuery);
 
 			expect(stats.downloadFormats.sort())
 				.withContext(`Download formats should include .json', .text', .csv' and .archive`)
@@ -204,7 +204,7 @@ describe('attachToOneSearch()', () => {
 			const filter: SearchFilter = { entriesOffset: { index: 0, count: count }, dateRange: { start, end } };
 
 			const searchCreated = await subscribeToOneSearch(query, { filter });
-			const search = await attachToOneSearch(searchCreated.searchID);
+			const search = await attachToOneSearch(searchCreated.searchID, { filter });
 
 			const textEntriesP = search.entries$
 				.pipe(
@@ -315,7 +315,7 @@ describe('attachToOneSearch()', () => {
 				Array.from({ length: SEARCHES_N }).map(() => subscribeToOneSearch(query, { filter })),
 			);
 			const searches = await Promise.all(
-				searchesCreated.map(searchCreated => attachToOneSearch(searchCreated.searchID)),
+				searchesCreated.map(searchCreated => attachToOneSearch(searchCreated.searchID, { filter })),
 			);
 
 			// Concat first because .reverse modifies the array
@@ -542,7 +542,7 @@ describe('attachToOneSearch()', () => {
 				const filter: SearchFilter = { entriesOffset: { index: 0, count }, dateRange: { start, end } };
 
 				const searchCreated = await subscribeToOneSearch(query, { filter });
-				const search = await attachToOneSearch(searchCreated.searchID);
+				const search = await attachToOneSearch(searchCreated.searchID, { filter });
 
 				let [statsOverview, statsZoom] = await Promise.all([
 					search.statsOverview$.pipe(first()).toPromise(),
@@ -600,7 +600,7 @@ describe('attachToOneSearch()', () => {
 				const filter: SearchFilter = { entriesOffset: { index: 0, count }, dateRange: { start, end } };
 
 				const searchCreated = await subscribeToOneSearch(query, { filter });
-				const search = await attachToOneSearch(searchCreated.searchID);
+				const search = await attachToOneSearch(searchCreated.searchID, { filter });
 
 				let [statsOverview, statsZoom] = await Promise.all([
 					search.statsOverview$.pipe(first()).toPromise(),
@@ -659,7 +659,7 @@ describe('attachToOneSearch()', () => {
 				const filter1s: SearchFilter = { entriesOffset: { index: 0, count: count }, dateRange };
 
 				const search1sCreated = await subscribeToOneSearch(query1s, { filter: filter1s });
-				const search1s = await attachToOneSearch(search1sCreated.searchID);
+				const search1s = await attachToOneSearch(search1sCreated.searchID, { filter: filter1s });
 
 				const stats1s = await search1s.stats$
 					.pipe(
@@ -680,7 +680,7 @@ describe('attachToOneSearch()', () => {
 				const filter33s = { entriesOffset: { index: 0, count: count }, dateRange };
 
 				const search33sCreated = await subscribeToOneSearch(query33s, { filter: filter33s });
-				const search33s = await attachToOneSearch(search33sCreated.searchID);
+				const search33s = await attachToOneSearch(search33sCreated.searchID, { filter: filter33s });
 
 				const stats33s = await search33s.stats$
 					.pipe(
@@ -709,7 +709,7 @@ describe('attachToOneSearch()', () => {
 				const filter1: SearchFilter = { entriesOffset: { index: 0, count: count }, dateRange: { start, end } };
 
 				const searchCreated = await subscribeToOneSearch(query, { filter: filter1 });
-				const search = await attachToOneSearch(searchCreated.searchID);
+				const search = await attachToOneSearch(searchCreated.searchID, { filter: filter1 });
 
 				let [statsOverview, statsZoom] = await Promise.all([
 					search.statsOverview$.pipe(first()).toPromise(),
@@ -783,7 +783,7 @@ describe('attachToOneSearch()', () => {
 				const filter1: SearchFilter = { entriesOffset: { index: 0, count: count }, dateRange: { start, end } };
 
 				const searchCreated = await subscribeToOneSearch(query, { filter: filter1 });
-				const search = await attachToOneSearch(searchCreated.searchID);
+				const search = await attachToOneSearch(searchCreated.searchID, { filter: filter1 });
 
 				let [statsOverview, statsZoom] = await Promise.all([
 					search.statsOverview$.pipe(first()).toPromise(),
@@ -863,7 +863,7 @@ describe('attachToOneSearch()', () => {
 				};
 
 				const searchCreated = await subscribeToOneSearch(query, { filter: filter1 });
-				const search = await attachToOneSearch(searchCreated.searchID);
+				const search = await attachToOneSearch(searchCreated.searchID, { filter: filter1 });
 
 				let [statsOverview, statsZoom] = await Promise.all([
 					search.statsOverview$.pipe(first()).toPromise(),
@@ -944,7 +944,7 @@ describe('attachToOneSearch()', () => {
 				};
 
 				const searchCreated = await subscribeToOneSearch(query, { filter: filter1 });
-				const search = await attachToOneSearch(searchCreated.searchID);
+				const search = await attachToOneSearch(searchCreated.searchID, { filter: filter1 });
 
 				let [statsOverview, statsZoom] = await Promise.all([
 					search.statsOverview$.pipe(first()).toPromise(),
