@@ -20,7 +20,7 @@ describe('getMailServerConfig()', () => {
 			const updateMailServerConfig = makeUpdateConfig(TEST_BASE_API_CONTEXT);
 
 			const config: MailServerConfig = {
-				server: 'mail.gravwell.io',
+				server: 'localhost',
 				username: 'dev',
 				port: 32,
 				password: 'pwd',

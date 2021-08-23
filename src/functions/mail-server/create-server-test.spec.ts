@@ -19,7 +19,7 @@ describe('makeCreateServerTest()', () => {
 		'Should enqueue an email when mail server config is set',
 		integrationTest(async () => {
 			const config: MailServerConfig = {
-				server: 'mail.gravwell.io',
+				server: 'localhost',
 				username: 'dev',
 				port: 32,
 				password: 'pwd',
@@ -31,8 +31,8 @@ describe('makeCreateServerTest()', () => {
 			expect(result).toBe(true);
 
 			const data: MailServerTestData = {
-				from: 'someone@gravwell.io',
-				to: 'someone@gravwell.io',
+				from: 'someone@localhost',
+				to: 'someone@localhost',
 				body: 'This is a test',
 				subject: 'This is a subject',
 			};
