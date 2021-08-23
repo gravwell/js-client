@@ -6,6 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
+import { MailServerTestResult } from '~/models/mail-server/mail-server-test-result';
 import { MailServerConfig, MailServerTestData } from '../../models';
 
 export interface MailServerService {
@@ -16,6 +17,6 @@ export interface MailServerService {
 		config: (config: MailServerConfig) => Promise<boolean>;
 	};
 	create: {
-		test: (data: MailServerTestData) => Promise<string>;
+		test: (data: MailServerTestData) => Promise<MailServerTestResult>;
 	};
 }
