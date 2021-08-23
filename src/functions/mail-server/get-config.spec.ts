@@ -28,11 +28,12 @@ describe('getMailServerConfig()', () => {
 				useTLS: false,
 			};
 			// update/create config
-			await updateMailServerConfig(config);
+			const result = await updateMailServerConfig(config);
+			expect(result).toBe(true);
+
 			const createdConfig = await getMailServerConfig();
 			// api doesn't return password on get so we omit it
-			const omitted = ['password'];
-			expect(omit(createdConfig, omitted)).toEqual(omit(config, omitted));
+			expect(createdConfig).toEqual(omit(config, 'password'));
 		}),
 	);
 });

@@ -10,7 +10,7 @@ import { MailServerConfig, MailServerTestData } from '../../models';
 
 export interface MailServerService {
 	get: {
-		config: () => Promise<MailServerConfig>;
+		config: () => Promise<Omit<MailServerConfig, 'password'>>;
 	};
 	update: {
 		config: (config: MailServerConfig) => Promise<boolean>;
