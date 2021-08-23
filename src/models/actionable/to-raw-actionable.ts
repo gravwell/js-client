@@ -23,6 +23,7 @@ export const toRawActionableAction = (action: ActionableAction): RawActionableAc
 	description: action.description,
 	placeholder: action.placeholder,
 	command: toRawActionableCommand(action.command),
+	noValueUrlEncode: action.noValueUrlEncode,
 	start: toRawActionableTimeVariable(action.start),
 	end: toRawActionableTimeVariable(action.end),
 });
