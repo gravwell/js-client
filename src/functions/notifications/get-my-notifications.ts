@@ -17,10 +17,9 @@ import {
 } from '~/models';
 import {
 	APIContext,
-	buildHTTPRequest,
+	buildHTTPRequestWithAuthFromContext,
 	buildURL,
 	fetch,
-	HTTPRequestOptions,
 	omitUndefinedShallow,
 	parseJSONResponse,
 } from '../utils';
@@ -30,10 +29,7 @@ export const makeGetMyNotifications = (context: APIContext) => {
 	const url = buildURL(templatePath, { ...context, protocol: 'http' });
 
 	return async (): Promise<Array<Notification>> => {
-		const baseRequestOptions: HTTPRequestOptions = {
-			headers: { Authorization: context.authToken ? `Bearer ${context.authToken}` : undefined },
-		};
-		const req = buildHTTPRequest(baseRequestOptions);
+		const req = buildHTTPRequestWithAuthFromContext(context);
 
 		const rawRes = await fetch(url, { ...req, method: 'GET' });
 		const rawObj = await parseJSONResponse<{ [id: string]: RawNotification }>(rawRes);

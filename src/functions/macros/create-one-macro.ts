@@ -8,7 +8,14 @@
 
 import { CreatableMacro, Macro, toRawCreatableMacro } from '~/models';
 import { RawNumericID, toNumericID } from '~/value-objects';
-import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
+import {
+	APIContext,
+	buildHTTPRequestWithAuthFromContext,
+	buildURL,
+	fetch,
+	HTTPRequestOptions,
+	parseJSONResponse,
+} from '../utils';
 import { makeGetOneMacro } from './get-one-macro';
 
 export const makeCreateOneMacro = (context: APIContext) => {
@@ -20,10 +27,9 @@ export const makeCreateOneMacro = (context: APIContext) => {
 	return async (data: CreatableMacro): Promise<Macro> => {
 		try {
 			const baseRequestOptions: HTTPRequestOptions = {
-				headers: { Authorization: context.authToken ? `Bearer ${context.authToken}` : undefined },
 				body: JSON.stringify(toRawCreatableMacro(data)),
 			};
-			const req = buildHTTPRequest(baseRequestOptions);
+			const req = buildHTTPRequestWithAuthFromContext(context, baseRequestOptions);
 
 			const raw = await fetch(url, { ...req, method: 'POST' });
 			const rawRes = await parseJSONResponse<RawNumericID>(raw);

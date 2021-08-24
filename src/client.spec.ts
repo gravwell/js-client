@@ -240,6 +240,9 @@ describe('GravwellClient', () => {
 			expectTypeOf(client.searches.download.one).toEqualTypeOf<
 				(searchID: ID, downloadFormat: SearchDownloadFormat) => ReturnType<typeof downloadFromURL>
 			>();
+			expectTypeOf(client.searches.get.one).toEqualTypeOf<
+				(searchID: ID, options: { filter?: Omit<SearchFilter, 'elementFilters'> }) => Promise<SearchSubscription>
+			>();
 			expectTypeOf(client.searches.create.one).toEqualTypeOf<
 				(
 					query: Query,

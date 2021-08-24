@@ -8,7 +8,14 @@
 
 import { AutoExtractor, CreatableAutoExtractor, toRawCreatableAutoExtractor } from '~/models';
 import { RawNumericID, toNumericID } from '~/value-objects';
-import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
+import {
+	APIContext,
+	buildHTTPRequestWithAuthFromContext,
+	buildURL,
+	fetch,
+	HTTPRequestOptions,
+	parseJSONResponse,
+} from '../utils';
 import { makeGetAllAutoExtractors } from './get-all-auto-extractors';
 
 export const makeCreateOneAutoExtractor = (context: APIContext) => {
@@ -20,10 +27,9 @@ export const makeCreateOneAutoExtractor = (context: APIContext) => {
 	return async (data: CreatableAutoExtractor): Promise<AutoExtractor> => {
 		try {
 			const baseRequestOptions: HTTPRequestOptions = {
-				headers: { Authorization: context.authToken ? `Bearer ${context.authToken}` : undefined },
 				body: JSON.stringify(toRawCreatableAutoExtractor(data)),
 			};
-			const req = buildHTTPRequest(baseRequestOptions);
+			const req = buildHTTPRequestWithAuthFromContext(context, baseRequestOptions);
 
 			const raw = await fetch(url, { ...req, method: 'POST' });
 			const rawRes = await parseJSONResponse<RawNumericID>(raw);

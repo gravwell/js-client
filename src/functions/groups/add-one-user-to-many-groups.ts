@@ -7,7 +7,14 @@
  **************************************************************************/
 
 import { NumericID, toRawNumericID } from '~/value-objects';
-import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
+import {
+	APIContext,
+	buildHTTPRequestWithAuthFromContext,
+	buildURL,
+	fetch,
+	HTTPRequestOptions,
+	parseJSONResponse,
+} from '../utils';
 
 export const makeAddOneUserToManyGroups = (context: APIContext) => {
 	return async (userID: NumericID, groupIDs: Array<NumericID>): Promise<void> => {
@@ -16,10 +23,9 @@ export const makeAddOneUserToManyGroups = (context: APIContext) => {
 
 		try {
 			const baseRequestOptions: HTTPRequestOptions = {
-				headers: { Authorization: context.authToken ? `Bearer ${context.authToken}` : undefined },
 				body: JSON.stringify({ GIDs: groupIDs.map(toRawNumericID) }),
 			};
-			const req = buildHTTPRequest(baseRequestOptions);
+			const req = buildHTTPRequestWithAuthFromContext(context, baseRequestOptions);
 
 			const raw = await fetch(url, { ...req, method: 'POST' });
 			return parseJSONResponse(raw, { expect: 'void' });
