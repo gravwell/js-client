@@ -171,7 +171,7 @@ export const normalizeToHeatmapSearchEntries = (
 };
 
 export interface PointToPointSearchEntries extends BaseSearchEntries {
-	type: 'point to point';
+	type: 'point2point';
 
 	// TODO
 	names: Array<string>;
@@ -190,7 +190,7 @@ export const normalizeToPointToPointSearchEntries = (
 		start: new Date(v.EntryRange.StartTS),
 		end: new Date(v.EntryRange.EndTS),
 		finished: v.Finished,
-		type: 'point to point',
+		type: 'point2point',
 		names: v.ValueNames,
 		data: (v.Entries ?? []).map(rawEntry => ({
 			source: {
