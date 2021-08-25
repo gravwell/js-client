@@ -25,7 +25,7 @@ const DEFAULT_GRANULARITY_MAP: Record<SearchEntries['type'], number> = {
 	'fdg': 2000,
 	'gauge': 100, // *NOTE: Couldn't find it in environments.ts, using the same as table
 	'heatmap': 10000,
-	'point to point': 1000, // *NOTE: Couldn't find it in environments.ts, using the same as pointmap
+	'point2point': 1000, // *NOTE: Couldn't find it in environments.ts, using the same as pointmap
 	'pointmap': 1000,
 	'raw': 50,
 	'text': 50,

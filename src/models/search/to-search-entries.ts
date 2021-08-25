@@ -58,7 +58,7 @@ const NORMALIZERS: Record<SearchEntries['type'], RawEntryNormalizer> = {
 		normalizeToGaugeSearchEntries(data as RawSearchMessageReceivedRequestEntriesWithinRangeGaugeRenderer),
 	'heatmap': ({ data }) =>
 		normalizeToHeatmapSearchEntries(data as RawSearchMessageReceivedRequestEntriesWithinRangeHeatmapRenderer),
-	'point to point': ({ data }) =>
+	'point2point': ({ data }) =>
 		normalizeToPointToPointSearchEntries(data as RawSearchMessageReceivedRequestEntriesWithinRangePointToPointRenderer),
 	'pointmap': ({ data }) =>
 		normalizeToPointmapSearchEntries(data as RawSearchMessageReceivedRequestEntriesWithinRangePointmapRenderer),
@@ -89,7 +89,7 @@ export function normalize(
 	msg: RawSearchMessageReceivedRequestEntriesWithinRange,
 ): ReturnType<typeof normalizeToHeatmapSearchEntries>;
 export function normalize(
-	renderer: 'point to point',
+	renderer: 'point2point',
 	msg: RawSearchMessageReceivedRequestEntriesWithinRange,
 ): ReturnType<typeof normalizeToPointToPointSearchEntries>;
 export function normalize(
