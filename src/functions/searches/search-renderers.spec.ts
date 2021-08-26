@@ -8,9 +8,9 @@
 
 import { addMinutes } from 'date-fns';
 import { random, sample } from 'lodash';
-import { last, map, takeWhile } from 'rxjs/operators';
+import { last, takeWhile } from 'rxjs/operators';
 import { v4 as uuidv4 } from 'uuid';
-import { PointToPointSearchEntries } from '~/models';
+import { HexSearchEntries, PcapSearchEntries, PointToPointSearchEntries, SearchFilter } from '~/models';
 import { integrationTest, myCustomMatchers, sleep, TEST_BASE_API_CONTEXT } from '~/tests';
 import { makeIngestMultiLineEntry } from '../ingestors';
 import { makeGetAllTags } from '../tags';
@@ -39,6 +39,9 @@ const randomIp = (): string => {
 const randomCoordinate = (): Coordinate => ({ lat: random(-85, 85), lon: random(-180, 180) });
 
 describe('search renderer types', () => {
+	// Make function to subscript to a search
+	const subscribeToOneSearch = makeSubscribeToOneSearch(TEST_BASE_API_CONTEXT);
+
 	// Use a randomly generated tag, so that we know exactly what we're going to query
 	const tag = uuidv4();
 
@@ -88,38 +91,80 @@ describe('search renderer types', () => {
 	it(
 		'should search using the point2point renderer',
 		integrationTest(async () => {
-			const subscribeToOneSearch = makeSubscribeToOneSearch(TEST_BASE_API_CONTEXT);
-
 			// Perform a query, rendering it as point2point
 			const query = `tag=${tag} json srclocation.lat as slat srclocation.lon as slon dstlocation.lat as dlat dstlocation.lon as dlon | point2point -srclat slat -srclong slon -dstlat dlat -dstlong dlon`;
-			const search = await subscribeToOneSearch(query, { filter: { dateRange: { start, end } } });
-
-			// Wait for the entry count to come through
-			const stats = await search.stats$
-				.pipe(
-					takeWhile(e => !e.finished, true),
-					last(),
-				)
-				.toPromise();
-
-			// Entry count should match
-			expect(stats.entries).toEqual(count);
-
-			// Set the count on the filter, so that we're getting **everything** back
-			search.setFilter({ entriesOffset: { index: 0, count: stats.entries } });
+			const filter: SearchFilter = { entriesOffset: { index: 0, count: count }, dateRange: { start, end } };
+			const search = await subscribeToOneSearch(query, { filter });
 
 			// Wait on the entries to come back
-			const point2PointEntries = await search.entries$
+			const entries = await search.entries$
 				.pipe(
-					map(e => e as PointToPointSearchEntries),
 					takeWhile(e => !e.finished, true),
 					last(),
 				)
 				.toPromise();
 
-			// Assert that we got what we expected
+			// Check the type
+			expect(entries.type).toEqual('point2point');
+
+			// Assert type and make some basic sanity checks
+			const point2PointEntries = entries as PointToPointSearchEntries;
 			expect(point2PointEntries.finished).toBeTrue();
 			expect(point2PointEntries.data.length).toEqual(count);
+		}),
+		25000,
+	);
+
+	it(
+		'should work with queries using the hex renderer, which behaves like the raw renderer',
+		integrationTest(async () => {
+			// Perform a query, rendering it as hex
+			const query = `tag=${tag} hex`;
+			const filter: SearchFilter = { entriesOffset: { index: 0, count: count }, dateRange: { start, end } };
+			const search = await subscribeToOneSearch(query, { filter });
+
+			// Wait on the entries to come back
+			const entries = await search.entries$
+				.pipe(
+					takeWhile(e => !e.finished, true),
+					last(),
+				)
+				.toPromise();
+
+			// Check the type
+			expect(entries.type).toEqual('hex');
+
+			// Assert type and make some basic sanity checks
+			const hexEntries = entries as HexSearchEntries;
+			expect(hexEntries.finished).toBeTrue();
+			expect(hexEntries.data.length).toEqual(count);
+		}),
+		25000,
+	);
+
+	it(
+		'should work with queries using the pcap renderer, which behaves like the text renderer',
+		integrationTest(async () => {
+			// Perform a query, rendering it as pcap
+			const query = `tag=${tag} pcap`;
+			const filter: SearchFilter = { entriesOffset: { index: 0, count: count }, dateRange: { start, end } };
+			const search = await subscribeToOneSearch(query, { filter });
+
+			// Wait on the entries to come back
+			const entries = await search.entries$
+				.pipe(
+					takeWhile(e => !e.finished, true),
+					last(),
+				)
+				.toPromise();
+
+			// Check the type
+			expect(entries.type).toEqual('pcap');
+
+			// Assert type and make some basic sanity checks
+			const pcapEntries = entries as PcapSearchEntries;
+			expect(pcapEntries.finished).toBeTrue();
+			expect(pcapEntries.data.length).toEqual(count);
 		}),
 		25000,
 	);
