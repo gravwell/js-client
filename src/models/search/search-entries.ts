@@ -256,7 +256,8 @@ export interface RawSearchEntries extends BaseSearchEntries {
 	data: Array<SearchEntry>;
 }
 
-export interface HexSearchEntries extends BaseSearchEntries { // hex entries are like raw entries
+export interface HexSearchEntries extends BaseSearchEntries {
+	// hex entries are like raw entries
 	type: 'hex';
 
 	// TODO
@@ -285,7 +286,8 @@ export interface TextSearchEntries extends BaseSearchEntries {
 	data: Array<SearchEntry>;
 }
 
-export interface PcapSearchEntries extends BaseSearchEntries { // pcap entries are like text entries
+export interface PcapSearchEntries extends BaseSearchEntries {
+	// pcap entries are like text entries
 	type: 'pcap';
 
 	// TODO

@@ -50,31 +50,28 @@ type RawEntryNormalizer = (
 ) => Omit<SearchEntries, 'filter'>;
 
 const NORMALIZERS: Record<SearchEntries['type'], RawEntryNormalizer> = {
-	'chart': ({ data }) =>
+	chart: ({ data }) =>
 		normalizeToChartSearchEntries(data as RawSearchMessageReceivedRequestEntriesWithinRangeChartRenderer),
-	'fdg': ({ data }) =>
-		normalizeToFDGSearchEntries(data as RawSearchMessageReceivedRequestEntriesWithinRangeFDGRenderer),
-	'gauge': ({ data }) =>
+	fdg: ({ data }) => normalizeToFDGSearchEntries(data as RawSearchMessageReceivedRequestEntriesWithinRangeFDGRenderer),
+	gauge: ({ data }) =>
 		normalizeToGaugeSearchEntries(data as RawSearchMessageReceivedRequestEntriesWithinRangeGaugeRenderer),
-	'heatmap': ({ data }) =>
+	heatmap: ({ data }) =>
 		normalizeToHeatmapSearchEntries(data as RawSearchMessageReceivedRequestEntriesWithinRangeHeatmapRenderer),
-	'point2point': ({ data }) =>
+	point2point: ({ data }) =>
 		normalizeToPointToPointSearchEntries(data as RawSearchMessageReceivedRequestEntriesWithinRangePointToPointRenderer),
-	'pointmap': ({ data }) =>
+	pointmap: ({ data }) =>
 		normalizeToPointmapSearchEntries(data as RawSearchMessageReceivedRequestEntriesWithinRangePointmapRenderer),
-	'raw': ({ data }) =>
-		normalizeToRawSearchEntries(data as RawSearchMessageReceivedRequestEntriesWithinRangeRawRenderer),
-	'text': ({ data }) =>
+	raw: ({ data }) => normalizeToRawSearchEntries(data as RawSearchMessageReceivedRequestEntriesWithinRangeRawRenderer),
+	text: ({ data }) =>
 		normalizeToTextSearchEntries(data as RawSearchMessageReceivedRequestEntriesWithinRangeTextRenderer),
-	'stackgraph': ({ data }) =>
+	stackgraph: ({ data }) =>
 		normalizeToStackGraphSearchEntries(data as RawSearchMessageReceivedRequestEntriesWithinRangeStackGraphRenderer),
-	'table': ({ data }) =>
+	table: ({ data }) =>
 		normalizeToTableSearchEntries(data as RawSearchMessageReceivedRequestEntriesWithinRangeTableRenderer),
 	// hex entries are raw entries
-	'hex': ({ data }) =>
-		normalizeToRawSearchEntries(data as RawSearchMessageReceivedRequestEntriesWithinRangeRawRenderer),
+	hex: ({ data }) => normalizeToRawSearchEntries(data as RawSearchMessageReceivedRequestEntriesWithinRangeRawRenderer),
 	// pcap entries are text entries
-	'pcap': ({ data }) =>
+	pcap: ({ data }) =>
 		normalizeToRawSearchEntries(data as RawSearchMessageReceivedRequestEntriesWithinRangeTextRenderer),
 };
 
