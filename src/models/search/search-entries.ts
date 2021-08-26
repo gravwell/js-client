@@ -12,6 +12,7 @@ import {
 	RawSearchMessageReceivedRequestEntriesWithinRangeFDGRenderer,
 	RawSearchMessageReceivedRequestEntriesWithinRangeGaugeRenderer,
 	RawSearchMessageReceivedRequestEntriesWithinRangeHeatmapRenderer,
+	RawSearchMessageReceivedRequestEntriesWithinRangeHexRenderer,
 	RawSearchMessageReceivedRequestEntriesWithinRangePointmapRenderer,
 	RawSearchMessageReceivedRequestEntriesWithinRangePointToPointRenderer,
 	RawSearchMessageReceivedRequestEntriesWithinRangeRawRenderer,
@@ -256,15 +257,6 @@ export interface RawSearchEntries extends BaseSearchEntries {
 	data: Array<SearchEntry>;
 }
 
-export interface HexSearchEntries extends BaseSearchEntries {
-	// hex entries are like raw entries
-	type: 'hex';
-
-	// TODO
-	names: Array<string>;
-	data: Array<SearchEntry>;
-}
-
 export const normalizeToRawSearchEntries = (
 	v: RawSearchMessageReceivedRequestEntriesWithinRangeRawRenderer,
 ): Omit<RawSearchEntries, 'filter'> => {
@@ -274,6 +266,28 @@ export const normalizeToRawSearchEntries = (
 		finished: v.Finished,
 		type: 'raw',
 		names: ['RAW'],
+		data: (v.Entries ?? []).map(toSearchEntry),
+	};
+};
+
+export interface HexSearchEntries extends BaseSearchEntries {
+	// hex entries are like raw entries
+	type: 'hex';
+
+	// TODO
+	names: Array<string>;
+	data: Array<SearchEntry>;
+}
+
+export const normalizeToHexSearchEntries = (
+	v: RawSearchMessageReceivedRequestEntriesWithinRangeHexRenderer,
+): Omit<HexSearchEntries, 'filter'> => {
+	return {
+		start: new Date(v.EntryRange.StartTS),
+		end: new Date(v.EntryRange.EndTS),
+		finished: v.Finished,
+		type: 'hex',
+		names: ['HEX'],
 		data: (v.Entries ?? []).map(toSearchEntry),
 	};
 };
