@@ -10,7 +10,13 @@ import { addMinutes } from 'date-fns';
 import { random, sample } from 'lodash';
 import { last, takeWhile } from 'rxjs/operators';
 import { v4 as uuidv4 } from 'uuid';
-import { HexSearchEntries, PcapSearchEntries, PointToPointSearchEntries, SearchFilter } from '~/models';
+import {
+	HexSearchEntries,
+	PcapSearchEntries,
+	PointToPointSearchEntries,
+	SearchFilter,
+	StackGraphSearchEntries,
+} from '~/models';
 import { integrationTest, myCustomMatchers, sleep, TEST_BASE_API_CONTEXT } from '~/tests';
 import { makeIngestMultiLineEntry } from '../ingestors';
 import { makeGetAllTags } from '../tags';
@@ -165,6 +171,33 @@ describe('search renderer types', () => {
 			const pcapEntries = entries as PcapSearchEntries;
 			expect(pcapEntries.finished).toBeTrue();
 			expect(pcapEntries.data.length).toEqual(count);
+		}),
+		25000,
+	);
+
+	it(
+		'should work with queries using the stackgraph renderer',
+		integrationTest(async () => {
+			// Perform a query, rendering it as a stackgraph
+			const query = `tag=${tag}  json category fixed value |  sum value by category,fixed | stackgraph category fixed sum`;
+			const filter: SearchFilter = { dateRange: { start, end } };
+			const search = await subscribeToOneSearch(query, { filter });
+
+			// Wait on the entries to come back
+			const entries = await search.entries$
+				.pipe(
+					takeWhile(e => !e.finished, true),
+					last(),
+				)
+				.toPromise();
+
+			// Check the type
+			expect(entries.type).toEqual('stackgraph');
+
+			// Assert type and make some basic sanity checks
+			const stackGraphEntries = entries as StackGraphSearchEntries;
+			expect(stackGraphEntries.finished).toBeTrue();
+			expect(stackGraphEntries.data.length).toEqual(3); // the three categories: red, green, blue
 		}),
 		25000,
 	);
