@@ -13,6 +13,7 @@ import {
 	RawSearchMessageReceivedRequestEntriesWithinRangeGaugeRenderer,
 	RawSearchMessageReceivedRequestEntriesWithinRangeHeatmapRenderer,
 	RawSearchMessageReceivedRequestEntriesWithinRangeHexRenderer,
+	RawSearchMessageReceivedRequestEntriesWithinRangePcapRenderer,
 	RawSearchMessageReceivedRequestEntriesWithinRangePointmapRenderer,
 	RawSearchMessageReceivedRequestEntriesWithinRangePointToPointRenderer,
 	RawSearchMessageReceivedRequestEntriesWithinRangeRawRenderer,
@@ -300,15 +301,6 @@ export interface TextSearchEntries extends BaseSearchEntries {
 	data: Array<SearchEntry>;
 }
 
-export interface PcapSearchEntries extends BaseSearchEntries {
-	// pcap entries are like text entries
-	type: 'pcap';
-
-	// TODO
-	names: Array<string>;
-	data: Array<SearchEntry>;
-}
-
 export const normalizeToTextSearchEntries = (
 	v: RawSearchMessageReceivedRequestEntriesWithinRangeTextRenderer,
 ): Omit<TextSearchEntries, 'filter'> => {
@@ -318,6 +310,28 @@ export const normalizeToTextSearchEntries = (
 		finished: v.Finished,
 		type: 'text',
 		names: ['DATA'],
+		data: (v.Entries ?? []).map(toSearchEntry),
+	};
+};
+
+export interface PcapSearchEntries extends BaseSearchEntries {
+	// pcap entries are like text entries
+	type: 'pcap';
+
+	// TODO
+	names: Array<string>;
+	data: Array<SearchEntry>;
+}
+
+export const normalizeToPcapSearchEntries = (
+	v: RawSearchMessageReceivedRequestEntriesWithinRangePcapRenderer,
+): Omit<PcapSearchEntries, 'filter'> => {
+	return {
+		start: new Date(v.EntryRange.StartTS),
+		end: new Date(v.EntryRange.EndTS),
+		finished: v.Finished,
+		type: 'pcap',
+		names: ['PCAP'],
 		data: (v.Entries ?? []).map(toSearchEntry),
 	};
 };

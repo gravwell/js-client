@@ -24,6 +24,7 @@ import {
 	RawSearchMessageReceivedRequestEntriesWithinRangeGaugeRenderer,
 	RawSearchMessageReceivedRequestEntriesWithinRangeHeatmapRenderer,
 	RawSearchMessageReceivedRequestEntriesWithinRangeHexRenderer,
+	RawSearchMessageReceivedRequestEntriesWithinRangePcapRenderer,
 	RawSearchMessageReceivedRequestEntriesWithinRangePointmapRenderer,
 	RawSearchMessageReceivedRequestEntriesWithinRangePointToPointRenderer,
 	RawSearchMessageReceivedRequestEntriesWithinRangeRawRenderer,
@@ -38,6 +39,7 @@ import {
 	normalizeToGaugeSearchEntries,
 	normalizeToHeatmapSearchEntries,
 	normalizeToHexSearchEntries,
+	normalizeToPcapSearchEntries,
 	normalizeToPointmapSearchEntries,
 	normalizeToPointToPointSearchEntries,
 	normalizeToRawSearchEntries,
@@ -74,7 +76,7 @@ const NORMALIZERS: Record<SearchEntries['type'], RawEntryNormalizer> = {
 	hex: ({ data }) => normalizeToHexSearchEntries(data as RawSearchMessageReceivedRequestEntriesWithinRangeHexRenderer),
 	// pcap entries are text entries
 	pcap: ({ data }) =>
-		normalizeToRawSearchEntries(data as RawSearchMessageReceivedRequestEntriesWithinRangeTextRenderer),
+		normalizeToPcapSearchEntries(data as RawSearchMessageReceivedRequestEntriesWithinRangePcapRenderer),
 };
 
 export function normalize(
@@ -126,7 +128,7 @@ export function normalize(
 export function normalize(
 	renderer: 'pcap',
 	msg: RawSearchMessageReceivedRequestEntriesWithinRange,
-): ReturnType<typeof normalizeToTextSearchEntries>;
+): ReturnType<typeof normalizeToPcapSearchEntries>;
 export function normalize(
 	renderer: SearchEntries['type'],
 	msg: RawSearchMessageReceivedRequestEntriesWithinRange,
@@ -162,6 +164,9 @@ export const toSearchEntries = (
 };
 
 /** Attempts to determine the type of a search entry by inspecting the members of the msg
+ *
+ * Warning: Search messages received from the backend are often too similar to differentiate. Use
+ * this function with caution.
  *
  * @param msg : the value to inspect
  *
