@@ -10,6 +10,8 @@ import { RawSearchMessageReceivedRequestEntriesWithinRangeChartRenderer } from '
 import { RawSearchMessageReceivedRequestEntriesWithinRangeFDGRenderer } from './fdg-renderer';
 import { RawSearchMessageReceivedRequestEntriesWithinRangeGaugeRenderer } from './gauge-renderer';
 import { RawSearchMessageReceivedRequestEntriesWithinRangeHeatmapRenderer } from './heatmap-renderer';
+import { RawSearchMessageReceivedRequestEntriesWithinRangeHexRenderer } from './hex-renderer';
+import { RawSearchMessageReceivedRequestEntriesWithinRangePcapRenderer } from './pcap-renderer';
 import { RawSearchMessageReceivedRequestEntriesWithinRangePointToPointRenderer } from './point-to-point-renderer';
 import { RawSearchMessageReceivedRequestEntriesWithinRangePointmapRenderer } from './pointmap-renderer';
 import { RawSearchMessageReceivedRequestEntriesWithinRangeRawRenderer } from './raw-renderer';
@@ -22,6 +24,8 @@ export type RawSearchMessageReceivedRequestEntriesWithinRangeData =
 	| RawSearchMessageReceivedRequestEntriesWithinRangeFDGRenderer
 	| RawSearchMessageReceivedRequestEntriesWithinRangeGaugeRenderer
 	| RawSearchMessageReceivedRequestEntriesWithinRangeHeatmapRenderer
+	| RawSearchMessageReceivedRequestEntriesWithinRangeHexRenderer
+	| RawSearchMessageReceivedRequestEntriesWithinRangePcapRenderer
 	| RawSearchMessageReceivedRequestEntriesWithinRangePointToPointRenderer
 	| RawSearchMessageReceivedRequestEntriesWithinRangePointmapRenderer
 	| RawSearchMessageReceivedRequestEntriesWithinRangeRawRenderer
@@ -38,6 +42,8 @@ export * from './chart-renderer';
 export * from './fdg-renderer';
 export * from './gauge-renderer';
 export * from './heatmap-renderer';
+export * from './hex-renderer';
+export * from './pcap-renderer';
 export * from './point-to-point-renderer';
 export * from './pointmap-renderer';
 export * from './raw-renderer';

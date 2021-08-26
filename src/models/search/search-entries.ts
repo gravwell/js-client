@@ -12,6 +12,8 @@ import {
 	RawSearchMessageReceivedRequestEntriesWithinRangeFDGRenderer,
 	RawSearchMessageReceivedRequestEntriesWithinRangeGaugeRenderer,
 	RawSearchMessageReceivedRequestEntriesWithinRangeHeatmapRenderer,
+	RawSearchMessageReceivedRequestEntriesWithinRangeHexRenderer,
+	RawSearchMessageReceivedRequestEntriesWithinRangePcapRenderer,
 	RawSearchMessageReceivedRequestEntriesWithinRangePointmapRenderer,
 	RawSearchMessageReceivedRequestEntriesWithinRangePointToPointRenderer,
 	RawSearchMessageReceivedRequestEntriesWithinRangeRawRenderer,
@@ -33,7 +35,9 @@ export type SearchEntries =
 	| RawSearchEntries
 	| TextSearchEntries
 	| StackGraphSearchEntries
-	| TableSearchEntries;
+	| TableSearchEntries
+	| HexSearchEntries
+	| PcapSearchEntries;
 
 export type ExplorerSearchEntries = SearchEntries & { explorerEntries: Array<DataExplorerEntry> };
 
@@ -267,6 +271,28 @@ export const normalizeToRawSearchEntries = (
 	};
 };
 
+export interface HexSearchEntries extends BaseSearchEntries {
+	// hex entries are like raw entries
+	type: 'hex';
+
+	// TODO
+	names: Array<string>;
+	data: Array<SearchEntry>;
+}
+
+export const normalizeToHexSearchEntries = (
+	v: RawSearchMessageReceivedRequestEntriesWithinRangeHexRenderer,
+): Omit<HexSearchEntries, 'filter'> => {
+	return {
+		start: new Date(v.EntryRange.StartTS),
+		end: new Date(v.EntryRange.EndTS),
+		finished: v.Finished,
+		type: 'hex',
+		names: ['HEX'],
+		data: (v.Entries ?? []).map(toSearchEntry),
+	};
+};
+
 export interface TextSearchEntries extends BaseSearchEntries {
 	type: 'text';
 
@@ -288,8 +314,30 @@ export const normalizeToTextSearchEntries = (
 	};
 };
 
+export interface PcapSearchEntries extends BaseSearchEntries {
+	// pcap entries are like text entries
+	type: 'pcap';
+
+	// TODO
+	names: Array<string>;
+	data: Array<SearchEntry>;
+}
+
+export const normalizeToPcapSearchEntries = (
+	v: RawSearchMessageReceivedRequestEntriesWithinRangePcapRenderer,
+): Omit<PcapSearchEntries, 'filter'> => {
+	return {
+		start: new Date(v.EntryRange.StartTS),
+		end: new Date(v.EntryRange.EndTS),
+		finished: v.Finished,
+		type: 'pcap',
+		names: ['PCAP'],
+		data: (v.Entries ?? []).map(toSearchEntry),
+	};
+};
+
 export interface StackGraphSearchEntries extends BaseSearchEntries {
-	type: 'stack graph';
+	type: 'stackgraph';
 
 	// TODO
 	data: Array<{
@@ -308,7 +356,7 @@ export const normalizeToStackGraphSearchEntries = (
 		start: new Date(v.EntryRange.StartTS),
 		end: new Date(v.EntryRange.EndTS),
 		finished: v.Finished,
-		type: 'stack graph',
+		type: 'stackgraph',
 		data: (v.Entries ?? []).map(rawEntry => ({
 			key: rawEntry.Key,
 			values: rawEntry.Values.map(rawValue => ({
