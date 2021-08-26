@@ -66,10 +66,16 @@ const NORMALIZERS: Record<SearchEntries['type'], RawEntryNormalizer> = {
 		normalizeToRawSearchEntries(data as RawSearchMessageReceivedRequestEntriesWithinRangeRawRenderer),
 	'text': ({ data }) =>
 		normalizeToTextSearchEntries(data as RawSearchMessageReceivedRequestEntriesWithinRangeTextRenderer),
-	'stack graph': ({ data }) =>
+	'stackgraph': ({ data }) =>
 		normalizeToStackGraphSearchEntries(data as RawSearchMessageReceivedRequestEntriesWithinRangeStackGraphRenderer),
 	'table': ({ data }) =>
 		normalizeToTableSearchEntries(data as RawSearchMessageReceivedRequestEntriesWithinRangeTableRenderer),
+	// hex entries are raw entries
+	'hex': ({ data }) =>
+		normalizeToRawSearchEntries(data as RawSearchMessageReceivedRequestEntriesWithinRangeRawRenderer),
+	// pcap entries are text entries
+	'pcap': ({ data }) =>
+		normalizeToRawSearchEntries(data as RawSearchMessageReceivedRequestEntriesWithinRangeTextRenderer),
 };
 
 export function normalize(
@@ -105,13 +111,23 @@ export function normalize(
 	msg: RawSearchMessageReceivedRequestEntriesWithinRange,
 ): ReturnType<typeof normalizeToTextSearchEntries>;
 export function normalize(
-	renderer: 'stack graph',
+	renderer: 'stackgraph',
 	msg: RawSearchMessageReceivedRequestEntriesWithinRange,
 ): ReturnType<typeof normalizeToStackGraphSearchEntries>;
 export function normalize(
 	renderer: 'table',
 	msg: RawSearchMessageReceivedRequestEntriesWithinRange,
 ): ReturnType<typeof normalizeToTableSearchEntries>;
+// hex entries are raw entries
+export function normalize(
+	renderer: 'hex',
+	msg: RawSearchMessageReceivedRequestEntriesWithinRange,
+): ReturnType<typeof normalizeToRawSearchEntries>;
+// pcap entries are text entries
+export function normalize(
+	renderer: 'pcap',
+	msg: RawSearchMessageReceivedRequestEntriesWithinRange,
+): ReturnType<typeof normalizeToTextSearchEntries>;
 export function normalize(
 	renderer: SearchEntries['type'],
 	msg: RawSearchMessageReceivedRequestEntriesWithinRange,

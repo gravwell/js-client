@@ -29,8 +29,10 @@ const DEFAULT_GRANULARITY_MAP: Record<SearchEntries['type'], number> = {
 	'pointmap': 1000,
 	'raw': 50,
 	'text': 50,
-	'stack graph': 150,
+	'stackgraph': 150,
 	'table': 100,
+	'pcap': 50,
+	'hex': 50,
 };
 
 export const getDefaultGranularityByRendererType = (rendererType: SearchEntries['type']): number => {
