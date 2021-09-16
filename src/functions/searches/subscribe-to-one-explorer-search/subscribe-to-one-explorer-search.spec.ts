@@ -36,7 +36,7 @@ describe('subscribeToOneExplorerSearch()', () => {
 	const start = new Date(2010, 0, 0);
 
 	// The end date for generated queries; one minute between each entry
-	const end = addMinutes(start, count - 1);
+	const end = addMinutes(start, count);
 
 	const originalData: Array<Entry> = [];
 

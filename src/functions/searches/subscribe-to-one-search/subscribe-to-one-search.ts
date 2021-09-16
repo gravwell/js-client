@@ -13,6 +13,7 @@ import {
 	bufferCount,
 	catchError,
 	concatMap,
+	delayWhen,
 	distinctUntilChanged,
 	filter,
 	first,
@@ -43,6 +44,7 @@ import { APIContext } from '../../utils';
 import { initiateSearch } from '../initiate-search';
 import { makeModifyOneQuery } from '../modify-one-query';
 import { makeSubscribeToOneRawSearch } from '../subscribe-to-one-raw-search';
+import { initDynamicDelay } from '../../utils/interval-handler';
 import {
 	countEntriesFromModules,
 	filterMessageByCommand,
@@ -57,6 +59,15 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 	const subscribeToOneRawSearch = makeSubscribeToOneRawSearch(context);
 	let rawSubscriptionP: ReturnType<typeof subscribeToOneRawSearch> | null = null;
 	let closedSub: Subscription | null = null;
+
+	// * search interval settings
+	const dynamicDelayProps = {
+		intervalStepSize: 500, //0.5 sec // * time do add after each search
+		intervalOffset: 4000, //4 sec // * not pass this time
+		intervalInitialValue: 1000, // 1s // * await with this value at first call
+	};
+	//initialize dynamicDelay operator
+	const { dynamicDelay, resetInterval: resetDelayTimer } = initDynamicDelay(dynamicDelayProps);
 
 	return async (
 		query: Query,
@@ -144,7 +155,6 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 					closed = true;
 				}
 			}),
-
 			// Complete when/if the user calls .close()
 			takeUntil(close$),
 		);
@@ -186,17 +196,22 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 		};
 
 		const progress$: Observable<Percentage> = searchMessages$.pipe(
+			//add delay time after each search
+			delayWhen(dynamicDelay),
+
 			map(msg => (msg as Partial<RawResponseForSearchDetailsMessageReceived>).data?.Finished ?? null),
 			filter(isBoolean),
 			map(done => (done ? 1 : 0)),
 			distinctUntilChanged(),
 			map(rawPercentage => new Percentage(rawPercentage)),
-
 			// Complete when/if the user calls .close()
 			takeUntil(close$),
 		);
 
 		const entries$: Observable<SearchEntries> = searchMessages$.pipe(
+			//add delay time after each search
+			delayWhen(dynamicDelay),
+
 			filter(filterMessageByCommand(SearchMessageCommands.RequestEntriesWithinRange)),
 			map(
 				(msg): SearchEntries => {
@@ -210,7 +225,6 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 				const defDesiredGranularity = getDefaultGranularityByRendererType(entries.type);
 				initialFilter.desiredGranularity = defDesiredGranularity;
 			}),
-
 			// Complete when/if the user calls .close()
 			takeUntil(close$),
 		);
@@ -339,10 +353,11 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 
 		filter$.subscribe(filter => {
 			requestEntries(filter);
-			setTimeout(() => requestEntries(filter), 2000); // TODO: Change this
 		});
 
 		const rawSearchStats$ = searchMessages$.pipe(
+			//add delay time after each search
+			delayWhen(dynamicDelay),
 			filter(filterMessageByCommand(SearchMessageCommands.RequestAllStats)),
 
 			// Complete when/if the user calls .close()
@@ -350,6 +365,8 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 		);
 
 		const rawSearchDetails$ = searchMessages$.pipe(
+			//add delay time after each search
+			delayWhen(dynamicDelay),
 			filter(filterMessageByCommand(SearchMessageCommands.RequestDetails)),
 
 			// Complete when/if the user calls .close()
@@ -357,6 +374,8 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 		);
 
 		const rawStatsZoom$ = searchMessages$.pipe(
+			//add delay time after each search
+			delayWhen(dynamicDelay),
 			filter(filterMessageByCommand(SearchMessageCommands.RequestStatsInRange)),
 
 			// Complete when/if the user calls .close()
@@ -440,7 +459,6 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 					};
 				},
 			),
-
 			// Complete when/if the user calls .close()
 			takeUntil(close$),
 		);
@@ -474,6 +492,8 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 		);
 
 		const errors$: Observable<Error> = searchMessages$.pipe(
+			//add delay time after each search
+			delayWhen(dynamicDelay),
 			// Skip every regular message. We only want to emit when there's an error
 			skipUntil(NEVER),
 
