@@ -67,7 +67,7 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 		intervalInitialValue: 1000, // 1s // * await with this value at first call
 	};
 	//initialize dynamicDelay operator
-	const { dynamicDelay, resetInterval: resetDelayTimer } = initDynamicDelay(dynamicDelayProps);
+	const { dynamicDelay } = initDynamicDelay(dynamicDelayProps);
 
 	return async (
 		query: Query,

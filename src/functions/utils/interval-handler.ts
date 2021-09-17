@@ -37,5 +37,5 @@ export const initDynamicDelay = ({ intervalStepSize, intervalOffset, intervalIni
 		const delayTime = getIntervalTime();
 		return timer(delayTime);
 	};
-	return { dynamicDelay, resetInterval };
+	return { dynamicDelay };
 };
