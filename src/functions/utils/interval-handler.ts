@@ -1,10 +1,11 @@
-import { timer } from 'rxjs';
+import { timer, VirtualTimeScheduler } from 'rxjs';
 
 //Types
 interface IntervalHandlerProps {
 	intervalStepSize: number;
 	intervalOffset: number;
 	intervalInitialValue: number;
+	scheduler?: VirtualTimeScheduler;
 }
 
 // Implementations
@@ -19,12 +20,17 @@ export const initIntervalHandler = ({
 		return interval;
 	};
 	const resetInterval = () => {
-		interval = intervalInitialValue;
+		interval = intervalInitialValue - intervalStepSize;
 	};
 	return { getIntervalTime, resetInterval };
 };
 
-export const initDynamicDelay = ({ intervalStepSize, intervalOffset, intervalInitialValue }: IntervalHandlerProps) => {
+export const initDynamicDelay = ({
+	intervalStepSize,
+	intervalOffset,
+	intervalInitialValue,
+	scheduler,
+}: IntervalHandlerProps) => {
 	const { getIntervalTime, resetInterval } = initIntervalHandler({
 		intervalStepSize,
 		intervalOffset,
@@ -35,6 +41,9 @@ export const initDynamicDelay = ({ intervalStepSize, intervalOffset, intervalIni
 	const dynamicDelay = <T>(event: any) => {
 		if (event?.finished) resetInterval();
 		const delayTime = getIntervalTime();
+
+		if (scheduler) return timer(delayTime, scheduler);
+
 		return timer(delayTime);
 	};
 	return { dynamicDelay };

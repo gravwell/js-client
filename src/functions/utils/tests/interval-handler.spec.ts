@@ -1,15 +1,17 @@
-import { of } from 'rxjs';
+import { of, VirtualTimeScheduler } from 'rxjs';
 import { delayWhen, repeat } from 'rxjs/operators';
-import { sleep } from '~/tests';
 import { initDynamicDelay } from '../interval-handler';
 
-describe('delay operator', async () => {
+fdescribe('delay operator', async () => {
 	it('calculates a new delay on every new event', async () => {
+		const scheduler = new VirtualTimeScheduler();
+
 		// * search interval settings
 		const dynamicDelayProps = {
 			intervalStepSize: 500, //0.5 sec // * time do add after each search
 			intervalOffset: 4000, //4 sec // * not pass this time
 			intervalInitialValue: 1000, // 1s // * await with this value at first call
+			scheduler,
 		};
 		const { dynamicDelay } = initDynamicDelay(dynamicDelayProps);
 
@@ -18,29 +20,32 @@ describe('delay operator', async () => {
 		let count = 0;
 
 		const delayLogs = new Array<number>();
-		delayLogs[0] = Date.now();
+		delayLogs[0] = scheduler.now();
 		delayedObs$
 			.pipe(repeat(7))
 			// delayed value...delayed value...delay	ed value
 			.subscribe(function () {
-				delayLogs[count] = Date.now() - delayLogs[count];
+				delayLogs[count] = scheduler.now() - delayLogs[count];
 				count++;
-				delayLogs[count] = Date.now();
+				delayLogs[count] = scheduler.now();
 			});
 
-		await sleep(18000);
+		scheduler.flush();
 
 		const expectedTimes = [1000, 1500, 2000, 2500, 3000, 3500, 4000];
 		for (let i = 0; i < expectedTimes.length; i++) {
-			expect(delayLogs[i]).withContext('Delay should').toBeGreaterThanOrEqual(expectedTimes[i]);
+			expect(delayLogs[i]).withContext('Delay should').toBe(expectedTimes[i]);
 		}
-	}, 25000);
-	fit('resets the delay when shouldReset is called', async () => {
+	});
+	it('resets the delay when shouldReset is called', async () => {
+		const scheduler = new VirtualTimeScheduler();
+
 		// * search interval settings
 		const dynamicDelayProps = {
 			intervalStepSize: 500, //0.5 sec // * time do add after each search
 			intervalOffset: 4000, //4 sec // * not pass this time
 			intervalInitialValue: 1000, // 1s // * await with this value at first call
+			scheduler,
 		};
 		const { dynamicDelay } = initDynamicDelay(dynamicDelayProps);
 
@@ -49,7 +54,7 @@ describe('delay operator', async () => {
 		let count = 0;
 
 		const delayLogs = new Array<number>();
-		delayLogs[0] = Date.now();
+		delayLogs[0] = scheduler.now();
 		delayedObs$
 			.pipe(repeat(4))
 			// delayed value...delayed value...delay	ed value
@@ -57,16 +62,16 @@ describe('delay operator', async () => {
 				if (count >= 2 && !data.finished) {
 					data.finished = true;
 				}
-				delayLogs[count] = Date.now() - delayLogs[count];
+				delayLogs[count] = scheduler.now() - delayLogs[count];
 				count++;
-				delayLogs[count] = Date.now();
+				delayLogs[count] = scheduler.now();
 			});
 
-		await sleep(6000);
+		scheduler.flush();
 
 		const expectedTimes = [1000, 1500, 2000, 1000];
 		for (let i = 0; i < expectedTimes.length; i++) {
-			expect(delayLogs[i]).withContext('Delay should').toBeGreaterThanOrEqual(expectedTimes[i]);
+			expect(delayLogs[i]).withContext('Delay should').toBe(expectedTimes[i]);
 		}
-	}, 25000);
+	});
 });
