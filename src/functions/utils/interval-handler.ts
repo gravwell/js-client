@@ -16,8 +16,11 @@ import { timer } from 'rxjs';
  * @param 	initialValue initial time value to start delay
  */
 export interface DelayHandlerProps {
+	/** every interval that finished !== true, add this value to the timer  */
 	stepSizeValue: number;
+	/** the timer should not pass that limit */
 	offsetValue: number;
+	/** initial time value to start delay */
 	initialValue: number;
 }
 
