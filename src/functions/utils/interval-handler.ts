@@ -1,50 +1,74 @@
-import { timer, VirtualTimeScheduler } from 'rxjs';
+/*************************************************************************
+ * Copyright 2021 Gravwell, Inc. All rights reserved.
+ * Contact: <legal@gravwell.io>
+ *
+ * This software may be modified and distributed under the terms of the
+ * MIT license. See the LICENSE file for details.
+ **************************************************************************/
 
-//Types
-interface IntervalHandlerProps {
-	intervalStepSize: number;
-	intervalOffset: number;
-	intervalInitialValue: number;
-	scheduler?: VirtualTimeScheduler;
+import { timer } from 'rxjs';
+
+/**
+ * Props to configure the delay
+ *
+ * @param 	stepSizeValue every interval that finished !== true, add this value to the timer
+ * @param 	offsetValue the timer should not pass that limit
+ * @param 	initialValue initial time value to start delay
+ */
+export interface DelayHandlerProps {
+	stepSizeValue: number;
+	offsetValue: number;
+	initialValue: number;
 }
 
-// Implementations
-export const initIntervalHandler = ({
-	intervalStepSize,
-	intervalOffset,
-	intervalInitialValue,
-}: IntervalHandlerProps) => {
-	let interval = intervalInitialValue - intervalStepSize;
+/**
+ * Initialize timer handler and returns a function
+ * that manages the timer and return its value
+ *
+ *
+ * @param 	stepSizeValue - Every interval that finished !== true, add this value to the timer
+ * @param 	offsetValue the timer should not pass that limit
+ * @param 	initialValue initial timer value
+ */
+export const initIntervalHandler = ({ stepSizeValue, offsetValue, initialValue }: DelayHandlerProps) => {
+	let interval = initialValue - stepSizeValue;
 	const getIntervalTime = () => {
-		if (interval < intervalOffset) interval += intervalStepSize;
+		if (interval < offsetValue) interval += stepSizeValue;
 		return interval;
 	};
 	const resetInterval = () => {
-		interval = intervalInitialValue - intervalStepSize;
+		interval = initialValue - stepSizeValue;
 	};
 	return { getIntervalTime, resetInterval };
 };
 
-export const initDynamicDelay = ({
-	intervalStepSize,
-	intervalOffset,
-	intervalInitialValue,
-	scheduler,
-}: IntervalHandlerProps) => {
-	const { getIntervalTime, resetInterval } = initIntervalHandler({
-		intervalStepSize,
-		intervalOffset,
-		intervalInitialValue,
-	});
+/**
+ * Initialize timer handler and returns a function
+ * that manage timer and return your value
+ *
+ * @example
+ * ```ts
+ * // The following expressions are equivalent:
+ * const dynamicDelay = initDynamicDelay(props);
+ * const dynamicDelay = (props: DelayHandlerProps): () => number
+ * ```
+ *
+ * @param 	stepSizeValue - Every interval that finished !== true, add this value to the timer
+ * @param 	offsetValue the timer should not pass that limit
+ * @param 	initialValue initial timer value
+ */
+export const initDynamicDelay = ({ stepSizeValue, offsetValue, initialValue }: DelayHandlerProps) => {
+	const { getIntervalTime, resetInterval } = initIntervalHandler({ stepSizeValue, offsetValue, initialValue });
 
 	//return delay observable
-	const dynamicDelay = <T>(event: any) => {
-		if (event?.finished) resetInterval();
+	const dynamicDelay = <T>(value: T) => {
+		if (typeof value === 'object') {
+			const data = (value as unknown) as object & { finished?: boolean };
+			if (data?.finished) resetInterval();
+		}
 		const delayTime = getIntervalTime();
-
-		if (scheduler) return timer(delayTime, scheduler);
 
 		return timer(delayTime);
 	};
-	return { dynamicDelay };
+	return dynamicDelay;
 };

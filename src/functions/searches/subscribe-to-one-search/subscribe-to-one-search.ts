@@ -41,10 +41,10 @@ import {
 } from '~/models';
 import { Percentage, RawJSON, toNumericID } from '~/value-objects';
 import { APIContext } from '../../utils';
+import { initDynamicDelay, DelayHandlerProps } from '../../utils/interval-handler';
 import { initiateSearch } from '../initiate-search';
 import { makeModifyOneQuery } from '../modify-one-query';
 import { makeSubscribeToOneRawSearch } from '../subscribe-to-one-raw-search';
-import { initDynamicDelay } from '../../utils/interval-handler';
 import {
 	countEntriesFromModules,
 	filterMessageByCommand,
@@ -62,12 +62,12 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 
 	// * search interval settings
 	const dynamicDelayProps = {
-		intervalStepSize: 500, //0.5 sec // * time do add after each search
-		intervalOffset: 4000, //4 sec // * not pass this time
-		intervalInitialValue: 1000, // 1s // * await with this value at first call
-	};
+		stepSizeValue: 500, //0.5 sec // * time do add after each search
+		offsetValue: 4000, //4 sec // * not pass this time
+		initialValue: 1000, // 1s // * await with this value at first call
+	} as DelayHandlerProps;
 	//initialize dynamicDelay operator
-	const { dynamicDelay } = initDynamicDelay(dynamicDelayProps);
+	const dynamicDelay = initDynamicDelay(dynamicDelayProps);
 
 	return async (
 		query: Query,
