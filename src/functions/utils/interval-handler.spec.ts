@@ -7,12 +7,12 @@
  **************************************************************************/
 
 import { getTestScheduler, initTestScheduler } from 'jasmine-marbles';
-import { concatMap, map } from 'rxjs/operators';
+import { concatMap } from 'rxjs/operators';
 import { TestScheduler } from 'rxjs/testing';
 import { unitTest } from '~/tests';
 import { dynamicDuration } from './interval-handler';
 
-describe('delay operator', () => {
+describe(dynamicDuration.name, () => {
 	let scheduler: TestScheduler;
 
 	beforeEach(() => {
@@ -21,12 +21,12 @@ describe('delay operator', () => {
 	});
 
 	it(
-		'adds the step value on every new event',
+		'adds 500ms on every new event, starting with 1s',
 		unitTest(() => {
 			const source = 'a b c';
 			const expected = '1000ms a 1499ms b 1999ms c';
 
-			const dynamicDelay = dynamicDuration(lastInterval => Math.min(lastInterval + 500, 4000), 1000);
+			const dynamicDelay = dynamicDuration(lastInterval => lastInterval + 500, 1000);
 
 			scheduler.run(({ expectObservable, cold }) => {
 				const source$ = cold(source);
@@ -37,12 +37,12 @@ describe('delay operator', () => {
 	);
 
 	it(
-		'does not surpass the limit',
+		'adds 500ms on every new event, never surpassing 1s',
 		unitTest(() => {
 			const source = 'a b c d e';
-			const expected = '1000ms a 1499ms b 1999ms c 1999ms d 1999ms e';
+			const expected = 'a 500ms b 999ms c 999ms d 999ms e';
 
-			const dynamicDelay = dynamicDuration(lastInterval => Math.min(lastInterval + 500, 2000), 1000);
+			const dynamicDelay = dynamicDuration(lastInterval => Math.min(lastInterval + 500, 1000));
 
 			scheduler.run(({ expectObservable }) => {
 				const source$ = scheduler.createColdObservable(source);
@@ -53,7 +53,7 @@ describe('delay operator', () => {
 	);
 
 	it(
-		'resets the delay when shouldReset is called',
+		'adds 500ms on every new event, starting with 1s, resets to 1s after the 2nd event',
 		unitTest(() => {
 			const source = 'a b c d e';
 			const expected = '1000ms a 1499ms b 1999ms c 999ms d 1499ms e';
@@ -65,7 +65,7 @@ describe('delay operator', () => {
 					return 1000;
 				}
 
-				return Math.min(lastInterval + 500, 4000);
+				return lastInterval + 500;
 			}, 1000);
 
 			scheduler.run(({ expectObservable, cold }) => {
