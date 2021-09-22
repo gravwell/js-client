@@ -59,20 +59,18 @@ describe('delay operator', () => {
 			const expected = '1000ms a 1499ms b 1999ms c 999ms d 1499ms e';
 			const resetAfterEvent = 2;
 
-			const dynamicDelay = dynamicDuration(lastInterval => Math.min(lastInterval + 500, 4000), 1000);
+			const dynamicDelay = dynamicDuration((lastInterval, _event, index) => {
+				// Reset the duration to the initial value after the second event
+				if (index === resetAfterEvent) {
+					return 1000;
+				}
+
+				return Math.min(lastInterval + 500, 4000);
+			}, 1000);
 
 			scheduler.run(({ expectObservable, cold }) => {
 				const source$ = cold(source);
-
-				const actual$ = source$.pipe(
-					map((v, index) => {
-						const isFinished = index - 1 === resetAfterEvent ? true : false;
-						return { finished: isFinished, value: v };
-					}),
-					concatMap(dynamicDelay),
-					map(v => (v as any).value),
-				);
-
+				const actual$ = source$.pipe(concatMap(dynamicDelay));
 				expectObservable(actual$).toBe(expected);
 			});
 		}),

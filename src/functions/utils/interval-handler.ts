@@ -69,19 +69,12 @@ export const dynamicDuration = <T>(
 	fn: (lastDuration: number, event: T, index: number) => number,
 	initialDuration = 0,
 ) => {
-	let index = 0;
 	const dynamicDelay = makeDynamicDelay(fn, initialDuration);
 
 	// Return duration observable
 	return (value: T): Observable<T> => {
-		if (typeof value === 'object') {
-			const data = (value as unknown) as object & { finished?: boolean };
-			if (data?.finished) dynamicDelay.reset();
-		}
-
 		const delayTime = dynamicDelay.getValue();
 		dynamicDelay.next(value);
-		console.log({ delayTime });
 
 		return timer(delayTime).pipe(mapTo(value), first());
 	};
