@@ -6,17 +6,14 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
+import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, fetch, parseJSONResponse } from '../utils';
 
 export const makeSystemIsConnected = (context: APIContext) => {
 	const templatePath = '/api/test';
 	const url = buildURL(templatePath, { ...context, protocol: 'http' });
 
 	return async (): Promise<boolean> => {
-		const baseRequestOptions: HTTPRequestOptions = {
-			headers: { Authorization: context.authToken ? `Bearer ${context.authToken}` : undefined },
-		};
-		const req = buildHTTPRequest(baseRequestOptions);
+		const req = buildHTTPRequestWithAuthFromContext(context);
 
 		try {
 			const rawRes = await fetch(url, { ...req, method: 'GET' });

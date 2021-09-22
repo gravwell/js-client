@@ -6,6 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
+export * from './attach-to-one-search';
 export * from './background-one-search';
 export * from './delete-one-search';
 export * from './download-one-search';

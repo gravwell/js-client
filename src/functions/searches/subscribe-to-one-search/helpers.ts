@@ -11,6 +11,7 @@ import { isNil, last } from 'lodash';
 import {
 	RawResponseForSearchStatsMessageReceived,
 	RawResponseForSearchStatsWithinRangeMessageReceived,
+	RawSearchAttachedMessageReceived,
 	RawSearchInitiatedMessageReceived,
 	RawSearchMessageReceived,
 	SearchEntries,
@@ -20,16 +21,18 @@ import {
 } from '~/models';
 
 const DEFAULT_GRANULARITY_MAP: Record<SearchEntries['type'], number> = {
-	'chart': 160,
-	'fdg': 2000,
-	'gauge': 100, // *NOTE: Couldn't find it in environments.ts, using the same as table
-	'heatmap': 10000,
-	'point to point': 1000, // *NOTE: Couldn't find it in environments.ts, using the same as pointmap
-	'pointmap': 1000,
-	'raw': 50,
-	'text': 50,
-	'stack graph': 150,
-	'table': 100,
+	chart: 160,
+	fdg: 2000,
+	gauge: 100, // *NOTE: Couldn't find it in environments.ts, using the same as table
+	heatmap: 10000,
+	point2point: 1000, // *NOTE: Couldn't find it in environments.ts, using the same as pointmap
+	pointmap: 1000,
+	raw: 50,
+	text: 50,
+	stackgraph: 150,
+	table: 100,
+	pcap: 50,
+	hex: 50,
 };
 
 export const getDefaultGranularityByRendererType = (rendererType: SearchEntries['type']): number => {
@@ -57,7 +60,10 @@ export const filterMessageByCommand = <Command extends SearchMessageCommands>(co
 	msg: M,
 ): msg is Extract<M, { data: { ID: Command } }> => {
 	try {
-		const _msg = msg as Exclude<RawSearchMessageReceived, RawSearchInitiatedMessageReceived>;
+		const _msg = msg as Exclude<
+			RawSearchMessageReceived,
+			RawSearchInitiatedMessageReceived | RawSearchAttachedMessageReceived
+		>;
 		return _msg.data?.ID === command;
 	} catch {
 		return false;

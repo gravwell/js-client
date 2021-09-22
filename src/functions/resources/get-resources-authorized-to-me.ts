@@ -7,17 +7,14 @@
  **************************************************************************/
 
 import { RawResource, Resource, toResource } from '~/models';
-import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
+import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, fetch, parseJSONResponse } from '../utils';
 
 export const makeGetResourcesAuthorizedToMe = (context: APIContext) => {
 	const resourcePath = '/api/resources';
 	const url = buildURL(resourcePath, { ...context, protocol: 'http' });
 
 	return async (): Promise<Array<Omit<Resource, 'body'>>> => {
-		const baseRequestOptions: HTTPRequestOptions = {
-			headers: { Authorization: context.authToken ? `Bearer ${context.authToken}` : undefined },
-		};
-		const req = buildHTTPRequest(baseRequestOptions);
+		const req = buildHTTPRequestWithAuthFromContext(context);
 
 		const raw = await fetch(url, { ...req, method: 'GET' });
 		const rawResources = (await parseJSONResponse<Array<RawResource> | null>(raw)) ?? [];

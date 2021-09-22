@@ -7,6 +7,7 @@
  **************************************************************************/
 
 import {
+	makeAttachToOneSearch,
 	makeBackgroundOneSearch,
 	makeDeleteOneSearch,
 	makeDownloadOneSearch,
@@ -32,6 +33,10 @@ export const createSearchesService = (context: APIContext): SearchesService => (
 
 	download: {
 		one: makeDownloadOneSearch(context),
+	},
+
+	get: {
+		one: makeAttachToOneSearch(context),
 	},
 
 	create: {

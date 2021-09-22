@@ -9,7 +9,14 @@
 import * as FormData from 'form-data';
 import { isString, pick } from 'lodash';
 import { CreatableFile, FileMetadata, RawBaseFileMetadata, toRawCreatableFile } from '~/models';
-import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
+import {
+	APIContext,
+	buildHTTPRequestWithAuthFromContext,
+	buildURL,
+	fetch,
+	HTTPRequestOptions,
+	parseJSONResponse,
+} from '../utils';
 import { makeGetOneFile } from './get-one-file';
 import { makeUpdateOneFile } from './update-one-file';
 
@@ -23,10 +30,9 @@ export const makeCreateOneFile = (context: APIContext) => {
 	return async (data: CreatableFile): Promise<FileMetadata> => {
 		try {
 			const baseRequestOptions: HTTPRequestOptions = {
-				headers: { Authorization: context.authToken ? `Bearer ${context.authToken}` : undefined },
 				body: toFormData(data) as any,
 			};
-			const req = buildHTTPRequest(baseRequestOptions);
+			const req = buildHTTPRequestWithAuthFromContext(context, baseRequestOptions);
 
 			const raw = await fetch(url, { ...req, method: 'POST' });
 			const rawRes = await parseJSONResponse<RawBaseFileMetadata>(raw);

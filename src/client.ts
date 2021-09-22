@@ -26,6 +26,7 @@ import {
 	createKitsService,
 	createLogsService,
 	createMacrosService,
+	createMailServerService,
 	createNotificationsService,
 	createPlaybooksService,
 	createQueriesService,
@@ -36,6 +37,7 @@ import {
 	createScheduledScriptsService,
 	createScriptLibrariesService,
 	createSearchesService,
+	createSearchGroupsService,
 	createSearchHistoryService,
 	createSearchModulesService,
 	createSearchStatusService,
@@ -54,6 +56,7 @@ import {
 	KitsService,
 	LogsService,
 	MacrosService,
+	MailServerService,
 	NotificationsService,
 	PlaybooksService,
 	QueriesService,
@@ -64,6 +67,7 @@ import {
 	ScheduledScriptsService,
 	ScriptLibrariesService,
 	SearchesService,
+	SearchGroupsService,
 	SearchHistoryService,
 	SearchModulesService,
 	SearchStatusService,
@@ -74,7 +78,6 @@ import {
 	UsersService,
 	WebServerService,
 } from '~/services';
-import { createSearchGroupsService, SearchGroupsService } from './services/search-groups';
 
 export interface GravwellClientOptions {
 	useEncryption?: boolean;
@@ -180,6 +183,7 @@ export class GravwellClient {
 		this._queries = createQueriesService(initialContext);
 		this._explorer = createExplorerService(initialContext);
 		this._searchGroups = createSearchGroupsService(initialContext);
+		this._mailServer = createMailServerService(initialContext);
 
 		this._context$.subscribe(context => {
 			this._tags = createTagsService(context);
@@ -214,6 +218,7 @@ export class GravwellClient {
 			this._queries = createQueriesService(context);
 			this._explorer = createExplorerService(context);
 			this._searchGroups = createSearchGroupsService(context);
+			this._mailServer = createMailServerService(context);
 		});
 	}
 
@@ -377,4 +382,9 @@ export class GravwellClient {
 		return this._searchGroups;
 	}
 	private _searchGroups: SearchGroupsService;
+
+	public get mailServer(): MailServerService {
+		return this._mailServer;
+	}
+	private _mailServer: MailServerService;
 }
