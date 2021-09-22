@@ -35,7 +35,6 @@ export const rxjsDynamicDuration = <T>(
 	return (value: T): Observable<T> => {
 		const delayTime = mappableDuration.getValue();
 		mappableDuration.next(value);
-
 		return timer(delayTime).pipe(mapTo(value), first());
 	};
 };
