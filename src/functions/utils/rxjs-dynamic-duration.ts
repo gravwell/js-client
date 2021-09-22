@@ -6,45 +6,9 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { BehaviorSubject, Observable, timer } from 'rxjs';
+import { Observable, timer } from 'rxjs';
 import { first, mapTo } from 'rxjs/operators';
-
-/**
- * Props to configure the delay
- */
-export interface DelayHandlerProps {
-	/** every interval that finished !== true, add this value to the timer  */
-	stepSizeValue: number;
-
-	/** the timer should not pass that limit */
-	offsetValue: number;
-
-	/** initial time value to start delay */
-	initialValue: number;
-}
-
-/**
- * Initialize timer handler and returns a function
- * that manages the timer and return its value
- */
-export const makeDynamicDelay = <T>(
-	fn: (lastInterval: number, event: T, index: number) => number,
-	initialDelay = 0,
-) => {
-	const duration$ = new BehaviorSubject(initialDelay);
-	let index = 0;
-
-	return {
-		next: (event: T): number => {
-			duration$.next(fn(duration$.getValue(), event, index));
-			index++;
-			return duration$.getValue();
-		},
-		getValue: (): number => {
-			return duration$.getValue();
-		},
-	};
-};
+import { createMappableValue } from './create-mappable-value';
 
 /**
  * Initialize timer handler and returns a function
@@ -62,15 +26,15 @@ export const makeDynamicDelay = <T>(
  * @param 	initialValue initial timer value
  */
 export const rxjsDynamicDuration = <T>(
-	fn: (lastDuration: number, event: T, index: number) => number,
+	mapDuration: (lastDuration: number, event: T, index: number) => number,
 	initialDuration = 0,
 ) => {
-	const dynamicDelay = makeDynamicDelay(fn, initialDuration);
+	const mappableDuration = createMappableValue(mapDuration, initialDuration);
 
 	// Return duration observable
 	return (value: T): Observable<T> => {
-		const delayTime = dynamicDelay.getValue();
-		dynamicDelay.next(value);
+		const delayTime = mappableDuration.getValue();
+		mappableDuration.next(value);
 
 		return timer(delayTime).pipe(mapTo(value), first());
 	};
