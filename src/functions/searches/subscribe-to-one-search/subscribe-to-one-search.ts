@@ -13,8 +13,7 @@ import {
 	bufferCount,
 	catchError,
 	concatMap,
-	debounceTime,
-	delayWhen,
+	debounce,
 	distinctUntilChanged,
 	filter,
 	filter as rxjsFilter,
@@ -42,7 +41,7 @@ import {
 	toSearchEntries,
 } from '~/models';
 import { Percentage, RawJSON, toNumericID } from '~/value-objects';
-import { APIContext, DelayHandlerProps, initDynamicDelay } from '../../utils';
+import { APIContext, rxjsDynamicDuration } from '../../utils';
 import { initiateSearch } from '../initiate-search';
 import { makeModifyOneQuery } from '../modify-one-query';
 import { makeSubscribeToOneRawSearch } from '../subscribe-to-one-raw-search';
@@ -60,15 +59,6 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 	const subscribeToOneRawSearch = makeSubscribeToOneRawSearch(context);
 	let rawSubscriptionP: ReturnType<typeof subscribeToOneRawSearch> | null = null;
 	let closedSub: Subscription | null = null;
-
-	// * search interval settings
-	const dynamicDelayProps = {
-		stepSizeValue: 500, //0.5 sec // * time do add after each search
-		offsetValue: 4000, //4 sec // * not pass this time
-		initialValue: 1000, // 1s // * await with this value at first call
-	} as DelayHandlerProps;
-	//initialize dynamicDelay operator
-	const dynamicDelay = initDynamicDelay(dynamicDelayProps);
 
 	return async (
 		query: Query,
@@ -313,13 +303,18 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 			pollingSubs.add(
 				rawSearchDetails$
 					.pipe(
-						startWith(detailsMsg), // We've already received one details message - use it to start
-						rxjsFilter(details => !details.data.Finished),
+						// We've already received one details message - use it to start
+						startWith(detailsMsg),
 
-						// Add dynamic delay after each message
-						delayWhen(dynamicDelay),
+						// Extract the property that indicates if the data is finished
+						map(details => details.data.Finished),
 
-						debounceTime(500),
+						// Filter out finished events
+						rxjsFilter(isFinished => isFinished === false),
+
+						// Add dynamic debounce after each message, starting from 1s and increasing 500ms after each event, never surpassing 4s
+						debounce(rxjsDynamicDuration(lastInterval => Math.min(lastInterval + 500, 4000), 1000)),
+
 						concatMap(() => rawSubscription.send(requestDetailsMsg)),
 						catchError(() => EMPTY),
 						takeUntil(close$),
@@ -344,12 +339,15 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 			pollingSubs.add(
 				entries$
 					.pipe(
-						rxjsFilter(entries => !entries.finished),
+						// Extract the property that indicates if the data is finished
+						map(entries => entries.finished),
 
-						// Add dynamic delay after each message
-						delayWhen(dynamicDelay),
+						// Filter out finished events
+						rxjsFilter(isFinished => isFinished === false),
 
-						debounceTime(500),
+						// Add dynamic debounce after each message, starting from 1s and increasing 500ms after each event, never surpassing 4s
+						debounce(rxjsDynamicDuration(lastInterval => Math.min(lastInterval + 500, 4000), 1000)),
+
 						concatMap(() => rawSubscription.send(requestEntriesMsg)),
 						catchError(() => EMPTY),
 						takeUntil(close$),
@@ -370,12 +368,15 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 			pollingSubs.add(
 				rawSearchStats$
 					.pipe(
-						rxjsFilter(stats => !stats.data.Finished),
+						// Extract the property that indicates if the data is finished
+						map(stats => stats.data.Finished ?? false),
 
-						// Add dynamic delay after each message
-						delayWhen(dynamicDelay),
+						// Filter out finished events
+						rxjsFilter(isFinished => isFinished === false),
 
-						debounceTime(500),
+						// Add dynamic debounce after each message, starting from 1s and increasing 500ms after each event, never surpassing 4s
+						debounce(rxjsDynamicDuration(lastInterval => Math.min(lastInterval + 500, 4000), 1000)),
+
 						concatMap(() => rawSubscription.send(requestStatsMessage)),
 						catchError(() => EMPTY),
 						takeUntil(close$),
@@ -405,12 +406,15 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 			pollingSubs.add(
 				rawStatsZoom$
 					.pipe(
-						rxjsFilter(stats => !stats.data.Finished),
+						// Extract the property that indicates if the data is finished
+						map(stats => stats.data.Finished ?? false),
 
-						// Add dynamic delay after each message
-						delayWhen(dynamicDelay),
+						// Filter out finished events
+						rxjsFilter(isFinished => isFinished === false),
 
-						debounceTime(500),
+						// Add dynamic debounce after each message, starting from 1s and increasing 500ms after each event, never surpassing 4s
+						debounce(rxjsDynamicDuration(lastInterval => Math.min(lastInterval + 500, 4000), 1000)),
+
 						concatMap(() => rawSubscription.send(requestStatsWithinRangeMsg)),
 						catchError(() => EMPTY),
 						takeUntil(close$),
