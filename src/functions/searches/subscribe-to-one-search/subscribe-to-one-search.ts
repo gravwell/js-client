@@ -156,6 +156,7 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 					closed = true;
 				}
 			}),
+
 			// Complete when/if the user calls .close()
 			takeUntil(close$),
 		);
@@ -197,22 +198,17 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 		};
 
 		const progress$: Observable<Percentage> = searchMessages$.pipe(
-			//add delay time after each search
-			delayWhen(dynamicDelay),
-
 			map(msg => (msg as Partial<RawResponseForSearchDetailsMessageReceived>).data?.Finished ?? null),
 			filter(isBoolean),
 			map(done => (done ? 1 : 0)),
 			distinctUntilChanged(),
 			map(rawPercentage => new Percentage(rawPercentage)),
+
 			// Complete when/if the user calls .close()
 			takeUntil(close$),
 		);
 
 		const entries$: Observable<SearchEntries> = searchMessages$.pipe(
-			//add delay time after each search
-			delayWhen(dynamicDelay),
-
 			filter(filterMessageByCommand(SearchMessageCommands.RequestEntriesWithinRange)),
 			map(
 				(msg): SearchEntries => {
@@ -226,6 +222,7 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 				const defDesiredGranularity = getDefaultGranularityByRendererType(entries.type);
 				initialFilter.desiredGranularity = defDesiredGranularity;
 			}),
+
 			// Complete when/if the user calls .close()
 			takeUntil(close$),
 		);
@@ -318,6 +315,10 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 					.pipe(
 						startWith(detailsMsg), // We've already received one details message - use it to start
 						rxjsFilter(details => !details.data.Finished),
+
+						// Add dynamic delay after each message
+						delayWhen(dynamicDelay),
+
 						debounceTime(500),
 						concatMap(() => rawSubscription.send(requestDetailsMsg)),
 						catchError(() => EMPTY),
@@ -344,6 +345,10 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 				entries$
 					.pipe(
 						rxjsFilter(entries => !entries.finished),
+
+						// Add dynamic delay after each message
+						delayWhen(dynamicDelay),
+
 						debounceTime(500),
 						concatMap(() => rawSubscription.send(requestEntriesMsg)),
 						catchError(() => EMPTY),
@@ -366,6 +371,10 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 				rawSearchStats$
 					.pipe(
 						rxjsFilter(stats => !stats.data.Finished),
+
+						// Add dynamic delay after each message
+						delayWhen(dynamicDelay),
+
 						debounceTime(500),
 						concatMap(() => rawSubscription.send(requestStatsMessage)),
 						catchError(() => EMPTY),
@@ -397,6 +406,10 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 				rawStatsZoom$
 					.pipe(
 						rxjsFilter(stats => !stats.data.Finished),
+
+						// Add dynamic delay after each message
+						delayWhen(dynamicDelay),
+
 						debounceTime(500),
 						concatMap(() => rawSubscription.send(requestStatsWithinRangeMsg)),
 						catchError(() => EMPTY),
@@ -414,9 +427,6 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 		});
 
 		const rawSearchStats$ = searchMessages$.pipe(
-			//add delay time after each search
-			delayWhen(dynamicDelay),
-
 			filter(filterMessageByCommand(SearchMessageCommands.RequestAllStats)),
 
 			// Complete when/if the user calls .close()
@@ -424,9 +434,6 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 		);
 
 		const rawSearchDetails$ = searchMessages$.pipe(
-			//add delay time after each search
-			delayWhen(dynamicDelay),
-
 			filter(filterMessageByCommand(SearchMessageCommands.RequestDetails)),
 
 			// Complete when/if the user calls .close()
@@ -434,9 +441,6 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 		);
 
 		const rawStatsZoom$ = searchMessages$.pipe(
-			//add delay time after each search
-			delayWhen(dynamicDelay),
-
 			filter(filterMessageByCommand(SearchMessageCommands.RequestStatsInRange)),
 
 			// Complete when/if the user calls .close()
@@ -520,6 +524,7 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 					};
 				},
 			),
+
 			// Complete when/if the user calls .close()
 			takeUntil(close$),
 		);
@@ -553,9 +558,6 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 		);
 
 		const errors$: Observable<Error> = searchMessages$.pipe(
-			//add delay time after each search
-			delayWhen(dynamicDelay),
-
 			// Skip every regular message. We only want to emit when there's an error
 			skipUntil(NEVER),
 
