@@ -19,7 +19,7 @@ export * from './download-from-url';
 export * from './fetch';
 export * from './file';
 export * from './http-request-options';
-export * from './interval-handler';
+export * from './rxjs-dynamic-duration';
 export * from './lazy-first';
 export * from './lazy-last';
 export * from './omit-undefined-shallow';

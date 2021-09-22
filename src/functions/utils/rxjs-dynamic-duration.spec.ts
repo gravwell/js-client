@@ -10,9 +10,9 @@ import { getTestScheduler, initTestScheduler } from 'jasmine-marbles';
 import { concatMap } from 'rxjs/operators';
 import { TestScheduler } from 'rxjs/testing';
 import { unitTest } from '~/tests';
-import { dynamicDuration } from './interval-handler';
+import { rxjsDynamicDuration } from './rxjs-dynamic-duration';
 
-describe(dynamicDuration.name, () => {
+describe(rxjsDynamicDuration.name, () => {
 	let scheduler: TestScheduler;
 
 	beforeEach(() => {
@@ -26,7 +26,7 @@ describe(dynamicDuration.name, () => {
 			const source = 'a b c';
 			const expected = '1000ms a 1499ms b 1999ms c';
 
-			const dynamicDelay = dynamicDuration(lastInterval => lastInterval + 500, 1000);
+			const dynamicDelay = rxjsDynamicDuration(lastInterval => lastInterval + 500, 1000);
 
 			scheduler.run(({ expectObservable, cold }) => {
 				const source$ = cold(source);
@@ -42,7 +42,7 @@ describe(dynamicDuration.name, () => {
 			const source = 'a b c d e';
 			const expected = 'a 500ms b 999ms c 999ms d 999ms e';
 
-			const dynamicDelay = dynamicDuration(lastInterval => Math.min(lastInterval + 500, 1000));
+			const dynamicDelay = rxjsDynamicDuration(lastInterval => Math.min(lastInterval + 500, 1000));
 
 			scheduler.run(({ expectObservable }) => {
 				const source$ = scheduler.createColdObservable(source);
@@ -59,7 +59,7 @@ describe(dynamicDuration.name, () => {
 			const expected = '1000ms a 1499ms b 1999ms c 999ms d 1499ms e';
 			const resetAfterEvent = 2;
 
-			const dynamicDelay = dynamicDuration((lastInterval, _event, index) => {
+			const dynamicDelay = rxjsDynamicDuration((lastInterval, _event, index) => {
 				// Reset the duration to the initial value after the second event
 				if (index === resetAfterEvent) {
 					return 1000;

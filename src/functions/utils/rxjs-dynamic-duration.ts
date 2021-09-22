@@ -65,7 +65,7 @@ export const makeDynamicDelay = <T>(
  * @param 	offsetValue the timer should not pass that limit
  * @param 	initialValue initial timer value
  */
-export const dynamicDuration = <T>(
+export const rxjsDynamicDuration = <T>(
 	fn: (lastDuration: number, event: T, index: number) => number,
 	initialDuration = 0,
 ) => {
