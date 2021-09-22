@@ -40,8 +40,7 @@ import {
 	toSearchEntries,
 } from '~/models';
 import { Percentage, RawJSON, toNumericID } from '~/value-objects';
-import { APIContext } from '../../utils';
-import { initDynamicDelay, DelayHandlerProps } from '../../utils/interval-handler';
+import { APIContext, DelayHandlerProps, initDynamicDelay } from '../../utils';
 import { initiateSearch } from '../initiate-search';
 import { makeModifyOneQuery } from '../modify-one-query';
 import { makeSubscribeToOneRawSearch } from '../subscribe-to-one-raw-search';
