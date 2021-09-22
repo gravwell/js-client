@@ -299,6 +299,20 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 			const detailsResults = await Promise.all([detailsP, detailsMsgP]);
 			const detailsMsg = detailsResults[1];
 
+			// Dynamic duration for debounce a after each event, starting from 1s and increasing 500ms after each event,
+			// never surpass 4s, reset to 1s if the request is finished
+			const dynamicDurationData = {
+				initialDuration: 1000,
+				limitDuration: 4000,
+				step: 500,
+			};
+			const dynamicDurationMapFunction = (lastDuration: number, isFinished: boolean) => {
+				if (isFinished) {
+					return dynamicDurationData.initialDuration;
+				}
+				return Math.min(lastDuration + dynamicDurationData.step, dynamicDurationData.limitDuration);
+			};
+
 			// Keep sending requests for search details until Finished is true
 			pollingSubs.add(
 				rawSearchDetails$
@@ -309,11 +323,11 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 						// Extract the property that indicates if the data is finished
 						map(details => details.data.Finished),
 
+						// Add dynamic debounce after each message, see dynamicDurationData and dynamicDurationMapFunction
+						debounce(rxjsDynamicDuration(dynamicDurationMapFunction, dynamicDurationData.initialDuration)),
+
 						// Filter out finished events
 						rxjsFilter(isFinished => isFinished === false),
-
-						// Add dynamic debounce after each message, starting from 1s and increasing 500ms after each event, never surpassing 4s
-						debounce(rxjsDynamicDuration(lastInterval => Math.min(lastInterval + 500, 4000), 1000)),
 
 						concatMap(() => rawSubscription.send(requestDetailsMsg)),
 						catchError(() => EMPTY),
@@ -342,11 +356,11 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 						// Extract the property that indicates if the data is finished
 						map(entries => entries.finished),
 
+						// Add dynamic debounce after each message, see dynamicDurationData and dynamicDurationMapFunction
+						debounce(rxjsDynamicDuration(dynamicDurationMapFunction, dynamicDurationData.initialDuration)),
+
 						// Filter out finished events
 						rxjsFilter(isFinished => isFinished === false),
-
-						// Add dynamic debounce after each message, starting from 1s and increasing 500ms after each event, never surpassing 4s
-						debounce(rxjsDynamicDuration(lastInterval => Math.min(lastInterval + 500, 4000), 1000)),
 
 						concatMap(() => rawSubscription.send(requestEntriesMsg)),
 						catchError(() => EMPTY),
@@ -371,11 +385,11 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 						// Extract the property that indicates if the data is finished
 						map(stats => stats.data.Finished ?? false),
 
+						// Add dynamic debounce after each message, see dynamicDurationData and dynamicDurationMapFunction
+						debounce(rxjsDynamicDuration(dynamicDurationMapFunction, dynamicDurationData.initialDuration)),
+
 						// Filter out finished events
 						rxjsFilter(isFinished => isFinished === false),
-
-						// Add dynamic debounce after each message, starting from 1s and increasing 500ms after each event, never surpassing 4s
-						debounce(rxjsDynamicDuration(lastInterval => Math.min(lastInterval + 500, 4000), 1000)),
 
 						concatMap(() => rawSubscription.send(requestStatsMessage)),
 						catchError(() => EMPTY),
@@ -409,11 +423,11 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 						// Extract the property that indicates if the data is finished
 						map(stats => stats.data.Finished ?? false),
 
+						// Add dynamic debounce after each message, see dynamicDurationData and dynamicDurationMapFunction
+						debounce(rxjsDynamicDuration(dynamicDurationMapFunction, dynamicDurationData.initialDuration)),
+
 						// Filter out finished events
 						rxjsFilter(isFinished => isFinished === false),
-
-						// Add dynamic debounce after each message, starting from 1s and increasing 500ms after each event, never surpassing 4s
-						debounce(rxjsDynamicDuration(lastInterval => Math.min(lastInterval + 500, 4000), 1000)),
 
 						concatMap(() => rawSubscription.send(requestStatsWithinRangeMsg)),
 						catchError(() => EMPTY),
