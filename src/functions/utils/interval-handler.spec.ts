@@ -13,12 +13,6 @@ import { unitTest } from '~/tests';
 import { DelayHandlerProps, initDynamicDelay } from './interval-handler';
 
 describe('delay operator', () => {
-	const dynamicDelayProps: DelayHandlerProps = {
-		stepSizeValue: 500, //0.5 sec // * time do add after each search
-		offsetValue: 4000, //4 sec // * not pass this time
-		initialValue: 1000, // 1s // * await with this value at first call
-	};
-
 	let scheduler: TestScheduler;
 
 	beforeEach(() => {
@@ -29,13 +23,20 @@ describe('delay operator', () => {
 	it(
 		'calculates a new delay on every new event',
 		unitTest(() => {
+			const source = 'abcdefg';
+			const expected = '1000ms a 500ms b 500ms c 500ms d 500ms e 500ms f 500ms g';
+
+			const dynamicDelayProps: DelayHandlerProps = {
+				stepSizeValue: 500, //0.5 sec // * time do add after each search
+				offsetValue: 4000, //4 sec // * not pass this time
+				initialValue: 1000, // 1s // * await with this value at first call
+			};
 			const dynamicDelay = initDynamicDelay(dynamicDelayProps);
 
-			scheduler.run(helpers => {
-				const { expectObservable } = helpers;
-				const source$ = scheduler.createColdObservable('abcdefg').pipe(delayWhen(dynamicDelay));
-				const expectedMarble = '1000ms a 500ms b 500ms c 500ms d 500ms e 500ms f 500ms g';
-				expectObservable(source$).toBe(expectedMarble);
+			scheduler.run(({ expectObservable }) => {
+				const source$ = scheduler.createColdObservable(source);
+				const actual$ = source$.pipe(delayWhen(dynamicDelay));
+				expectObservable(actual$).toBe(expected);
 			});
 		}),
 	);
@@ -43,11 +44,21 @@ describe('delay operator', () => {
 	it(
 		'resets the delay when shouldReset is called',
 		unitTest(() => {
+			const source = 'abcde';
+			const expected = '1000ms a 0ms b 500ms c 500ms d 500ms e';
+
+			const dynamicDelayProps: DelayHandlerProps = {
+				stepSizeValue: 500, //0.5 sec // * time do add after each search
+				offsetValue: 4000, //4 sec // * not pass this time
+				initialValue: 1000, // 1s // * await with this value at first call
+			};
 			const dynamicDelay = initDynamicDelay(dynamicDelayProps);
-			let count = 0;
-			scheduler.run(helpers => {
-				const { expectObservable } = helpers;
-				const source$ = cold('abcde').pipe(
+
+			scheduler.run(({ expectObservable }) => {
+				const source$ = cold(source);
+
+				let count = 0;
+				const actual$ = source$.pipe(
 					map(v => {
 						count++;
 						const isFinished = count === 2 ? true : false;
@@ -57,8 +68,7 @@ describe('delay operator', () => {
 					map(v => v.value),
 				);
 
-				const expectedMarble = '1000ms a 0ms b 500ms c 500ms d 500ms e';
-				expectObservable(source$).toBe(expectedMarble);
+				expectObservable(actual$).toBe(expected);
 			});
 		}),
 	);
