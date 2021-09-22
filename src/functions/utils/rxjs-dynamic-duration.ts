@@ -11,19 +11,34 @@ import { first, mapTo } from 'rxjs/operators';
 import { createMappableValue } from './create-mappable-value';
 
 /**
- * Initialize timer handler and returns a function
- * that manage timer and return your value
+ * Returns a function that receives a value and returns that value wrapped in an observable that
+ * will emit that value after a certain duration. That duration is calculated by the `mapDuration`
+ * parameter.
+ *
+ * Useful as an utility for other rxjs operators, such as {@link debounce}, {@link delayWhen},
+ * {@link concatMap} and so on...
  *
  * @example
  * ```ts
- * // The following expressions are equivalent:
- * const dynamicDelay = initDynamicDelay(props);
- * const dynamicDelay = (props: DelayHandlerProps): () => number
+ * const init = Date.now()
+ *
+ * interval(0).pipe(
+ *   take(4),
+ *   concatMap(rxjsDynamicDuration(lastDuration => lastDuration + 500, 1000)),
+ * ).subscribe(() => {
+ *   const sinceInit = Date.now() - init
+ *   console.log(`Milliseconds since init: ${ sinceInit }`)
+ * })
+ *
+ * // Logs:
+ * // Milliseconds since init: 1000
+ * // Milliseconds since init: 2500
+ * // Milliseconds since init: 4500
+ * // Milliseconds since init: 7000
  * ```
  *
- * @param 	stepSizeValue - Every interval that finished !== true, add this value to the timer
- * @param 	offsetValue the timer should not pass that limit
- * @param 	initialValue initial timer value
+ * @param mapDuration Function that calculates the next duration
+ * @param initialDuration Initial duration
  */
 export const rxjsDynamicDuration = <T>(
 	mapDuration: (lastDuration: number, event: T, index: number) => number,
