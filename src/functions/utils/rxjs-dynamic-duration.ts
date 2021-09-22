@@ -6,7 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { Observable, timer } from 'rxjs';
+import { BehaviorSubject, Observable, timer } from 'rxjs';
 import { first, mapTo } from 'rxjs/operators';
 
 /**
@@ -31,21 +31,17 @@ export const makeDynamicDelay = <T>(
 	fn: (lastInterval: number, event: T, index: number) => number,
 	initialDelay = 0,
 ) => {
+	const duration$ = new BehaviorSubject(initialDelay);
 	let index = 0;
-	let delay = initialDelay;
 
 	return {
 		next: (event: T): number => {
-			delay = fn(delay, event, index);
+			duration$.next(fn(duration$.getValue(), event, index));
 			index++;
-			return delay;
+			return duration$.getValue();
 		},
 		getValue: (): number => {
-			return delay;
-		},
-		reset: (): number => {
-			delay = initialDelay;
-			return delay;
+			return duration$.getValue();
 		},
 	};
 };
