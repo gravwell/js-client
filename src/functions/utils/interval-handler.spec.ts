@@ -8,7 +8,7 @@
 
 import { initTestScheduler, getTestScheduler, cold } from 'jasmine-marbles';
 import { delayWhen, map } from 'rxjs/operators';
-import { DelayHandlerProps, initDynamicDelay } from '../interval-handler';
+import { DelayHandlerProps, initDynamicDelay } from './interval-handler';
 
 describe('delay operator', async () => {
 	// * search interval settings
