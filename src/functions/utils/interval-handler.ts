@@ -6,7 +6,8 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { timer } from 'rxjs';
+import { Observable, timer } from 'rxjs';
+import { first, mapTo } from 'rxjs/operators';
 
 /**
  * Props to configure the delay
@@ -27,18 +28,27 @@ export interface DelayHandlerProps {
  * that manages the timer and return its value
  */
 export const initIntervalHandler = ({ stepSizeValue, offsetValue, initialValue }: DelayHandlerProps) => {
-	let interval = initialValue - stepSizeValue;
+	let interval = initialValue;
+
+	// Add step to interval
+	const addStep = () => {
+		// Add step
+		interval += stepSizeValue;
+
+		// Limit the interval
+		if (interval >= offsetValue) interval = offsetValue;
+	};
 
 	const getIntervalTime = () => {
-		if (interval < offsetValue) interval += stepSizeValue;
 		return interval;
 	};
 
+	// Set interval to the initial value
 	const resetInterval = () => {
-		interval = initialValue - stepSizeValue;
+		interval = initialValue;
 	};
 
-	return { getIntervalTime, resetInterval };
+	return { addStep, getIntervalTime, resetInterval };
 };
 
 /**
@@ -57,17 +67,21 @@ export const initIntervalHandler = ({ stepSizeValue, offsetValue, initialValue }
  * @param 	initialValue initial timer value
  */
 export const initDynamicDelay = ({ stepSizeValue, offsetValue, initialValue }: DelayHandlerProps) => {
-	const { getIntervalTime, resetInterval } = initIntervalHandler({ stepSizeValue, offsetValue, initialValue });
+	const { getIntervalTime, resetInterval, addStep } = initIntervalHandler({ stepSizeValue, offsetValue, initialValue });
 
 	// return delay observable
-	const dynamicDelay = <T>(value: T) => {
+	const dynamicDelay = <T>(value: T): Observable<T> => {
 		if (typeof value === 'object') {
 			const data = (value as unknown) as object & { finished?: boolean };
 			if (data?.finished) resetInterval();
 		}
-		const delayTime = getIntervalTime();
 
-		return timer(delayTime);
+		const delayTime = getIntervalTime();
+		addStep();
+		console.log({ delayTime });
+
+		return timer(delayTime).pipe(mapTo(value), first());
 	};
+
 	return dynamicDelay;
 };

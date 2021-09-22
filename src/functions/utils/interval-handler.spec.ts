@@ -6,8 +6,8 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { cold, getTestScheduler, initTestScheduler } from 'jasmine-marbles';
-import { delayWhen, map } from 'rxjs/operators';
+import { getTestScheduler, initTestScheduler } from 'jasmine-marbles';
+import { concatMap, map } from 'rxjs/operators';
 import { TestScheduler } from 'rxjs/testing';
 import { unitTest } from '~/tests';
 import { DelayHandlerProps, initDynamicDelay } from './interval-handler';
@@ -21,21 +21,42 @@ describe('delay operator', () => {
 	});
 
 	it(
-		'calculates a new delay on every new event',
+		'adds the step value on every new event',
 		unitTest(() => {
-			const source = 'abcdefg';
-			const expected = '1000ms a 500ms b 500ms c 500ms d 500ms e 500ms f 500ms g';
+			const source = 'a b c';
+			const expected = '1000ms a 1499ms b 1999ms c';
 
 			const dynamicDelayProps: DelayHandlerProps = {
-				stepSizeValue: 500, //0.5 sec // * time do add after each search
-				offsetValue: 4000, //4 sec // * not pass this time
-				initialValue: 1000, // 1s // * await with this value at first call
+				stepSizeValue: 500,
+				offsetValue: 4000,
+				initialValue: 1000,
+			};
+			const dynamicDelay = initDynamicDelay(dynamicDelayProps);
+
+			scheduler.run(({ expectObservable, cold }) => {
+				const source$ = cold(source);
+				const actual$ = source$.pipe(concatMap(dynamicDelay));
+				expectObservable(actual$).toBe(expected);
+			});
+		}),
+	);
+
+	it(
+		'does not surpass the limit',
+		unitTest(() => {
+			const source = 'a b c d e';
+			const expected = '1000ms a 1499ms b 1999ms c 1999ms d 1999ms e';
+
+			const dynamicDelayProps: DelayHandlerProps = {
+				stepSizeValue: 500,
+				offsetValue: 2000,
+				initialValue: 1000,
 			};
 			const dynamicDelay = initDynamicDelay(dynamicDelayProps);
 
 			scheduler.run(({ expectObservable }) => {
 				const source$ = scheduler.createColdObservable(source);
-				const actual$ = source$.pipe(delayWhen(dynamicDelay));
+				const actual$ = source$.pipe(concatMap(dynamicDelay));
 				expectObservable(actual$).toBe(expected);
 			});
 		}),
@@ -44,27 +65,26 @@ describe('delay operator', () => {
 	it(
 		'resets the delay when shouldReset is called',
 		unitTest(() => {
-			const source = 'abcde';
-			const expected = '1000ms a 0ms b 500ms c 500ms d 500ms e';
+			const source = 'a b c d e';
+			const expected = '1000ms a 1499ms b 1999ms c 999ms d 1499ms e';
+			const resetAfterEvent = 2;
 
 			const dynamicDelayProps: DelayHandlerProps = {
-				stepSizeValue: 500, //0.5 sec // * time do add after each search
-				offsetValue: 4000, //4 sec // * not pass this time
-				initialValue: 1000, // 1s // * await with this value at first call
+				stepSizeValue: 500,
+				offsetValue: 4000,
+				initialValue: 1000,
 			};
 			const dynamicDelay = initDynamicDelay(dynamicDelayProps);
 
-			scheduler.run(({ expectObservable }) => {
+			scheduler.run(({ expectObservable, cold }) => {
 				const source$ = cold(source);
 
-				let count = 0;
 				const actual$ = source$.pipe(
-					map(v => {
-						count++;
-						const isFinished = count === 2 ? true : false;
+					map((v, index) => {
+						const isFinished = index - 1 === resetAfterEvent ? true : false;
 						return { finished: isFinished, value: v };
 					}),
-					delayWhen(dynamicDelay),
+					concatMap(dynamicDelay),
 					map(v => v.value),
 				);
 
