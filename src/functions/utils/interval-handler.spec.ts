@@ -10,7 +10,7 @@ import { getTestScheduler, initTestScheduler } from 'jasmine-marbles';
 import { concatMap, map } from 'rxjs/operators';
 import { TestScheduler } from 'rxjs/testing';
 import { unitTest } from '~/tests';
-import { DelayHandlerProps, initDynamicDelay } from './interval-handler';
+import { dynamicDuration } from './interval-handler';
 
 describe('delay operator', () => {
 	let scheduler: TestScheduler;
@@ -26,12 +26,7 @@ describe('delay operator', () => {
 			const source = 'a b c';
 			const expected = '1000ms a 1499ms b 1999ms c';
 
-			const dynamicDelayProps: DelayHandlerProps = {
-				stepSizeValue: 500,
-				offsetValue: 4000,
-				initialValue: 1000,
-			};
-			const dynamicDelay = initDynamicDelay(dynamicDelayProps);
+			const dynamicDelay = dynamicDuration(lastInterval => Math.min(lastInterval + 500, 4000), 1000);
 
 			scheduler.run(({ expectObservable, cold }) => {
 				const source$ = cold(source);
@@ -47,12 +42,7 @@ describe('delay operator', () => {
 			const source = 'a b c d e';
 			const expected = '1000ms a 1499ms b 1999ms c 1999ms d 1999ms e';
 
-			const dynamicDelayProps: DelayHandlerProps = {
-				stepSizeValue: 500,
-				offsetValue: 2000,
-				initialValue: 1000,
-			};
-			const dynamicDelay = initDynamicDelay(dynamicDelayProps);
+			const dynamicDelay = dynamicDuration(lastInterval => Math.min(lastInterval + 500, 2000), 1000);
 
 			scheduler.run(({ expectObservable }) => {
 				const source$ = scheduler.createColdObservable(source);
@@ -69,12 +59,7 @@ describe('delay operator', () => {
 			const expected = '1000ms a 1499ms b 1999ms c 999ms d 1499ms e';
 			const resetAfterEvent = 2;
 
-			const dynamicDelayProps: DelayHandlerProps = {
-				stepSizeValue: 500,
-				offsetValue: 4000,
-				initialValue: 1000,
-			};
-			const dynamicDelay = initDynamicDelay(dynamicDelayProps);
+			const dynamicDelay = dynamicDuration(lastInterval => Math.min(lastInterval + 500, 4000), 1000);
 
 			scheduler.run(({ expectObservable, cold }) => {
 				const source$ = cold(source);
@@ -85,7 +70,7 @@ describe('delay operator', () => {
 						return { finished: isFinished, value: v };
 					}),
 					concatMap(dynamicDelay),
-					map(v => v.value),
+					map(v => (v as any).value),
 				);
 
 				expectObservable(actual$).toBe(expected);

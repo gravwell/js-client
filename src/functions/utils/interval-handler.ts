@@ -27,28 +27,27 @@ export interface DelayHandlerProps {
  * Initialize timer handler and returns a function
  * that manages the timer and return its value
  */
-export const initIntervalHandler = ({ stepSizeValue, offsetValue, initialValue }: DelayHandlerProps) => {
-	let interval = initialValue;
+export const makeDynamicDelay = <T>(
+	fn: (lastInterval: number, event: T, index: number) => number,
+	initialDelay = 0,
+) => {
+	let index = 0;
+	let delay = initialDelay;
 
-	// Add step to interval
-	const addStep = () => {
-		// Add step
-		interval += stepSizeValue;
-
-		// Limit the interval
-		if (interval >= offsetValue) interval = offsetValue;
+	return {
+		next: (event: T): number => {
+			delay = fn(delay, event, index);
+			index++;
+			return delay;
+		},
+		getValue: (): number => {
+			return delay;
+		},
+		reset: (): number => {
+			delay = initialDelay;
+			return delay;
+		},
 	};
-
-	const getIntervalTime = () => {
-		return interval;
-	};
-
-	// Set interval to the initial value
-	const resetInterval = () => {
-		interval = initialValue;
-	};
-
-	return { addStep, getIntervalTime, resetInterval };
 };
 
 /**
@@ -66,22 +65,24 @@ export const initIntervalHandler = ({ stepSizeValue, offsetValue, initialValue }
  * @param 	offsetValue the timer should not pass that limit
  * @param 	initialValue initial timer value
  */
-export const initDynamicDelay = ({ stepSizeValue, offsetValue, initialValue }: DelayHandlerProps) => {
-	const { getIntervalTime, resetInterval, addStep } = initIntervalHandler({ stepSizeValue, offsetValue, initialValue });
+export const dynamicDuration = <T>(
+	fn: (lastDuration: number, event: T, index: number) => number,
+	initialDuration = 0,
+) => {
+	let index = 0;
+	const dynamicDelay = makeDynamicDelay(fn, initialDuration);
 
-	// return delay observable
-	const dynamicDelay = <T>(value: T): Observable<T> => {
+	// Return duration observable
+	return (value: T): Observable<T> => {
 		if (typeof value === 'object') {
 			const data = (value as unknown) as object & { finished?: boolean };
-			if (data?.finished) resetInterval();
+			if (data?.finished) dynamicDelay.reset();
 		}
 
-		const delayTime = getIntervalTime();
-		addStep();
+		const delayTime = dynamicDelay.getValue();
+		dynamicDelay.next(value);
 		console.log({ delayTime });
 
 		return timer(delayTime).pipe(mapTo(value), first());
 	};
-
-	return dynamicDelay;
 };
