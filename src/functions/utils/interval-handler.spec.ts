@@ -6,54 +6,60 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { initTestScheduler, getTestScheduler, cold } from 'jasmine-marbles';
+import { cold, getTestScheduler, initTestScheduler } from 'jasmine-marbles';
 import { delayWhen, map } from 'rxjs/operators';
+import { TestScheduler } from 'rxjs/testing';
+import { unitTest } from '~/tests';
 import { DelayHandlerProps, initDynamicDelay } from './interval-handler';
 
-describe('delay operator', async () => {
-	// * search interval settings
-	// * search interval settings
-	const dynamicDelayProps = {
+describe('delay operator', () => {
+	const dynamicDelayProps: DelayHandlerProps = {
 		stepSizeValue: 500, //0.5 sec // * time do add after each search
 		offsetValue: 4000, //4 sec // * not pass this time
 		initialValue: 1000, // 1s // * await with this value at first call
-	} as DelayHandlerProps;
+	};
 
-	it('calculates a new delay on every new event', async () => {
+	let scheduler: TestScheduler;
+
+	beforeEach(() => {
 		initTestScheduler();
-
-		const scheduler = getTestScheduler();
-
-		const dynamicDelay = initDynamicDelay(dynamicDelayProps);
-
-		scheduler.run(helpers => {
-			const { expectObservable } = helpers;
-			const source$ = scheduler.createColdObservable('abcdefg').pipe(delayWhen(dynamicDelay));
-			const expectedMarble = '1000ms a 500ms b 500ms c 500ms d 500ms e 500ms f 500ms g';
-			expectObservable(source$).toBe(expectedMarble);
-		});
+		scheduler = getTestScheduler();
 	});
-	it('resets the delay when shouldReset is called', async () => {
-		initTestScheduler();
 
-		const scheduler = getTestScheduler();
+	it(
+		'calculates a new delay on every new event',
+		unitTest(() => {
+			const dynamicDelay = initDynamicDelay(dynamicDelayProps);
 
-		const dynamicDelay = initDynamicDelay(dynamicDelayProps);
-		let count = 0;
-		scheduler.run(helpers => {
-			const { expectObservable } = helpers;
-			const source$ = cold('abcde').pipe(
-				map(v => {
-					count++;
-					const isFinished = count === 2 ? true : false;
-					return { finished: isFinished, value: v };
-				}),
-				delayWhen(dynamicDelay),
-				map(v => v.value),
-			);
+			scheduler.run(helpers => {
+				const { expectObservable } = helpers;
+				const source$ = scheduler.createColdObservable('abcdefg').pipe(delayWhen(dynamicDelay));
+				const expectedMarble = '1000ms a 500ms b 500ms c 500ms d 500ms e 500ms f 500ms g';
+				expectObservable(source$).toBe(expectedMarble);
+			});
+		}),
+	);
 
-			const expectedMarble = '1000ms a 0ms b 500ms c 500ms d 500ms e';
-			expectObservable(source$).toBe(expectedMarble);
-		});
-	});
+	it(
+		'resets the delay when shouldReset is called',
+		unitTest(() => {
+			const dynamicDelay = initDynamicDelay(dynamicDelayProps);
+			let count = 0;
+			scheduler.run(helpers => {
+				const { expectObservable } = helpers;
+				const source$ = cold('abcde').pipe(
+					map(v => {
+						count++;
+						const isFinished = count === 2 ? true : false;
+						return { finished: isFinished, value: v };
+					}),
+					delayWhen(dynamicDelay),
+					map(v => v.value),
+				);
+
+				const expectedMarble = '1000ms a 0ms b 500ms c 500ms d 500ms e';
+				expectObservable(source$).toBe(expectedMarble);
+			});
+		}),
+	);
 });
