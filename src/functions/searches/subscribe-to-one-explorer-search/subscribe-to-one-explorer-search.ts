@@ -446,6 +446,7 @@ export const makeSubscribeToOneExplorerSearch = (context: APIContext) => {
 
 		filter$.subscribe(filter => {
 			requestEntries(filter);
+			setTimeout(() => requestEntries(filter), 2000); // TODO: Change this
 		});
 
 		const rawSearchStats$ = searchMessages$.pipe(
