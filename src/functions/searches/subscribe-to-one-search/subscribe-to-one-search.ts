@@ -13,7 +13,6 @@ import {
 	bufferCount,
 	catchError,
 	concatMap,
-	debounce,
 	distinctUntilChanged,
 	filter,
 	filter as rxjsFilter,
@@ -41,7 +40,7 @@ import {
 	toSearchEntries,
 } from '~/models';
 import { Percentage, RawJSON, toNumericID } from '~/value-objects';
-import { APIContext, rxjsDynamicDuration } from '../../utils';
+import { APIContext, debounceWithBackoffWhile } from '../../utils';
 import { initiateSearch } from '../initiate-search';
 import { makeModifyOneQuery } from '../modify-one-query';
 import { makeSubscribeToOneRawSearch } from '../subscribe-to-one-raw-search';
@@ -299,18 +298,13 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 			const detailsResults = await Promise.all([detailsP, detailsMsgP]);
 			const detailsMsg = detailsResults[1];
 
-			// Dynamic duration for debounce a after each event, starting from 1s and increasing 500ms after each event,
+			// Dynamic duration for debounce after each event, starting from 1s and increasing 500ms after each event,
 			// never surpass 4s, reset to 1s if the request is finished
-			const dynamicDurationData = {
-				initialDuration: 1000,
-				limitDuration: 4000,
+			const debounceOptions = {
+				initialDueTime: 1000,
 				step: 500,
-			};
-			const dynamicDurationMapFunction = (lastDuration: number, isFinished: boolean) => {
-				if (isFinished) {
-					return dynamicDurationData.initialDuration;
-				}
-				return Math.min(lastDuration + dynamicDurationData.step, dynamicDurationData.limitDuration);
+				maxDueTime: 4000,
+				predicate: (isFinished: boolean) => isFinished === false, // increase backoff while isFinished is false
 			};
 
 			// Keep sending requests for search details until Finished is true
@@ -323,8 +317,8 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 						// Extract the property that indicates if the data is finished
 						map(details => details.data.Finished),
 
-						// Add dynamic debounce after each message, see dynamicDurationData and dynamicDurationMapFunction
-						debounce(rxjsDynamicDuration(dynamicDurationMapFunction, dynamicDurationData.initialDuration)),
+						// Add dynamic debounce after each message
+						debounceWithBackoffWhile(debounceOptions),
 
 						// Filter out finished events
 						rxjsFilter(isFinished => isFinished === false),
@@ -356,8 +350,8 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 						// Extract the property that indicates if the data is finished
 						map(entries => entries.finished),
 
-						// Add dynamic debounce after each message, see dynamicDurationData and dynamicDurationMapFunction
-						debounce(rxjsDynamicDuration(dynamicDurationMapFunction, dynamicDurationData.initialDuration)),
+						// Add dynamic debounce after each message
+						debounceWithBackoffWhile(debounceOptions),
 
 						// Filter out finished events
 						rxjsFilter(isFinished => isFinished === false),
@@ -385,8 +379,8 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 						// Extract the property that indicates if the data is finished
 						map(stats => stats.data.Finished ?? false),
 
-						// Add dynamic debounce after each message, see dynamicDurationData and dynamicDurationMapFunction
-						debounce(rxjsDynamicDuration(dynamicDurationMapFunction, dynamicDurationData.initialDuration)),
+						// Add dynamic debounce after each message
+						debounceWithBackoffWhile(debounceOptions),
 
 						// Filter out finished events
 						rxjsFilter(isFinished => isFinished === false),
@@ -423,8 +417,8 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 						// Extract the property that indicates if the data is finished
 						map(stats => stats.data.Finished ?? false),
 
-						// Add dynamic debounce after each message, see dynamicDurationData and dynamicDurationMapFunction
-						debounce(rxjsDynamicDuration(dynamicDurationMapFunction, dynamicDurationData.initialDuration)),
+						// Add dynamic debounce after each message
+						debounceWithBackoffWhile(debounceOptions),
 
 						// Filter out finished events
 						rxjsFilter(isFinished => isFinished === false),
@@ -442,6 +436,7 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 
 		filter$.subscribe(filter => {
 			requestEntries(filter);
+			setTimeout(() => requestEntries(filter), 2000); // TODO: Change this
 		});
 
 		const rawSearchStats$ = searchMessages$.pipe(
