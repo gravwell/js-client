@@ -3,14 +3,14 @@ import { debounce } from 'rxjs/operators';
 import { rxjsDynamicDuration } from './rxjs-dynamic-duration';
 
 /**
- * `debounceWithBackoff` works like `debounceTime`, but uses a backoff strategy to increase the dueTime as the source
+ * `debounceWithBackoffWhile` works like `debounceTime`, but uses a backoff strategy to increase the dueTime as the source
  * Observable emits notifications.
  *
- * That is, `debounceWithBackoff` delays notifications emitted by the source Observable, dropping cached notifications
+ * That is, `debounceWithBackoffWhile` delays notifications emitted by the source Observable, dropping cached notifications
  * and restarting timers as new notifications arrive from the source. The rules for hanging on to cached notifications
  * and handling complete/error are the same as `debounceTime`.
  *
- * `debounceWithBackoff` starts with a dueTime of `initialDueTime` and increments the dueTime by `step`
+ * `debounceWithBackoffWhile` starts with a dueTime of `initialDueTime` and increments the dueTime by `step`
  * to a maximum of `maxDueTime` as long as `predicate(value)` returns true for each `value` emitted by the source.
  *
  * If `predicate(value)` returns false for a given `value`, the dueTime is reset to `initialDueTime` for that notification.
