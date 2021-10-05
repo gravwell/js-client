@@ -206,7 +206,7 @@ export interface RawResponseForSearchStatsMessageReceived {
 		Addendum?: RawJSON;
 		AdditionalEntries: false;
 		EntryCount: number;
-		Finished: true;
+		Finished: boolean;
 		Stats: {
 			Size: number;
 			Current: string; // timestamp
@@ -235,7 +235,7 @@ export interface RawResponseForSearchStatsWithinRangeMessageReceived {
 		Addendum?: RawJSON;
 		AdditionalEntries: false;
 		EntryCount: number;
-		Finished: true;
+		Finished: boolean;
 		Stats: {
 			Size: number;
 			Current: string; // timestamp
@@ -264,7 +264,7 @@ export interface RawResponseForSearchStatsSummaryMessageReceived {
 		Addendum?: RawJSON;
 		AdditionalEntries: false;
 		EntryCount: number;
-		Finished: true;
+		Finished: boolean;
 		Stats: {
 			Size: number;
 			Set: Array<{
@@ -290,7 +290,7 @@ export interface RawResponseForSearchStatsLocationMessageReceived {
 		Addendum?: RawJSON;
 		AdditionalEntries: false;
 		EntryCount: number;
-		Finished: true;
+		Finished: boolean;
 		Stats: {
 			Size: number;
 			Current: string; // timestamp

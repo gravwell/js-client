@@ -13,7 +13,6 @@ import {
 	bufferCount,
 	catchError,
 	concatMap,
-	debounceTime,
 	distinctUntilChanged,
 	filter,
 	filter as rxjsFilter,
@@ -40,7 +39,7 @@ import {
 	toSearchEntries,
 } from '~/models';
 import { ID, Percentage, toNumericID } from '~/value-objects';
-import { APIContext } from '../../utils';
+import { APIContext, debounceWithBackoffWhile } from '../../utils';
 import { attachSearch } from '../attach-search';
 import { makeSubscribeToOneRawSearch } from '../subscribe-to-one-raw-search';
 import {
@@ -281,13 +280,31 @@ export const makeAttachToOneSearch = (context: APIContext) => {
 			const detailsResults = await Promise.all([detailsP, detailsMsgP]);
 			const detailsMsg = detailsResults[1];
 
+			// Dynamic duration for debounce a after each event, starting from 1s and increasing 500ms after each event,
+			// never surpass 4s, reset to 1s if the request is finished
+			const debounceOptions = {
+				initialDueTime: 1000,
+				step: 500,
+				maxDueTime: 4000,
+				predicate: (isFinished: boolean) => !isFinished, // increase backoff while isFinished is false
+			};
+
 			// Keep sending requests for search details until Finished is true
 			pollingSubs.add(
 				rawSearchDetails$
 					.pipe(
-						startWith(detailsMsg), // We've already received one details message - use it to start
-						rxjsFilter(details => !details.data.Finished),
-						debounceTime(500),
+						// We've already received one details message - use it to start
+						startWith(detailsMsg),
+
+						// Extract the property that indicates if the data is finished
+						map(details => details.data.Finished),
+
+						// Add dynamic debounce after each message
+						debounceWithBackoffWhile(debounceOptions),
+
+						// Filter out finished events
+						rxjsFilter(isFinished => isFinished === false),
+
 						concatMap(() => rawSubscription.send(requestDetailsMsg)),
 						catchError(() => EMPTY),
 						takeUntil(close$),
@@ -312,8 +329,15 @@ export const makeAttachToOneSearch = (context: APIContext) => {
 			pollingSubs.add(
 				entries$
 					.pipe(
-						rxjsFilter(entries => !entries.finished),
-						debounceTime(500),
+						// Extract the property that indicates if the data is finished
+						map(entries => entries.finished),
+
+						// Add dynamic debounce after each message
+						debounceWithBackoffWhile(debounceOptions),
+
+						// Filter out finished events
+						rxjsFilter(isFinished => isFinished === false),
+
 						concatMap(() => rawSubscription.send(requestEntriesMsg)),
 						catchError(() => EMPTY),
 						takeUntil(close$),
@@ -334,8 +358,15 @@ export const makeAttachToOneSearch = (context: APIContext) => {
 			pollingSubs.add(
 				rawSearchStats$
 					.pipe(
-						rxjsFilter(stats => !stats.data.Finished),
-						debounceTime(500),
+						// Extract the property that indicates if the data is finished
+						map(stats => stats.data.Finished ?? false),
+
+						// Add dynamic debounce after each message
+						debounceWithBackoffWhile(debounceOptions),
+
+						// Filter out finished events
+						rxjsFilter(isFinished => isFinished === false),
+
 						concatMap(() => rawSubscription.send(requestStatsMessage)),
 						catchError(() => EMPTY),
 						takeUntil(close$),
@@ -365,8 +396,15 @@ export const makeAttachToOneSearch = (context: APIContext) => {
 			pollingSubs.add(
 				rawStatsZoom$
 					.pipe(
-						rxjsFilter(stats => !stats.data.Finished),
-						debounceTime(500),
+						// Extract the property that indicates if the data is finished
+						map(stats => stats.data.Finished ?? false),
+
+						// Add dynamic debounce after each message
+						debounceWithBackoffWhile(debounceOptions),
+
+						// Filter out finished events
+						rxjsFilter(isFinished => isFinished === false),
+
 						concatMap(() => rawSubscription.send(requestStatsWithinRangeMsg)),
 						catchError(() => EMPTY),
 						takeUntil(close$),
