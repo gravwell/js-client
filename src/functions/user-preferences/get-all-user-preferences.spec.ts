@@ -8,10 +8,23 @@
 
 import { isObject, isString } from 'lodash';
 import { integrationTest, TEST_BASE_API_CONTEXT } from '~/tests';
+import { makeDeleteOneUser, makeGetAllUsers, makeGetMyUser } from '../users';
 import { makeGetAllUserPreferences } from './get-all-user-preferences';
 
 describe('getAllUserPreferences()', () => {
 	const getAllUserPreferences = makeGetAllUserPreferences(TEST_BASE_API_CONTEXT);
+	const deleteOneUser = makeDeleteOneUser(TEST_BASE_API_CONTEXT);
+	const getAllUsers = makeGetAllUsers(TEST_BASE_API_CONTEXT);
+	const getMyUser = makeGetMyUser(TEST_BASE_API_CONTEXT);
+
+	beforeEach(async () => {
+		// Delete all users, except the admin
+		const currentUsers = await getAllUsers();
+		const myUser = await getMyUser();
+		const currentUserIDs = currentUsers.map(u => u.id).filter(userID => userID !== myUser.id);
+		const deletePromises = currentUserIDs.map(userID => deleteOneUser(userID));
+		await Promise.all(deletePromises);
+	});
 
 	it(
 		'should return an array of user preferences with metadata',
