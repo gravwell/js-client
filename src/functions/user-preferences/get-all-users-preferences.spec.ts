@@ -16,10 +16,10 @@ fdescribe('getAllUserPreferences()', () => {
 		'Should return all user preferences',
 		integrationTest(async () => {
 			const userPreferencesList = await getAllUserPreferences();
-			for (let i = 0; i < userPreferencesList.length; i++) {
-				const userPreferences = userPreferencesList[i];
+			expect(userPreferencesList).toHaveSize(1);
+			Array.from(userPreferencesList).forEach(userPreferences => {
 				expect(Object.keys(userPreferences)).toEqual(['userID', 'lastUpdateDate', 'preferences']);
-			}
+			});
 		}),
 	);
 });
