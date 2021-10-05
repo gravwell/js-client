@@ -17,8 +17,10 @@ export const makeGetAllUserPreferences = (context: APIContext) => {
 		const req = buildHTTPRequestWithAuthFromContext(context);
 
 		const raw = await fetch(url, { ...req, method: 'GET' });
-		const rawRes = (await parseJSONResponse<Array<RawUserPreferencesWithMetadata> | null>(raw)) ?? [];
-		console.log({ rawRes });
+		const rawRes = ((await parseJSONResponse<Array<RawUserPreferencesWithMetadata> | null>(raw)) ?? []).filter(
+			// There are other things that come here, like email preferences for example. We need to make sure we're only getting the user preferences
+			v => v.Name === 'prefs',
+		);
 		return rawRes.map(toUserPreferencesWithMetadata);
 	};
 };
