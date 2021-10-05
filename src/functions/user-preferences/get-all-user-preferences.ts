@@ -6,14 +6,21 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { UserPreferences } from '~/models';
+import { RawUserPreferencesWithMetadata, toUserPreferencesWithMetadata, UserPreferencesWithMetadata } from '~/models';
 import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, fetch, parseJSONResponse } from '../utils';
 
-export const makeGetAllUserPreferences = (context: APIContext) => async (): Promise<Array<UserPreferences>> => {
+export const makeGetAllUserPreferences = (context: APIContext) => {
 	const templatePath = '/api/users/preferences';
 	const url = buildURL(templatePath, { ...context, protocol: 'http' });
-	const req = buildHTTPRequestWithAuthFromContext(context);
 
-	const raw = await fetch(url, { ...req, method: 'GET' });
-	return parseJSONResponse(raw);
+	return async (): Promise<Array<UserPreferencesWithMetadata>> => {
+		const req = buildHTTPRequestWithAuthFromContext(context);
+
+		const raw = await fetch(url, { ...req, method: 'GET' });
+		const rawRes = ((await parseJSONResponse<Array<RawUserPreferencesWithMetadata> | null>(raw)) ?? []).filter(
+			// There are other things that come here, like email preferences for example. We need to make sure we're only getting the user preferences
+			v => v.Name === 'prefs',
+		);
+		return rawRes.map(toUserPreferencesWithMetadata);
+	};
 };
