@@ -8,11 +8,12 @@
 
 import { UserPreferences } from '~/models';
 import { NumericID } from '../../value-objects';
+import { ID } from '../../value-objects/id';
 
 export interface UserPreferencesService {
 	readonly get: {
 		readonly one: (userID: NumericID) => Promise<UserPreferences>;
-		readonly all: () => Promise<Array<UserPreferences>>;
+		readonly all: () => Promise<Array<{ userID: ID; lastUpdateDate: Date; preferences: UserPreferences }>>;
 	};
 
 	readonly update: {
