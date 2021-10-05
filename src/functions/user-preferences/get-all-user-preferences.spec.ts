@@ -6,8 +6,9 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { isObject, isString } from 'lodash';
+import { isString } from 'lodash';
 import { integrationTest, TEST_BASE_API_CONTEXT } from '~/tests';
+import { makeUpdateOneUserPreferences } from '..';
 import { makeDeleteOneUser, makeGetAllUsers, makeGetMyUser } from '../users';
 import { makeGetAllUserPreferences } from './get-all-user-preferences';
 
@@ -16,6 +17,7 @@ describe('getAllUserPreferences()', () => {
 	const deleteOneUser = makeDeleteOneUser(TEST_BASE_API_CONTEXT);
 	const getAllUsers = makeGetAllUsers(TEST_BASE_API_CONTEXT);
 	const getMyUser = makeGetMyUser(TEST_BASE_API_CONTEXT);
+	const updateOneUserPreferences = makeUpdateOneUserPreferences(TEST_BASE_API_CONTEXT);
 
 	beforeEach(async () => {
 		// Delete all users, except the admin
@@ -24,6 +26,9 @@ describe('getAllUserPreferences()', () => {
 		const currentUserIDs = currentUsers.map(u => u.id).filter(userID => userID !== myUser.id);
 		const deletePromises = currentUserIDs.map(userID => deleteOneUser(userID));
 		await Promise.all(deletePromises);
+
+		// Reset the preferences of the current user
+		await updateOneUserPreferences(myUser.id, {});
 	});
 
 	it(
@@ -38,7 +43,7 @@ describe('getAllUserPreferences()', () => {
 				expect(Object.keys(userPreferences)).toEqual(['userID', 'lastUpdateDate', 'preferences']);
 				expect(isString(userPreferences.userID)).toBeTrue();
 				expect(userPreferences.lastUpdateDate).toBeInstanceOf(Date);
-				expect(isObject(userPreferences.preferences)).toBeTrue();
+				expect(userPreferences.preferences).toEqual({});
 			});
 		}),
 	);
