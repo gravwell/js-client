@@ -6,14 +6,13 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { UserPreferences } from '~/models';
+import { UserPreferences, UserPreferencesWithMetadata } from '~/models';
 import { NumericID } from '../../value-objects';
-import { ID } from '../../value-objects/id';
 
 export interface UserPreferencesService {
 	readonly get: {
 		readonly one: (userID: NumericID) => Promise<UserPreferences>;
-		readonly all: () => Promise<Array<{ userID: ID; lastUpdateDate: Date; preferences: UserPreferences }>>;
+		readonly all: () => Promise<Array<UserPreferencesWithMetadata>>;
 	};
 
 	readonly update: {
