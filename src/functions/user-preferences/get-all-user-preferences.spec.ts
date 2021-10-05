@@ -14,7 +14,7 @@ describe('getAllUserPreferences()', () => {
 	const getAllUserPreferences = makeGetAllUserPreferences(TEST_BASE_API_CONTEXT);
 
 	it(
-		'Should return all user preferences',
+		'should return an array of user preferences with metadata',
 		integrationTest(async () => {
 			// There should only be one user in the system, so only 1 preference
 			const userPreferencesList = await getAllUserPreferences();
