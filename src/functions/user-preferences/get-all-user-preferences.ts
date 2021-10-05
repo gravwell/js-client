@@ -8,46 +8,50 @@
 
 import { UserPreferences } from '~/models';
 import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, fetch, parseJSONResponse } from '../utils';
-import { ID } from '../../value-objects/id';
+import { ID, RawNumericID } from '../../value-objects/id';
 import { decode as base64decode } from 'base-64';
 
-type ParsedUserPreferences = { userID: ID; lastUpdateDate: Date; preferences: UserPreferences };
-type UsersPreferencesJSON = {
-	UID: number;
-	Name: string;
-	Updated: string;
-	Data: string;
-}[];
-export const makeGetAllUserPreferences = (context: APIContext) => async (): Promise<Array<ParsedUserPreferences>> => {
+export const makeGetAllUserPreferences = (context: APIContext) => {
 	const templatePath = '/api/users/preferences';
 	const url = buildURL(templatePath, { ...context, protocol: 'http' });
-	const req = buildHTTPRequestWithAuthFromContext(context);
-	const raw = await fetch(url, { ...req, method: 'GET' });
 
-	//send raw to conversion
-	const response = await parseUserResponse(raw);
-	return response;
+	return async (): Promise<Array<UserPreferencesWithMetadata>> => {
+		const req = buildHTTPRequestWithAuthFromContext(context);
+
+		const raw = await fetch(url, { ...req, method: 'GET' });
+		const rawRes = (await parseJSONResponse<Array<RawUserPreferencesWithMetadata> | null>(raw)) ?? [];
+		return rawRes.map(toUserPreferencesWithMetadata);
+	};
 };
-async function parseUserResponse(raw: Response) {
-	const parsedUserDataList = [];
-	//convert to JSON
-	const parsedRawResponseList = (await parseJSONResponse(raw)) as UsersPreferencesJSON;
-	for (let i = 0; i < parsedRawResponseList.length; i++) {
-		//get data from raw
-		const { UID: userUID, Updated: userUpdatedDate } = parsedRawResponseList[i];
-		//get data from raw Data and convert do JSON
-		const decodedUserPreferences = base64decode(parsedRawResponseList[i].Data);
-		const userPreferenceObj = JSON.parse(decodedUserPreferences);
 
-		//* parse data
-		const parsedUserData = {
-			userID: userUID.toString(),
-			lastUpdateDate: new Date(userUpdatedDate),
-			preferences: userPreferenceObj,
-		} as ParsedUserPreferences;
-		//push to array
-		parsedUserDataList.push(parsedUserData);
-	}
+interface RawUserPreferencesWithMetadata {
+	Name: 'prefs';
 
-	return parsedUserDataList;
+	/** Base 64 encoded user preferences */
+	Data: string;
+
+	Synced: boolean;
+
+	/** User ID of the owner of those preferences */
+	UID: RawNumericID;
+
+	/** Timestamp of the last update */
+	Updated: string;
 }
+
+export interface UserPreferencesWithMetadata {
+	/** User ID of the owner of those preferences */
+	userID: ID;
+
+	/** Date of the last update */
+	lastUpdateDate: Date;
+
+	/** User preferences */
+	preferences: UserPreferences;
+}
+
+const toUserPreferencesWithMetadata = (raw: RawUserPreferencesWithMetadata): UserPreferencesWithMetadata => ({
+	userID: raw.toString(),
+	lastUpdateDate: new Date(raw.Updated),
+	preferences: JSON.parse(base64decode(raw.Data)),
+});
