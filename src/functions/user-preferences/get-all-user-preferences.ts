@@ -18,6 +18,7 @@ export const makeGetAllUserPreferences = (context: APIContext) => {
 
 		const raw = await fetch(url, { ...req, method: 'GET' });
 		const rawRes = (await parseJSONResponse<Array<RawUserPreferencesWithMetadata> | null>(raw)) ?? [];
+		console.log({ rawRes });
 		return rawRes.map(toUserPreferencesWithMetadata);
 	};
 };

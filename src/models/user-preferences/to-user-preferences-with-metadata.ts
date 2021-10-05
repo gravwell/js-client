@@ -11,7 +11,7 @@ import { RawUserPreferencesWithMetadata } from './raw-user-preferences-with-meta
 import { UserPreferencesWithMetadata } from './user-preferences-with-metadata';
 
 export const toUserPreferencesWithMetadata = (raw: RawUserPreferencesWithMetadata): UserPreferencesWithMetadata => ({
-	userID: raw.toString(),
+	userID: raw.UID.toString(),
 	lastUpdateDate: new Date(raw.Updated),
 	preferences: JSON.parse(base64Decode(raw.Data)),
 });
