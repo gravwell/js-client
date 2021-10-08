@@ -19,6 +19,7 @@ import {
 	RawSearchMessageReceivedRequestEntriesWithinRangeRawRenderer,
 	RawSearchMessageReceivedRequestEntriesWithinRangeStackGraphRenderer,
 	RawSearchMessageReceivedRequestEntriesWithinRangeTableRenderer,
+	RawSearchMessageReceivedRequestEntriesWithinRangeWordcloudRenderer,
 	RawSearchMessageReceivedRequestEntriesWithinRangeTextRenderer,
 } from './raw-search-message-received';
 import { SearchEntry } from './search-entry';
@@ -37,7 +38,8 @@ export type SearchEntries =
 	| StackGraphSearchEntries
 	| TableSearchEntries
 	| HexSearchEntries
-	| PcapSearchEntries;
+	| PcapSearchEntries
+	| WordcloudSearchEntries;
 
 export type ExplorerSearchEntries = SearchEntries & { explorerEntries: Array<DataExplorerEntry> };
 
@@ -393,3 +395,28 @@ export const normalizeToTableSearchEntries = (
 		})),
 	};
 };
+
+export interface WordcloudSearchEntries extends BaseSearchEntries {
+	type: 'wordcloud';
+	data: Array<{
+		name: string,
+		magnitude: number,
+		min: number,
+		max: number,
+	}>
+}
+
+export const normalizeToWordcloudSearchEntries = (
+	v: RawSearchMessageReceivedRequestEntriesWithinRangeWordcloudRenderer,
+): Omit<WordcloudSearchEntries, 'filter'> => ({
+	type: 'wordcloud',
+	start: new Date(v.EntryRange.StartTS),
+	end: new Date(v.EntryRange.EndTS),
+	finished: v.Finished,
+	data: (v.Entries ?? []).map(value => ({
+		name: value.Name,
+		magnitude: value.Magnitude,
+		min: value.Min,
+		max: value.Max,
+	})),
+});

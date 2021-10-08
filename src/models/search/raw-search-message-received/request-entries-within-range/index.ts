@@ -17,6 +17,7 @@ import { RawSearchMessageReceivedRequestEntriesWithinRangePointmapRenderer } fro
 import { RawSearchMessageReceivedRequestEntriesWithinRangeRawRenderer } from './raw-renderer';
 import { RawSearchMessageReceivedRequestEntriesWithinRangeStackGraphRenderer } from './stack-graph-renderer';
 import { RawSearchMessageReceivedRequestEntriesWithinRangeTableRenderer } from './table-renderer';
+import { RawSearchMessageReceivedRequestEntriesWithinRangeWordcloudRenderer } from './wordcloud-renderer';
 import { RawSearchMessageReceivedRequestEntriesWithinRangeTextRenderer } from './text-renderer';
 
 export type RawSearchMessageReceivedRequestEntriesWithinRangeData =
@@ -31,7 +32,8 @@ export type RawSearchMessageReceivedRequestEntriesWithinRangeData =
 	| RawSearchMessageReceivedRequestEntriesWithinRangeRawRenderer
 	| RawSearchMessageReceivedRequestEntriesWithinRangeStackGraphRenderer
 	| RawSearchMessageReceivedRequestEntriesWithinRangeTableRenderer
-	| RawSearchMessageReceivedRequestEntriesWithinRangeTextRenderer;
+	| RawSearchMessageReceivedRequestEntriesWithinRangeTextRenderer
+	| RawSearchMessageReceivedRequestEntriesWithinRangeWordcloudRenderer;
 
 export interface RawSearchMessageReceivedRequestEntriesWithinRange {
 	type: string; // Search subtype ID eg. "search2"
@@ -49,4 +51,5 @@ export * from './pointmap-renderer';
 export * from './raw-renderer';
 export * from './stack-graph-renderer';
 export * from './table-renderer';
+export * from './wordcloud-renderer';
 export * from './text-renderer';

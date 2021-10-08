@@ -30,6 +30,7 @@ import {
 	RawSearchMessageReceivedRequestEntriesWithinRangeRawRenderer,
 	RawSearchMessageReceivedRequestEntriesWithinRangeStackGraphRenderer,
 	RawSearchMessageReceivedRequestEntriesWithinRangeTableRenderer,
+	RawSearchMessageReceivedRequestEntriesWithinRangeWordcloudRenderer,
 	RawSearchMessageReceivedRequestEntriesWithinRangeTextRenderer,
 	RawSearchMessageReceivedRequestExplorerEntriesWithinRange,
 } from './raw-search-message-received';
@@ -45,6 +46,7 @@ import {
 	normalizeToRawSearchEntries,
 	normalizeToStackGraphSearchEntries,
 	normalizeToTableSearchEntries,
+	normalizeToWordcloudSearchEntries,
 	normalizeToTextSearchEntries,
 	SearchEntries,
 } from './search-entries';
@@ -66,6 +68,7 @@ const NORMALIZERS: Record<SearchEntries['type'], RawEntryNormalizer> = {
 	pointmap: ({ data }) =>
 		normalizeToPointmapSearchEntries(data as RawSearchMessageReceivedRequestEntriesWithinRangePointmapRenderer),
 	raw: ({ data }) => normalizeToRawSearchEntries(data as RawSearchMessageReceivedRequestEntriesWithinRangeRawRenderer),
+	wordcloud: ({ data }) => normalizeToWordcloudSearchEntries(data as RawSearchMessageReceivedRequestEntriesWithinRangeWordcloudRenderer),
 	text: ({ data }) =>
 		normalizeToTextSearchEntries(data as RawSearchMessageReceivedRequestEntriesWithinRangeTextRenderer),
 	stackgraph: ({ data }) =>
