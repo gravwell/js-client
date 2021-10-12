@@ -6,7 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { isArray, isString, isNumber } from 'lodash';
+import { isArray, isNumber, isString } from 'lodash';
 import { RawSearchMessageReceivedRequestEntriesWithinRangeBaseData } from './base';
 
 export interface RawSearchMessageReceivedRequestEntriesWithinRangeWordcloudRenderer
@@ -16,10 +16,10 @@ export interface RawSearchMessageReceivedRequestEntriesWithinRangeWordcloudRende
 
 // Named WordcloudValueSet in Go
 export interface RawWordcloudEntry {
-    Name: string,
-    Magnitude: number,
-    Min: number,
-    Max: number,
+	Name: string;
+	Magnitude: number;
+	Min: number;
+	Max: number;
 }
 
 export const isRawSearchMessageReceivedRequestEntriesWithinRangeWordcloudRenderer = (
@@ -45,12 +45,7 @@ const isRawWordcloudEntries = (v: unknown): v is RawWordcloudEntry => {
 const isRawWordcloudEntry = (v: unknown): v is RawWordcloudEntry => {
 	try {
 		const t = v as RawWordcloudEntry;
-        return (
-            isString(t.Name) &&
-            isNumber(t.Magnitude) &&
-            isNumber(t.Min) &&
-            isNumber(t.Max)
-        )
+		return isString(t.Name) && isNumber(t.Magnitude) && isNumber(t.Min) && isNumber(t.Max);
 	} catch {
 		return false;
 	}

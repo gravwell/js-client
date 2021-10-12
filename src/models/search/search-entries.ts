@@ -19,8 +19,8 @@ import {
 	RawSearchMessageReceivedRequestEntriesWithinRangeRawRenderer,
 	RawSearchMessageReceivedRequestEntriesWithinRangeStackGraphRenderer,
 	RawSearchMessageReceivedRequestEntriesWithinRangeTableRenderer,
-	RawSearchMessageReceivedRequestEntriesWithinRangeWordcloudRenderer,
 	RawSearchMessageReceivedRequestEntriesWithinRangeTextRenderer,
+	RawSearchMessageReceivedRequestEntriesWithinRangeWordcloudRenderer,
 } from './raw-search-message-received';
 import { SearchEntry } from './search-entry';
 import { SearchFilter } from './search-filter';
@@ -399,11 +399,11 @@ export const normalizeToTableSearchEntries = (
 export interface WordcloudSearchEntries extends BaseSearchEntries {
 	type: 'wordcloud';
 	data: Array<{
-		name: string,
-		magnitude: number,
-		min: number,
-		max: number,
-	}>
+		name: string;
+		magnitude: number;
+		min: number;
+		max: number;
+	}>;
 }
 
 export const normalizeToWordcloudSearchEntries = (

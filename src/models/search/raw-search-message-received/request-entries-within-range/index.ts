@@ -17,8 +17,8 @@ import { RawSearchMessageReceivedRequestEntriesWithinRangePointmapRenderer } fro
 import { RawSearchMessageReceivedRequestEntriesWithinRangeRawRenderer } from './raw-renderer';
 import { RawSearchMessageReceivedRequestEntriesWithinRangeStackGraphRenderer } from './stack-graph-renderer';
 import { RawSearchMessageReceivedRequestEntriesWithinRangeTableRenderer } from './table-renderer';
-import { RawSearchMessageReceivedRequestEntriesWithinRangeWordcloudRenderer } from './wordcloud-renderer';
 import { RawSearchMessageReceivedRequestEntriesWithinRangeTextRenderer } from './text-renderer';
+import { RawSearchMessageReceivedRequestEntriesWithinRangeWordcloudRenderer } from './wordcloud-renderer';
 
 export type RawSearchMessageReceivedRequestEntriesWithinRangeData =
 	| RawSearchMessageReceivedRequestEntriesWithinRangeChartRenderer
