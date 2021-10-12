@@ -29,6 +29,7 @@ const DEFAULT_GRANULARITY_MAP: Record<SearchEntries['type'], number> = {
 	pointmap: 1000,
 	raw: 50,
 	text: 50,
+	wordcloud: 50,
 	stackgraph: 150,
 	table: 100,
 	pcap: 50,
