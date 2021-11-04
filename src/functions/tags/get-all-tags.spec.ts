@@ -7,6 +7,7 @@
  **************************************************************************/
 
 import { integrationTest, TEST_AUTH_TOKEN, TEST_BASE_API_CONTEXT, unitTest } from '~/tests';
+import { fetch } from '~/functions/utils';
 import { makeGetAllTags } from './get-all-tags';
 
 describe('getAllTags()', () => {
@@ -15,7 +16,8 @@ describe('getAllTags()', () => {
 	it(
 		'Should return a function given a valid host',
 		unitTest(() => {
-			const fn = () => makeGetAllTags({ host: 'www.example.com', useEncryption: false, authToken: TEST_AUTH_TOKEN });
+			const fn = () =>
+				makeGetAllTags({ host: 'www.example.com', useEncryption: false, authToken: TEST_AUTH_TOKEN, fetch: fetch });
 			expect(fn).not.toThrow();
 			expect(typeof fn()).toBe('function');
 		}),
