@@ -9,7 +9,7 @@
 import { isEqual, isUndefined } from 'lodash';
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import { distinctUntilChanged, map, shareReplay } from 'rxjs/operators';
-import { APIContext } from '~/functions/utils';
+import { APIContext, fetch } from '~/functions/utils';
 import {
 	ActionablesService,
 	AuthService,
