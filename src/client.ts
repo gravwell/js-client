@@ -120,7 +120,7 @@ export class GravwellClient {
 		this.useEncryption$,
 		this.authToken$,
 	).pipe(
-		map(([host, useEncryption, authToken]) => ({ host, useEncryption, authToken })),
+		map(([host, useEncryption, authToken]) => ({ host, useEncryption, authToken, fetch: fetch })),
 		distinctUntilChanged((a, b) => isEqual(a, b)),
 		shareReplay(1),
 	);

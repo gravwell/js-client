@@ -11,5 +11,5 @@ export interface APIContext {
 	host: string;
 	useEncryption: boolean;
 	authToken: string | null;
-	fetch?: typeof fetch;
+	fetch: typeof fetch;
 }
