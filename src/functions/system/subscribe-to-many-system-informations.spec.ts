@@ -22,6 +22,7 @@ describe('subscribeToManySystemInformations()', () => {
 					host: 'www.example.com',
 					useEncryption: false,
 					authToken: TEST_AUTH_TOKEN,
+					fetch: fetch,
 				});
 			expect(fn).not.toThrow();
 			expect(typeof fn()).toBe('function');

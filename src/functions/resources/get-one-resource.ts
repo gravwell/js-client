@@ -8,7 +8,7 @@
 
 import { isBlankRawResource, RawResource, Resource, toResource } from '~/models';
 import { UUID } from '~/value-objects';
-import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, fetch, parseJSONResponse } from '../utils';
+import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, parseJSONResponse } from '../utils';
 
 export const makeGetOneResource = (context: APIContext) => {
 	return async (resourceID: UUID): Promise<Resource> => {
@@ -17,7 +17,7 @@ export const makeGetOneResource = (context: APIContext) => {
 
 		const req = buildHTTPRequestWithAuthFromContext(context);
 
-		const raw = await fetch(url, { ...req, method: 'GET' });
+		const raw = await context.fetch(url, { ...req, method: 'GET' });
 		const rawResource = await parseJSONResponse<RawResource>(raw);
 		// gravwell/gravwell#2337 nº 3
 		if (isBlankRawResource(rawResource)) throw new Error('Not found');

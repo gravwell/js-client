@@ -7,7 +7,7 @@
  **************************************************************************/
 
 import { RawUserPreferencesWithMetadata, toUserPreferencesWithMetadata, UserPreferencesWithMetadata } from '~/models';
-import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, fetch, parseJSONResponse } from '../utils';
+import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, parseJSONResponse } from '../utils';
 
 export const makeGetAllUserPreferences = (context: APIContext) => {
 	const templatePath = '/api/users/preferences';
@@ -16,7 +16,7 @@ export const makeGetAllUserPreferences = (context: APIContext) => {
 	return async (): Promise<Array<UserPreferencesWithMetadata>> => {
 		const req = buildHTTPRequestWithAuthFromContext(context);
 
-		const raw = await fetch(url, { ...req, method: 'GET' });
+		const raw = await context.fetch(url, { ...req, method: 'GET' });
 		const rawRes = ((await parseJSONResponse<Array<RawUserPreferencesWithMetadata> | null>(raw)) ?? []).filter(
 			// There are other things that come here, like email preferences for example. We need to make sure we're only getting the user preferences
 			v => v.Name === 'prefs',

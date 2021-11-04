@@ -8,7 +8,7 @@
 
 import { UserRole } from '~/models';
 import { NumericID } from '~/value-objects';
-import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, fetch, parseJSONResponse } from '../utils';
+import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, parseJSONResponse } from '../utils';
 
 export const makeUpdateOneUserRole = (context: APIContext) => {
 	return async (userID: NumericID, role: UserRole): Promise<void> => {
@@ -19,7 +19,7 @@ export const makeUpdateOneUserRole = (context: APIContext) => {
 			const req = buildHTTPRequestWithAuthFromContext(context);
 
 			const method = role === 'admin' ? 'PUT' : 'DELETE';
-			const raw = await fetch(url, { ...req, method });
+			const raw = await context.fetch(url, { ...req, method });
 			return parseJSONResponse(raw, { expect: 'void' });
 		} catch (err) {
 			if (err instanceof Error) throw err;

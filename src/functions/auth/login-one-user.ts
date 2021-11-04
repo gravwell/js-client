@@ -7,7 +7,7 @@
  **************************************************************************/
 
 import { JWT } from '~/models';
-import { APIContext, buildHTTPRequest, buildURL, fetch, HTTPRequestOptions, parseJSONResponse } from '../utils';
+import { APIContext, buildHTTPRequest, buildURL, HTTPRequestOptions, parseJSONResponse } from '../utils';
 
 export const makeLoginOneUser = (context: APIContext) => {
 	const templatePath = '/api/login';
@@ -20,7 +20,7 @@ export const makeLoginOneUser = (context: APIContext) => {
 		const req = buildHTTPRequest(baseRequestOptions);
 
 		try {
-			const raw = await fetch(url, { ...req, method: 'POST' });
+			const raw = await context.fetch(url, { ...req, method: 'POST' });
 			const data = await parseJSONResponse<RawResponse>(raw);
 			if (data.LoginStatus === false) throw Error(data.Reason);
 			return data.JWT;

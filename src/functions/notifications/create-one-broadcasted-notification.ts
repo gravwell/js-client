@@ -11,7 +11,6 @@ import {
 	APIContext,
 	buildHTTPRequestWithAuthFromContext,
 	buildURL,
-	fetch,
 	HTTPRequestOptions,
 	parseJSONResponse,
 } from '../utils';
@@ -27,7 +26,7 @@ export const makeCreateOneBroadcastedNotification = (context: APIContext) => {
 			};
 			const req = buildHTTPRequestWithAuthFromContext(context, baseRequestOptions);
 
-			const raw = await fetch(url, { ...req, method: 'POST' });
+			const raw = await context.fetch(url, { ...req, method: 'POST' });
 			return parseJSONResponse(raw, { expect: 'void' });
 		} catch (err) {
 			if (err instanceof Error) throw err;

@@ -7,7 +7,7 @@
  **************************************************************************/
 
 import { RawUserSessions, toUserSessions, UserSessions } from '~/models';
-import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, fetch, parseJSONResponse } from '../utils';
+import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, parseJSONResponse } from '../utils';
 
 export const makeGetOneUserActiveSessions = (context: APIContext) => {
 	return async (userID: string): Promise<UserSessions> => {
@@ -17,7 +17,7 @@ export const makeGetOneUserActiveSessions = (context: APIContext) => {
 		const req = buildHTTPRequestWithAuthFromContext(context);
 
 		try {
-			const raw = await fetch(url, { ...req, method: 'GET' });
+			const raw = await context.fetch(url, { ...req, method: 'GET' });
 			const data = await parseJSONResponse<RawUserSessions>(raw);
 			return toUserSessions(data);
 		} catch (err) {

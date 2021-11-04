@@ -14,7 +14,6 @@ import {
 	APIContext,
 	buildHTTPRequestWithAuthFromContext,
 	buildURL,
-	fetch,
 	File,
 	HTTPRequestOptions,
 	parseJSONResponse,
@@ -31,7 +30,7 @@ export const makeSetOneResourceContent = (context: APIContext) => {
 			};
 			const req = buildHTTPRequestWithAuthFromContext(context, baseRequestOptions);
 
-			const raw = await fetch(url, { ...req, method: 'PUT' });
+			const raw = await context.fetch(url, { ...req, method: 'PUT' });
 			const rawRes = await parseJSONResponse<RawResource>(raw);
 			return toResource(rawRes);
 		} catch (err) {

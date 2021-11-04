@@ -7,7 +7,7 @@
  **************************************************************************/
 
 import { Version } from '~/models';
-import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, fetch, parseJSONResponse } from '../utils';
+import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, parseJSONResponse } from '../utils';
 
 export const makeGetAPIVersion = (context: APIContext) => {
 	const templatePath = '/api/version/';
@@ -16,7 +16,7 @@ export const makeGetAPIVersion = (context: APIContext) => {
 	return async (): Promise<GetAPIVersionResponse> => {
 		const req = buildHTTPRequestWithAuthFromContext(context);
 
-		const raw = await fetch(url, { ...req, method: 'GET' });
+		const raw = await context.fetch(url, { ...req, method: 'GET' });
 		const rawRes = await parseJSONResponse<GetAPIVersionRawResponse>(raw);
 		return toGetAPIVersionResponse(rawRes);
 	};

@@ -7,7 +7,7 @@
  **************************************************************************/
 
 import { RawSystemSettings, SystemSettings, toSystemSettings } from '~/models';
-import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, fetch, parseJSONResponse } from '../utils';
+import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, parseJSONResponse } from '../utils';
 
 export const makeGetSystemSettings = (context: APIContext) => {
 	const templatePath = '/api/settings';
@@ -16,7 +16,7 @@ export const makeGetSystemSettings = (context: APIContext) => {
 	return async (): Promise<SystemSettings> => {
 		const req = buildHTTPRequestWithAuthFromContext(context);
 
-		const raw = await fetch(url, { ...req, method: 'GET' });
+		const raw = await context.fetch(url, { ...req, method: 'GET' });
 		const rawRes = await parseJSONResponse<RawSystemSettings>(raw);
 		return toSystemSettings(rawRes);
 	};
