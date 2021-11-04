@@ -82,6 +82,7 @@ import {
 export interface GravwellClientOptions {
 	useEncryption?: boolean;
 	authToken?: string;
+	fetch?: typeof fetch;
 }
 
 export class GravwellClient {
@@ -150,6 +151,7 @@ export class GravwellClient {
 			host: this.host,
 			useEncryption: this.useEncryption,
 			authToken: this.authToken,
+			fetch: options.fetch || fetch,
 		};
 		this._tags = createTagsService(initialContext);
 		this._system = createSystemService(initialContext);
