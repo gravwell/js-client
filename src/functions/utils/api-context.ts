@@ -1,3 +1,4 @@
+import { fetch } from './fetch';
 /*************************************************************************
  * Copyright 2021 Gravwell, Inc. All rights reserved.
  * Contact: <legal@gravwell.io>
@@ -10,4 +11,5 @@ export interface APIContext {
 	host: string;
 	useEncryption: boolean;
 	authToken: string | null;
+	fetch?: typeof fetch;
 }
