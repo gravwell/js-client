@@ -7,7 +7,7 @@
  **************************************************************************/
 
 import { RawSearchModule, SearchModule, toSearchModule } from '~/models';
-import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, fetch, parseJSONResponse } from '../utils';
+import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, parseJSONResponse } from '../utils';
 
 export const makeGetAllSearchModules = (context: APIContext) => {
 	const templatePath = '/api/info/searchmodules';
@@ -16,7 +16,7 @@ export const makeGetAllSearchModules = (context: APIContext) => {
 	return async (): Promise<Array<SearchModule>> => {
 		const req = buildHTTPRequestWithAuthFromContext(context);
 
-		const raw = await fetch(url, { ...req, method: 'GET' });
+		const raw = await context.fetch(url, { ...req, method: 'GET' });
 		const rawRes = (await parseJSONResponse<RawResponse>(raw)) ?? [];
 		return rawRes.map(toSearchModule);
 	};

@@ -6,7 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { APIContext, buildHTTPRequestWithAuth, buildURL, fetch, parseJSONResponse } from '../utils';
+import { APIContext, buildHTTPRequestWithAuth, buildURL, parseJSONResponse } from '../utils';
 
 export const makeLogoutOneUser = (context: APIContext) => {
 	const templatePath = '/api/logout';
@@ -15,7 +15,7 @@ export const makeLogoutOneUser = (context: APIContext) => {
 	return async (userAuthToken: string): Promise<void> => {
 		const req = buildHTTPRequestWithAuth(userAuthToken);
 
-		const raw = await fetch(url, { ...req, method: 'PUT' });
+		const raw = await context.fetch(url, { ...req, method: 'PUT' });
 		return parseJSONResponse(raw);
 	};
 };

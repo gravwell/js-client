@@ -12,7 +12,6 @@ import {
 	APIContext,
 	buildHTTPRequestWithAuthFromContext,
 	buildURL,
-	fetch,
 	HTTPRequestOptions,
 	parseJSONResponse,
 } from '../utils';
@@ -46,7 +45,7 @@ export const makeUpdateOneFile = (context: APIContext) => {
 				};
 				const req = buildHTTPRequestWithAuthFromContext(context, baseRequestOptions);
 
-				const raw = await fetch(url, { ...req, method: 'PATCH' });
+				const raw = await context.fetch(url, { ...req, method: 'PATCH' });
 				await parseJSONResponse<RawBaseFileMetadata>(raw);
 			})();
 
@@ -63,7 +62,7 @@ export const makeUpdateOneFile = (context: APIContext) => {
 				};
 				const req = buildHTTPRequestWithAuthFromContext(context, baseRequestOptions);
 
-				const raw = await fetch(url, { ...req, method: 'POST' });
+				const raw = await context.fetch(url, { ...req, method: 'POST' });
 				await parseJSONResponse<RawBaseFileMetadata>(raw);
 			})();
 

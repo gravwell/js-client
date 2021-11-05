@@ -7,7 +7,7 @@
  **************************************************************************/
 
 import { RawRemoteKit, RemoteKit, toRemoteKit } from '~/models';
-import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, fetch, parseJSONResponse } from '../utils';
+import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, parseJSONResponse } from '../utils';
 
 export const makeGetAllRemoteKits = (context: APIContext) => {
 	const path = '/api/kits/remote/list';
@@ -16,7 +16,7 @@ export const makeGetAllRemoteKits = (context: APIContext) => {
 	return async (): Promise<Array<RemoteKit>> => {
 		const req = buildHTTPRequestWithAuthFromContext(context);
 
-		const raw = await fetch(url, { ...req, method: 'GET' });
+		const raw = await context.fetch(url, { ...req, method: 'GET' });
 		const rawRes = (await parseJSONResponse<Array<RawRemoteKit> | null>(raw)) ?? [];
 		return rawRes.map(toRemoteKit);
 	};

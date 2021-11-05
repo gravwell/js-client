@@ -7,7 +7,7 @@
  **************************************************************************/
 
 import { NumericID } from '~/value-objects';
-import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, fetch } from '../utils';
+import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL } from '../utils';
 
 export const makeStopOneSearch = (context: APIContext) => {
 	return async (searchID: NumericID): Promise<void> => {
@@ -16,6 +16,6 @@ export const makeStopOneSearch = (context: APIContext) => {
 
 		const req = buildHTTPRequestWithAuthFromContext(context);
 
-		await fetch(url, { ...req, method: 'PUT' });
+		await context.fetch(url, { ...req, method: 'PUT' });
 	};
 };

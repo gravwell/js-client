@@ -7,7 +7,7 @@
  **************************************************************************/
 
 import { LogLevels, RawLogLevels, toLogLevels } from '~/models';
-import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, fetch, parseJSONResponse } from '../utils';
+import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, parseJSONResponse } from '../utils';
 
 export const makeGetLogLevels = (context: APIContext) => {
 	const templatePath = '/api/logging';
@@ -16,7 +16,7 @@ export const makeGetLogLevels = (context: APIContext) => {
 	return async (): Promise<LogLevels> => {
 		const req = buildHTTPRequestWithAuthFromContext(context);
 
-		const raw = await fetch(url, { ...req, method: 'GET' });
+		const raw = await context.fetch(url, { ...req, method: 'GET' });
 		const rawRes = await parseJSONResponse<RawLogLevels>(raw);
 		return toLogLevels(rawRes);
 	};

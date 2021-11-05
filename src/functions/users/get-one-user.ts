@@ -7,7 +7,7 @@
  **************************************************************************/
 
 import { RawUser, toUser, User } from '~/models';
-import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, fetch, parseJSONResponse } from '../utils';
+import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, parseJSONResponse } from '../utils';
 
 export const makeGetOneUser = (context: APIContext) => {
 	return async (userID: string): Promise<User> => {
@@ -15,7 +15,7 @@ export const makeGetOneUser = (context: APIContext) => {
 		const url = buildURL(templatePath, { ...context, protocol: 'http', pathParams: { userID } });
 		const req = buildHTTPRequestWithAuthFromContext(context);
 
-		const raw = await fetch(url, { ...req, method: 'GET' });
+		const raw = await context.fetch(url, { ...req, method: 'GET' });
 		const rawRes = await parseJSONResponse<RawUser>(raw);
 		return toUser(rawRes);
 	};

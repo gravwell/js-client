@@ -7,7 +7,7 @@
  **************************************************************************/
 
 import { NumericID } from '~/value-objects';
-import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, fetch, parseJSONResponse } from '../utils';
+import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, parseJSONResponse } from '../utils';
 
 export const makeBackgroundOneSearch = (context: APIContext) => {
 	return async (searchID: NumericID): Promise<void> => {
@@ -16,7 +16,7 @@ export const makeBackgroundOneSearch = (context: APIContext) => {
 
 		const req = buildHTTPRequestWithAuthFromContext(context);
 
-		const raw = await fetch(url, { ...req, method: 'PATCH' });
+		const raw = await context.fetch(url, { ...req, method: 'PATCH' });
 		return parseJSONResponse(raw, { expect: 'void' });
 	};
 };

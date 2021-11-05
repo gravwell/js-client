@@ -6,7 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, fetch, parseJSONResponse } from '../utils';
+import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, parseJSONResponse } from '../utils';
 
 // TODO: Test this when gravwell/gravwell#2277 gets fixed
 export const makeRestartIndexers = (context: APIContext) => {
@@ -16,7 +16,7 @@ export const makeRestartIndexers = (context: APIContext) => {
 	return async (): Promise<void> => {
 		const req = buildHTTPRequestWithAuthFromContext(context);
 
-		const raw = await fetch(url, { ...req, method: 'POST' });
+		const raw = await context.fetch(url, { ...req, method: 'POST' });
 		return parseJSONResponse(raw, { expect: 'void' });
 	};
 };

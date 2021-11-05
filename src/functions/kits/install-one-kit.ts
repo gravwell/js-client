@@ -20,7 +20,6 @@ import {
 	APISubscription,
 	buildHTTPRequestWithAuthFromContext,
 	buildURL,
-	fetch,
 	HTTPRequestOptions,
 	parseJSONResponse,
 } from '../utils';
@@ -85,7 +84,7 @@ const makeGetOneKitInstallationStatus = (context: APIContext) => {
 
 		const req = buildHTTPRequestWithAuthFromContext(context);
 
-		const raw = await fetch(url, { ...req, method: 'GET' });
+		const raw = await context.fetch(url, { ...req, method: 'GET' });
 		const rawRes = await parseJSONResponse<RawKitInstallationStatus>(raw);
 		return toKitInstallationStatus(rawRes);
 	};
@@ -102,7 +101,7 @@ const makeQueueOneKitForInstallation = (context: APIContext) => {
 			};
 			const req = buildHTTPRequestWithAuthFromContext(context, baseRequestOptions);
 
-			const raw = await fetch(url, { ...req, method: 'POST' });
+			const raw = await context.fetch(url, { ...req, method: 'POST' });
 			const rawStatusID = await parseJSONResponse<RawNumericID>(raw);
 			return toNumericID(rawStatusID);
 		} catch (err) {

@@ -6,7 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, fetch, parseJSONResponse } from '../utils';
+import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, parseJSONResponse } from '../utils';
 
 export const makeDeleteOneUserPreferences = (context: APIContext) => async (userID: string): Promise<void> => {
 	const templatePath = '/api/users/{userID}/preferences';
@@ -14,6 +14,6 @@ export const makeDeleteOneUserPreferences = (context: APIContext) => async (user
 
 	const req = buildHTTPRequestWithAuthFromContext(context);
 
-	const raw = await fetch(url, { ...req, method: 'DELETE' });
+	const raw = await context.fetch(url, { ...req, method: 'DELETE' });
 	return parseJSONResponse(raw);
 };

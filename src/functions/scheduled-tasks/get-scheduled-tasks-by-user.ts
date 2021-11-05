@@ -8,7 +8,7 @@
 
 import { RawScheduledTask, ScheduledTask, toScheduledTask } from '~/models';
 import { NumericID } from '~/value-objects';
-import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, fetch, parseJSONResponse } from '../utils';
+import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, parseJSONResponse } from '../utils';
 
 export const makeGetScheduledTasksByUser = (context: APIContext) => {
 	return async (userID: NumericID): Promise<Array<ScheduledTask>> => {
@@ -17,7 +17,7 @@ export const makeGetScheduledTasksByUser = (context: APIContext) => {
 
 		const req = buildHTTPRequestWithAuthFromContext(context);
 
-		const raw = await fetch(url, { ...req, method: 'GET' });
+		const raw = await context.fetch(url, { ...req, method: 'GET' });
 		const rawRes = (await parseJSONResponse<Array<RawScheduledTask> | null>(raw)) ?? [];
 		return rawRes.map(toScheduledTask);
 	};

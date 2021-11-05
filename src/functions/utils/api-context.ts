@@ -6,8 +6,11 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
+import { fetch } from './fetch';
+
 export interface APIContext {
 	host: string;
 	useEncryption: boolean;
 	authToken: string | null;
+	fetch: typeof fetch;
 }

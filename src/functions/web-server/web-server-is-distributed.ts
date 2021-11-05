@@ -6,7 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, fetch, parseJSONResponse } from '../utils';
+import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, parseJSONResponse } from '../utils';
 
 export const makeWebServerIsDistributed = (context: APIContext) => {
 	const templatePath = '/api/distributed';
@@ -15,7 +15,7 @@ export const makeWebServerIsDistributed = (context: APIContext) => {
 	return async (): Promise<boolean> => {
 		const req = buildHTTPRequestWithAuthFromContext(context);
 
-		const rawRes = await fetch(url, { ...req, method: 'GET' });
+		const rawRes = await context.fetch(url, { ...req, method: 'GET' });
 		const rawData = await parseJSONResponse<RawDistributedWebServerResponse>(rawRes);
 		return rawData.Distributed;
 	};
