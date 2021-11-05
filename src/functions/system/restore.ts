@@ -7,7 +7,7 @@
  **************************************************************************/
 
 import * as FormData from 'form-data';
-import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, fetch, File, HTTPRequestOptions } from '../utils';
+import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, File, HTTPRequestOptions } from '../utils';
 
 export const makeRestore = (context: APIContext) => {
 	const templatePath = '/api/backup';
@@ -21,6 +21,6 @@ export const makeRestore = (context: APIContext) => {
 			body: form as any,
 		};
 		const req = buildHTTPRequestWithAuthFromContext(context, baseRequestOptions);
-		await fetch(url, { ...req, method: 'POST', signal });
+		await context.fetch(url, { ...req, method: 'POST', signal });
 	};
 };

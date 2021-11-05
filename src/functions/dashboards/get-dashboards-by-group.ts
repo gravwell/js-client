@@ -8,7 +8,7 @@
 
 import { Dashboard, RawDashboard, toDashboard } from '~/models';
 import { NumericID } from '~/value-objects';
-import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, fetch, parseJSONResponse } from '../utils';
+import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, parseJSONResponse } from '../utils';
 
 export const makeGetDashboardsByGroup = (context: APIContext) => {
 	return async (groupID: NumericID): Promise<Array<Dashboard>> => {
@@ -17,7 +17,7 @@ export const makeGetDashboardsByGroup = (context: APIContext) => {
 
 		const req = buildHTTPRequestWithAuthFromContext(context);
 
-		const raw = await fetch(url, { ...req, method: 'GET' });
+		const raw = await context.fetch(url, { ...req, method: 'GET' });
 		const rawRes = (await parseJSONResponse<Array<RawDashboard> | null>(raw)) ?? [];
 		return rawRes.map(toDashboard);
 	};

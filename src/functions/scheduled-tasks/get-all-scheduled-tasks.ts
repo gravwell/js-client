@@ -7,7 +7,7 @@
  **************************************************************************/
 
 import { RawScheduledTask, ScheduledTask, toScheduledTask } from '~/models';
-import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, fetch, parseJSONResponse } from '../utils';
+import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, parseJSONResponse } from '../utils';
 
 export const makeGetAllScheduledTasks = (context: APIContext) => {
 	const path = '/api/scheduledsearches?admin=true';
@@ -16,7 +16,7 @@ export const makeGetAllScheduledTasks = (context: APIContext) => {
 	return async (): Promise<Array<ScheduledTask>> => {
 		const req = buildHTTPRequestWithAuthFromContext(context);
 
-		const raw = await fetch(url, { ...req, method: 'GET' });
+		const raw = await context.fetch(url, { ...req, method: 'GET' });
 		const rawRes = (await parseJSONResponse<Array<RawScheduledTask> | null>(raw)) ?? [];
 		return rawRes.map(toScheduledTask);
 	};

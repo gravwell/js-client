@@ -12,7 +12,6 @@ import {
 	APIContext,
 	buildHTTPRequestWithAuthFromContext,
 	buildURL,
-	fetch,
 	HTTPRequestOptions,
 	parseJSONResponse,
 } from '../utils';
@@ -28,7 +27,7 @@ export const makeUploadOneRemoteKit = (context: APIContext) => {
 			};
 			const req = buildHTTPRequestWithAuthFromContext(context, baseRequestOptions);
 
-			const raw = await fetch(url, { ...req, method: 'POST' });
+			const raw = await context.fetch(url, { ...req, method: 'POST' });
 			const rawRes = await parseJSONResponse<RawRemoteKit>(raw);
 			return toRemoteKit(rawRes);
 		} catch (err) {

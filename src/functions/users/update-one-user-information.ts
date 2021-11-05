@@ -11,7 +11,6 @@ import {
 	APIContext,
 	buildHTTPRequestWithAuthFromContext,
 	buildURL,
-	fetch,
 	HTTPRequestOptions,
 	omitUndefinedShallow,
 	parseJSONResponse,
@@ -28,7 +27,7 @@ export const makeUpdateOneUserInformation = (context: APIContext) => {
 			};
 			const req = buildHTTPRequestWithAuthFromContext(context, baseRequestOptions);
 
-			const raw = await fetch(url, { ...req, method: 'PUT' });
+			const raw = await context.fetch(url, { ...req, method: 'PUT' });
 			return parseJSONResponse(raw, { expect: 'void' });
 		} catch (err) {
 			if (err instanceof Error) throw err;

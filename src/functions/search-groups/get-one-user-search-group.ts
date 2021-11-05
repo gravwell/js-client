@@ -7,7 +7,7 @@
  **************************************************************************/
 
 import { NumericID } from '~/value-objects';
-import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, fetch, parseJSONResponse } from '../utils';
+import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, parseJSONResponse } from '../utils';
 
 export const makeGetOneUserSearchGroup = (context: APIContext) => {
 	return async (userID: NumericID): Promise<NumericID> => {
@@ -17,7 +17,7 @@ export const makeGetOneUserSearchGroup = (context: APIContext) => {
 
 			const req = buildHTTPRequestWithAuthFromContext(context);
 
-			const raw = await fetch(url, { ...req, method: 'GET' });
+			const raw = await context.fetch(url, { ...req, method: 'GET' });
 			const parsed = await parseJSONResponse<NumericID>(raw);
 			return parsed.toString(); // backend returns an int
 		} catch (err) {

@@ -13,7 +13,6 @@ import {
 	APIContext,
 	buildHTTPRequestWithAuthFromContext,
 	buildURL,
-	fetch,
 	File,
 	HTTPRequestOptions,
 	parseJSONResponse,
@@ -30,7 +29,7 @@ export const makeUploadOneLocalKit = (context: APIContext) => {
 			};
 			const req = buildHTTPRequestWithAuthFromContext(context, baseRequestOptions);
 
-			const raw = await fetch(url, { ...req, method: 'POST' });
+			const raw = await context.fetch(url, { ...req, method: 'POST' });
 			const rawRes = await parseJSONResponse<RawLocalKit>(raw);
 			return toLocalKit(rawRes);
 		} catch (err) {
