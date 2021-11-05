@@ -6,7 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { APIContext } from '~/functions/utils';
+import { APIContext, fetch } from '~/functions/utils';
 import { getEnvVar } from './get-env-var';
 
 export * from './paths';
@@ -19,6 +19,7 @@ export const TEST_BASE_API_CONTEXT: APIContext = {
 	host: TEST_HOST,
 	useEncryption: false,
 	authToken: TEST_AUTH_TOKEN,
+	fetch: fetch,
 };
 
 const getBooleanEnv = (envVar: string): boolean | null => {
