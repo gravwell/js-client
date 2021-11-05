@@ -7,7 +7,7 @@
  **************************************************************************/
 
 import { Macro, RawMacro, toMacro } from '~/models';
-import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, fetch, parseJSONResponse } from '../utils';
+import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, parseJSONResponse } from '../utils';
 
 export const makeGetMacrosAuthorizedToMe = (context: APIContext) => {
 	const path = '/api/macros';
@@ -16,7 +16,7 @@ export const makeGetMacrosAuthorizedToMe = (context: APIContext) => {
 	return async (): Promise<Array<Macro>> => {
 		const req = buildHTTPRequestWithAuthFromContext(context);
 
-		const raw = await fetch(url, { ...req, method: 'GET' });
+		const raw = await context.fetch(url, { ...req, method: 'GET' });
 		const rawRes = (await parseJSONResponse<Array<RawMacro> | null>(raw)) ?? [];
 		return rawRes.map(toMacro);
 	};

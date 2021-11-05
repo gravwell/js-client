@@ -7,7 +7,7 @@
  **************************************************************************/
 
 import { Actionable, RawActionable, toActionable } from '~/models';
-import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, fetch, parseJSONResponse } from '../utils';
+import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, parseJSONResponse } from '../utils';
 
 export const makeGetAllActionablesAsAdmin = (context: APIContext) => {
 	const templatePath = '/api/pivots?admin=true';
@@ -16,7 +16,7 @@ export const makeGetAllActionablesAsAdmin = (context: APIContext) => {
 	return async (): Promise<Array<Actionable>> => {
 		const req = buildHTTPRequestWithAuthFromContext(context);
 
-		const raw = await fetch(url, { ...req, method: 'GET' });
+		const raw = await context.fetch(url, { ...req, method: 'GET' });
 		const rawRes = (await parseJSONResponse<Array<RawActionable> | null>(raw)) ?? [];
 		return rawRes.map(toActionable);
 	};

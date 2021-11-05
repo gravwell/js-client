@@ -12,7 +12,6 @@ import {
 	APIContext,
 	buildHTTPRequestWithAuthFromContext,
 	buildURL,
-	fetch,
 	HTTPRequestOptions,
 	parseJSONResponse,
 } from '../utils';
@@ -43,7 +42,8 @@ export const makeUpdateOneResource = (context: APIContext) => {
 			};
 			const req = buildHTTPRequestWithAuthFromContext(context, baseRequestOptions);
 
-			const metadataP = fetch(url, { ...req, method: 'PUT' })
+			const metadataP = context
+				.fetch(url, { ...req, method: 'PUT' })
 				.then(res => parseJSONResponse<RawResource>(res))
 				.then(toResource)
 				.then(insertResource);

@@ -7,7 +7,7 @@
  **************************************************************************/
 
 import { LocalKit, RawLocalKit, toLocalKit } from '~/models';
-import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, fetch, parseJSONResponse } from '../utils';
+import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, parseJSONResponse } from '../utils';
 
 export const makeGetAllLocalKits = (context: APIContext) => {
 	const path = '/api/kits';
@@ -16,7 +16,7 @@ export const makeGetAllLocalKits = (context: APIContext) => {
 	return async (): Promise<Array<LocalKit>> => {
 		const req = buildHTTPRequestWithAuthFromContext(context);
 
-		const raw = await fetch(url, { ...req, method: 'GET' });
+		const raw = await context.fetch(url, { ...req, method: 'GET' });
 		const rawRes = (await parseJSONResponse<Array<RawLocalKit> | null>(raw)) ?? [];
 		return rawRes.map(toLocalKit);
 	};

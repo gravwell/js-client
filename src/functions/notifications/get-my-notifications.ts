@@ -19,7 +19,6 @@ import {
 	APIContext,
 	buildHTTPRequestWithAuthFromContext,
 	buildURL,
-	fetch,
 	omitUndefinedShallow,
 	parseJSONResponse,
 } from '../utils';
@@ -31,7 +30,7 @@ export const makeGetMyNotifications = (context: APIContext) => {
 	return async (): Promise<Array<Notification>> => {
 		const req = buildHTTPRequestWithAuthFromContext(context);
 
-		const rawRes = await fetch(url, { ...req, method: 'GET' });
+		const rawRes = await context.fetch(url, { ...req, method: 'GET' });
 		const rawObj = await parseJSONResponse<{ [id: string]: RawNotification }>(rawRes);
 		return Object.entries(rawObj).map<Notification>(([id, rawNotification]) => toNotification(rawNotification, id));
 	};

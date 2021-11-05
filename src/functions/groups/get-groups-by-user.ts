@@ -8,7 +8,7 @@
 
 import { Group, RawGroup, toGroup } from '~/models';
 import { NumericID } from '~/value-objects';
-import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, fetch, parseJSONResponse } from '../utils';
+import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, parseJSONResponse } from '../utils';
 
 export const makeGetGroupsByUser = (context: APIContext) => {
 	return async (userID: NumericID): Promise<Array<Group>> => {
@@ -17,7 +17,7 @@ export const makeGetGroupsByUser = (context: APIContext) => {
 
 		const req = buildHTTPRequestWithAuthFromContext(context);
 
-		const raw = await fetch(url, { ...req, method: 'GET' });
+		const raw = await context.fetch(url, { ...req, method: 'GET' });
 		const rawRes = (await parseJSONResponse<Array<RawGroup> | null>(raw)) ?? [];
 		return rawRes.map(toGroup);
 	};

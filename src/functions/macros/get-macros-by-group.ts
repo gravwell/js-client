@@ -8,7 +8,7 @@
 
 import { Macro, RawMacro, toMacro } from '~/models';
 import { NumericID } from '~/value-objects';
-import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, fetch, parseJSONResponse } from '../utils';
+import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, parseJSONResponse } from '../utils';
 
 export const makeGetMacrosByGroup = (context: APIContext) => {
 	return async (groupID: NumericID): Promise<Array<Macro>> => {
@@ -17,7 +17,7 @@ export const makeGetMacrosByGroup = (context: APIContext) => {
 
 		const req = buildHTTPRequestWithAuthFromContext(context);
 
-		const raw = await fetch(url, { ...req, method: 'GET' });
+		const raw = await context.fetch(url, { ...req, method: 'GET' });
 		const rawRes = (await parseJSONResponse<Array<RawMacro> | null>(raw)) ?? [];
 		return rawRes.map(toMacro);
 	};

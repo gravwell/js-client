@@ -7,7 +7,7 @@
  **************************************************************************/
 
 import { RawSearch2, Search2, toSearch2 } from '~/models';
-import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, fetch, parseJSONResponse } from '../utils';
+import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, parseJSONResponse } from '../utils';
 
 export const makeGetAllPersistentSearchStatus = (context: APIContext) => {
 	const templatePath = '/api/searchctrl/all';
@@ -16,7 +16,7 @@ export const makeGetAllPersistentSearchStatus = (context: APIContext) => {
 	return async (): Promise<Array<Search2>> => {
 		const req = buildHTTPRequestWithAuthFromContext(context);
 
-		const raw = await fetch(url, { ...req, method: 'GET' });
+		const raw = await context.fetch(url, { ...req, method: 'GET' });
 		const rawRes = (await parseJSONResponse<RawResponse>(raw)) ?? [];
 		return rawRes.map(toSearch2);
 	};

@@ -7,7 +7,7 @@
  **************************************************************************/
 
 import { AutoExtractor, RawAutoExtractor, toAutoExtractor } from '~/models';
-import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, fetch, parseJSONResponse } from '../utils';
+import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, parseJSONResponse } from '../utils';
 
 export const makeGetAutoExtractorsAuthorizedToMe = (context: APIContext) => {
 	const path = '/api/autoextractors';
@@ -16,7 +16,7 @@ export const makeGetAutoExtractorsAuthorizedToMe = (context: APIContext) => {
 	return async (): Promise<Array<AutoExtractor>> => {
 		const req = buildHTTPRequestWithAuthFromContext(context);
 
-		const raw = await fetch(url, { ...req, method: 'GET' });
+		const raw = await context.fetch(url, { ...req, method: 'GET' });
 		const rawRes = (await parseJSONResponse<Array<RawAutoExtractor> | null>(raw)) ?? [];
 		return rawRes.map(toAutoExtractor);
 	};
