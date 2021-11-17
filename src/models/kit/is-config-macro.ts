@@ -6,9 +6,12 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-export * from './is-version';
-export * from './raw-version';
-export * from './raw-version-object';
-export * from './to-raw-version-object';
-export * from './to-version';
-export * from './version';
+import { isNull, isString } from 'lodash';
+import { ConfigMacro } from './config-macro';
+
+export const isConfigMacro = (v: any): v is ConfigMacro =>
+	v.type === 'macro value' &&
+	isString(v.macroName) &&
+	isString(v.description) &&
+	isString(v.defaultValue) &&
+	(isString(v.value) || (isNull(v.value) && ['tag', 'string'].includes(v.valueType)));

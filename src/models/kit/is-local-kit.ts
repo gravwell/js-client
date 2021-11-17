@@ -31,13 +31,12 @@ export const isLocalKit = (v: any): v is LocalKit => {
 			isBoolean(k.isSigned) &&
 				isBoolean(k.requiresAdminPrivilege) &&
 				k.items.every(isKitItem) &&
-				k.settings.every(
+				k.configMacros.every(
 					s =>
-						s.type === 'macro value' &&
-						isString(s.name) &&
+						isString(s.macroName) &&
 						isString(s.description) &&
 						isString(s.defaultValue) &&
-						(isString(s.value) || (isNull(s.value) && ['tag', 'string'].includes(s.valueType))),
+						(isString(s.value) || (isNull(s.value) && ['tag', 'string'].includes(s.type))),
 				)
 		);
 	} catch {

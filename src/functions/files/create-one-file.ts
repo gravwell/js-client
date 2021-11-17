@@ -23,8 +23,8 @@ export const makeCreateOneFile = (context: APIContext) => {
 	const updateOneFile = makeUpdateOneFile(context);
 	const getOneFile = makeGetOneFile(context);
 
-	const templatePath = '/api/files';
-	const url = buildURL(templatePath, { ...context, protocol: 'http' });
+	const filesPath = '/api/files';
+	const url = buildURL(filesPath, { ...context, protocol: 'http' });
 
 	return async (data: CreatableFile): Promise<FileMetadata> => {
 		try {
