@@ -7,7 +7,7 @@
  **************************************************************************/
 
 import { APISubscription, File } from '~/functions/utils';
-import { BuildableKit, InstallableKit, KitInstallationStatus, LocalKit, RemoteKit } from '~/models/kit';
+import { BuildableKit, InstallableKit, KitArchive, KitInstallationStatus, LocalKit, RemoteKit } from '~/models/kit';
 
 export interface KitsService {
 	readonly get: {
@@ -48,5 +48,14 @@ export interface KitsService {
 	readonly uninstall: {
 		readonly one: (kitID: string) => Promise<void>;
 		readonly all: () => Promise<void>;
+	};
+
+	readonly archives: {
+		readonly get: {
+			readonly all: () => Promise<Array<KitArchive>>;
+		};
+		readonly delete: {
+			readonly one: (archiveID: string) => Promise<boolean>;
+		};
 	};
 }

@@ -8,14 +8,16 @@
 
 import { ID } from '~/value-objects';
 import { Version } from '../version';
+import { ConfigMacro } from './config-macro';
 
 export interface BuildableKit {
 	customID: ID;
-
 	name: string;
 	description: string;
-	version: Version;
-
+	version: number;
+	minVersion: Version | null;
+	maxVersion: Version | null;
+	readme: string;
 	actionableIDs: Array<ID>;
 	autoExtractorIDs: Array<ID>;
 	dashboardIDs: Array<ID>;
@@ -27,15 +29,9 @@ export interface BuildableKit {
 	scheduledQueryIDs: Array<ID>;
 	scheduledScriptIDs: Array<ID>;
 	templateIDs: Array<ID>;
-
-	icon: string;
+	banner?: string;
+	cover?: string;
+	icon?: string;
 	licenses: Array<{ name: string; content: string }>;
-	settings: Array<{
-		type: 'macro value';
-		name: string;
-		description: string;
-		defaultValue: string;
-		value: string | null;
-		valueType: 'tag' | 'string';
-	}>;
+	configMacros: Array<ConfigMacro>;
 }

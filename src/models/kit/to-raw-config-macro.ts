@@ -6,9 +6,13 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-export * from './is-version';
-export * from './raw-version';
-export * from './raw-version-object';
-export * from './to-raw-version-object';
-export * from './to-version';
-export * from './version';
+import { ConfigMacro } from './config-macro';
+import { RawConfigMacro } from './raw-config-macro';
+
+export const toRawConfigMacro = (macro: ConfigMacro): RawConfigMacro => ({
+	DefaultValue: macro.defaultValue,
+	Description: macro.description,
+	MacroName: macro.macroName,
+	Value: macro.value,
+	Type: macro.type === 'tag' ? 'TAG' : 'STRING',
+});

@@ -6,9 +6,10 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-export * from './is-version';
-export * from './raw-version';
-export * from './raw-version-object';
-export * from './to-raw-version-object';
-export * from './to-version';
-export * from './version';
+export interface RawConfigMacro {
+	DefaultValue: string;
+	Description: string;
+	MacroName: string;
+	Value?: string | null;
+	Type?: 'TAG' | 'STRING';
+}
