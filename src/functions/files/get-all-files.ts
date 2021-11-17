@@ -7,7 +7,7 @@
  **************************************************************************/
 
 import { FileMetadata, RawFileMetadata, toFileMetadata } from '~/models';
-import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, fetch, parseJSONResponse } from '../utils';
+import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, parseJSONResponse } from '../utils';
 
 export const makeGetAllFiles = (context: APIContext) => {
 	const path = '/api/files?admin=true';
@@ -16,7 +16,7 @@ export const makeGetAllFiles = (context: APIContext) => {
 	return async (): Promise<Array<FileMetadata>> => {
 		const req = buildHTTPRequestWithAuthFromContext(context);
 
-		const raw = await fetch(url, { ...req, method: 'GET' });
+		const raw = await context.fetch(url, { ...req, method: 'GET' });
 		const rawRes = (await parseJSONResponse<Array<RawFileMetadata> | null>(raw)) ?? [];
 		return rawRes.map(toFileMetadata);
 	};

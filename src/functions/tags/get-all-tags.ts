@@ -7,7 +7,7 @@
  **************************************************************************/
 
 import { Tag } from '~/models';
-import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, fetch, parseJSONResponse } from '../utils';
+import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, parseJSONResponse } from '../utils';
 
 export const makeGetAllTags = (context: APIContext) => {
 	const templatePath = '/api/tags';
@@ -16,7 +16,7 @@ export const makeGetAllTags = (context: APIContext) => {
 	return async (): Promise<Array<Tag>> => {
 		const req = buildHTTPRequestWithAuthFromContext(context);
 
-		const raw = await fetch(url, { ...req, method: 'GET' });
+		const raw = await context.fetch(url, { ...req, method: 'GET' });
 		return parseJSONResponse(raw);
 	};
 };

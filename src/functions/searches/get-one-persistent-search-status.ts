@@ -8,7 +8,7 @@
 
 import { RawSearch2, Search2, toSearch2 } from '~/models';
 import { NumericID } from '~/value-objects';
-import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, fetch, parseJSONResponse } from '../utils';
+import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, parseJSONResponse } from '../utils';
 
 export const makeGetOnePersistentSearchStatus = (context: APIContext) => {
 	return async (searchID: NumericID): Promise<Search2> => {
@@ -17,7 +17,7 @@ export const makeGetOnePersistentSearchStatus = (context: APIContext) => {
 
 		const req = buildHTTPRequestWithAuthFromContext(context);
 
-		const raw = await fetch(url, { ...req, method: 'GET' });
+		const raw = await context.fetch(url, { ...req, method: 'GET' });
 		const rawRes = await parseJSONResponse<RawSearch2>(raw);
 		return toSearch2(rawRes);
 	};

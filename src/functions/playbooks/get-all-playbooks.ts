@@ -7,7 +7,7 @@
  **************************************************************************/
 
 import { Playbook, RawPlaybook, toPlaybook } from '~/models';
-import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, fetch, parseJSONResponse } from '../utils';
+import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, parseJSONResponse } from '../utils';
 
 export const makeGetAllPlaybooks = (context: APIContext) => {
 	const playbookPath = '/api/playbooks?admin=true';
@@ -16,7 +16,7 @@ export const makeGetAllPlaybooks = (context: APIContext) => {
 	return async (): Promise<Array<Omit<Playbook, 'body'>>> => {
 		const req = buildHTTPRequestWithAuthFromContext(context);
 
-		const raw = await fetch(url, { ...req, method: 'GET' });
+		const raw = await context.fetch(url, { ...req, method: 'GET' });
 		const rawRes = (await parseJSONResponse<Array<RawPlaybook> | null>(raw)) ?? [];
 		return rawRes.map(p => toPlaybook(p, { includeBody: false }));
 	};

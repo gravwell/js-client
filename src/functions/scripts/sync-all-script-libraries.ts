@@ -6,7 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, fetch, parseJSONResponse } from '../utils';
+import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, parseJSONResponse } from '../utils';
 
 export const makeSyncAllScriptLibraries = (context: APIContext) => {
 	const templatePath = '/api/libs/pull';
@@ -15,7 +15,7 @@ export const makeSyncAllScriptLibraries = (context: APIContext) => {
 	return async (): Promise<void> => {
 		const req = buildHTTPRequestWithAuthFromContext(context);
 
-		const raw = await fetch(url, { ...req, method: 'GET' });
+		const raw = await context.fetch(url, { ...req, method: 'GET' });
 		return parseJSONResponse(raw, { expect: 'void' });
 	};
 };

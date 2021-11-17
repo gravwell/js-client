@@ -9,7 +9,7 @@
 import { MailServerTestData } from '~/models';
 import { isMailServerTestResult } from '~/models/mail-server/is-mail-server-test-result';
 import { MailServerTestResult } from '~/models/mail-server/mail-server-test-result';
-import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, fetch, parseJSONResponse } from '../utils';
+import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, parseJSONResponse } from '../utils';
 import { toRawMailServerTestData } from './conversion';
 import { MAIL_PATH } from './paths';
 
@@ -20,7 +20,7 @@ export const makeCreateServerTest = (context: APIContext) => {
 			const req = buildHTTPRequestWithAuthFromContext(context, {
 				body: JSON.stringify(toRawMailServerTestData(data)),
 			});
-			const rawRes = await fetch(url, { ...req, method: 'POST' });
+			const rawRes = await context.fetch(url, { ...req, method: 'POST' });
 
 			// The backend returns a JSON-encoded string
 			const result = await parseJSONResponse(rawRes);

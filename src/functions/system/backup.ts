@@ -6,7 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, fetch } from '../utils';
+import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL } from '../utils';
 
 export const makeBackup = (context: APIContext) => {
 	const templatePath = '/api/backup';
@@ -20,7 +20,7 @@ export const makeBackup = (context: APIContext) => {
 
 		const req = buildHTTPRequestWithAuthFromContext(context);
 
-		const raw = await fetch(url, { ...req, method: 'GET' });
+		const raw = await context.fetch(url, { ...req, method: 'GET' });
 
 		const matches = raw.headers.get('content-disposition')?.match(/^attachment; filename="(?<name>.*)"$/);
 		const filename = matches?.groups?.name ?? 'GravwellBackup.gravbak';

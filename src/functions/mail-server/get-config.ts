@@ -8,7 +8,7 @@
 
 import { omit } from 'lodash';
 import { MailServerConfig, RawMailServerConfig } from '../../models/mail-server';
-import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, fetch, parseJSONResponse } from '../utils';
+import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, parseJSONResponse } from '../utils';
 import { toMailServerConfig } from './conversion';
 import { MAIL_CONFIG_PATH } from './paths';
 
@@ -20,7 +20,7 @@ export const makeGetConfig = (context: APIContext) => {
 	return async (): Promise<Omit<MailServerConfig, 'password'>> => {
 		const url = buildURL(MAIL_CONFIG_PATH, { ...context, protocol: 'http' });
 		const req = buildHTTPRequestWithAuthFromContext(context);
-		const res = await fetch(url, { ...req, method: 'GET' });
+		const res = await context.fetch(url, { ...req, method: 'GET' });
 		const rawObj = await parseJSONResponse<RawMailServerConfig>(res);
 		return omit(toMailServerConfig(rawObj), 'password');
 	};

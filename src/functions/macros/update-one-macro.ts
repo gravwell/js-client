@@ -11,7 +11,6 @@ import {
 	APIContext,
 	buildHTTPRequestWithAuthFromContext,
 	buildURL,
-	fetch,
 	HTTPRequestOptions,
 	parseJSONResponse,
 } from '../utils';
@@ -32,7 +31,7 @@ export const makeUpdateOneMacro = (context: APIContext) => {
 			};
 			const req = buildHTTPRequestWithAuthFromContext(context, baseRequestOptions);
 
-			const raw = await fetch(url, { ...req, method: 'PUT' });
+			const raw = await context.fetch(url, { ...req, method: 'PUT' });
 			const rawMacro = await parseJSONResponse<RawMacro>(raw);
 			return toMacro(rawMacro);
 		} catch (err) {

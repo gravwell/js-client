@@ -6,7 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, fetch, parseJSONResponse } from '../utils';
+import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, parseJSONResponse } from '../utils';
 
 export const makeRestartWebServer = (context: APIContext) => {
 	const templatePath = '/api/restart/webserver';
@@ -16,7 +16,7 @@ export const makeRestartWebServer = (context: APIContext) => {
 		const req = buildHTTPRequestWithAuthFromContext(context);
 
 		try {
-			const raw = await fetch(url, { ...req, method: 'POST' });
+			const raw = await context.fetch(url, { ...req, method: 'POST' });
 			await parseJSONResponse(raw, { expect: 'void' });
 		} catch (err) {
 			if (err instanceof Error && err.message.includes('socket hang up')) return;

@@ -7,7 +7,7 @@
  **************************************************************************/
 
 import { MailServerConfig } from '../../models/mail-server';
-import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, fetch } from '../utils';
+import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL } from '../utils';
 import { toRawMailServerConfig } from './conversion';
 import { MAIL_CONFIG_PATH } from './paths';
 
@@ -18,7 +18,7 @@ export const makeUpdateConfig = (context: APIContext) => {
 			const req = buildHTTPRequestWithAuthFromContext(context, {
 				body: JSON.stringify(toRawMailServerConfig(config)),
 			});
-			const rawRes = await fetch(url, { ...req, method: 'POST' });
+			const rawRes = await context.fetch(url, { ...req, method: 'POST' });
 			// The API response is empty so we just check on status
 			return rawRes.status === 200;
 		} catch (err) {
