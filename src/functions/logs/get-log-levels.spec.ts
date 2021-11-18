@@ -13,7 +13,7 @@ import { makeGetLogLevels } from './get-log-levels';
 describe('getLogLevels()', () => {
 	const getLogLevels = makeGetLogLevels(TEST_BASE_API_CONTEXT);
 
-	it(
+	xit(
 		'Should get all available log levels and the current active log level',
 		integrationTest(async () => {
 			const { available, current } = await getLogLevels();
