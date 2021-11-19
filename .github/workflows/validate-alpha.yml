@@ -1,0 +1,254 @@
+name: Validate Pull Request for Alpha
+
+on:
+  pull_request:
+    branches: [dev]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js 10.20.1
+        uses: actions/setup-node@v1
+        with:
+          node-version: '10.20.1'
+      - run: npm i -g npm@6.14.5
+      - run: npm ci
+      - run: npm run lint
+
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js 10.20.1
+        uses: actions/setup-node@v1
+        with:
+          node-version: '10.20.1'
+      - run: npm i -g npm@6.14.5
+      - run: npm ci
+      - run: npm run build
+      - run: npm run build:tests
+
+  test-ts-compatibility:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js 10.20.1
+        uses: actions/setup-node@v1
+        with:
+          node-version: '10.20.1'
+      - run: npm i -g npm@6.14.5
+      - run: npm ci
+      - run: npm run test:ts-compatibility
+
+  test-node:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build image for Backend Alpha
+        run: docker build -t gravwell-alpha .config/test-config/test-backend-alpha/
+      - shell: bash
+        run: |
+          docker run -p 8080:80 -d \
+            -e GRAVWELL_INGEST_SECRET=MyIngestSecret \
+            -e GRAVWELL_INGEST_AUTH=MyIngestSecret \
+            -e GRAVWELL_CONTROL_AUTH=MyControlSecret \
+            -e GRAVWELL_SEARCHAGENT_AUTH=MySearchAgentAuth \
+            --name gravwell-alpha \
+            -v ${GITHUB_WORKSPACE}/.config/test-config/etc:/opt/gravwell/etc \
+            gravwell-alpha
+      - shell: bash
+        env:
+          LICENSE: ${{ secrets.TEST_LICENSE }}
+        run: |
+          [[ "$(echo "$LICENSE" | base64 -d | md5sum)" == "01e4f5602666143d338593d8b97002ea  -" ]] || ( echo "md5sum mismatch - is this PR from a fork?"; exit 1 )
+          n=0
+          until [[ "$n" -ge 5 ]]
+          do
+            curl --silent --fail http://localhost:8080/license/status && break
+            n=$((n+1))
+            sleep 10
+          done
+          if [[ "$n" -eq 5 ]]
+          then
+            echo "Timed out waiting for license server to stand up"
+            exit 1
+          else
+            echo "License server is up"
+          fi
+          sleep 5
+          echo "$LICENSE" | base64 -d | curl --silent --form 'file=@-;filename=license' http://localhost:8080/license || ( echo "License upload failed"; exit 1 )
+          sleep 5
+          n=0
+          until [[ "$n" -ge 5 ]]
+          do
+            curl --silent --fail http://localhost:8080/license/status && break
+            n=$((n+1))
+            sleep 10
+          done
+          if [[ "$n" -eq 5 ]]
+          then
+            echo "Timed out checking for license acceptance"
+            exit 1
+          else
+            echo "License accepted"
+          fi
+          sleep 10
+          curl --silent --fail http://localhost:8080/api/test || ( echo "api test failed"; exit 1 )
+      - name: Use Node.js 10.20.1
+        uses: actions/setup-node@v1
+        with:
+          node-version: '10.20.1'
+      - run: npm i -g npm@6.14.5
+      - run: npm ci
+      - shell: bash
+        env:
+          INTEGRATION_TESTS: true
+          UNIT_TESTS: true
+        run: |
+          export TEST_AUTH_TOKEN="$(curl --silent --header "Content-Type:  application/json" --request POST --data '{"User":"admin","Pass":"changeme"}' http://localhost:8080/api/login | jq -r .JWT)"
+          npm run test:node
+
+  test-firefox:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build image for Backend Alpha
+        run: docker build -t gravwell-alpha .config/test-config/test-backend-alpha/
+      - shell: bash
+        run: |
+          docker run -p 8080:80 -d \
+            -e GRAVWELL_INGEST_SECRET=MyIngestSecret \
+            -e GRAVWELL_INGEST_AUTH=MyIngestSecret \
+            -e GRAVWELL_CONTROL_AUTH=MyControlSecret \
+            -e GRAVWELL_SEARCHAGENT_AUTH=MySearchAgentAuth \
+            --name gravwell-alpha \
+            -v ${GITHUB_WORKSPACE}/.config/test-config/etc:/opt/gravwell/etc \
+            gravwell-alpha
+      - shell: bash
+        env:
+          LICENSE: ${{ secrets.TEST_LICENSE }}
+        run: |
+          [[ "$(echo "$LICENSE" | base64 -d | md5sum)" == "01e4f5602666143d338593d8b97002ea  -" ]] || ( echo "md5sum mismatch - is this PR from a fork?"; exit 1 )
+          n=0
+          until [[ "$n" -ge 5 ]]
+          do
+            curl --silent --fail http://localhost:8080/license/status && break
+            n=$((n+1))
+            sleep 10
+          done
+          if [[ "$n" -eq 5 ]]
+          then
+            echo "Timed out waiting for license server to stand up"
+            exit 1
+          else
+            echo "License server is up"
+          fi
+          sleep 5
+          echo "$LICENSE" | base64 -d | curl --silent --form 'file=@-;filename=license' http://localhost:8080/license || ( echo "License upload failed"; exit 1 )
+          sleep 5
+          n=0
+          until [[ "$n" -ge 5 ]]
+          do
+            curl --silent --fail http://localhost:8080/license/status && break
+            n=$((n+1))
+            sleep 10
+          done
+          if [[ "$n" -eq 5 ]]
+          then
+            echo "Timed out checking for license acceptance"
+            exit 1
+          else
+            echo "License accepted"
+          fi
+          sleep 10
+          curl --silent --fail http://localhost:8080/api/test || ( echo "api test failed"; exit 1 )
+      - name: Use Node.js 10.20.1
+        uses: actions/setup-node@v1
+        with:
+          node-version: '10.20.1'
+      - run: npm i -g npm@6.14.5
+      - run: npm ci
+      - shell: bash
+        env:
+          INTEGRATION_TESTS: true
+          UNIT_TESTS: true
+        run: |
+          export TEST_AUTH_TOKEN="$(curl --silent --header "Content-Type:  application/json" --request POST --data '{"User":"admin","Pass":"changeme"}' http://localhost:8080/api/login | jq -r .JWT)"
+        # npm run test:browsers -- --browsers=FirefoxHeadlessCI
+
+  test-chrome:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build image for Backend Alpha
+        run: docker build -t gravwell-alpha .config/test-config/test-backend-alpha/
+      - shell: bash
+        run: |
+          docker run -p 8080:80 -d \
+            -e GRAVWELL_INGEST_SECRET=MyIngestSecret \
+            -e GRAVWELL_INGEST_AUTH=MyIngestSecret \
+            -e GRAVWELL_CONTROL_AUTH=MyControlSecret \
+            -e GRAVWELL_SEARCHAGENT_AUTH=MySearchAgentAuth \
+            --name gravwell-alpha \
+            -v ${GITHUB_WORKSPACE}/.config/test-config/etc:/opt/gravwell/etc \
+            gravwell-alpha
+      - shell: bash
+        env:
+          LICENSE: ${{ secrets.TEST_LICENSE }}
+        run: |
+          [[ "$(echo "$LICENSE" | base64 -d | md5sum)" == "01e4f5602666143d338593d8b97002ea  -" ]] || ( echo "md5sum mismatch - is this PR from a fork?"; exit 1 )
+          n=0
+          until [[ "$n" -ge 5 ]]
+          do
+            curl --silent --fail http://localhost:8080/license/status && break
+            n=$((n+1))
+            sleep 10
+          done
+          if [[ "$n" -eq 5 ]]
+          then
+            echo "Timed out waiting for license server to stand up"
+            exit 1
+          else
+            echo "License server is up"
+          fi
+          sleep 5
+          echo "$LICENSE" | base64 -d | curl --silent --form 'file=@-;filename=license' http://localhost:8080/license || ( echo "License upload failed"; exit 1 )
+          sleep 5
+          n=0
+          until [[ "$n" -ge 5 ]]
+          do
+            curl --silent --fail http://localhost:8080/license/status && break
+            n=$((n+1))
+            sleep 10
+          done
+          if [[ "$n" -eq 5 ]]
+          then
+            echo "Timed out checking for license acceptance"
+            exit 1
+          else
+            echo "License accepted"
+          fi
+          sleep 10
+          curl --silent --fail http://localhost:8080/api/test || ( echo "api test failed"; exit 1 )
+      - name: Use Node.js 10.20.1
+        uses: actions/setup-node@v1
+        with:
+          node-version: '10.20.1'
+      - run: npm i -g npm@6.14.5
+      - run: npm ci
+      - shell: bash
+        env:
+          INTEGRATION_TESTS: true
+          UNIT_TESTS: true
+        run: |
+          export TEST_AUTH_TOKEN="$(curl --silent --header "Content-Type:  application/json" --request POST --data '{"User":"admin","Pass":"changeme"}' http://localhost:8080/api/login | jq -r .JWT)"
+          export CHROME_BIN=$(which google-chrome-stable)
+        # npm run test:browsers -- --browsers=ChromeHeadlessCI

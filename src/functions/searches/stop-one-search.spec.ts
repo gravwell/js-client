@@ -58,7 +58,7 @@ describe('stopOneSearch()', () => {
 		}
 	}, 25000);
 
-	it(
+	xit(
 		'Should stop a search',
 		integrationTest(async () => {
 			const stopOneSearch = makeStopOneSearch(TEST_BASE_API_CONTEXT);
