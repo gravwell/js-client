@@ -6,16 +6,15 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { integrationTest, TEST_BASE_API_CONTEXT } from '~/tests';
-import { makeSetLogLevel } from './set-log-level';
+import { isString } from 'lodash';
+import { isToken } from './is-token';
+import { TokenWithSecret } from './token-with-secret';
 
-describe('setLogLevel()', () => {
-	const setLogLevel = makeSetLogLevel(TEST_BASE_API_CONTEXT);
-
-	xit(
-		'Should set the current active log level',
-		integrationTest(async () => {
-			await setLogLevel('web access');
-		}),
-	);
-});
+export const isTokenWithSecret = (value: unknown): value is TokenWithSecret => {
+	try {
+		const t = <TokenWithSecret>value;
+		return isToken(t) && isString(t.token);
+	} catch {
+		return false;
+	}
+};

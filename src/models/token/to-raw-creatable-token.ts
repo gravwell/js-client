@@ -6,16 +6,12 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { integrationTest, TEST_BASE_API_CONTEXT } from '~/tests';
-import { makeSetLogLevel } from './set-log-level';
+import { RawCreatableToken } from '~/main';
+import { CreatableToken } from './creatable-token';
 
-describe('setLogLevel()', () => {
-	const setLogLevel = makeSetLogLevel(TEST_BASE_API_CONTEXT);
-
-	xit(
-		'Should set the current active log level',
-		integrationTest(async () => {
-			await setLogLevel('web access');
-		}),
-	);
+export const toRawCreatableToken = (creatable: CreatableToken): RawCreatableToken => ({
+	name: creatable.name,
+	description: creatable.description ?? null,
+	capabilities: creatable.capabilities,
+	expiresAt: creatable.expiresAt?.toISOString() ?? null,
 });

@@ -1,8 +1,8 @@
-name: Validate Pull Request
+name: Validate Pull Request for Production
 
 on:
   pull_request:
-    branches: [master, dev]
+    branches: [master]
 
 jobs:
   lint:
@@ -64,7 +64,7 @@ jobs:
         env:
           LICENSE: ${{ secrets.TEST_LICENSE }}
         run: |
-          [[ "$(echo "$LICENSE" | base64 -d | md5sum)" == "e1fd9a7a78a5ddd27e3443f2144a6de3  -" ]] || ( echo "md5sum mismatch - is this PR from a fork?"; exit 1 )
+          [[ "$(echo "$LICENSE" | base64 -d | md5sum)" == "01e4f5602666143d338593d8b97002ea  -" ]] || ( echo "md5sum mismatch - is this PR from a fork?"; exit 1 )
           n=0
           until [[ "$n" -ge 5 ]]
           do
@@ -131,7 +131,7 @@ jobs:
         env:
           LICENSE: ${{ secrets.TEST_LICENSE }}
         run: |
-          [[ "$(echo "$LICENSE" | base64 -d | md5sum)" == "e1fd9a7a78a5ddd27e3443f2144a6de3  -" ]] || ( echo "md5sum mismatch - is this PR from a fork?"; exit 1 )
+          [[ "$(echo "$LICENSE" | base64 -d | md5sum)" == "01e4f5602666143d338593d8b97002ea  -" ]] || ( echo "md5sum mismatch - is this PR from a fork?"; exit 1 )
           n=0
           until [[ "$n" -ge 5 ]]
           do
@@ -198,7 +198,7 @@ jobs:
         env:
           LICENSE: ${{ secrets.TEST_LICENSE }}
         run: |
-          [[ "$(echo "$LICENSE" | base64 -d | md5sum)" == "e1fd9a7a78a5ddd27e3443f2144a6de3  -" ]] || ( echo "md5sum mismatch - is this PR from a fork?"; exit 1 )
+          [[ "$(echo "$LICENSE" | base64 -d | md5sum)" == "01e4f5602666143d338593d8b97002ea  -" ]] || ( echo "md5sum mismatch - is this PR from a fork?"; exit 1 )
           n=0
           until [[ "$n" -ge 5 ]]
           do

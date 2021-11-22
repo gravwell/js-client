@@ -6,16 +6,19 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
+import { isTokenCapability } from '~/models';
 import { integrationTest, TEST_BASE_API_CONTEXT } from '~/tests';
-import { makeSetLogLevel } from './set-log-level';
+import { makeListTokenCapabilities } from './list-token-capabilities';
 
-describe('setLogLevel()', () => {
-	const setLogLevel = makeSetLogLevel(TEST_BASE_API_CONTEXT);
+describe('listTokenCapabilities()', () => {
+	const listTokenCapabilities = makeListTokenCapabilities(TEST_BASE_API_CONTEXT);
 
-	xit(
-		'Should set the current active log level',
+	it(
+		'Should returns all token capabilities',
 		integrationTest(async () => {
-			await setLogLevel('web access');
+			const tokensCapabilities = await listTokenCapabilities();
+			const areTokenCapabilities = tokensCapabilities.every(isTokenCapability);
+			expect(areTokenCapabilities).toBeTrue();
 		}),
 	);
 });

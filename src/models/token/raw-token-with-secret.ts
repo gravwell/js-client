@@ -6,16 +6,17 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { integrationTest, TEST_BASE_API_CONTEXT } from '~/tests';
-import { makeSetLogLevel } from './set-log-level';
+import { RawToken } from './raw-token';
 
-describe('setLogLevel()', () => {
-	const setLogLevel = makeSetLogLevel(TEST_BASE_API_CONTEXT);
-
-	xit(
-		'Should set the current active log level',
-		integrationTest(async () => {
-			await setLogLevel('web access');
-		}),
-	);
-});
+/**
+ * Token containing the secret (only available when the token is created)
+ */
+export interface RawTokenWithSecret extends RawToken {
+	/**
+	 * The created token
+	 *
+	 * @example
+	 * "sdlkjslasdlkfjiowej132452389sdkljsd"
+	 */
+	token: string;
+}
