@@ -30,6 +30,7 @@ export * from './searches';
 export * from './system';
 export * from './tags';
 export * from './templates';
+export * from './tokens';
 export * from './user-preferences';
 export * from './users';
 export * from './web-server';

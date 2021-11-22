@@ -44,6 +44,7 @@ import {
 	CreatableScheduledScript,
 	CreatableTargetedNotification,
 	CreatableTemplate,
+	CreatableToken,
 	CreatableUser,
 	Dashboard,
 	DataExplorerEntry,
@@ -76,6 +77,9 @@ import {
 	SystemSettings,
 	TargetedNotificationTargetType,
 	Template,
+	Token,
+	TokenCapability,
+	TokenWithSecret,
 	UpdatableActionable,
 	UpdatableAutoExtractor,
 	UpdatableDashboard,
@@ -89,6 +93,7 @@ import {
 	UpdatableScheduledQuery,
 	UpdatableScheduledScript,
 	UpdatableTemplate,
+	UpdatableToken,
 	UpdatableUser,
 	UploadableAutoExtractor,
 	User,
@@ -455,6 +460,15 @@ describe('GravwellClient', () => {
 
 			// Search Groups
 			expectTypeOf(client.searchGroups.get.one).toEqualTypeOf<(id: NumericID) => Promise<NumericID>>();
+
+			// Tokens
+			expectTypeOf(client.tokens.get.one).toEqualTypeOf<(tokenID: ID) => Promise<Token>>();
+			expectTypeOf(client.tokens.get.all).toEqualTypeOf<() => Promise<Array<Token>>>();
+			expectTypeOf(client.tokens.get.authorizedTo.me).toEqualTypeOf<() => Promise<Array<Token>>>();
+			expectTypeOf(client.tokens.get.tokenCapabilities).toEqualTypeOf<() => Promise<Array<TokenCapability>>>();
+			expectTypeOf(client.tokens.create.one).toEqualTypeOf<(data: CreatableToken) => Promise<TokenWithSecret>>();
+			expectTypeOf(client.tokens.update.one).toEqualTypeOf<(data: UpdatableToken) => Promise<Token>>();
+			expectTypeOf(client.tokens.delete.one).toEqualTypeOf<(tokenID: ID) => Promise<void>>();
 		}),
 	);
 });
