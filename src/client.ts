@@ -44,6 +44,7 @@ import {
 	createSystemService,
 	createTagsService,
 	createTemplatesService,
+	createTokensService,
 	createUserPreferencesService,
 	createUsersService,
 	createWebServerService,
@@ -74,6 +75,7 @@ import {
 	SystemService,
 	TagsService,
 	TemplatesService,
+	TokensService,
 	UserPreferencesService,
 	UsersService,
 	WebServerService,
@@ -194,6 +196,7 @@ export class GravwellClient {
 		this._explorer = createExplorerService(initialContext);
 		this._searchGroups = createSearchGroupsService(initialContext);
 		this._mailServer = createMailServerService(initialContext);
+		this._tokens = createTokensService(initialContext);
 
 		this._context$.subscribe(context => {
 			this._tags = createTagsService(context);
@@ -229,6 +232,7 @@ export class GravwellClient {
 			this._explorer = createExplorerService(context);
 			this._searchGroups = createSearchGroupsService(context);
 			this._mailServer = createMailServerService(context);
+			this._tokens = createTokensService(context);
 		});
 	}
 
@@ -397,4 +401,9 @@ export class GravwellClient {
 		return this._mailServer;
 	}
 	private _mailServer: MailServerService;
+
+	public get tokens(): TokensService {
+		return this._tokens;
+	}
+	private _tokens: TokensService;
 }
