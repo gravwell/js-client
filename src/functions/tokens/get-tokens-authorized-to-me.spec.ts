@@ -10,7 +10,7 @@ import { omit, random, sortBy } from 'lodash';
 import { CreatableToken, CreatableUser, isToken, Token, TokenCapability, User } from '~/models';
 import { integrationTest, TEST_BASE_API_CONTEXT } from '~/tests';
 import { makeLoginOneUser } from '../auth/login-one-user';
-import { makeCreateOneUser } from '../users';
+import { makeCreateOneUser, makeDeleteOneUser, makeGetAllUsers, makeGetMyUser } from '../users';
 import { makeCreateOneToken } from './create-one-token';
 import { makeDeleteOneToken } from './delete-one-token';
 import { makeGetAllTokens } from './get-all-tokens';
@@ -23,6 +23,9 @@ describe('getTokensAuthorizedToMe()', () => {
 	const getAllTokens = makeGetAllTokens(TEST_BASE_API_CONTEXT);
 	const createOneUser = makeCreateOneUser(TEST_BASE_API_CONTEXT);
 	const login = makeLoginOneUser(TEST_BASE_API_CONTEXT);
+	const deleteOneUser = makeDeleteOneUser(TEST_BASE_API_CONTEXT);
+	const getAllUsers = makeGetAllUsers(TEST_BASE_API_CONTEXT);
+	const getMyUser = makeGetMyUser(TEST_BASE_API_CONTEXT);
 
 	let adminTokens: Array<Token>;
 
@@ -31,6 +34,13 @@ describe('getTokensAuthorizedToMe()', () => {
 	let analystTokens: Array<Token>;
 
 	beforeEach(async () => {
+		// Delete all users, except the admin
+		const currentUsers = await getAllUsers();
+		const myUser = await getMyUser();
+		const currentUserIDs = currentUsers.map(u => u.id).filter(userID => userID !== myUser.id);
+		const deleteUserPromises = currentUserIDs.map(userID => deleteOneUser(userID));
+		await Promise.all(deleteUserPromises);
+
 		// Delete all tokens
 		const currentTokens = await getAllTokens();
 		const currentTokenIDs = currentTokens.map(t => t.id);
