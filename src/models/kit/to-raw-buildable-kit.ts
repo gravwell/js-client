@@ -9,16 +9,19 @@
 import { encode as base64Encode } from 'base-64';
 import { encode as utf8Encode } from 'utf8';
 import { toRawNumericID } from '~/value-objects';
+import { toRawVersionObject } from './../version/to-raw-version-object';
 import { BuildableKit } from './buildable-kit';
 import { RawBuildableKit } from './raw-buildable-kit';
+import { toRawConfigMacro } from './to-raw-config-macro';
 
 export const toRawBuildableKit = (data: BuildableKit): RawBuildableKit => ({
 	ID: data.customID,
-
 	Name: data.name,
 	Description: data.description,
-	Version: data.version.major,
-
+	Version: data.version,
+	MinVersion: data.minVersion ? toRawVersionObject(data.minVersion) : null,
+	MaxVersion: data.maxVersion ? toRawVersionObject(data.maxVersion) : null,
+	Readme: data.readme,
 	Dashboards: data.dashboardIDs.map(toRawNumericID),
 	Extractors: data.autoExtractorIDs,
 	Files: data.fileIDs,
@@ -36,10 +39,8 @@ export const toRawBuildableKit = (data: BuildableKit): RawBuildableKit => ({
 	})),
 
 	Icon: data.icon,
-	ConfigMacros: data.settings.map(s => ({
-		DefaultValue: s.defaultValue,
-		Description: s.description,
-		MacroName: s.name,
-		Value: s.value,
-	})),
+	Cover: data.cover,
+	Banner: data.banner,
+
+	ConfigMacros: data.configMacros.map(toRawConfigMacro),
 });

@@ -6,9 +6,13 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-export * from './is-version';
-export * from './raw-version';
-export * from './raw-version-object';
-export * from './to-raw-version-object';
-export * from './to-version';
-export * from './version';
+import { RawVersionObject } from './raw-version-object';
+import { Version } from './version';
+
+export const toRawVersionObject = (version: Version): RawVersionObject => {
+	return {
+		Major: version.major,
+		Minor: version.minor,
+		Point: version.patch,
+	};
+};

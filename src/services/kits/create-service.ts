@@ -8,10 +8,12 @@
 
 import {
 	makeBuildOneLocalKit,
+	makeDeleteOneKitArchive,
 	makeDownloadOneLocalKit,
 	makeDownloadRemoteKit,
 	makeGetAllLocalKits,
 	makeGetAllRemoteKits,
+	makeGetKitArchives,
 	makeGetOneLocalKit,
 	makeGetOneRemoteKit,
 	makeInstallOneKit,
@@ -62,5 +64,14 @@ export const createKitsService = (context: APIContext): KitsService => ({
 	uninstall: {
 		one: makeUninstallOneKit(context),
 		all: makeUninstallAllKits(context),
+	},
+
+	archives: {
+		get: {
+			all: makeGetKitArchives(context),
+		},
+		delete: {
+			one: makeDeleteOneKitArchive(context),
+		},
 	},
 });

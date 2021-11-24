@@ -11,6 +11,7 @@ import { toVersion } from '../version';
 import { KitItem } from './kit-item';
 import { LocalKit } from './local-kit';
 import { RawLocalKit } from './raw-local-kit';
+import { toConfigMacros } from './to-config-macro';
 import { toKitItem } from './to-kit-item';
 
 export const toLocalKit = (raw: RawLocalKit): LocalKit => ({
@@ -37,12 +38,5 @@ export const toLocalKit = (raw: RawLocalKit): LocalKit => ({
 	requiresAdminPrivilege: raw.AdminRequired,
 
 	items: raw.Items.map<KitItem>(toKitItem),
-	settings: (raw.ConfigMacros ?? []).map(s => ({
-		type: 'macro value',
-		name: s.MacroName,
-		description: s.Description,
-		defaultValue: s.DefaultValue,
-		value: s.Value.trim() === '' ? null : s.Value,
-		valueType: s.Type === 'TAG' ? 'tag' : 'string',
-	})),
+	configMacros: toConfigMacros(raw.ConfigMacros ?? []),
 });

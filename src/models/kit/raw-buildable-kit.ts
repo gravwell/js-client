@@ -7,13 +7,18 @@
  **************************************************************************/
 
 import { RawID, RawNumericID, RawUUID } from '~/value-objects';
+import { RawVersionObject } from '../version';
+import { RawConfigMacro } from './raw-config-macro';
+import { RawKitEmbeddedItem } from './raw-kit-embedded-item';
 
 export interface RawBuildableKit {
 	ID: RawID;
 	Name: string;
 	Description: string;
 	Version: number;
-
+	MinVersion: RawVersionObject | null;
+	MaxVersion: RawVersionObject | null;
+	Readme: string;
 	Dashboards: Array<RawNumericID>;
 	Extractors: Array<RawUUID>;
 	Files: Array<RawUUID>;
@@ -24,17 +29,11 @@ export interface RawBuildableKit {
 	ScheduledSearches: Array<RawNumericID>;
 	SearchLibraries: Array<RawUUID>;
 	Templates: Array<RawUUID>;
-	EmbeddedItems: Array<{
-		Content: string; // base64 encoded
-		Name: string;
-		Type: 'license';
-	}>;
+	EmbeddedItems: Array<RawKitEmbeddedItem>;
 
-	Icon: string | null;
-	ConfigMacros: Array<{
-		DefaultValue: string;
-		Description: string;
-		MacroName: string;
-		Value: string | null;
-	}> | null;
+	Icon?: string;
+	Banner?: string;
+	Cover?: string;
+
+	ConfigMacros: Array<RawConfigMacro> | null;
 }
