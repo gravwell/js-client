@@ -8,6 +8,7 @@
 
 import { KitArchive, RawKitArchive, toKitArchive } from '~/models';
 import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, parseJSONResponse } from '../utils';
+import { isArray } from 'lodash';
 
 export const makeGetKitArchives = (context: APIContext) => {
 	return async (): Promise<Array<KitArchive>> => {
@@ -18,6 +19,6 @@ export const makeGetKitArchives = (context: APIContext) => {
 
 		const raw = await context.fetch(url, { ...req, method: 'GET' });
 		const rawRes = await parseJSONResponse<Array<RawKitArchive>>(raw);
-		return rawRes.map(toKitArchive);
+		return isArray(rawRes) ? rawRes.map(toKitArchive) : [];
 	};
 };
