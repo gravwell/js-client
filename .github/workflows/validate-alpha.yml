@@ -181,7 +181,7 @@ jobs:
           UNIT_TESTS: true
         run: |
           export TEST_AUTH_TOKEN="$(curl --silent --header "Content-Type:  application/json" --request POST --data '{"User":"admin","Pass":"changeme"}' http://localhost:8080/api/login | jq -r .JWT)"
-        # npm run test:browsers -- --browsers=FirefoxHeadlessCI
+          npm run test:browsers -- --browsers=FirefoxHeadlessCI
 
   test-chrome:
     runs-on: ubuntu-latest
@@ -251,4 +251,4 @@ jobs:
         run: |
           export TEST_AUTH_TOKEN="$(curl --silent --header "Content-Type:  application/json" --request POST --data '{"User":"admin","Pass":"changeme"}' http://localhost:8080/api/login | jq -r .JWT)"
           export CHROME_BIN=$(which google-chrome-stable)
-        # npm run test:browsers -- --browsers=ChromeHeadlessCI
+          npm run test:browsers -- --browsers=ChromeHeadlessCI
