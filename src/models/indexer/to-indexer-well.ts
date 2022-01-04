@@ -43,20 +43,24 @@ const toReplicatedState = (
 ): Record<string, Array<ReplicatedState>> | undefined => {
 	if (raw === undefined) return raw;
 
-	const convertReplicatedState = Object.entries(raw).map(([key, replicatedStateList]) => {
-		const list = replicatedStateList.map(data => {
-			return {
-				name: data.Name,
-				accelerator: data.Accelerator,
-				engine: data.Engine,
-				tags: data.Tags,
-				shards: data.Shards.map(toShard),
-			};
-		});
+	return Object.entries(raw)
+		.map(([key, replicatedStateList]) => {
+			const list = replicatedStateList.map(data => {
+				return {
+					name: data.Name,
+					accelerator: data.Accelerator,
+					engine: data.Engine,
+					tags: data.Tags,
+					shards: data.Shards.map(toShard),
+				};
+			});
 
-		return [key, list];
-	});
-	return Object.fromEntries(convertReplicatedState);
+			return { key, list };
+		})
+		.reduce<Record<string, Array<ReplicatedState>>>((acc, curr) => {
+			acc[curr.key] = curr.list;
+			return acc;
+		}, {});
 };
 
 const toShard = (shard: RawShard): Shard => {
