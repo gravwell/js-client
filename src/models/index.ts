@@ -12,6 +12,7 @@ export * from './dashboard';
 export * from './entry';
 export * from './file';
 export * from './group';
+export * from './indexer';
 export * from './jwt';
 export * from './kit';
 export * from './log-level';
