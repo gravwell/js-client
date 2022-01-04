@@ -1,3 +1,4 @@
+import { IndexerWell } from '../../models/indexer/indexer-well';
 /*************************************************************************
  * Copyright 2021 Gravwell, Inc. All rights reserved.
  * Contact: <legal@gravwell.io>
@@ -8,4 +9,8 @@
 
 export interface IndexersService {
 	readonly restart: () => Promise<void>;
+
+	readonly get: {
+		readonly all: () => Promise<Array<IndexerWell>>;
+	};
 }

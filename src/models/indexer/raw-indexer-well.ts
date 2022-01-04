@@ -6,5 +6,15 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-export * from './restart-indexers';
-export * from './get-all-indexers';
+import { RawReplicatedState } from './raw-replicated-state';
+import { RawWell } from './raw-well';
+
+export type RawIndexerWell = {
+	UUID: string;
+	Wells: Array<RawWell>;
+	Replicated?: Record<string, Array<RawReplicatedState>>;
+};
+
+export type RawIndexerWellResponse = {
+	[key: string]: RawIndexerWell;
+};
