@@ -10,6 +10,7 @@ import { CreatableScheduledScript, isScheduledScript } from '~/models';
 import { integrationTest, myCustomMatchers, TEST_BASE_API_CONTEXT } from '~/tests';
 import { NumericID } from '~/value-objects';
 import { makeCreateOneGroup } from '../groups/create-one-group';
+import { makeDeleteAllGroups } from '../groups/delete-all-groups';
 import { makeCreateManyScheduledScripts } from './create-many-scheduled-scripts';
 import { makeDeleteAllScheduledScripts } from './delete-all-scheduled-scripts';
 
@@ -17,6 +18,7 @@ describe('createManyScheduledScripts()', () => {
 	const createManyScheduledScripts = makeCreateManyScheduledScripts(TEST_BASE_API_CONTEXT);
 	const createOneGroup = makeCreateOneGroup(TEST_BASE_API_CONTEXT);
 	const deleteAllScheduledScripts = makeDeleteAllScheduledScripts(TEST_BASE_API_CONTEXT);
+	const deleteAllGroups = makeDeleteAllGroups(TEST_BASE_API_CONTEXT);
 
 	let groupIDs: Array<NumericID>;
 
@@ -24,6 +26,7 @@ describe('createManyScheduledScripts()', () => {
 		jasmine.addMatchers(myCustomMatchers);
 
 		await deleteAllScheduledScripts();
+		await deleteAllGroups();
 
 		groupIDs = (
 			await Promise.all(
