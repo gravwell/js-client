@@ -10,16 +10,20 @@ import { CreatableSavedQuery, isSavedQuery } from '~/models';
 import { integrationTest, myCustomMatchers, TEST_BASE_API_CONTEXT } from '~/tests';
 import { NumericID } from '~/value-objects';
 import { makeCreateOneGroup } from '../groups/create-one-group';
+import { makeDeleteAllGroups } from '../groups/delete-all-groups';
 import { makeCreateOneSavedQuery } from './create-one-saved-query';
 
 describe('createOneSavedQuery()', () => {
 	const createOneSavedQuery = makeCreateOneSavedQuery(TEST_BASE_API_CONTEXT);
 	const createOneGroup = makeCreateOneGroup(TEST_BASE_API_CONTEXT);
+	const deleteAllGroups = makeDeleteAllGroups(TEST_BASE_API_CONTEXT);
 
 	let groupIDs: Array<NumericID>;
 
 	beforeEach(async () => {
 		jasmine.addMatchers(myCustomMatchers);
+
+		await deleteAllGroups();
 
 		groupIDs = (
 			await Promise.all(
