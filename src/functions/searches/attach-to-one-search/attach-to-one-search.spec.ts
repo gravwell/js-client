@@ -900,7 +900,7 @@ describe('attachToOneSearch()', () => {
 
 				[statsOverview, statsZoom] = await Promise.all([
 					lastValueFrom(search.statsOverview$),
-					lastValueFrom((search.statsZoom$),
+					lastValueFrom(search.statsZoom$),
 				]);
 
 				expect(sum(statsOverview.frequencyStats.map(x => x.count)))
