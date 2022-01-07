@@ -18,7 +18,7 @@ import {
 	NEVER,
 	of,
 	Subject,
-	Subscription
+	Subscription,
 } from 'rxjs';
 import {
 	bufferCount,
