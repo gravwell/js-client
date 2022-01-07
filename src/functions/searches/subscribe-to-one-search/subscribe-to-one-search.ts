@@ -205,7 +205,7 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 			distinctUntilChanged(),
 			map(rawPercentage => new Percentage(rawPercentage)),
 
-			shareReplay(1),
+			shareReplay({ bufferSize: 1, refCount: true }),
 
 			// Complete when/if the user calls .close()
 			takeUntil(close$),
@@ -226,7 +226,7 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 				initialFilter.desiredGranularity = defDesiredGranularity;
 			}),
 
-			shareReplay(1),
+			shareReplay({ bufferSize: 1, refCount: true }),
 
 			// Complete when/if the user calls .close()
 			takeUntil(close$),
@@ -553,7 +553,7 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 				},
 			),
 
-			shareReplay(1),
+			shareReplay({ bufferSize: 1, refCount: true }),
 
 			// Complete when/if the user calls .close()
 			takeUntil(close$),
@@ -564,7 +564,7 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 				return { frequencyStats: countEntriesFromModules(set) };
 			}),
 
-			shareReplay(1),
+			shareReplay({ bufferSize: 1, refCount: true }),
 
 			// Complete when/if the user calls .close()
 			takeUntil(close$),
@@ -585,7 +585,7 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 				};
 			}),
 
-			shareReplay(1),
+			shareReplay({ bufferSize: 1, refCount: true }),
 
 			// Complete when/if the user calls .close()
 			takeUntil(close$),
@@ -598,7 +598,7 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 			// When there's an error, catch it and emit it
 			catchError(err => of(err)),
 
-			shareReplay(1),
+			shareReplay({ bufferSize: 1, refCount: true }),
 
 			// Complete when/if the user calls .close()
 			takeUntil(close$),
