@@ -7,7 +7,8 @@
  **************************************************************************/
 
 import { isNull, pick } from 'lodash';
-import { filter, first, map } from 'rxjs/operators';
+import { firstValueFrom } from 'rxjs';
+import { filter, map } from 'rxjs/operators';
 import { Query, ValidatedQuery } from '~/models';
 import { APIContext } from '../utils';
 import { makeSubscribeToOneQueryParsing } from './subscribe-to-query-parsing';
@@ -21,13 +22,12 @@ export const makeValidateOneQuery = (context: APIContext) => {
 		const querySub = await querySubP;
 		const id = SEARCH_SOCKET_ID_GENERATOR.generate();
 
-		const validationP = querySub.received$
-			.pipe(
+		const validationP = firstValueFrom(
+			querySub.received$.pipe(
 				filter(msg => msg.id === id),
 				map(msg => pick(msg, ['isValid', 'error', 'query']) as ValidatedQuery),
-				first(),
-			)
-			.toPromise();
+			),
+		);
 		querySub.send({ id, query, filters: [] });
 		return validationP;
 	};

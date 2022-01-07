@@ -8,8 +8,8 @@
 
 import { subDays } from 'date-fns';
 import { isNull } from 'lodash';
-import { from, Subscription } from 'rxjs';
-import { concatMap, filter, last, map, takeWhile } from 'rxjs/operators';
+import { from, lastValueFrom, Subscription } from 'rxjs';
+import { concatMap, filter, map, takeWhile } from 'rxjs/operators';
 import {
 	RawRequestExplorerSearchEntriesWithinRangeMessageSent,
 	RawSearchMessageReceivedRequestExplorerEntriesWithinRange,
@@ -55,8 +55,8 @@ export const makeExploreOneTag = (context: APIContext) => {
 		const searchTypeID = searchInitMsg.data.OutputSearchSubproto;
 		const searchMessages$ = rawSubscription.received$.pipe(filter(msg => msg.type === searchTypeID));
 
-		const exploredElementsP: Promise<Array<DataExplorerEntry>> = searchMessages$
-			.pipe(
+		const exploredElementsP: Promise<Array<DataExplorerEntry>> = lastValueFrom(
+			searchMessages$.pipe(
 				filter((msg): msg is RawSearchMessageReceivedRequestExplorerEntriesWithinRange => {
 					try {
 						const _msg = <RawSearchMessageReceivedRequestExplorerEntriesWithinRange>msg;
@@ -67,9 +67,8 @@ export const makeExploreOneTag = (context: APIContext) => {
 				}),
 				takeWhile(msg => msg.data.Finished === false, true),
 				map(msg => (msg.data.Explore ?? []).map(toDataExplorerEntry)),
-				last(),
-			)
-			.toPromise();
+			),
+		);
 
 		// Request messages
 		await (async (): Promise<void> => {

@@ -16,9 +16,9 @@ export interface ExplorerSearchSubscription {
 	searchID: NumericID;
 
 	progress$: Observable<Percentage>;
-	entries$: Observable<ExplorerSearchEntries>;
+	entries$: Observable<ExplorerSearchEntries | null>;
 	errors$: Observable<Error>;
-	stats$: Observable<SearchStats>;
+	stats$: Observable<SearchStats | null>;
 	statsOverview$: Observable<{ frequencyStats: Array<SearchFrequencyStats> }>;
 	statsZoom$: Observable<{ filter?: SearchFilter; frequencyStats: Array<SearchFrequencyStats> }>;
 
