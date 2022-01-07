@@ -943,8 +943,8 @@ describe('attachToOneSearch()', () => {
 				const search = await attachToOneSearch(searchCreated.searchID, { filter: filter1 });
 
 				let [statsOverview, statsZoom] = await Promise.all([
-					firstValueFrom(search.statsOverview$),
-					firstValueFrom(search.statsZoom$),
+					lastValueFrom(search.statsOverview$),
+					lastValueFrom(search.statsZoom$),
 				]);
 
 				expect(sum(statsOverview.frequencyStats.map(x => x.count)))
@@ -978,8 +978,8 @@ describe('attachToOneSearch()', () => {
 				search.setFilter(filter2);
 
 				[statsOverview, statsZoom] = await Promise.all([
-					firstValueFrom(search.statsOverview$),
-					firstValueFrom(search.statsZoom$),
+					lastValueFrom(search.statsOverview$),
+					lastValueFrom(search.statsZoom$),
 				]);
 
 				expect(sum(statsOverview.frequencyStats.map(x => x.count)))
