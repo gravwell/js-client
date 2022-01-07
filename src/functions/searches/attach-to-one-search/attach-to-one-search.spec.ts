@@ -121,14 +121,14 @@ describe('attachToOneSearch()', () => {
 				),
 			);
 
-			const progressP = firstValueFrom(
+			const progressP = lastValueFrom(
 				search.progress$.pipe(
 					takeWhile(v => v < 100, true),
 					toArray(),
 				),
 			);
 
-			const statsP = firstValueFrom(
+			const statsP = lastValueFrom(
 				search.stats$.pipe(
 					takeWhile(s => !s.finished, true),
 					last(),
@@ -212,7 +212,7 @@ describe('attachToOneSearch()', () => {
 				),
 			);
 
-			const statsP = firstValueFrom(
+			const statsP = lastValueFrom(
 				search.stats$.pipe(
 					takeWhile(e => !e.finished, true),
 					toArray(),
@@ -327,7 +327,7 @@ describe('attachToOneSearch()', () => {
 					),
 				);
 
-				const statsP = firstValueFrom(
+				const statsP = lastValueFrom(
 					search.stats$.pipe(
 						takeWhile(e => !e.finished, true),
 						toArray(),
@@ -481,7 +481,7 @@ describe('attachToOneSearch()', () => {
 					),
 				);
 
-				const statsP = firstValueFrom(
+				const statsP = lastValueFrom(
 					search.stats$.pipe(
 						takeWhile(e => !e?.finished, true),
 						toArray(),
@@ -844,7 +844,7 @@ describe('attachToOneSearch()', () => {
 			25000,
 		);
 
-		it(
+		fit(
 			'Should adjust zoom granularity and overview granularity independently for nicely-aligned bins',
 			integrationTest(async () => {
 				const subscribeToOneSearch = makeSubscribeToOneSearch(TEST_BASE_API_CONTEXT);

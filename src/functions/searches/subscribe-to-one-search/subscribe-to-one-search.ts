@@ -13,7 +13,7 @@ import {
 	combineLatest,
 	EMPTY,
 	firstValueFrom,
-	from,
+	from, lastValueFrom,
 	NEVER,
 	Observable,
 	of,
@@ -194,7 +194,7 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 			await rawSubscription.send(closeMsg);
 
 			// Wait for closed message to be received
-			await firstValueFrom(close$);
+			await lastValueFrom(close$);
 		};
 
 		const progress$ = searchMessages$.pipe(

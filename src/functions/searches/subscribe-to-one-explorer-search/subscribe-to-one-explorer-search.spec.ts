@@ -116,7 +116,7 @@ describe('subscribeToOneExplorerSearch()', () => {
 				),
 			);
 
-			const statsP = firstValueFrom(
+			const statsP = lastValueFrom(
 				search.stats$.pipe(
 					takeWhile(e => !e.finished, true),
 					toArray(),
@@ -255,7 +255,7 @@ describe('subscribeToOneExplorerSearch()', () => {
 			),
 		);
 
-		const statsP = firstValueFrom(
+		const statsP = lastValueFrom(
 			search.stats$.pipe(
 				takeWhile(e => !e.finished, true),
 				toArray(),
@@ -402,15 +402,15 @@ describe('subscribeToOneExplorerSearch()', () => {
 
 			// Non-error observables should error
 			await Promise.all([
-				expectAsync(firstValueFrom(search.progress$)).withContext('progress$ should error').toBeRejected(),
-				expectAsync(firstValueFrom(search.entries$)).withContext('entries$ should error').toBeRejected(),
-				expectAsync(firstValueFrom(search.stats$)).withContext('stats$ should error').toBeRejected(),
-				expectAsync(firstValueFrom(search.statsOverview$)).withContext('statsOverview$ should error').toBeRejected(),
-				expectAsync(firstValueFrom(search.statsZoom$)).withContext('statsZoom$ should error').toBeRejected(),
+				expectAsync(lastValueFrom(search.progress$)).withContext('progress$ should error').toBeRejected(),
+				expectAsync(lastValueFrom(search.entries$)).withContext('entries$ should error').toBeRejected(),
+				expectAsync(lastValueFrom(search.stats$)).withContext('stats$ should error').toBeRejected(),
+				expectAsync(lastValueFrom(search.statsOverview$)).withContext('statsOverview$ should error').toBeRejected(),
+				expectAsync(lastValueFrom(search.statsZoom$)).withContext('statsZoom$ should error').toBeRejected(),
 			]);
 
 			// errors$ should emit one item (the error) and resolve
-			const error = await firstValueFrom(search.errors$);
+			const error = await lastValueFrom(search.errors$);
 
 			expect(error).toBeDefined();
 			expect(error.name.length).toBeGreaterThan(0);
@@ -437,7 +437,7 @@ describe('subscribeToOneExplorerSearch()', () => {
 				),
 			);
 
-			const statsP = firstValueFrom(
+			const statsP = lastValueFrom(
 				search.stats$.pipe(
 					takeWhile(e => !e.finished, true),
 					toArray(),

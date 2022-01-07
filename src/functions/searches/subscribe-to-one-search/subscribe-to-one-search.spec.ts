@@ -113,7 +113,7 @@ describe('subscribeToOneSearch()', () => {
 				),
 			);
 
-			const progressP = firstValueFrom(
+			const progressP = lastValueFrom(
 				search.progress$.pipe(
 					takeWhile(v => v < 100, true),
 					toArray(),
@@ -195,7 +195,7 @@ describe('subscribeToOneSearch()', () => {
 				),
 			);
 
-			const statsP = firstValueFrom(
+			const statsP = lastValueFrom(
 				search.stats$.pipe(
 					takeWhile(e => !e.finished, true),
 					toArray(),
@@ -305,7 +305,7 @@ describe('subscribeToOneSearch()', () => {
 					),
 				);
 
-				const statsP = firstValueFrom(
+				const statsP = lastValueFrom(
 					search.stats$.pipe(
 						takeWhile(e => !e.finished, true),
 						toArray(),
@@ -508,15 +508,15 @@ describe('subscribeToOneSearch()', () => {
 
 			// Non-error observables should error
 			await Promise.all([
-				expectAsync(firstValueFrom(search.progress$)).withContext('progress$ should error').toBeRejected(),
-				expectAsync(firstValueFrom(search.entries$)).withContext('entries$ should error').toBeRejected(),
-				expectAsync(firstValueFrom(search.stats$)).withContext('stats$ should error').toBeRejected(),
-				expectAsync(firstValueFrom(search.statsOverview$)).withContext('statsOverview$ should error').toBeRejected(),
-				expectAsync(firstValueFrom(search.statsZoom$)).withContext('statsZoom$ should error').toBeRejected(),
+				expectAsync(lastValueFrom(search.progress$)).withContext('progress$ should error').toBeRejected(),
+				expectAsync(lastValueFrom(search.entries$)).withContext('entries$ should error').toBeRejected(),
+				expectAsync(lastValueFrom(search.stats$)).withContext('stats$ should error').toBeRejected(),
+				expectAsync(lastValueFrom(search.statsOverview$)).withContext('statsOverview$ should error').toBeRejected(),
+				expectAsync(lastValueFrom(search.statsZoom$)).withContext('statsZoom$ should error').toBeRejected(),
 			]);
 
 			// errors$ should emit one item (the error) and resolve
-			const error = await firstValueFrom(search.errors$);
+			const error = await lastValueFrom(search.errors$);
 
 			expect(error).toBeDefined();
 			expect(error.name.length).toBeGreaterThan(0);
@@ -543,7 +543,7 @@ describe('subscribeToOneSearch()', () => {
 				),
 			);
 
-			const statsP = firstValueFrom(
+			const statsP = lastValueFrom(
 				search.stats$.pipe(
 					takeWhile(e => !e.finished, true),
 					toArray(),
@@ -656,7 +656,7 @@ describe('subscribeToOneSearch()', () => {
 					),
 				);
 
-				const statsP = firstValueFrom(
+				const statsP = lastValueFrom(
 					search.stats$.pipe(
 						takeWhile(e => !e.finished, true),
 						toArray(),

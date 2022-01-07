@@ -8,7 +8,18 @@
 
 import { isAfter } from 'date-fns';
 import { isBoolean, isNil, isNull, isUndefined, uniqueId } from 'lodash';
-import { BehaviorSubject, combineLatest, EMPTY, firstValueFrom, from, NEVER, of, Subject, Subscription } from 'rxjs';
+import {
+	BehaviorSubject,
+	combineLatest,
+	EMPTY,
+	firstValueFrom,
+	from,
+	lastValueFrom,
+	NEVER,
+	of,
+	Subject,
+	Subscription
+} from 'rxjs';
 import {
 	bufferCount,
 	catchError,
@@ -165,7 +176,7 @@ export const makeAttachToOneSearch = (context: APIContext) => {
 			await rawSubscription.send(closeMsg);
 
 			// Wait for closed message to be received
-			await firstValueFrom(close$);
+			await lastValueFrom(close$);
 		};
 
 		const progress$ = searchMessages$.pipe(
