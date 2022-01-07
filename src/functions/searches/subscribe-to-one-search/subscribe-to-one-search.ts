@@ -28,6 +28,7 @@ import {
 	filter,
 	filter as rxjsFilter,
 	map,
+	shareReplay,
 	skipUntil,
 	startWith,
 	takeUntil,
@@ -50,7 +51,6 @@ import {
 	toSearchEntries,
 } from '~/models';
 import { Percentage, RawJSON, toNumericID } from '~/value-objects';
-import { SearchFrequencyStats } from '../../../models';
 import { APIContext, debounceWithBackoffWhile } from '../../utils';
 import { initiateSearch } from '../initiate-search';
 import { makeModifyOneQuery } from '../modify-one-query';
@@ -197,41 +197,39 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 			await firstValueFrom(close$);
 		};
 
-		const progress$ = new BehaviorSubject<Percentage>(0);
-		searchMessages$
-			.pipe(
-				map(msg => (msg as Partial<RawResponseForSearchDetailsMessageReceived>).data?.Finished ?? null),
-				filter(isBoolean),
-				map(done => (done ? 1 : 0)),
-				distinctUntilChanged(),
-				map(rawPercentage => new Percentage(rawPercentage)),
+		const progress$ = searchMessages$.pipe(
+			map(msg => (msg as Partial<RawResponseForSearchDetailsMessageReceived>).data?.Finished ?? null),
+			filter(isBoolean),
+			map(done => (done ? 1 : 0)),
+			distinctUntilChanged(),
+			map(rawPercentage => new Percentage(rawPercentage)),
 
-				// Complete when/if the user calls .close()
-				takeUntil(close$),
-			)
-			.subscribe(progress => progress$.next(progress));
+			shareReplay(1),
 
-		const entries$ = new BehaviorSubject<SearchEntries | null>(null);
-		searchMessages$
-			.pipe(
-				filter(filterMessageByCommand(SearchMessageCommands.RequestEntriesWithinRange)),
-				map(
-					(msg): SearchEntries => {
-						const base = toSearchEntries(rendererType, msg);
-						const filterID = (msg.data.Addendum?.filterID as string | undefined) ?? null;
-						const filter = filtersByID[filterID ?? ''] ?? undefined;
-						return { ...base, filter } as SearchEntries;
-					},
-				),
-				tap(entries => {
-					const defDesiredGranularity = getDefaultGranularityByRendererType(entries.type);
-					initialFilter.desiredGranularity = defDesiredGranularity;
-				}),
+			// Complete when/if the user calls .close()
+			takeUntil(close$),
+		);
 
-				// Complete when/if the user calls .close()
-				takeUntil(close$),
-			)
-			.subscribe(entries => entries$.next(entries));
+		const entries$ = searchMessages$.pipe(
+			filter(filterMessageByCommand(SearchMessageCommands.RequestEntriesWithinRange)),
+			map(
+				(msg): SearchEntries => {
+					const base = toSearchEntries(rendererType, msg);
+					const filterID = (msg.data.Addendum?.filterID as string | undefined) ?? null;
+					const filter = filtersByID[filterID ?? ''] ?? undefined;
+					return { ...base, filter } as SearchEntries;
+				},
+			),
+			tap(entries => {
+				const defDesiredGranularity = getDefaultGranularityByRendererType(entries.type);
+				initialFilter.desiredGranularity = defDesiredGranularity;
+			}),
+
+			shareReplay(1),
+
+			// Complete when/if the user calls .close()
+			takeUntil(close$),
+		);
 
 		const expandDateRange = (dateRange: SearchFilter['dateRange']): Partial<DateRange> => {
 			if (dateRange === 'preview') return previewDateRange;
@@ -364,7 +362,7 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 				entries$
 					.pipe(
 						// Extract the property that indicates if the data is finished
-						map(entries => (entries ? entries.finished : false)),
+						map(entries => entries.finished),
 
 						// Add dynamic debounce after each message
 						debounceWithBackoffWhile(debounceOptions),
@@ -476,127 +474,121 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 			takeUntil(close$),
 		);
 
-		const stats$ = new BehaviorSubject<SearchStats | null>(null);
-		combineLatest(rawSearchStats$, rawSearchDetails$)
-			.pipe(
-				map(
-					([rawStats, rawDetails]): SearchStats => {
-						const filterID =
-							(rawStats.data.Addendum?.filterID as string | undefined) ??
-							(rawDetails.data.Addendum?.filterID as string | undefined) ??
-							null;
-						const filter = filtersByID[filterID ?? ''] ?? undefined;
-
-						const pipeline = rawStats.data.Stats.Set.map(s => s.Stats)
-							.reduce<
-								Array<Array<RawResponseForSearchStatsMessageReceived['data']['Stats']['Set'][number]['Stats'][number]>>
-							>((acc, curr) => {
-								curr.forEach((_curr, i) => {
-									if (isUndefined(acc[i])) acc[i] = [];
-									acc[i].push(_curr);
-								});
-								return acc;
-							}, [])
-							.map(s =>
-								s
-									.map(_s => ({
-										module: _s.Name,
-										arguments: _s.Args,
-										duration: _s.Duration,
-										input: {
-											bytes: _s.InputBytes,
-											entries: _s.InputCount,
-										},
-										output: {
-											bytes: _s.OutputBytes,
-											entries: _s.OutputCount,
-										},
-									}))
-									.reduce((acc, curr) => ({
-										...curr,
-										duration: acc.duration + curr.duration,
-										input: {
-											bytes: acc.input.bytes + curr.input.bytes,
-											entries: acc.input.entries + curr.input.entries,
-										},
-										output: {
-											bytes: acc.output.bytes + curr.output.bytes,
-											entries: acc.output.entries + curr.output.entries,
-										},
-									})),
-							);
-
-						return {
-							id: rawDetails.data.SearchInfo.ID,
-							userID: toNumericID(rawDetails.data.SearchInfo.UID),
-
-							filter,
-							finished: rawStats.data.Finished && rawDetails.data.Finished,
-
-							query: searchInitMsg.data.RawQuery,
-							effectiveQuery: searchInitMsg.data.SearchString,
-
-							metadata: searchInitMsg.data.Metadata,
-							entries: rawStats.data.EntryCount,
-							duration: rawDetails.data.SearchInfo.Duration,
-							start: new Date(rawDetails.data.SearchInfo.StartRange),
-							end: new Date(rawDetails.data.SearchInfo.EndRange),
-							minZoomWindow: rawDetails.data.SearchInfo.MinZoomWindow,
-							downloadFormats: rawDetails.data.SearchInfo.RenderDownloadFormats,
-							tags: searchInitMsg.data.Tags,
-
-							storeSize: rawDetails.data.SearchInfo.StoreSize,
-							processed: {
-								entries: pipeline[0]?.input?.entries ?? 0,
-								bytes: pipeline[0]?.input?.bytes ?? 0,
-							},
-
-							pipeline,
-						};
-					},
-				),
-
-				// Complete when/if the user calls .close()
-				takeUntil(close$),
-			)
-			.subscribe(stats => stats$.next(stats));
-
-		const statsOverview$ = new BehaviorSubject<{ frequencyStats: Array<SearchFrequencyStats> }>({ frequencyStats: [] });
-		rawSearchStats$
-			.pipe(
-				map(set => {
-					return { frequencyStats: countEntriesFromModules(set) };
-				}),
-
-				// Complete when/if the user calls .close()
-				takeUntil(close$),
-			)
-			.subscribe(stats => statsOverview$.next(stats));
-
-		const statsZoom$ = new BehaviorSubject<{
-			frequencyStats: Array<SearchFrequencyStats>;
-			filter: SearchFilter | undefined;
-		}>({ frequencyStats: [], filter: undefined });
-		rawStatsZoom$
-			.pipe(
-				map(set => {
-					const filterID = (set.data.Addendum?.filterID as string | undefined) ?? null;
+		const stats$ = combineLatest(rawSearchStats$, rawSearchDetails$).pipe(
+			map(
+				([rawStats, rawDetails]): SearchStats => {
+					const filterID =
+						(rawStats.data.Addendum?.filterID as string | undefined) ??
+						(rawDetails.data.Addendum?.filterID as string | undefined) ??
+						null;
 					const filter = filtersByID[filterID ?? ''] ?? undefined;
 
-					const filterEnd = filter?.dateRange === 'preview' ? previewDateRange.end : filter?.dateRange?.end;
-					const initialEnd = initialFilter.dateRange === 'preview' ? previewDateRange.end : initialFilter.dateRange.end;
-					const endDate = filterEnd ?? initialEnd;
+					const pipeline = rawStats.data.Stats.Set.map(s => s.Stats)
+						.reduce<
+							Array<Array<RawResponseForSearchStatsMessageReceived['data']['Stats']['Set'][number]['Stats'][number]>>
+						>((acc, curr) => {
+							curr.forEach((_curr, i) => {
+								if (isUndefined(acc[i])) acc[i] = [];
+								acc[i].push(_curr);
+							});
+							return acc;
+						}, [])
+						.map(s =>
+							s
+								.map(_s => ({
+									module: _s.Name,
+									arguments: _s.Args,
+									duration: _s.Duration,
+									input: {
+										bytes: _s.InputBytes,
+										entries: _s.InputCount,
+									},
+									output: {
+										bytes: _s.OutputBytes,
+										entries: _s.OutputCount,
+									},
+								}))
+								.reduce((acc, curr) => ({
+									...curr,
+									duration: acc.duration + curr.duration,
+									input: {
+										bytes: acc.input.bytes + curr.input.bytes,
+										entries: acc.input.entries + curr.input.entries,
+									},
+									output: {
+										bytes: acc.output.bytes + curr.output.bytes,
+										entries: acc.output.entries + curr.output.entries,
+									},
+								})),
+						);
 
 					return {
-						frequencyStats: countEntriesFromModules(set).filter(f => !isAfter(f.timestamp, endDate)),
-						filter,
-					};
-				}),
+						id: rawDetails.data.SearchInfo.ID,
+						userID: toNumericID(rawDetails.data.SearchInfo.UID),
 
-				// Complete when/if the user calls .close()
-				takeUntil(close$),
-			)
-			.subscribe(stats => statsZoom$.next(stats));
+						filter,
+						finished: rawStats.data.Finished && rawDetails.data.Finished,
+
+						query: searchInitMsg.data.RawQuery,
+						effectiveQuery: searchInitMsg.data.SearchString,
+
+						metadata: searchInitMsg.data.Metadata,
+						entries: rawStats.data.EntryCount,
+						duration: rawDetails.data.SearchInfo.Duration,
+						start: new Date(rawDetails.data.SearchInfo.StartRange),
+						end: new Date(rawDetails.data.SearchInfo.EndRange),
+						minZoomWindow: rawDetails.data.SearchInfo.MinZoomWindow,
+						downloadFormats: rawDetails.data.SearchInfo.RenderDownloadFormats,
+						tags: searchInitMsg.data.Tags,
+
+						storeSize: rawDetails.data.SearchInfo.StoreSize,
+						processed: {
+							entries: pipeline[0]?.input?.entries ?? 0,
+							bytes: pipeline[0]?.input?.bytes ?? 0,
+						},
+
+						pipeline,
+					};
+				},
+			),
+
+			shareReplay(1),
+
+			// Complete when/if the user calls .close()
+			takeUntil(close$),
+		);
+
+		const statsOverview$ = rawSearchStats$.pipe(
+			map(set => {
+				return { frequencyStats: countEntriesFromModules(set) };
+			}),
+
+			shareReplay(1),
+
+			// Complete when/if the user calls .close()
+			takeUntil(close$),
+		);
+
+		const statsZoom$ = rawStatsZoom$.pipe(
+			map(set => {
+				const filterID = (set.data.Addendum?.filterID as string | undefined) ?? null;
+				const filter = filtersByID[filterID ?? ''] ?? undefined;
+
+				const filterEnd = filter?.dateRange === 'preview' ? previewDateRange.end : filter?.dateRange?.end;
+				const initialEnd = initialFilter.dateRange === 'preview' ? previewDateRange.end : initialFilter.dateRange.end;
+				const endDate = filterEnd ?? initialEnd;
+
+				return {
+					frequencyStats: countEntriesFromModules(set).filter(f => !isAfter(f.timestamp, endDate)),
+					filter,
+				};
+			}),
+
+			shareReplay(1),
+
+			// Complete when/if the user calls .close()
+			takeUntil(close$),
+		);
 
 		const errors$: Observable<Error> = searchMessages$.pipe(
 			// Skip every regular message. We only want to emit when there's an error
@@ -605,6 +597,8 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 			// When there's an error, catch it and emit it
 			catchError(err => of(err)),
 
+			shareReplay(1),
+
 			// Complete when/if the user calls .close()
 			takeUntil(close$),
 		);
@@ -612,11 +606,11 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 		return {
 			searchID: searchInitMsg.data.SearchID.toString(),
 
-			progress$: progress$.asObservable(),
-			entries$: entries$.asObservable(),
-			stats$: stats$.asObservable(),
-			statsOverview$: statsOverview$.asObservable(),
-			statsZoom$: statsZoom$.asObservable(),
+			progress$,
+			entries$,
+			stats$,
+			statsOverview$,
+			statsZoom$,
 			errors$,
 
 			setFilter,
