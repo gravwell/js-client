@@ -38,6 +38,7 @@ export interface RawDashboard {
 			timeframe?: {} | RawTimeframe;
 			query?: string;
 			searchID?: RawNumericID;
+			color?: string;
 			reference?: {
 				id: RawUUID;
 				type: 'template' | 'savedQuery' | 'scheduledSearch';

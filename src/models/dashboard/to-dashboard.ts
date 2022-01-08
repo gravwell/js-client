@@ -73,6 +73,7 @@ export const toDashboard = (raw: RawDashboard): Dashboard => ({
 			timeframeOverride: Object.keys(s.timeframe ?? {}).length === 0 ? null : toTimeframe(<RawTimeframe>s.timeframe),
 			cachedSearchID: s.searchID?.toString() ?? null,
 			variablePreviewValue: s.reference?.extras?.defaultValue ?? null,
+			color: s.color ?? null,
 		};
 
 		if (isString(s.query)) return { ...base, type: 'query', query: s.query };
