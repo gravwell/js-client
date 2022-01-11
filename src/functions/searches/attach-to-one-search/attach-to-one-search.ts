@@ -16,6 +16,7 @@ import {
 	from,
 	lastValueFrom,
 	NEVER,
+	Observable,
 	of,
 	Subject,
 	Subscription,
@@ -179,7 +180,7 @@ export const makeAttachToOneSearch = (context: APIContext) => {
 			await lastValueFrom(close$);
 		};
 
-		const progress$ = searchMessages$.pipe(
+		const progress$: Observable<Percentage> = searchMessages$.pipe(
 			map(msg => (msg as Partial<RawResponseForSearchDetailsMessageReceived>).data?.Finished ?? null),
 			filter(isBoolean),
 			map(done => (done ? 1 : 0)),
@@ -192,7 +193,7 @@ export const makeAttachToOneSearch = (context: APIContext) => {
 			takeUntil(close$),
 		);
 
-		const entries$ = searchMessages$.pipe(
+		const entries$: Observable<SearchEntries> = searchMessages$.pipe(
 			filter(filterMessageByCommand(SearchMessageCommands.RequestEntriesWithinRange)),
 			map(
 				(msg): SearchEntries => {
@@ -212,7 +213,6 @@ export const makeAttachToOneSearch = (context: APIContext) => {
 			// Complete when/if the user calls .close()
 			takeUntil(close$),
 		);
-		//.subscribe(entries => entries$.next(entries));
 
 		const expandDateRange = (dateRange: SearchFilter['dateRange']): Partial<DateRange> => {
 			if (dateRange === 'preview') return previewDateRange;
@@ -573,9 +573,8 @@ export const makeAttachToOneSearch = (context: APIContext) => {
 			// Complete when/if the user calls .close()
 			takeUntil(close$),
 		);
-		//.subscribe(stats => statsZoom$.next(stats));
 
-		const errors$ = searchMessages$.pipe(
+		const errors$: Observable<Error> = searchMessages$.pipe(
 			// Skip every regular message. We only want to emit when there's an error
 			skipUntil(NEVER),
 

@@ -198,7 +198,7 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 			await lastValueFrom(close$);
 		};
 
-		const progress$ = searchMessages$.pipe(
+		const progress$: Observable<Percentage> = searchMessages$.pipe(
 			map(msg => (msg as Partial<RawResponseForSearchDetailsMessageReceived>).data?.Finished ?? null),
 			filter(isBoolean),
 			map(done => (done ? 1 : 0)),
@@ -211,7 +211,7 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 			takeUntil(close$),
 		);
 
-		const entries$ = searchMessages$.pipe(
+		const entries$: Observable<SearchEntries> = searchMessages$.pipe(
 			filter(filterMessageByCommand(SearchMessageCommands.RequestEntriesWithinRange)),
 			map(
 				(msg): SearchEntries => {
