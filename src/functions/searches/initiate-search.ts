@@ -7,7 +7,7 @@
  **************************************************************************/
 
 import { isNil } from 'lodash';
-import { defer, firstValueFrom, Observable, of, Subject, throwError } from 'rxjs';
+import { defer, lastValueFrom, Observable, of, Subject, throwError } from 'rxjs';
 import { concatMap, delay, filter, first, map, share, tap, withLatestFrom } from 'rxjs/operators';
 import { v4 as uuidv4 } from 'uuid';
 import {
@@ -135,7 +135,7 @@ export const initiateSearch = (
 		delay(200),
 	);
 
-	const resultsP = firstValueFrom(results$);
+	const resultsP = lastValueFrom(results$);
 
 	// Now that we're ready to receive results (with resultsP), we can push on the queue to kick off the search initiation process
 	QUERY_QUEUE.next({ requestID, rawSubscription, query, options });

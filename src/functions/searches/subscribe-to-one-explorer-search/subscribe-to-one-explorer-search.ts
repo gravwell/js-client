@@ -28,7 +28,6 @@ import {
 	distinctUntilChanged,
 	filter,
 	filter as rxjsFilter,
-	first,
 	map,
 	shareReplay,
 	skipUntil,
@@ -201,7 +200,7 @@ export const makeSubscribeToOneExplorerSearch = (context: APIContext) => {
 			await lastValueFrom(close$);
 		};
 
-		const progress$ = searchMessages$.pipe(
+		const progress$: Observable<Percentage> = searchMessages$.pipe(
 			map(msg => (msg as Partial<RawResponseForSearchDetailsMessageReceived>).data?.Finished ?? null),
 			filter(isBoolean),
 			map(done => (done ? 1 : 0)),
@@ -214,7 +213,7 @@ export const makeSubscribeToOneExplorerSearch = (context: APIContext) => {
 			takeUntil(close$),
 		);
 
-		const entries$ = searchMessages$.pipe(
+		const entries$: Observable<ExplorerSearchEntries> = searchMessages$.pipe(
 			filter(filterMessageByCommand(SearchMessageCommands.RequestExplorerEntriesWithinRange)),
 			map(
 				(msg): ExplorerSearchEntries => {
@@ -279,7 +278,6 @@ export const makeSubscribeToOneExplorerSearch = (context: APIContext) => {
 			firstValueFrom(
 				searchMessages$.pipe(
 					filter(filterMessageByCommand(SearchMessageCommands.RequestDetails)),
-					first(),
 					// cleanup: Complete when/if the user calls .close()
 					takeUntil(close$),
 				),
