@@ -418,7 +418,7 @@ export const makeAttachToOneSearch = (context: APIContext) => {
 						debounceWithBackoffWhile(debounceOptions),
 
 						// Filter out finished events
-						shareReplay(1),
+						shareReplay({ bufferSize: 1, refCount: true }),
 						rxjsFilter(isFinished => isFinished === false),
 
 						concatMap(() => rawSubscription.send(requestStatsWithinRangeMsg)),

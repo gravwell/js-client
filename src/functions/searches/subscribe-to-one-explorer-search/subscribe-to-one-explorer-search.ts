@@ -28,7 +28,6 @@ import {
 	distinctUntilChanged,
 	filter,
 	filter as rxjsFilter,
-	first,
 	map,
 	shareReplay,
 	skipUntil,
@@ -279,7 +278,6 @@ export const makeSubscribeToOneExplorerSearch = (context: APIContext) => {
 			firstValueFrom(
 				searchMessages$.pipe(
 					filter(filterMessageByCommand(SearchMessageCommands.RequestDetails)),
-					first(),
 					// cleanup: Complete when/if the user calls .close()
 					takeUntil(close$),
 				),
