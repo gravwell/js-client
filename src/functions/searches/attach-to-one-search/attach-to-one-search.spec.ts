@@ -651,12 +651,7 @@ describe('attachToOneSearch()', () => {
 				const search1sCreated = await subscribeToOneSearch(query1s, { filter: filter1s });
 				const search1s = await attachToOneSearch(search1sCreated.searchID, { filter: filter1s });
 
-				const stats1s = await firstValueFrom(
-					search1s.stats$.pipe(
-						takeWhile(e => !e.finished, true),
-						last(),
-					),
-				);
+				const stats1s = await lastValueFrom(search1s.stats$.pipe(takeWhile(e => !e.finished, true)));
 
 				expect(stats1s.minZoomWindow).toEqual(1);
 				if (isUndefined(stats1s.filter) === false) {
@@ -672,12 +667,7 @@ describe('attachToOneSearch()', () => {
 				const search33sCreated = await subscribeToOneSearch(query33s, { filter: filter33s });
 				const search33s = await attachToOneSearch(search33sCreated.searchID, { filter: filter33s });
 
-				const stats33s = await lastValueFrom(
-					search33s.stats$.pipe(
-						takeWhile(e => !e.finished, true),
-						last(),
-					),
-				);
+				const stats33s = await lastValueFrom(search33s.stats$.pipe(takeWhile(e => !e.finished, true)));
 
 				expect(stats33s.minZoomWindow).toEqual(33);
 				if (isUndefined(stats33s.filter) === false) {
