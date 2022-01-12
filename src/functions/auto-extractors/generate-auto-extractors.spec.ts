@@ -8,6 +8,7 @@
 
 import { addMinutes } from 'date-fns';
 import { range } from 'lodash';
+import { lastValueFrom } from 'rxjs';
 import { last, map, takeWhile } from 'rxjs/operators';
 import { v4 as uuidv4 } from 'uuid';
 import { CreatableJSONEntry, RawSearchEntries } from '~/models';
@@ -66,13 +67,12 @@ describe('generateAutoExtractors()', () => {
 			const query = `tag=${tag} limit 10`;
 			const search = await subscribeToOneSearch(query, { filter: { dateRange: { start, end } } });
 
-			const entries = await search.entries$
-				.pipe(
+			const entries = await lastValueFrom(
+				search.entries$.pipe(
 					map(e => e as RawSearchEntries),
 					takeWhile(e => !e.finished, true),
-					last(),
-				)
-				.toPromise();
+				),
+			);
 
 			const exploreResults = await generateAutoExtractors({ tag, entries });
 

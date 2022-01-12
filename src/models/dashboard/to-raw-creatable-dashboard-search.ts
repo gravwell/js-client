@@ -18,6 +18,7 @@ export const toRawCreatableDashboardSearch = (data: CreatableDashboardSearch): R
 		timeframe: data.timeframeOverride ? toRawTimeframe(data.timeframeOverride) : undefined,
 		query: data.type === 'query' ? data.query : undefined,
 		searchID: isNumericID(data.cachedSearchID) ? toRawNumericID(data.cachedSearchID) : undefined,
+		color: data.color,
 		reference: ((): RawCreatableDashboardSearch['reference'] => {
 			if (data.type === 'query') return undefined;
 

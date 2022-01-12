@@ -8,7 +8,19 @@
 
 import { isAfter } from 'date-fns';
 import { isBoolean, isNil, isNull, isUndefined, uniqueId } from 'lodash';
-import { BehaviorSubject, combineLatest, EMPTY, from, NEVER, Observable, of, Subject, Subscription } from 'rxjs';
+import {
+	BehaviorSubject,
+	combineLatest,
+	EMPTY,
+	firstValueFrom,
+	from,
+	lastValueFrom,
+	NEVER,
+	Observable,
+	of,
+	Subject,
+	Subscription,
+} from 'rxjs';
 import {
 	bufferCount,
 	catchError,
@@ -16,8 +28,8 @@ import {
 	distinctUntilChanged,
 	filter,
 	filter as rxjsFilter,
-	first,
 	map,
+	shareReplay,
 	skipUntil,
 	startWith,
 	takeUntil,
@@ -139,9 +151,9 @@ export const makeAttachToOneSearch = (context: APIContext) => {
 			if (initialFilter.dateRange !== 'preview') return initialFilter.dateRange;
 
 			// In preview mode, so we need to request search details and use the timerange that we get back
-			const detailsP = searchMessages$
-				.pipe(filter(filterMessageByCommand(SearchMessageCommands.RequestDetails)), first())
-				.toPromise();
+			const detailsP = firstValueFrom(
+				searchMessages$.pipe(filter(filterMessageByCommand(SearchMessageCommands.RequestDetails))),
+			);
 			const requestDetailsMsg: RawRequestSearchDetailsMessageSent = {
 				type: searchTypeID,
 				data: { ID: SearchMessageCommands.RequestDetails },
@@ -165,7 +177,7 @@ export const makeAttachToOneSearch = (context: APIContext) => {
 			await rawSubscription.send(closeMsg);
 
 			// Wait for closed message to be received
-			await close$.toPromise();
+			await lastValueFrom(close$);
 		};
 
 		const progress$: Observable<Percentage> = searchMessages$.pipe(
@@ -174,6 +186,8 @@ export const makeAttachToOneSearch = (context: APIContext) => {
 			map(done => (done ? 1 : 0)),
 			distinctUntilChanged(),
 			map(rawPercentage => new Percentage(rawPercentage)),
+
+			shareReplay({ bufferSize: 1, refCount: true }),
 
 			// Complete when/if the user calls .close()
 			takeUntil(close$),
@@ -193,6 +207,8 @@ export const makeAttachToOneSearch = (context: APIContext) => {
 				const defDesiredGranularity = getDefaultGranularityByRendererType(entries.type);
 				initialFilter.desiredGranularity = defDesiredGranularity;
 			}),
+
+			shareReplay({ bufferSize: 1, refCount: true }),
 
 			// Complete when/if the user calls .close()
 			takeUntil(close$),
@@ -237,14 +253,13 @@ export const makeAttachToOneSearch = (context: APIContext) => {
 		);
 
 		const nextDetailsMsg = () =>
-			searchMessages$
-				.pipe(
+			firstValueFrom(
+				searchMessages$.pipe(
 					filter(filterMessageByCommand(SearchMessageCommands.RequestDetails)),
-					first(),
 					// cleanup: Complete when/if the user calls .close()
 					takeUntil(close$),
-				)
-				.toPromise();
+				),
+			);
 
 		let pollingSubs: Subscription;
 
@@ -297,7 +312,7 @@ export const makeAttachToOneSearch = (context: APIContext) => {
 						startWith(detailsMsg),
 
 						// Extract the property that indicates if the data is finished
-						map(details => details.data.Finished),
+						map(details => (details ? details.data.Finished : false)),
 
 						// Add dynamic debounce after each message
 						debounceWithBackoffWhile(debounceOptions),
@@ -330,7 +345,7 @@ export const makeAttachToOneSearch = (context: APIContext) => {
 				entries$
 					.pipe(
 						// Extract the property that indicates if the data is finished
-						map(entries => entries.finished),
+						map(entries => (entries ? entries.finished : false)),
 
 						// Add dynamic debounce after each message
 						debounceWithBackoffWhile(debounceOptions),
@@ -383,7 +398,7 @@ export const makeAttachToOneSearch = (context: APIContext) => {
 					Stats: {
 						SetCount: filter.zoomGranularity,
 						SetEnd: recalculateZoomEnd(
-							detailsMsg.data.SearchInfo.MinZoomWindow,
+							detailsMsg ? detailsMsg.data.SearchInfo.MinZoomWindow : 1,
 							filter.zoomGranularity,
 							startDate,
 							endDate,
@@ -403,6 +418,7 @@ export const makeAttachToOneSearch = (context: APIContext) => {
 						debounceWithBackoffWhile(debounceOptions),
 
 						// Filter out finished events
+						shareReplay({ bufferSize: 1, refCount: true }),
 						rxjsFilter(isFinished => isFinished === false),
 
 						concatMap(() => rawSubscription.send(requestStatsWithinRangeMsg)),
@@ -520,6 +536,8 @@ export const makeAttachToOneSearch = (context: APIContext) => {
 				},
 			),
 
+			shareReplay({ bufferSize: 1, refCount: true }),
+
 			// Complete when/if the user calls .close()
 			takeUntil(close$),
 		);
@@ -528,6 +546,8 @@ export const makeAttachToOneSearch = (context: APIContext) => {
 			map(set => {
 				return { frequencyStats: countEntriesFromModules(set) };
 			}),
+
+			shareReplay({ bufferSize: 1, refCount: true }),
 
 			// Complete when/if the user calls .close()
 			takeUntil(close$),
@@ -548,6 +568,8 @@ export const makeAttachToOneSearch = (context: APIContext) => {
 				};
 			}),
 
+			shareReplay({ bufferSize: 1, refCount: true }),
+
 			// Complete when/if the user calls .close()
 			takeUntil(close$),
 		);
@@ -558,6 +580,8 @@ export const makeAttachToOneSearch = (context: APIContext) => {
 
 			// When there's an error, catch it and emit it
 			catchError(err => of(err)),
+
+			shareReplay({ bufferSize: 1, refCount: true }),
 
 			// Complete when/if the user calls .close()
 			takeUntil(close$),

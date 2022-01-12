@@ -10,6 +10,7 @@ import { CreatableScheduledQuery, isScheduledQuery } from '~/models';
 import { integrationTest, myCustomMatchers, TEST_BASE_API_CONTEXT } from '~/tests';
 import { NumericID } from '~/value-objects';
 import { makeCreateOneGroup } from '../groups/create-one-group';
+import { makeDeleteAllGroups } from '../groups/delete-all-groups';
 import { makeCreateManyScheduledQueries } from './create-many-scheduled-queries';
 import { makeDeleteAllScheduledQueries } from './delete-all-scheduled-queries';
 
@@ -17,6 +18,7 @@ describe('createManyScheduledQueries()', () => {
 	const createManyScheduledQueries = makeCreateManyScheduledQueries(TEST_BASE_API_CONTEXT);
 	const createOneGroup = makeCreateOneGroup(TEST_BASE_API_CONTEXT);
 	const deleteAllScheduledQueries = makeDeleteAllScheduledQueries(TEST_BASE_API_CONTEXT);
+	const deleteAllGroups = makeDeleteAllGroups(TEST_BASE_API_CONTEXT);
 
 	let groupIDs: Array<NumericID>;
 
@@ -24,6 +26,8 @@ describe('createManyScheduledQueries()', () => {
 		jasmine.addMatchers(myCustomMatchers);
 
 		await deleteAllScheduledQueries();
+		// avoid dup error from backend
+		await deleteAllGroups();
 
 		groupIDs = (
 			await Promise.all(

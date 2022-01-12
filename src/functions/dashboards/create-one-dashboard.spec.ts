@@ -9,16 +9,20 @@
 import { CreatableDashboard, isDashboard } from '~/models';
 import { integrationTest, myCustomMatchers, TEST_BASE_API_CONTEXT } from '~/tests';
 import { makeCreateOneGroup } from '../groups/create-one-group';
+import { makeDeleteAllGroups } from '../groups/delete-all-groups';
 import { makeCreateOneDashboard } from './create-one-dashboard';
 
 describe('createOneDashboard()', () => {
 	const createOneDashboard = makeCreateOneDashboard(TEST_BASE_API_CONTEXT);
 	const createOneGroup = makeCreateOneGroup(TEST_BASE_API_CONTEXT);
+	const deleteAllGroups = makeDeleteAllGroups(TEST_BASE_API_CONTEXT);
 
 	// let groupIDs: Array<NumericID>;
 
 	beforeEach(async () => {
 		jasmine.addMatchers(myCustomMatchers);
+
+		await deleteAllGroups();
 
 		// groupIDs =
 		await Promise.all(

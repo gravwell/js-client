@@ -9,7 +9,7 @@
 import * as base64 from 'base-64';
 import { addMinutes, isEqual as datesAreEqual, subMinutes } from 'date-fns';
 import { isArray, isUndefined, sum, zip } from 'lodash';
-import { Observable } from 'rxjs';
+import { firstValueFrom, lastValueFrom, Observable } from 'rxjs';
 import { first, last, map, takeWhile, toArray } from 'rxjs/operators';
 import { v4 as uuidv4 } from 'uuid';
 import { makeCreateOneAutoExtractor } from '~/functions/auto-extractors';
@@ -109,26 +109,25 @@ describe('subscribeToOneExplorerSearch()', () => {
 			const filter: SearchFilter = { entriesOffset: { index: 0, count: count }, dateRange: { start, end } };
 			const search = await subscribeToOneExplorerSearch(query, { filter });
 
-			const textEntriesP = search.entries$
-				.pipe(
+			const textEntriesP = lastValueFrom(
+				search.entries$.pipe(
 					map(e => e as RawSearchEntries & { explorerEntries: Array<DataExplorerEntry> }),
 					takeWhile(e => !e.finished, true),
-					last(),
-				)
-				.toPromise();
+				),
+			);
 
-			const statsP = search.stats$
-				.pipe(
+			const statsP = lastValueFrom(
+				search.stats$.pipe(
 					takeWhile(e => !e.finished, true),
 					toArray(),
-				)
-				.toPromise();
+				),
+			);
 
 			const [textEntries, stats, statsOverview, statsZoom] = await Promise.all([
 				textEntriesP,
 				statsP,
-				search.statsOverview$.pipe(first()).toPromise(),
-				search.statsZoom$.pipe(first()).toPromise(),
+				firstValueFrom(search.statsOverview$),
+				firstValueFrom(search.statsZoom$),
 			]);
 
 			////
@@ -249,20 +248,19 @@ describe('subscribeToOneExplorerSearch()', () => {
 		};
 		const search = await subscribeToOneExplorerSearch(unfilteredQuery, { filter });
 
-		const textEntriesP = search.entries$
-			.pipe(
+		const textEntriesP = lastValueFrom(
+			search.entries$.pipe(
 				map(e => e as RawSearchEntries & { explorerEntries: Array<DataExplorerEntry> }),
 				takeWhile(e => !e.finished, true),
-				last(),
-			)
-			.toPromise();
+			),
+		);
 
-		const statsP = search.stats$
-			.pipe(
+		const statsP = lastValueFrom(
+			search.stats$.pipe(
 				takeWhile(e => !e.finished, true),
 				toArray(),
-			)
-			.toPromise();
+			),
+		);
 
 		const [textEntries, stats] = await Promise.all([textEntriesP, statsP]);
 
@@ -404,15 +402,15 @@ describe('subscribeToOneExplorerSearch()', () => {
 
 			// Non-error observables should error
 			await Promise.all([
-				expectAsync(search.progress$.toPromise()).withContext('progress$ should error').toBeRejected(),
-				expectAsync(search.entries$.toPromise()).withContext('entries$ should error').toBeRejected(),
-				expectAsync(search.stats$.toPromise()).withContext('stats$ should error').toBeRejected(),
-				expectAsync(search.statsOverview$.toPromise()).withContext('statsOverview$ should error').toBeRejected(),
-				expectAsync(search.statsZoom$.toPromise()).withContext('statsZoom$ should error').toBeRejected(),
+				expectAsync(lastValueFrom(search.progress$)).withContext('progress$ should error').toBeRejected(),
+				expectAsync(lastValueFrom(search.entries$)).withContext('entries$ should error').toBeRejected(),
+				expectAsync(lastValueFrom(search.stats$)).withContext('stats$ should error').toBeRejected(),
+				expectAsync(lastValueFrom(search.statsOverview$)).withContext('statsOverview$ should error').toBeRejected(),
+				expectAsync(lastValueFrom(search.statsZoom$)).withContext('statsZoom$ should error').toBeRejected(),
 			]);
 
 			// errors$ should emit one item (the error) and resolve
-			const error = await search.errors$.toPromise();
+			const error = await lastValueFrom(search.errors$);
 
 			expect(error).toBeDefined();
 			expect(error.name.length).toBeGreaterThan(0);
@@ -432,26 +430,25 @@ describe('subscribeToOneExplorerSearch()', () => {
 			};
 			const search = await subscribeToOneExplorerSearch(query, { filter });
 
-			const textEntriesP = search.entries$
-				.pipe(
+			const textEntriesP = lastValueFrom(
+				search.entries$.pipe(
 					map(e => e as RawSearchEntries),
 					takeWhile(e => !e.finished, true),
-					last(),
-				)
-				.toPromise();
+				),
+			);
 
-			const statsP = search.stats$
-				.pipe(
+			const statsP = lastValueFrom(
+				search.stats$.pipe(
 					takeWhile(e => !e.finished, true),
 					toArray(),
-				)
-				.toPromise();
+				),
+			);
 
 			const [textEntries, stats, statsOverview, statsZoom] = await Promise.all([
 				textEntriesP,
 				statsP,
-				search.statsOverview$.pipe(first()).toPromise(),
-				search.statsZoom$.pipe(first()).toPromise(),
+				firstValueFrom(search.statsOverview$),
+				firstValueFrom(search.statsZoom$),
 			]);
 
 			////
@@ -555,12 +552,12 @@ describe('subscribeToOneExplorerSearch()', () => {
 			// 	.toEqual(textEntries.data.length);
 
 			// See if we can change the date range
-			const lastEntriesP = search.entries$
-				.pipe(
+			const lastEntriesP = lastValueFrom(
+				search.entries$.pipe(
 					takeWhile(e => datesAreEqual(e.start, start) === false, true),
 					last(),
-				)
-				.toPromise();
+				),
+			);
 			search.setFilter({ dateRange: { start, end } });
 			const lastEntries = await lastEntriesP;
 

@@ -14,6 +14,7 @@ export interface BaseDashboardSearch {
 	timeframeOverride: Timeframe | null;
 	cachedSearchID: NumericID | null;
 	variablePreviewValue: string | null;
+	color: string | null;
 }
 
 export type DashboardSearch = BaseDashboardSearch &

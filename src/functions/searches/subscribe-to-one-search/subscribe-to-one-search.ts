@@ -8,7 +8,19 @@
 
 import { isAfter, subHours } from 'date-fns';
 import { isBoolean, isNil, isNull, isUndefined, uniqueId } from 'lodash';
-import { BehaviorSubject, combineLatest, EMPTY, from, NEVER, Observable, of, Subject, Subscription } from 'rxjs';
+import {
+	BehaviorSubject,
+	combineLatest,
+	EMPTY,
+	firstValueFrom,
+	from,
+	lastValueFrom,
+	NEVER,
+	Observable,
+	of,
+	Subject,
+	Subscription,
+} from 'rxjs';
 import {
 	bufferCount,
 	catchError,
@@ -16,8 +28,8 @@ import {
 	distinctUntilChanged,
 	filter,
 	filter as rxjsFilter,
-	first,
 	map,
+	shareReplay,
 	skipUntil,
 	startWith,
 	takeUntil,
@@ -157,9 +169,9 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 			if (initialFilter.dateRange !== 'preview') return initialFilter.dateRange;
 
 			// In preview mode, so we need to request search details and use the timerange that we get back
-			const detailsP = searchMessages$
-				.pipe(filter(filterMessageByCommand(SearchMessageCommands.RequestDetails)), first())
-				.toPromise();
+			const detailsP = firstValueFrom(
+				searchMessages$.pipe(filter(filterMessageByCommand(SearchMessageCommands.RequestDetails))),
+			);
 			const requestDetailsMsg: RawRequestSearchDetailsMessageSent = {
 				type: searchTypeID,
 				data: { ID: SearchMessageCommands.RequestDetails },
@@ -183,7 +195,7 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 			await rawSubscription.send(closeMsg);
 
 			// Wait for closed message to be received
-			await close$.toPromise();
+			await lastValueFrom(close$);
 		};
 
 		const progress$: Observable<Percentage> = searchMessages$.pipe(
@@ -192,6 +204,8 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 			map(done => (done ? 1 : 0)),
 			distinctUntilChanged(),
 			map(rawPercentage => new Percentage(rawPercentage)),
+
+			shareReplay({ bufferSize: 1, refCount: true }),
 
 			// Complete when/if the user calls .close()
 			takeUntil(close$),
@@ -211,6 +225,8 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 				const defDesiredGranularity = getDefaultGranularityByRendererType(entries.type);
 				initialFilter.desiredGranularity = defDesiredGranularity;
 			}),
+
+			shareReplay({ bufferSize: 1, refCount: true }),
 
 			// Complete when/if the user calls .close()
 			takeUntil(close$),
@@ -255,14 +271,13 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 		);
 
 		const nextDetailsMsg = () =>
-			searchMessages$
-				.pipe(
+			firstValueFrom(
+				searchMessages$.pipe(
 					filter(filterMessageByCommand(SearchMessageCommands.RequestDetails)),
-					first(),
 					// cleanup: Complete when/if the user calls .close()
 					takeUntil(close$),
-				)
-				.toPromise();
+				),
+			);
 
 		let pollingSubs: Subscription;
 
@@ -538,6 +553,8 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 				},
 			),
 
+			shareReplay({ bufferSize: 1, refCount: true }),
+
 			// Complete when/if the user calls .close()
 			takeUntil(close$),
 		);
@@ -546,6 +563,8 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 			map(set => {
 				return { frequencyStats: countEntriesFromModules(set) };
 			}),
+
+			shareReplay({ bufferSize: 1, refCount: true }),
 
 			// Complete when/if the user calls .close()
 			takeUntil(close$),
@@ -566,6 +585,8 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 				};
 			}),
 
+			shareReplay({ bufferSize: 1, refCount: true }),
+
 			// Complete when/if the user calls .close()
 			takeUntil(close$),
 		);
@@ -576,6 +597,8 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 
 			// When there's an error, catch it and emit it
 			catchError(err => of(err)),
+
+			shareReplay({ bufferSize: 1, refCount: true }),
 
 			// Complete when/if the user calls .close()
 			takeUntil(close$),
