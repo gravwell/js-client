@@ -1,5 +1,5 @@
 /*************************************************************************
- * Copyright 2021 Gravwell, Inc. All rights reserved.
+ * Copyright 2022 Gravwell, Inc. All rights reserved.
  * Contact: <legal@gravwell.io>
  *
  * This software may be modified and distributed under the terms of the
@@ -22,7 +22,7 @@ describe('getOneGroup()', () => {
 
 	beforeEach(async () => {
 		const data: CreatableGroup = {
-			name: 'Name test',
+			name: 'Name test ' + Date.now(),
 			description: 'Description test',
 		};
 		groupID = (await createOneGroup(data)).id;
