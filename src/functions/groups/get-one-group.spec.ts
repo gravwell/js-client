@@ -22,7 +22,7 @@ describe('getOneGroup()', () => {
 
 	beforeEach(async () => {
 		const data: CreatableGroup = {
-			name: 'Name test',
+			name: 'Name test ' + Date.now(),
 			description: 'Description test',
 		};
 		groupID = (await createOneGroup(data)).id;
