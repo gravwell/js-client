@@ -8,7 +8,8 @@
 
 export interface Timeframe {
 	durationString: string | null;
-	timeframe: string;
+	timeframe: string | null;
+	timezone: string | null;
 	start: Date | null;
 	end: Date | null;
 }

@@ -12,6 +12,7 @@ import { RawTimeframe } from './raw-timeframe';
 export const toRawTimeframe = (tf: CreatableTimeframe): RawTimeframe => ({
 	durationString: tf.durationString,
 	timeframe: tf.timeframe,
+	timezone: tf.timezone,
 	start: tf.start?.toISOString() ?? null,
 	end: tf.end?.toISOString() ?? null,
 });

@@ -77,14 +77,14 @@ xdescribe('getDashboardsByGroup()', () => {
 				groupIDs: [adminGroupID],
 				searches: [],
 				tiles: [],
-				timeframe: { durationString: 'PT1H', end: null, start: null, timeframe: 'PT1H' },
+				timeframe: { durationString: 'PT1H', end: null, start: null, timeframe: 'PT1H', timezone: null },
 			},
 			{
 				name: 'D2',
 				groupIDs: [adminGroupID],
 				searches: [],
 				tiles: [],
-				timeframe: { durationString: 'PT1H', end: null, start: null, timeframe: 'PT1H' },
+				timeframe: { durationString: 'PT1H', end: null, start: null, timeframe: 'PT1H', timezone: null },
 			},
 		];
 		const createPromises = creatableDashboards.map(creatable => createOneDashboard(creatable));
@@ -97,21 +97,21 @@ xdescribe('getDashboardsByGroup()', () => {
 				groupIDs: [analystGroupID],
 				searches: [],
 				tiles: [],
-				timeframe: { durationString: 'PT1H', end: null, start: null, timeframe: 'PT1H' },
+				timeframe: { durationString: 'PT1H', end: null, start: null, timeframe: 'PT1H', timezone: null },
 			},
 			{
 				name: 'D4',
 				groupIDs: [analystGroupID],
 				searches: [],
 				tiles: [],
-				timeframe: { durationString: 'PT1H', end: null, start: null, timeframe: 'PT1H' },
+				timeframe: { durationString: 'PT1H', end: null, start: null, timeframe: 'PT1H', timezone: null },
 			},
 			{
 				name: 'D5',
 				groupIDs: [analystGroupID],
 				searches: [],
 				tiles: [],
-				timeframe: { durationString: 'PT1H', end: null, start: null, timeframe: 'PT1H' },
+				timeframe: { durationString: 'PT1H', end: null, start: null, timeframe: 'PT1H', timezone: null },
 			},
 		];
 
