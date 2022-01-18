@@ -7,8 +7,9 @@
  **************************************************************************/
 
 export interface RawTimeframe {
-	durationString: string | null;
-	timeframe: string;
+	durationString?: string | null;
+	timeframe?: string | null;
+	timezone?: string | null;
 	start?: string | null; // Timestamp
 	end?: string | null; // Timestamp
 }
