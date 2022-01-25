@@ -127,8 +127,6 @@ export interface FDGEdge {
 
 export interface GaugeSearchEntries extends BaseSearchEntries {
 	type: 'gauge';
-
-	// TODO
 	data: Array<{
 		name: string;
 		magnitude: number;
@@ -140,8 +138,6 @@ export interface GaugeSearchEntries extends BaseSearchEntries {
 /** Numbercard renderer is an alias of gauge */
 export interface NumberCardEntries extends BaseSearchEntries {
 	type: 'numbercard';
-
-	// TODO
 	data: Array<{
 		name: string;
 		magnitude: number;
