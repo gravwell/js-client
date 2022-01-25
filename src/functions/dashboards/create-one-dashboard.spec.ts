@@ -56,7 +56,7 @@ describe('createOneDashboard()', () => {
 						searchIndex: 0,
 					},
 				],
-				timeframe: { durationString: 'PT1H', end: null, start: null, timeframe: 'PT1H' },
+				timeframe: { durationString: 'PT1H', end: null, start: null, timeframe: 'PT1H', timezone: null },
 			};
 
 			const dashboard = await createOneDashboard(data);
