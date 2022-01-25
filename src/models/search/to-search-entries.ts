@@ -61,6 +61,8 @@ const NORMALIZERS: Record<SearchEntries['type'], RawEntryNormalizer> = {
 	fdg: ({ data }) => normalizeToFDGSearchEntries(data as RawSearchMessageReceivedRequestEntriesWithinRangeFDGRenderer),
 	gauge: ({ data }) =>
 		normalizeToGaugeSearchEntries(data as RawSearchMessageReceivedRequestEntriesWithinRangeGaugeRenderer),
+	numbercard: ({ data }) =>
+		normalizeToGaugeSearchEntries(data as RawSearchMessageReceivedRequestEntriesWithinRangeGaugeRenderer),
 	heatmap: ({ data }) =>
 		normalizeToHeatmapSearchEntries(data as RawSearchMessageReceivedRequestEntriesWithinRangeHeatmapRenderer),
 	point2point: ({ data }) =>
@@ -93,6 +95,10 @@ export function normalize(
 ): ReturnType<typeof normalizeToFDGSearchEntries>;
 export function normalize(
 	renderer: 'gauge',
+	msg: RawSearchMessageReceivedRequestEntriesWithinRange,
+): ReturnType<typeof normalizeToGaugeSearchEntries>;
+export function normalize(
+	renderer: 'numbercard',
 	msg: RawSearchMessageReceivedRequestEntriesWithinRange,
 ): ReturnType<typeof normalizeToGaugeSearchEntries>;
 export function normalize(
