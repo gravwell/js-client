@@ -7,22 +7,17 @@
  **************************************************************************/
 
 import { RawNumericID } from '~/value-objects';
+import { TemplateVariable } from './template';
 
 export interface RawUpdatableTemplate {
 	UID: RawNumericID;
 	GIDs: Array<RawNumericID>;
-
 	Global: boolean;
 	Labels: Array<string>;
-
 	Name: string;
 	Description: string | null; // Null becomes empty string
 	Contents: {
 		query: string;
-		variable: string;
-		variableLabel: string;
-		variableDescription: string | null;
-		required: boolean;
-		testValue: string | null;
+		variables: Array<TemplateVariable>;
 	};
 }

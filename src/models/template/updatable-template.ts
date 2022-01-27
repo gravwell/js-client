@@ -7,26 +7,16 @@
  **************************************************************************/
 
 import { NumericID, UUID } from '~/value-objects';
+import { TemplateVariable } from './template';
 
 export interface UpdatableTemplate {
 	uuid: UUID;
-
 	userID?: NumericID;
 	groupIDs?: Array<NumericID>;
-
 	name?: string;
 	description?: string | null;
 	labels?: Array<string>;
-
 	isGlobal?: boolean;
-	isRequired?: boolean;
-
 	query?: string;
-	variable?: {
-		token?: string;
-		name?: string;
-		description?: string | null;
-	};
-
-	previewValue?: string | null;
+	variables?: Array<TemplateVariable>;
 }

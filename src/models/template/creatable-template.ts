@@ -7,6 +7,7 @@
  **************************************************************************/
 
 import { NumericID } from '~/value-objects';
+import { TemplateVariable } from './template';
 
 export interface CreatableTemplate {
 	userID?: NumericID;
@@ -17,14 +18,7 @@ export interface CreatableTemplate {
 	labels?: Array<string>;
 
 	isGlobal?: boolean;
-	isRequired: boolean;
 
 	query: string;
-	variable: {
-		token: string;
-		name: string;
-		description?: string | null;
-	};
-
-	previewValue?: string | null;
+	variables: Array<TemplateVariable>;
 }
