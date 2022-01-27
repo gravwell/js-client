@@ -7,7 +7,7 @@
  **************************************************************************/
 
 import { omit } from 'lodash';
-import { CreatableTemplate, isTemplate, Template, UpdatableTemplate } from '~/models';
+import { CreatableTemplate, isTemplate, Template, TemplateVariable, UpdatableTemplate } from '~/models';
 import { integrationTest, TEST_BASE_API_CONTEXT } from '~/tests';
 import { omitUndefinedShallow } from '../utils';
 import { makeCreateOneTemplate } from './create-one-template';
@@ -28,9 +28,8 @@ describe('updateOneTemplate()', () => {
 		const data: CreatableTemplate = {
 			name: 'Current name',
 			description: 'Current description',
-			isRequired: true,
 			query: 'tag=netflow __VAR__',
-			variable: { name: 'Variable', token: '__VAR__' },
+			variables: [{ label: 'Variable', name: '__VAR__', required: true }],
 		};
 		createdTemplate = await createOneTemplate(data);
 	});
@@ -39,32 +38,35 @@ describe('updateOneTemplate()', () => {
 		await deleteOneTemplate(createdTemplate.uuid).catch(() => undefined);
 	});
 
+	const testVariable: TemplateVariable = {
+		label: 'New variable name',
+		name: '__VAR__',
+		previewValue: '',
+		defaultValue: '',
+		required: false,
+		description: '',
+	};
+
 	const updateTests: Array<Omit<UpdatableTemplate, 'uuid'>> = [
 		{ name: 'New name' },
 		{ description: 'New description' },
 		{ description: null },
-
 		{ userID: '2' },
 		{ groupIDs: ['1'] },
 		{ groupIDs: ['1', '2'] },
 		{ groupIDs: [] },
-
 		{ isGlobal: true },
 		{ isGlobal: false },
-		{ isRequired: true },
-		{ isRequired: false },
-
 		{ query: 'tag=test __VAR__' },
-		{ variable: { name: 'New variable name' } },
-		{ variable: { description: 'New variable description' } },
-		{ variable: { description: null } },
-		{ variable: { token: '__NEW_TOKEN__' } },
-
-		{ previewValue: 'raw' },
-		{ previewValue: null },
+		{ variables: [testVariable] },
+		{ variables: [{ ...testVariable, description: 'New variable description' }] },
+		{ variables: [{ ...testVariable, description: '' }] },
+		{ variables: [{ ...testVariable, name: '__NEW_TOKEN__' }] },
+		{ variables: [{ ...testVariable, previewValue: 'raw' }] },
+		{ variables: [{ ...testVariable, previewValue: '' }] },
 	];
 	updateTests.forEach((_data, testIndex) => {
-		const nestedObjectKeys: Array<keyof typeof _data> = ['variable'];
+		const nestedObjectKeys: Array<keyof typeof _data> = ['variables'];
 		const updatedFields: Array<string> = Object.keys(omit(_data, ['uuid'])).reduce<Array<string>>(
 			(acc, key: string) => {
 				const toAdd: Array<string> = nestedObjectKeys.includes(key as any)
@@ -77,29 +79,22 @@ describe('updateOneTemplate()', () => {
 		const formatedUpdatedFields = updatedFields.join(', ');
 		const formatedTestIndex = (testIndex + 1).toString().padStart(2, '0');
 
-		// gravwell/gravwell#2426
-		xit(
+		it(
 			`Test ${formatedTestIndex}: Should update an template ${formatedUpdatedFields} and return itself updated`,
 			integrationTest(async () => {
 				const current = createdTemplate;
 				expect(isTemplate(current)).toBeTrue();
 
 				const data: UpdatableTemplate = { ..._data, uuid: current.uuid };
-				if (updatedFields.includes('userID')) {
-					// *NOTE: gravwell/gravwell#2318 nº 7
-					await expectAsync(updateOneTemplate(data)).toBeRejected();
-					await expectAsync(getOneTemplate(data.uuid)).toBeRejected();
-					return;
-				}
 
 				const updated = await updateOneTemplate(data);
 				expect(isTemplate(updated)).toBeTrue();
 
 				const parsedData = omitUndefinedShallow({
 					...data,
-					variable: { ...current.variable, ...(data.variable ?? {}) },
 				});
-				expect(updated).toEqual({ ...current, ...parsedData, lastUpdateDate: updated.lastUpdateDate });
+				const obj = { ...current, ...parsedData, lastUpdateDate: updated.lastUpdateDate };
+				expect(updated).toEqual(obj);
 			}),
 		);
 	});

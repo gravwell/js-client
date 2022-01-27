@@ -7,6 +7,7 @@
  **************************************************************************/
 
 import { RawNumericID, RawUUID } from '~/value-objects';
+import { TemplateVariable } from './template';
 
 export interface RawTemplate {
 	GUID: RawUUID;
@@ -14,16 +15,12 @@ export interface RawTemplate {
 	UID: RawNumericID;
 	GIDs: null | Array<RawNumericID>;
 	Global: boolean;
+	Labels: null | Array<string>;
 	Name: string;
 	Description: string; // Empty string is null
 	Updated: string; // Timestamp
 	Contents: {
 		query: string;
-		variable: string;
-		variableLabel: string;
-		variableDescription: string | null;
-		required: boolean;
-		testValue: string | null;
+		variables: Array<TemplateVariable>;
 	};
-	Labels: null | Array<string>;
 }
