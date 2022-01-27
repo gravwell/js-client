@@ -23,9 +23,8 @@ describe('getOneTemplate()', () => {
 	beforeEach(async () => {
 		const data: CreatableTemplate = {
 			name: 'Template test',
-			isRequired: true,
 			query: 'tag=netflow __VAR__',
-			variable: { name: 'Variable', token: '__VAR__' },
+			variables: [{ label: 'Variable', name: '__VAR__', required: true }],
 		};
 		createdTemplateUUID = (await createOneTemplate(data)).uuid;
 	});
@@ -34,8 +33,7 @@ describe('getOneTemplate()', () => {
 		await deleteOneTemplate(createdTemplateUUID);
 	});
 
-	// gravwell/gravwell#2426
-	xit(
+	it(
 		'Should return an template',
 		integrationTest(async () => {
 			const template = await getOneTemplate(createdTemplateUUID);

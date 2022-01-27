@@ -15,18 +15,12 @@ export const toRawCreatableTemplate = (creatable: CreatableTemplate): RawCreatab
 	omitUndefinedShallow({
 		UID: creatable.userID ? toRawNumericID(creatable.userID) : undefined,
 		GIDs: creatable.groupIDs?.map(id => toRawNumericID(id)) ?? [],
-
 		Global: creatable.isGlobal ?? false,
 		Labels: creatable.labels ?? [],
-
 		Name: creatable.name,
 		Description: creatable.description ?? null,
 		Contents: {
-			required: creatable.isRequired,
 			query: creatable.query,
-			variable: creatable.variable.token,
-			variableDescription: creatable.variable.description ?? null,
-			variableLabel: creatable.variable.name,
-			testValue: creatable.previewValue ?? null,
+			variables: creatable.variables,
 		},
 	});
