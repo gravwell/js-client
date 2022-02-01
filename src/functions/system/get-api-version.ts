@@ -30,6 +30,8 @@ export interface GetAPIVersionResponse {
 		id: string;
 		releaseDate: Date;
 	};
+	codename: string | null; // release codename >= 4.3.0
+	timezone: string | null; // timezone >= 4.3.0
 }
 
 interface GetAPIVersionRawResponse {
@@ -44,6 +46,8 @@ interface GetAPIVersionRawResponse {
 		BuildDate: string; // Timestamp
 		BuildID: string; // Commit ID
 	};
+	Codename: string | null; // release codename >= 4.3.0
+	Timezone: string | null; // timezone >= 4.3.0
 }
 
 const toGetAPIVersionResponse = (raw: GetAPIVersionRawResponse): GetAPIVersionResponse => ({
@@ -55,4 +59,6 @@ const toGetAPIVersionResponse = (raw: GetAPIVersionRawResponse): GetAPIVersionRe
 		id: raw.Build.BuildID,
 		releaseDate: new Date(raw.Build.BuildDate),
 	},
+	codename: raw.Codename ?? null,
+	timezone: raw.Timezone ?? null,
 });
