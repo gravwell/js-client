@@ -42,7 +42,7 @@ describe('updateOneUser()', () => {
 		await deleteOneUser(user.id);
 	});
 
-	xit(
+	it(
 		"Should update the user's username",
 		integrationTest(async () => {
 			expect(isValidUser(user)).toBeTrue();
@@ -57,7 +57,7 @@ describe('updateOneUser()', () => {
 		}),
 	);
 
-	xit(
+	it(
 		'Should update the user email',
 		integrationTest(async () => {
 			expect(isValidUser(user)).toBeTrue();
@@ -72,7 +72,7 @@ describe('updateOneUser()', () => {
 		}),
 	);
 
-	xit(
+	it(
 		'Should update the user name',
 		integrationTest(async () => {
 			expect(isValidUser(user)).toBeTrue();
@@ -87,7 +87,7 @@ describe('updateOneUser()', () => {
 		}),
 	);
 
-	xit(
+	it(
 		'Should update the user locked state',
 		integrationTest(async () => {
 			expect(isValidUser(user)).toBeTrue();
@@ -105,7 +105,7 @@ describe('updateOneUser()', () => {
 		}),
 	);
 
-	xit(
+	it(
 		'Should update the user role',
 		integrationTest(async () => {
 			expect(isValidUser(user)).toBeTrue();
@@ -123,7 +123,7 @@ describe('updateOneUser()', () => {
 		}),
 	);
 
-	xit(
+	it(
 		'Should update my password, requiring the current one',
 		integrationTest(async () => {
 			const myUser = await getMyUser();
@@ -154,7 +154,7 @@ describe('updateOneUser()', () => {
 		}),
 	);
 
-	xit(
+	it(
 		'Should update the user password without passing current one',
 		integrationTest(async () => {
 			expect(isValidUser(user)).toBeTrue();
@@ -174,13 +174,35 @@ describe('updateOneUser()', () => {
 		}),
 	);
 
-	xit(
+	it(
 		'Should update the user search group ID',
 		integrationTest(async () => {
-			expect(isValidUser(user)).toBeTrue();
+			const newSearchGroupID = '1';
+			expect(user.searchGroupID).not.toEqual(newSearchGroupID);
 
-			// Update the password
+			await expectAsync(updateOneUser({ id: user.id, searchGroupID: newSearchGroupID })).toBeResolved();
+			const updatedUser = await getOneUser(user.id);
+
+			expect(updatedUser.searchGroupID).toEqual(newSearchGroupID);
+			expect(isValidUser(updatedUser)).toBeTrue();
+		}),
+	);
+
+	it(
+		'Should update the user search group ID to null',
+		integrationTest(async () => {
+			// We need to update the user before because the createOneUser return the search id null by default and that would give us a false positive
 			await expectAsync(updateOneUser({ id: user.id, searchGroupID: '1' })).toBeResolved();
+			user = await getOneUser(user.id);
+
+			const newSearchGroupID = null;
+			expect(user.searchGroupID).not.toEqual(newSearchGroupID);
+
+			await expectAsync(updateOneUser({ id: user.id, searchGroupID: newSearchGroupID })).toBeResolved();
+			const updatedUser = await getOneUser(user.id);
+
+			expect(updatedUser.searchGroupID).toEqual(newSearchGroupID);
+			expect(isValidUser(updatedUser)).toBeTrue();
 		}),
 	);
 });

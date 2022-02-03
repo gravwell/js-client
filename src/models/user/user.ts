@@ -18,6 +18,7 @@ export interface User {
 	role: 'admin' | 'analyst';
 	locked: boolean;
 	lastActivityDate: Date | null;
+	searchGroupID: string | null;
 }
 
 export type UserRole = User['role'];
