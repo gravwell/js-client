@@ -6,9 +6,9 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
+import { isNumber } from 'lodash';
 import { RawUser } from './raw-user';
 import { User } from './user';
-import { isNumber } from 'lodash';
 
 export const toUser = (raw: RawUser): User => ({
 	id: raw.UID.toString(),

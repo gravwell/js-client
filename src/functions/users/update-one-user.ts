@@ -6,7 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { isBoolean, isString, isUndefined, negate, isNull } from 'lodash';
+import { isBoolean, isNull, isString, isUndefined, negate } from 'lodash';
 import { isValidUserRole, UpdatableUser, User } from '~/models';
 import { isNumericID } from '../../value-objects';
 import { makeUpdateOneUserSearchGroup } from '../search-groups/update-one-user-search-group';

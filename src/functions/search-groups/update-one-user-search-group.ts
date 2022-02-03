@@ -6,7 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { isNumber, isNull } from 'lodash';
+import { isNull, isNumber } from 'lodash';
 import { NumericID } from '~/value-objects';
 import {
 	APIContext,
