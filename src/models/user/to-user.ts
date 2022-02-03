@@ -6,6 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
+import { isNumber } from 'lodash';
 import { RawUser } from './raw-user';
 import { User } from './user';
 
@@ -17,6 +18,7 @@ export const toUser = (raw: RawUser): User => ({
 	email: raw.Email,
 	role: raw.Admin ? 'admin' : 'analyst',
 	locked: raw.Locked,
+	searchGroupID: isNumber(raw.DefaultGID) ? raw.DefaultGID.toString() : null,
 	lastActivityDate: ((): Date | null => {
 		// !WARNING: If we set the TS to January 01, 0001, it means that there's no last activity date
 		// I'm using 1970 to have a margin for errors

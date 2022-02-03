@@ -12,6 +12,7 @@ import { integrationTest, TEST_BASE_API_CONTEXT } from '~/tests';
 import { makeLoginOneUser } from '../auth';
 import { makeCreateOneUser } from './create-one-user';
 import { makeDeleteOneUser } from './delete-one-user';
+import { makeGetAllUsers } from './get-all-users';
 import { makeGetMyUser } from './get-my-user';
 import { makeGetOneUser } from './get-one-user';
 import { makeUpdateOneUser } from './update-one-user';
@@ -23,10 +24,18 @@ describe('updateOneUser()', () => {
 	const createOneUser = makeCreateOneUser(TEST_BASE_API_CONTEXT);
 	const getMyUser = makeGetMyUser(TEST_BASE_API_CONTEXT);
 	const login = makeLoginOneUser(TEST_BASE_API_CONTEXT);
+	const getAllUsers = makeGetAllUsers(TEST_BASE_API_CONTEXT);
 
 	let user: User;
 
 	beforeEach(async () => {
+		// Delete all users, except the admin
+		const currentUsers = await getAllUsers();
+		const myUser = await getMyUser();
+		const currentUserIDs = currentUsers.map(u => u.id).filter(userID => userID !== myUser.id);
+		const deleteUserPromises = currentUserIDs.map(userID => deleteOneUser(userID));
+		await Promise.all(deleteUserPromises);
+
 		const username = 'test-user-' + random(0, Number.MAX_SAFE_INTEGER);
 		const data: CreatableUser = {
 			name: 'Test',
@@ -42,7 +51,7 @@ describe('updateOneUser()', () => {
 		await deleteOneUser(user.id);
 	});
 
-	xit(
+	it(
 		"Should update the user's username",
 		integrationTest(async () => {
 			expect(isValidUser(user)).toBeTrue();
@@ -57,7 +66,7 @@ describe('updateOneUser()', () => {
 		}),
 	);
 
-	xit(
+	it(
 		'Should update the user email',
 		integrationTest(async () => {
 			expect(isValidUser(user)).toBeTrue();
@@ -72,7 +81,7 @@ describe('updateOneUser()', () => {
 		}),
 	);
 
-	xit(
+	it(
 		'Should update the user name',
 		integrationTest(async () => {
 			expect(isValidUser(user)).toBeTrue();
@@ -87,7 +96,7 @@ describe('updateOneUser()', () => {
 		}),
 	);
 
-	xit(
+	it(
 		'Should update the user locked state',
 		integrationTest(async () => {
 			expect(isValidUser(user)).toBeTrue();
@@ -105,7 +114,7 @@ describe('updateOneUser()', () => {
 		}),
 	);
 
-	xit(
+	it(
 		'Should update the user role',
 		integrationTest(async () => {
 			expect(isValidUser(user)).toBeTrue();
@@ -123,7 +132,7 @@ describe('updateOneUser()', () => {
 		}),
 	);
 
-	xit(
+	it(
 		'Should update my password, requiring the current one',
 		integrationTest(async () => {
 			const myUser = await getMyUser();
@@ -154,7 +163,7 @@ describe('updateOneUser()', () => {
 		}),
 	);
 
-	xit(
+	it(
 		'Should update the user password without passing current one',
 		integrationTest(async () => {
 			expect(isValidUser(user)).toBeTrue();
@@ -174,13 +183,35 @@ describe('updateOneUser()', () => {
 		}),
 	);
 
-	xit(
+	it(
 		'Should update the user search group ID',
 		integrationTest(async () => {
-			expect(isValidUser(user)).toBeTrue();
+			const newSearchGroupID = '1';
+			expect(user.searchGroupID).not.toEqual(newSearchGroupID);
 
-			// Update the password
+			await expectAsync(updateOneUser({ id: user.id, searchGroupID: newSearchGroupID })).toBeResolved();
+			const updatedUser = await getOneUser(user.id);
+
+			expect(updatedUser.searchGroupID).toEqual(newSearchGroupID);
+			expect(isValidUser(updatedUser)).toBeTrue();
+		}),
+	);
+
+	it(
+		'Should update the user search group ID to null',
+		integrationTest(async () => {
+			// We need to update the user before because the createOneUser return the search id null by default and that would give us a false positive
 			await expectAsync(updateOneUser({ id: user.id, searchGroupID: '1' })).toBeResolved();
+			user = await getOneUser(user.id);
+
+			const newSearchGroupID = null;
+			expect(user.searchGroupID).not.toEqual(newSearchGroupID);
+
+			await expectAsync(updateOneUser({ id: user.id, searchGroupID: newSearchGroupID })).toBeResolved();
+			const updatedUser = await getOneUser(user.id);
+
+			expect(updatedUser.searchGroupID).toEqual(newSearchGroupID);
+			expect(isValidUser(updatedUser)).toBeTrue();
 		}),
 	);
 });

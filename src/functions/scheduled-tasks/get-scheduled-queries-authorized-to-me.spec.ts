@@ -10,7 +10,7 @@ import { random, sortBy } from 'lodash';
 import { CreatableUser, isScheduledQuery, ScheduledQuery, User } from '~/models';
 import { integrationTest, TEST_BASE_API_CONTEXT } from '~/tests';
 import { makeLoginOneUser } from '../auth/login-one-user';
-import { makeCreateOneUser } from '../users';
+import { makeCreateOneUser, makeDeleteOneUser, makeGetAllUsers, makeGetMyUser } from '../users';
 import { makeCreateManyScheduledQueries } from './create-many-scheduled-queries';
 import { makeDeleteAllScheduledQueries } from './delete-all-scheduled-queries';
 import { makeGetAllScheduledQueries } from './get-all-scheduled-queries';
@@ -23,6 +23,9 @@ describe('getScheduledQueriesAuthorizedToMe()', () => {
 	const login = makeLoginOneUser(TEST_BASE_API_CONTEXT);
 	const deleteAllScheduledQueries = makeDeleteAllScheduledQueries(TEST_BASE_API_CONTEXT);
 	const createManyScheduledQueries = makeCreateManyScheduledQueries(TEST_BASE_API_CONTEXT);
+	const getAllUsers = makeGetAllUsers(TEST_BASE_API_CONTEXT);
+	const getMyUser = makeGetMyUser(TEST_BASE_API_CONTEXT);
+	const deleteOneUser = makeDeleteOneUser(TEST_BASE_API_CONTEXT);
 
 	let adminScheduledQueries: Array<ScheduledQuery>;
 
@@ -32,6 +35,13 @@ describe('getScheduledQueriesAuthorizedToMe()', () => {
 
 	beforeEach(async () => {
 		await deleteAllScheduledQueries();
+
+		// Delete all users, except the admin
+		const currentUsers = await getAllUsers();
+		const myUser = await getMyUser();
+		const currentUserIDs = currentUsers.map(u => u.id).filter(userID => userID !== myUser.id);
+		const deleteUserPromises = currentUserIDs.map(userID => deleteOneUser(userID));
+		await Promise.all(deleteUserPromises);
 
 		// Create two scheduled queries as admin
 		adminScheduledQueries = await createManyScheduledQueries([

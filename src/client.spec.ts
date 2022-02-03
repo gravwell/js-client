@@ -458,9 +458,6 @@ describe('GravwellClient', () => {
 				) => Promise<ExplorerSearchSubscription>
 			>();
 
-			// Search Groups
-			expectTypeOf(client.searchGroups.get.one).toEqualTypeOf<(id: NumericID) => Promise<NumericID>>();
-
 			// Tokens
 			expectTypeOf(client.tokens.get.one).toEqualTypeOf<(tokenID: ID) => Promise<Token>>();
 			expectTypeOf(client.tokens.get.all).toEqualTypeOf<() => Promise<Array<Token>>>();
