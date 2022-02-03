@@ -21,5 +21,5 @@ export interface UpdatableUser {
 	role?: UserRole;
 	locked?: boolean;
 
-	searchGroupID?: NumericID;
+	searchGroupID?: NumericID | null;
 }

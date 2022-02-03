@@ -6,7 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { isBoolean, isString, isUndefined, negate } from 'lodash';
+import { isBoolean, isNull, isString, isUndefined, negate } from 'lodash';
 import { isValidUserRole, UpdatableUser, User } from '~/models';
 import { isNumericID } from '../../value-objects';
 import { makeUpdateOneUserSearchGroup } from '../search-groups/update-one-user-search-group';
@@ -43,7 +43,8 @@ export const makeUpdateOneUser = (context: APIContext) => {
 			if (isString(data.password)) promises.push(updateOneUserPassword(data.id, data.password, data.currentPassword));
 
 			// Search group ID
-			if (isNumericID(data.searchGroupID)) promises.push(updateOneUserSearchGroup(data.id, data.searchGroupID));
+			if (isNumericID(data.searchGroupID) || isNull(data.searchGroupID))
+				promises.push(updateOneUserSearchGroup(data.id, data.searchGroupID));
 
 			await Promise.all(promises);
 			return await getOneUser(data.id);
