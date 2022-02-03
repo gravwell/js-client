@@ -29,7 +29,6 @@ export * from './scheduled-queries';
 export * from './scheduled-scripts';
 export * from './script-libraries';
 export * from './scripts';
-export * from './search-groups';
 export * from './search-history';
 export * from './search-modules';
 export * from './search-status';
