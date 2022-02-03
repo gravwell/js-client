@@ -6,26 +6,25 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { isNumber } from 'lodash';
+import { isNull, isNumber } from 'lodash';
 import { NumericID } from '~/value-objects';
 import {
 	APIContext,
 	buildHTTPRequestWithAuthFromContext,
 	buildURL,
 	HTTPRequestOptions,
-	omitUndefinedShallow,
 	parseJSONResponse,
 } from '../utils';
 
 export const makeUpdateOneUserSearchGroup = (context: APIContext) => {
-	return async (userID: NumericID, groupID: NumericID): Promise<void> => {
+	return async (userID: NumericID, groupID: NumericID | null): Promise<void> => {
 		try {
 			const path = '/api/users/{userID}/searchgroup';
 			const url = buildURL(path, { ...context, protocol: 'http', pathParams: { userID } });
 
-			const body: UpdateOneUserSearchGroupRawRequest = omitUndefinedShallow({
-				GID: isNumber(groupID) ? groupID : parseInt(groupID, 10),
-			});
+			const body: UpdateOneUserSearchGroupRawRequest = {
+				GID: isNumber(groupID) ? groupID : isNull(groupID) ? groupID : parseInt(groupID, 10),
+			};
 
 			const baseRequestOptions: HTTPRequestOptions = {
 				body: JSON.stringify(body),
@@ -42,5 +41,5 @@ export const makeUpdateOneUserSearchGroup = (context: APIContext) => {
 };
 
 interface UpdateOneUserSearchGroupRawRequest {
-	GID: number;
+	GID: number | null;
 }

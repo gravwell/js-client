@@ -24,6 +24,7 @@ export const isValidUser = (value: any): value is User => {
 			isString(u.email) &&
 			isValidUserRole(u.role) &&
 			isBoolean(u.locked) &&
+			(isString(u.searchGroupID) || isNull(u.searchGroupID)) &&
 			(isDate(u.lastActivityDate) || isNull(u.lastActivityDate))
 		);
 	} catch {

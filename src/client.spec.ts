@@ -452,9 +452,6 @@ describe('GravwellClient', () => {
 					options?: { filter?: Partial<SearchFilter>; metadata?: RawJSON; noHistory?: boolean },
 				) => Promise<ExplorerSearchSubscription>
 			>();
-
-			// Search Groups
-			expectTypeOf(client.searchGroups.get.one).toEqualTypeOf<(id: NumericID) => Promise<NumericID>>();
 		}),
 	);
 });

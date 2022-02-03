@@ -37,7 +37,6 @@ import {
 	createScheduledScriptsService,
 	createScriptLibrariesService,
 	createSearchesService,
-	createSearchGroupsService,
 	createSearchHistoryService,
 	createSearchModulesService,
 	createSearchStatusService,
@@ -67,7 +66,6 @@ import {
 	ScheduledScriptsService,
 	ScriptLibrariesService,
 	SearchesService,
-	SearchGroupsService,
 	SearchHistoryService,
 	SearchModulesService,
 	SearchStatusService,
@@ -192,7 +190,6 @@ export class GravwellClient {
 		this._kits = createKitsService(initialContext);
 		this._queries = createQueriesService(initialContext);
 		this._explorer = createExplorerService(initialContext);
-		this._searchGroups = createSearchGroupsService(initialContext);
 		this._mailServer = createMailServerService(initialContext);
 
 		this._context$.subscribe(context => {
@@ -227,7 +224,6 @@ export class GravwellClient {
 			this._kits = createKitsService(context);
 			this._queries = createQueriesService(context);
 			this._explorer = createExplorerService(context);
-			this._searchGroups = createSearchGroupsService(context);
 			this._mailServer = createMailServerService(context);
 		});
 	}
@@ -387,11 +383,6 @@ export class GravwellClient {
 		return this._explorer;
 	}
 	private _explorer: ExplorerService;
-
-	public get searchGroups(): SearchGroupsService {
-		return this._searchGroups;
-	}
-	private _searchGroups: SearchGroupsService;
 
 	public get mailServer(): MailServerService {
 		return this._mailServer;
