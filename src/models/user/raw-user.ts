@@ -16,6 +16,7 @@ export interface RawUser {
 	TS: string;
 
 	Synced: boolean;
+	DefaultGID?: number | undefined;
 	Groups: Array<{
 		GID: number;
 		Name: string;
