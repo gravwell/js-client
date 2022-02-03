@@ -35,7 +35,7 @@ describe('updateOneUser()', () => {
 		const currentUserIDs = currentUsers.map(u => u.id).filter(userID => userID !== myUser.id);
 		const deleteUserPromises = currentUserIDs.map(userID => deleteOneUser(userID));
 		await Promise.all(deleteUserPromises);
-		
+
 		const username = 'test-user-' + random(0, Number.MAX_SAFE_INTEGER);
 		const data: CreatableUser = {
 			name: 'Test',
