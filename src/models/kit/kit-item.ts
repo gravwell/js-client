@@ -112,7 +112,7 @@ export const isKitItem = (v: any): v is KitItem => {
 			case 'actionable':
 				return isUUID(i.globalID) && (isString(i.description) || isNull(i.description));
 			case 'playbook':
-				return isUUID(i.globalID) && isString(i.description) && isNull(i.description);
+				return isUUID(i.globalID) && (isString(i.description) || isNull(i.description));
 			case 'resource':
 				return isString(i.description) && isNumber(i.size) && isVersion(i.version);
 			case 'scheduled script':
