@@ -7,8 +7,10 @@
  **************************************************************************/
 
 import { RawUUID } from '~/value-objects';
+import { AutoExtractorModule } from '../auto-extractor';
 
 export interface RawKitItemBase {
+	ID: string;
 	Name: string;
 	Hash: Array<number>; // 32 elements
 }
@@ -102,6 +104,16 @@ export interface RawTemplateKitItem extends RawKitItemBase {
 	};
 }
 
+export interface RawAutoExtractorKitItem extends RawKitItemBase {
+	Type: 'autoextractor';
+	AdditionalInfo: {
+		name: string;
+		desc: string;
+		module: AutoExtractorModule;
+		tag: string;
+	};
+}
+
 export type RawKitItem =
 	| RawFileKitItem
 	| RawDashboardKitItem
@@ -112,4 +124,5 @@ export type RawKitItem =
 	| RawResourceKitItem
 	| RawScheduledScriptKitItem
 	| RawSavedQueryKitItem
-	| RawTemplateKitItem;
+	| RawTemplateKitItem
+	| RawAutoExtractorKitItem;

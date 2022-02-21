@@ -12,6 +12,7 @@ import { RawKitItem } from './raw-kit-item';
 
 export const toKitItem = (raw: RawKitItem): KitItem => {
 	const base: KitItemBase = {
+		id: raw.ID,
 		name: raw.Name,
 		hash: raw.Hash,
 	};
@@ -101,6 +102,15 @@ export const toKitItem = (raw: RawKitItem): KitItem => {
 				globalID: raw.AdditionalInfo.UUID,
 				name: raw.AdditionalInfo.Name,
 				description: cleanDescription(raw.AdditionalInfo.Description),
+			};
+		case 'autoextractor':
+			return {
+				...base,
+				type: 'auto extractor',
+				name: raw.AdditionalInfo.name,
+				description: raw.AdditionalInfo.desc,
+				tag: raw.AdditionalInfo.tag,
+				module: raw.AdditionalInfo.module,
 			};
 	}
 };
