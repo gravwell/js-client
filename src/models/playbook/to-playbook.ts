@@ -7,6 +7,7 @@
  **************************************************************************/
 
 import { decode as base64Decode } from 'base-64';
+import { isString } from 'lodash';
 import { Playbook } from './playbook';
 import { RawPlaybook } from './raw-playbook';
 import { RawPlaybookDecodedMetadata } from './raw-playbook-decoded-metadata';
@@ -44,7 +45,7 @@ export const toPlaybook = <IncludeBody extends boolean = true>(
 	const includeBody = options.includeBody ?? true;
 	if (includeBody === false) return playbookWithoutBody as any;
 
-	const body = base64Decode(raw.Body);
+	const body = isString(raw.Body) ? base64Decode(raw.Body) : '';
 	const playbook: Playbook = { ...playbookWithoutBody, body };
 	return playbook as any;
 };
