@@ -12,7 +12,7 @@ export interface CreatablePlaybook {
 	userID?: NumericID;
 	groupIDs?: Array<NumericID>;
 
-	name: string;
+	name?: string | null;
 	description?: string | null;
 	labels?: Array<string>;
 

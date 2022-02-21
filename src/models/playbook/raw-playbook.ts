@@ -14,9 +14,15 @@ export interface RawPlaybook {
 	UID: RawNumericID;
 	GIDs: Array<RawNumericID> | null;
 	Global: boolean;
-	Name: string;
+	Name: string; // Empty string is null
 	Desc: string; // Empty string is null
-	Body: string; // Base64 encoded markdown string, it comes as an empty string when requesting multiple playbooks
+
+	/**
+	 * A playbook can be created without body. In this case, the Body property will not be present.
+	 *
+	 * Base64 encoded markdown string, it comes as an empty string when requesting multiple playbooks.
+	 */
+	Body?: string | null | undefined;
 	Metadata: string; // Base64 encoded RawPlaybookDecodedMetadata
 	Labels: Array<string> | null;
 	LastUpdated: string; // Timestamp
