@@ -25,7 +25,7 @@ export const toRawCreatablePlaybook = (creatable: CreatablePlaybook): RawCreatab
 		Global: creatable.isGlobal ?? false,
 		Labels: creatable.labels ?? [],
 
-		Name: creatable.name,
+		Name: creatable.name ?? '',
 		Desc: creatable.description ?? null,
 
 		Body: base64Encode(creatable.body),
