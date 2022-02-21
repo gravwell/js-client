@@ -31,10 +31,12 @@ export const toRawUpdatablePlaybook = (updatable: UpdatablePlaybook, current: Pl
 		Global: updatable.isGlobal ?? current.isGlobal,
 		Labels: updatable.labels ?? current.labels,
 
-		Name: updatable.name ?? current.name,
+		Name: nullToEmptyString(updatable.name) ?? nullToEmptyString(current.name),
 		Desc: isUndefined(updatable.description) ? current.description : updatable.description,
 
 		Body: base64Encode(updatable.body ?? current.body),
 		Metadata: base64Encode(JSON.stringify(omitUndefinedShallow(metadata))),
 	};
 };
+
+const nullToEmptyString = <T>(x: T | null): T | string => (isNull(x) ? '' : x);

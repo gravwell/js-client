@@ -24,7 +24,7 @@ export const toPlaybook = <IncludeBody extends boolean = true>(
 		userID: raw.UID.toString(),
 		groupIDs: raw.GIDs?.map(id => id.toString()) ?? [],
 
-		name: raw.Name,
+		name: raw.Name.trim() === '' ? null : raw.Name,
 		description: raw.Desc.trim() === '' ? null : raw.Desc,
 		labels: raw.Labels ?? [],
 

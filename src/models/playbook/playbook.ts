@@ -37,7 +37,7 @@ export interface Playbook {
 	/**
 	 * User-friendly name of the playbook.
 	 */
-	name: string;
+	name: string | null;
 
 	/**
 	 * Description of the playbook.
