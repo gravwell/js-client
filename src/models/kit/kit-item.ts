@@ -8,9 +8,11 @@
 
 import { isNull, isNumber, isString } from 'lodash';
 import { isUUID, UUID } from '~/value-objects';
+import { AutoExtractorModule } from '..';
 import { isVersion, Version } from '../version';
 
 export interface KitItemBase {
+	id: string;
 	name: string;
 	hash: Array<number>;
 }
@@ -77,6 +79,13 @@ export interface TemplateKitItem extends KitItemBase {
 	description: string | null;
 }
 
+export interface AutoExtractorKitItem extends KitItemBase {
+	type: 'auto extractor';
+	description: string;
+	module: AutoExtractorModule;
+	tag: string;
+}
+
 export type KitItem =
 	| FileKitItem
 	| DashboardKitItem
@@ -87,12 +96,13 @@ export type KitItem =
 	| ResourceKitItem
 	| ScheduledScriptKitItem
 	| SavedQueryKitItem
-	| TemplateKitItem;
+	| TemplateKitItem
+	| AutoExtractorKitItem;
 
 export const isKitItem = (v: any): v is KitItem => {
 	try {
 		const i = <KitItem>v;
-		const base = i.hash.every(isNumber) && isString(i.name);
+		const base = i.hash.every(isNumber) && isString(i.name) && isString(i.id);
 		if (base === false) return false;
 
 		switch (i.type) {
@@ -121,8 +131,10 @@ export const isKitItem = (v: any): v is KitItem => {
 				return (isString(i.description) || isNull(i.description)) && isString(i.query);
 			case 'template':
 				return isUUID(i.globalID) && (isString(i.description) || isNull(i.description));
+			case 'auto extractor':
+				return isString(i.description) && isString(i.tag) && isString(i.module);
 			default:
-				return false;
+				throw Error(`Unexpected KitItem.type`);
 		}
 	} catch {
 		return false;
