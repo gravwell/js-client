@@ -28,8 +28,8 @@ describe('deleteOnePlaybook()', () => {
 			const playbook = await createOnePlaybook(data);
 			expect(isPlaybook(playbook)).toBeTrue();
 
-			await expectAsync(deleteOnePlaybook(playbook.uuid)).toBeResolved();
-			await expectAsync(getOnePlaybook(playbook.uuid)).toBeRejected();
+			await expectAsync(deleteOnePlaybook(playbook.id)).toBeResolved();
+			await expectAsync(getOnePlaybook(playbook.id)).toBeRejected();
 		}),
 	);
 });

@@ -27,7 +27,7 @@ describe('getAllPlaybooksRelatedToMe()', () => {
 			body: 'This is my playbook',
 		};
 		const createdPlaybooksPs = Array.from({ length: 2 }).map(() => createOnePlaybook(data));
-		createdPlaybooksUUIDs = (await Promise.all(createdPlaybooksPs)).map(p => p.uuid);
+		createdPlaybooksUUIDs = (await Promise.all(createdPlaybooksPs)).map(p => p.id);
 	});
 
 	afterEach(async () => {
@@ -40,7 +40,7 @@ describe('getAllPlaybooksRelatedToMe()', () => {
 		'Should return playbooks',
 		integrationTest(async () => {
 			const playbooks = await getAllPlaybooksRelatedToMe();
-			const playbookUUIDs = playbooks.map(a => a.uuid);
+			const playbookUUIDs = playbooks.map(a => a.id);
 
 			expect(playbooks.map(p => ({ ...p, body: '' })).every(isPlaybook)).toBeTrue();
 			expect(playbooks.length).toBeGreaterThanOrEqual(createdPlaybooksUUIDs.length);

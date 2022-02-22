@@ -32,10 +32,10 @@ describe('updateOnePlaybook()', () => {
 	});
 
 	afterEach(async () => {
-		await deleteOnePlaybook(createdPlaybook.uuid).catch(() => undefined);
+		await deleteOnePlaybook(createdPlaybook.id).catch(() => undefined);
 	});
 
-	const updateTests: Array<Omit<UpdatablePlaybook, 'uuid'>> = [
+	const updateTests: Array<Omit<UpdatablePlaybook, 'id'>> = [
 		{ name: 'New name' },
 		{ description: 'New description' },
 		{ description: null },
@@ -65,7 +65,7 @@ describe('updateOnePlaybook()', () => {
 				const current = createdPlaybook;
 				expect(isPlaybook(current)).toBeTrue();
 
-				const data: UpdatablePlaybook = { ..._data, uuid: current.uuid };
+				const data: UpdatablePlaybook = { ..._data, id: current.id };
 				const updated = await updateOnePlaybook(data);
 				expect(isPlaybook(updated)).toBeTrue();
 
