@@ -6,7 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { isNull, isNumber, isString } from 'lodash';
+import { isBoolean, isNull, isNumber, isString } from 'lodash';
 import { isUUID, UUID } from '~/value-objects';
 import { AutoExtractorModule } from '..';
 import { isVersion, Version } from '../version';
@@ -40,6 +40,7 @@ export interface DashboardKitItem extends KitItemBase {
 export interface MacroKitItem extends KitItemBase {
 	id: string;
 	type: 'macro';
+	description: string | null;
 	expansion: string;
 }
 
@@ -68,14 +69,27 @@ export interface ResourceKitItem extends KitItemBase {
 export interface ScheduledScriptKitItem extends KitItemBase {
 	id: string;
 	type: 'scheduled script';
-	description: string | null;
+	description: string;
 	schedule: string;
 	script: string;
+	oneShot: boolean;
+	isDisabled: boolean;
+}
+
+export interface ScheduledQueryKitItem extends KitItemBase {
+	id: string;
+	type: 'scheduled query';
+	description: string;
+	schedule: string;
+	query: string;
+	oneShot: boolean;
+	isDisabled: boolean;
 }
 
 export interface SavedQueryKitItem extends KitItemBase {
 	id: string;
 	type: 'saved query';
+	globalID: UUID;
 	description: string | null;
 	query: string;
 }
@@ -104,6 +118,7 @@ export type KitItem =
 	| PlaybookKitItem
 	| ResourceKitItem
 	| ScheduledScriptKitItem
+	| ScheduledQueryKitItem
 	| SavedQueryKitItem
 	| TemplateKitItem
 	| AutoExtractorKitItem;
@@ -128,7 +143,7 @@ export const isKitItem = (v: any): v is KitItem => {
 			case 'dashboard':
 				return isString(i.id) && isUUID(i.globalID) && (isString(i.description) || isNull(i.description));
 			case 'macro':
-				return isString(i.id) && isString(i.expansion);
+				return isString(i.id) && isString(i.expansion) && (isString(i.description) || isNull(i.description));
 			case 'actionable':
 				return isString(i.id) && isUUID(i.globalID) && (isString(i.description) || isNull(i.description));
 			case 'playbook':
@@ -138,12 +153,28 @@ export const isKitItem = (v: any): v is KitItem => {
 			case 'scheduled script':
 				return (
 					isString(i.id) &&
-					(isString(i.description) || isNull(i.description)) &&
+					isString(i.description) &&
 					isString(i.schedule) &&
-					isString(i.script)
+					isString(i.script) &&
+					isBoolean(i.oneShot) &&
+					isBoolean(i.isDisabled)
+				);
+			case 'scheduled query':
+				return (
+					isString(i.id) &&
+					isString(i.description) &&
+					isString(i.schedule) &&
+					isString(i.query) &&
+					isBoolean(i.oneShot) &&
+					isBoolean(i.isDisabled)
 				);
 			case 'saved query':
-				return isString(i.id) && (isString(i.description) || isNull(i.description)) && isString(i.query);
+				return (
+					isString(i.id) &&
+					isUUID(i.globalID) &&
+					(isString(i.description) || isNull(i.description)) &&
+					isString(i.query)
+				);
 			case 'template':
 				return isString(i.id) && isUUID(i.globalID) && (isString(i.description) || isNull(i.description));
 			case 'auto extractor':

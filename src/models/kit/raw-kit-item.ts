@@ -46,6 +46,7 @@ export interface RawMacroKitItem extends RawKitItemBase {
 	Type: 'macro';
 	AdditionalInfo: {
 		Name: string;
+		Description: string; // "" is null,
 		Expansion: string;
 	};
 }
@@ -86,9 +87,21 @@ export interface RawScheduledScriptKitItem extends RawKitItemBase {
 	Type: 'scheduled search';
 	AdditionalInfo: {
 		Name: string;
-		Description: string; // "" is null,
+		Description: string; 
 		Schedule: string; // Cron job eg. '* * * * *'
-		Script: string;
+
+		// If Script is set, then SearchString and Duration will not be set
+		Script?: string; // "" is null,
+
+		// If SearchString and Duration are set, Script will not be set
+		SearchString?: string; // "" is null,
+		Duration?: string; // "" is null,
+
+		DefaultDeploymentRules: {
+			Disabled: boolean;
+			/** If RunImmediately is set to true, we set OneShot = true on the script as we install it */
+			RunImmediately: boolean;
+		};
 	};
 }
 
@@ -96,6 +109,7 @@ export interface RawSavedQueryKitItem extends RawKitItemBase {
 	ID: string;
 	Type: 'searchlibrary';
 	AdditionalInfo: {
+		UUID: RawUUID;
 		Name: string;
 		Description: string; // "" is null,
 		Query: string;

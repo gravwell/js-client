@@ -6,6 +6,8 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
+import { ScheduledTaskType } from '../scheduled-task/scheduled-task';
+import { getScheduledTaskType } from '../scheduled-task/to-scheduled-task';
 import { toVersion } from '../version';
 import { KitItem, KitItemBase } from './kit-item';
 import { RawKitItem } from './raw-kit-item';
@@ -53,6 +55,7 @@ export const toKitItem = (raw: RawKitItem): KitItem => {
 				id: raw.ID,
 				type: 'macro',
 				name: raw.AdditionalInfo.Name,
+				description: cleanDescription(raw.AdditionalInfo.Description),
 				expansion: raw.AdditionalInfo.Expansion,
 			};
 		case 'pivot':
@@ -83,21 +86,40 @@ export const toKitItem = (raw: RawKitItem): KitItem => {
 				size: raw.AdditionalInfo.Size,
 				version: toVersion(raw.AdditionalInfo.VersionNumber),
 			};
-		case 'scheduled search':
-			return {
+		case 'scheduled search': {
+			const type: ScheduledTaskType = getScheduledTaskType(raw.AdditionalInfo);
+			const scheduledBase = {
 				...base,
 				id: raw.ID,
-				type: 'scheduled script',
 				name: raw.AdditionalInfo.Name,
-				description: cleanDescription(raw.AdditionalInfo.Description),
+				description: raw.AdditionalInfo.Description,
 				schedule: raw.AdditionalInfo.Schedule,
-				script: raw.AdditionalInfo.Script,
+				isDisabled: raw.AdditionalInfo.DefaultDeploymentRules.Disabled,
+				oneShot: raw.AdditionalInfo.DefaultDeploymentRules.RunImmediately,
 			};
+
+			switch (type) {
+				case 'query':
+					return {
+						...scheduledBase,
+						type: 'scheduled query',
+						query: raw.AdditionalInfo.SearchString ?? '',
+					};
+				case 'script':
+					return {
+						...scheduledBase,
+						type: 'scheduled script',
+						script: raw.AdditionalInfo.Script ?? '',
+					};
+			}
+		}
+
 		case 'searchlibrary':
 			return {
 				...base,
 				id: raw.ID,
 				type: 'saved query',
+				globalID: raw.AdditionalInfo.UUID,
 				name: raw.AdditionalInfo.Name,
 				description: cleanDescription(raw.AdditionalInfo.Description),
 				query: raw.AdditionalInfo.Query,
