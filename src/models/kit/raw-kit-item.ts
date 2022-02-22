@@ -32,7 +32,7 @@ export interface RawDashboardKitItem extends RawKitItemBase {
 	AdditionalInfo: {
 		UUID: RawUUID;
 		Name: string;
-		Description: string; // "" are null,
+		Description: string; // "" is null,
 	};
 }
 
@@ -56,7 +56,7 @@ export interface RawActionableKitItem extends RawKitItemBase {
 	AdditionalInfo: {
 		UUID: RawUUID;
 		Name: string;
-		Description: string; // "" are null,
+		Description: string; // "" is null,
 	};
 }
 
@@ -66,7 +66,7 @@ export interface RawPlaybookKitItem extends RawKitItemBase {
 	AdditionalInfo: {
 		UUID: RawUUID;
 		Name: string;
-		Description: string; // "" are null,
+		Description: string; // "" is null,
 	};
 }
 
@@ -86,7 +86,7 @@ export interface RawScheduledScriptKitItem extends RawKitItemBase {
 	Type: 'scheduled search';
 	AdditionalInfo: {
 		Name: string;
-		Description: string; // "" are null,
+		Description: string; // "" is null,
 		Schedule: string; // Cron job eg. '* * * * *'
 		Script: string;
 	};
@@ -97,7 +97,7 @@ export interface RawSavedQueryKitItem extends RawKitItemBase {
 	Type: 'searchlibrary';
 	AdditionalInfo: {
 		Name: string;
-		Description: string; // "" are null,
+		Description: string; // "" is null,
 		Query: string;
 	};
 }
@@ -108,7 +108,7 @@ export interface RawTemplateKitItem extends RawKitItemBase {
 	AdditionalInfo: {
 		UUID: RawUUID;
 		Name: string;
-		Description: string; // "" are null,
+		Description: string; // "" is null,
 	};
 }
 
