@@ -12,7 +12,6 @@ import { RawKitItem } from './raw-kit-item';
 
 export const toKitItem = (raw: RawKitItem): KitItem => {
 	const base: KitItemBase = {
-		id: raw.ID,
 		name: raw.Name,
 		hash: raw.Hash,
 	};
@@ -25,6 +24,7 @@ export const toKitItem = (raw: RawKitItem): KitItem => {
 		case 'file':
 			return {
 				...base,
+				id: raw.ID,
 				type: 'file',
 				globalID: raw.AdditionalInfo.UUID,
 				name: raw.AdditionalInfo.Name,
@@ -35,6 +35,7 @@ export const toKitItem = (raw: RawKitItem): KitItem => {
 		case 'dashboard':
 			return {
 				...base,
+				id: raw.ID,
 				type: 'dashboard',
 				globalID: raw.AdditionalInfo.UUID,
 				name: raw.AdditionalInfo.Name,
@@ -49,6 +50,7 @@ export const toKitItem = (raw: RawKitItem): KitItem => {
 		case 'macro':
 			return {
 				...base,
+				id: raw.ID,
 				type: 'macro',
 				name: raw.AdditionalInfo.Name,
 				expansion: raw.AdditionalInfo.Expansion,
@@ -56,6 +58,7 @@ export const toKitItem = (raw: RawKitItem): KitItem => {
 		case 'pivot':
 			return {
 				...base,
+				id: raw.ID,
 				type: 'actionable',
 				globalID: raw.AdditionalInfo.UUID,
 				name: raw.AdditionalInfo.Name,
@@ -64,6 +67,7 @@ export const toKitItem = (raw: RawKitItem): KitItem => {
 		case 'playbook':
 			return {
 				...base,
+				id: raw.ID,
 				type: 'playbook',
 				globalID: raw.AdditionalInfo.UUID,
 				name: raw.AdditionalInfo.Name,
@@ -72,6 +76,7 @@ export const toKitItem = (raw: RawKitItem): KitItem => {
 		case 'resource':
 			return {
 				...base,
+				id: raw.ID,
 				type: 'resource',
 				name: raw.AdditionalInfo.ResourceName,
 				description: raw.AdditionalInfo.Description,
@@ -81,6 +86,7 @@ export const toKitItem = (raw: RawKitItem): KitItem => {
 		case 'scheduled search':
 			return {
 				...base,
+				id: raw.ID,
 				type: 'scheduled script',
 				name: raw.AdditionalInfo.Name,
 				description: cleanDescription(raw.AdditionalInfo.Description),
@@ -90,6 +96,7 @@ export const toKitItem = (raw: RawKitItem): KitItem => {
 		case 'searchlibrary':
 			return {
 				...base,
+				id: raw.ID,
 				type: 'saved query',
 				name: raw.AdditionalInfo.Name,
 				description: cleanDescription(raw.AdditionalInfo.Description),
@@ -98,6 +105,7 @@ export const toKitItem = (raw: RawKitItem): KitItem => {
 		case 'template':
 			return {
 				...base,
+				id: raw.ID,
 				type: 'template',
 				globalID: raw.AdditionalInfo.UUID,
 				name: raw.AdditionalInfo.Name,
@@ -106,6 +114,7 @@ export const toKitItem = (raw: RawKitItem): KitItem => {
 		case 'autoextractor':
 			return {
 				...base,
+				id: raw.ID,
 				type: 'auto extractor',
 				name: raw.AdditionalInfo.name,
 				description: raw.AdditionalInfo.desc,
