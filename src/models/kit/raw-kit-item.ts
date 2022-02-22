@@ -14,6 +14,11 @@ export interface RawKitItemBase {
 	Hash: Array<number>; // 32 elements
 }
 
+export interface RawLicenseKitItem extends RawKitItemBase {
+	Type: 'license';
+	AdditionalInfo: string;
+}
+
 export interface RawFileKitItem extends RawKitItemBase {
 	ID: string;
 	Type: 'file';
@@ -34,11 +39,6 @@ export interface RawDashboardKitItem extends RawKitItemBase {
 		Name: string;
 		Description: string; // "" is null,
 	};
-}
-
-export interface RawLicenseKitItem extends RawKitItemBase {
-	Type: 'license';
-	AdditionalInfo: string;
 }
 
 export interface RawMacroKitItem extends RawKitItemBase {
