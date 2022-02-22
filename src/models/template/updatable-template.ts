@@ -10,7 +10,7 @@ import { NumericID, UUID } from '~/value-objects';
 import { TemplateVariable } from './template';
 
 export interface UpdatableTemplate {
-	uuid: UUID;
+	id: UUID;
 	userID?: NumericID;
 	groupIDs?: Array<NumericID>;
 	name?: string;

@@ -25,7 +25,7 @@ describe('getOnePlaybook()', () => {
 			name: 'Playbook test',
 			body: 'This is my playbook',
 		};
-		createdPlaybookUUID = (await createOnePlaybook(data)).uuid;
+		createdPlaybookUUID = (await createOnePlaybook(data)).id;
 	});
 
 	afterEach(async () => {

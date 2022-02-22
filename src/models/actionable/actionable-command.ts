@@ -10,9 +10,9 @@ import { UUID } from '~/value-objects';
 
 export type ActionableCommand =
 	| { type: 'query'; userQuery: string }
-	| { type: 'template'; templateUUID: UUID; templateVariable: string | null }
-	| { type: 'savedQuery'; queryUUID: UUID }
-	| { type: 'dashboard'; dashboardUUID: UUID; dashboardVariable: string | null }
+	| { type: 'template'; templateID: UUID; templateVariable: string | null }
+	| { type: 'savedQuery'; queryID: UUID }
+	| { type: 'dashboard'; dashboardID: UUID; dashboardVariable: string | null }
 	| {
 			type: 'url';
 			urlTemplate: string;
@@ -34,17 +34,17 @@ export interface ActionableQueryCommand {
 
 export interface ActionableTemplateCommand {
 	type: 'template';
-	templateUUID: UUID;
+	templateID: UUID;
 }
 
 export interface ActionableSavedQueryCommand {
 	type: 'savedQuery';
-	queryUUID: UUID;
+	queryID: UUID;
 }
 
 export interface ActionableDashboardCommand {
 	type: 'dashboard';
-	dashboardUUID: UUID;
+	dashboardID: UUID;
 	dashboardVariable: string | null;
 }
 

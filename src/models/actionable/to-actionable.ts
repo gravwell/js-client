@@ -14,8 +14,8 @@ import { RawActionable, RawActionableAction, RawActionableTimeVariable, RawActio
 import { RawActionableCommand } from './raw-actionable-command';
 
 export const toActionable = (raw: RawActionable): Actionable => ({
-	uuid: raw.GUID,
-	thingUUID: raw.ThingUUID,
+	globalID: raw.GUID,
+	id: raw.ThingUUID,
 
 	userID: raw.UID.toString(),
 	groupIDs: raw.GIDs?.map(id => id.toString()) ?? [],
@@ -54,11 +54,11 @@ export const toActionableCommand = (raw: RawActionableCommand): ActionableComman
 		case 'query':
 			return { type: 'query', userQuery: raw.reference };
 		case 'template':
-			return { type: 'template', templateUUID: raw.reference, templateVariable: raw.options?.variable ?? null };
+			return { type: 'template', templateID: raw.reference, templateVariable: raw.options?.variable ?? null };
 		case 'savedQuery':
-			return { type: 'savedQuery', queryUUID: raw.reference };
+			return { type: 'savedQuery', queryID: raw.reference };
 		case 'dashboard':
-			return { type: 'dashboard', dashboardUUID: raw.reference, dashboardVariable: raw.options?.variable ?? null };
+			return { type: 'dashboard', dashboardID: raw.reference, dashboardVariable: raw.options?.variable ?? null };
 		case 'url': {
 			const modalWidth = raw.options?.modalWidth;
 			return {

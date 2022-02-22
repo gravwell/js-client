@@ -18,8 +18,8 @@ export const toPlaybook = <IncludeBody extends boolean = true>(
 ): IncludeBody extends true ? Playbook : Omit<Playbook, 'body'> => {
 	const metadata: RawPlaybookDecodedMetadata = JSON.parse(base64Decode(raw.Metadata));
 	const playbookWithoutBody: Omit<Playbook, 'body'> = {
-		uuid: raw.UUID,
-		guid: raw.GUID,
+		id: raw.UUID,
+		globalID: raw.GUID,
 
 		userID: raw.UID.toString(),
 		groupIDs: raw.GIDs?.map(id => id.toString()) ?? [],

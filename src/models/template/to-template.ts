@@ -10,8 +10,8 @@ import { RawTemplate } from './raw-template';
 import { Template } from './template';
 
 export const toTemplate = (raw: RawTemplate): Template => ({
-	uuid: raw.GUID,
-	thingUUID: raw.ThingUUID,
+	globalID: raw.GUID,
+	id: raw.ThingUUID,
 	userID: raw.UID.toString(),
 	groupIDs: raw.GIDs?.map(id => id.toString()) ?? [],
 	name: raw.Name,
