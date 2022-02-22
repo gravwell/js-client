@@ -87,7 +87,7 @@ export interface RawScheduledScriptKitItem extends RawKitItemBase {
 	Type: 'scheduled search';
 	AdditionalInfo: {
 		Name: string;
-		Description: string; 
+		Description: string;
 		Schedule: string; // Cron job eg. '* * * * *'
 
 		// If Script is set, then SearchString and Duration will not be set

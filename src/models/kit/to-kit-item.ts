@@ -112,6 +112,7 @@ export const toKitItem = (raw: RawKitItem): KitItem => {
 						script: raw.AdditionalInfo.Script ?? '',
 					};
 			}
+			break;
 		}
 
 		case 'searchlibrary':
