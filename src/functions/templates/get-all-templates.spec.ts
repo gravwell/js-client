@@ -28,12 +28,12 @@ describe('getAllTemplates()', () => {
 			variables: [{ label: 'Variable', name: '__VAR__', required: true }],
 		};
 		const createdTemplatesPs = Array.from({ length: 2 }).map(() => createOneTemplate(data));
-		createdTemplatesUUIDs = (await Promise.all(createdTemplatesPs)).map(t => t.uuid);
+		createdTemplatesUUIDs = (await Promise.all(createdTemplatesPs)).map(t => t.id);
 	});
 
 	afterEach(async () => {
 		// Delete the created templates
-		const deletePs = createdTemplatesUUIDs.map(templateUUID => deleteOneTemplate(templateUUID));
+		const deletePs = createdTemplatesUUIDs.map(templateID => deleteOneTemplate(templateID));
 		await Promise.all(deletePs);
 	});
 
@@ -41,11 +41,11 @@ describe('getAllTemplates()', () => {
 		'Should return templates',
 		integrationTest(async () => {
 			const templates = await getAllTemplates();
-			const templateUUIDs = templates.map(a => a.uuid);
+			const templateIDs = templates.map(a => a.id);
 
 			expect(templates.every(isTemplate)).toBeTrue();
 			expect(templates.length).toBeGreaterThanOrEqual(createdTemplatesUUIDs.length);
-			for (const templateUUID of createdTemplatesUUIDs) expect(templateUUIDs).toContain(templateUUID);
+			for (const templateID of createdTemplatesUUIDs) expect(templateIDs).toContain(templateID);
 		}),
 	);
 });

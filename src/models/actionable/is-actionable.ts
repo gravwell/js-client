@@ -15,8 +15,8 @@ export const isActionable = (value: any): value is Actionable => {
 	try {
 		const a = <Actionable>value;
 		return (
-			isUUID(a.uuid) &&
-			isUUID(a.thingUUID) &&
+			isUUID(a.globalID) &&
+			isUUID(a.id) &&
 			isNumericID(a.userID) &&
 			a.groupIDs.every(isNumericID) &&
 			isString(a.name) &&
@@ -82,11 +82,11 @@ export const isActionableCommand = (value: any): value is ActionableCommand => {
 			case 'query':
 				return isString(cmd.userQuery);
 			case 'template':
-				return isUUID(cmd.templateUUID);
+				return isUUID(cmd.templateID);
 			case 'savedQuery':
-				return isUUID(cmd.queryUUID);
+				return isUUID(cmd.queryID);
 			case 'dashboard':
-				return isUUID(cmd.dashboardUUID) && (isString(cmd.dashboardVariable) || isNull(cmd.dashboardVariable));
+				return isUUID(cmd.dashboardID) && (isString(cmd.dashboardVariable) || isNull(cmd.dashboardVariable));
 			case 'url':
 				return (
 					isString(cmd.urlTemplate) &&
