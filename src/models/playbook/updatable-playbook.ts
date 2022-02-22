@@ -9,7 +9,7 @@
 import { Markdown, NumericID, UUID } from '~/value-objects';
 
 export interface UpdatablePlaybook {
-	uuid: UUID;
+	id: UUID;
 
 	userID?: NumericID;
 	groupIDs?: Array<NumericID>;

@@ -26,7 +26,7 @@ describe('createOnePlaybook()', () => {
 			const playbook = await createOnePlaybook(data);
 			expect(isPlaybook(playbook)).toBeTrue();
 
-			await deleteOnePlaybook(playbook.uuid);
+			await deleteOnePlaybook(playbook.id);
 		}),
 	);
 });

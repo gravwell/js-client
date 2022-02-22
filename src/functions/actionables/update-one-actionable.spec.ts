@@ -36,10 +36,10 @@ describe('updateOneActionable()', () => {
 	});
 
 	afterEach(async () => {
-		await deleteOneActionable(createdActionable.uuid).catch(() => undefined);
+		await deleteOneActionable(createdActionable.id).catch(() => undefined);
 	});
 
-	const updateTests: Array<Omit<UpdatableActionable, 'uuid'>> = [
+	const updateTests: Array<Omit<UpdatableActionable, 'id'>> = [
 		{ name: 'New name' },
 		{ description: 'New description' },
 		{ description: null },
@@ -75,7 +75,7 @@ describe('updateOneActionable()', () => {
 		{ triggers: [{ pattern: /123/g, activatesOn: 'selection' }] },
 	];
 	updateTests.forEach((_data, testIndex) => {
-		const updatedFields = Object.keys(omit(_data, ['uuid']));
+		const updatedFields = Object.keys(omit(_data, ['id']));
 		const formatedUpdatedFields = updatedFields.join(', ');
 		const formatedTestIndex = (testIndex + 1).toString().padStart(2, '0');
 
@@ -86,11 +86,11 @@ describe('updateOneActionable()', () => {
 				const current = createdActionable;
 				expect(isActionable(current)).toBeTrue();
 
-				const data: UpdatableActionable = { ..._data, uuid: current.uuid };
+				const data: UpdatableActionable = { ..._data, id: current.id };
 				if (updatedFields.includes('userID')) {
 					// *NOTE: gravwell/gravwell#2318 nº 7
 					await expectAsync(updateOneActionable(data)).toBeRejected();
-					await expectAsync(getOneActionable(data.uuid)).toBeRejected();
+					await expectAsync(getOneActionable(data.id)).toBeRejected();
 					return;
 				}
 

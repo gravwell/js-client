@@ -21,13 +21,13 @@ export const makeUpdateOneTemplate = (context: APIContext) => {
 
 	return async (data: UpdatableTemplate): Promise<Template> => {
 		try {
-			const current = await getOneTemplate(data.uuid);
+			const current = await getOneTemplate(data.id);
 
 			const templatePath = '/api/templates/{templateID}';
 			const url = buildURL(templatePath, {
 				...context,
 				protocol: 'http',
-				pathParams: { templateID: data.uuid },
+				pathParams: { templateID: data.id },
 			});
 
 			const baseRequestOptions: HTTPRequestOptions = {

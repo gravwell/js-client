@@ -28,7 +28,7 @@ describe('getAllActionables()', () => {
 			triggers: [{ pattern: /abc/g, activatesOn: 'clicks and selection' }],
 		};
 		const createdActionables = await Promise.all(Array.from({ length: 2 }).map(() => createOneActionable(data)));
-		createdActionablesUUIDs = createdActionables.map(a => a.uuid);
+		createdActionablesUUIDs = createdActionables.map(a => a.id);
 	});
 
 	afterEach(async () => {
@@ -42,7 +42,7 @@ describe('getAllActionables()', () => {
 		'Should return actionables',
 		integrationTest(async () => {
 			const actionables = await getAllActionables();
-			const actionableUUIDs = actionables.map(a => a.uuid);
+			const actionableUUIDs = actionables.map(a => a.id);
 
 			expect(actionables.every(isActionable)).toBeTrue();
 			expect(actionables.length).toBeGreaterThanOrEqual(createdActionablesUUIDs.length);

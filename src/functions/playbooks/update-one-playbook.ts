@@ -22,13 +22,13 @@ export const makeUpdateOnePlaybook = (context: APIContext) => {
 	return async (data: UpdatablePlaybook): Promise<Playbook> => {
 		try {
 			// TODO: We shouldn't have to query the current object before updating
-			const current = await getOnePlaybook(data.uuid);
+			const current = await getOnePlaybook(data.id);
 
 			const playbookPath = '/api/playbooks/{playbookID}';
 			const url = buildURL(playbookPath, {
 				...context,
 				protocol: 'http',
-				pathParams: { playbookID: data.uuid },
+				pathParams: { playbookID: data.id },
 			});
 
 			const baseRequestOptions: HTTPRequestOptions = {

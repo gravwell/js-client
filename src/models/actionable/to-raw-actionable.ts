@@ -35,15 +35,15 @@ export const toRawActionableCommand = (cmd: ActionableCommand): RawActionableCom
 		case 'template':
 			return {
 				type: 'template',
-				reference: cmd.templateUUID,
+				reference: cmd.templateID,
 				options: omitUndefinedShallow({ variable: cmd.templateVariable ?? undefined }),
 			};
 		case 'savedQuery':
-			return { type: 'savedQuery', reference: cmd.queryUUID };
+			return { type: 'savedQuery', reference: cmd.queryID };
 		case 'dashboard':
 			return {
 				type: 'dashboard',
-				reference: cmd.dashboardUUID,
+				reference: cmd.dashboardID,
 				options: omitUndefinedShallow({ variable: cmd.dashboardVariable ?? undefined }),
 			};
 		case 'url':

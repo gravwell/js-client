@@ -35,7 +35,7 @@ describe('updateOneTemplate()', () => {
 	});
 
 	afterEach(async () => {
-		await deleteOneTemplate(createdTemplate.uuid).catch(() => undefined);
+		await deleteOneTemplate(createdTemplate.id).catch(() => undefined);
 	});
 
 	const testVariable: TemplateVariable = {
@@ -47,7 +47,7 @@ describe('updateOneTemplate()', () => {
 		description: '',
 	};
 
-	const updateTests: Array<Omit<UpdatableTemplate, 'uuid'>> = [
+	const updateTests: Array<Omit<UpdatableTemplate, 'id'>> = [
 		{ name: 'New name' },
 		{ description: 'New description' },
 		{ description: null },
@@ -67,15 +67,12 @@ describe('updateOneTemplate()', () => {
 	];
 	updateTests.forEach((_data, testIndex) => {
 		const nestedObjectKeys: Array<keyof typeof _data> = ['variables'];
-		const updatedFields: Array<string> = Object.keys(omit(_data, ['uuid'])).reduce<Array<string>>(
-			(acc, key: string) => {
-				const toAdd: Array<string> = nestedObjectKeys.includes(key as any)
-					? Object.keys((_data as any)[key] as any).map(_k => `${key}.${_k}`)
-					: [key];
-				return acc.concat(toAdd);
-			},
-			[],
-		);
+		const updatedFields: Array<string> = Object.keys(omit(_data, ['id'])).reduce<Array<string>>((acc, key: string) => {
+			const toAdd: Array<string> = nestedObjectKeys.includes(key as any)
+				? Object.keys((_data as any)[key] as any).map(_k => `${key}.${_k}`)
+				: [key];
+			return acc.concat(toAdd);
+		}, []);
 		const formatedUpdatedFields = updatedFields.join(', ');
 		const formatedTestIndex = (testIndex + 1).toString().padStart(2, '0');
 
@@ -85,7 +82,7 @@ describe('updateOneTemplate()', () => {
 				const current = createdTemplate;
 				expect(isTemplate(current)).toBeTrue();
 
-				const data: UpdatableTemplate = { ..._data, uuid: current.uuid };
+				const data: UpdatableTemplate = { ..._data, id: current.id };
 
 				const updated = await updateOneTemplate(data);
 				expect(isTemplate(updated)).toBeTrue();
