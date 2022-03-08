@@ -7,11 +7,11 @@
  **************************************************************************/
 
 import { isNull, isString } from 'lodash';
+import { isTimeframe } from '~/models';
 import { isNumericID } from '~/value-objects';
-import { isTimeframe } from '../timeframe';
 import { DashboardSearch } from './dashboard-search';
 
-export const isDashboardSearch = (value: any): value is DashboardSearch => {
+export const isDashboardSearch = (value: unknown): value is DashboardSearch => {
 	try {
 		const ds = <DashboardSearch>value;
 		return (
