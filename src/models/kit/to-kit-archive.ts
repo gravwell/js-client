@@ -6,14 +6,14 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { NumericID, RawNumericID, RawUUID, UUID } from '~/value-objects';
-import { isScheduledQuery, isScheduledScript } from './../scheduled-task';
+import { ID, NumericID, RawNumericID, RawUUID, toNumericID, UUID } from '~/value-objects';
+import { isScheduledQuery, isScheduledScript, ScheduledTask } from '../scheduled-task';
 import { toVersion } from './../version';
 import { DeployRules, KitArchive } from './kit-archive';
 import { RawDeployRules, RawKitArchive } from './raw-kit-archive';
 import { toConfigMacros } from './to-config-macro';
 
-export const toKitArchive = (raw: RawKitArchive): KitArchive => {
+export const toKitArchive = (raw: RawKitArchive, scheduledTasks: Array<ScheduledTask>): KitArchive => {
 	const scriptDeployRules = Object.entries(raw.ScriptDeployRules ?? {}).reduce((acc, cur) => {
 		acc[cur[0]] = toDeployRules(cur[1]);
 		return acc;
@@ -22,9 +22,17 @@ export const toKitArchive = (raw: RawKitArchive): KitArchive => {
 	// previous builds may not have a date so we make it null if it starts with 0001
 	const buildDate = raw.BuildDate.indexOf('0001') === 0 ? null : new Date(raw.BuildDate);
 
-	const scheduled = raw.ScheduledSearches ?? [];
-	const scripts = scheduled.filter(isScheduledScript);
-	const scheduledSearches = scheduled.filter(isScheduledQuery);
+	// The scheduled scripts and scheduled searches come from the API call.
+	// So we need to retrieve all the scripts and scheduled searches to then see which one is what.
+	const scheduledTaskIDs = new Set((raw.ScheduledSearches ?? []).map(toNumericID));
+	const scheduledScriptIDs: Array<ID> = scheduledTasks
+		.filter(isScheduledScript)
+		.filter(script => scheduledTaskIDs.has(script.id))
+		.map(script => script.id);
+	const scheduledSearchIDs: Array<ID> = scheduledTasks
+		.filter(isScheduledQuery)
+		.filter(search => scheduledTaskIDs.has(search.id))
+		.map(search => search.id);
 
 	const embeddedItems = (raw.EmbeddedItems ?? []).map(item => ({
 		name: item.Name,
@@ -62,8 +70,8 @@ export const toKitArchive = (raw: RawKitArchive): KitArchive => {
 		playbooks: toStringArray(raw.Playbooks ?? []),
 		resources: toStringArray(raw.Resources ?? []),
 		savedQueries: toStringArray(raw.SearchLibraries ?? []),
-		scheduledSearches: toStringArray(scheduledSearches),
-		scripts: toStringArray(scripts),
+		scheduledSearches: scheduledSearchIDs,
+		scripts: scheduledScriptIDs,
 		templates: toStringArray(raw.Templates ?? []),
 	};
 };
