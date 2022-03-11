@@ -24,6 +24,7 @@ export const toRawUpdatableSavedQuery = (
 
 	return {
 		ThingUUID: current.id,
+		UID: toRawNumericID(current.userID),
 		GUID: updatable.globalID ?? current.globalID,
 
 		GIDs: (updatable.groupIDs ?? current.groupIDs).map(toRawNumericID),
