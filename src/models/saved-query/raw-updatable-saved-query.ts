@@ -11,6 +11,7 @@ import { RawTimeframe } from '../timeframe';
 
 export interface RawUpdatableSavedQuery {
 	ThingUUID: RawUUID; // gravwell/gravwell#2524
+	UID: RawNumericID;
 	GUID?: RawUUID;
 
 	GIDs: Array<RawNumericID>;
