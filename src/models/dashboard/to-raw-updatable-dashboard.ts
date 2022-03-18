@@ -31,9 +31,14 @@ export const toRawUpdatableDashboard = (updatable: UpdatableDashboard, current: 
 			id: toRawNumericID(t.id),
 			title: t.title,
 			renderer: t.renderer,
-			span: { col: t.dimensions.columns, row: t.dimensions.rows, x: t.position.x, y: t.position.y },
+			span: {
+				col: t.dimensions.columns,
+				row: t.dimensions.rows,
+				x: t.position.x ?? undefined,
+				y: t.position.y ?? undefined,
+			},
 			searchesIndex: t.searchIndex,
-			rendererOptions: t.rendererOptions,
+			rendererOptions: t.rendererOptions ?? undefined,
 		})),
 
 		liveUpdateInterval: (updatable.liveUpdate ?? current.liveUpdate).interval ?? undefined,

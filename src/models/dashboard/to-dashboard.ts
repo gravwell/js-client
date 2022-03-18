@@ -55,15 +55,15 @@ export const toDashboard = (raw: RawDashboard): Dashboard => ({
 		searchIndex: t.searchesIndex,
 
 		renderer: t.renderer,
-		rendererOptions: t.rendererOptions,
+		rendererOptions: t.rendererOptions ?? null,
 
 		dimensions: {
 			columns: t.span.col,
 			rows: t.span.row,
 		},
 		position: {
-			x: t.span.x,
-			y: t.span.y,
+			x: t.span.x ?? null,
+			y: t.span.y ?? null,
 		},
 	})),
 

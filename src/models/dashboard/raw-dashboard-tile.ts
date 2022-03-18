@@ -6,27 +6,14 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
+import { RawNumericID } from '~/value-objects';
 import { DashboardRendererOptions } from './dashboard-renderer-options';
 
-export type CreatableDashboardTile = {
+export type RawDashboardTile = {
+	id: RawNumericID;
 	title: string;
-
-	/**
-	 * Index for the related search in Dashboard.searches.
-	 */
-	searchIndex: number;
-
 	renderer: string;
-	rendererOptions?: DashboardRendererOptions | null;
-
-	dimensions: {
-		columns: number;
-		rows: number;
-	};
-
-	/** `x` and `y` is only mandatory on creation */
-	position: {
-		x: number;
-		y: number;
-	};
+	span: { col: number; row: number; x?: number; y?: number };
+	searchesIndex: number;
+	rendererOptions?: DashboardRendererOptions;
 };

@@ -19,14 +19,18 @@ export interface DashboardTile {
 	searchIndex: number;
 
 	renderer: string;
-	rendererOptions: DashboardRendererOptions;
+
+	/**	Due to the old dashboards we may not have `.rendererOptions` defined */
+	rendererOptions: DashboardRendererOptions | null;
 
 	dimensions: {
 		columns: number;
 		rows: number;
 	};
+
+	/**	Due to the old dashboards we may not have `x` and `y` defined */
 	position: {
-		x: number;
-		y: number;
+		x: number | null;
+		y: number | null;
 	};
 }
