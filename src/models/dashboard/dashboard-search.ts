@@ -17,10 +17,10 @@ export interface BaseDashboardSearch {
 	color: string | null;
 }
 
-export type DashboardSearch = BaseDashboardSearch &
-	(
-		| { type: 'query'; query: string }
-		| { type: 'template'; templateID: UUID }
-		| { type: 'savedQuery'; savedQueryID: UUID }
-		| { type: 'scheduledSearch'; scheduledSearchID: UUID }
-	);
+export type TypedDashboardSearch =
+	| { type: 'query'; query: string }
+	| { type: 'template'; templateID: UUID }
+	| { type: 'savedQuery'; savedQueryID: UUID }
+	| { type: 'scheduledSearch'; scheduledSearchID: UUID };
+
+export type DashboardSearch = BaseDashboardSearch & TypedDashboardSearch;

@@ -18,7 +18,8 @@ export const isDashboardSearch = (value: unknown): value is DashboardSearch => {
 			(isString(ds.name) || isNull(ds.name)) &&
 			(isTimeframe(ds.timeframeOverride) || isNull(ds.timeframeOverride)) &&
 			(isNumericID(ds.cachedSearchID) || isNull(ds.cachedSearchID)) &&
-			(isString(ds.variablePreviewValue) || isNull(ds.variablePreviewValue))
+			(isString(ds.variablePreviewValue) || isNull(ds.variablePreviewValue)) &&
+			isString(ds.type)
 		);
 	} catch {
 		return false;

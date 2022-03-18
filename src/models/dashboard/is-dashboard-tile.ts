@@ -6,7 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { isNumber, isString } from 'lodash';
+import { isNull, isNumber, isString } from 'lodash';
 import { isNumericID } from '~/value-objects';
 import { DashboardTile } from './dashboard-tile';
 import { isDashboardRendererOptions } from './is-dashboard-renderer-options';
@@ -19,11 +19,13 @@ export const isDashboardTile = (value: unknown): value is DashboardTile => {
 			isString(dt.title) &&
 			isNumber(dt.searchIndex) &&
 			isString(dt.renderer) &&
-			isDashboardRendererOptions(dt.rendererOptions) &&
+			/**	Due to the old dashboards we may not have `.rendererOptions` defined */
+			(isNull(dt.rendererOptions) || isDashboardRendererOptions(dt.rendererOptions)) &&
 			isNumber(dt.dimensions.columns) &&
 			isNumber(dt.dimensions.rows) &&
-			isNumber(dt.position.x) &&
-			isNumber(dt.position.y)
+			/**	Due to the old dashboards we may not have `x` and `y` defined */
+			(isNull(dt.position.x) || isNumber(dt.position.x)) &&
+			(isNull(dt.position.y) || isNumber(dt.position.y))
 		);
 	} catch {
 		return false;
