@@ -17,7 +17,7 @@ export const isDashboardTile = (value: unknown): value is DashboardTile => {
 		return (
 			isNumericID(dt.id) &&
 			isString(dt.title) &&
-			isNumber(dt.searchIndex) &&
+			(isNumber(dt.searchIndex) || (isString(dt.searchIndex) && Number.isInteger(parseInt(dt.searchIndex, 10)))) &&
 			isString(dt.renderer) &&
 			/**	Due to the old dashboards we may not have `.rendererOptions` defined */
 			(isNull(dt.rendererOptions) || isDashboardRendererOptions(dt.rendererOptions)) &&

@@ -15,8 +15,9 @@ export interface DashboardTile {
 
 	/**
 	 * Index for the related search in Dashboard.searches.
+	 * `string` included for legacy dashboard support.
 	 */
-	searchIndex: number;
+	searchIndex: number | string;
 
 	renderer: string;
 
