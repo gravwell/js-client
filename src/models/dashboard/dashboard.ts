@@ -40,7 +40,8 @@ export interface Dashboard {
 
 	liveUpdate: DashboardLiveUpdate;
 
-	timeframe: Timeframe;
+	/** Legacy support: `timeframe` may be undefined. */
+	timeframe?: Timeframe;
 
 	searches: Array<DashboardSearch>;
 

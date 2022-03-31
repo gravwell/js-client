@@ -34,9 +34,10 @@ export interface RawDashboard {
 			margin?: string | number | null; // string is a number
 		};
 
-		searches: Array<RawDashboardSearch>;
-		tiles: Array<RawDashboardTile>;
-		timeframe: RawTimeframe;
+		/** Legacy support: `searches`, `tiles`, and/or `timeframe` may be undefined. */
+		searches?: Array<RawDashboardSearch>;
+		tiles?: Array<RawDashboardTile>;
+		timeframe?: RawTimeframe;
 		version?: 1 | 2;
 		lastDataUpdate?: string; // Timestamp
 	};

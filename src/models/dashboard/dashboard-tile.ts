@@ -10,7 +10,8 @@ import { NumericID } from '~/value-objects';
 import { DashboardRendererOptions } from './dashboard-renderer-options';
 
 export interface DashboardTile {
-	id: NumericID;
+	/** Legacy support: `id` may be undefined. */
+	id?: NumericID;
 	title: string;
 
 	/**

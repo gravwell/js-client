@@ -10,7 +10,8 @@ import { RawNumericID } from '~/value-objects';
 import { DashboardRendererOptions } from './dashboard-renderer-options';
 
 export type RawDashboardTile = {
-	id: RawNumericID;
+	/** Legacy support: `id` may be undefined. */
+	id?: RawNumericID;
 	title: string;
 	renderer: string;
 	span: { col: number; row: number; x?: number; y?: number };

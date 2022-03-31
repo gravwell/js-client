@@ -40,7 +40,8 @@ export interface RawUpdatableDashboard {
 			};
 		}>;
 		tiles: Array<{
-			id: RawNumericID;
+			/** Legacy support: `id` may be undefined. */
+			id?: RawNumericID;
 			title: string;
 			renderer: string;
 			/**	Due to the old dashboards we may not have `x` and `y` defined */
@@ -50,7 +51,8 @@ export interface RawUpdatableDashboard {
 			/**	Due to the old dashboards we may not have `.rendererOptions` defined */
 			rendererOptions?: DashboardRendererOptions;
 		}>;
-		timeframe: RawTimeframe;
+		/** Legacy support: `timeframe` may be undefined. */
+		timeframe?: RawTimeframe;
 		version?: number;
 		lastDataUpdate?: string; // Timestamp
 	};
