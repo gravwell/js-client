@@ -46,10 +46,11 @@ export const toDashboard = (raw: RawDashboard): Dashboard => ({
 			? { enabled: true, interval: raw.Data.liveUpdateInterval }
 			: { enabled: false },
 
-	timeframe: toTimeframe(raw.Data.timeframe),
+	timeframe: raw.Data.timeframe ? toTimeframe(raw.Data.timeframe) : undefined,
 
-	tiles: raw.Data.tiles.map(t => ({
-		id: toNumericID(t.id),
+	tiles: (raw.Data.tiles ?? []).map(t => ({
+		/** Legacy support: `id` may be undefined. */
+		id: t.id ? toNumericID(t.id) : undefined,
 		title: t.title,
 
 		searchIndex: t.searchesIndex,
@@ -67,7 +68,7 @@ export const toDashboard = (raw: RawDashboard): Dashboard => ({
 		},
 	})),
 
-	searches: raw.Data.searches.map<DashboardSearch>(s => {
+	searches: (raw.Data.searches ?? []).map<DashboardSearch>(s => {
 		const base: BaseDashboardSearch = {
 			name: s.alias,
 			timeframeOverride: Object.keys(s.timeframe ?? {}).length === 0 ? null : toTimeframe(<RawTimeframe>s.timeframe),

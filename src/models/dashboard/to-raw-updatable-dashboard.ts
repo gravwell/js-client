@@ -23,12 +23,17 @@ export const toRawUpdatableDashboard = (updatable: UpdatableDashboard, current: 
 	Labels: updatable.labels ?? current.labels,
 
 	Data: {
-		timeframe: toRawTimeframe(updatable.timeframe ?? current.timeframe),
+		timeframe: updatable.timeframe
+			? toRawTimeframe(updatable.timeframe)
+			: current.timeframe
+			? toRawTimeframe(current.timeframe)
+			: undefined,
 
 		searches: (updatable.searches ?? current.searches).map(toRawCreatableDashboardSearch),
 
 		tiles: (updatable.tiles ?? current.tiles).map(t => ({
-			id: toRawNumericID(t.id),
+			/** Legacy support: `id` may be undefined. */
+			id: t.id ? toRawNumericID(t.id) : undefined,
 			title: t.title,
 			renderer: t.renderer,
 			span: {
