@@ -8,12 +8,12 @@
 
 import * as base64 from 'base-64';
 import { addMinutes, subMinutes } from 'date-fns';
-import { isUndefined, last as lastElt, range as rangeLeft, sum, zip } from 'lodash';
+import { isUndefined, last as lastElt, matches, range as rangeLeft, sum, zip } from 'lodash';
 import { firstValueFrom, lastValueFrom, Observable } from 'rxjs';
-import { first, last, map, takeWhile, toArray } from 'rxjs/operators';
+import { map, skipWhile, takeWhile, toArray } from 'rxjs/operators';
 import { v4 as uuidv4 } from 'uuid';
 import { makeCreateOneMacro, makeDeleteOneMacro } from '~/functions/macros';
-import { SearchFilter } from '~/models';
+import { SearchFilter, SearchStats } from '~/models';
 import { RawSearchEntries, TextSearchEntries } from '~/models/search/search-entries';
 import { integrationTest, myCustomMatchers, sleep, TEST_BASE_API_CONTEXT } from '~/tests';
 import { makeIngestMultiLineEntry } from '../../ingestors/ingest-multi-line-entry';
@@ -989,5 +989,58 @@ describe('attachToOneSearch()', () => {
 			}),
 			25000,
 		);
+
+		it(
+			'Should keep the dateRange when update the filter multiple times',
+			integrationTest(async () => {
+				const subscribeToOneSearch = makeSubscribeToOneSearch(TEST_BASE_API_CONTEXT);
+				const attachToOneSearch = makeAttachToOneSearch(TEST_BASE_API_CONTEXT);
+
+				const query = `tag=*`;
+				const initialFilter: SearchFilter = { entriesOffset: { index: 0, count: count }, dateRange: { start, end } };
+
+				const searchCreated = await subscribeToOneSearch(query, { filter: initialFilter });
+				const search = await attachToOneSearch(searchCreated.searchID, { filter: initialFilter });
+				// Expect the filter to be the initial one
+				await expectStatsFilter(search.stats$, initialFilter);
+
+				////
+				// Update property
+				////
+				const updatedDateRange = { dateRange: { start: start, end: addMinutes(end, 10000) } };
+				const entriesUpdatedFilter = { entriesOffset: { index: 0, count: count / 2 } };
+
+				search.setFilter(updatedDateRange);
+				// Expect the filter to be the updatedDateRange
+				await expectStatsFilter(search.stats$, updatedDateRange);
+
+				// Update twice to clear previous cache
+				search.setFilter(entriesUpdatedFilter);
+				// Expect the filter data range to still be the updatedDateRange
+				await expectStatsFilter(search.stats$, entriesUpdatedFilter);
+
+				search.setFilter(entriesUpdatedFilter);
+				// Expect the filter data range to still be the updatedDateRange
+				await expectStatsFilter(search.stats$, entriesUpdatedFilter);
+
+				////
+				// Check filter
+				////
+				const stats = await firstValueFrom(search.stats$);
+				expect(stats.filter)
+					.withContext(`The filter should be equal to the one used, plus the default values for undefined properties`)
+					.toPartiallyEqual(updatedDateRange);
+			}),
+			25000,
+		);
 	});
 });
+
+const expectStatsFilter = async (stats$: Observable<SearchStats>, filter: SearchFilter): Promise<void> => {
+	const matchesFilter = matches(filter);
+	const statsP = firstValueFrom(stats$.pipe(skipWhile(x => matchesFilter(x.filter) === false)));
+
+	await expectAsync(statsP)
+		.withContext(`Expecting the filter to be ${JSON.stringify(filter)}`)
+		.toBeResolved();
+};
