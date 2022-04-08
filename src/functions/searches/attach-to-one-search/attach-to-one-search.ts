@@ -459,14 +459,8 @@ export const makeAttachToOneSearch = (context: APIContext) => {
 		);
 
 		const stats$ = combineLatest([
-			rawSearchStats$.pipe(
-				distinctUntilChanged<RawResponseForSearchStatsMessageReceived>(isEqual),
-				tap(() => console.log('rawSearchStats$')),
-			),
-			rawSearchDetails$.pipe(
-				distinctUntilChanged<RawResponseForSearchDetailsMessageReceived>(isEqual),
-				tap(() => console.log('rawSearchDetails$')),
-			),
+			rawSearchStats$.pipe(distinctUntilChanged<RawResponseForSearchStatsMessageReceived>(isEqual)),
+			rawSearchDetails$.pipe(distinctUntilChanged<RawResponseForSearchDetailsMessageReceived>(isEqual)),
 		]).pipe(
 			map(
 				([rawStats, rawDetails]): SearchStats => {
