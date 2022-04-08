@@ -60,7 +60,7 @@ export const makeKeepDataRangeTest = ({
 	};
 };
 
-const expectStatsFilter = async (stats$: Observable<SearchStats>, filter: SearchFilter): Promise<void> => {
+export const expectStatsFilter = async (stats$: Observable<SearchStats>, filter: SearchFilter): Promise<void> => {
 	const matchesFilter = matches(filter);
 	const statsP = firstValueFrom(stats$.pipe(skipWhile(x => matchesFilter(x.filter) === false)));
 
