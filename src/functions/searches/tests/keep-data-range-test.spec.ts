@@ -1,23 +1,28 @@
 import { addMinutes } from 'date-fns';
 import { matches } from 'lodash';
 import { firstValueFrom, Observable, skipWhile } from 'rxjs';
-import { SearchFilter, SearchStats } from '~/models';
-import { integrationTest, TEST_BASE_API_CONTEXT } from '~/tests';
-import { makeAttachToOneSearch } from '../attach-to-one-search/attach-to-one-search';
-import { makeSubscribeToOneSearch } from '../subscribe-to-one-search/subscribe-to-one-search';
+import { SearchFilter, SearchStats, SearchSubscription } from '~/models';
+import { integrationTest } from '~/tests';
 
-export const keepDataRangeTest = ({ start, end, count }: { start: Date; end: Date; count: number }) => {
+export type CreateSearchFn = (initialFilter: SearchFilter) => Promise<SearchSubscription>;
+
+export const keepDataRangeTest = ({
+	start,
+	end,
+	count,
+	createSearch,
+}: {
+	start: Date;
+	end: Date;
+	count: number;
+	createSearch: CreateSearchFn;
+}) => {
 	it(
 		'Should keep the dateRange when update the filter multiple times',
 		integrationTest(async () => {
-			const subscribeToOneSearch = makeSubscribeToOneSearch(TEST_BASE_API_CONTEXT);
-			const attachToOneSearch = makeAttachToOneSearch(TEST_BASE_API_CONTEXT);
-
-			const query = `tag=*`;
 			const initialFilter: SearchFilter = { entriesOffset: { index: 0, count: count }, dateRange: { start, end } };
 
-			const searchCreated = await subscribeToOneSearch(query, { filter: initialFilter });
-			const search = await attachToOneSearch(searchCreated.searchID, { filter: initialFilter });
+			const search = await createSearch(initialFilter);
 			// Expect the filter to be the initial one
 			await expectStatsFilter(search.stats$, initialFilter);
 

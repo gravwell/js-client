@@ -10,14 +10,15 @@ import * as base64 from 'base-64';
 import { addMinutes, isEqual as datesAreEqual, subMinutes } from 'date-fns';
 import { isArray, isUndefined, sum, zip } from 'lodash';
 import { firstValueFrom, lastValueFrom, Observable } from 'rxjs';
-import { first, last, map, takeWhile, toArray } from 'rxjs/operators';
+import { last, map, takeWhile, toArray } from 'rxjs/operators';
 import { v4 as uuidv4 } from 'uuid';
 import { makeCreateOneAutoExtractor } from '~/functions/auto-extractors';
-import { DataExplorerEntry, ElementFilter, isDataExplorerEntry, SearchFilter } from '~/models';
+import { DataExplorerEntry, ElementFilter, isDataExplorerEntry, SearchFilter, SearchSubscription } from '~/models';
 import { RawSearchEntries } from '~/models/search/search-entries';
 import { integrationTest, myCustomMatchers, sleep, TEST_BASE_API_CONTEXT } from '~/tests';
 import { makeIngestMultiLineEntry } from '../../ingestors/ingest-multi-line-entry';
 import { makeGetAllTags } from '../../tags/get-all-tags';
+import { keepDataRangeTest } from '../tests';
 import { makeSubscribeToOneExplorerSearch } from './subscribe-to-one-explorer-search';
 
 interface Entry {
@@ -568,4 +569,17 @@ describe('subscribeToOneExplorerSearch()', () => {
 		}),
 		25000,
 	);
+
+	keepDataRangeTest({
+		start,
+		end,
+		count,
+		createSearch: async (initialFilter: SearchFilter): Promise<SearchSubscription> => {
+			const subscribeToOneExplorerSearch = makeSubscribeToOneExplorerSearch(TEST_BASE_API_CONTEXT);
+
+			const query = `tag=*`;
+
+			return await subscribeToOneExplorerSearch(query, { filter: initialFilter });
+		},
+	});
 });

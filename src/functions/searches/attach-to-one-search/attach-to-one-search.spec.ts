@@ -13,7 +13,7 @@ import { firstValueFrom, lastValueFrom, Observable } from 'rxjs';
 import { map, takeWhile, toArray } from 'rxjs/operators';
 import { v4 as uuidv4 } from 'uuid';
 import { makeCreateOneMacro, makeDeleteOneMacro } from '~/functions/macros';
-import { SearchFilter } from '~/models';
+import { SearchFilter, SearchSubscription } from '~/models';
 import { RawSearchEntries, TextSearchEntries } from '~/models/search/search-entries';
 import { integrationTest, myCustomMatchers, sleep, TEST_BASE_API_CONTEXT } from '~/tests';
 import { makeIngestMultiLineEntry } from '../../ingestors/ingest-multi-line-entry';
@@ -991,6 +991,18 @@ describe('attachToOneSearch()', () => {
 			25000,
 		);
 
-		keepDataRangeTest({ start, end, count });
+		keepDataRangeTest({
+			start,
+			end,
+			count,
+			createSearch: async (initialFilter: SearchFilter): Promise<SearchSubscription> => {
+				const subscribeToOneSearch = makeSubscribeToOneSearch(TEST_BASE_API_CONTEXT);
+				const attachToOneSearch = makeAttachToOneSearch(TEST_BASE_API_CONTEXT);
+
+				const query = `tag=*`;
+				const searchCreated = await subscribeToOneSearch(query, { filter: initialFilter });
+				return await attachToOneSearch(searchCreated.searchID, { filter: initialFilter });
+			},
+		});
 	});
 });
