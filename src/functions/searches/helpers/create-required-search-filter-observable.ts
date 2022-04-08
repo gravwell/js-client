@@ -50,19 +50,18 @@ export const createRequiredSearchFilterObservable = ({
 		scan(
 			(acc, curr) => ({
 				entriesOffset: {
-					index: curr.entriesOffset?.index ?? acc?.entriesOffset?.index ?? initialFilter.entriesOffset.index,
-					count: curr.entriesOffset?.count ?? acc?.entriesOffset?.count ?? initialFilter.entriesOffset.count,
+					index: curr.entriesOffset?.index ?? acc.entriesOffset.index,
+					count: curr.entriesOffset?.count ?? acc.entriesOffset.count,
 				},
 				dateRange: {
 					start: defaultValues.dateStart,
 					end: defaultValues.dateEnd,
-					...expandDateRange(initialFilter.dateRange),
-					...expandDateRange(acc?.dateRange),
+					...expandDateRange(acc.dateRange),
 					...expandDateRange(curr.dateRange),
 				},
-				desiredGranularity: curr.desiredGranularity ?? acc?.desiredGranularity ?? initialFilter.desiredGranularity,
-				overviewGranularity: curr.overviewGranularity ?? acc?.overviewGranularity ?? initialFilter.overviewGranularity,
-				zoomGranularity: curr.zoomGranularity ?? acc?.zoomGranularity ?? initialFilter.zoomGranularity,
+				desiredGranularity: curr.desiredGranularity ?? acc.desiredGranularity,
+				overviewGranularity: curr.overviewGranularity ?? acc.overviewGranularity,
+				zoomGranularity: curr.zoomGranularity ?? acc.zoomGranularity,
 				elementFilters: initialFilter.elementFilters,
 			}),
 			initialFilter,
