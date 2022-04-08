@@ -19,3 +19,4 @@ export * from './save-one-search';
 export * from './subscribe-to-one-explorer-search';
 export * from './subscribe-to-one-search';
 export * from './validate-one-query';
+export * from './helpers/create-required-search-filter-observable';

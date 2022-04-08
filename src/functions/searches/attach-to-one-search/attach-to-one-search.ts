@@ -22,7 +22,6 @@ import {
 	Subscription,
 } from 'rxjs';
 import {
-	bufferCount,
 	catchError,
 	concatMap,
 	distinctUntilChanged,
@@ -53,6 +52,7 @@ import {
 import { ID, Percentage, toNumericID } from '~/value-objects';
 import { APIContext, debounceWithBackoffWhile } from '../../utils';
 import { attachSearch } from '../attach-search';
+import { createRequiredSearchFilterObservable } from '../helpers/create-required-search-filter-observable';
 import { makeSubscribeToOneRawSearch } from '../subscribe-to-one-raw-search';
 import {
 	countEntriesFromModules,
@@ -214,40 +214,21 @@ export const makeAttachToOneSearch = (context: APIContext) => {
 			takeUntil(close$),
 		);
 
-		const expandDateRange = (dateRange: SearchFilter['dateRange']): Partial<DateRange> => {
-			if (dateRange === 'preview') return previewDateRange;
-			return dateRange ?? {};
-		};
-
 		const _filter$ = new BehaviorSubject<SearchFilter>(initialFilter);
 		const setFilter = (filter: SearchFilter | null): void => {
 			if (closed) return undefined;
 			_filter$.next(filter ?? initialFilter);
 		};
-		const filter$ = _filter$.asObservable().pipe(
-			startWith<SearchFilter>(initialFilter),
-			bufferCount(2, 1),
-			map(
-				([prev, curr]): RequiredSearchFilter => ({
-					entriesOffset: {
-						index: curr.entriesOffset?.index ?? prev.entriesOffset?.index ?? initialFilter.entriesOffset.index,
-						count: curr.entriesOffset?.count ?? prev.entriesOffset?.count ?? initialFilter.entriesOffset.count,
-					},
-					dateRange: {
-						start: defaultStart,
-						end: defaultEnd,
-						...expandDateRange(initialFilter.dateRange),
-						...expandDateRange(prev.dateRange),
-						...expandDateRange(curr.dateRange),
-					},
-					desiredGranularity: curr.desiredGranularity ?? prev.desiredGranularity ?? initialFilter.desiredGranularity,
-					overviewGranularity:
-						curr.overviewGranularity ?? prev.overviewGranularity ?? initialFilter.overviewGranularity,
-					zoomGranularity: curr.zoomGranularity ?? prev.zoomGranularity ?? initialFilter.zoomGranularity,
-					elementFilters: initialFilter.elementFilters,
-				}),
-			),
 
+		const filter$ = createRequiredSearchFilterObservable({
+			filter$: _filter$.asObservable(),
+			initialFilter,
+			previewDateRange,
+			defaultValues: {
+				dateStart: defaultStart,
+				dateEnd: defaultEnd,
+			},
+		}).pipe(
 			// Complete when/if the user calls .close()
 			takeUntil(close$),
 		);
