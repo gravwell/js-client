@@ -6,7 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { Observable, scan, startWith } from 'rxjs';
+import { Observable, scan } from 'rxjs';
 import { SearchFilter } from '~/main';
 import { RequiredSearchFilter } from '../subscribe-to-one-search/helpers';
 
@@ -46,7 +46,6 @@ export const createRequiredSearchFilterObservable = ({
 	};
 
 	const searchFilter$: Observable<RequiredSearchFilter> = filter$.pipe(
-		startWith<SearchFilter>(initialFilter),
 		scan(
 			(acc, curr) => ({
 				entriesOffset: {
