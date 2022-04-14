@@ -7,7 +7,7 @@
  **************************************************************************/
 
 import { isAfter, subHours } from 'date-fns';
-import { isBoolean, isNil, isNull, isUndefined, uniqueId } from 'lodash';
+import { isBoolean, isEqual, isNil, isNull, isUndefined, uniqueId } from 'lodash';
 import {
 	BehaviorSubject,
 	combineLatest,
@@ -22,7 +22,6 @@ import {
 	Subscription,
 } from 'rxjs';
 import {
-	bufferCount,
 	catchError,
 	concatMap,
 	distinctUntilChanged,
@@ -55,6 +54,7 @@ import {
 import { toDataExplorerEntry } from '~/models/search/to-data-explorer-entry';
 import { Percentage, RawJSON, toNumericID } from '~/value-objects';
 import { APIContext, debounceWithBackoffWhile } from '../../utils';
+import { createRequiredSearchFilterObservable } from '../helpers/create-required-search-filter-observable';
 import { initiateSearch } from '../initiate-search';
 import { makeModifyOneQuery } from '../modify-one-query';
 import { makeSubscribeToOneRawSearch } from '../subscribe-to-one-raw-search';
@@ -236,40 +236,21 @@ export const makeSubscribeToOneExplorerSearch = (context: APIContext) => {
 			takeUntil(close$),
 		);
 
-		const expandDateRange = (dateRange: SearchFilter['dateRange']): Partial<DateRange> => {
-			if (dateRange === 'preview') return previewDateRange;
-			return dateRange ?? {};
-		};
-
 		const _filter$ = new BehaviorSubject<SearchFilter>(initialFilter);
 		const setFilter = (filter: SearchFilter | null): void => {
 			if (closed) return undefined;
 			_filter$.next(filter ?? initialFilter);
 		};
-		const filter$ = _filter$.asObservable().pipe(
-			startWith<SearchFilter>(initialFilter),
-			bufferCount(2, 1),
-			map(
-				([prev, curr]): RequiredSearchFilter => ({
-					entriesOffset: {
-						index: curr.entriesOffset?.index ?? prev.entriesOffset?.index ?? initialFilter.entriesOffset.index,
-						count: curr.entriesOffset?.count ?? prev.entriesOffset?.count ?? initialFilter.entriesOffset.count,
-					},
-					dateRange: {
-						start: defaultStart,
-						end: defaultEnd,
-						...expandDateRange(initialFilter.dateRange),
-						...expandDateRange(prev.dateRange),
-						...expandDateRange(curr.dateRange),
-					},
-					desiredGranularity: curr.desiredGranularity ?? prev.desiredGranularity ?? initialFilter.desiredGranularity,
-					overviewGranularity:
-						curr.overviewGranularity ?? prev.overviewGranularity ?? initialFilter.overviewGranularity,
-					zoomGranularity: curr.zoomGranularity ?? prev.zoomGranularity ?? initialFilter.zoomGranularity,
-					elementFilters: initialFilter.elementFilters,
-				}),
-			),
 
+		const filter$ = createRequiredSearchFilterObservable({
+			filter$: _filter$.asObservable(),
+			initialFilter,
+			previewDateRange,
+			defaultValues: {
+				dateStart: defaultStart,
+				dateEnd: defaultEnd,
+			},
+		}).pipe(
 			// Complete when/if the user calls .close()
 			takeUntil(close$),
 		);
@@ -479,7 +460,10 @@ export const makeSubscribeToOneExplorerSearch = (context: APIContext) => {
 			takeUntil(close$),
 		);
 
-		const stats$ = combineLatest(rawSearchStats$, rawSearchDetails$).pipe(
+		const stats$ = combineLatest([
+			rawSearchStats$.pipe(distinctUntilChanged<RawResponseForSearchStatsMessageReceived>(isEqual)),
+			rawSearchDetails$.pipe(distinctUntilChanged<RawResponseForSearchDetailsMessageReceived>(isEqual)),
+		]).pipe(
 			map(
 				([rawStats, rawDetails]): SearchStats => {
 					const filterID =
@@ -557,7 +541,9 @@ export const makeSubscribeToOneExplorerSearch = (context: APIContext) => {
 				},
 			),
 
-			shareReplay({ bufferSize: 1, refCount: true }),
+			distinctUntilChanged<SearchStats>(isEqual),
+
+			shareReplay({ bufferSize: 1, refCount: false }),
 
 			// Complete when/if the user calls .close()
 			takeUntil(close$),

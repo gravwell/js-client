@@ -10,15 +10,16 @@ import * as base64 from 'base-64';
 import { addMinutes, subMinutes } from 'date-fns';
 import { isUndefined, last as lastElt, range as rangeLeft, sum, zip } from 'lodash';
 import { firstValueFrom, lastValueFrom, Observable } from 'rxjs';
-import { first, last, map, takeWhile, toArray } from 'rxjs/operators';
+import { map, takeWhile, toArray } from 'rxjs/operators';
 import { v4 as uuidv4 } from 'uuid';
 import { makeCreateOneMacro, makeDeleteOneMacro } from '~/functions/macros';
-import { SearchFilter } from '~/models';
+import { SearchFilter, SearchSubscription } from '~/models';
 import { RawSearchEntries, TextSearchEntries } from '~/models/search/search-entries';
 import { integrationTest, myCustomMatchers, sleep, TEST_BASE_API_CONTEXT } from '~/tests';
 import { makeIngestMultiLineEntry } from '../../ingestors/ingest-multi-line-entry';
 import { makeGetAllTags } from '../../tags/get-all-tags';
 import { makeSubscribeToOneSearch } from '../subscribe-to-one-search';
+import { expectStatsFilter, makeKeepDataRangeTest } from '../tests/keep-data-range-test.spec';
 import { makeAttachToOneSearch } from './attach-to-one-search';
 
 interface Entry {
@@ -535,10 +536,13 @@ describe('attachToOneSearch()', () => {
 				const searchCreated = await subscribeToOneSearch(query, { filter });
 				const search = await attachToOneSearch(searchCreated.searchID, { filter });
 
+				await expectStatsFilter(search.stats$, filter);
+
 				let [statsOverview, statsZoom] = await Promise.all([
 					firstValueFrom(search.statsOverview$),
 					firstValueFrom(search.statsZoom$),
 				]);
+
 				expect(sum(statsOverview.frequencyStats.map(x => x.count)))
 					.withContext('The sum of counts from statsOverview should equal the total count ingested')
 					.toEqual(count);
@@ -559,6 +563,8 @@ describe('attachToOneSearch()', () => {
 				// Narrow the search window by moving the end date sooner by delta minutes
 				const filter2: SearchFilter = { dateRange: { start, end: subMinutes(end, delta) } };
 				search.setFilter(filter2);
+
+				await expectStatsFilter(search.stats$, filter2);
 
 				[statsOverview, statsZoom] = await Promise.all([
 					firstValueFrom(search.statsOverview$),
@@ -592,6 +598,8 @@ describe('attachToOneSearch()', () => {
 				const searchCreated = await subscribeToOneSearch(query, { filter });
 				const search = await attachToOneSearch(searchCreated.searchID, { filter });
 
+				await expectStatsFilter(search.stats$, filter);
+
 				let [statsOverview, statsZoom] = await Promise.all([
 					firstValueFrom(search.statsOverview$),
 					firstValueFrom(search.statsZoom$),
@@ -615,6 +623,8 @@ describe('attachToOneSearch()', () => {
 				// Narrow the search window by moving the end date sooner by delta minutes
 				const filter2: SearchFilter = { dateRange: { start, end: subMinutes(end, delta) } };
 				search.setFilter(filter2);
+
+				await expectStatsFilter(search.stats$, filter2);
 
 				[statsOverview, statsZoom] = await Promise.all([
 					firstValueFrom(search.statsOverview$),
@@ -691,6 +701,8 @@ describe('attachToOneSearch()', () => {
 				const searchCreated = await subscribeToOneSearch(query, { filter: filter1 });
 				const search = await attachToOneSearch(searchCreated.searchID, { filter: filter1 });
 
+				await expectStatsFilter(search.stats$, filter1);
+
 				let [statsOverview, statsZoom] = await Promise.all([
 					firstValueFrom(search.statsOverview$),
 					firstValueFrom(search.statsZoom$),
@@ -725,6 +737,8 @@ describe('attachToOneSearch()', () => {
 					zoomGranularity: newZoomGranularity,
 				};
 				search.setFilter(filter2);
+
+				await expectStatsFilter(search.stats$, filter2);
 
 				[statsOverview, statsZoom] = await Promise.all([
 					firstValueFrom(search.statsOverview$),
@@ -765,6 +779,8 @@ describe('attachToOneSearch()', () => {
 				const searchCreated = await subscribeToOneSearch(query, { filter: filter1 });
 				const search = await attachToOneSearch(searchCreated.searchID, { filter: filter1 });
 
+				await expectStatsFilter(search.stats$, filter1);
+
 				let [statsOverview, statsZoom] = await Promise.all([
 					firstValueFrom(search.statsOverview$),
 					firstValueFrom(search.statsZoom$),
@@ -797,6 +813,8 @@ describe('attachToOneSearch()', () => {
 					zoomGranularity: newZoomGranularity,
 				};
 				search.setFilter(filter2);
+
+				await expectStatsFilter(search.stats$, filter2);
 
 				[statsOverview, statsZoom] = await Promise.all([
 					firstValueFrom(search.statsOverview$),
@@ -845,6 +863,8 @@ describe('attachToOneSearch()', () => {
 				const searchCreated = await subscribeToOneSearch(query, { filter: filter1 });
 				const search = await attachToOneSearch(searchCreated.searchID, { filter: filter1 });
 
+				await expectStatsFilter(search.stats$, filter1);
+
 				let [statsOverview, statsZoom] = await Promise.all([
 					firstValueFrom(search.statsOverview$),
 					firstValueFrom(search.statsZoom$),
@@ -881,6 +901,8 @@ describe('attachToOneSearch()', () => {
 					zoomGranularity: newZoomGranularity,
 				};
 				search.setFilter(filter2);
+
+				await expectStatsFilter(search.stats$, filter2);
 
 				[statsOverview, statsZoom] = await Promise.all([
 					firstValueFrom(search.statsOverview$),
@@ -926,10 +948,13 @@ describe('attachToOneSearch()', () => {
 				const searchCreated = await subscribeToOneSearch(query, { filter: filter1 });
 				const search = await attachToOneSearch(searchCreated.searchID, { filter: filter1 });
 
+				await expectStatsFilter(search.stats$, filter1);
+
 				let [statsOverview, statsZoom] = await Promise.all([
 					firstValueFrom(search.statsOverview$),
 					firstValueFrom(search.statsZoom$),
 				]);
+
 				expect(sum(statsOverview.frequencyStats.map(x => x.count)))
 					.withContext('The sum of counts from statsOverview should equal the total count ingested')
 					.toEqual(count);
@@ -960,6 +985,8 @@ describe('attachToOneSearch()', () => {
 				};
 				search.setFilter(filter2);
 
+				await expectStatsFilter(search.stats$, filter2);
+
 				[statsOverview, statsZoom] = await Promise.all([
 					firstValueFrom(search.statsOverview$),
 					firstValueFrom(search.statsZoom$),
@@ -987,6 +1014,26 @@ describe('attachToOneSearch()', () => {
 					.withContext('statsZoom should use the default granularity')
 					.toEqual(overviewGranularity);
 			}),
+			25000,
+		);
+
+		it(
+			'Should keep the dateRange when update the filter multiple times',
+			integrationTest(
+				makeKeepDataRangeTest({
+					start,
+					end,
+					count,
+					createSearch: async (initialFilter: SearchFilter): Promise<SearchSubscription> => {
+						const subscribeToOneSearch = makeSubscribeToOneSearch(TEST_BASE_API_CONTEXT);
+						const attachToOneSearch = makeAttachToOneSearch(TEST_BASE_API_CONTEXT);
+
+						const query = `tag=*`;
+						const searchCreated = await subscribeToOneSearch(query, { filter: initialFilter });
+						return await attachToOneSearch(searchCreated.searchID, { filter: initialFilter });
+					},
+				}),
+			),
 			25000,
 		);
 	});
