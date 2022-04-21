@@ -20,8 +20,8 @@ export interface RawActionable {
 	Updated: string; // Timestamp
 	Contents: {
 		menuLabel: null | string;
-		actions: Array<RawActionableAction>;
-		triggers: Array<RawActionableTrigger>;
+		actions?: Array<RawActionableAction> | null;
+		triggers?: Array<RawActionableTrigger> | null;
 	};
 	Labels: null | Array<string>;
 	Disabled: boolean;
