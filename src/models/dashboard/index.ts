@@ -1,5 +1,5 @@
 /*************************************************************************
- * Copyright 2021 Gravwell, Inc. All rights reserved.
+ * Copyright 2022 Gravwell, Inc. All rights reserved.
  * Contact: <legal@gravwell.io>
  *
  * This software may be modified and distributed under the terms of the
@@ -15,7 +15,6 @@ export * from './dashboard-renderer-options';
 export * from './dashboard-search';
 export * from './dashboard-tile';
 export * from './is-dashboard';
-export * from './is-dashboard-search';
 export * from './raw-creatable-dashboard';
 export * from './raw-dashboard';
 export * from './raw-updatable-dashboard';
@@ -25,3 +24,7 @@ export * from './to-raw-creatable-dashboard-search';
 export * from './to-raw-creatable-dashboard-tile';
 export * from './to-raw-updatable-dashboard';
 export * from './updatable-dashboard';
+export * from './is-dashboard-live-update';
+export * from './is-dashboard-renderer-options';
+export * from './is-dashboard-search';
+export * from './is-dashboard-tile';

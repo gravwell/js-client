@@ -1,5 +1,5 @@
 /*************************************************************************
- * Copyright 2021 Gravwell, Inc. All rights reserved.
+ * Copyright 2022 Gravwell, Inc. All rights reserved.
  * Contact: <legal@gravwell.io>
  *
  * This software may be modified and distributed under the terms of the
@@ -40,14 +40,19 @@ export interface RawUpdatableDashboard {
 			};
 		}>;
 		tiles: Array<{
-			id: RawNumericID;
+			/** Legacy support: `id` may be undefined. */
+			id?: RawNumericID;
 			title: string;
 			renderer: string;
-			span: { col: number; row: number; x: number; y: number };
-			searchesIndex: number;
-			rendererOptions: DashboardRendererOptions;
+			/**	Due to the old dashboards we may not have `x` and `y` defined */
+			span: { col: number; row: number; x?: number; y?: number };
+			/** `string` included for legacy dashboard support. */
+			searchesIndex: number | string;
+			/**	Due to the old dashboards we may not have `.rendererOptions` defined */
+			rendererOptions?: DashboardRendererOptions;
 		}>;
-		timeframe: RawTimeframe;
+		/** Legacy support: `timeframe` may be undefined. */
+		timeframe?: RawTimeframe;
 		version?: number;
 		lastDataUpdate?: string; // Timestamp
 	};

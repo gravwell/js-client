@@ -1,5 +1,5 @@
 /*************************************************************************
- * Copyright 2021 Gravwell, Inc. All rights reserved.
+ * Copyright 2022 Gravwell, Inc. All rights reserved.
  * Contact: <legal@gravwell.io>
  *
  * This software may be modified and distributed under the terms of the
@@ -30,6 +30,7 @@ export type SearchEntries =
 	| ChartSearchEntries
 	| FDGSearchEntries
 	| GaugeSearchEntries
+	| NumberCardEntries
 	| HeatmapSearchEntries
 	| PointToPointSearchEntries
 	| PointmapSearchEntries
@@ -126,8 +127,17 @@ export interface FDGEdge {
 
 export interface GaugeSearchEntries extends BaseSearchEntries {
 	type: 'gauge';
+	data: Array<{
+		name: string;
+		magnitude: number;
+		min: number;
+		max: number;
+	}>;
+}
 
-	// TODO
+/** Numbercard renderer is an alias of gauge */
+export interface NumberCardEntries extends BaseSearchEntries {
+	type: 'numbercard';
 	data: Array<{
 		name: string;
 		magnitude: number;

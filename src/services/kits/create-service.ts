@@ -1,5 +1,5 @@
 /*************************************************************************
- * Copyright 2021 Gravwell, Inc. All rights reserved.
+ * Copyright 2022 Gravwell, Inc. All rights reserved.
  * Contact: <legal@gravwell.io>
  *
  * This software may be modified and distributed under the terms of the
@@ -8,10 +8,12 @@
 
 import {
 	makeBuildOneLocalKit,
+	makeDeleteOneKitArchive,
 	makeDownloadOneLocalKit,
 	makeDownloadRemoteKit,
 	makeGetAllLocalKits,
 	makeGetAllRemoteKits,
+	makeGetKitArchives,
 	makeGetOneLocalKit,
 	makeGetOneRemoteKit,
 	makeInstallOneKit,
@@ -62,5 +64,14 @@ export const createKitsService = (context: APIContext): KitsService => ({
 	uninstall: {
 		one: makeUninstallOneKit(context),
 		all: makeUninstallAllKits(context),
+	},
+
+	archives: {
+		get: {
+			all: makeGetKitArchives(context),
+		},
+		delete: {
+			one: makeDeleteOneKitArchive(context),
+		},
 	},
 });

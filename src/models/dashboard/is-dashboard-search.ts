@@ -1,5 +1,5 @@
 /*************************************************************************
- * Copyright 2021 Gravwell, Inc. All rights reserved.
+ * Copyright 2022 Gravwell, Inc. All rights reserved.
  * Contact: <legal@gravwell.io>
  *
  * This software may be modified and distributed under the terms of the
@@ -7,18 +7,19 @@
  **************************************************************************/
 
 import { isNull, isString } from 'lodash';
+import { isTimeframe } from '~/models';
 import { isNumericID } from '~/value-objects';
-import { isTimeframe } from '../timeframe';
 import { DashboardSearch } from './dashboard-search';
 
-export const isDashboardSearch = (value: any): value is DashboardSearch => {
+export const isDashboardSearch = (value: unknown): value is DashboardSearch => {
 	try {
 		const ds = <DashboardSearch>value;
 		return (
 			(isString(ds.name) || isNull(ds.name)) &&
 			(isTimeframe(ds.timeframeOverride) || isNull(ds.timeframeOverride)) &&
 			(isNumericID(ds.cachedSearchID) || isNull(ds.cachedSearchID)) &&
-			(isString(ds.variablePreviewValue) || isNull(ds.variablePreviewValue))
+			(isString(ds.variablePreviewValue) || isNull(ds.variablePreviewValue)) &&
+			isString(ds.type)
 		);
 	} catch {
 		return false;

@@ -1,5 +1,5 @@
 /*************************************************************************
- * Copyright 2021 Gravwell, Inc. All rights reserved.
+ * Copyright 2022 Gravwell, Inc. All rights reserved.
  * Contact: <legal@gravwell.io>
  *
  * This software may be modified and distributed under the terms of the
@@ -11,7 +11,7 @@
  */
 
 import { isNil } from 'lodash';
-import { defer, Observable, of, Subject, throwError } from 'rxjs';
+import { defer, firstValueFrom, Observable, of, Subject, throwError } from 'rxjs';
 import { concatMap, delay, filter, first, map, share, withLatestFrom } from 'rxjs/operators';
 import { v4 as uuidv4 } from 'uuid';
 import {
@@ -63,9 +63,9 @@ const SEARCH_ATTACH_RESULTS: Observable<{
 						data: { ID: searchID },
 					});
 				}),
-				// Discard the (void) result from rawSubscription.send(). We only need the messages coming from received$
-				(msg: RawSearchMessageReceived) => msg,
 			),
+			// Discard the (void) result from rawSubscription.send(). We only need the messages coming from received$
+			map(([msg]) => msg),
 
 			// Filter to only RawSearchAttachedMessageReceived messages
 			filter((msg): msg is RawSearchAttachedMessageReceived => {
@@ -97,7 +97,7 @@ export const attachSearch = (
 	const requestID = uuidv4();
 
 	// Create a promise to receive search initation results
-	const resultsP = SEARCH_ATTACH_RESULTS.pipe(
+	const results$ = SEARCH_ATTACH_RESULTS.pipe(
 		// We only want results relevant to this request
 		filter(({ requestID: msgRequestID }) => msgRequestID === requestID),
 
@@ -110,7 +110,10 @@ export const attachSearch = (
 
 		// It takes the backend a fraction of a second to be ready for requests after we set up the search
 		delay(200),
-	).toPromise();
+	);
+
+	// set up the promise so we can subscribe then next the queue
+	const resultsP = firstValueFrom(results$);
 
 	// Now that we're ready to receive results (with resultsP), we can push on the queue to kick off the search initiation process
 	ATTACH_QUEUE.next({ requestID, rawSubscription, searchID });

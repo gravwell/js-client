@@ -1,5 +1,5 @@
 /*************************************************************************
- * Copyright 2021 Gravwell, Inc. All rights reserved.
+ * Copyright 2022 Gravwell, Inc. All rights reserved.
  * Contact: <legal@gravwell.io>
  *
  * This software may be modified and distributed under the terms of the
@@ -33,7 +33,7 @@ describe('getOneDashboard()', () => {
 			name: 'TEST',
 			searches: [],
 			tiles: [],
-			timeframe: { durationString: 'PT1H', end: null, start: null, timeframe: 'PT1H' },
+			timeframe: { durationString: 'PT1H', end: null, start: null, timeframe: 'PT1H', timezone: null },
 		};
 		createdDashboard = await createOneDashboard(data);
 	});

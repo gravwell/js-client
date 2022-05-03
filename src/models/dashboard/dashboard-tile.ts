@@ -1,5 +1,5 @@
 /*************************************************************************
- * Copyright 2021 Gravwell, Inc. All rights reserved.
+ * Copyright 2022 Gravwell, Inc. All rights reserved.
  * Contact: <legal@gravwell.io>
  *
  * This software may be modified and distributed under the terms of the
@@ -10,23 +10,29 @@ import { NumericID } from '~/value-objects';
 import { DashboardRendererOptions } from './dashboard-renderer-options';
 
 export interface DashboardTile {
-	id: NumericID;
+	/** Legacy support: `id` may be undefined. */
+	id?: NumericID;
 	title: string;
 
 	/**
 	 * Index for the related search in Dashboard.searches.
+	 * `string` included for legacy dashboard support.
 	 */
-	searchIndex: number;
+	searchIndex: number | string;
 
 	renderer: string;
-	rendererOptions: DashboardRendererOptions;
+
+	/**	Due to the old dashboards we may not have `.rendererOptions` defined */
+	rendererOptions: DashboardRendererOptions | null;
 
 	dimensions: {
 		columns: number;
 		rows: number;
 	};
+
+	/**	Due to the old dashboards we may not have `x` and `y` defined */
 	position: {
-		x: number;
-		y: number;
+		x: number | null;
+		y: number | null;
 	};
 }

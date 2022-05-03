@@ -1,5 +1,5 @@
 /*************************************************************************
- * Copyright 2021 Gravwell, Inc. All rights reserved.
+ * Copyright 2022 Gravwell, Inc. All rights reserved.
  * Contact: <legal@gravwell.io>
  *
  * This software may be modified and distributed under the terms of the
@@ -43,6 +43,7 @@ import {
 	createSystemService,
 	createTagsService,
 	createTemplatesService,
+	createTokensService,
 	createUserPreferencesService,
 	createUsersService,
 	createWebServerService,
@@ -72,6 +73,7 @@ import {
 	SystemService,
 	TagsService,
 	TemplatesService,
+	TokensService,
 	UserPreferencesService,
 	UsersService,
 	WebServerService,
@@ -191,6 +193,7 @@ export class GravwellClient {
 		this._queries = createQueriesService(initialContext);
 		this._explorer = createExplorerService(initialContext);
 		this._mailServer = createMailServerService(initialContext);
+		this._tokens = createTokensService(initialContext);
 
 		this._context$.subscribe(context => {
 			this._tags = createTagsService(context);
@@ -225,6 +228,7 @@ export class GravwellClient {
 			this._queries = createQueriesService(context);
 			this._explorer = createExplorerService(context);
 			this._mailServer = createMailServerService(context);
+			this._tokens = createTokensService(context);
 		});
 	}
 
@@ -388,4 +392,9 @@ export class GravwellClient {
 		return this._mailServer;
 	}
 	private _mailServer: MailServerService;
+
+	public get tokens(): TokensService {
+		return this._tokens;
+	}
+	private _tokens: TokensService;
 }

@@ -1,5 +1,5 @@
 /*************************************************************************
- * Copyright 2021 Gravwell, Inc. All rights reserved.
+ * Copyright 2022 Gravwell, Inc. All rights reserved.
  * Contact: <legal@gravwell.io>
  *
  * This software may be modified and distributed under the terms of the
@@ -20,8 +20,8 @@ export interface RawActionable {
 	Updated: string; // Timestamp
 	Contents: {
 		menuLabel: null | string;
-		actions: Array<RawActionableAction>;
-		triggers: Array<RawActionableTrigger>;
+		actions?: Array<RawActionableAction> | null;
+		triggers?: Array<RawActionableTrigger> | null;
 	};
 	Labels: null | Array<string>;
 	Disabled: boolean;

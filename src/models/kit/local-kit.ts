@@ -1,5 +1,5 @@
 /*************************************************************************
- * Copyright 2021 Gravwell, Inc. All rights reserved.
+ * Copyright 2022 Gravwell, Inc. All rights reserved.
  * Contact: <legal@gravwell.io>
  *
  * This software may be modified and distributed under the terms of the
@@ -8,6 +8,7 @@
 
 import { NumericID, UUID } from '~/value-objects';
 import { Version } from '../version';
+import { ConfigMacro } from './config-macro';
 import { KitItem } from './kit-item';
 
 export interface LocalKit {
@@ -34,12 +35,5 @@ export interface LocalKit {
 	requiresAdminPrivilege: boolean;
 
 	items: Array<KitItem>;
-	settings: Array<{
-		type: 'macro value';
-		name: string;
-		description: string;
-		defaultValue: string;
-		value: string | null;
-		valueType: 'tag' | 'string';
-	}>;
+	configMacros: Array<ConfigMacro>;
 }

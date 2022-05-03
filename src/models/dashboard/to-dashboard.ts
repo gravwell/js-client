@@ -1,5 +1,5 @@
 /*************************************************************************
- * Copyright 2021 Gravwell, Inc. All rights reserved.
+ * Copyright 2022 Gravwell, Inc. All rights reserved.
  * Contact: <legal@gravwell.io>
  *
  * This software may be modified and distributed under the terms of the
@@ -46,33 +46,35 @@ export const toDashboard = (raw: RawDashboard): Dashboard => ({
 			? { enabled: true, interval: raw.Data.liveUpdateInterval }
 			: { enabled: false },
 
-	timeframe: toTimeframe(raw.Data.timeframe),
+	timeframe: raw.Data.timeframe ? toTimeframe(raw.Data.timeframe) : undefined,
 
-	tiles: raw.Data.tiles.map(t => ({
-		id: toNumericID(t.id),
+	tiles: (raw.Data.tiles ?? []).map(t => ({
+		/** Legacy support: `id` may be undefined. */
+		id: t.id ? toNumericID(t.id) : undefined,
 		title: t.title,
 
 		searchIndex: t.searchesIndex,
 
 		renderer: t.renderer,
-		rendererOptions: t.rendererOptions,
+		rendererOptions: t.rendererOptions ?? null,
 
 		dimensions: {
 			columns: t.span.col,
 			rows: t.span.row,
 		},
 		position: {
-			x: t.span.x,
-			y: t.span.y,
+			x: t.span.x ?? null,
+			y: t.span.y ?? null,
 		},
 	})),
 
-	searches: raw.Data.searches.map<DashboardSearch>(s => {
+	searches: (raw.Data.searches ?? []).map<DashboardSearch>(s => {
 		const base: BaseDashboardSearch = {
 			name: s.alias,
 			timeframeOverride: Object.keys(s.timeframe ?? {}).length === 0 ? null : toTimeframe(<RawTimeframe>s.timeframe),
 			cachedSearchID: s.searchID?.toString() ?? null,
 			variablePreviewValue: s.reference?.extras?.defaultValue ?? null,
+			color: s.color ?? null,
 		};
 
 		if (isString(s.query)) return { ...base, type: 'query', query: s.query };

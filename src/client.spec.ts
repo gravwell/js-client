@@ -1,5 +1,5 @@
 /*************************************************************************
- * Copyright 2021 Gravwell, Inc. All rights reserved.
+ * Copyright 2022 Gravwell, Inc. All rights reserved.
  * Contact: <legal@gravwell.io>
  *
  * This software may be modified and distributed under the terms of the
@@ -44,6 +44,7 @@ import {
 	CreatableScheduledScript,
 	CreatableTargetedNotification,
 	CreatableTemplate,
+	CreatableToken,
 	CreatableUser,
 	Dashboard,
 	DataExplorerEntry,
@@ -76,6 +77,9 @@ import {
 	SystemSettings,
 	TargetedNotificationTargetType,
 	Template,
+	Token,
+	TokenCapability,
+	TokenWithSecret,
 	UpdatableActionable,
 	UpdatableAutoExtractor,
 	UpdatableDashboard,
@@ -89,6 +93,7 @@ import {
 	UpdatableScheduledQuery,
 	UpdatableScheduledScript,
 	UpdatableTemplate,
+	UpdatableToken,
 	UpdatableUser,
 	UploadableAutoExtractor,
 	User,
@@ -452,6 +457,15 @@ describe('GravwellClient', () => {
 					options?: { filter?: Partial<SearchFilter>; metadata?: RawJSON; noHistory?: boolean },
 				) => Promise<ExplorerSearchSubscription>
 			>();
+
+			// Tokens
+			expectTypeOf(client.tokens.get.one).toEqualTypeOf<(tokenID: ID) => Promise<Token>>();
+			expectTypeOf(client.tokens.get.all).toEqualTypeOf<() => Promise<Array<Token>>>();
+			expectTypeOf(client.tokens.get.authorizedTo.me).toEqualTypeOf<() => Promise<Array<Token>>>();
+			expectTypeOf(client.tokens.get.tokenCapabilities).toEqualTypeOf<() => Promise<Array<TokenCapability>>>();
+			expectTypeOf(client.tokens.create.one).toEqualTypeOf<(data: CreatableToken) => Promise<TokenWithSecret>>();
+			expectTypeOf(client.tokens.update.one).toEqualTypeOf<(data: UpdatableToken) => Promise<Token>>();
+			expectTypeOf(client.tokens.delete.one).toEqualTypeOf<(tokenID: ID) => Promise<void>>();
 		}),
 	);
 });

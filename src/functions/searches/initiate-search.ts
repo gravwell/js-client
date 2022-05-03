@@ -1,5 +1,5 @@
 /*************************************************************************
- * Copyright 2021 Gravwell, Inc. All rights reserved.
+ * Copyright 2022 Gravwell, Inc. All rights reserved.
  * Contact: <legal@gravwell.io>
  *
  * This software may be modified and distributed under the terms of the
@@ -7,7 +7,7 @@
  **************************************************************************/
 
 import { isNil } from 'lodash';
-import { defer, Observable, of, Subject, throwError } from 'rxjs';
+import { defer, lastValueFrom, Observable, of, Subject, throwError } from 'rxjs';
 import { concatMap, delay, filter, first, map, share, tap, withLatestFrom } from 'rxjs/operators';
 import { v4 as uuidv4 } from 'uuid';
 import {
@@ -70,9 +70,9 @@ const QUERY_INIT_RESULTS: Observable<{
 						},
 					});
 				}),
-				// Discard the (void) result from rawSubscription.send(). We only need the messages coming from received$
-				(msg: RawSearchMessageReceived) => msg,
 			),
+			// Discard the (void) result from rawSubscription.send(). We only need the messages coming from received$
+			map(([msg]) => msg),
 
 			// Filter to only RawSearchInitiatedMessageReceived messages
 			filter((msg): msg is RawSearchInitiatedMessageReceived => {
@@ -112,7 +112,7 @@ export const initiateSearch = (
 	const requestID = uuidv4();
 
 	// Create a promise to receive search initation results
-	const resultsP = QUERY_INIT_RESULTS.pipe(
+	const results$ = QUERY_INIT_RESULTS.pipe(
 		// We only want results relevant to this request
 		filter(({ requestID: msgRequestID }) => msgRequestID === requestID),
 
@@ -133,7 +133,9 @@ export const initiateSearch = (
 
 		// It takes the backend a fraction of a second to be ready for requests after we set up the search
 		delay(200),
-	).toPromise();
+	);
+
+	const resultsP = lastValueFrom(results$);
 
 	// Now that we're ready to receive results (with resultsP), we can push on the queue to kick off the search initiation process
 	QUERY_QUEUE.next({ requestID, rawSubscription, query, options });

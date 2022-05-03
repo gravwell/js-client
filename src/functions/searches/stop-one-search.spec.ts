@@ -1,5 +1,5 @@
 /*************************************************************************
- * Copyright 2021 Gravwell, Inc. All rights reserved.
+ * Copyright 2022 Gravwell, Inc. All rights reserved.
  * Contact: <legal@gravwell.io>
  *
  * This software may be modified and distributed under the terms of the
@@ -58,7 +58,7 @@ describe('stopOneSearch()', () => {
 		}
 	}, 25000);
 
-	it(
+	xit(
 		'Should stop a search',
 		integrationTest(async () => {
 			const stopOneSearch = makeStopOneSearch(TEST_BASE_API_CONTEXT);

@@ -1,5 +1,5 @@
 /*************************************************************************
- * Copyright 2021 Gravwell, Inc. All rights reserved.
+ * Copyright 2022 Gravwell, Inc. All rights reserved.
  * Contact: <legal@gravwell.io>
  *
  * This software may be modified and distributed under the terms of the
@@ -11,6 +11,7 @@ import { RawTimeframe } from '../timeframe';
 
 export interface RawUpdatableSavedQuery {
 	ThingUUID: RawUUID; // gravwell/gravwell#2524
+	UID: RawNumericID;
 	GUID?: RawUUID;
 
 	GIDs: Array<RawNumericID>;

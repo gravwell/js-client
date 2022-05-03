@@ -1,5 +1,5 @@
 /*************************************************************************
- * Copyright 2021 Gravwell, Inc. All rights reserved.
+ * Copyright 2022 Gravwell, Inc. All rights reserved.
  * Contact: <legal@gravwell.io>
  *
  * This software may be modified and distributed under the terms of the
@@ -40,13 +40,13 @@ describe('getDashboardsByUser()', () => {
 				name: 'D1',
 				searches: [],
 				tiles: [],
-				timeframe: { durationString: 'PT1H', end: null, start: null, timeframe: 'PT1H' },
+				timeframe: { durationString: 'PT1H', end: null, start: null, timeframe: 'PT1H', timezone: null },
 			},
 			{
 				name: 'D2',
 				searches: [],
 				tiles: [],
-				timeframe: { durationString: 'PT1H', end: null, start: null, timeframe: 'PT1H' },
+				timeframe: { durationString: 'PT1H', end: null, start: null, timeframe: 'PT1H', timezone: null },
 			},
 		];
 		const createPromises1 = creatableDashboards1.map(creatable => createOneDashboard(creatable));
@@ -70,19 +70,19 @@ describe('getDashboardsByUser()', () => {
 				name: 'D3',
 				searches: [],
 				tiles: [],
-				timeframe: { durationString: 'PT1H', end: null, start: null, timeframe: 'PT1H' },
+				timeframe: { durationString: 'PT1H', end: null, start: null, timeframe: 'PT1H', timezone: null },
 			},
 			{
 				name: 'D4',
 				searches: [],
 				tiles: [],
-				timeframe: { durationString: 'PT1H', end: null, start: null, timeframe: 'PT1H' },
+				timeframe: { durationString: 'PT1H', end: null, start: null, timeframe: 'PT1H', timezone: null },
 			},
 			{
 				name: 'D5',
 				searches: [],
 				tiles: [],
-				timeframe: { durationString: 'PT1H', end: null, start: null, timeframe: 'PT1H' },
+				timeframe: { durationString: 'PT1H', end: null, start: null, timeframe: 'PT1H', timezone: null },
 			},
 		];
 

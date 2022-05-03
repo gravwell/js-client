@@ -1,5 +1,5 @@
 /*************************************************************************
- * Copyright 2021 Gravwell, Inc. All rights reserved.
+ * Copyright 2022 Gravwell, Inc. All rights reserved.
  * Contact: <legal@gravwell.io>
  *
  * This software may be modified and distributed under the terms of the
@@ -8,6 +8,7 @@
 
 import { addMinutes } from 'date-fns';
 import { random, sample } from 'lodash';
+import { lastValueFrom } from 'rxjs';
 import { last, takeWhile } from 'rxjs/operators';
 import { v4 as uuidv4 } from 'uuid';
 import {
@@ -103,12 +104,7 @@ describe('search renderer types', () => {
 			const search = await subscribeToOneSearch(query, { filter });
 
 			// Wait on the entries to come back
-			const entries = await search.entries$
-				.pipe(
-					takeWhile(e => !e.finished, true),
-					last(),
-				)
-				.toPromise();
+			const entries = await lastValueFrom(search.entries$.pipe(takeWhile(e => !e.finished, true)));
 
 			// Check the type
 			expect(entries.type).toEqual('point2point');
@@ -130,12 +126,7 @@ describe('search renderer types', () => {
 			const search = await subscribeToOneSearch(query, { filter });
 
 			// Wait on the entries to come back
-			const entries = await search.entries$
-				.pipe(
-					takeWhile(e => !e.finished, true),
-					last(),
-				)
-				.toPromise();
+			const entries = await lastValueFrom(search.entries$.pipe(takeWhile(e => !e.finished, true)));
 
 			// Check the type
 			expect(entries.type).toEqual('hex');
@@ -157,12 +148,7 @@ describe('search renderer types', () => {
 			const search = await subscribeToOneSearch(query, { filter });
 
 			// Wait on the entries to come back
-			const entries = await search.entries$
-				.pipe(
-					takeWhile(e => !e.finished, true),
-					last(),
-				)
-				.toPromise();
+			const entries = await lastValueFrom(search.entries$.pipe(takeWhile(e => !e.finished, true)));
 
 			// Check the type
 			expect(entries.type).toEqual('pcap');
@@ -184,12 +170,7 @@ describe('search renderer types', () => {
 			const search = await subscribeToOneSearch(query, { filter });
 
 			// Wait on the entries to come back
-			const entries = await search.entries$
-				.pipe(
-					takeWhile(e => !e.finished, true),
-					last(),
-				)
-				.toPromise();
+			const entries = await lastValueFrom(search.entries$.pipe(takeWhile(e => !e.finished, true)));
 
 			// Check the type
 			expect(entries.type).toEqual('stackgraph');

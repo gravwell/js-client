@@ -1,5 +1,5 @@
 /*************************************************************************
- * Copyright 2021 Gravwell, Inc. All rights reserved.
+ * Copyright 2022 Gravwell, Inc. All rights reserved.
  * Contact: <legal@gravwell.io>
  *
  * This software may be modified and distributed under the terms of the
@@ -37,10 +37,12 @@ export const toScheduledTask = (raw: RawScheduledTask): ScheduledTask => {
 	}
 };
 
-const getScheduledTaskType = (raw: RawScheduledTask): ScheduledTask['type'] => {
+export const getScheduledTaskType = <T extends { Script?: string; SearchString?: string }>(
+	raw: T,
+): ScheduledTask['type'] => {
 	if (isNil(raw.Script)) return 'query';
 	if (raw.Script.trim() !== '') return 'script';
 	// From the [docs](https://docs.gravwell.io/#!api/scheduledsearches.md#Creating_a_scheduled_search):
 	// If both (Script and SearchString) are populated, the script will take precedence.
-	return raw.SearchString.trim() === '' ? 'script' : 'query';
+	return (raw.SearchString ?? '').trim() === '' ? 'script' : 'query';
 };

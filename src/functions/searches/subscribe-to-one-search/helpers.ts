@@ -1,5 +1,5 @@
 /*************************************************************************
- * Copyright 2021 Gravwell, Inc. All rights reserved.
+ * Copyright 2022 Gravwell, Inc. All rights reserved.
  * Contact: <legal@gravwell.io>
  *
  * This software may be modified and distributed under the terms of the
@@ -24,6 +24,7 @@ const DEFAULT_GRANULARITY_MAP: Record<SearchEntries['type'], number> = {
 	chart: 160,
 	fdg: 2000,
 	gauge: 100, // *NOTE: Couldn't find it in environments.ts, using the same as table
+	numbercard: 100, // same as gauge
 	heatmap: 10000,
 	point2point: 1000, // *NOTE: Couldn't find it in environments.ts, using the same as pointmap
 	pointmap: 1000,

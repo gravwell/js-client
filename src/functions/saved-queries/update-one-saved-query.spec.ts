@@ -1,5 +1,5 @@
 /*************************************************************************
- * Copyright 2021 Gravwell, Inc. All rights reserved.
+ * Copyright 2022 Gravwell, Inc. All rights reserved.
  * Contact: <legal@gravwell.io>
  *
  * This software may be modified and distributed under the terms of the
@@ -57,7 +57,7 @@ describe('updateOneSavedQuery()', () => {
 
 		{ query: 'tag=custom' },
 
-		{ defaultTimeframe: { timeframe: 'thisMonth', durationString: 'thisMonth' } },
+		{ defaultTimeframe: { timeframe: 'thisMonth', durationString: 'thisMonth', timezone: null } },
 		{ defaultTimeframe: null },
 	];
 	updateTests.forEach((_data, testIndex) => {

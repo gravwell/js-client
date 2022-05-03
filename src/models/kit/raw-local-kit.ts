@@ -1,5 +1,5 @@
 /*************************************************************************
- * Copyright 2021 Gravwell, Inc. All rights reserved.
+ * Copyright 2022 Gravwell, Inc. All rights reserved.
  * Contact: <legal@gravwell.io>
  *
  * This software may be modified and distributed under the terms of the
@@ -8,6 +8,7 @@
 
 import { RawID, RawNumericID, RawUUID } from '~/value-objects';
 import { RawVersionObject } from '../version';
+import { RawConfigMacro } from './raw-config-macro';
 import { RawKitItem } from './raw-kit-item';
 
 export interface RawLocalKit {
@@ -37,12 +38,5 @@ export interface RawLocalKit {
 	RequiredDependencies: null;
 
 	Items: Array<RawKitItem>;
-	ConfigMacros: null | Array<{
-		MacroName: string;
-		Description: string;
-		DefaultValue: string;
-		Value: ''; // '' is null
-		Type: 'TAG' | ''; // '' is null
-		InstalledByID: ''; // '' is null
-	}>;
+	ConfigMacros: null | Array<RawConfigMacro>;
 }

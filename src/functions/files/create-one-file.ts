@@ -1,5 +1,5 @@
 /*************************************************************************
- * Copyright 2021 Gravwell, Inc. All rights reserved.
+ * Copyright 2022 Gravwell, Inc. All rights reserved.
  * Contact: <legal@gravwell.io>
  *
  * This software may be modified and distributed under the terms of the
@@ -23,8 +23,8 @@ export const makeCreateOneFile = (context: APIContext) => {
 	const updateOneFile = makeUpdateOneFile(context);
 	const getOneFile = makeGetOneFile(context);
 
-	const templatePath = '/api/files';
-	const url = buildURL(templatePath, { ...context, protocol: 'http' });
+	const filesPath = '/api/files';
+	const url = buildURL(filesPath, { ...context, protocol: 'http' });
 
 	return async (data: CreatableFile): Promise<FileMetadata> => {
 		try {

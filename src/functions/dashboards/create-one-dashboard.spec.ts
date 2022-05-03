@@ -1,5 +1,5 @@
 /*************************************************************************
- * Copyright 2021 Gravwell, Inc. All rights reserved.
+ * Copyright 2022 Gravwell, Inc. All rights reserved.
  * Contact: <legal@gravwell.io>
  *
  * This software may be modified and distributed under the terms of the
@@ -9,16 +9,20 @@
 import { CreatableDashboard, isDashboard } from '~/models';
 import { integrationTest, myCustomMatchers, TEST_BASE_API_CONTEXT } from '~/tests';
 import { makeCreateOneGroup } from '../groups/create-one-group';
+import { makeDeleteAllGroups } from '../groups/delete-all-groups';
 import { makeCreateOneDashboard } from './create-one-dashboard';
 
 describe('createOneDashboard()', () => {
 	const createOneDashboard = makeCreateOneDashboard(TEST_BASE_API_CONTEXT);
 	const createOneGroup = makeCreateOneGroup(TEST_BASE_API_CONTEXT);
+	const deleteAllGroups = makeDeleteAllGroups(TEST_BASE_API_CONTEXT);
 
 	// let groupIDs: Array<NumericID>;
 
 	beforeEach(async () => {
 		jasmine.addMatchers(myCustomMatchers);
+
+		await deleteAllGroups();
 
 		// groupIDs =
 		await Promise.all(
@@ -52,7 +56,7 @@ describe('createOneDashboard()', () => {
 						searchIndex: 0,
 					},
 				],
-				timeframe: { durationString: 'PT1H', end: null, start: null, timeframe: 'PT1H' },
+				timeframe: { durationString: 'PT1H', end: null, start: null, timeframe: 'PT1H', timezone: null },
 			};
 
 			const dashboard = await createOneDashboard(data);

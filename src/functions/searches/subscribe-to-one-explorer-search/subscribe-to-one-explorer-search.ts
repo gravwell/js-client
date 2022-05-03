@@ -1,5 +1,5 @@
 /*************************************************************************
- * Copyright 2021 Gravwell, Inc. All rights reserved.
+ * Copyright 2022 Gravwell, Inc. All rights reserved.
  * Contact: <legal@gravwell.io>
  *
  * This software may be modified and distributed under the terms of the
@@ -7,17 +7,28 @@
  **************************************************************************/
 
 import { isAfter, subHours } from 'date-fns';
-import { isBoolean, isNil, isNull, isUndefined, uniqueId } from 'lodash';
-import { BehaviorSubject, combineLatest, EMPTY, from, NEVER, Observable, of, Subject, Subscription } from 'rxjs';
+import { isBoolean, isEqual, isNil, isNull, isUndefined, uniqueId } from 'lodash';
 import {
-	bufferCount,
+	BehaviorSubject,
+	combineLatest,
+	EMPTY,
+	firstValueFrom,
+	from,
+	lastValueFrom,
+	NEVER,
+	Observable,
+	of,
+	Subject,
+	Subscription,
+} from 'rxjs';
+import {
 	catchError,
 	concatMap,
 	distinctUntilChanged,
 	filter,
 	filter as rxjsFilter,
-	first,
 	map,
+	shareReplay,
 	skipUntil,
 	startWith,
 	takeUntil,
@@ -43,6 +54,7 @@ import {
 import { toDataExplorerEntry } from '~/models/search/to-data-explorer-entry';
 import { Percentage, RawJSON, toNumericID } from '~/value-objects';
 import { APIContext, debounceWithBackoffWhile } from '../../utils';
+import { createRequiredSearchFilterObservable } from '../helpers/create-required-search-filter-observable';
 import { initiateSearch } from '../initiate-search';
 import { makeModifyOneQuery } from '../modify-one-query';
 import { makeSubscribeToOneRawSearch } from '../subscribe-to-one-raw-search';
@@ -159,9 +171,9 @@ export const makeSubscribeToOneExplorerSearch = (context: APIContext) => {
 			if (initialFilter.dateRange !== 'preview') return initialFilter.dateRange;
 
 			// In preview mode, so we need to request search details and use the timerange that we get back
-			const detailsP = searchMessages$
-				.pipe(filter(filterMessageByCommand(SearchMessageCommands.RequestDetails)), first())
-				.toPromise();
+			const detailsP = firstValueFrom(
+				searchMessages$.pipe(filter(filterMessageByCommand(SearchMessageCommands.RequestDetails))),
+			);
 			const requestDetailsMsg: RawRequestSearchDetailsMessageSent = {
 				type: searchTypeID,
 				data: { ID: SearchMessageCommands.RequestDetails },
@@ -185,7 +197,7 @@ export const makeSubscribeToOneExplorerSearch = (context: APIContext) => {
 			await rawSubscription.send(closeMsg);
 
 			// Wait for closed message to be received
-			await close$.toPromise();
+			await lastValueFrom(close$);
 		};
 
 		const progress$: Observable<Percentage> = searchMessages$.pipe(
@@ -194,6 +206,8 @@ export const makeSubscribeToOneExplorerSearch = (context: APIContext) => {
 			map(done => (done ? 1 : 0)),
 			distinctUntilChanged(),
 			map(rawPercentage => new Percentage(rawPercentage)),
+
+			shareReplay({ bufferSize: 1, refCount: true }),
 
 			// Complete when/if the user calls .close()
 			takeUntil(close$),
@@ -216,57 +230,39 @@ export const makeSubscribeToOneExplorerSearch = (context: APIContext) => {
 				initialFilter.desiredGranularity = defDesiredGranularity;
 			}),
 
+			shareReplay({ bufferSize: 1, refCount: true }),
+
 			// Complete when/if the user calls .close()
 			takeUntil(close$),
 		);
-
-		const expandDateRange = (dateRange: SearchFilter['dateRange']): Partial<DateRange> => {
-			if (dateRange === 'preview') return previewDateRange;
-			return dateRange ?? {};
-		};
 
 		const _filter$ = new BehaviorSubject<SearchFilter>(initialFilter);
 		const setFilter = (filter: SearchFilter | null): void => {
 			if (closed) return undefined;
 			_filter$.next(filter ?? initialFilter);
 		};
-		const filter$ = _filter$.asObservable().pipe(
-			startWith<SearchFilter>(initialFilter),
-			bufferCount(2, 1),
-			map(
-				([prev, curr]): RequiredSearchFilter => ({
-					entriesOffset: {
-						index: curr.entriesOffset?.index ?? prev.entriesOffset?.index ?? initialFilter.entriesOffset.index,
-						count: curr.entriesOffset?.count ?? prev.entriesOffset?.count ?? initialFilter.entriesOffset.count,
-					},
-					dateRange: {
-						start: defaultStart,
-						end: defaultEnd,
-						...expandDateRange(initialFilter.dateRange),
-						...expandDateRange(prev.dateRange),
-						...expandDateRange(curr.dateRange),
-					},
-					desiredGranularity: curr.desiredGranularity ?? prev.desiredGranularity ?? initialFilter.desiredGranularity,
-					overviewGranularity:
-						curr.overviewGranularity ?? prev.overviewGranularity ?? initialFilter.overviewGranularity,
-					zoomGranularity: curr.zoomGranularity ?? prev.zoomGranularity ?? initialFilter.zoomGranularity,
-					elementFilters: initialFilter.elementFilters,
-				}),
-			),
 
+		const filter$ = createRequiredSearchFilterObservable({
+			filter$: _filter$.asObservable(),
+			initialFilter,
+			previewDateRange,
+			defaultValues: {
+				dateStart: defaultStart,
+				dateEnd: defaultEnd,
+			},
+		}).pipe(
 			// Complete when/if the user calls .close()
 			takeUntil(close$),
 		);
 
 		const nextDetailsMsg = () =>
-			searchMessages$
-				.pipe(
+			firstValueFrom(
+				searchMessages$.pipe(
 					filter(filterMessageByCommand(SearchMessageCommands.RequestDetails)),
-					first(),
 					// cleanup: Complete when/if the user calls .close()
 					takeUntil(close$),
-				)
-				.toPromise();
+				),
+			);
 
 		let pollingSubs: Subscription;
 
@@ -319,7 +315,7 @@ export const makeSubscribeToOneExplorerSearch = (context: APIContext) => {
 						startWith(detailsMsg),
 
 						// Extract the property that indicates if the data is finished
-						map(details => details.data.Finished),
+						map(details => (details ? details.data.Finished : false)),
 
 						// Add dynamic debounce after each message
 						debounceWithBackoffWhile(debounceOptions),
@@ -352,7 +348,7 @@ export const makeSubscribeToOneExplorerSearch = (context: APIContext) => {
 				entries$
 					.pipe(
 						// Extract the property that indicates if the data is finished
-						map(entries => entries.finished),
+						map(entries => (entries ? entries.finished : false)),
 
 						// Add dynamic debounce after each message
 						debounceWithBackoffWhile(debounceOptions),
@@ -405,7 +401,7 @@ export const makeSubscribeToOneExplorerSearch = (context: APIContext) => {
 					Stats: {
 						SetCount: filter.zoomGranularity,
 						SetEnd: recalculateZoomEnd(
-							detailsMsg.data.SearchInfo.MinZoomWindow,
+							detailsMsg ? detailsMsg.data.SearchInfo.MinZoomWindow : 1,
 							filter.zoomGranularity,
 							startDate,
 							endDate,
@@ -464,7 +460,10 @@ export const makeSubscribeToOneExplorerSearch = (context: APIContext) => {
 			takeUntil(close$),
 		);
 
-		const stats$ = combineLatest(rawSearchStats$, rawSearchDetails$).pipe(
+		const stats$ = combineLatest([
+			rawSearchStats$.pipe(distinctUntilChanged<RawResponseForSearchStatsMessageReceived>(isEqual)),
+			rawSearchDetails$.pipe(distinctUntilChanged<RawResponseForSearchDetailsMessageReceived>(isEqual)),
+		]).pipe(
 			map(
 				([rawStats, rawDetails]): SearchStats => {
 					const filterID =
@@ -542,6 +541,10 @@ export const makeSubscribeToOneExplorerSearch = (context: APIContext) => {
 				},
 			),
 
+			distinctUntilChanged<SearchStats>(isEqual),
+
+			shareReplay({ bufferSize: 1, refCount: false }),
+
 			// Complete when/if the user calls .close()
 			takeUntil(close$),
 		);
@@ -550,6 +553,8 @@ export const makeSubscribeToOneExplorerSearch = (context: APIContext) => {
 			map(set => {
 				return { frequencyStats: countEntriesFromModules(set) };
 			}),
+
+			shareReplay({ bufferSize: 1, refCount: true }),
 
 			// Complete when/if the user calls .close()
 			takeUntil(close$),
@@ -570,6 +575,8 @@ export const makeSubscribeToOneExplorerSearch = (context: APIContext) => {
 				};
 			}),
 
+			shareReplay({ bufferSize: 1, refCount: true }),
+
 			// Complete when/if the user calls .close()
 			takeUntil(close$),
 		);
@@ -580,6 +587,8 @@ export const makeSubscribeToOneExplorerSearch = (context: APIContext) => {
 
 			// When there's an error, catch it and emit it
 			catchError(err => of(err)),
+
+			shareReplay({ bufferSize: 1, refCount: true }),
 
 			// Complete when/if the user calls .close()
 			takeUntil(close$),

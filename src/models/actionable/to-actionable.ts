@@ -1,5 +1,5 @@
 /*************************************************************************
- * Copyright 2021 Gravwell, Inc. All rights reserved.
+ * Copyright 2022 Gravwell, Inc. All rights reserved.
  * Contact: <legal@gravwell.io>
  *
  * This software may be modified and distributed under the terms of the
@@ -30,8 +30,8 @@ export const toActionable = (raw: RawActionable): Actionable => ({
 
 	lastUpdateDate: new Date(raw.Updated),
 
-	triggers: raw.Contents.triggers.map(toActionableTrigger),
-	actions: raw.Contents.actions.map(toActionableAction),
+	triggers: raw.Contents.triggers?.map(toActionableTrigger) ?? [],
+	actions: raw.Contents.actions?.map(toActionableAction) ?? [],
 });
 
 export const toActionableTrigger = (raw: RawActionableTrigger): ActionableTrigger => ({

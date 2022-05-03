@@ -1,5 +1,5 @@
 /*************************************************************************
- * Copyright 2021 Gravwell, Inc. All rights reserved.
+ * Copyright 2022 Gravwell, Inc. All rights reserved.
  * Contact: <legal@gravwell.io>
  *
  * This software may be modified and distributed under the terms of the
@@ -40,7 +40,8 @@ export interface Dashboard {
 
 	liveUpdate: DashboardLiveUpdate;
 
-	timeframe: Timeframe;
+	/** Legacy support: `timeframe` may be undefined. */
+	timeframe?: Timeframe;
 
 	searches: Array<DashboardSearch>;
 

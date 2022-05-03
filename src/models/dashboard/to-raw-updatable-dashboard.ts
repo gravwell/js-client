@@ -1,5 +1,5 @@
 /*************************************************************************
- * Copyright 2021 Gravwell, Inc. All rights reserved.
+ * Copyright 2022 Gravwell, Inc. All rights reserved.
  * Contact: <legal@gravwell.io>
  *
  * This software may be modified and distributed under the terms of the
@@ -23,17 +23,27 @@ export const toRawUpdatableDashboard = (updatable: UpdatableDashboard, current: 
 	Labels: updatable.labels ?? current.labels,
 
 	Data: {
-		timeframe: toRawTimeframe(updatable.timeframe ?? current.timeframe),
+		timeframe: updatable.timeframe
+			? toRawTimeframe(updatable.timeframe)
+			: current.timeframe
+			? toRawTimeframe(current.timeframe)
+			: undefined,
 
 		searches: (updatable.searches ?? current.searches).map(toRawCreatableDashboardSearch),
 
 		tiles: (updatable.tiles ?? current.tiles).map(t => ({
-			id: toRawNumericID(t.id),
+			/** Legacy support: `id` may be undefined. */
+			id: t.id ? toRawNumericID(t.id) : undefined,
 			title: t.title,
 			renderer: t.renderer,
-			span: { col: t.dimensions.columns, row: t.dimensions.rows, x: t.position.x, y: t.position.y },
+			span: {
+				col: t.dimensions.columns,
+				row: t.dimensions.rows,
+				x: t.position.x ?? undefined,
+				y: t.position.y ?? undefined,
+			},
 			searchesIndex: t.searchIndex,
-			rendererOptions: t.rendererOptions,
+			rendererOptions: t.rendererOptions ?? undefined,
 		})),
 
 		liveUpdateInterval: (updatable.liveUpdate ?? current.liveUpdate).interval ?? undefined,
