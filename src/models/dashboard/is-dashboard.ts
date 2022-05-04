@@ -6,7 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { isArray, isBoolean, isDate, isNull, isNumber, isString, isUndefined } from 'lodash';
+import { isArray, isBoolean, isDate, isNull, isNumber, isString } from 'lodash';
 import { Dashboard, isTimeframe, isVersion } from '~/models';
 import { isNumericID, isUUID } from '~/value-objects';
 import { isDashboardLiveUpdate } from './is-dashboard-live-update';
@@ -18,7 +18,7 @@ export const isDashboard = (value: unknown): value is Dashboard => {
 		const d = <Dashboard>value;
 		return (
 			isNumericID(d.id) &&
-			(isUndefined(d.globalID) || isUUID(d.globalID)) &&
+			(isNull(d.globalID) || isUUID(d.globalID)) &&
 			isNumericID(d.userID) &&
 			isArray(d.groupIDs) &&
 			d.groupIDs.every(isNumericID) &&
