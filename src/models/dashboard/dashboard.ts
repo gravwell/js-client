@@ -14,7 +14,7 @@ import { DashboardLiveUpdate, DashboardTile } from './index';
 
 export interface Dashboard {
 	id: NumericID;
-	globalID: UUID;
+	globalID?: UUID;
 
 	userID: NumericID;
 	groupIDs: Array<NumericID>;
