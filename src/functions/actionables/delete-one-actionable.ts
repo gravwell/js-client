@@ -9,6 +9,12 @@
 import { NumericID } from '~/value-objects';
 import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, parseJSONResponse } from '../utils';
 
+/**
+ * endpoint: [DELETE] <strong>/api/pivots/{actionableID}</strong>
+ *
+ * @param context
+ * @returns
+ */
 export const makeDeleteOneActionable = (context: APIContext) => {
 	return async (actionableID: NumericID): Promise<void> => {
 		const templatePath = '/api/pivots/{actionableID}';

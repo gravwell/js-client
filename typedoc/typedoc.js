@@ -11,6 +11,7 @@ const functionsPage = {
 	entryPointStrategy: 'Resolve',
 	entryPoints: getEntryPoints('./src/functions'),
 	outputDir: 'docs/modules/functions',
+	readme: './typedoc/readme/functions.md',
 };
 
 const modelsPage = {

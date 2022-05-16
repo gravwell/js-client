@@ -10,6 +10,12 @@ import { Actionable, RawActionable, toActionable } from '~/models';
 import { NumericID } from '~/value-objects';
 import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, parseJSONResponse } from '../utils';
 
+/**
+ * endpoint: [GET] <strong>/api/pivots/{actionableID}</strong>
+ *
+ * @param context
+ * @returns
+ */
 export const makeGetOneActionable = (context: APIContext) => {
 	return async (actionableID: NumericID): Promise<Actionable> => {
 		const templatePath = '/api/pivots/{actionableID}';
