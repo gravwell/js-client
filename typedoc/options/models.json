@@ -1,6 +1,0 @@
-{
-	"entryPointStrategy": "Resolve",
-	"entryPoints": ["./src/models/actionable", "./src/models/auto-extractor", "./src/models/dashboard"],
-	"readme": "./typedoc/links.html",
-	"tsconfig": "./tsconfig.json"
-}
