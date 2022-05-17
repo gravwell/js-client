@@ -78,7 +78,7 @@ const generateDocsPage = async page => {
 };
 
 // This function will delete the index.html from ./docs folder
-// the will make a copy from ./typedoc/index.html, and paste it inside ./docs folder
+// then will make a copy from ./typedoc/index.html, and paste it inside ./docs folder
 const setHomePage = () => {
 	fs.unlinkSync('./docs/index.html');
 	fs.copyFileSync('./typedoc/index.html', 'docs/index.html');
