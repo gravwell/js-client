@@ -60,6 +60,7 @@ const valueObjectsPage: Page = {
 };
 
 // This function will generate the docsPage
+// to understand how it works, checkout https://typedoc.org/guides/installation/#node-module
 const generateDocsPage = async (page: Page): Promise<void> => {
 	const app = new TypeDoc.Application();
 
