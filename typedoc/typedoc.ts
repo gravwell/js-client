@@ -93,9 +93,15 @@ const setHomePage = (): void => {
 	fs.copyFileSync('./typedoc/index.html', 'docs/index.html');
 };
 
+// This will make a copy from ./typedoc/global.css, and paste it inside ./docs/assets folder
+const createGlobalStyle = (): void => {
+	fs.copyFileSync('./typedoc/global.css', 'docs/assets/global.css');
+};
+
 // This function will fix the page's link to:
 // make the header link always point to the first page, './docs/index.html'
 // will remove the link from <a>Modules</a>
+// will create a link with the global styles
 const setLinks = (pageName: string): void => {
 	const code = `
 	<script> 
@@ -104,6 +110,7 @@ const setLinks = (pageName: string): void => {
 	const modulesLinkElement = document.getElementsByClassName('current')[0].children[0];
 	modulesLinkElement.href = ''; // will remove the link from modules
 	</script>
+	<link rel="stylesheet" href="../../assets/global.css" />
 	`;
 	fs.appendFileSync(`./docs/modules/${pageName}/index.html`, code);
 
@@ -116,6 +123,7 @@ const setLinks = (pageName: string): void => {
 	const breadCrumbElement = document.getElementsByClassName('tsd-breadcrumb')[0];
 	breadCrumbElement.remove(); // will remove the bread-crum element
 	</script>
+	<link rel="stylesheet" href="../../../assets/global.css" />
 	`;
 
 	const modulesFolder = `./docs/modules/${pageName}/modules`;
@@ -134,6 +142,7 @@ const generateAllDocsPages = async (): Promise<void> => {
 	generateDocsPage(servicesPage).then(() => setLinks('services'));
 	generateDocsPage(testsPage).then(() => setLinks('tests'));
 	generateDocsPage(valueObjectsPage).then(() => setLinks('value-objects'));
+	createGlobalStyle();
 };
 
 generateAllDocsPages();

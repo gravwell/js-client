@@ -1,0 +1,19 @@
+/* Styles for @POST, @GET, @PUT, @DELETE */
+dt {
+	background-color: rgba(255, 229, 157, 1);
+	color: white;
+	top: 5px;
+	left: 5px;
+	position: relative;
+	text-transform: uppercase;
+}
+
+/* Styles for the endpoint that comes after @POST, @GET, @PUT, @DELETE */
+dd {
+	color: black;
+	border: 1px solid rgba(255, 229, 157, 1);
+	border-radius: 4px;
+	font-weight: bold;
+	padding: 6px;
+	background-color: rgba(255, 229, 157, 0.4);
+}
