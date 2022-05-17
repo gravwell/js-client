@@ -16,7 +16,7 @@ const getEntryPoints = pathName => {
 	return subFolders.map(subFolder => `${pathName}/${subFolder}`);
 };
 
-const mainPage = {
+const homePage = {
 	entryPointStrategy: 'Resolve',
 	entryPoints: ['./src/functions', './src/models', './src/services', './src/tests', './src/value-objects'],
 	outputDir: 'docs',
@@ -119,7 +119,7 @@ const setLinks = pageName => {
 
 // This function will generate all the docs pages
 const generateAllDocsPages = async () => {
-	await generateDocsPage(mainPage).then(() => setHomePage());
+	await generateDocsPage(homePage).then(() => setHomePage());
 	generateDocsPage(functionsPage).then(() => setLinks('functions'));
 	generateDocsPage(modelsPage).then(() => setLinks('models'));
 	generateDocsPage(servicesPage).then(() => setLinks('services'));
