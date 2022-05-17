@@ -9,61 +9,60 @@
 const TypeDoc = require('typedoc');
 const fs = require('fs');
 
-const mainPage = {
+// This function will get all sub-folders from a folder
+const getEntryPoints = (pathName: string): Array<string> => {
+	const Folder = pathName;
+	const subFolders: Array<string> = fs.readdirSync(Folder);
+	return subFolders.map(subFolder => `${pathName}/${subFolder}`);
+};
+
+interface Page {
+	entryPointStrategy: string;
+	entryPoints: Array<string>;
+	outputDir: string;
+	readme?: string;
+}
+
+const homePage: Page = {
 	entryPointStrategy: 'Resolve',
 	entryPoints: ['./src/functions', './src/models', './src/services', './src/tests', './src/value-objects'],
 	outputDir: 'docs',
 };
 
-const functionsPage = {
+const functionsPage: Page = {
 	entryPointStrategy: 'Resolve',
 	entryPoints: getEntryPoints('./src/functions'),
 	outputDir: 'docs/modules/functions',
 	readme: './typedoc/readme/functions.md',
 };
 
-const modelsPage = {
+const modelsPage: Page = {
 	entryPointStrategy: 'Resolve',
 	entryPoints: getEntryPoints('./src/models'),
 	outputDir: 'docs/modules/models',
 };
 
-const servicesPage = {
+const servicesPage: Page = {
 	entryPointStrategy: 'Resolve',
 	entryPoints: getEntryPoints('./src/services'),
 	outputDir: 'docs/modules/services',
 };
 
-const testsPage = {
+const testsPage: Page = {
 	entryPointStrategy: 'Expand',
 	entryPoints: ['./src/tests'],
 	outputDir: 'docs/modules/tests',
 };
 
-const valueObjectsPage = {
+const valueObjectsPage: Page = {
 	entryPointStrategy: 'Expand',
 	entryPoints: ['./src/value-objects'],
 	outputDir: 'docs/modules/value-objects',
 };
 
-function getEntryPoints(pathName) {
-	const Folder = pathName;
-	const subFolders = fs.readdirSync(Folder);
-	return subFolders.map(subFolder => `${pathName}/${subFolder}`);
-}
-
-async function generateAllDocsPages() {
-	await generateDocsPage(mainPage).then(() => setHomePage());
-	generateDocsPage(functionsPage).then(() => setLinks('functions'));
-	generateDocsPage(modelsPage).then(() => setLinks('models'));
-	generateDocsPage(servicesPage).then(() => setLinks('services'));
-	generateDocsPage(testsPage).then(() => setLinks('tests'));
-	generateDocsPage(valueObjectsPage).then(() => setLinks('value-objects'));
-}
-
-generateAllDocsPages();
-
-async function generateDocsPage(page) {
+// This function will generate the docsPage
+// to understand how it works, checkout https://typedoc.org/guides/installation/#node-module
+const generateDocsPage = async (page: Page): Promise<void> => {
 	const app = new TypeDoc.Application();
 
 	// If you want TypeDoc to load tsconfig.json / typedoc.json files
@@ -85,14 +84,19 @@ async function generateDocsPage(page) {
 		// Alternatively generate JSON output
 		await app.generateJson(project, page.outputDir + '/documentation.json');
 	}
-}
+};
 
-function setHomePage() {
+// This function will delete the index.html from ./docs folder
+// then will make a copy from ./typedoc/index.html, and paste it inside ./docs folder
+const setHomePage = (): void => {
 	fs.unlinkSync('./docs/index.html');
 	fs.copyFileSync('./typedoc/index.html', 'docs/index.html');
-}
+};
 
-function setLinks(pageName) {
+// This function will fix the page's link to:
+// make the header link always point to the first page, './docs/index.html'
+// will remove the link from <a>Modules</a>
+const setLinks = (pageName: string): void => {
 	const code = `
 	<script> 
 	const headerLinkElement = document.getElementsByClassName('title')[0];
@@ -117,7 +121,19 @@ function setLinks(pageName) {
 	const modulesFolder = `./docs/modules/${pageName}/modules`;
 	const modulesFiles = fs.readdirSync(modulesFolder);
 
-	for (const fileName of modulesFiles) {
+	modulesFiles.forEach((fileName: string) => {
 		fs.appendFileSync(`${modulesFolder}/${fileName}`, childCode);
-	}
-}
+	});
+};
+
+// This function will generate all the docs pages
+const generateAllDocsPages = async (): Promise<void> => {
+	await generateDocsPage(homePage).then(() => setHomePage());
+	generateDocsPage(functionsPage).then(() => setLinks('functions'));
+	generateDocsPage(modelsPage).then(() => setLinks('models'));
+	generateDocsPage(servicesPage).then(() => setLinks('services'));
+	generateDocsPage(testsPage).then(() => setLinks('tests'));
+	generateDocsPage(valueObjectsPage).then(() => setLinks('value-objects'));
+};
+
+generateAllDocsPages();
