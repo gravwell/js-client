@@ -1,6 +1,13 @@
 const TypeDoc = require('typedoc');
 const fs = require('fs');
 
+// This function will get all sub-folders from a folder
+const getEntryPoints = pathName => {
+	const Folder = pathName;
+	const subFolders = fs.readdirSync(Folder);
+	return subFolders.map(subFolder => `${pathName}/${subFolder}`);
+};
+
 const mainPage = {
 	entryPointStrategy: 'Resolve',
 	entryPoints: ['./src/functions', './src/models', './src/services', './src/tests', './src/value-objects'],
@@ -37,24 +44,8 @@ const valueObjectsPage = {
 	outputDir: 'docs/modules/value-objects',
 };
 
-function getEntryPoints(pathName) {
-	const Folder = pathName;
-	const subFolders = fs.readdirSync(Folder);
-	return subFolders.map(subFolder => `${pathName}/${subFolder}`);
-}
-
-async function generateAllDocsPages() {
-	await generateDocsPage(mainPage).then(() => setHomePage());
-	generateDocsPage(functionsPage).then(() => setLinks('functions'));
-	generateDocsPage(modelsPage).then(() => setLinks('models'));
-	generateDocsPage(servicesPage).then(() => setLinks('services'));
-	generateDocsPage(testsPage).then(() => setLinks('tests'));
-	generateDocsPage(valueObjectsPage).then(() => setLinks('value-objects'));
-}
-
-generateAllDocsPages();
-
-async function generateDocsPage(page) {
+// This function will generate the docsPage
+const generateDocsPage = async page => {
 	const app = new TypeDoc.Application();
 
 	// If you want TypeDoc to load tsconfig.json / typedoc.json files
@@ -76,14 +67,19 @@ async function generateDocsPage(page) {
 		// Alternatively generate JSON output
 		await app.generateJson(project, page.outputDir + '/documentation.json');
 	}
-}
+};
 
-function setHomePage() {
+// This function will delete the index.html from ./docs folder
+// the will make a copy from ./typedoc/index.html, and paste it inside ./docs folder
+const setHomePage = () => {
 	fs.unlinkSync('./docs/index.html');
 	fs.copyFileSync('./typedoc/index.html', 'docs/index.html');
-}
+};
 
-function setLinks(pageName) {
+// This function will fix the page's link to:
+// make the header link always point to the first page, './docs/index.html'
+// will remove the link from <a>Modules</a>
+const setLinks = pageName => {
 	const code = `
 	<script> 
 	const headerLinkElement = document.getElementsByClassName('title')[0];
@@ -108,7 +104,19 @@ function setLinks(pageName) {
 	const modulesFolder = `./docs/modules/${pageName}/modules`;
 	const modulesFiles = fs.readdirSync(modulesFolder);
 
-	for (const fileName of modulesFiles) {
+	modulesFiles.forEach(fileName => {
 		fs.appendFileSync(`${modulesFolder}/${fileName}`, childCode);
-	}
-}
+	});
+};
+
+// This function will generate all the docs pages
+const generateAllDocsPages = async () => {
+	await generateDocsPage(mainPage).then(() => setHomePage());
+	generateDocsPage(functionsPage).then(() => setLinks('functions'));
+	generateDocsPage(modelsPage).then(() => setLinks('models'));
+	generateDocsPage(servicesPage).then(() => setLinks('services'));
+	generateDocsPage(testsPage).then(() => setLinks('tests'));
+	generateDocsPage(valueObjectsPage).then(() => setLinks('value-objects'));
+};
+
+generateAllDocsPages();
