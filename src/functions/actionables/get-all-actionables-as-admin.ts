@@ -9,12 +9,6 @@
 import { Actionable, RawActionable, toActionable } from '~/models';
 import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, parseJSONResponse } from '../utils';
 
-/**
- * endpoint: [GET] <strong>/api/pivots?admin=true</strong>
- *
- * @param context
- * @returns
- */
 export const makeGetAllActionablesAsAdmin = (context: APIContext) => {
 	const templatePath = '/api/pivots?admin=true';
 	const url = buildURL(templatePath, { ...context, protocol: 'http' });

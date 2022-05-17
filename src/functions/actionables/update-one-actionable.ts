@@ -16,12 +16,6 @@ import {
 } from '../utils';
 import { makeGetOneActionable } from './get-one-actionable';
 
-/**
- * endpoint: [PUT] <strong>/api/pivots/{actionableID}</strong>
- *
- * @param context
- * @returns
- */
 export const makeUpdateOneActionable = (context: APIContext) => {
 	const getOneActionable = makeGetOneActionable(context);
 
