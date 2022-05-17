@@ -1,3 +1,19 @@
+/\*
+Copyright 2022 Gravwell, Inc. All rights reserved.
+Contact: <legal@gravwell.io>
+
+This software may be modified and distributed under the terms of the
+MIT license. See the LICENSE file for details.
+\*/
+
+<!--
+ Copyright 2022 Gravwell, Inc. All rights reserved.
+ Contact: <legal@gravwell.io>
+
+ This software may be modified and distributed under the terms of the
+ MIT license. See the LICENSE file for details.
+ -->
+
 # functions folder
 
 The main porpuse of this folder is to handle/organize the communication to the backend, as like fetch, add, delete and update a data.
