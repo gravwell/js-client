@@ -10,50 +10,57 @@ const TypeDoc = require('typedoc');
 const fs = require('fs');
 
 // This function will get all sub-folders from a folder
-const getEntryPoints = pathName => {
+const getEntryPoints = (pathName: string) => {
 	const Folder = pathName;
-	const subFolders = fs.readdirSync(Folder);
+	const subFolders: Array<string> = fs.readdirSync(Folder);
 	return subFolders.map(subFolder => `${pathName}/${subFolder}`);
 };
 
-const homePage = {
+interface Page {
+	entryPointStrategy: string;
+	entryPoints: Array<string>;
+	outputDir: string;
+	readme?: string;
+}
+
+const homePage: Page = {
 	entryPointStrategy: 'Resolve',
 	entryPoints: ['./src/functions', './src/models', './src/services', './src/tests', './src/value-objects'],
 	outputDir: 'docs',
 };
 
-const functionsPage = {
+const functionsPage: Page = {
 	entryPointStrategy: 'Resolve',
 	entryPoints: getEntryPoints('./src/functions'),
 	outputDir: 'docs/modules/functions',
 };
 
-const modelsPage = {
+const modelsPage: Page = {
 	entryPointStrategy: 'Resolve',
 	entryPoints: getEntryPoints('./src/models'),
 	outputDir: 'docs/modules/models',
 };
 
-const servicesPage = {
+const servicesPage: Page = {
 	entryPointStrategy: 'Resolve',
 	entryPoints: getEntryPoints('./src/services'),
 	outputDir: 'docs/modules/services',
 };
 
-const testsPage = {
+const testsPage: Page = {
 	entryPointStrategy: 'Expand',
 	entryPoints: ['./src/tests'],
 	outputDir: 'docs/modules/tests',
 };
 
-const valueObjectsPage = {
+const valueObjectsPage: Page = {
 	entryPointStrategy: 'Expand',
 	entryPoints: ['./src/value-objects'],
 	outputDir: 'docs/modules/value-objects',
 };
 
 // This function will generate the docsPage
-const generateDocsPage = async page => {
+const generateDocsPage = async (page: Page): Promise<void> => {
 	const app = new TypeDoc.Application();
 
 	// If you want TypeDoc to load tsconfig.json / typedoc.json files
@@ -79,7 +86,7 @@ const generateDocsPage = async page => {
 
 // This function will delete the index.html from ./docs folder
 // then will make a copy from ./typedoc/index.html, and paste it inside ./docs folder
-const setHomePage = () => {
+const setHomePage = (): void => {
 	fs.unlinkSync('./docs/index.html');
 	fs.copyFileSync('./typedoc/index.html', 'docs/index.html');
 };
@@ -87,7 +94,7 @@ const setHomePage = () => {
 // This function will fix the page's link to:
 // make the header link always point to the first page, './docs/index.html'
 // will remove the link from <a>Modules</a>
-const setLinks = pageName => {
+const setLinks = (pageName: string): void => {
 	const code = `
 	<script> 
 	const headerLinkElement = document.getElementsByClassName('title')[0];
@@ -112,13 +119,13 @@ const setLinks = pageName => {
 	const modulesFolder = `./docs/modules/${pageName}/modules`;
 	const modulesFiles = fs.readdirSync(modulesFolder);
 
-	modulesFiles.forEach(fileName => {
+	modulesFiles.forEach((fileName: string) => {
 		fs.appendFileSync(`${modulesFolder}/${fileName}`, childCode);
 	});
 };
 
 // This function will generate all the docs pages
-const generateAllDocsPages = async () => {
+const generateAllDocsPages = async (): Promise<void> => {
 	await generateDocsPage(homePage).then(() => setHomePage());
 	generateDocsPage(functionsPage).then(() => setLinks('functions'));
 	generateDocsPage(modelsPage).then(() => setLinks('models'));
