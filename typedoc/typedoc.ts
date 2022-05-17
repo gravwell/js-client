@@ -10,7 +10,7 @@ const TypeDoc = require('typedoc');
 const fs = require('fs');
 
 // This function will get all sub-folders from a folder
-const getEntryPoints = (pathName: string) => {
+const getEntryPoints = (pathName: string): Array<string> => {
 	const Folder = pathName;
 	const subFolders: Array<string> = fs.readdirSync(Folder);
 	return subFolders.map(subFolder => `${pathName}/${subFolder}`);
