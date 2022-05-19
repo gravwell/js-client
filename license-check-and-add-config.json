@@ -1,0 +1,23 @@
+{
+	"ignore": ["*.txt", "**/!(text_file_to_not_ignore).txt", "sub_directory/sub_sub_directory_to_ignore"],
+	"license": "LICENSE",
+	"licenseFormats": {
+		"js|ts|css|scss|less|php|as|c|java|cpp|go|cto|acl": {
+			"prepend": "/*",
+			"append": " */",
+			"eachLine": {
+				"prepend": " * "
+			}
+		},
+		"gitignore|npmignore|eslintignore|dockerignore|sh|py": {
+			"eachLine": {
+				"prepend": "# "
+			}
+		},
+		"html|xml|svg|md": {
+			"prepend": "<!--",
+			"append": "-->"
+		}
+	},
+	"trailingWhitespace": "TRIM"
+}
