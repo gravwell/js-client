@@ -268,6 +268,8 @@ export interface RawSearchEntries extends BaseSearchEntries {
 	// TODO
 	names: Array<string>;
 	data: Array<SearchEntry>;
+	/** Maps tag names to numeric IDs*/
+	tags: { [tagname: string]: number };
 }
 
 export const normalizeToRawSearchEntries = (
@@ -280,6 +282,7 @@ export const normalizeToRawSearchEntries = (
 		type: 'raw',
 		names: ['RAW'],
 		data: (v.Entries ?? []).map(toSearchEntry),
+		tags: v.Tags,
 	};
 };
 
@@ -311,6 +314,8 @@ export interface TextSearchEntries extends BaseSearchEntries {
 	// TODO
 	names: Array<string>;
 	data: Array<SearchEntry>;
+	/** Maps tag names to numeric IDs*/
+	tags: { [tagname: string]: number };
 }
 
 export const normalizeToTextSearchEntries = (
@@ -323,6 +328,7 @@ export const normalizeToTextSearchEntries = (
 		type: 'text',
 		names: ['DATA'],
 		data: (v.Entries ?? []).map(toSearchEntry),
+		tags: v.Tags,
 	};
 };
 

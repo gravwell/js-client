@@ -7,12 +7,15 @@
  **************************************************************************/
 
 import { isArray, isUndefined } from 'lodash';
+import { isDictOfNumber } from '~/functions/utils/type-guards';
 import { isRawDataExplorerEntry } from '../../raw-data-explorer-entry';
 import { isRawSearchEntry, RawSearchEntry } from '../../raw-search-entry';
 import { RawSearchMessageReceivedRequestEntriesWithinRangeBaseData } from './base';
 
 export interface RawSearchMessageReceivedRequestEntriesWithinRangeRawRenderer
 	extends RawSearchMessageReceivedRequestEntriesWithinRangeBaseData {
+	/** Maps tag names to numeric IDs*/
+	Tags: { [tagname: string]: number };
 	Entries?: Array<RawSearchEntry>;
 }
 
@@ -23,7 +26,7 @@ export const isRawSearchMessageReceivedRequestEntriesWithinRangeRawRenderer = (
 		const t = v as RawSearchMessageReceivedRequestEntriesWithinRangeRawRenderer;
 		const entriesOK = isUndefined(t.Entries) || (isArray(t.Entries) && t.Entries.every(isRawSearchEntry));
 		const exploreOK = isUndefined(t.Explore) || (isArray(t.Explore) && t.Explore.every(isRawDataExplorerEntry));
-		return entriesOK && exploreOK;
+		return entriesOK && exploreOK && isDictOfNumber(t.Tags);
 	} catch {
 		return false;
 	}
