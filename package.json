@@ -18,7 +18,7 @@
 		"format": "scripts/format",
 		"prepublishOnly": "npm ci && npm run format && npm run lint && npm run build",
 		"start:docs": "npm run generate:docs && npm run launch:server:docs",
-		"generate:docs": "npx ts-node ./typedoc/typedoc.ts",
+		"generate:docs": "npx ts-node ./docs-generator/main.ts",
 		"launch:server:docs": "http-server ./docs"
 	},
 	"keywords": [
