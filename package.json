@@ -16,7 +16,10 @@
 		"build:tests": "scripts/build --tests --assets",
 		"lint": "scripts/lint",
 		"format": "scripts/format",
-		"prepublishOnly": "npm ci && npm run format && npm run lint && npm run build"
+		"prepublishOnly": "npm ci && npm run format && npm run lint && npm run build",
+		"start:docs": "npm run generate:docs && npm run launch:server:docs",
+		"generate:docs": "npx ts-node ./docs-generator/main.ts",
+		"launch:server:docs": "http-server ./docs"
 	},
 	"keywords": [
 		"Gravwell",
@@ -45,9 +48,11 @@
 		"date-fns": "^2.17.0",
 		"decoders": "^1.25.5",
 		"form-data": "^3.0.0",
+		"http-server": "^14.1.0",
 		"isomorphic-ws": "^4.0.1",
 		"lodash": "^4.17.15",
 		"node-fetch": "^2.6.1",
+		"typedoc": "^0.22.15",
 		"utf8": "^3.0.0",
 		"ws": "^7.4.3"
 	},
