@@ -6,9 +6,12 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { unlinkSync } from 'fs';
+import { existsSync, unlinkSync } from 'fs';
 
-// this function will remove a file from some filePath
+/**
+ * this function will remove a file from some filePath
+ * @param filePath is the path where we want to remove the file
+ */
 export const removeFile = (filePath: string): void => {
-	unlinkSync(`${filePath}`);
+	!existsSync(filePath) && unlinkSync(`${filePath}`);
 };

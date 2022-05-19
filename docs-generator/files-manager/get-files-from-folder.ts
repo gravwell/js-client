@@ -8,7 +8,10 @@
 
 import { readdirSync } from 'fs';
 
-// this function will looop througha folder an return all the files inside this folder
+/**
+ * @param pathName path where is the folder that we wants to see
+ * @returns an array with all files inside this folder
+ */
 export const getFilesFromFolder = (pathName: string): Array<string> => {
 	const folder = pathName;
 	const files = readdirSync(folder);

@@ -7,7 +7,10 @@
  **************************************************************************/
 import { existsSync, mkdirSync } from 'fs';
 
-// This function will check if this folder exists, and if deosn't it will create a folder on some folderPath
+/**
+ * This function will check if this folder exists, and if deosn't it will create a folder on some folderPath
+ * @param folderPath is the path where we want to add a new folder
+ */
 export const createFolder = (folderPath: string): void => {
 	!existsSync(folderPath) && mkdirSync(folderPath);
 };

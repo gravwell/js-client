@@ -6,11 +6,13 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { appendFileSync } from 'fs';
+import { appendFileSync, existsSync } from 'fs';
 
-// This function will add a code block in the bottom of some docs page (normally the html files),
-// for example, it could add the following code block:
-// <script>console.log('hello world')</script>
+/**
+ * This function will add a code block into some file
+ * @param filePath is the path where the code will be added
+ * @param code it's the coded to be added
+ */
 export const addCodeBlock = (filePath: string, code: string): void => {
-	appendFileSync(filePath, code);
+	!existsSync(filePath) && appendFileSync(filePath, code);
 };

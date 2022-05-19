@@ -11,9 +11,10 @@ import { getFilesFromFolder } from './files-manager';
 import { pagesFolderPath, filesFolderPath, readmePathOnDocsGenerator, blackListFolders } from './settings';
 import { Page } from './pages';
 
-// This will loop through all folders inside ./src, and will give the correct object
-// to typedoc generate the doc correctly
-
+/**
+ * This function will create a function based on all folders inside './src'
+ * @returns all the pages, that will be used inside createTypedocPage()
+ */
 export const getPages = (): Array<Page> => {
 	let pages = [];
 	const folders = getSubfoldersFromFolder(filesFolderPath);

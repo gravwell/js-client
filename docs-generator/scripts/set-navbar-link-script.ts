@@ -6,7 +6,10 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-// it will make the navbar header link point to a new path
+/**
+ * @param path is the path where we want to point the navbar link
+ * @returns a string with the setNavbarLinkScript
+ */
 export const setNavbarLinkScript = (path: string): string => {
 	return `
     <script>

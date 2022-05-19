@@ -8,7 +8,10 @@
 
 import { readdirSync } from 'fs';
 
-// This function will return all the subfolders from a folder
+/**
+ * @param pathName is the path from a folder that we want to see
+ * @returns an array with all subfolders inside this folder
+ */
 export const getSubfoldersFromFolder = (pathName: string): Array<string> => {
 	const folder = pathName;
 	const subFolders = readdirSync(folder);

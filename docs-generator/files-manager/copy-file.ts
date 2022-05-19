@@ -6,9 +6,13 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { copyFileSync } from 'fs';
+import { copyFileSync, existsSync } from 'fs';
 
-// This function will make a copy from fileToBeCopyPath, and paste it inside pathWhereFileIsPasted
+/**
+ * This function will make a copy from fileToBeCopyPath, and paste it inside pathWhereFileIsPasted
+ * @param pathWhereFileIsCopied is the path where the file is copied from
+ * @param pathWhereFileIsPasted is the path whre the file will be copied
+ */
 export const copyFile = (pathWhereFileIsCopied: string, pathWhereFileIsPasted: string): void => {
-	copyFileSync(pathWhereFileIsCopied, pathWhereFileIsPasted);
+	!existsSync(pathWhereFileIsCopied) && copyFileSync(pathWhereFileIsCopied, pathWhereFileIsPasted);
 };

@@ -6,8 +6,11 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-// This will change the bradCrumb created by default by the typedoc.
-// Example of bradCrumb = tests / custom-matchers / interface
+/**
+ * @param element is the element of breadCrumbElement
+ * @param pageName is the name of the page, that will substitute the olde breadCrumb, selected by typedoc.
+ * @returns a string with the setBreadCrumbScript
+ */
 export const setBreadCrumbScript = (element: string, pageName: string): string => {
 	return `
     <script>

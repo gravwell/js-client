@@ -6,7 +6,10 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-// This script will remove the Module link, created by default by typedoc
+/**
+ * @param element is the element from modulesLink
+ * @returns a string with the removeModulesLinksScript
+ */
 export const removeModulesLinksScript = (element: string): string => {
 	return `
     <script>

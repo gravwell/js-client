@@ -59,15 +59,20 @@ const setChildPage = (page: Page): void => {
 	});
 };
 
-// This will change the homePage sideBar
+/**
+ * This will change the homePage sideBar
+ * @param page will be used inside setSideBarScript(), checkout set-sidebar-script.ts for more informations
+ * @param index will be used inside setSideBarScript(), checkout set-sidebar-script.ts for more informations
+ * @returns the script to be able to change the homePage sidebar
+ */
 const getHomePageScript = (page: Page, index: number): string => {
 	return setSideBarScript(page, index);
 };
 
-// This will add a script inside all index pages (unless the homePage),
-// it will make the navbar link points to the homePage
-// then will remove the modules link created by default by typedoc
-// it will change the title page, created by default by typedoc
+/**
+ * @param page the page where this script will be addded
+ * @returns the script to make changes on index pages
+ */
 const getIndexPageScript = (page: Page): string => {
 	return `
 	${setNavbarLinkScript('../../index.html')}
@@ -76,10 +81,11 @@ const getIndexPageScript = (page: Page): string => {
 	`;
 };
 
-// This will add a script inside all child pages, ex: ./docs/pages/functions/modules/actionables.html
-// it will make the navbar link points to the homePage
-// then will remove the modules link created by default by typedoc
-// it will change the breadCrumb, created by default by typedoc
+/**
+ * @param page the page where this script will be addded
+ * @returns it will get the script that will make changes on all childPages
+ * childPages: all the pages that's not index.html, ex: ./docs/pages/functions/modules/actionables.html
+ */
 const getChildPageScript = (page: Page): string => {
 	return `
 	${setNavbarLinkScript('../../../index.html')}

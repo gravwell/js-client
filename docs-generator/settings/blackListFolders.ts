@@ -6,5 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-// Here will be the folders that won't have a docs for it with docs-generator
+/**
+ * Here you can set which folders will not have a document generated to it
+ */
 export const blackListFolders = ['@types'];

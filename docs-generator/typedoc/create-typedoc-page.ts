@@ -8,12 +8,13 @@
 
 import { Application, TSConfigReader } from 'typedoc';
 
-// This function will generate the docsPage
-// to understand how it works, checkout https://typedoc.org/guides/installation/#node-module
+/**
+ * to understand how it works, checkout https://typedoc.org/guides/installation/#node-module
+ * @param page the page that will generate the docs
+ */
 export const createTypedocPage = async <Type>(page: Type): Promise<void> => {
 	const app = new Application();
 
-	// If you want TypeDoc to load tsconfig.json / typedoc.json files
 	app.options.addReader(new TSConfigReader());
 	app.options.addReader(new TSConfigReader());
 
@@ -27,9 +28,7 @@ export const createTypedocPage = async <Type>(page: Type): Promise<void> => {
 	const project = app.convert();
 
 	if (project) {
-		// Rendered docs
 		await app.generateDocs(project, page['outputDir']);
-		// Alternatively generate JSON output
 		await app.generateJson(project, page['outputDir'] + '/documentation.json');
 	}
 };
