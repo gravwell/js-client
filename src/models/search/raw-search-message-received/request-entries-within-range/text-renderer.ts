@@ -14,6 +14,8 @@ import { RawSearchMessageReceivedRequestEntriesWithinRangeBaseData } from './bas
 export interface RawSearchMessageReceivedRequestEntriesWithinRangeTextRenderer
 	extends RawSearchMessageReceivedRequestEntriesWithinRangeBaseData {
 	Entries?: Array<RawSearchEntry>;
+	/** Maps tag names to numeric IDs*/
+	Tags: { [tagname: string]: number };
 }
 
 export const isRawSearchMessageReceivedRequestEntriesWithinRangeTextRenderer = (

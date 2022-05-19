@@ -13,6 +13,8 @@ import { RawSearchMessageReceivedRequestEntriesWithinRangeBaseData } from './bas
 
 export interface RawSearchMessageReceivedRequestEntriesWithinRangeRawRenderer
 	extends RawSearchMessageReceivedRequestEntriesWithinRangeBaseData {
+	/** Maps tag names to numeric IDs*/
+	Tags: { [tagname: string]: number };
 	Entries?: Array<RawSearchEntry>;
 }
 
