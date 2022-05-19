@@ -31,6 +31,7 @@ export const getPages = (): Array<Page> => {
 					entryPoints: [folderPath],
 					outputDir: `${pagesFolderPath}/${folderName}`,
 					readme: `${readmePathOnDocsGenerator}/${folderName}.md`,
+					customCss: './docs-generator/assets/custom.css',
 				});
 			} else {
 				pages.push({
@@ -39,6 +40,7 @@ export const getPages = (): Array<Page> => {
 					entryPoints: getSubfoldersFromFolder(folderPath).map(subfolder => `${folderPath}/${subfolder}`),
 					outputDir: `${pagesFolderPath}/${folderName}`,
 					readme: `${readmePathOnDocsGenerator}/${folderName}.md`,
+					customCss: './docs-generator/assets/custom.css',
 				});
 			}
 		}

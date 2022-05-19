@@ -12,4 +12,5 @@ export interface Page {
 	entryPoints: Array<string>;
 	outputDir: string;
 	readme?: string;
+	customCss?: string;
 }
