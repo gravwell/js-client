@@ -13,5 +13,9 @@ import { existsSync, unlinkSync } from 'fs';
  * @param filePath is the path where we want to remove the file
  */
 export const removeFile = (filePath: string): void => {
-	!existsSync(filePath) && unlinkSync(`${filePath}`);
+	if (existsSync(filePath)) {
+		unlinkSync(`${filePath}`);
+	} else {
+		throw `Was not possible to remove this file, ${filePath} does note exists`;
+	}
 };

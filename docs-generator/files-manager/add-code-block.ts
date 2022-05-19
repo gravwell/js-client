@@ -14,5 +14,9 @@ import { appendFileSync, existsSync } from 'fs';
  * @param code it's the coded to be added
  */
 export const addCodeBlock = (filePath: string, code: string): void => {
-	!existsSync(filePath) && appendFileSync(filePath, code);
+	if (existsSync(filePath)) {
+		appendFileSync(filePath, code);
+	} else {
+		throw `Was not possible to add the code block, ${filePath} does note exists`;
+	}
 };

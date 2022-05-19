@@ -14,5 +14,9 @@ import { copyFileSync, existsSync } from 'fs';
  * @param pathWhereFileIsPasted is the path whre the file will be copied
  */
 export const copyFile = (pathWhereFileIsCopied: string, pathWhereFileIsPasted: string): void => {
-	!existsSync(pathWhereFileIsCopied) && copyFileSync(pathWhereFileIsCopied, pathWhereFileIsPasted);
+	if (existsSync(pathWhereFileIsCopied)) {
+		copyFileSync(pathWhereFileIsCopied, pathWhereFileIsPasted);
+	} else {
+		throw `Was not possible to add the code block, ${pathWhereFileIsCopied} does note exists`;
+	}
 };

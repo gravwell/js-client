@@ -15,5 +15,7 @@ import { existsSync, writeFileSync } from 'fs';
  * @param data what will be inject on the file
  */
 export const createFile = (filePath: string, data: string): void => {
-	!existsSync(filePath) && writeFileSync(filePath, data);
+	if (!existsSync(filePath)) {
+		writeFileSync(filePath, data);
+	}
 };

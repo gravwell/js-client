@@ -12,5 +12,7 @@ import { existsSync, mkdirSync } from 'fs';
  * @param folderPath is the path where we want to add a new folder
  */
 export const createFolder = (folderPath: string): void => {
-	!existsSync(folderPath) && mkdirSync(folderPath);
+	if (!existsSync(folderPath)) {
+		mkdirSync(folderPath);
+	}
 };
