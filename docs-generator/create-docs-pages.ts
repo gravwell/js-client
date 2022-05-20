@@ -61,7 +61,7 @@ const setChildPage = (page: Page): void => {
 };
 
 /**
- * This will change the homePage sideBar
+ * This will change the homePage sideBar, and add all the links from the pages created
  * @param page will be used inside setSideBarScript(), checkout set-sidebar-script.ts for more informations
  * @param index will be used inside setSideBarScript(), checkout set-sidebar-script.ts for more informations
  * @returns the script to be able to change the homePage sidebar
