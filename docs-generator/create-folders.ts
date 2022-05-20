@@ -9,7 +9,7 @@
 import { createFolder } from './folder-manager';
 import { assetsFolderPathOnDocs, docsFolderPath, pagesFolderPath } from './settings';
 
-export const createFolders = (): void => {
+export const createAllFolders = (): void => {
 	createFolder(docsFolderPath);
 	createFolder(pagesFolderPath);
 	createFolder(assetsFolderPathOnDocs);
