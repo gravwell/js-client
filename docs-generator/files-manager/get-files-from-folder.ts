@@ -6,14 +6,14 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { readdirSync, lstatSync } from 'fs';
+import { readdirSync, statSync } from 'fs';
 
 /**
  * @param pathName path where is the folder that we wants to see
  * @returns an array with all files inside this folder
  */
 export const getFilesFromFolder = (pathName: string): Array<string> => {
-	const folder = pathName;
-	const files = readdirSync(folder);
-	return files.filter(file => file.includes('.'));
+	const folderPath = pathName;
+	const files = readdirSync(folderPath);
+	return files.filter(fileName => statSync(`${folderPath}/${fileName}`).isFile());
 };

@@ -6,14 +6,14 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { readdirSync } from 'fs';
+import { readdirSync, statSync } from 'fs';
 
 /**
  * @param pathName is the path from a folder that we want to see
  * @returns an array with all subfolders inside this folder
  */
 export const getSubfoldersFromFolder = (pathName: string): Array<string> => {
-	const folder = pathName;
-	const subFolders = readdirSync(folder);
-	return subFolders.filter(subFolder => !subFolder.includes('.'));
+	const folderPath = pathName;
+	const subFolders = readdirSync(folderPath);
+	return subFolders.filter(subfolderName => statSync(`${folderPath}/${subfolderName}`).isDirectory());
 };
