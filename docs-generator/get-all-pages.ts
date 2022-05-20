@@ -29,11 +29,12 @@ const getPage = (folderName: string): Page => {
 	const folderPath = `${filesFolderPath}/${folderName}`;
 	const files = getFilesFromFolder(folderPath);
 	const subFolders = getSubfoldersFromFolder(folderPath);
+	const hasMoreFilesThanFolders = files.length > subFolders.length;
 
 	return {
 		name: folderName,
-		entryPointStrategy: files.length > subFolders.length ? 'expand' : 'resolve',
-		entryPoints: files.length > subFolders.length ? [folderPath] : getResolveEntryPoints(folderPath),
+		entryPointStrategy: hasMoreFilesThanFolders ? 'expand' : 'resolve',
+		entryPoints: hasMoreFilesThanFolders ? [folderPath] : getResolveEntryPoints(folderPath),
 		outputDir: `${pagesFolderPath}/${folderName}`,
 		readme: `${readmePathOnDocsGenerator}/${folderName}.md`,
 		customCss: './docs-generator/assets/custom.css',

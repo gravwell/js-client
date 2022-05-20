@@ -16,6 +16,6 @@ export const removeFile = (filePath: string): void => {
 	if (existsSync(filePath)) {
 		unlinkSync(`${filePath}`);
 	} else {
-		console.log(`Was not possible to remove this file, ${filePath} does note exists`);
+		console.error(`Was not possible to remove this file, ${filePath} does note exists`);
 	}
 };
