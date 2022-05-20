@@ -7,12 +7,12 @@
  **************************************************************************/
 
 import { Page } from './pages';
-import { markDownLicense, readmePathOnDocsGenerator } from './settings';
+import { readmePathOnDocsGenerator } from './settings';
 import { createFile } from './files-manager';
 
 export const createReadmes = (pages: Array<Page>): void => {
 	pages.forEach(page => {
 		const readmeFilePath = `${readmePathOnDocsGenerator}/${page.name}.md`;
-		createFile(readmeFilePath, markDownLicense);
+		createFile(readmeFilePath, '');
 	});
 };

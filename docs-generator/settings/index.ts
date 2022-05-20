@@ -7,5 +7,4 @@
  **************************************************************************/
 
 export * from './paths';
-export * from './licenses';
 export * from './blackListFolders';
