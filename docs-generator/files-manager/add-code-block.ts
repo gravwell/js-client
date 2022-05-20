@@ -17,6 +17,6 @@ export const addCodeBlock = (filePath: string, code: string): void => {
 	if (existsSync(filePath)) {
 		appendFileSync(filePath, code);
 	} else {
-		throw `Was not possible to add the code block, ${filePath} does note exists`;
+		console.log(`Was not possible to add the code block, ${filePath} does note exists`);
 	}
 };

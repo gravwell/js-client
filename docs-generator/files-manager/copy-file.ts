@@ -17,6 +17,6 @@ export const copyFile = (pathWhereFileIsCopied: string, pathWhereFileIsPasted: s
 	if (existsSync(pathWhereFileIsCopied)) {
 		copyFileSync(pathWhereFileIsCopied, pathWhereFileIsPasted);
 	} else {
-		throw `Was not possible to add the code block, ${pathWhereFileIsCopied} does note exists`;
+		console.log(`Was not possible to add the code block, ${pathWhereFileIsCopied} does note exists`);
 	}
 };

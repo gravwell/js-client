@@ -6,7 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { createAllFolders } from './create-folders';
+import { createAllFolders } from './create-all-folders';
 import { copyFiles } from './copy-files';
 import { getPages } from './get-pages';
 import { createReadmes } from './create-readmes';
