@@ -8,13 +8,13 @@
 
 import { createAllFolders } from './create-all-folders';
 import { copyFiles } from './copy-files';
-import { getPages } from './get-pages';
+import { getAllPages } from './get-all-pages';
 import { createReadmes } from './create-readmes';
 import { createDocsPages } from './create-docs-pages';
 
 createAllFolders();
 copyFiles();
 
-const pages = getPages();
+const pages = getAllPages();
 createReadmes(pages);
 createDocsPages(pages);
