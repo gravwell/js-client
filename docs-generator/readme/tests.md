@@ -6,6 +6,6 @@
  MIT license. See the LICENSE file for details.
  -->
 
-# tests folder
+# Tests folder
 
 The main porpuse of this folder is...

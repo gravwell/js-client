@@ -6,6 +6,6 @@
  MIT license. See the LICENSE file for details.
  -->
 
-# models folder
+# Models folder
 
 The main porpuse of this folder is...

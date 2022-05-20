@@ -6,6 +6,6 @@
  MIT license. See the LICENSE file for details.
  -->
 
-# value-objects folder
+# Value-objects folder
 
 The main porpuse of this folder is...

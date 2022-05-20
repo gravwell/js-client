@@ -6,7 +6,7 @@
  MIT license. See the LICENSE file for details.
  -->
 
-# functions folder
+# Functions folder
 
 The main porpuse of this folder is to handle/organize the communication to the backend, as like fetch, add, delete and update a data.
 

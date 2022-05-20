@@ -6,6 +6,6 @@
  MIT license. See the LICENSE file for details.
  -->
 
-# services folder
+# Services folder
 
 The main porpuse of this folder is...
