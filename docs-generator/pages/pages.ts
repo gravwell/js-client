@@ -8,7 +8,7 @@
 
 export interface Page {
 	name: string;
-	entryPointStrategy: 'Resolve' | 'resolve' | 'Expand' | 'expand' | 'Packages' | 'packages';
+	entryPointStrategy: 'resolve' | 'expand' | 'packages';
 	entryPoints: Array<string>;
 	outputDir: string;
 	readme?: string;

@@ -15,5 +15,5 @@ import { readdirSync, lstatSync } from 'fs';
 export const getFilesFromFolder = (pathName: string): Array<string> => {
 	const folder = pathName;
 	const files = readdirSync(folder);
-	return files.filter(file => lstatSync(file).isFile());
+	return files.filter(file => file.includes('.'));
 };

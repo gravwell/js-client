@@ -28,7 +28,7 @@ export const getPages = (): Array<Page> => {
 			if (files.length > subFolders.length) {
 				pages.push({
 					name: folderName,
-					entryPointStrategy: 'Expand',
+					entryPointStrategy: 'expand',
 					entryPoints: [folderPath],
 					outputDir: `${pagesFolderPath}/${folderName}`,
 					readme: `${readmePathOnDocsGenerator}/${folderName}.md`,
@@ -37,7 +37,7 @@ export const getPages = (): Array<Page> => {
 			} else {
 				pages.push({
 					name: folderName,
-					entryPointStrategy: 'Resolve',
+					entryPointStrategy: 'resolve',
 					entryPoints: getSubfoldersFromFolder(folderPath).map(subfolder => `${folderPath}/${subfolder}`),
 					outputDir: `${pagesFolderPath}/${folderName}`,
 					readme: `${readmePathOnDocsGenerator}/${folderName}.md`,
