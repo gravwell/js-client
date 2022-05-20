@@ -19,9 +19,10 @@ import {
 } from './scripts';
 import { createTypedocPage } from './typedoc';
 
-export const createDocsPages = (pages: Array<Page>): void => {
-	pages.forEach((page: Page, index: number) => {
-		createTypedocPage<Page>(page).then(() => setPages(page, index));
+export const createDocsPages = async (pages: Array<Page>): Promise<void> => {
+	pages.forEach(async (page: Page, index: number) => {
+		await createTypedocPage<Page>(page);
+		setPages(page, index);
 	});
 };
 
