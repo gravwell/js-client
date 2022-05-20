@@ -18,7 +18,7 @@ const DASHBOARD_DEFAULT_VERSION = '2.0.0';
 
 export const toDashboard = (raw: RawDashboard): Dashboard => ({
 	id: toNumericID(raw.ID),
-	globalID: raw.GUID,
+	globalID: raw.GUID ?? null,
 
 	userID: toNumericID(raw.UID),
 	groupIDs: (raw.GIDs ?? []).map(toNumericID),
