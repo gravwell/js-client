@@ -78,9 +78,12 @@ export const makeAttachToOneSearch = (context: APIContext) => {
 				closedSub.unsubscribe();
 			}
 
-			// Handles websocket hangups
+			// Handles websocket hangups from close or error
 			closedSub = from(rawSubscriptionP)
-				.pipe(concatMap(rawSubscription => rawSubscription.received$))
+				.pipe(
+					concatMap(rawSubscription => rawSubscription.received$),
+					catchError(() => EMPTY),
+				)
 				.subscribe({
 					complete: () => {
 						rawSubscriptionP = null;
