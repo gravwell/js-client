@@ -16,6 +16,11 @@ npm install gravwell
 
 Make sure you understand our [contributing guide](./CONTRIBUTING.md) before doing any work.
 
-## Generate docs
+## Generating docs
 
-First run `npm install`, to install all dependencies, then run `npm run start:docs`, then the docs from this project will be generated and a server on port 8080 will be started, so go to `http://localhost:8080` to see the docs. When you open the docs, it's important to `disable the cache` to a better experience, otherwise it will have a delay every time you update the docs.
+1. First run `npm clean-install`, to install all dependencies;
+2. Then run `npm run start:docs`;
+3. Then the docs from this project will be generated and served on port 8080;
+4. Go to `http://localhost:8080` to see the docs. 
+
+> TIP: For a better experience, disable the Browser cache using the network developer tools. Otherwise it will have a delay every time you update the docs.
