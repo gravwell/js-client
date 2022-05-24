@@ -9,6 +9,9 @@
 import { createFolder } from './folder-manager';
 import { assetsFolderPathOnDocs, docsFolderPath, pagesFolderPath } from './settings';
 
+/**
+ * This function will create the structure of all folders if it doesn't exist
+ */
 export const createAllFolders = (): void => {
 	createFolder(docsFolderPath);
 	createFolder(pagesFolderPath);

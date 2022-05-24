@@ -19,10 +19,16 @@ export const copyFiles = (): void => {
 	copyAssetsFilesToDocs();
 };
 
+/**
+ * This function will copy the home-page.html to the docs folder
+ */
 const copyHomePageToDocs = (): void => {
 	copyFile(homePageFilePathOnDocsGenerator, homePageFilePathOnDocs);
 };
 
+/**
+ * This function will copy all files from assets folder to the docs/assets folder
+ */
 const copyAssetsFilesToDocs = (): void => {
 	const filesFromAssetsFolder = getFilesFromFolder(assetsFolderPathOnDocsGenerator);
 
