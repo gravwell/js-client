@@ -17,8 +17,8 @@ import { Page } from './pages';
  */
 export const getAllPages = (): Array<Page> => {
 	const folders = getSubfoldersFromFolder(filesFolderPath);
-	const pagesNotFiltered = folders.map(folderName => getPage(folderName));
-	return pagesNotFiltered.filter(page => checkIfFolderIsNotOnBlackList(page.name));
+	const filteredFolders = folders.filter(folderName => checkIfFolderIsNotOnBlackList(folderName));
+	return filteredFolders.map(folderName => getPage(folderName));
 };
 
 const checkIfFolderIsNotOnBlackList = (folderName: string): boolean => {
