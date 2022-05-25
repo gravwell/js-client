@@ -14,12 +14,15 @@ import { RawCreatablePlaybook } from './raw-creatable-playbook';
 import { RawPlaybookDecodedMetadata } from './raw-playbook-decoded-metadata';
 
 export const toRawCreatablePlaybook = (creatable: CreatablePlaybook): RawCreatablePlaybook => {
-	const metadata: RawPlaybookDecodedMetadata = { dashboards: [], attachments: [] };
-	if (isUUID(creatable.coverImageFileGlobalID))
-		metadata.attachments?.push({ context: 'cover', type: 'image', fileGUID: creatable.coverImageFileGlobalID });
+	const metadata: Required<RawPlaybookDecodedMetadata> = { dashboards: [], attachments: [] };
 
+	// Add cover image to metadata, if it exists
+	if (isUUID(creatable.coverImageFileGlobalID))
+		metadata.attachments.push({ context: 'cover', type: 'image', fileGUID: creatable.coverImageFileGlobalID });
+
+	// Add banner image to metadata, if it exists
 	if (isUUID(creatable.bannerImageFileGlobalID))
-		metadata.attachments?.push({ context: 'banner', type: 'image', fileGUID: creatable.bannerImageFileGlobalID });
+		metadata.attachments.push({ context: 'banner', type: 'image', fileGUID: creatable.bannerImageFileGlobalID });
 
 	return omitUndefinedShallow({
 		UID: creatable.userID ? toRawNumericID(creatable.userID) : undefined,
