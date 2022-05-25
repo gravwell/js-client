@@ -70,6 +70,12 @@ export interface Playbook {
 	 */
 	coverImageFileGUID: UUID | null;
 
+	/**
+	 * GUID for the image file used in the playbook banner. `null`if the playbook
+	 * doesn't have a banner image.
+	 */
+	bannerImageFileGUID: UUID | null;
+
 	author: {
 		name: string | null;
 		email: string | null;

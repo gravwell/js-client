@@ -22,4 +22,5 @@ export interface UpdatablePlaybook {
 
 	body?: Markdown;
 	coverImageFileGUID?: UUID | null;
+	bannerImageFileGUID?: UUID | null;
 }

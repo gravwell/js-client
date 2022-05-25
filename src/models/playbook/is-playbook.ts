@@ -25,6 +25,7 @@ export const isPlaybook = (value: any): value is Playbook => {
 			isDate(p.lastUpdateDate) &&
 			isMarkdown(p.body) &&
 			(isUUID(p.coverImageFileGUID) || isNull(p.coverImageFileGUID)) &&
+			(isUUID(p.bannerImageFileGUID) || isNull(p.bannerImageFileGUID)) &&
 			(isString(p.author.name) || isNull(p.author.name)) &&
 			(isString(p.author.email) || isNull(p.author.email)) &&
 			(isString(p.author.company) || isNull(p.author.company)) &&

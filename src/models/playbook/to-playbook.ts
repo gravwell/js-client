@@ -34,6 +34,9 @@ export const toPlaybook = <IncludeBody extends boolean = true>(
 		coverImageFileGUID:
 			(metadata.attachments ?? []).find(o => o.context === 'cover' && o.type === 'image')?.fileGUID ?? null,
 
+		bannerImageFileGUID:
+			(metadata.attachments ?? []).find(o => o.context === 'banner' && o.type === 'image')?.fileGUID ?? null,
+
 		author: {
 			name: raw.Author.Name.trim() === '' ? null : raw.Author.Name.trim(),
 			email: raw.Author.Email.trim() === '' ? null : raw.Author.Email.trim(),

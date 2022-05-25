@@ -16,13 +16,27 @@ import { RawUpdatablePlaybook } from './raw-updatable-playbook';
 import { UpdatablePlaybook } from './updatable-playbook';
 
 export const toRawUpdatablePlaybook = (updatable: UpdatablePlaybook, current: Playbook): RawUpdatablePlaybook => {
-	const metadata: RawPlaybookDecodedMetadata = { dashboards: [] };
-	if (isUUID(current.coverImageFileGUID))
-		metadata.attachments = [{ context: 'cover', type: 'image', fileGUID: current.coverImageFileGUID }];
+	const metadata: RawPlaybookDecodedMetadata = { dashboards: [], attachments: [] };
 
-	if (isNull(updatable.coverImageFileGUID)) metadata.attachments = undefined;
-	else if (isUUID(updatable.coverImageFileGUID))
-		metadata.attachments = [{ context: 'cover', type: 'image', fileGUID: updatable.coverImageFileGUID }];
+	/** If null, then we are deleting and will not add */
+	if (!isNull(updatable.coverImageFileGUID)) {
+		// If has a UUID, we add the new cover
+		if (isUUID(updatable.coverImageFileGUID))
+			metadata.attachments = [{ context: 'cover', type: 'image', fileGUID: updatable.coverImageFileGUID }];
+		// If updatable to not have a new one cover, we add the old one
+		else if (isUUID(current.coverImageFileGUID))
+			metadata.attachments = [{ context: 'cover', type: 'image', fileGUID: current.coverImageFileGUID }];
+	}
+
+	/** If null, then we are deleting and will not add */
+	if (!isNull(updatable.bannerImageFileGUID)) {
+		// If has a UUID, we add the new cover
+		if (isUUID(updatable.bannerImageFileGUID))
+			metadata.attachments = [{ context: 'banner', type: 'image', fileGUID: updatable.bannerImageFileGUID }];
+		// If updatable to not have a new one cover, we add the old one
+		else if (isUUID(current.bannerImageFileGUID))
+			metadata.attachments = [{ context: 'banner', type: 'image', fileGUID: current.bannerImageFileGUID }];
+	}
 
 	return {
 		UID: toRawNumericID(updatable.userID ?? current.userID),
