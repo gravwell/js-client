@@ -6,7 +6,6 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { isNotNull } from '@lucaspaganini/value-objects/dist/utils';
 import { encode as base64Encode } from 'base-64';
 import { isNull, isUndefined } from 'lodash';
 import { omitUndefinedShallow } from '~/functions/utils';
@@ -19,25 +18,53 @@ import { UpdatablePlaybook } from './updatable-playbook';
 export const toRawUpdatablePlaybook = (updatable: UpdatablePlaybook, current: Playbook): RawUpdatablePlaybook => {
 	const metadata: Required<RawPlaybookDecodedMetadata> = { dashboards: [], attachments: [] };
 
-	/** If null, then we are deleting and will not add */
-	if (isNotNull(updatable.coverImageFileGlobalID)) {
-		// If has a UUID, we add the new cover
-		if (isUUID(updatable.coverImageFileGlobalID))
+	// Add playbook cover to metadata
+	((): void => {
+		// If the updated playbook has a cover, use it
+		if (isUUID(updatable.coverImageFileGlobalID)) {
 			metadata.attachments.push({ context: 'cover', type: 'image', fileGUID: updatable.coverImageFileGlobalID });
-		// If updatable to not have a new one cover, we add the old one
-		else if (isUUID(current.coverImageFileGlobalID))
-			metadata.attachments.push({ context: 'cover', type: 'image', fileGUID: current.coverImageFileGlobalID });
-	}
+			return;
+		}
 
-	/** If null, then we are deleting and will not add */
-	if (isNotNull(updatable.bannerImageFileGlobalID)) {
-		// If has a UUID, we add the new banner
-		if (isUUID(updatable.bannerImageFileGlobalID))
+		// If the updated playbook cover is `null`, the cover should be removed
+		if (isNull(updatable.coverImageFileGlobalID)) {
+			return;
+		}
+
+		// Otherwise, the updated cover is `undefined`, which means that we should use the current cover
+		// If the current playbook has a cover, use it
+		if (isUUID(current.coverImageFileGlobalID)) {
+			metadata.attachments.push({ context: 'cover', type: 'image', fileGUID: current.coverImageFileGlobalID });
+			return;
+		}
+
+		// The current playbook cover is `null`, the cover should be removed
+		return;
+	})();
+
+	// Add playbook banner to metadata
+	((): void => {
+		// If the updated playbook has a banner, use it
+		if (isUUID(updatable.bannerImageFileGlobalID)) {
 			metadata.attachments.push({ context: 'banner', type: 'image', fileGUID: updatable.bannerImageFileGlobalID });
-		// If updatable to not have a new one banner, we add the old one
-		else if (isUUID(current.bannerImageFileGlobalID))
+			return;
+		}
+
+		// If the updated playbook banner is `null`, the banner should be removed
+		if (isNull(updatable.bannerImageFileGlobalID)) {
+			return;
+		}
+
+		// Otherwise, the updated banner is `undefined`, which means that we should use the current banner
+		// If the current playbook has a banner, use it
+		if (isUUID(current.bannerImageFileGlobalID)) {
 			metadata.attachments.push({ context: 'banner', type: 'image', fileGUID: current.bannerImageFileGlobalID });
-	}
+			return;
+		}
+
+		// The current playbook banner is `null`, the banner should be removed
+		return;
+	})();
 
 	return {
 		UID: toRawNumericID(updatable.userID ?? current.userID),
