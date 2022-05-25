@@ -6,6 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
+import { isNotNull } from '@lucaspaganini/value-objects/dist/utils';
 import { encode as base64Encode } from 'base-64';
 import { isNull, isUndefined } from 'lodash';
 import { omitUndefinedShallow } from '~/functions/utils';
@@ -19,7 +20,7 @@ export const toRawUpdatablePlaybook = (updatable: UpdatablePlaybook, current: Pl
 	const metadata: RawPlaybookDecodedMetadata = { dashboards: [], attachments: [] };
 
 	/** If null, then we are deleting and will not add */
-	if (!isNull(updatable.coverImageFileGUID)) {
+	if (isNotNull(updatable.coverImageFileGUID)) {
 		// If has a UUID, we add the new cover
 		if (isUUID(updatable.coverImageFileGUID))
 			metadata.attachments = [{ context: 'cover', type: 'image', fileGUID: updatable.coverImageFileGUID }];
@@ -29,7 +30,7 @@ export const toRawUpdatablePlaybook = (updatable: UpdatablePlaybook, current: Pl
 	}
 
 	/** If null, then we are deleting and will not add */
-	if (!isNull(updatable.bannerImageFileGUID)) {
+	if (isNotNull(updatable.bannerImageFileGUID)) {
 		// If has a UUID, we add the new cover
 		if (isUUID(updatable.bannerImageFileGUID))
 			metadata.attachments = [{ context: 'banner', type: 'image', fileGUID: updatable.bannerImageFileGUID }];
