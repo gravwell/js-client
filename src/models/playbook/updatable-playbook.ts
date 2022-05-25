@@ -21,6 +21,6 @@ export interface UpdatablePlaybook {
 	isGlobal?: boolean;
 
 	body?: Markdown;
-	coverImageFileGUID?: UUID | null;
-	bannerImageFileGUID?: UUID | null;
+	coverImageFileGlobalID?: UUID | null;
+	bannerImageFileGlobalID?: UUID | null;
 }

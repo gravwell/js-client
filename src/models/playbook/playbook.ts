@@ -68,13 +68,13 @@ export interface Playbook {
 	 * GUID for the image file used in the playbook cover. `null`if the playbook
 	 * doesn't have a cover image.
 	 */
-	coverImageFileGUID: UUID | null;
+	coverImageFileGlobalID: UUID | null;
 
 	/**
 	 * GUID for the image file used in the playbook banner. `null`if the playbook
 	 * doesn't have a banner image.
 	 */
-	bannerImageFileGUID: UUID | null;
+	bannerImageFileGlobalID: UUID | null;
 
 	author: {
 		name: string | null;
