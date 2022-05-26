@@ -19,5 +19,6 @@ export interface CreatablePlaybook {
 	isGlobal?: boolean;
 
 	body: Markdown;
-	coverImageFileGUID?: UUID | null;
+	coverImageFileGlobalID?: UUID | null;
+	bannerImageFileGlobalID?: UUID | null;
 }

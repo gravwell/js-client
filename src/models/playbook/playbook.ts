@@ -19,8 +19,8 @@ export interface Playbook {
 	 * the playbook and will remain the same even if the playbook is bundled into
 	 * a kit and installed on another system.
 	 *
-	 * Each user may only have one playbook with a given GUID, but multiple users
-	 * could each have a copy of a playbook with the same GUID.
+	 * Each user may only have one playbook with a given global ID, but multiple users
+	 * could each have a copy of a playbook with the same global ID.
 	 */
 	globalID: UUID;
 
@@ -65,10 +65,16 @@ export interface Playbook {
 	body: Markdown;
 
 	/**
-	 * GUID for the image file used in the playbook cover. `null`if the playbook
+	 * Global ID for the image file used in the playbook cover. `null` if the playbook
 	 * doesn't have a cover image.
 	 */
-	coverImageFileGUID: UUID | null;
+	coverImageFileGlobalID: UUID | null;
+
+	/**
+	 * Global ID for the image file used in the playbook banner. `null` if the playbook
+	 * doesn't have a banner image.
+	 */
+	bannerImageFileGlobalID: UUID | null;
 
 	author: {
 		name: string | null;
