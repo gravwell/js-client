@@ -1,5 +1,5 @@
 {
-	"ignore": [".config", "scripts", "**/*/assets", ".git", ".github", "*", ".idea"],
+	"ignore": [".config", "scripts", "docs", "**/*/assets", ".git", ".github", "*", ".idea"],
 	"license": ".config/license-header.txt",
 	"licenseFormats": {
 		"ts|js": {
@@ -8,6 +8,10 @@
 			"eachLine": {
 				"prepend": " * "
 			}
+		},
+		"md|html": {
+			"prepend": "<!--",
+			"append": "-->"
 		}
 	},
 	"defaultFormat": {

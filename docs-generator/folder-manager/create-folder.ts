@@ -5,20 +5,14 @@
  * This software may be modified and distributed under the terms of the
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
+import { existsSync, mkdirSync } from 'fs';
 
-import { Markdown, NumericID, UUID } from '~/value-objects';
-
-export interface CreatablePlaybook {
-	userID?: NumericID;
-	groupIDs?: Array<NumericID>;
-
-	name?: string | null;
-	description?: string | null;
-	labels?: Array<string>;
-
-	isGlobal?: boolean;
-
-	body: Markdown;
-	coverImageFileGlobalID?: UUID | null;
-	bannerImageFileGlobalID?: UUID | null;
-}
+/**
+ * This function will check if this folder exists, and if deosn't it will create a folder on some folderPath
+ * @param folderPath is the path where we want to add a new folder
+ */
+export const createFolder = (folderPath: string): void => {
+	if (!existsSync(folderPath)) {
+		mkdirSync(folderPath);
+	}
+};

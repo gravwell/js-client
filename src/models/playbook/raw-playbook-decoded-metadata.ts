@@ -12,7 +12,7 @@ export interface RawPlaybookDecodedMetadata {
 	dashboards: [];
 	attachments?: Array<{
 		fileGUID: RawUUID;
-		context: 'cover';
+		context: 'cover' | 'banner';
 		type: 'image';
 	}>;
 }

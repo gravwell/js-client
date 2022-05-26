@@ -6,19 +6,15 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { Markdown, NumericID, UUID } from '~/value-objects';
+import { createAllFolders } from './create-all-folders';
+import { copyFiles } from './copy-files';
+import { getAllPages } from './get-all-pages';
+import { createReadmes } from './create-readmes';
+import { createDocsPages } from './create-docs-pages';
 
-export interface CreatablePlaybook {
-	userID?: NumericID;
-	groupIDs?: Array<NumericID>;
+createAllFolders();
+copyFiles();
 
-	name?: string | null;
-	description?: string | null;
-	labels?: Array<string>;
-
-	isGlobal?: boolean;
-
-	body: Markdown;
-	coverImageFileGlobalID?: UUID | null;
-	bannerImageFileGlobalID?: UUID | null;
-}
+const pages = getAllPages();
+createReadmes(pages);
+createDocsPages(pages);
