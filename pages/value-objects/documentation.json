@@ -1,0 +1,1300 @@
+{
+	"id": 5968,
+	"name": "gravwell",
+	"kind": 1,
+	"flags": {},
+	"originalName": "",
+	"children": [
+		{
+			"id": 5969,
+			"name": "id",
+			"kind": 2,
+			"kindString": "Module",
+			"flags": {},
+			"children": [
+				{
+					"id": 5971,
+					"name": "ID",
+					"kind": 4194304,
+					"kindString": "Type alias",
+					"flags": {},
+					"sources": [
+						{
+							"fileName": "src/value-objects/id.ts",
+							"line": 12,
+							"character": 12
+						}
+					],
+					"type": {
+						"type": "intrinsic",
+						"name": "string"
+					}
+				},
+				{
+					"id": 5975,
+					"name": "NumericID",
+					"kind": 4194304,
+					"kindString": "Type alias",
+					"flags": {},
+					"sources": [
+						{
+							"fileName": "src/value-objects/id.ts",
+							"line": 16,
+							"character": 12
+						}
+					],
+					"type": {
+						"type": "intrinsic",
+						"name": "string"
+					}
+				},
+				{
+					"id": 5970,
+					"name": "RawID",
+					"kind": 4194304,
+					"kindString": "Type alias",
+					"flags": {},
+					"sources": [
+						{
+							"fileName": "src/value-objects/id.ts",
+							"line": 11,
+							"character": 12
+						}
+					],
+					"type": {
+						"type": "intrinsic",
+						"name": "string"
+					}
+				},
+				{
+					"id": 5976,
+					"name": "RawNumericID",
+					"kind": 4194304,
+					"kindString": "Type alias",
+					"flags": {},
+					"sources": [
+						{
+							"fileName": "src/value-objects/id.ts",
+							"line": 17,
+							"character": 12
+						}
+					],
+					"type": {
+						"type": "intrinsic",
+						"name": "number"
+					}
+				},
+				{
+					"id": 5987,
+					"name": "RawUUID",
+					"kind": 4194304,
+					"kindString": "Type alias",
+					"flags": {},
+					"sources": [
+						{
+							"fileName": "src/value-objects/id.ts",
+							"line": 25,
+							"character": 12
+						}
+					],
+					"type": {
+						"type": "intrinsic",
+						"name": "string"
+					}
+				},
+				{
+					"id": 5986,
+					"name": "UUID",
+					"kind": 4194304,
+					"kindString": "Type alias",
+					"flags": {},
+					"sources": [
+						{
+							"fileName": "src/value-objects/id.ts",
+							"line": 24,
+							"character": 12
+						}
+					],
+					"type": {
+						"type": "intrinsic",
+						"name": "string"
+					}
+				},
+				{
+					"id": 5972,
+					"name": "isID",
+					"kind": 64,
+					"kindString": "Function",
+					"flags": {},
+					"sources": [
+						{
+							"fileName": "src/value-objects/id.ts",
+							"line": 14,
+							"character": 13
+						}
+					],
+					"signatures": [
+						{
+							"id": 5973,
+							"name": "isID",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {},
+							"parameters": [
+								{
+									"id": 5974,
+									"name": "value",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"type": {
+										"type": "intrinsic",
+										"name": "any"
+									}
+								}
+							],
+							"type": {
+								"type": "predicate",
+								"name": "value",
+								"asserts": false,
+								"targetType": {
+									"type": "intrinsic",
+									"name": "string"
+								}
+							}
+						}
+					]
+				},
+				{
+					"id": 5983,
+					"name": "isNumericID",
+					"kind": 64,
+					"kindString": "Function",
+					"flags": {},
+					"sources": [
+						{
+							"fileName": "src/value-objects/id.ts",
+							"line": 22,
+							"character": 13
+						}
+					],
+					"signatures": [
+						{
+							"id": 5984,
+							"name": "isNumericID",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {},
+							"parameters": [
+								{
+									"id": 5985,
+									"name": "value",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"type": {
+										"type": "intrinsic",
+										"name": "any"
+									}
+								}
+							],
+							"type": {
+								"type": "predicate",
+								"name": "value",
+								"asserts": false,
+								"targetType": {
+									"type": "intrinsic",
+									"name": "string"
+								}
+							}
+						}
+					]
+				},
+				{
+					"id": 5988,
+					"name": "isUUID",
+					"kind": 64,
+					"kindString": "Function",
+					"flags": {},
+					"sources": [
+						{
+							"fileName": "src/value-objects/id.ts",
+							"line": 28,
+							"character": 13
+						}
+					],
+					"signatures": [
+						{
+							"id": 5989,
+							"name": "isUUID",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {},
+							"parameters": [
+								{
+									"id": 5990,
+									"name": "value",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"type": {
+										"type": "intrinsic",
+										"name": "any"
+									}
+								}
+							],
+							"type": {
+								"type": "predicate",
+								"name": "value",
+								"asserts": false,
+								"targetType": {
+									"type": "intrinsic",
+									"name": "string"
+								}
+							}
+						}
+					]
+				},
+				{
+					"id": 5977,
+					"name": "toNumericID",
+					"kind": 64,
+					"kindString": "Function",
+					"flags": {},
+					"sources": [
+						{
+							"fileName": "src/value-objects/id.ts",
+							"line": 18,
+							"character": 13
+						}
+					],
+					"signatures": [
+						{
+							"id": 5978,
+							"name": "toNumericID",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {},
+							"parameters": [
+								{
+									"id": 5979,
+									"name": "raw",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"type": {
+										"type": "intrinsic",
+										"name": "number"
+									}
+								}
+							],
+							"type": {
+								"type": "intrinsic",
+								"name": "string"
+							}
+						}
+					]
+				},
+				{
+					"id": 5980,
+					"name": "toRawNumericID",
+					"kind": 64,
+					"kindString": "Function",
+					"flags": {},
+					"sources": [
+						{
+							"fileName": "src/value-objects/id.ts",
+							"line": 20,
+							"character": 13
+						}
+					],
+					"signatures": [
+						{
+							"id": 5981,
+							"name": "toRawNumericID",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {},
+							"parameters": [
+								{
+									"id": 5982,
+									"name": "id",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"type": {
+										"type": "intrinsic",
+										"name": "string"
+									}
+								}
+							],
+							"type": {
+								"type": "intrinsic",
+								"name": "number"
+							}
+						}
+					]
+				}
+			],
+			"groups": [
+				{
+					"title": "Type aliases",
+					"kind": 4194304,
+					"children": [
+						5971,
+						5975,
+						5970,
+						5976,
+						5987,
+						5986
+					]
+				},
+				{
+					"title": "Functions",
+					"kind": 64,
+					"children": [
+						5972,
+						5983,
+						5988,
+						5977,
+						5980
+					]
+				}
+			],
+			"sources": [
+				{
+					"fileName": "src/value-objects/id.ts",
+					"line": 9,
+					"character": 0
+				}
+			]
+		},
+		{
+			"id": 5991,
+			"name": "index",
+			"kind": 2,
+			"kindString": "Module",
+			"flags": {},
+			"children": [
+				{
+					"id": 6029,
+					"name": "ID",
+					"kind": 16777216,
+					"kindString": "Reference",
+					"flags": {},
+					"target": 5971
+				},
+				{
+					"id": 6040,
+					"name": "Markdown",
+					"kind": 16777216,
+					"kindString": "Reference",
+					"flags": {},
+					"target": 5995
+				},
+				{
+					"id": 6031,
+					"name": "NumericID",
+					"kind": 16777216,
+					"kindString": "Reference",
+					"flags": {},
+					"target": 5975
+				},
+				{
+					"id": 6043,
+					"name": "Percentage",
+					"kind": 16777216,
+					"kindString": "Reference",
+					"flags": {},
+					"target": 6001
+				},
+				{
+					"id": 6028,
+					"name": "RawID",
+					"kind": 16777216,
+					"kindString": "Reference",
+					"flags": {},
+					"target": 5970
+				},
+				{
+					"id": 6039,
+					"name": "RawJSON",
+					"kind": 16777216,
+					"kindString": "Reference",
+					"flags": {},
+					"target": 5993
+				},
+				{
+					"id": 6041,
+					"name": "RawMarkdown",
+					"kind": 16777216,
+					"kindString": "Reference",
+					"flags": {},
+					"target": 5996
+				},
+				{
+					"id": 6032,
+					"name": "RawNumericID",
+					"kind": 16777216,
+					"kindString": "Reference",
+					"flags": {},
+					"target": 5976
+				},
+				{
+					"id": 6044,
+					"name": "RawPercentage",
+					"kind": 16777216,
+					"kindString": "Reference",
+					"flags": {},
+					"target": 6012
+				},
+				{
+					"id": 6047,
+					"name": "RawRegex",
+					"kind": 16777216,
+					"kindString": "Reference",
+					"flags": {},
+					"target": 6018
+				},
+				{
+					"id": 6037,
+					"name": "RawUUID",
+					"kind": 16777216,
+					"kindString": "Reference",
+					"flags": {},
+					"target": 5987
+				},
+				{
+					"id": 6046,
+					"name": "Regex",
+					"kind": 16777216,
+					"kindString": "Reference",
+					"flags": {},
+					"target": 6017
+				},
+				{
+					"id": 6036,
+					"name": "UUID",
+					"kind": 16777216,
+					"kindString": "Reference",
+					"flags": {},
+					"target": 5986
+				},
+				{
+					"id": 6030,
+					"name": "isID",
+					"kind": 16777216,
+					"kindString": "Reference",
+					"flags": {},
+					"target": 5972
+				},
+				{
+					"id": 6042,
+					"name": "isMarkdown",
+					"kind": 16777216,
+					"kindString": "Reference",
+					"flags": {},
+					"target": 5997
+				},
+				{
+					"id": 6035,
+					"name": "isNumericID",
+					"kind": 16777216,
+					"kindString": "Reference",
+					"flags": {},
+					"target": 5983
+				},
+				{
+					"id": 6045,
+					"name": "isPercentage",
+					"kind": 16777216,
+					"kindString": "Reference",
+					"flags": {},
+					"target": 6013
+				},
+				{
+					"id": 6050,
+					"name": "isRegex",
+					"kind": 16777216,
+					"kindString": "Reference",
+					"flags": {},
+					"target": 6025
+				},
+				{
+					"id": 6038,
+					"name": "isUUID",
+					"kind": 16777216,
+					"kindString": "Reference",
+					"flags": {},
+					"target": 5988
+				},
+				{
+					"id": 6033,
+					"name": "toNumericID",
+					"kind": 16777216,
+					"kindString": "Reference",
+					"flags": {},
+					"target": 5977
+				},
+				{
+					"id": 6034,
+					"name": "toRawNumericID",
+					"kind": 16777216,
+					"kindString": "Reference",
+					"flags": {},
+					"target": 5980
+				},
+				{
+					"id": 6049,
+					"name": "toRawRegex",
+					"kind": 16777216,
+					"kindString": "Reference",
+					"flags": {},
+					"target": 6022
+				},
+				{
+					"id": 6048,
+					"name": "toRegex",
+					"kind": 16777216,
+					"kindString": "Reference",
+					"flags": {},
+					"target": 6019
+				}
+			],
+			"groups": [
+				{
+					"title": "References",
+					"kind": 16777216,
+					"children": [
+						6029,
+						6040,
+						6031,
+						6043,
+						6028,
+						6039,
+						6041,
+						6032,
+						6044,
+						6047,
+						6037,
+						6046,
+						6036,
+						6030,
+						6042,
+						6035,
+						6045,
+						6050,
+						6038,
+						6033,
+						6034,
+						6049,
+						6048
+					]
+				}
+			],
+			"sources": [
+				{
+					"fileName": "src/value-objects/index.ts",
+					"line": 9,
+					"character": 0
+				}
+			]
+		},
+		{
+			"id": 5992,
+			"name": "json",
+			"kind": 2,
+			"kindString": "Module",
+			"flags": {},
+			"children": [
+				{
+					"id": 5993,
+					"name": "RawJSON",
+					"kind": 4194304,
+					"kindString": "Type alias",
+					"flags": {},
+					"comment": {
+						"shortText": "Copyright 2022 Gravwell, Inc. All rights reserved.\nContact: <legal@gravwell.io>",
+						"text": "This software may be modified and distributed under the terms of the\nMIT license. See the LICENSE file for details.\n"
+					},
+					"sources": [
+						{
+							"fileName": "src/value-objects/json.ts",
+							"line": 10,
+							"character": 12
+						}
+					],
+					"type": {
+						"type": "reference",
+						"typeArguments": [
+							{
+								"type": "intrinsic",
+								"name": "string"
+							},
+							{
+								"type": "intrinsic",
+								"name": "unknown"
+							}
+						],
+						"qualifiedName": "Record",
+						"package": "typescript",
+						"name": "Record"
+					}
+				}
+			],
+			"groups": [
+				{
+					"title": "Type aliases",
+					"kind": 4194304,
+					"children": [
+						5993
+					]
+				}
+			],
+			"sources": [
+				{
+					"fileName": "src/value-objects/json.ts",
+					"line": 10,
+					"character": 0
+				}
+			]
+		},
+		{
+			"id": 5994,
+			"name": "markdown",
+			"kind": 2,
+			"kindString": "Module",
+			"flags": {},
+			"children": [
+				{
+					"id": 5995,
+					"name": "Markdown",
+					"kind": 4194304,
+					"kindString": "Type alias",
+					"flags": {},
+					"sources": [
+						{
+							"fileName": "src/value-objects/markdown.ts",
+							"line": 11,
+							"character": 12
+						}
+					],
+					"type": {
+						"type": "intrinsic",
+						"name": "string"
+					}
+				},
+				{
+					"id": 5996,
+					"name": "RawMarkdown",
+					"kind": 4194304,
+					"kindString": "Type alias",
+					"flags": {},
+					"sources": [
+						{
+							"fileName": "src/value-objects/markdown.ts",
+							"line": 13,
+							"character": 12
+						}
+					],
+					"type": {
+						"type": "intrinsic",
+						"name": "string"
+					}
+				},
+				{
+					"id": 5997,
+					"name": "isMarkdown",
+					"kind": 64,
+					"kindString": "Function",
+					"flags": {},
+					"sources": [
+						{
+							"fileName": "src/value-objects/markdown.ts",
+							"line": 15,
+							"character": 13
+						}
+					],
+					"signatures": [
+						{
+							"id": 5998,
+							"name": "isMarkdown",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {},
+							"parameters": [
+								{
+									"id": 5999,
+									"name": "value",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"type": {
+										"type": "intrinsic",
+										"name": "any"
+									}
+								}
+							],
+							"type": {
+								"type": "predicate",
+								"name": "value",
+								"asserts": false,
+								"targetType": {
+									"type": "intrinsic",
+									"name": "string"
+								}
+							}
+						}
+					]
+				}
+			],
+			"groups": [
+				{
+					"title": "Type aliases",
+					"kind": 4194304,
+					"children": [
+						5995,
+						5996
+					]
+				},
+				{
+					"title": "Functions",
+					"kind": 64,
+					"children": [
+						5997
+					]
+				}
+			],
+			"sources": [
+				{
+					"fileName": "src/value-objects/markdown.ts",
+					"line": 9,
+					"character": 0
+				}
+			]
+		},
+		{
+			"id": 6000,
+			"name": "percentage",
+			"kind": 2,
+			"kindString": "Module",
+			"flags": {},
+			"children": [
+				{
+					"id": 6001,
+					"name": "Percentage",
+					"kind": 128,
+					"kindString": "Class",
+					"flags": {},
+					"comment": {
+						"shortText": "Floating point number with two decimal digits from 0.00 to 100.00."
+					},
+					"children": [
+						{
+							"id": 6005,
+							"name": "constructor",
+							"kind": 512,
+							"kindString": "Constructor",
+							"flags": {},
+							"sources": [
+								{
+									"fileName": "src/value-objects/percentage.ts",
+									"line": 15,
+									"character": 1
+								}
+							],
+							"signatures": [
+								{
+									"id": 6006,
+									"name": "new Percentage",
+									"kind": 16384,
+									"kindString": "Constructor signature",
+									"flags": {},
+									"parameters": [
+										{
+											"id": 6007,
+											"name": "raw",
+											"kind": 32768,
+											"kindString": "Parameter",
+											"flags": {},
+											"type": {
+												"type": "intrinsic",
+												"name": "number"
+											}
+										}
+									],
+									"type": {
+										"type": "reference",
+										"id": 6001,
+										"name": "Percentage"
+									},
+									"overwrites": {
+										"type": "reference",
+										"name": "VOFloat({ min: 0, max: 100, precision: 2, precisionTrim: 'round' }).constructor"
+									}
+								}
+							],
+							"overwrites": {
+								"type": "reference",
+								"name": "VOFloat({ min: 0, max: 100, precision: 2, precisionTrim: 'round' }).constructor"
+							}
+						},
+						{
+							"id": 6008,
+							"name": "toString",
+							"kind": 2048,
+							"kindString": "Method",
+							"flags": {
+								"isPublic": true
+							},
+							"sources": [
+								{
+									"fileName": "src/value-objects/percentage.ts",
+									"line": 19,
+									"character": 8
+								}
+							],
+							"signatures": [
+								{
+									"id": 6009,
+									"name": "toString",
+									"kind": 4096,
+									"kindString": "Call signature",
+									"flags": {},
+									"type": {
+										"type": "intrinsic",
+										"name": "string"
+									}
+								}
+							]
+						},
+						{
+							"id": 6010,
+							"name": "valueOf",
+							"kind": 2048,
+							"kindString": "Method",
+							"flags": {
+								"isExternal": true
+							},
+							"signatures": [
+								{
+									"id": 6011,
+									"name": "valueOf",
+									"kind": 4096,
+									"kindString": "Call signature",
+									"flags": {
+										"isExternal": true
+									},
+									"type": {
+										"type": "intrinsic",
+										"name": "number"
+									},
+									"inheritedFrom": {
+										"type": "reference",
+										"name": "VOFloat({ min: 0, max: 100, precision: 2, precisionTrim: 'round' }).valueOf"
+									}
+								}
+							],
+							"inheritedFrom": {
+								"type": "reference",
+								"name": "VOFloat({ min: 0, max: 100, precision: 2, precisionTrim: 'round' }).valueOf"
+							}
+						},
+						{
+							"id": 6002,
+							"name": "from",
+							"kind": 2048,
+							"kindString": "Method",
+							"flags": {
+								"isPublic": true,
+								"isStatic": true
+							},
+							"sources": [
+								{
+									"fileName": "src/value-objects/percentage.ts",
+									"line": 23,
+									"character": 15
+								}
+							],
+							"signatures": [
+								{
+									"id": 6003,
+									"name": "from",
+									"kind": 4096,
+									"kindString": "Call signature",
+									"flags": {},
+									"parameters": [
+										{
+											"id": 6004,
+											"name": "raw",
+											"kind": 32768,
+											"kindString": "Parameter",
+											"flags": {},
+											"type": {
+												"type": "intrinsic",
+												"name": "number"
+											}
+										}
+									],
+									"type": {
+										"type": "reference",
+										"id": 6001,
+										"name": "Percentage"
+									}
+								}
+							]
+						}
+					],
+					"groups": [
+						{
+							"title": "Constructors",
+							"kind": 512,
+							"children": [
+								6005
+							]
+						},
+						{
+							"title": "Methods",
+							"kind": 2048,
+							"children": [
+								6008,
+								6010,
+								6002
+							]
+						}
+					],
+					"sources": [
+						{
+							"fileName": "src/value-objects/percentage.ts",
+							"line": 14,
+							"character": 13
+						}
+					],
+					"extendedTypes": [
+						{
+							"type": "reference",
+							"qualifiedName": "VOFloatInstance",
+							"package": "@lucaspaganini/value-objects",
+							"name": "VOFloatInstance"
+						}
+					]
+				},
+				{
+					"id": 6012,
+					"name": "RawPercentage",
+					"kind": 4194304,
+					"kindString": "Type alias",
+					"flags": {},
+					"comment": {
+						"shortText": "Floating point number from 0 to 1."
+					},
+					"sources": [
+						{
+							"fileName": "src/value-objects/percentage.ts",
+							"line": 31,
+							"character": 12
+						}
+					],
+					"type": {
+						"type": "intrinsic",
+						"name": "number"
+					}
+				},
+				{
+					"id": 6013,
+					"name": "isPercentage",
+					"kind": 64,
+					"kindString": "Function",
+					"flags": {},
+					"sources": [
+						{
+							"fileName": "src/value-objects/percentage.ts",
+							"line": 33,
+							"character": 13
+						}
+					],
+					"signatures": [
+						{
+							"id": 6014,
+							"name": "isPercentage",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {},
+							"parameters": [
+								{
+									"id": 6015,
+									"name": "v",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"type": {
+										"type": "intrinsic",
+										"name": "any"
+									}
+								}
+							],
+							"type": {
+								"type": "predicate",
+								"name": "v",
+								"asserts": false,
+								"targetType": {
+									"type": "reference",
+									"id": 6001,
+									"name": "Percentage"
+								}
+							}
+						}
+					]
+				}
+			],
+			"groups": [
+				{
+					"title": "Classes",
+					"kind": 128,
+					"children": [
+						6001
+					]
+				},
+				{
+					"title": "Type aliases",
+					"kind": 4194304,
+					"children": [
+						6012
+					]
+				},
+				{
+					"title": "Functions",
+					"kind": 64,
+					"children": [
+						6013
+					]
+				}
+			],
+			"sources": [
+				{
+					"fileName": "src/value-objects/percentage.ts",
+					"line": 9,
+					"character": 0
+				}
+			]
+		},
+		{
+			"id": 6016,
+			"name": "regex",
+			"kind": 2,
+			"kindString": "Module",
+			"flags": {},
+			"children": [
+				{
+					"id": 6018,
+					"name": "RawRegex",
+					"kind": 4194304,
+					"kindString": "Type alias",
+					"flags": {},
+					"sources": [
+						{
+							"fileName": "src/value-objects/regex.ts",
+							"line": 13,
+							"character": 12
+						}
+					],
+					"type": {
+						"type": "intrinsic",
+						"name": "string"
+					}
+				},
+				{
+					"id": 6017,
+					"name": "Regex",
+					"kind": 4194304,
+					"kindString": "Type alias",
+					"flags": {},
+					"sources": [
+						{
+							"fileName": "src/value-objects/regex.ts",
+							"line": 11,
+							"character": 12
+						}
+					],
+					"type": {
+						"type": "reference",
+						"qualifiedName": "RegExp",
+						"package": "typescript",
+						"name": "RegExp"
+					}
+				},
+				{
+					"id": 6025,
+					"name": "isRegex",
+					"kind": 64,
+					"kindString": "Function",
+					"flags": {},
+					"sources": [
+						{
+							"fileName": "src/value-objects/regex.ts",
+							"line": 26,
+							"character": 13
+						}
+					],
+					"signatures": [
+						{
+							"id": 6026,
+							"name": "isRegex",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {},
+							"parameters": [
+								{
+									"id": 6027,
+									"name": "value",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"type": {
+										"type": "intrinsic",
+										"name": "any"
+									}
+								}
+							],
+							"type": {
+								"type": "predicate",
+								"name": "value",
+								"asserts": false,
+								"targetType": {
+									"type": "reference",
+									"qualifiedName": "RegExp",
+									"package": "typescript",
+									"name": "RegExp"
+								}
+							}
+						}
+					]
+				},
+				{
+					"id": 6022,
+					"name": "toRawRegex",
+					"kind": 64,
+					"kindString": "Function",
+					"flags": {},
+					"sources": [
+						{
+							"fileName": "src/value-objects/regex.ts",
+							"line": 21,
+							"character": 13
+						}
+					],
+					"signatures": [
+						{
+							"id": 6023,
+							"name": "toRawRegex",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {},
+							"parameters": [
+								{
+									"id": 6024,
+									"name": "regex",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"type": {
+										"type": "reference",
+										"qualifiedName": "RegExp",
+										"package": "typescript",
+										"name": "RegExp"
+									}
+								}
+							],
+							"type": {
+								"type": "intrinsic",
+								"name": "string"
+							}
+						}
+					]
+				},
+				{
+					"id": 6019,
+					"name": "toRegex",
+					"kind": 64,
+					"kindString": "Function",
+					"flags": {},
+					"sources": [
+						{
+							"fileName": "src/value-objects/regex.ts",
+							"line": 15,
+							"character": 13
+						}
+					],
+					"signatures": [
+						{
+							"id": 6020,
+							"name": "toRegex",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {},
+							"parameters": [
+								{
+									"id": 6021,
+									"name": "raw",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"type": {
+										"type": "intrinsic",
+										"name": "string"
+									}
+								}
+							],
+							"type": {
+								"type": "reference",
+								"qualifiedName": "RegExp",
+								"package": "typescript",
+								"name": "RegExp"
+							}
+						}
+					]
+				}
+			],
+			"groups": [
+				{
+					"title": "Type aliases",
+					"kind": 4194304,
+					"children": [
+						6018,
+						6017
+					]
+				},
+				{
+					"title": "Functions",
+					"kind": 64,
+					"children": [
+						6025,
+						6022,
+						6019
+					]
+				}
+			],
+			"sources": [
+				{
+					"fileName": "src/value-objects/regex.ts",
+					"line": 9,
+					"character": 0
+				}
+			]
+		}
+	],
+	"groups": [
+		{
+			"title": "Modules",
+			"kind": 2,
+			"children": [
+				5969,
+				5991,
+				5992,
+				5994,
+				6000,
+				6016
+			]
+		}
+	]
+}

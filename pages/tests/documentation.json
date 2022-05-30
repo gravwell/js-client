@@ -1,0 +1,853 @@
+{
+	"id": 5924,
+	"name": "gravwell",
+	"kind": 1,
+	"flags": {},
+	"originalName": "",
+	"children": [
+		{
+			"id": 5925,
+			"name": "config",
+			"kind": 2,
+			"kindString": "Module",
+			"flags": {},
+			"children": [
+				{
+					"id": 5957,
+					"name": "TEST_ASSETS_PATH",
+					"kind": 16777216,
+					"kindString": "Reference",
+					"flags": {},
+					"target": 5945
+				},
+				{
+					"id": 5929,
+					"name": "TestType",
+					"kind": 4194304,
+					"kindString": "Type alias",
+					"flags": {},
+					"sources": [
+						{
+							"fileName": "config.ts",
+							"line": 33,
+							"character": 12
+						}
+					],
+					"type": {
+						"type": "union",
+						"types": [
+							{
+								"type": "literal",
+								"value": "unit"
+							},
+							{
+								"type": "literal",
+								"value": "integration"
+							}
+						]
+					}
+				},
+				{
+					"id": 5927,
+					"name": "TEST_AUTH_TOKEN",
+					"kind": 32,
+					"kindString": "Variable",
+					"flags": {
+						"isConst": true
+					},
+					"sources": [
+						{
+							"fileName": "config.ts",
+							"line": 16,
+							"character": 13
+						}
+					],
+					"type": {
+						"type": "union",
+						"types": [
+							{
+								"type": "literal",
+								"value": null
+							},
+							{
+								"type": "intrinsic",
+								"name": "string"
+							}
+						]
+					},
+					"defaultValue": "..."
+				},
+				{
+					"id": 5928,
+					"name": "TEST_BASE_API_CONTEXT",
+					"kind": 32,
+					"kindString": "Variable",
+					"flags": {
+						"isConst": true
+					},
+					"sources": [
+						{
+							"fileName": "config.ts",
+							"line": 18,
+							"character": 13
+						}
+					],
+					"type": {
+						"type": "reference",
+						"name": "APIContext"
+					},
+					"defaultValue": "..."
+				},
+				{
+					"id": 5926,
+					"name": "TEST_HOST",
+					"kind": 32,
+					"kindString": "Variable",
+					"flags": {
+						"isConst": true
+					},
+					"sources": [
+						{
+							"fileName": "config.ts",
+							"line": 14,
+							"character": 13
+						}
+					],
+					"type": {
+						"type": "intrinsic",
+						"name": "string"
+					},
+					"defaultValue": "..."
+				},
+				{
+					"id": 5930,
+					"name": "TEST_TYPES",
+					"kind": 32,
+					"kindString": "Variable",
+					"flags": {
+						"isConst": true
+					},
+					"sources": [
+						{
+							"fileName": "config.ts",
+							"line": 34,
+							"character": 13
+						}
+					],
+					"type": {
+						"type": "array",
+						"elementType": {
+							"type": "reference",
+							"id": 5929,
+							"name": "TestType"
+						}
+					},
+					"defaultValue": "..."
+				}
+			],
+			"groups": [
+				{
+					"title": "References",
+					"kind": 16777216,
+					"children": [
+						5957
+					]
+				},
+				{
+					"title": "Type aliases",
+					"kind": 4194304,
+					"children": [
+						5929
+					]
+				},
+				{
+					"title": "Variables",
+					"kind": 32,
+					"children": [
+						5927,
+						5928,
+						5926,
+						5930
+					]
+				}
+			],
+			"sources": [
+				{
+					"fileName": "config.ts",
+					"line": 9,
+					"character": 0
+				}
+			]
+		},
+		{
+			"id": 5931,
+			"name": "custom-matchers",
+			"kind": 2,
+			"kindString": "Module",
+			"flags": {},
+			"children": [
+				{
+					"id": 5932,
+					"name": "myCustomMatchers",
+					"kind": 32,
+					"kindString": "Variable",
+					"flags": {
+						"isConst": true
+					},
+					"sources": [
+						{
+							"fileName": "custom-matchers.ts",
+							"line": 11,
+							"character": 13
+						}
+					],
+					"type": {
+						"type": "reference",
+						"qualifiedName": "jasmine.CustomMatcherFactories",
+						"package": "@types/jasmine",
+						"name": "jasmine.CustomMatcherFactories"
+					},
+					"defaultValue": "..."
+				}
+			],
+			"groups": [
+				{
+					"title": "Variables",
+					"kind": 32,
+					"children": [
+						5932
+					]
+				}
+			],
+			"sources": [
+				{
+					"fileName": "custom-matchers.ts",
+					"line": 9,
+					"character": 0
+				}
+			]
+		},
+		{
+			"id": 5937,
+			"name": "get-env-var",
+			"kind": 2,
+			"kindString": "Module",
+			"flags": {},
+			"children": [
+				{
+					"id": 5938,
+					"name": "getEnvVar",
+					"kind": 64,
+					"kindString": "Function",
+					"flags": {},
+					"sources": [
+						{
+							"fileName": "get-env-var.ts",
+							"line": 9,
+							"character": 13
+						}
+					],
+					"signatures": [
+						{
+							"id": 5939,
+							"name": "getEnvVar",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {},
+							"comment": {
+								"shortText": "Copyright 2022 Gravwell, Inc. All rights reserved.\nContact: <legal@gravwell.io>",
+								"text": "This software may be modified and distributed under the terms of the\nMIT license. See the LICENSE file for details.\n"
+							},
+							"parameters": [
+								{
+									"id": 5940,
+									"name": "key",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"type": {
+										"type": "intrinsic",
+										"name": "string"
+									}
+								}
+							],
+							"type": {
+								"type": "union",
+								"types": [
+									{
+										"type": "intrinsic",
+										"name": "undefined"
+									},
+									{
+										"type": "intrinsic",
+										"name": "string"
+									}
+								]
+							}
+						}
+					]
+				}
+			],
+			"groups": [
+				{
+					"title": "Functions",
+					"kind": 64,
+					"children": [
+						5938
+					]
+				}
+			],
+			"sources": [
+				{
+					"fileName": "get-env-var.ts",
+					"line": 9,
+					"character": 0
+				}
+			]
+		},
+		{
+			"id": 5933,
+			"name": "get-env-var.node",
+			"kind": 2,
+			"kindString": "Module",
+			"flags": {},
+			"children": [
+				{
+					"id": 5934,
+					"name": "getEnvVar",
+					"kind": 64,
+					"kindString": "Function",
+					"flags": {},
+					"sources": [
+						{
+							"fileName": "get-env-var.node.ts",
+							"line": 13,
+							"character": 13
+						}
+					],
+					"signatures": [
+						{
+							"id": 5935,
+							"name": "getEnvVar",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {},
+							"parameters": [
+								{
+									"id": 5936,
+									"name": "key",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"type": {
+										"type": "intrinsic",
+										"name": "string"
+									}
+								}
+							],
+							"type": {
+								"type": "union",
+								"types": [
+									{
+										"type": "intrinsic",
+										"name": "undefined"
+									},
+									{
+										"type": "intrinsic",
+										"name": "string"
+									}
+								]
+							}
+						}
+					]
+				}
+			],
+			"groups": [
+				{
+					"title": "Functions",
+					"kind": 64,
+					"children": [
+						5934
+					]
+				}
+			],
+			"sources": [
+				{
+					"fileName": "get-env-var.node.ts",
+					"line": 9,
+					"character": 0
+				}
+			]
+		},
+		{
+			"id": 5941,
+			"name": "index",
+			"kind": 2,
+			"kindString": "Module",
+			"flags": {},
+			"children": [
+				{
+					"id": 5963,
+					"name": "TEST_ASSETS_PATH",
+					"kind": 16777216,
+					"kindString": "Reference",
+					"flags": {},
+					"target": 5945
+				},
+				{
+					"id": 5959,
+					"name": "TEST_AUTH_TOKEN",
+					"kind": 16777216,
+					"kindString": "Reference",
+					"flags": {},
+					"target": 5927
+				},
+				{
+					"id": 5960,
+					"name": "TEST_BASE_API_CONTEXT",
+					"kind": 16777216,
+					"kindString": "Reference",
+					"flags": {},
+					"target": 5928
+				},
+				{
+					"id": 5958,
+					"name": "TEST_HOST",
+					"kind": 16777216,
+					"kindString": "Reference",
+					"flags": {},
+					"target": 5926
+				},
+				{
+					"id": 5962,
+					"name": "TEST_TYPES",
+					"kind": 16777216,
+					"kindString": "Reference",
+					"flags": {},
+					"target": 5930
+				},
+				{
+					"id": 5961,
+					"name": "TestType",
+					"kind": 16777216,
+					"kindString": "Reference",
+					"flags": {},
+					"target": 5929
+				},
+				{
+					"id": 5965,
+					"name": "integrationTest",
+					"kind": 16777216,
+					"kindString": "Reference",
+					"flags": {},
+					"target": 5947
+				},
+				{
+					"id": 5964,
+					"name": "myCustomMatchers",
+					"kind": 16777216,
+					"kindString": "Reference",
+					"flags": {},
+					"target": 5932
+				},
+				{
+					"id": 5967,
+					"name": "sleep",
+					"kind": 16777216,
+					"kindString": "Reference",
+					"flags": {},
+					"target": 5954
+				},
+				{
+					"id": 5966,
+					"name": "unitTest",
+					"kind": 16777216,
+					"kindString": "Reference",
+					"flags": {},
+					"target": 5950
+				}
+			],
+			"groups": [
+				{
+					"title": "References",
+					"kind": 16777216,
+					"children": [
+						5963,
+						5959,
+						5960,
+						5958,
+						5962,
+						5961,
+						5965,
+						5964,
+						5967,
+						5966
+					]
+				}
+			],
+			"sources": [
+				{
+					"fileName": "index.ts",
+					"line": 9,
+					"character": 0
+				}
+			]
+		},
+		{
+			"id": 5944,
+			"name": "paths",
+			"kind": 2,
+			"kindString": "Module",
+			"flags": {},
+			"children": [
+				{
+					"id": 5945,
+					"name": "TEST_ASSETS_PATH",
+					"kind": 32,
+					"kindString": "Variable",
+					"flags": {
+						"isConst": true
+					},
+					"comment": {
+						"shortText": "Copyright 2022 Gravwell, Inc. All rights reserved.\nContact: <legal@gravwell.io>",
+						"text": "This software may be modified and distributed under the terms of the\nMIT license. See the LICENSE file for details.\n"
+					},
+					"sources": [
+						{
+							"fileName": "paths.ts",
+							"line": 9,
+							"character": 13
+						}
+					],
+					"type": {
+						"type": "union",
+						"types": [
+							{
+								"type": "intrinsic",
+								"name": "string"
+							},
+							{
+								"type": "literal",
+								"value": null
+							}
+						]
+					},
+					"defaultValue": "null"
+				}
+			],
+			"groups": [
+				{
+					"title": "Variables",
+					"kind": 32,
+					"children": [
+						5945
+					]
+				}
+			],
+			"sources": [
+				{
+					"fileName": "paths.ts",
+					"line": 9,
+					"character": 0
+				}
+			]
+		},
+		{
+			"id": 5942,
+			"name": "paths.node",
+			"kind": 2,
+			"kindString": "Module",
+			"flags": {},
+			"children": [
+				{
+					"id": 5943,
+					"name": "TEST_ASSETS_PATH",
+					"kind": 32,
+					"kindString": "Variable",
+					"flags": {
+						"isConst": true
+					},
+					"sources": [
+						{
+							"fileName": "paths.node.ts",
+							"line": 11,
+							"character": 13
+						}
+					],
+					"type": {
+						"type": "intrinsic",
+						"name": "string"
+					},
+					"defaultValue": "..."
+				}
+			],
+			"groups": [
+				{
+					"title": "Variables",
+					"kind": 32,
+					"children": [
+						5943
+					]
+				}
+			],
+			"sources": [
+				{
+					"fileName": "paths.node.ts",
+					"line": 9,
+					"character": 0
+				}
+			]
+		},
+		{
+			"id": 5946,
+			"name": "test-types",
+			"kind": 2,
+			"kindString": "Module",
+			"flags": {},
+			"children": [
+				{
+					"id": 5947,
+					"name": "integrationTest",
+					"kind": 64,
+					"kindString": "Function",
+					"flags": {},
+					"sources": [
+						{
+							"fileName": "test-types.ts",
+							"line": 18,
+							"character": 13
+						}
+					],
+					"signatures": [
+						{
+							"id": 5948,
+							"name": "integrationTest",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {},
+							"parameters": [
+								{
+									"id": 5949,
+									"name": "assertion",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"type": {
+										"type": "union",
+										"types": [
+											{
+												"type": "intrinsic",
+												"name": "undefined"
+											},
+											{
+												"type": "reference",
+												"qualifiedName": "jasmine.ImplementationCallback",
+												"package": "@types/jasmine",
+												"name": "ImplementationCallback"
+											}
+										]
+									}
+								}
+							],
+							"type": {
+								"type": "union",
+								"types": [
+									{
+										"type": "intrinsic",
+										"name": "undefined"
+									},
+									{
+										"type": "reference",
+										"qualifiedName": "jasmine.ImplementationCallback",
+										"package": "@types/jasmine",
+										"name": "ImplementationCallback"
+									}
+								]
+							}
+						}
+					]
+				},
+				{
+					"id": 5950,
+					"name": "unitTest",
+					"kind": 64,
+					"kindString": "Function",
+					"flags": {},
+					"sources": [
+						{
+							"fileName": "test-types.ts",
+							"line": 19,
+							"character": 13
+						}
+					],
+					"signatures": [
+						{
+							"id": 5951,
+							"name": "unitTest",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {},
+							"parameters": [
+								{
+									"id": 5952,
+									"name": "assertion",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"type": {
+										"type": "union",
+										"types": [
+											{
+												"type": "intrinsic",
+												"name": "undefined"
+											},
+											{
+												"type": "reference",
+												"qualifiedName": "jasmine.ImplementationCallback",
+												"package": "@types/jasmine",
+												"name": "ImplementationCallback"
+											}
+										]
+									}
+								}
+							],
+							"type": {
+								"type": "union",
+								"types": [
+									{
+										"type": "intrinsic",
+										"name": "undefined"
+									},
+									{
+										"type": "reference",
+										"qualifiedName": "jasmine.ImplementationCallback",
+										"package": "@types/jasmine",
+										"name": "ImplementationCallback"
+									}
+								]
+							}
+						}
+					]
+				}
+			],
+			"groups": [
+				{
+					"title": "Functions",
+					"kind": 64,
+					"children": [
+						5947,
+						5950
+					]
+				}
+			],
+			"sources": [
+				{
+					"fileName": "test-types.ts",
+					"line": 9,
+					"character": 0
+				}
+			]
+		},
+		{
+			"id": 5953,
+			"name": "utils",
+			"kind": 2,
+			"kindString": "Module",
+			"flags": {},
+			"comment": {
+				"shortText": "Copyright 2022 Gravwell, Inc. All rights reserved.\nContact: <legal@gravwell.io>",
+				"text": "This software may be modified and distributed under the terms of the\nMIT license. See the LICENSE file for details.\n"
+			},
+			"children": [
+				{
+					"id": 5954,
+					"name": "sleep",
+					"kind": 64,
+					"kindString": "Function",
+					"flags": {},
+					"sources": [
+						{
+							"fileName": "utils.ts",
+							"line": 19,
+							"character": 13
+						}
+					],
+					"signatures": [
+						{
+							"id": 5955,
+							"name": "sleep",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {},
+							"comment": {
+								"shortText": "A delay function to use while testing.",
+								"text": "```ts\n// sleep for a second\nawait sleep(1000);\n```\n"
+							},
+							"parameters": [
+								{
+									"id": 5956,
+									"name": "ms",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"comment": {
+										"shortText": "The number of milliseconds to wait\n"
+									},
+									"type": {
+										"type": "intrinsic",
+										"name": "number"
+									}
+								}
+							],
+							"type": {
+								"type": "reference",
+								"typeArguments": [
+									{
+										"type": "intrinsic",
+										"name": "void"
+									}
+								],
+								"qualifiedName": "Promise",
+								"package": "typescript",
+								"name": "Promise"
+							}
+						}
+					]
+				}
+			],
+			"groups": [
+				{
+					"title": "Functions",
+					"kind": 64,
+					"children": [
+						5954
+					]
+				}
+			],
+			"sources": [
+				{
+					"fileName": "utils.ts",
+					"line": 19,
+					"character": 0
+				}
+			]
+		}
+	],
+	"groups": [
+		{
+			"title": "Modules",
+			"kind": 2,
+			"children": [
+				5925,
+				5931,
+				5937,
+				5933,
+				5941,
+				5944,
+				5942,
+				5946,
+				5953
+			]
+		}
+	]
+}
