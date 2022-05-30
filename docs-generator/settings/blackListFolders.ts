@@ -6,19 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { Markdown, NumericID, UUID } from '~/value-objects';
-
-export interface CreatablePlaybook {
-	userID?: NumericID;
-	groupIDs?: Array<NumericID>;
-
-	name?: string | null;
-	description?: string | null;
-	labels?: Array<string>;
-
-	isGlobal?: boolean;
-
-	body: Markdown;
-	coverImageFileGlobalID?: UUID | null;
-	bannerImageFileGlobalID?: UUID | null;
-}
+/**
+ * Here you can set which folders will not have a document generated to it
+ */
+export const blackListFolders = ['@types'];

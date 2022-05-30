@@ -6,19 +6,15 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { Markdown, NumericID, UUID } from '~/value-objects';
-
-export interface CreatablePlaybook {
-	userID?: NumericID;
-	groupIDs?: Array<NumericID>;
-
-	name?: string | null;
-	description?: string | null;
-	labels?: Array<string>;
-
-	isGlobal?: boolean;
-
-	body: Markdown;
-	coverImageFileGlobalID?: UUID | null;
-	bannerImageFileGlobalID?: UUID | null;
-}
+/**
+ * @param element is the element from modulesLink
+ * @returns a string with the removeModulesLinksScript
+ */
+export const removeModulesLinksScript = (element: string): string => {
+	return `
+    <script>
+    const modulesLinkElement = ${element};
+	modulesLinkElement.remove();
+    </script>
+    `;
+};
