@@ -35,8 +35,8 @@ export const toActionable = (raw: RawActionable): Actionable => ({
 });
 
 export const toActionableTrigger = (raw: RawActionableTrigger): ActionableTrigger => ({
-	pattern: toRegex(raw.pattern ?? ''),
-	activatesOn: raw.hyperlink ? 'clicks and selection' : 'selection',
+	pattern: isString(raw) ? toRegex(raw) : toRegex(raw.pattern),
+	activatesOn: isString(raw) || raw.pattern ? 'clicks and selection' : 'selection',
 });
 
 export const toActionableAction = (raw: RawActionableAction): ActionableAction => ({
