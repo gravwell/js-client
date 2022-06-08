@@ -14,11 +14,7 @@ export type RawRegex = string;
 
 export const toRegex = (raw: RawRegex): Regex => {
 	const flags = takeRightWhile(raw, char => char !== '/').join('');
-	let source = '';
-
-	if (raw && raw.length) {
-		source = raw.substr(1, raw.length - (flags.length + 2));
-	}
+	const source = raw.substr(1, raw.length - (flags.length + 2));
 
 	return new RegExp(source, flags);
 };
