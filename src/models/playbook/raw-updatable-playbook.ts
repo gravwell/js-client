@@ -19,4 +19,11 @@ export interface RawUpdatablePlaybook {
 
 	Global: boolean;
 	Labels: Array<string>;
+
+	Author: {
+		Name: string; // Empty string "" is null
+		Email: string; // Empty string "" is null
+		Company: string; // Empty string "" is null
+		URL: string; // Empty string "" is null
+	};
 }

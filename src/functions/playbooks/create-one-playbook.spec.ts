@@ -21,6 +21,12 @@ describe('createOnePlaybook()', () => {
 			const data: CreatablePlaybook = {
 				name: 'Playbook test',
 				body: 'This is my playbook',
+				author: {
+					name: 'name',
+					email: 'name@email.com',
+					company: 'companyName',
+					url: 'www.url.com',
+				},
 			};
 
 			const playbook = await createOnePlaybook(data);
