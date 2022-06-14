@@ -55,6 +55,14 @@ describe('updateOnePlaybook()', () => {
 		{ coverImageFileGlobalID: '8b0f4322-9653-4942-bd87-cf8ec966f6af' },
 		{ bannerImageFileGlobalID: null },
 		{ bannerImageFileGlobalID: '8b0f4322-9653-4942-bd87-cf8ec966f6af' },
+		{
+			author: {
+				name: 'name',
+				email: 'name@email.com',
+				company: 'companyName',
+				url: 'www.url.com',
+			},
+		},
 	];
 	updateTests.forEach((_data, testIndex) => {
 		const updatedFields: Array<string> = Object.keys(omit(_data, ['uuid']));

@@ -37,10 +37,15 @@ export interface RawActionableAction {
 	command: RawActionableCommand;
 }
 
-export interface RawActionableTrigger {
-	pattern: string;
-	hyperlink: boolean;
-}
+/**
+ * An Actionable trigger can be a single string or the object below.
+ */
+export type RawActionableTrigger =
+	| {
+			pattern: string;
+			hyperlink: boolean;
+	  }
+	| string;
 
 export type RawActionableTimeVariable =
 	| { type: 'timestamp'; format: null | string; placeholder: null | string }
