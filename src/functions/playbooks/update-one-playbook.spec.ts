@@ -80,7 +80,13 @@ describe('updateOnePlaybook()', () => {
 				expect(isPlaybook(updated)).toBeTrue();
 
 				const parsedData = omitUndefinedShallow(data);
-				expect(updated).toEqual({ ...current, ...parsedData, lastUpdateDate: updated.lastUpdateDate });
+				const expected = {
+					...current,
+					...parsedData,
+					author: { ...current.author, ...parsedData.author },
+					lastUpdateDate: updated.lastUpdateDate,
+				};
+				expect(updated).toEqual(expected);
 			}),
 		);
 	});
