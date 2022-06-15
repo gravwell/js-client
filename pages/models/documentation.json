@@ -5014,7 +5014,7 @@
 					]
 				},
 				{
-					"title": "Type aliases",
+					"title": "Type Aliases",
 					"kind": 4194304,
 					"children": [
 						1380,
@@ -7310,7 +7310,7 @@
 					]
 				},
 				{
-					"title": "Type aliases",
+					"title": "Type Aliases",
 					"kind": 4194304,
 					"children": [
 						1597,
@@ -13534,7 +13534,7 @@
 					]
 				},
 				{
-					"title": "Type aliases",
+					"title": "Type Aliases",
 					"kind": 4194304,
 					"children": [
 						1706,
@@ -18028,7 +18028,7 @@
 					]
 				},
 				{
-					"title": "Type aliases",
+					"title": "Type Aliases",
 					"kind": 4194304,
 					"children": [
 						2105,
@@ -24630,7 +24630,7 @@
 					]
 				},
 				{
-					"title": "Type aliases",
+					"title": "Type Aliases",
 					"kind": 4194304,
 					"children": [
 						2496,
@@ -30502,7 +30502,7 @@
 					]
 				},
 				{
-					"title": "Type aliases",
+					"title": "Type Aliases",
 					"kind": 4194304,
 					"children": [
 						2613,
@@ -30575,7 +30575,9 @@
 											"name": "company",
 											"kind": 1024,
 											"kindString": "Property",
-											"flags": {},
+											"flags": {
+												"isOptional": true
+											},
 											"sources": [
 												{
 													"fileName": "playbook/creatable-playbook.ts",
@@ -30602,7 +30604,9 @@
 											"name": "email",
 											"kind": 1024,
 											"kindString": "Property",
-											"flags": {},
+											"flags": {
+												"isOptional": true
+											},
 											"sources": [
 												{
 													"fileName": "playbook/creatable-playbook.ts",
@@ -30629,7 +30633,9 @@
 											"name": "name",
 											"kind": 1024,
 											"kindString": "Property",
-											"flags": {},
+											"flags": {
+												"isOptional": true
+											},
 											"sources": [
 												{
 													"fileName": "playbook/creatable-playbook.ts",
@@ -30656,7 +30662,9 @@
 											"name": "url",
 											"kind": 1024,
 											"kindString": "Property",
-											"flags": {},
+											"flags": {
+												"isOptional": true
+											},
 											"sources": [
 												{
 													"fileName": "playbook/creatable-playbook.ts",
@@ -32594,7 +32602,9 @@
 											"name": "company",
 											"kind": 1024,
 											"kindString": "Property",
-											"flags": {},
+											"flags": {
+												"isOptional": true
+											},
 											"sources": [
 												{
 													"fileName": "playbook/updatable-playbook.ts",
@@ -32621,7 +32631,9 @@
 											"name": "email",
 											"kind": 1024,
 											"kindString": "Property",
-											"flags": {},
+											"flags": {
+												"isOptional": true
+											},
 											"sources": [
 												{
 													"fileName": "playbook/updatable-playbook.ts",
@@ -32648,7 +32660,9 @@
 											"name": "name",
 											"kind": 1024,
 											"kindString": "Property",
-											"flags": {},
+											"flags": {
+												"isOptional": true
+											},
 											"sources": [
 												{
 													"fileName": "playbook/updatable-playbook.ts",
@@ -32675,7 +32689,9 @@
 											"name": "url",
 											"kind": 1024,
 											"kindString": "Property",
-											"flags": {},
+											"flags": {
+												"isOptional": true
+											},
 											"sources": [
 												{
 													"fileName": "playbook/updatable-playbook.ts",
@@ -43146,7 +43162,7 @@
 					]
 				},
 				{
-					"title": "Type aliases",
+					"title": "Type Aliases",
 					"kind": 4194304,
 					"children": [
 						3096,
@@ -43619,7 +43635,7 @@
 					]
 				},
 				{
-					"title": "Type aliases",
+					"title": "Type Aliases",
 					"kind": 4194304,
 					"children": [
 						3340,
@@ -43664,7 +43680,7 @@
 							"id": 4387,
 							"name": "ArchiveSearch",
 							"kind": 16,
-							"kindString": "Enumeration member",
+							"kindString": "Enumeration Member",
 							"flags": {},
 							"sources": [
 								{
@@ -43673,13 +43689,17 @@
 									"character": 1
 								}
 							],
+							"type": {
+								"type": "literal",
+								"value": "archive"
+							},
 							"defaultValue": "\"archive\""
 						},
 						{
 							"id": 4388,
 							"name": "BackgroundSearch",
 							"kind": 16,
-							"kindString": "Enumeration member",
+							"kindString": "Enumeration Member",
 							"flags": {},
 							"sources": [
 								{
@@ -43688,13 +43708,17 @@
 									"character": 1
 								}
 							],
+							"type": {
+								"type": "literal",
+								"value": "background"
+							},
 							"defaultValue": "\"background\""
 						},
 						{
 							"id": 4385,
 							"name": "Close",
 							"kind": 16,
-							"kindString": "Enumeration member",
+							"kindString": "Enumeration Member",
 							"flags": {},
 							"sources": [
 								{
@@ -43703,13 +43727,17 @@
 									"character": 1
 								}
 							],
+							"type": {
+								"type": "literal",
+								"value": 1
+							},
 							"defaultValue": "1"
 						},
 						{
 							"id": 4386,
 							"name": "DeleteSearch",
 							"kind": 16,
-							"kindString": "Enumeration member",
+							"kindString": "Enumeration Member",
 							"flags": {},
 							"sources": [
 								{
@@ -43718,13 +43746,17 @@
 									"character": 1
 								}
 							],
+							"type": {
+								"type": "literal",
+								"value": "delete"
+							},
 							"defaultValue": "\"delete\""
 						},
 						{
 							"id": 4401,
 							"name": "RequestAllStats",
 							"kind": 16,
-							"kindString": "Enumeration member",
+							"kindString": "Enumeration Member",
 							"flags": {},
 							"comment": {
 								"shortText": "Requests stats over all time. Generally used on init."
@@ -43736,13 +43768,17 @@
 									"character": 1
 								}
 							],
+							"type": {
+								"type": "literal",
+								"value": 2130706435
+							},
 							"defaultValue": "2130706435"
 						},
 						{
 							"id": 4395,
 							"name": "RequestDetails",
 							"kind": 16,
-							"kindString": "Enumeration member",
+							"kindString": "Enumeration Member",
 							"flags": {},
 							"sources": [
 								{
@@ -43751,13 +43787,17 @@
 									"character": 1
 								}
 							],
+							"type": {
+								"type": "literal",
+								"value": 4
+							},
 							"defaultValue": "4"
 						},
 						{
 							"id": 4390,
 							"name": "RequestEntries",
 							"kind": 16,
-							"kindString": "Enumeration member",
+							"kindString": "Enumeration Member",
 							"flags": {},
 							"sources": [
 								{
@@ -43766,13 +43806,17 @@
 									"character": 1
 								}
 							],
+							"type": {
+								"type": "literal",
+								"value": 16
+							},
 							"defaultValue": "16"
 						},
 						{
 							"id": 4391,
 							"name": "RequestEntriesWithinRange",
 							"kind": 16,
-							"kindString": "Enumeration member",
+							"kindString": "Enumeration Member",
 							"flags": {},
 							"sources": [
 								{
@@ -43781,13 +43825,17 @@
 									"character": 1
 								}
 							],
+							"type": {
+								"type": "literal",
+								"value": 18
+							},
 							"defaultValue": "18"
 						},
 						{
 							"id": 4394,
 							"name": "RequestEntryCount",
 							"kind": 16,
-							"kindString": "Enumeration member",
+							"kindString": "Enumeration Member",
 							"flags": {},
 							"sources": [
 								{
@@ -43796,13 +43844,17 @@
 									"character": 1
 								}
 							],
+							"type": {
+								"type": "literal",
+								"value": 3
+							},
 							"defaultValue": "3"
 						},
 						{
 							"id": 4392,
 							"name": "RequestExplorerEntries",
 							"kind": 16,
-							"kindString": "Enumeration member",
+							"kindString": "Enumeration Member",
 							"flags": {},
 							"sources": [
 								{
@@ -43811,13 +43863,17 @@
 									"character": 1
 								}
 							],
+							"type": {
+								"type": "literal",
+								"value": 61456
+							},
 							"defaultValue": "61456"
 						},
 						{
 							"id": 4393,
 							"name": "RequestExplorerEntriesWithinRange",
 							"kind": 16,
-							"kindString": "Enumeration member",
+							"kindString": "Enumeration Member",
 							"flags": {},
 							"sources": [
 								{
@@ -43826,13 +43882,17 @@
 									"character": 1
 								}
 							],
+							"type": {
+								"type": "literal",
+								"value": 61458
+							},
 							"defaultValue": "61458"
 						},
 						{
 							"id": 4402,
 							"name": "RequestStatsInRange",
 							"kind": 16,
-							"kindString": "Enumeration member",
+							"kindString": "Enumeration Member",
 							"flags": {},
 							"comment": {
 								"shortText": "Requests stats in a specific range."
@@ -43844,13 +43904,17 @@
 									"character": 1
 								}
 							],
+							"type": {
+								"type": "literal",
+								"value": 2130706436
+							},
 							"defaultValue": "2130706436"
 						},
 						{
 							"id": 4404,
 							"name": "RequestStatsLocation",
 							"kind": 16,
-							"kindString": "Enumeration member",
+							"kindString": "Enumeration Member",
 							"flags": {},
 							"comment": {
 								"shortText": "Requests current timestamp for search progress"
@@ -43862,13 +43926,17 @@
 									"character": 1
 								}
 							],
+							"type": {
+								"type": "literal",
+								"value": 2130706438
+							},
 							"defaultValue": "2130706438"
 						},
 						{
 							"id": 4399,
 							"name": "RequestStatsSize",
 							"kind": 16,
-							"kindString": "Enumeration member",
+							"kindString": "Enumeration Member",
 							"flags": {},
 							"comment": {
 								"shortText": "Requests \"size\" value of stats chunks. Never used."
@@ -43880,13 +43948,17 @@
 									"character": 1
 								}
 							],
+							"type": {
+								"type": "literal",
+								"value": 2130706433
+							},
 							"defaultValue": "2130706433"
 						},
 						{
 							"id": 4403,
 							"name": "RequestStatsSummary",
 							"kind": 16,
-							"kindString": "Enumeration member",
+							"kindString": "Enumeration Member",
 							"flags": {},
 							"comment": {
 								"shortText": "Requests stats summary for entire results."
@@ -43898,13 +43970,17 @@
 									"character": 1
 								}
 							],
+							"type": {
+								"type": "literal",
+								"value": 2130706437
+							},
 							"defaultValue": "2130706437"
 						},
 						{
 							"id": 4400,
 							"name": "RequestStatsWithinRange",
 							"kind": 16,
-							"kindString": "Enumeration member",
+							"kindString": "Enumeration Member",
 							"flags": {},
 							"comment": {
 								"shortText": "Request current time range covered by stats. Rarely used."
@@ -43916,13 +43992,17 @@
 									"character": 1
 								}
 							],
+							"type": {
+								"type": "literal",
+								"value": 2130706434
+							},
 							"defaultValue": "2130706434"
 						},
 						{
 							"id": 4397,
 							"name": "RequestStreaming",
 							"kind": 16,
-							"kindString": "Enumeration member",
+							"kindString": "Enumeration Member",
 							"flags": {},
 							"sources": [
 								{
@@ -43931,13 +44011,17 @@
 									"character": 1
 								}
 							],
+							"type": {
+								"type": "literal",
+								"value": 17
+							},
 							"defaultValue": "17"
 						},
 						{
 							"id": 4396,
 							"name": "RequestTags",
 							"kind": 16,
-							"kindString": "Enumeration member",
+							"kindString": "Enumeration Member",
 							"flags": {},
 							"sources": [
 								{
@@ -43946,13 +44030,17 @@
 									"character": 1
 								}
 							],
+							"type": {
+								"type": "literal",
+								"value": 5
+							},
 							"defaultValue": "5"
 						},
 						{
 							"id": 4398,
 							"name": "RequestTextSearchDetails",
 							"kind": 16,
-							"kindString": "Enumeration member",
+							"kindString": "Enumeration Member",
 							"flags": {},
 							"sources": [
 								{
@@ -43961,13 +44049,17 @@
 									"character": 1
 								}
 							],
+							"type": {
+								"type": "literal",
+								"value": 16777220
+							},
 							"defaultValue": "16777220"
 						},
 						{
 							"id": 4405,
 							"name": "ResponseError",
 							"kind": 16,
-							"kindString": "Enumeration member",
+							"kindString": "Enumeration Member",
 							"flags": {},
 							"comment": {
 								"shortText": "Error response from the backend"
@@ -43979,13 +44071,17 @@
 									"character": 1
 								}
 							],
+							"type": {
+								"type": "literal",
+								"value": 4294967295
+							},
 							"defaultValue": "4294967295"
 						},
 						{
 							"id": 4389,
 							"name": "Status",
 							"kind": 16,
-							"kindString": "Enumeration member",
+							"kindString": "Enumeration Member",
 							"flags": {},
 							"sources": [
 								{
@@ -43994,12 +44090,16 @@
 									"character": 1
 								}
 							],
+							"type": {
+								"type": "literal",
+								"value": "status"
+							},
 							"defaultValue": "\"status\""
 						}
 					],
 					"groups": [
 						{
-							"title": "Enumeration members",
+							"title": "Enumeration Members",
 							"kind": 16,
 							"children": [
 								4387,
@@ -68714,7 +68814,7 @@
 					]
 				},
 				{
-					"title": "Type aliases",
+					"title": "Type Aliases",
 					"kind": 4194304,
 					"children": [
 						3383,
@@ -71441,7 +71541,7 @@
 					]
 				},
 				{
-					"title": "Type aliases",
+					"title": "Type Aliases",
 					"kind": 4194304,
 					"children": [
 						4647
@@ -72003,7 +72103,7 @@
 					]
 				},
 				{
-					"title": "Type aliases",
+					"title": "Type Aliases",
 					"kind": 4194304,
 					"children": [
 						4675
@@ -72049,7 +72149,7 @@
 							"id": 4764,
 							"name": "AttachSearch",
 							"kind": 16,
-							"kindString": "Enumeration member",
+							"kindString": "Enumeration Member",
 							"flags": {},
 							"sources": [
 								{
@@ -72058,13 +72158,17 @@
 									"character": 1
 								}
 							],
+							"type": {
+								"type": "literal",
+								"value": "AttachSearch"
+							},
 							"defaultValue": "\"AttachSearch\""
 						},
 						{
 							"id": 4765,
 							"name": "BackgroundSearch",
 							"kind": 16,
-							"kindString": "Enumeration member",
+							"kindString": "Enumeration Member",
 							"flags": {},
 							"sources": [
 								{
@@ -72073,13 +72177,17 @@
 									"character": 1
 								}
 							],
+							"type": {
+								"type": "literal",
+								"value": "BackgroundSearch"
+							},
 							"defaultValue": "\"BackgroundSearch\""
 						},
 						{
 							"id": 4771,
 							"name": "DashboardRead",
 							"kind": 16,
-							"kindString": "Enumeration member",
+							"kindString": "Enumeration Member",
 							"flags": {},
 							"sources": [
 								{
@@ -72088,13 +72196,17 @@
 									"character": 1
 								}
 							],
+							"type": {
+								"type": "literal",
+								"value": "DashboardRead"
+							},
 							"defaultValue": "\"DashboardRead\""
 						},
 						{
 							"id": 4772,
 							"name": "DashboardWrite",
 							"kind": 16,
-							"kindString": "Enumeration member",
+							"kindString": "Enumeration Member",
 							"flags": {},
 							"sources": [
 								{
@@ -72103,13 +72215,17 @@
 									"character": 1
 								}
 							],
+							"type": {
+								"type": "literal",
+								"value": "DashboardWrite"
+							},
 							"defaultValue": "\"DashboardWrite\""
 						},
 						{
 							"id": 4762,
 							"name": "Download",
 							"kind": 16,
-							"kindString": "Enumeration member",
+							"kindString": "Enumeration Member",
 							"flags": {},
 							"sources": [
 								{
@@ -72118,13 +72234,17 @@
 									"character": 1
 								}
 							],
+							"type": {
+								"type": "literal",
+								"value": "Download"
+							},
 							"defaultValue": "\"Download\""
 						},
 						{
 							"id": 4783,
 							"name": "ExtractorRead",
 							"kind": 16,
-							"kindString": "Enumeration member",
+							"kindString": "Enumeration Member",
 							"flags": {},
 							"sources": [
 								{
@@ -72133,13 +72253,17 @@
 									"character": 1
 								}
 							],
+							"type": {
+								"type": "literal",
+								"value": "ExtractorRead"
+							},
 							"defaultValue": "\"ExtractorRead\""
 						},
 						{
 							"id": 4784,
 							"name": "ExtractorWrite",
 							"kind": 16,
-							"kindString": "Enumeration member",
+							"kindString": "Enumeration Member",
 							"flags": {},
 							"sources": [
 								{
@@ -72148,13 +72272,17 @@
 									"character": 1
 								}
 							],
+							"type": {
+								"type": "literal",
+								"value": "ExtractorWrite"
+							},
 							"defaultValue": "\"ExtractorWrite\""
 						},
 						{
 							"id": 4766,
 							"name": "GetTags",
 							"kind": 16,
-							"kindString": "Enumeration member",
+							"kindString": "Enumeration Member",
 							"flags": {},
 							"sources": [
 								{
@@ -72163,13 +72291,17 @@
 									"character": 1
 								}
 							],
+							"type": {
+								"type": "literal",
+								"value": "GetTags"
+							},
 							"defaultValue": "\"GetTags\""
 						},
 						{
 							"id": 4799,
 							"name": "Ingest",
 							"kind": 16,
-							"kindString": "Enumeration member",
+							"kindString": "Enumeration Member",
 							"flags": {},
 							"sources": [
 								{
@@ -72178,13 +72310,17 @@
 									"character": 1
 								}
 							],
+							"type": {
+								"type": "literal",
+								"value": "Ingest"
+							},
 							"defaultValue": "\"Ingest\""
 						},
 						{
 							"id": 4789,
 							"name": "KitBuild",
 							"kind": 16,
-							"kindString": "Enumeration member",
+							"kindString": "Enumeration Member",
 							"flags": {},
 							"sources": [
 								{
@@ -72193,13 +72329,17 @@
 									"character": 1
 								}
 							],
+							"type": {
+								"type": "literal",
+								"value": "KitBuild"
+							},
 							"defaultValue": "\"KitBuild\""
 						},
 						{
 							"id": 4790,
 							"name": "KitDownload",
 							"kind": 16,
-							"kindString": "Enumeration member",
+							"kindString": "Enumeration Member",
 							"flags": {},
 							"sources": [
 								{
@@ -72208,13 +72348,17 @@
 									"character": 1
 								}
 							],
+							"type": {
+								"type": "literal",
+								"value": "KitDownload"
+							},
 							"defaultValue": "\"KitDownload\""
 						},
 						{
 							"id": 4787,
 							"name": "KitRead",
 							"kind": 16,
-							"kindString": "Enumeration member",
+							"kindString": "Enumeration Member",
 							"flags": {},
 							"sources": [
 								{
@@ -72223,13 +72367,17 @@
 									"character": 1
 								}
 							],
+							"type": {
+								"type": "literal",
+								"value": "KitRead"
+							},
 							"defaultValue": "\"KitRead\""
 						},
 						{
 							"id": 4788,
 							"name": "KitWrite",
 							"kind": 16,
-							"kindString": "Enumeration member",
+							"kindString": "Enumeration Member",
 							"flags": {},
 							"sources": [
 								{
@@ -72238,13 +72386,17 @@
 									"character": 1
 								}
 							],
+							"type": {
+								"type": "literal",
+								"value": "KitWrite"
+							},
 							"defaultValue": "\"KitWrite\""
 						},
 						{
 							"id": 4781,
 							"name": "LibraryRead",
 							"kind": 16,
-							"kindString": "Enumeration member",
+							"kindString": "Enumeration Member",
 							"flags": {},
 							"sources": [
 								{
@@ -72253,13 +72405,17 @@
 									"character": 1
 								}
 							],
+							"type": {
+								"type": "literal",
+								"value": "LibraryRead"
+							},
 							"defaultValue": "\"LibraryRead\""
 						},
 						{
 							"id": 4782,
 							"name": "LibraryWrite",
 							"kind": 16,
-							"kindString": "Enumeration member",
+							"kindString": "Enumeration Member",
 							"flags": {},
 							"sources": [
 								{
@@ -72268,13 +72424,17 @@
 									"character": 1
 								}
 							],
+							"type": {
+								"type": "literal",
+								"value": "LibraryWrite"
+							},
 							"defaultValue": "\"LibraryWrite\""
 						},
 						{
 							"id": 4797,
 							"name": "LicenseRead",
 							"kind": 16,
-							"kindString": "Enumeration member",
+							"kindString": "Enumeration Member",
 							"flags": {},
 							"sources": [
 								{
@@ -72283,13 +72443,17 @@
 									"character": 1
 								}
 							],
+							"type": {
+								"type": "literal",
+								"value": "LicenseRead"
+							},
 							"defaultValue": "\"LicenseRead\""
 						},
 						{
 							"id": 4802,
 							"name": "ListGroupMembers",
 							"kind": 16,
-							"kindString": "Enumeration member",
+							"kindString": "Enumeration Member",
 							"flags": {},
 							"sources": [
 								{
@@ -72298,13 +72462,17 @@
 									"character": 1
 								}
 							],
+							"type": {
+								"type": "literal",
+								"value": "ListGroupMembers"
+							},
 							"defaultValue": "\"ListGroupMembers\""
 						},
 						{
 							"id": 4801,
 							"name": "ListGroups",
 							"kind": 16,
-							"kindString": "Enumeration member",
+							"kindString": "Enumeration Member",
 							"flags": {},
 							"sources": [
 								{
@@ -72313,13 +72481,17 @@
 									"character": 1
 								}
 							],
+							"type": {
+								"type": "literal",
+								"value": "ListGroups"
+							},
 							"defaultValue": "\"ListGroups\""
 						},
 						{
 							"id": 4800,
 							"name": "ListUsers",
 							"kind": 16,
-							"kindString": "Enumeration member",
+							"kindString": "Enumeration Member",
 							"flags": {},
 							"sources": [
 								{
@@ -72328,13 +72500,17 @@
 									"character": 1
 								}
 							],
+							"type": {
+								"type": "literal",
+								"value": "ListUsers"
+							},
 							"defaultValue": "\"ListUsers\""
 						},
 						{
 							"id": 4779,
 							"name": "MacroRead",
 							"kind": 16,
-							"kindString": "Enumeration member",
+							"kindString": "Enumeration Member",
 							"flags": {},
 							"sources": [
 								{
@@ -72343,13 +72519,17 @@
 									"character": 1
 								}
 							],
+							"type": {
+								"type": "literal",
+								"value": "MacroRead"
+							},
 							"defaultValue": "\"MacroRead\""
 						},
 						{
 							"id": 4780,
 							"name": "MacroWrite",
 							"kind": 16,
-							"kindString": "Enumeration member",
+							"kindString": "Enumeration Member",
 							"flags": {},
 							"sources": [
 								{
@@ -72358,13 +72538,17 @@
 									"character": 1
 								}
 							],
+							"type": {
+								"type": "literal",
+								"value": "MacroWrite"
+							},
 							"defaultValue": "\"MacroWrite\""
 						},
 						{
 							"id": 4803,
 							"name": "NotificationRead",
 							"kind": 16,
-							"kindString": "Enumeration member",
+							"kindString": "Enumeration Member",
 							"flags": {},
 							"sources": [
 								{
@@ -72373,13 +72557,17 @@
 									"character": 1
 								}
 							],
+							"type": {
+								"type": "literal",
+								"value": "NotificationRead"
+							},
 							"defaultValue": "\"NotificationRead\""
 						},
 						{
 							"id": 4804,
 							"name": "NotificationWrite",
 							"kind": 16,
-							"kindString": "Enumeration member",
+							"kindString": "Enumeration Member",
 							"flags": {},
 							"sources": [
 								{
@@ -72388,13 +72576,17 @@
 									"character": 1
 								}
 							],
+							"type": {
+								"type": "literal",
+								"value": "NotificationWrite"
+							},
 							"defaultValue": "\"NotificationWrite\""
 						},
 						{
 							"id": 4777,
 							"name": "PivotRead",
 							"kind": 16,
-							"kindString": "Enumeration member",
+							"kindString": "Enumeration Member",
 							"flags": {},
 							"sources": [
 								{
@@ -72403,13 +72595,17 @@
 									"character": 1
 								}
 							],
+							"type": {
+								"type": "literal",
+								"value": "PivotRead"
+							},
 							"defaultValue": "\"PivotRead\""
 						},
 						{
 							"id": 4778,
 							"name": "PivotWrite",
 							"kind": 16,
-							"kindString": "Enumeration member",
+							"kindString": "Enumeration Member",
 							"flags": {},
 							"sources": [
 								{
@@ -72418,13 +72614,17 @@
 									"character": 1
 								}
 							],
+							"type": {
+								"type": "literal",
+								"value": "PivotWrite"
+							},
 							"defaultValue": "\"PivotWrite\""
 						},
 						{
 							"id": 4795,
 							"name": "PlaybookRead",
 							"kind": 16,
-							"kindString": "Enumeration member",
+							"kindString": "Enumeration Member",
 							"flags": {},
 							"sources": [
 								{
@@ -72433,13 +72633,17 @@
 									"character": 1
 								}
 							],
+							"type": {
+								"type": "literal",
+								"value": "PlaybookRead"
+							},
 							"defaultValue": "\"PlaybookRead\""
 						},
 						{
 							"id": 4796,
 							"name": "PlaybookWrite",
 							"kind": 16,
-							"kindString": "Enumeration member",
+							"kindString": "Enumeration Member",
 							"flags": {},
 							"sources": [
 								{
@@ -72448,13 +72652,17 @@
 									"character": 1
 								}
 							],
+							"type": {
+								"type": "literal",
+								"value": "PlaybookWrite"
+							},
 							"defaultValue": "\"PlaybookWrite\""
 						},
 						{
 							"id": 4773,
 							"name": "ResourceRead",
 							"kind": 16,
-							"kindString": "Enumeration member",
+							"kindString": "Enumeration Member",
 							"flags": {},
 							"sources": [
 								{
@@ -72463,13 +72671,17 @@
 									"character": 1
 								}
 							],
+							"type": {
+								"type": "literal",
+								"value": "ResourceRead"
+							},
 							"defaultValue": "\"ResourceRead\""
 						},
 						{
 							"id": 4774,
 							"name": "ResourceWrite",
 							"kind": 16,
-							"kindString": "Enumeration member",
+							"kindString": "Enumeration Member",
 							"flags": {},
 							"sources": [
 								{
@@ -72478,13 +72690,17 @@
 									"character": 1
 								}
 							],
+							"type": {
+								"type": "literal",
+								"value": "ResourceWrite"
+							},
 							"defaultValue": "\"ResourceWrite\""
 						},
 						{
 							"id": 4794,
 							"name": "SOAREmail",
 							"kind": 16,
-							"kindString": "Enumeration member",
+							"kindString": "Enumeration Member",
 							"flags": {},
 							"sources": [
 								{
@@ -72493,13 +72709,17 @@
 									"character": 1
 								}
 							],
+							"type": {
+								"type": "literal",
+								"value": "SOAREmail"
+							},
 							"defaultValue": "\"SOAREmail\""
 						},
 						{
 							"id": 4793,
 							"name": "SOARLibs",
 							"kind": 16,
-							"kindString": "Enumeration member",
+							"kindString": "Enumeration Member",
 							"flags": {},
 							"sources": [
 								{
@@ -72508,13 +72728,17 @@
 									"character": 1
 								}
 							],
+							"type": {
+								"type": "literal",
+								"value": "SOARLibs"
+							},
 							"defaultValue": "\"SOARLibs\""
 						},
 						{
 							"id": 4763,
 							"name": "SaveSearch",
 							"kind": 16,
-							"kindString": "Enumeration member",
+							"kindString": "Enumeration Member",
 							"flags": {},
 							"sources": [
 								{
@@ -72523,13 +72747,17 @@
 									"character": 1
 								}
 							],
+							"type": {
+								"type": "literal",
+								"value": "SaveSearch"
+							},
 							"defaultValue": "\"SaveSearch\""
 						},
 						{
 							"id": 4791,
 							"name": "ScheduleRead",
 							"kind": 16,
-							"kindString": "Enumeration member",
+							"kindString": "Enumeration Member",
 							"flags": {},
 							"sources": [
 								{
@@ -72538,13 +72766,17 @@
 									"character": 1
 								}
 							],
+							"type": {
+								"type": "literal",
+								"value": "ScheduleRead"
+							},
 							"defaultValue": "\"ScheduleRead\""
 						},
 						{
 							"id": 4792,
 							"name": "ScheduleWrite",
 							"kind": 16,
-							"kindString": "Enumeration member",
+							"kindString": "Enumeration Member",
 							"flags": {},
 							"sources": [
 								{
@@ -72553,13 +72785,17 @@
 									"character": 1
 								}
 							],
+							"type": {
+								"type": "literal",
+								"value": "ScheduleWrite"
+							},
 							"defaultValue": "\"ScheduleWrite\""
 						},
 						{
 							"id": 4761,
 							"name": "Search",
 							"kind": 16,
-							"kindString": "Enumeration member",
+							"kindString": "Enumeration Member",
 							"flags": {},
 							"sources": [
 								{
@@ -72568,13 +72804,17 @@
 									"character": 1
 								}
 							],
+							"type": {
+								"type": "literal",
+								"value": "Search"
+							},
 							"defaultValue": "\"Search\""
 						},
 						{
 							"id": 4770,
 							"name": "SearchAllHistory",
 							"kind": 16,
-							"kindString": "Enumeration member",
+							"kindString": "Enumeration Member",
 							"flags": {},
 							"sources": [
 								{
@@ -72583,13 +72823,17 @@
 									"character": 1
 								}
 							],
+							"type": {
+								"type": "literal",
+								"value": "SearchAllHistory"
+							},
 							"defaultValue": "\"SearchAllHistory\""
 						},
 						{
 							"id": 4769,
 							"name": "SearchGroupHistory",
 							"kind": 16,
-							"kindString": "Enumeration member",
+							"kindString": "Enumeration Member",
 							"flags": {},
 							"sources": [
 								{
@@ -72598,13 +72842,17 @@
 									"character": 1
 								}
 							],
+							"type": {
+								"type": "literal",
+								"value": "SearchGroupHistory"
+							},
 							"defaultValue": "\"SearchGroupHistory\""
 						},
 						{
 							"id": 4768,
 							"name": "SearchHistory",
 							"kind": 16,
-							"kindString": "Enumeration member",
+							"kindString": "Enumeration Member",
 							"flags": {},
 							"sources": [
 								{
@@ -72613,13 +72861,17 @@
 									"character": 1
 								}
 							],
+							"type": {
+								"type": "literal",
+								"value": "SearchHistory"
+							},
 							"defaultValue": "\"SearchHistory\""
 						},
 						{
 							"id": 4767,
 							"name": "SetSearchGroup",
 							"kind": 16,
-							"kindString": "Enumeration member",
+							"kindString": "Enumeration Member",
 							"flags": {},
 							"sources": [
 								{
@@ -72628,13 +72880,17 @@
 									"character": 1
 								}
 							],
+							"type": {
+								"type": "literal",
+								"value": "SetSearchGroup"
+							},
 							"defaultValue": "\"SetSearchGroup\""
 						},
 						{
 							"id": 4798,
 							"name": "Stats",
 							"kind": 16,
-							"kindString": "Enumeration member",
+							"kindString": "Enumeration Member",
 							"flags": {},
 							"sources": [
 								{
@@ -72643,13 +72899,17 @@
 									"character": 1
 								}
 							],
+							"type": {
+								"type": "literal",
+								"value": "Stats"
+							},
 							"defaultValue": "\"Stats\""
 						},
 						{
 							"id": 4805,
 							"name": "SystemInfoRead",
 							"kind": 16,
-							"kindString": "Enumeration member",
+							"kindString": "Enumeration Member",
 							"flags": {},
 							"sources": [
 								{
@@ -72658,13 +72918,17 @@
 									"character": 1
 								}
 							],
+							"type": {
+								"type": "literal",
+								"value": "SystemInfoRead"
+							},
 							"defaultValue": "\"SystemInfoRead\""
 						},
 						{
 							"id": 4775,
 							"name": "TemplateRead",
 							"kind": 16,
-							"kindString": "Enumeration member",
+							"kindString": "Enumeration Member",
 							"flags": {},
 							"sources": [
 								{
@@ -72673,13 +72937,17 @@
 									"character": 1
 								}
 							],
+							"type": {
+								"type": "literal",
+								"value": "TemplateRead"
+							},
 							"defaultValue": "\"TemplateRead\""
 						},
 						{
 							"id": 4776,
 							"name": "TemplateWrite",
 							"kind": 16,
-							"kindString": "Enumeration member",
+							"kindString": "Enumeration Member",
 							"flags": {},
 							"sources": [
 								{
@@ -72688,13 +72956,17 @@
 									"character": 1
 								}
 							],
+							"type": {
+								"type": "literal",
+								"value": "TemplateWrite"
+							},
 							"defaultValue": "\"TemplateWrite\""
 						},
 						{
 							"id": 4806,
 							"name": "TokenRead",
 							"kind": 16,
-							"kindString": "Enumeration member",
+							"kindString": "Enumeration Member",
 							"flags": {},
 							"sources": [
 								{
@@ -72703,13 +72975,17 @@
 									"character": 1
 								}
 							],
+							"type": {
+								"type": "literal",
+								"value": "TokenRead"
+							},
 							"defaultValue": "\"TokenRead\""
 						},
 						{
 							"id": 4807,
 							"name": "TokenWrite",
 							"kind": 16,
-							"kindString": "Enumeration member",
+							"kindString": "Enumeration Member",
 							"flags": {},
 							"sources": [
 								{
@@ -72718,13 +72994,17 @@
 									"character": 1
 								}
 							],
+							"type": {
+								"type": "literal",
+								"value": "TokenWrite"
+							},
 							"defaultValue": "\"TokenWrite\""
 						},
 						{
 							"id": 4785,
 							"name": "UserFileRead",
 							"kind": 16,
-							"kindString": "Enumeration member",
+							"kindString": "Enumeration Member",
 							"flags": {},
 							"sources": [
 								{
@@ -72733,13 +73013,17 @@
 									"character": 1
 								}
 							],
+							"type": {
+								"type": "literal",
+								"value": "UserFileRead"
+							},
 							"defaultValue": "\"UserFileRead\""
 						},
 						{
 							"id": 4786,
 							"name": "UserFileWrite",
 							"kind": 16,
-							"kindString": "Enumeration member",
+							"kindString": "Enumeration Member",
 							"flags": {},
 							"sources": [
 								{
@@ -72748,12 +73032,16 @@
 									"character": 1
 								}
 							],
+							"type": {
+								"type": "literal",
+								"value": "UserFileWrite"
+							},
 							"defaultValue": "\"UserFileWrite\""
 						}
 					],
 					"groups": [
 						{
-							"title": "Enumeration members",
+							"title": "Enumeration Members",
 							"kind": 16,
 							"children": [
 								4764,
@@ -76092,7 +76380,7 @@
 					]
 				},
 				{
-					"title": "Type aliases",
+					"title": "Type Aliases",
 					"kind": 4194304,
 					"children": [
 						4883
@@ -78014,7 +78302,7 @@
 					]
 				},
 				{
-					"title": "Type aliases",
+					"title": "Type Aliases",
 					"kind": 4194304,
 					"children": [
 						4960,
