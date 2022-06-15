@@ -80,10 +80,10 @@ export const toRawUpdatablePlaybook = (updatable: UpdatablePlaybook, current: Pl
 		Metadata: base64Encode(JSON.stringify(omitUndefinedShallow(metadata))),
 
 		Author: {
-			Name: updatable.author?.name ?? current.author.name ?? '',
-			Email: updatable.author?.email ?? current.author.email ?? '',
-			Company: updatable.author?.company ?? current.author.company ?? '',
-			URL: updatable.author?.url ?? current.author.url ?? '',
+			Name: nullToEmptyString(updatable.author?.name) ?? nullToEmptyString(current.author.name),
+			Email: nullToEmptyString(updatable.author?.email) ?? nullToEmptyString(current.author.email),
+			Company: nullToEmptyString(updatable.author?.company) ?? nullToEmptyString(current.author.company),
+			URL: nullToEmptyString(updatable.author?.url) ?? nullToEmptyString(current.author.url),
 		},
 	};
 };
