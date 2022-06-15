@@ -169,7 +169,7 @@ export const makeAttachToOneExplorerSearch = (context: APIContext) => {
 		);
 
 		const entries$: Observable<ExplorerSearchEntries> = searchMessages$.pipe(
-			filter(filterMessageByCommand(SearchMessageCommands.RequestEntriesWithinRange)),
+			filter(filterMessageByCommand(SearchMessageCommands.RequestExplorerEntriesWithinRange)),
 			map(
 				(msg): ExplorerSearchEntries => {
 					const base = toSearchEntries(rendererType, msg);
