@@ -10,6 +10,7 @@ import { makeSubscribeToOneExplorerSearch } from '~/functions';
 import { makeExploreOneTag } from '~/functions/searches/explore-one-tag';
 import { APIContext } from '~/functions/utils';
 import { ExplorerService } from './service';
+import { makeAttachToOneExplorerSearch } from '~/functions';
 
 export const createExplorerService = (context: APIContext): ExplorerService => ({
 	explore: {
@@ -18,5 +19,9 @@ export const createExplorerService = (context: APIContext): ExplorerService => (
 
 	searchAndExplore: {
 		one: makeSubscribeToOneExplorerSearch(context),
+	},
+
+	attach: {
+		one: makeAttachToOneExplorerSearch(context),
 	},
 });

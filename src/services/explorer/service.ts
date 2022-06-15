@@ -24,4 +24,15 @@ export interface ExplorerService {
 			},
 		) => Promise<ExplorerSearchSubscription>;
 	};
+
+	readonly attach: {
+		readonly one: (
+			query: string,
+			options?: {
+				filter?: SearchFilter | undefined;
+				metadata?: RawJSON | undefined;
+				noHistory?: boolean;
+			},
+		) => Promise<ExplorerSearchSubscription>;
+	};
 }
