@@ -34,7 +34,7 @@ import {
 	takeUntil,
 	tap,
 } from 'rxjs/operators';
-import { createInitialSearchFilter } from '~/functions/searches/helpers/create-initial-search-filter';
+import { createInitialSearchFilter, DEBOUNCE_OPTIONS } from '~/functions/searches/helpers/attach-search';
 import {
 	RawRequestSearchCloseMessageSent,
 	RawRequestSearchDetailsMessageSent,
@@ -55,6 +55,8 @@ import { APIContext, debounceWithBackoffWhile } from '../../utils';
 import { attachSearch } from '../attach-search';
 import { createRequiredSearchFilterObservable } from '../helpers/create-required-search-filter-observable';
 import { makeSubscribeToOneRawSearch } from '../subscribe-to-one-raw-search';
+import { getPreviewDateRange } from '../helpers/attach-search';
+import { DateRange } from '~/functions';
 import {
 	countEntriesFromModules,
 	filterMessageByCommand,
@@ -133,27 +135,12 @@ export const makeAttachToOneSearch = (context: APIContext) => {
 		);
 		const rendererType = searchAttachMsg.data.RendererMod;
 
-		type DateRange = { start: Date; end: Date };
-		const previewDateRange: DateRange = await (async (): Promise<DateRange> => {
-			// Not in preview mode, so return the initial filter date range, whatever, it won't be used
-			if (initialFilter.dateRange !== 'preview') return initialFilter.dateRange;
-
-			// In preview mode, so we need to request search details and use the timerange that we get back
-			const detailsP = firstValueFrom(
-				searchMessages$.pipe(filter(filterMessageByCommand(SearchMessageCommands.RequestDetails))),
-			);
-			const requestDetailsMsg: RawRequestSearchDetailsMessageSent = {
-				type: searchTypeID,
-				data: { ID: SearchMessageCommands.RequestDetails },
-			};
-			rawSubscription.send(requestDetailsMsg);
-			const details = await detailsP;
-
-			return {
-				start: new Date(details.data.SearchInfo.StartRange),
-				end: new Date(details.data.SearchInfo.EndRange),
-			};
-		})();
+		const previewDateRange: DateRange = await getPreviewDateRange({
+			initialFilter,
+			searchTypeID,
+			searchMessages$,
+			rawSubscription,
+		});
 
 		const close = async (): Promise<void> => {
 			if (closed) return undefined;
@@ -264,15 +251,6 @@ export const makeAttachToOneSearch = (context: APIContext) => {
 			const detailsResults = await Promise.all([detailsP, detailsMsgP]);
 			const detailsMsg = detailsResults[1];
 
-			// Dynamic duration for debounce a after each event, starting from 1s and increasing 500ms after each event,
-			// never surpass 4s, reset to 1s if the request is finished
-			const debounceOptions = {
-				initialDueTime: 1000,
-				step: 500,
-				maxDueTime: 4000,
-				predicate: (isFinished: boolean) => !isFinished, // increase backoff while isFinished is false
-			};
-
 			// Keep sending requests for search details until Finished is true
 			pollingSubs.add(
 				rawSearchDetails$
@@ -284,7 +262,7 @@ export const makeAttachToOneSearch = (context: APIContext) => {
 						map(details => (details ? details.data.Finished : false)),
 
 						// Add dynamic debounce after each message
-						debounceWithBackoffWhile(debounceOptions),
+						debounceWithBackoffWhile(DEBOUNCE_OPTIONS),
 
 						// Filter out finished events
 						rxjsFilter(isFinished => isFinished === false),
@@ -317,7 +295,7 @@ export const makeAttachToOneSearch = (context: APIContext) => {
 						map(entries => (entries ? entries.finished : false)),
 
 						// Add dynamic debounce after each message
-						debounceWithBackoffWhile(debounceOptions),
+						debounceWithBackoffWhile(DEBOUNCE_OPTIONS),
 
 						// Filter out finished events
 						rxjsFilter(isFinished => isFinished === false),
@@ -346,7 +324,7 @@ export const makeAttachToOneSearch = (context: APIContext) => {
 						map(stats => stats.data.Finished ?? false),
 
 						// Add dynamic debounce after each message
-						debounceWithBackoffWhile(debounceOptions),
+						debounceWithBackoffWhile(DEBOUNCE_OPTIONS),
 
 						// Filter out finished events
 						rxjsFilter(isFinished => isFinished === false),
@@ -384,7 +362,7 @@ export const makeAttachToOneSearch = (context: APIContext) => {
 						map(stats => stats.data.Finished ?? false),
 
 						// Add dynamic debounce after each message
-						debounceWithBackoffWhile(debounceOptions),
+						debounceWithBackoffWhile(DEBOUNCE_OPTIONS),
 
 						// Filter out finished events
 						shareReplay({ bufferSize: 1, refCount: true }),
