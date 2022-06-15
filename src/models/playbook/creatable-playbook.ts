@@ -23,9 +23,9 @@ export interface CreatablePlaybook {
 	bannerImageFileGlobalID?: UUID | null;
 
 	author?: {
-		name: string | null;
-		email: string | null;
-		company: string | null;
-		url: string | null;
+		name?: string | null;
+		email?: string | null;
+		company?: string | null;
+		url?: string | null;
 	};
 }
