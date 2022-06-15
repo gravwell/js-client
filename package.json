@@ -16,7 +16,10 @@
 		"build:tests": "scripts/build --tests --assets",
 		"lint": "scripts/lint",
 		"format": "scripts/format",
-		"prepublishOnly": "npm ci && npm run format && npm run lint && npm run build"
+		"prepublishOnly": "npm ci && npm run format && npm run lint && npm run build",
+		"start:docs": "npm run generate:docs && npm run launch:server:docs",
+		"generate:docs": "npx ts-node ./docs-generator/main.ts",
+		"launch:server:docs": "http-server ./docs"
 	},
 	"keywords": [
 		"Gravwell",
@@ -71,6 +74,7 @@
 		"eslint-plugin-import": "^2.22.1",
 		"eslint-plugin-simple-import-sort": "^7.0.0",
 		"expect-type": "^0.11.0",
+		"http-server": "^14.1.1",
 		"jasmine": "^3.6.4",
 		"jasmine-core": "^3.6.0",
 		"jasmine-marbles": "^0.9.1",
@@ -87,9 +91,10 @@
 		"prettier": "^2.2.1",
 		"rename-cli": "^6.2.1",
 		"rimraf": "^3.0.2",
-		"rxjs": "^7.5.4",
+		"rxjs": "^7.5.5",
 		"ts-node": "^9.1.1",
 		"tsc-alias": "^1.2.6",
+		"typedoc": "^0.22.17",
 		"typescript": "^4.5.4",
 		"uuid": "^8.3.2",
 		"webpack": "^5.21.2",

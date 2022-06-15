@@ -8,6 +8,10 @@
 			"eachLine": {
 				"prepend": " * "
 			}
+		},
+		"md|html": {
+			"prepend": "<!--",
+			"append": "-->"
 		}
 	},
 	"defaultFormat": {

@@ -18,7 +18,7 @@ export const isDashboard = (value: unknown): value is Dashboard => {
 		const d = <Dashboard>value;
 		return (
 			isNumericID(d.id) &&
-			isUUID(d.globalID) &&
+			(isNull(d.globalID) || isUUID(d.globalID)) &&
 			isNumericID(d.userID) &&
 			isArray(d.groupIDs) &&
 			d.groupIDs.every(isNumericID) &&

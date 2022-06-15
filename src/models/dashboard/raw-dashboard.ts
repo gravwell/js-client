@@ -13,7 +13,7 @@ import { RawDashboardTile } from './raw-dashboard-tile';
 
 export interface RawDashboard {
 	ID: RawNumericID;
-	GUID: RawUUID;
+	GUID?: RawUUID;
 
 	UID: RawNumericID;
 	GIDs: Array<RawNumericID> | null;

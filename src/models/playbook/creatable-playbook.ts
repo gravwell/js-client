@@ -21,4 +21,11 @@ export interface CreatablePlaybook {
 	body: Markdown;
 	coverImageFileGlobalID?: UUID | null;
 	bannerImageFileGlobalID?: UUID | null;
+
+	author?: {
+		name?: string | null;
+		email?: string | null;
+		company?: string | null;
+		url?: string | null;
+	};
 }
