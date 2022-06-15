@@ -6,14 +6,20 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { isRegExp, takeRightWhile } from 'lodash';
+import { isRegExp, takeRightWhile, uniq } from 'lodash';
 
 export type Regex = RegExp;
 
 export type RawRegex = string;
 
-export const toRegex = (raw: RawRegex): Regex => {
-	const flags = takeRightWhile(raw, char => char !== '/').join('');
+export const toRegex = (raw: RawRegex, defaultFlags: Array<string> = []): Regex => {
+	// If it doesn't start with a "/"", then it's a regular string
+	// If it has less than two "/", then it's also a regular string
+	if (!raw.startsWith('/') || Array.from(raw).filter(c => c === '/').length < 2) {
+		return new RegExp(raw, defaultFlags.join(''));
+	}
+
+	const flags = uniq(takeRightWhile(raw, char => char !== '/').concat(defaultFlags)).join('');
 	const source = raw.substr(1, raw.length - (flags.length + 2));
 	return new RegExp(source, flags);
 };
