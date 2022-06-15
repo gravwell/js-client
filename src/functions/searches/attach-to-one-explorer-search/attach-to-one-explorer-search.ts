@@ -64,6 +64,7 @@ import {
 	RequiredSearchFilter,
 	SEARCH_FILTER_PREFIX,
 } from '../subscribe-to-one-search/helpers';
+import { createInitialSearchFilter } from '~/functions/searches/helpers/create-initial-search-filter';
 
 export const makeAttachToOneExplorerSearch = (context: APIContext) => {
 	const subscribeToOneRawSearch = makeSubscribeToOneRawSearch(context);
@@ -104,24 +105,7 @@ export const makeAttachToOneExplorerSearch = (context: APIContext) => {
 		let closed = false;
 		const close$ = new Subject<void>();
 
-		const initialFilter: RequiredSearchFilter = {
-			entriesOffset: {
-				index: options.filter?.entriesOffset?.index ?? 0,
-				count: options.filter?.entriesOffset?.count ?? 100,
-			},
-			dateRange:
-				options.filter?.dateRange === 'preview'
-					? ('preview' as const)
-					: {
-							start: options.filter?.dateRange?.start ?? defaultStart,
-							end: options.filter?.dateRange?.end ?? defaultEnd,
-					  },
-			// *NOTE: The default granularity is recalculated when we receive the renderer type
-			desiredGranularity: options.filter?.desiredGranularity ?? 100,
-			overviewGranularity: options.filter?.overviewGranularity ?? 90,
-			zoomGranularity: options.filter?.zoomGranularity ?? 90,
-			elementFilters: [],
-		};
+		const initialFilter = createInitialSearchFilter({ defaultStart, defaultEnd }, options);
 		const initialFilterID = uniqueId(SEARCH_FILTER_PREFIX);
 
 		const filtersByID: Record<string, SearchFilter | undefined> = {};
