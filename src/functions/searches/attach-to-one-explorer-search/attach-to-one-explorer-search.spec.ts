@@ -15,7 +15,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { makeCreateOneMacro, makeDeleteOneMacro } from '~/functions/macros';
 import { makeAttachToOneExplorerSearch } from '~/functions/searches/attach-to-one-explorer-search/attach-to-one-explorer-search';
 import { makeSubscribeToOneExplorerSearch } from '~/functions/searches/subscribe-to-one-explorer-search';
-import { SearchFilter, SearchSubscription } from '~/models';
+import { DataExplorerEntry, SearchFilter, ExplorerSearchSubscription } from '~/models';
 import { RawSearchEntries, TextSearchEntries } from '~/models/search/search-entries';
 import { integrationTest, myCustomMatchers, sleep, TEST_BASE_API_CONTEXT } from '~/tests';
 import { makeIngestMultiLineEntry } from '../../ingestors/ingest-multi-line-entry';
@@ -27,7 +27,7 @@ interface Entry {
 	value: number;
 }
 
-describe('attachToOneSearch()', () => {
+describe('attachToOneExplorerSearch()', () => {
 	// Use a randomly generated tag, so that we know exactly what we're going to query
 	const tag = uuidv4();
 
@@ -67,12 +67,12 @@ describe('attachToOneSearch()', () => {
 	it(
 		'Should complete the observables when the search closes',
 		integrationTest(async () => {
-			const subscribeToOneSearch = makeSubscribeToOneExplorerSearch(TEST_BASE_API_CONTEXT);
-			const attachToOneSearch = makeAttachToOneExplorerSearch(TEST_BASE_API_CONTEXT);
+			const subscribeToOneExplorerSearch = makeSubscribeToOneExplorerSearch(TEST_BASE_API_CONTEXT);
+			const attachToOneExplorerSearch = makeAttachToOneExplorerSearch(TEST_BASE_API_CONTEXT);
 
 			const query = `tag=${tag}`;
-			const searchCreated = await subscribeToOneSearch(query, { filter: { dateRange: { start, end } } });
-			const search = await attachToOneSearch(searchCreated.searchID);
+			const searchCreated = await subscribeToOneExplorerSearch(query, { filter: { dateRange: { start, end } } });
+			const search = await attachToOneExplorerSearch(searchCreated.searchID);
 
 			let complete = 0;
 			const observables: Array<Observable<any>> = [
@@ -105,15 +105,18 @@ describe('attachToOneSearch()', () => {
 			const deleteOneMacro = makeDeleteOneMacro(TEST_BASE_API_CONTEXT);
 			const createdMacro = await createOneMacro({ name: macroName, expansion: 'value' });
 
-			const subscribeToOneSearch = makeSubscribeToOneExplorerSearch(TEST_BASE_API_CONTEXT);
-			const attachToOneSearch = makeAttachToOneExplorerSearch(TEST_BASE_API_CONTEXT);
+			const subscribeToOneExplorerSearch = makeSubscribeToOneExplorerSearch(TEST_BASE_API_CONTEXT);
+			const attachToOneExplorerSearch = makeAttachToOneExplorerSearch(TEST_BASE_API_CONTEXT);
 
 			const query = `tag=${tag} json $${macroName} | count`;
 			//const effectiveQuery = `tag=${tag} json value | count`;
 			const metadata = { test: 'abc' };
 
-			const searchCreated = await subscribeToOneSearch(query, { metadata, filter: { dateRange: { start, end } } });
-			const search = await attachToOneSearch(searchCreated.searchID);
+			const searchCreated = await subscribeToOneExplorerSearch(query, {
+				metadata,
+				filter: { dateRange: { start, end } },
+			});
+			const search = await attachToOneExplorerSearch(searchCreated.searchID);
 
 			const textEntriesP = lastValueFrom(
 				search.entries$.pipe(
@@ -192,18 +195,18 @@ describe('attachToOneSearch()', () => {
 	it(
 		'Should work with queries using the raw renderer',
 		integrationTest(async () => {
-			const subscribeToOneSearch = makeSubscribeToOneExplorerSearch(TEST_BASE_API_CONTEXT);
-			const attachToOneSearch = makeAttachToOneExplorerSearch(TEST_BASE_API_CONTEXT);
+			const subscribeToOneExplorerSearch = makeSubscribeToOneExplorerSearch(TEST_BASE_API_CONTEXT);
+			const attachToOneExplorerSearch = makeAttachToOneExplorerSearch(TEST_BASE_API_CONTEXT);
 
 			const query = `tag=${tag} json value timestamp | raw`;
 			const filter: SearchFilter = { entriesOffset: { index: 0, count: count }, dateRange: { start, end } };
 
-			const searchCreated = await subscribeToOneSearch(query, { filter });
-			const search = await attachToOneSearch(searchCreated.searchID, { filter });
+			const searchCreated = await subscribeToOneExplorerSearch(query, { filter });
+			const search = await attachToOneExplorerSearch(searchCreated.searchID, { filter });
 
 			const textEntriesP = lastValueFrom(
 				search.entries$.pipe(
-					map(e => e as RawSearchEntries),
+					map(e => e as RawSearchEntries & { explorerEntries: Array<DataExplorerEntry> }),
 					takeWhile(e => !e.finished, true),
 				),
 			);
@@ -299,17 +302,17 @@ describe('attachToOneSearch()', () => {
 			// Number of multiple searches to create at the same time
 			const SEARCHES_N = 4;
 
-			const subscribeToOneSearch = makeSubscribeToOneExplorerSearch(TEST_BASE_API_CONTEXT);
-			const attachToOneSearch = makeAttachToOneExplorerSearch(TEST_BASE_API_CONTEXT);
+			const subscribeToOneExplorerSearch = makeSubscribeToOneExplorerSearch(TEST_BASE_API_CONTEXT);
+			const attachToOneExplorerSearch = makeAttachToOneExplorerSearch(TEST_BASE_API_CONTEXT);
 
 			const query = `tag=${tag} json value timestamp | raw`;
 			const filter: SearchFilter = { entriesOffset: { index: 0, count: count }, dateRange: { start, end } };
 
 			const searchesCreated = await Promise.all(
-				Array.from({ length: SEARCHES_N }).map(() => subscribeToOneSearch(query, { filter })),
+				Array.from({ length: SEARCHES_N }).map(() => subscribeToOneExplorerSearch(query, { filter })),
 			);
 			const searches = await Promise.all(
-				searchesCreated.map(searchCreated => attachToOneSearch(searchCreated.searchID, { filter })),
+				searchesCreated.map(searchCreated => attachToOneExplorerSearch(searchCreated.searchID, { filter })),
 			);
 
 			// Concat first because .reverse modifies the array
@@ -410,9 +413,9 @@ describe('attachToOneSearch()', () => {
 	it(
 		'Should reject on an inexistent search ID',
 		integrationTest(async () => {
-			const attachToOneSearch = makeAttachToOneExplorerSearch(TEST_BASE_API_CONTEXT);
+			const attachToOneExplorerSearch = makeAttachToOneExplorerSearch(TEST_BASE_API_CONTEXT);
 			const searchID = `4723947892379482378`;
-			await expectAsync(attachToOneSearch(searchID)).toBeRejected();
+			await expectAsync(attachToOneExplorerSearch(searchID)).toBeRejected();
 		}),
 		25000,
 	);
@@ -420,19 +423,29 @@ describe('attachToOneSearch()', () => {
 	it(
 		'Should reject searches with invalid search IDs without affecting good ones',
 		integrationTest(async () => {
-			const subscribeToOneSearch = makeSubscribeToOneExplorerSearch(TEST_BASE_API_CONTEXT);
-			const attachToOneSearch = makeAttachToOneExplorerSearch(TEST_BASE_API_CONTEXT);
+			const subscribeToOneExplorerSearch = makeSubscribeToOneExplorerSearch(TEST_BASE_API_CONTEXT);
+			const attachToOneExplorerSearch = makeAttachToOneExplorerSearch(TEST_BASE_API_CONTEXT);
 
-			const goodSearchID = (await subscribeToOneSearch(`tag=${tag}`)).searchID;
+			const goodSearchID = (await subscribeToOneExplorerSearch(`tag=${tag}`)).searchID;
 			const badSearchID = `4723947892379482378`;
 
 			// Attach to a bunch of search subscriptions with different search IDs to race them
 			await Promise.all([
-				expectAsync(attachToOneSearch(badSearchID)).withContext('invalid search ID should reject').toBeRejected(),
-				expectAsync(attachToOneSearch(badSearchID)).withContext('invalid search ID should reject').toBeRejected(),
-				expectAsync(attachToOneSearch(goodSearchID)).withContext('valid search ID should resolve').toBeResolved(),
-				expectAsync(attachToOneSearch(badSearchID)).withContext('invalid search ID should reject').toBeRejected(),
-				expectAsync(attachToOneSearch(badSearchID)).withContext('invalid search ID should reject').toBeRejected(),
+				expectAsync(attachToOneExplorerSearch(badSearchID))
+					.withContext('invalid search ID should reject')
+					.toBeRejected(),
+				expectAsync(attachToOneExplorerSearch(badSearchID))
+					.withContext('invalid search ID should reject')
+					.toBeRejected(),
+				expectAsync(attachToOneExplorerSearch(goodSearchID))
+					.withContext('valid search ID should resolve')
+					.toBeResolved(),
+				expectAsync(attachToOneExplorerSearch(badSearchID))
+					.withContext('invalid search ID should reject')
+					.toBeRejected(),
+				expectAsync(attachToOneExplorerSearch(badSearchID))
+					.withContext('invalid search ID should reject')
+					.toBeRejected(),
 			]);
 		}),
 		25000,
@@ -441,15 +454,17 @@ describe('attachToOneSearch()', () => {
 	it(
 		'Should work with several searches initiated simultaneously',
 		integrationTest(async () => {
-			const subscribeToOneSearch = makeSubscribeToOneExplorerSearch(TEST_BASE_API_CONTEXT);
-			const attachToOneSearch = makeAttachToOneExplorerSearch(TEST_BASE_API_CONTEXT);
+			const subscribeToOneExplorerSearch = makeSubscribeToOneExplorerSearch(TEST_BASE_API_CONTEXT);
+			const attachToOneExplorerSearch = makeAttachToOneExplorerSearch(TEST_BASE_API_CONTEXT);
 
-			const searchCreatedID = (await subscribeToOneSearch(`tag=${tag}`)).searchID;
+			const searchCreatedID = (await subscribeToOneExplorerSearch(`tag=${tag}`)).searchID;
 
 			// Attach to a bunch of search subscriptions to race them
 			await Promise.all(
 				rangeLeft(0, 20).map(x =>
-					expectAsync(attachToOneSearch(searchCreatedID)).withContext('good query should resolve').toBeResolved(),
+					expectAsync(attachToOneExplorerSearch(searchCreatedID))
+						.withContext('good query should resolve')
+						.toBeResolved(),
 				),
 			);
 		}),
@@ -460,15 +475,15 @@ describe('attachToOneSearch()', () => {
 		it(
 			'Should be evenly spread over a window matching the zoom/overview granularity',
 			integrationTest(async () => {
-				const subscribeToOneSearch = makeSubscribeToOneExplorerSearch(TEST_BASE_API_CONTEXT);
-				const attachToOneSearch = makeAttachToOneExplorerSearch(TEST_BASE_API_CONTEXT);
+				const subscribeToOneExplorerSearch = makeSubscribeToOneExplorerSearch(TEST_BASE_API_CONTEXT);
+				const attachToOneExplorerSearch = makeAttachToOneExplorerSearch(TEST_BASE_API_CONTEXT);
 
 				const query = `tag=${tag}`;
 				const minutes = 90;
 				const dateRange = { start, end: addMinutes(start, minutes) };
 
-				const searchCreated = await subscribeToOneSearch(query, { filter: { dateRange } });
-				const search = await attachToOneSearch(searchCreated.searchID);
+				const searchCreated = await subscribeToOneExplorerSearch(query, { filter: { dateRange } });
+				const search = await attachToOneExplorerSearch(searchCreated.searchID);
 
 				const textEntriesP = lastValueFrom(
 					search.entries$.pipe(
@@ -527,14 +542,14 @@ describe('attachToOneSearch()', () => {
 		it(
 			'Should adjust when the zoom window adjusts for nicely-aligned bins',
 			integrationTest(async () => {
-				const subscribeToOneSearch = makeSubscribeToOneExplorerSearch(TEST_BASE_API_CONTEXT);
-				const attachToOneSearch = makeAttachToOneExplorerSearch(TEST_BASE_API_CONTEXT);
+				const subscribeToOneExplorerSearch = makeSubscribeToOneExplorerSearch(TEST_BASE_API_CONTEXT);
+				const attachToOneExplorerSearch = makeAttachToOneExplorerSearch(TEST_BASE_API_CONTEXT);
 
 				const query = `tag=${tag}`;
 				const filter: SearchFilter = { entriesOffset: { index: 0, count }, dateRange: { start, end } };
 
-				const searchCreated = await subscribeToOneSearch(query, { filter });
-				const search = await attachToOneSearch(searchCreated.searchID, { filter });
+				const searchCreated = await subscribeToOneExplorerSearch(query, { filter });
+				const search = await attachToOneExplorerSearch(searchCreated.searchID, { filter });
 
 				await expectStatsFilter(search.stats$, filter);
 
@@ -589,14 +604,14 @@ describe('attachToOneSearch()', () => {
 		it(
 			'Should adjust when the zoom window adjusts for odd bins',
 			integrationTest(async () => {
-				const subscribeToOneSearch = makeSubscribeToOneExplorerSearch(TEST_BASE_API_CONTEXT);
-				const attachToOneSearch = makeAttachToOneExplorerSearch(TEST_BASE_API_CONTEXT);
+				const subscribeToOneExplorerSearch = makeSubscribeToOneExplorerSearch(TEST_BASE_API_CONTEXT);
+				const attachToOneExplorerSearch = makeAttachToOneExplorerSearch(TEST_BASE_API_CONTEXT);
 
 				const query = `tag=${tag}`;
 				const filter: SearchFilter = { entriesOffset: { index: 0, count }, dateRange: { start, end } };
 
-				const searchCreated = await subscribeToOneSearch(query, { filter });
-				const search = await attachToOneSearch(searchCreated.searchID, { filter });
+				const searchCreated = await subscribeToOneExplorerSearch(query, { filter });
+				const search = await attachToOneExplorerSearch(searchCreated.searchID, { filter });
 
 				await expectStatsFilter(search.stats$, filter);
 
@@ -649,8 +664,8 @@ describe('attachToOneSearch()', () => {
 		it(
 			'Should provide the minimum zoom window',
 			integrationTest(async () => {
-				const subscribeToOneSearch = makeSubscribeToOneExplorerSearch(TEST_BASE_API_CONTEXT);
-				const attachToOneSearch = makeAttachToOneExplorerSearch(TEST_BASE_API_CONTEXT);
+				const subscribeToOneExplorerSearch = makeSubscribeToOneExplorerSearch(TEST_BASE_API_CONTEXT);
+				const attachToOneExplorerSearch = makeAttachToOneExplorerSearch(TEST_BASE_API_CONTEXT);
 
 				const dateRange = { start, end };
 
@@ -658,8 +673,8 @@ describe('attachToOneSearch()', () => {
 				const query1s = `tag=${tag} json value | stats mean(value) over 1s`;
 				const filter1s: SearchFilter = { entriesOffset: { index: 0, count: count }, dateRange };
 
-				const search1sCreated = await subscribeToOneSearch(query1s, { filter: filter1s });
-				const search1s = await attachToOneSearch(search1sCreated.searchID, { filter: filter1s });
+				const search1sCreated = await subscribeToOneExplorerSearch(query1s, { filter: filter1s });
+				const search1s = await attachToOneExplorerSearch(search1sCreated.searchID, { filter: filter1s });
 
 				const stats1s = await lastValueFrom(search1s.stats$.pipe(takeWhile(e => !e.finished, true)));
 
@@ -674,8 +689,8 @@ describe('attachToOneSearch()', () => {
 				const query33s = `tag=${tag} json value | stats mean(value) over 33s`;
 				const filter33s = { entriesOffset: { index: 0, count: count }, dateRange };
 
-				const search33sCreated = await subscribeToOneSearch(query33s, { filter: filter33s });
-				const search33s = await attachToOneSearch(search33sCreated.searchID, { filter: filter33s });
+				const search33sCreated = await subscribeToOneExplorerSearch(query33s, { filter: filter33s });
+				const search33s = await attachToOneExplorerSearch(search33sCreated.searchID, { filter: filter33s });
 
 				const stats33s = await lastValueFrom(search33s.stats$.pipe(takeWhile(e => !e.finished, true)));
 
@@ -692,14 +707,14 @@ describe('attachToOneSearch()', () => {
 		it(
 			'Should adjust when the zoom window adjusts with a different granularity for nicely-aligned bins',
 			integrationTest(async () => {
-				const subscribeToOneSearch = makeSubscribeToOneExplorerSearch(TEST_BASE_API_CONTEXT);
-				const attachToOneSearch = makeAttachToOneExplorerSearch(TEST_BASE_API_CONTEXT);
+				const subscribeToOneExplorerSearch = makeSubscribeToOneExplorerSearch(TEST_BASE_API_CONTEXT);
+				const attachToOneExplorerSearch = makeAttachToOneExplorerSearch(TEST_BASE_API_CONTEXT);
 
 				const query = `tag=${tag}`;
 				const filter1: SearchFilter = { entriesOffset: { index: 0, count: count }, dateRange: { start, end } };
 
-				const searchCreated = await subscribeToOneSearch(query, { filter: filter1 });
-				const search = await attachToOneSearch(searchCreated.searchID, { filter: filter1 });
+				const searchCreated = await subscribeToOneExplorerSearch(query, { filter: filter1 });
+				const search = await attachToOneExplorerSearch(searchCreated.searchID, { filter: filter1 });
 
 				await expectStatsFilter(search.stats$, filter1);
 
@@ -770,14 +785,14 @@ describe('attachToOneSearch()', () => {
 		it(
 			'Should adjust when the zoom window adjusts with a different granularity for odd bins',
 			integrationTest(async () => {
-				const subscribeToOneSearch = makeSubscribeToOneExplorerSearch(TEST_BASE_API_CONTEXT);
-				const attachToOneSearch = makeAttachToOneExplorerSearch(TEST_BASE_API_CONTEXT);
+				const subscribeToOneExplorerSearch = makeSubscribeToOneExplorerSearch(TEST_BASE_API_CONTEXT);
+				const attachToOneExplorerSearch = makeAttachToOneExplorerSearch(TEST_BASE_API_CONTEXT);
 
 				const query = `tag=${tag}`;
 				const filter1: SearchFilter = { entriesOffset: { index: 0, count: count }, dateRange: { start, end } };
 
-				const searchCreated = await subscribeToOneSearch(query, { filter: filter1 });
-				const search = await attachToOneSearch(searchCreated.searchID, { filter: filter1 });
+				const searchCreated = await subscribeToOneExplorerSearch(query, { filter: filter1 });
+				const search = await attachToOneExplorerSearch(searchCreated.searchID, { filter: filter1 });
 
 				await expectStatsFilter(search.stats$, filter1);
 
@@ -849,8 +864,8 @@ describe('attachToOneSearch()', () => {
 		it(
 			'Should adjust zoom granularity and overview granularity independently for nicely-aligned bins',
 			integrationTest(async () => {
-				const subscribeToOneSearch = makeSubscribeToOneExplorerSearch(TEST_BASE_API_CONTEXT);
-				const attachToOneSearch = makeAttachToOneExplorerSearch(TEST_BASE_API_CONTEXT);
+				const subscribeToOneExplorerSearch = makeSubscribeToOneExplorerSearch(TEST_BASE_API_CONTEXT);
+				const attachToOneExplorerSearch = makeAttachToOneExplorerSearch(TEST_BASE_API_CONTEXT);
 
 				const query = `tag=${tag}`;
 				const overviewGranularity = 133;
@@ -860,8 +875,8 @@ describe('attachToOneSearch()', () => {
 					dateRange: { start, end },
 				};
 
-				const searchCreated = await subscribeToOneSearch(query, { filter: filter1 });
-				const search = await attachToOneSearch(searchCreated.searchID, { filter: filter1 });
+				const searchCreated = await subscribeToOneExplorerSearch(query, { filter: filter1 });
+				const search = await attachToOneExplorerSearch(searchCreated.searchID, { filter: filter1 });
 
 				await expectStatsFilter(search.stats$, filter1);
 
@@ -934,8 +949,8 @@ describe('attachToOneSearch()', () => {
 		it(
 			'Should adjust zoom granularity and overview granularity independently for odd bins',
 			integrationTest(async () => {
-				const subscribeToOneSearch = makeSubscribeToOneExplorerSearch(TEST_BASE_API_CONTEXT);
-				const attachToOneSearch = makeAttachToOneExplorerSearch(TEST_BASE_API_CONTEXT);
+				const subscribeToOneExplorerSearch = makeSubscribeToOneExplorerSearch(TEST_BASE_API_CONTEXT);
+				const attachToOneExplorerSearch = makeAttachToOneExplorerSearch(TEST_BASE_API_CONTEXT);
 
 				const query = `tag=${tag}`;
 				const overviewGranularity = 133;
@@ -945,8 +960,8 @@ describe('attachToOneSearch()', () => {
 					dateRange: { start, end },
 				};
 
-				const searchCreated = await subscribeToOneSearch(query, { filter: filter1 });
-				const search = await attachToOneSearch(searchCreated.searchID, { filter: filter1 });
+				const searchCreated = await subscribeToOneExplorerSearch(query, { filter: filter1 });
+				const search = await attachToOneExplorerSearch(searchCreated.searchID, { filter: filter1 });
 
 				await expectStatsFilter(search.stats$, filter1);
 
@@ -1024,13 +1039,13 @@ describe('attachToOneSearch()', () => {
 					start,
 					end,
 					count,
-					createSearch: async (initialFilter: SearchFilter): Promise<SearchSubscription> => {
-						const subscribeToOneSearch = makeSubscribeToOneExplorerSearch(TEST_BASE_API_CONTEXT);
-						const attachToOneSearch = makeAttachToOneExplorerSearch(TEST_BASE_API_CONTEXT);
+					createSearch: async (initialFilter: SearchFilter): Promise<ExplorerSearchSubscription> => {
+						const subscribeToOneExplorerSearch = makeSubscribeToOneExplorerSearch(TEST_BASE_API_CONTEXT);
+						const attachToOneExplorerSearch = makeAttachToOneExplorerSearch(TEST_BASE_API_CONTEXT);
 
 						const query = `tag=*`;
-						const searchCreated = await subscribeToOneSearch(query, { filter: initialFilter });
-						return await attachToOneSearch(searchCreated.searchID, { filter: initialFilter });
+						const searchCreated = await subscribeToOneExplorerSearch(query, { filter: initialFilter });
+						return await attachToOneExplorerSearch(searchCreated.searchID, { filter: initialFilter });
 					},
 				}),
 			),
