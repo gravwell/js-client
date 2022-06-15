@@ -6,8 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { isAfter } from 'date-fns';
-import { isBoolean, isEqual, isNil, isNull, isUndefined, uniqueId } from 'lodash';
+import { isBoolean, isEqual, isNil, isNull, uniqueId } from 'lodash';
 import {
 	BehaviorSubject,
 	combineLatest,
@@ -34,7 +33,12 @@ import {
 	takeUntil,
 	tap,
 } from 'rxjs/operators';
-import { createInitialSearchFilter, DEBOUNCE_OPTIONS } from '~/functions/searches/helpers/attach-search';
+import {
+	createInitialSearchFilter,
+	DEBOUNCE_OPTIONS,
+	extractZoomFromRawSearchStats,
+	mapToSearchStats,
+} from '~/functions/searches/helpers/attach-search';
 import {
 	RawRequestSearchCloseMessageSent,
 	RawRequestSearchDetailsMessageSent,
@@ -50,7 +54,7 @@ import {
 	SearchSubscription,
 	toSearchEntries,
 } from '~/models';
-import { ID, Percentage, toNumericID } from '~/value-objects';
+import { ID, Percentage } from '~/value-objects';
 import { APIContext, debounceWithBackoffWhile } from '../../utils';
 import { attachSearch } from '../attach-search';
 import { createRequiredSearchFilterObservable } from '../helpers/create-required-search-filter-observable';
@@ -409,83 +413,7 @@ export const makeAttachToOneSearch = (context: APIContext) => {
 			rawSearchStats$.pipe(distinctUntilChanged<RawResponseForSearchStatsMessageReceived>(isEqual)),
 			rawSearchDetails$.pipe(distinctUntilChanged<RawResponseForSearchDetailsMessageReceived>(isEqual)),
 		]).pipe(
-			map(
-				([rawStats, rawDetails]): SearchStats => {
-					const filterID =
-						(rawStats.data.Addendum?.filterID as string | undefined) ??
-						(rawDetails.data.Addendum?.filterID as string | undefined) ??
-						null;
-					const filter = filtersByID[filterID ?? ''] ?? undefined;
-
-					const pipeline = rawStats.data.Stats.Set.map(s => s.Stats)
-						.reduce<
-							Array<Array<RawResponseForSearchStatsMessageReceived['data']['Stats']['Set'][number]['Stats'][number]>>
-						>((acc, curr) => {
-							curr.forEach((_curr, i) => {
-								if (isUndefined(acc[i])) acc[i] = [];
-								acc[i].push(_curr);
-							});
-							return acc;
-						}, [])
-						.map(s =>
-							s
-								.map(_s => ({
-									module: _s.Name,
-									arguments: _s.Args,
-									duration: _s.Duration,
-									input: {
-										bytes: _s.InputBytes,
-										entries: _s.InputCount,
-									},
-									output: {
-										bytes: _s.OutputBytes,
-										entries: _s.OutputCount,
-									},
-								}))
-								.reduce((acc, curr) => ({
-									...curr,
-									duration: acc.duration + curr.duration,
-									input: {
-										bytes: acc.input.bytes + curr.input.bytes,
-										entries: acc.input.entries + curr.input.entries,
-									},
-									output: {
-										bytes: acc.output.bytes + curr.output.bytes,
-										entries: acc.output.entries + curr.output.entries,
-									},
-								})),
-						);
-
-					return {
-						id: rawDetails.data.SearchInfo.ID,
-						userID: toNumericID(rawDetails.data.SearchInfo.UID),
-
-						filter,
-						finished: rawStats.data.Finished && rawDetails.data.Finished,
-
-						query: searchAttachMsg.data.Info.UserQuery,
-						effectiveQuery: searchAttachMsg.data.Info.EffectiveQuery,
-
-						metadata: searchAttachMsg.data.Info.Metadata ?? {},
-						entries: rawStats.data.EntryCount,
-						duration: rawDetails.data.SearchInfo.Duration,
-						start: new Date(rawDetails.data.SearchInfo.StartRange),
-						end: new Date(rawDetails.data.SearchInfo.EndRange),
-						minZoomWindow: rawDetails.data.SearchInfo.MinZoomWindow,
-						downloadFormats: rawDetails.data.SearchInfo.RenderDownloadFormats,
-						tags: searchAttachMsg.data.Info.Tags,
-
-						storeSize: rawDetails.data.SearchInfo.StoreSize,
-						processed: {
-							entries: pipeline[0]?.input?.entries ?? 0,
-							bytes: pipeline[0]?.input?.bytes ?? 0,
-						},
-
-						pipeline,
-					};
-				},
-			),
-
+			mapToSearchStats({ filtersByID, searchAttachMsg }),
 			distinctUntilChanged<SearchStats>(isEqual),
 
 			shareReplay({ bufferSize: 1, refCount: false }),
@@ -506,18 +434,10 @@ export const makeAttachToOneSearch = (context: APIContext) => {
 		);
 
 		const statsZoom$ = rawStatsZoom$.pipe(
-			map(set => {
-				const filterID = (set.data.Addendum?.filterID as string | undefined) ?? null;
-				const filter = filtersByID[filterID ?? ''] ?? undefined;
-
-				const filterEnd = filter?.dateRange === 'preview' ? previewDateRange.end : filter?.dateRange?.end;
-				const initialEnd = initialFilter.dateRange === 'preview' ? previewDateRange.end : initialFilter.dateRange.end;
-				const endDate = filterEnd ?? initialEnd;
-
-				return {
-					frequencyStats: countEntriesFromModules(set).filter(f => !isAfter(f.timestamp, endDate)),
-					filter,
-				};
+			extractZoomFromRawSearchStats({
+				filtersByID,
+				initialFilter,
+				previewDateRange,
 			}),
 
 			shareReplay({ bufferSize: 1, refCount: true }),
