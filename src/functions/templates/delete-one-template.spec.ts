@@ -21,9 +21,13 @@ describe('deleteOneTemplate()', () => {
 		'Should delete an template',
 		integrationTest(async () => {
 			const data: CreatableTemplate = {
+				userID: '1',
+				groupIDs: [],
 				name: 'Template test',
 				query: 'tag=netflow __VAR__',
 				variables: [{ label: 'Variable', name: '__VAR__', required: true }],
+				labels: ['label'],
+				isGlobal: false,
 			};
 
 			const template: Template = await createOneTemplate(data);
