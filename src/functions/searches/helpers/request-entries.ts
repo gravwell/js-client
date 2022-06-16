@@ -10,9 +10,11 @@ import { isNil, uniqueId } from 'lodash';
 import { EMPTY, firstValueFrom, Observable, Subscription } from 'rxjs';
 import { catchError, filter, map, shareReplay, startWith, takeUntil } from 'rxjs/operators';
 import { debouncedPooling } from '~/functions/searches/helpers/attach-search';
-import { DateRange } from './create-required-search-filter-observable';
+import { APISubscription } from '~/functions/utils';
 import {
+	RawRequestExplorerSearchEntriesWithinRangeMessageSent,
 	RawRequestSearchDetailsMessageSent,
+	RawRequestSearchEntriesWithinRangeMessageSent,
 	RawRequestSearchStatsMessageSent,
 	RawRequestSearchStatsWithinRangeMessageSent,
 	RawSearchMessageReceived,
@@ -26,11 +28,7 @@ import {
 	RequiredSearchFilter,
 	SEARCH_FILTER_PREFIX,
 } from '../subscribe-to-one-search/helpers';
-import { APISubscription } from '~/functions/utils';
-import {
-	RawRequestExplorerSearchEntriesWithinRangeMessageSent,
-	RawRequestSearchEntriesWithinRangeMessageSent,
-} from '~/models';
+import { DateRange } from './create-required-search-filter-observable';
 
 export const makeRequestEntries: (props: {
 	close$: Observable<void>;

@@ -6,14 +6,16 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { isBoolean, isEqual, isNil, isNull, uniqueId } from 'lodash';
+import { isBoolean, isEqual, isNull, uniqueId } from 'lodash';
 import { BehaviorSubject, combineLatest, EMPTY, from, lastValueFrom, Observable, Subject, Subscription } from 'rxjs';
 import { catchError, concatMap, distinctUntilChanged, filter, map, shareReplay, takeUntil, tap } from 'rxjs/operators';
+import { DateRange } from '~/functions';
 import {
 	createInitialSearchFilter,
 	extractZoomFromRawSearchStats,
 	mapToSearchStats,
 } from '~/functions/searches/helpers/attach-search';
+import { getRawRequestEntriesMsg, makeRequestEntries } from '~/functions/searches/helpers/request-entries';
 import {
 	RawRequestSearchCloseMessageSent,
 	RawResponseForSearchDetailsMessageReceived,
@@ -28,17 +30,15 @@ import {
 import { ID, Percentage } from '~/value-objects';
 import { APIContext } from '../../utils';
 import { attachSearch } from '../attach-search';
+import { emitError, getPreviewDateRange } from '../helpers/attach-search';
 import { createRequiredSearchFilterObservable } from '../helpers/create-required-search-filter-observable';
 import { makeSubscribeToOneRawSearch } from '../subscribe-to-one-raw-search';
-import { getPreviewDateRange, emitError } from '../helpers/attach-search';
-import { DateRange } from '~/functions';
 import {
 	countEntriesFromModules,
 	filterMessageByCommand,
 	getDefaultGranularityByRendererType,
 	SEARCH_FILTER_PREFIX,
 } from '../subscribe-to-one-search/helpers';
-import { getRawRequestEntriesMsg, makeRequestEntries } from '~/functions/searches/helpers/request-entries';
 
 export const makeAttachToOneSearch = (context: APIContext) => {
 	const subscribeToOneRawSearch = makeSubscribeToOneRawSearch(context);

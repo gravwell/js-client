@@ -1,3 +1,13 @@
+/*************************************************************************
+ * Copyright 2022 Gravwell, Inc. All rights reserved.
+ * Contact: <legal@gravwell.io>
+ *
+ * This software may be modified and distributed under the terms of the
+ * MIT license. See the LICENSE file for details.
+ **************************************************************************/
+
+import { isAfter } from 'date-fns';
+import { isUndefined } from 'lodash';
 import {
 	catchError,
 	concatMap,
@@ -11,22 +21,26 @@ import {
 	skipUntil,
 } from 'rxjs';
 import { DateRange } from '~/functions';
-import { SearchFilter } from '~/main';
-import { filterMessageByCommand, RequiredSearchFilter } from '../../searches/subscribe-to-one-search/helpers';
-import { RawRequestSearchDetailsMessageSent } from '~/models';
-import { SearchMessageCommands } from '~/models';
-import { RawSearchMessageReceived } from '~/models';
 import { APISubscription, debounceWithBackoffWhile } from '~/functions/utils';
-import { RawSearchMessageSent } from '~/models';
-import { RawResponseForSearchStatsWithinRangeMessageReceived } from '~/models';
-import { countEntriesFromModules } from '../../searches/subscribe-to-one-search/helpers';
-import { isAfter } from 'date-fns';
-import { SearchFrequencyStats, SearchStats } from '~/models';
-import { RawResponseForSearchStatsMessageReceived, RawResponseForSearchDetailsMessageReceived } from '~/models';
-import { isUndefined } from 'lodash';
+import { SearchFilter } from '~/main';
+import {
+	RawRequestSearchDetailsMessageSent,
+	RawResponseForSearchDetailsMessageReceived,
+	RawResponseForSearchStatsMessageReceived,
+	RawResponseForSearchStatsWithinRangeMessageReceived,
+	RawSearchAttachedMessageReceived,
+	RawSearchMessageReceived,
+	RawSearchMessageSent,
+	SearchFrequencyStats,
+	SearchMessageCommands,
+	SearchStats,
+} from '~/models';
 import { toNumericID } from '../../../value-objects/id';
-import { RawSearchAttachedMessageReceived } from '~/models';
-import { RawRequestSearchEntriesWithinRangeMessageSent } from '../../../../dist/browsers/models/search/raw-search-message-sent';
+import {
+	countEntriesFromModules,
+	filterMessageByCommand,
+	RequiredSearchFilter,
+} from '../../searches/subscribe-to-one-search/helpers';
 
 // Dynamic duration for debounce a after each event, starting from 1s and increasing 500ms after each event,
 // never surpass 4s, reset to 1s if the request is finished
@@ -216,9 +230,7 @@ export const debouncedPooling: <MessageReceived, MessageSent>(
 		concatMap(() => rawSubscription.send(message)),
 	);
 
-export const emitError: <MessageReceived, MessageSent>() => <T>(
-	source: Observable<T>,
-) => Observable<Error> = () => source =>
+export const emitError: () => <T>(source: Observable<T>) => Observable<Error> = () => source =>
 	source.pipe(
 		// Skip every regular message. We only want to emit when there's an error
 		skipUntil(NEVER),

@@ -10,6 +10,12 @@ import { isBoolean, isEqual, isNull, uniqueId } from 'lodash';
 import { BehaviorSubject, combineLatest, EMPTY, from, lastValueFrom, Observable, Subject, Subscription } from 'rxjs';
 import { catchError, concatMap, distinctUntilChanged, filter, map, shareReplay, takeUntil, tap } from 'rxjs/operators';
 import {
+	createInitialSearchFilter,
+	extractZoomFromRawSearchStats,
+	mapToSearchStats,
+} from '~/functions/searches/helpers/attach-search';
+import { getRawRequestExplorerEntriesMsg, makeRequestEntries } from '~/functions/searches/helpers/request-entries';
+import {
 	ExplorerSearchEntries,
 	ExplorerSearchSubscription,
 	RawRequestSearchCloseMessageSent,
@@ -25,6 +31,7 @@ import { toDataExplorerEntry } from '~/models/search/to-data-explorer-entry';
 import { ID, Percentage } from '~/value-objects';
 import { APIContext } from '../../utils';
 import { attachSearch } from '../attach-search';
+import { emitError, getPreviewDateRange } from '../helpers/attach-search';
 import { createRequiredSearchFilterObservable, DateRange } from '../helpers/create-required-search-filter-observable';
 import { makeSubscribeToOneRawSearch } from '../subscribe-to-one-raw-search';
 import {
@@ -33,13 +40,6 @@ import {
 	getDefaultGranularityByRendererType,
 	SEARCH_FILTER_PREFIX,
 } from '../subscribe-to-one-search/helpers';
-import {
-	createInitialSearchFilter,
-	extractZoomFromRawSearchStats,
-	mapToSearchStats,
-} from '~/functions/searches/helpers/attach-search';
-import { getPreviewDateRange, emitError } from '../helpers/attach-search';
-import { getRawRequestExplorerEntriesMsg, makeRequestEntries } from '~/functions/searches/helpers/request-entries';
 
 export const makeAttachToOneExplorerSearch = (context: APIContext) => {
 	const subscribeToOneRawSearch = makeSubscribeToOneRawSearch(context);

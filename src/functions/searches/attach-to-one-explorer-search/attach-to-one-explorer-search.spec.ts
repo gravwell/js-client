@@ -15,7 +15,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { makeCreateOneMacro, makeDeleteOneMacro } from '~/functions/macros';
 import { makeAttachToOneExplorerSearch } from '~/functions/searches/attach-to-one-explorer-search/attach-to-one-explorer-search';
 import { makeSubscribeToOneExplorerSearch } from '~/functions/searches/subscribe-to-one-explorer-search';
-import { DataExplorerEntry, SearchFilter, ExplorerSearchSubscription } from '~/models';
+import { DataExplorerEntry, ExplorerSearchSubscription, SearchFilter } from '~/models';
 import { RawSearchEntries, TextSearchEntries } from '~/models/search/search-entries';
 import { integrationTest, myCustomMatchers, sleep, TEST_BASE_API_CONTEXT } from '~/tests';
 import { makeIngestMultiLineEntry } from '../../ingestors/ingest-multi-line-entry';
