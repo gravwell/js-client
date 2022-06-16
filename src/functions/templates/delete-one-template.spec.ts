@@ -6,7 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { CreatableTemplate, isTemplate } from '~/models';
+import { CreatableTemplate, isTemplate, Template } from '~/models';
 import { integrationTest, TEST_BASE_API_CONTEXT } from '~/tests';
 import { makeCreateOneTemplate } from './create-one-template';
 import { makeDeleteOneTemplate } from './delete-one-template';
@@ -26,7 +26,7 @@ describe('deleteOneTemplate()', () => {
 				variables: [{ label: 'Variable', name: '__VAR__', required: true }],
 			};
 
-			const template = await createOneTemplate(data);
+			const template: Template = await createOneTemplate(data);
 			expect(isTemplate(template)).toBeTrue();
 
 			await expectAsync(deleteOneTemplate(template.id)).toBeResolved();

@@ -6,7 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { CreatableTemplate, isTemplate } from '~/models';
+import { CreatableTemplate, isTemplate, Template } from '~/models';
 import { integrationTest, TEST_BASE_API_CONTEXT } from '~/tests';
 import { UUID } from '~/value-objects';
 import { makeCreateOneTemplate } from './create-one-template';
@@ -40,8 +40,8 @@ describe('getAllTemplates()', () => {
 	it(
 		'Should return templates',
 		integrationTest(async () => {
-			const templates = await getAllTemplates();
-			const templateIDs = templates.map(a => a.id);
+			const templates: Array<Template> = await getAllTemplates();
+			const templateIDs: Array<UUID> = templates.map(a => a.id);
 
 			expect(templates.every(isTemplate)).toBeTrue();
 			expect(templates.length).toBeGreaterThanOrEqual(createdTemplatesUUIDs.length);
