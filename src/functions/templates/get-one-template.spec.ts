@@ -6,7 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { CreatableTemplate, isTemplate } from '~/models';
+import { CreatableTemplate, isTemplate, Template } from '~/models';
 import { integrationTest, TEST_BASE_API_CONTEXT } from '~/tests';
 import { UUID } from '~/value-objects';
 import { makeCreateOneTemplate } from './create-one-template';
@@ -22,9 +22,13 @@ describe('getOneTemplate()', () => {
 
 	beforeEach(async () => {
 		const data: CreatableTemplate = {
+			userID: '1',
+			groupIDs: [],
 			name: 'Template test',
 			query: 'tag=netflow __VAR__',
 			variables: [{ label: 'Variable', name: '__VAR__', required: true }],
+			labels: ['label'],
+			isGlobal: false,
 		};
 		createdTemplateUUID = (await createOneTemplate(data)).id;
 	});
@@ -36,7 +40,7 @@ describe('getOneTemplate()', () => {
 	it(
 		'Should return an template',
 		integrationTest(async () => {
-			const template = await getOneTemplate(createdTemplateUUID);
+			const template: Template = await getOneTemplate(createdTemplateUUID);
 			expect(isTemplate(template)).toBeTrue();
 		}),
 	);

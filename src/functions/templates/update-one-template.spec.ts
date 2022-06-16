@@ -26,10 +26,13 @@ describe('updateOneTemplate()', () => {
 	beforeEach(async () => {
 		// Create one template
 		const data: CreatableTemplate = {
-			name: 'Current name',
-			description: 'Current description',
+			userID: '1',
+			groupIDs: [],
+			name: 'Template test',
 			query: 'tag=netflow __VAR__',
 			variables: [{ label: 'Variable', name: '__VAR__', required: true }],
+			labels: ['label'],
+			isGlobal: false,
 		};
 		createdTemplate = await createOneTemplate(data);
 	});
