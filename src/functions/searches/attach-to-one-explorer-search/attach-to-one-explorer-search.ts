@@ -50,7 +50,7 @@ import {
 } from '~/models';
 import { toDataExplorerEntry } from '~/models/search/to-data-explorer-entry';
 import { ID, Percentage } from '~/value-objects';
-import { APIContext, debounceWithBackoffWhile } from '../../utils';
+import { APIContext } from '../../utils';
 import { attachSearch } from '../attach-search';
 import { createRequiredSearchFilterObservable, DateRange } from '../helpers/create-required-search-filter-observable';
 import { makeSubscribeToOneRawSearch } from '../subscribe-to-one-raw-search';
@@ -65,10 +65,11 @@ import {
 } from '../subscribe-to-one-search/helpers';
 import {
 	createInitialSearchFilter,
+	debouncedPooling,
 	extractZoomFromRawSearchStats,
 	mapToSearchStats,
 } from '~/functions/searches/helpers/attach-search';
-import { getPreviewDateRange, DEBOUNCE_OPTIONS } from '../helpers/attach-search';
+import { getPreviewDateRange, emitError } from '../helpers/attach-search';
 
 export const makeAttachToOneExplorerSearch = (context: APIContext) => {
 	const subscribeToOneRawSearch = makeSubscribeToOneRawSearch(context);
@@ -267,13 +268,8 @@ export const makeAttachToOneExplorerSearch = (context: APIContext) => {
 						// Extract the property that indicates if the data is finished
 						map(details => (details ? details.data.Finished : false)),
 
-						// Add dynamic debounce after each message
-						debounceWithBackoffWhile(DEBOUNCE_OPTIONS),
+						debouncedPooling({ rawSubscription, message: requestDetailsMsg }),
 
-						// Filter out finished events
-						rxjsFilter(isFinished => isFinished === false),
-
-						concatMap(() => rawSubscription.send(requestDetailsMsg)),
 						catchError(() => EMPTY),
 						takeUntil(close$),
 					)
@@ -300,13 +296,8 @@ export const makeAttachToOneExplorerSearch = (context: APIContext) => {
 						// Extract the property that indicates if the data is finished
 						map(entries => (entries ? entries.finished : false)),
 
-						// Add dynamic debounce after each message
-						debounceWithBackoffWhile(DEBOUNCE_OPTIONS),
+						debouncedPooling({ rawSubscription, message: requestEntriesMsg }),
 
-						// Filter out finished events
-						rxjsFilter(isFinished => isFinished === false),
-
-						concatMap(() => rawSubscription.send(requestEntriesMsg)),
 						catchError(() => EMPTY),
 						takeUntil(close$),
 					)
@@ -329,13 +320,8 @@ export const makeAttachToOneExplorerSearch = (context: APIContext) => {
 						// Extract the property that indicates if the data is finished
 						map(stats => stats.data.Finished ?? false),
 
-						// Add dynamic debounce after each message
-						debounceWithBackoffWhile(DEBOUNCE_OPTIONS),
+						debouncedPooling({ rawSubscription, message: requestStatsMessage }),
 
-						// Filter out finished events
-						rxjsFilter(isFinished => isFinished === false),
-
-						concatMap(() => rawSubscription.send(requestStatsMessage)),
 						catchError(() => EMPTY),
 						takeUntil(close$),
 					)
@@ -367,14 +353,11 @@ export const makeAttachToOneExplorerSearch = (context: APIContext) => {
 						// Extract the property that indicates if the data is finished
 						map(stats => stats.data.Finished ?? false),
 
-						// Add dynamic debounce after each message
-						debounceWithBackoffWhile(DEBOUNCE_OPTIONS),
+						debouncedPooling({ rawSubscription, message: requestStatsWithinRangeMsg }),
 
 						// Filter out finished events
 						shareReplay({ bufferSize: 1, refCount: true }),
-						rxjsFilter(isFinished => isFinished === false),
 
-						concatMap(() => rawSubscription.send(requestStatsWithinRangeMsg)),
 						catchError(() => EMPTY),
 						takeUntil(close$),
 					)
@@ -450,14 +433,8 @@ export const makeAttachToOneExplorerSearch = (context: APIContext) => {
 		);
 
 		const errors$: Observable<Error> = searchMessages$.pipe(
-			// Skip every regular message. We only want to emit when there's an error
-			skipUntil(NEVER),
-
-			// When there's an error, catch it and emit it
-			catchError(err => of(err)),
-
-			shareReplay({ bufferSize: 1, refCount: true }),
-
+			// Skip every message and just emit when an error occurs
+			emitError(),
 			// Complete when/if the user calls .close()
 			takeUntil(close$),
 		);

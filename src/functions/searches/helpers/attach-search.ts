@@ -1,11 +1,22 @@
-import { filter, firstValueFrom, map, Observable } from 'rxjs';
+import {
+	catchError,
+	concatMap,
+	filter,
+	firstValueFrom,
+	map,
+	NEVER,
+	Observable,
+	of,
+	shareReplay,
+	skipUntil,
+} from 'rxjs';
 import { DateRange } from '~/functions';
 import { SearchFilter } from '~/main';
 import { filterMessageByCommand, RequiredSearchFilter } from '../../searches/subscribe-to-one-search/helpers';
 import { RawRequestSearchDetailsMessageSent } from '~/models';
 import { SearchMessageCommands } from '~/models';
 import { RawSearchMessageReceived } from '~/models';
-import { APISubscription } from '~/functions/utils';
+import { APISubscription, debounceWithBackoffWhile } from '~/functions/utils';
 import { RawSearchMessageSent } from '~/models';
 import { RawResponseForSearchStatsWithinRangeMessageReceived } from '~/models';
 import { countEntriesFromModules } from '../../searches/subscribe-to-one-search/helpers';
@@ -15,6 +26,7 @@ import { RawResponseForSearchStatsMessageReceived, RawResponseForSearchDetailsMe
 import { isUndefined } from 'lodash';
 import { toNumericID } from '../../../value-objects/id';
 import { RawSearchAttachedMessageReceived } from '~/models';
+import { RawRequestSearchEntriesWithinRangeMessageSent } from '../../../../dist/browsers/models/search/raw-search-message-sent';
 
 // Dynamic duration for debounce a after each event, starting from 1s and increasing 500ms after each event,
 // never surpass 4s, reset to 1s if the request is finished
@@ -186,4 +198,33 @@ export const mapToSearchStats: (
 				};
 			},
 		),
+	);
+
+export const debouncedPooling: <MessageReceived, MessageSent>(
+	props: Readonly<{
+		rawSubscription: APISubscription<MessageReceived, MessageSent>;
+		message: MessageSent;
+	}>,
+) => (source: Observable<boolean>) => Observable<void> = ({ rawSubscription, message }) => source =>
+	source.pipe(
+		// Add dynamic debounce after each message
+		debounceWithBackoffWhile(DEBOUNCE_OPTIONS),
+
+		// Filter out finished events
+		filter(isFinished => isFinished === false),
+
+		concatMap(() => rawSubscription.send(message)),
+	);
+
+export const emitError: <MessageReceived, MessageSent>() => <T>(
+	source: Observable<T>,
+) => Observable<Error> = () => source =>
+	source.pipe(
+		// Skip every regular message. We only want to emit when there's an error
+		skipUntil(NEVER),
+
+		// When there's an error, catch it and emit it
+		catchError(err => of(err)),
+
+		shareReplay({ bufferSize: 1, refCount: true }),
 	);
