@@ -6,7 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { CreatableTemplate, isTemplate, Template } from '~/models';
+import { CreatableTemplate, isTemplate } from '~/models';
 import { integrationTest, TEST_BASE_API_CONTEXT } from '~/tests';
 import { UUID } from '~/value-objects';
 import { makeCreateOneTemplate } from './create-one-template';
@@ -23,13 +23,9 @@ describe('getAllTemplates()', () => {
 	beforeEach(async () => {
 		// Create two templates
 		const data: CreatableTemplate = {
-			userID: '1',
-			groupIDs: [],
 			name: 'Template test',
 			query: 'tag=netflow __VAR__',
 			variables: [{ label: 'Variable', name: '__VAR__', required: true }],
-			labels: ['label'],
-			isGlobal: false,
 		};
 		const createdTemplatesPs = Array.from({ length: 2 }).map(() => createOneTemplate(data));
 		createdTemplatesUUIDs = (await Promise.all(createdTemplatesPs)).map(t => t.id);
@@ -44,8 +40,8 @@ describe('getAllTemplates()', () => {
 	it(
 		'Should return templates',
 		integrationTest(async () => {
-			const templates: Array<Template> = await getAllTemplates();
-			const templateIDs: Array<UUID> = templates.map(a => a.id);
+			const templates = await getAllTemplates();
+			const templateIDs = templates.map(a => a.id);
 
 			expect(templates.every(isTemplate)).toBeTrue();
 			expect(templates.length).toBeGreaterThanOrEqual(createdTemplatesUUIDs.length);

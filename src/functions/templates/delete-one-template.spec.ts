@@ -6,7 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { CreatableTemplate, isTemplate, Template } from '~/models';
+import { CreatableTemplate, isTemplate } from '~/models';
 import { integrationTest, TEST_BASE_API_CONTEXT } from '~/tests';
 import { makeCreateOneTemplate } from './create-one-template';
 import { makeDeleteOneTemplate } from './delete-one-template';
@@ -21,16 +21,12 @@ describe('deleteOneTemplate()', () => {
 		'Should delete an template',
 		integrationTest(async () => {
 			const data: CreatableTemplate = {
-				userID: '1',
-				groupIDs: [],
 				name: 'Template test',
 				query: 'tag=netflow __VAR__',
 				variables: [{ label: 'Variable', name: '__VAR__', required: true }],
-				labels: ['label'],
-				isGlobal: false,
 			};
 
-			const template: Template = await createOneTemplate(data);
+			const template = await createOneTemplate(data);
 			expect(isTemplate(template)).toBeTrue();
 
 			await expectAsync(deleteOneTemplate(template.id)).toBeResolved();
