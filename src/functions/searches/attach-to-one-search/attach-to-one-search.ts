@@ -13,7 +13,7 @@ import { DateRange } from '~/functions';
 import {
 	createInitialSearchFilter,
 	extractZoomFromRawSearchStats,
-	mapToSearchStats,
+	makeToSearchStats,
 } from '~/functions/searches/helpers/attach-search';
 import { getRawRequestEntriesMsg, makeRequestEntries } from '~/functions/searches/helpers/request-entries';
 import {
@@ -214,7 +214,7 @@ export const makeAttachToOneSearch = (context: APIContext) => {
 			rawSubscription,
 			searchMessages$,
 			searchTypeID,
-			getRawRequestEntriesMsg: getRawRequestEntriesMsg,
+			getRawRequestEntriesMsg,
 			isClosed: () => closed,
 		});
 
@@ -227,7 +227,7 @@ export const makeAttachToOneSearch = (context: APIContext) => {
 			rawSearchStats$.pipe(distinctUntilChanged<RawResponseForSearchStatsMessageReceived>(isEqual)),
 			rawSearchDetails$.pipe(distinctUntilChanged<RawResponseForSearchDetailsMessageReceived>(isEqual)),
 		]).pipe(
-			mapToSearchStats({ filtersByID, searchAttachMsg }),
+			map(makeToSearchStats({ filtersByID, searchAttachMsg })),
 			distinctUntilChanged<SearchStats>(isEqual),
 
 			shareReplay({ bufferSize: 1, refCount: false }),

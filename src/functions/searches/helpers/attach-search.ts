@@ -35,7 +35,7 @@ import {
 	SearchMessageCommands,
 	SearchStats,
 } from '~/models';
-import { toNumericID } from '../../../value-objects/id';
+import { toNumericID } from '~/value-objects';
 import {
 	countEntriesFromModules,
 	filterMessageByCommand,
@@ -127,92 +127,87 @@ export const extractZoomFromRawSearchStats: (
 		}),
 	);
 
-export const mapToSearchStats: (
+export type MakeToSearchStats = (
 	props: Readonly<{
 		filtersByID: Record<string, SearchFilter | undefined>;
 		searchAttachMsg: RawSearchAttachedMessageReceived;
 	}>,
-) => (
-	source: Observable<[RawResponseForSearchStatsMessageReceived, RawResponseForSearchDetailsMessageReceived]>,
-) => Observable<SearchStats> = ({ filtersByID, searchAttachMsg }) => source =>
-	source.pipe(
-		map(
-			([rawStats, rawDetails]): SearchStats => {
-				const filterID =
-					(rawStats.data.Addendum?.filterID as string | undefined) ??
-					(rawDetails.data.Addendum?.filterID as string | undefined) ??
-					null;
-				const filter = filtersByID[filterID ?? ''] ?? undefined;
+) => (args: [RawResponseForSearchStatsMessageReceived, RawResponseForSearchDetailsMessageReceived]) => SearchStats;
+export const makeToSearchStats: MakeToSearchStats = ({ filtersByID, searchAttachMsg }) => ([rawStats, rawDetails]) => {
+	const filterID =
+		(rawStats.data.Addendum?.filterID as string | undefined) ??
+		(rawDetails.data.Addendum?.filterID as string | undefined) ??
+		null;
+	const filter = filtersByID[filterID ?? ''] ?? undefined;
 
-				const pipeline = rawStats.data.Stats.Set.map(s => s.Stats)
-					.reduce<
-						Array<Array<RawResponseForSearchStatsMessageReceived['data']['Stats']['Set'][number]['Stats'][number]>>
-					>((acc, curr) => {
-						curr.forEach((_curr, i) => {
-							if (isUndefined(acc[i])) acc[i] = [];
-							acc[i].push(_curr);
-						});
-						return acc;
-					}, [])
-					.map(s =>
-						s
-							.map(_s => ({
-								module: _s.Name,
-								arguments: _s.Args,
-								duration: _s.Duration,
-								input: {
-									bytes: _s.InputBytes,
-									entries: _s.InputCount,
-								},
-								output: {
-									bytes: _s.OutputBytes,
-									entries: _s.OutputCount,
-								},
-							}))
-							.reduce((acc, curr) => ({
-								...curr,
-								duration: acc.duration + curr.duration,
-								input: {
-									bytes: acc.input.bytes + curr.input.bytes,
-									entries: acc.input.entries + curr.input.entries,
-								},
-								output: {
-									bytes: acc.output.bytes + curr.output.bytes,
-									entries: acc.output.entries + curr.output.entries,
-								},
-							})),
-					);
-
-				return {
-					id: rawDetails.data.SearchInfo.ID,
-					userID: toNumericID(rawDetails.data.SearchInfo.UID),
-
-					filter,
-					finished: rawStats.data.Finished && rawDetails.data.Finished,
-
-					query: searchAttachMsg.data.Info.UserQuery,
-					effectiveQuery: searchAttachMsg.data.Info.EffectiveQuery,
-
-					metadata: searchAttachMsg.data.Info.Metadata ?? {},
-					entries: rawStats.data.EntryCount,
-					duration: rawDetails.data.SearchInfo.Duration,
-					start: new Date(rawDetails.data.SearchInfo.StartRange),
-					end: new Date(rawDetails.data.SearchInfo.EndRange),
-					minZoomWindow: rawDetails.data.SearchInfo.MinZoomWindow,
-					downloadFormats: rawDetails.data.SearchInfo.RenderDownloadFormats,
-					tags: searchAttachMsg.data.Info.Tags,
-
-					storeSize: rawDetails.data.SearchInfo.StoreSize,
-					processed: {
-						entries: pipeline[0]?.input?.entries ?? 0,
-						bytes: pipeline[0]?.input?.bytes ?? 0,
-					},
-
-					pipeline,
-				};
+	const pipeline = rawStats.data.Stats.Set.map(s => s.Stats)
+		.reduce<Array<Array<RawResponseForSearchStatsMessageReceived['data']['Stats']['Set'][number]['Stats'][number]>>>(
+			(acc, curr) => {
+				curr.forEach((_curr, i) => {
+					if (isUndefined(acc[i])) acc[i] = [];
+					acc[i].push(_curr);
+				});
+				return acc;
 			},
-		),
-	);
+			[],
+		)
+		.map(s =>
+			s
+				.map(_s => ({
+					module: _s.Name,
+					arguments: _s.Args,
+					duration: _s.Duration,
+					input: {
+						bytes: _s.InputBytes,
+						entries: _s.InputCount,
+					},
+					output: {
+						bytes: _s.OutputBytes,
+						entries: _s.OutputCount,
+					},
+				}))
+				.reduce((acc, curr) => ({
+					...curr,
+					duration: acc.duration + curr.duration,
+					input: {
+						bytes: acc.input.bytes + curr.input.bytes,
+						entries: acc.input.entries + curr.input.entries,
+					},
+					output: {
+						bytes: acc.output.bytes + curr.output.bytes,
+						entries: acc.output.entries + curr.output.entries,
+					},
+				})),
+		);
+
+	return {
+		id: rawDetails.data.SearchInfo.ID,
+		userID: toNumericID(rawDetails.data.SearchInfo.UID),
+
+		filter,
+		finished: rawStats.data.Finished && rawDetails.data.Finished,
+
+		query: searchAttachMsg.data.Info.UserQuery,
+		effectiveQuery: searchAttachMsg.data.Info.EffectiveQuery,
+
+		metadata: searchAttachMsg.data.Info.Metadata ?? {},
+		entries: rawStats.data.EntryCount,
+		duration: rawDetails.data.SearchInfo.Duration,
+		start: new Date(rawDetails.data.SearchInfo.StartRange),
+		end: new Date(rawDetails.data.SearchInfo.EndRange),
+		minZoomWindow: rawDetails.data.SearchInfo.MinZoomWindow,
+		downloadFormats: rawDetails.data.SearchInfo.RenderDownloadFormats,
+		tags: searchAttachMsg.data.Info.Tags,
+
+		storeSize: rawDetails.data.SearchInfo.StoreSize,
+		processed: {
+			entries: pipeline[0]?.input?.entries ?? 0,
+			bytes: pipeline[0]?.input?.bytes ?? 0,
+		},
+
+		pipeline,
+	};
+};
 
 /**
  * Dynamically debounces after each message, then filters out finished events, and then sends the message in order.

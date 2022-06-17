@@ -12,7 +12,7 @@ import { catchError, concatMap, distinctUntilChanged, filter, map, shareReplay, 
 import {
 	createInitialSearchFilter,
 	extractZoomFromRawSearchStats,
-	mapToSearchStats,
+	makeToSearchStats,
 } from '~/functions/searches/helpers/attach-search';
 import { getRawRequestExplorerEntriesMsg, makeRequestEntries } from '~/functions/searches/helpers/request-entries';
 import {
@@ -230,7 +230,7 @@ export const makeAttachToOneExplorerSearch = (context: APIContext) => {
 			rawSearchStats$.pipe(distinctUntilChanged<RawResponseForSearchStatsMessageReceived>(isEqual)),
 			rawSearchDetails$.pipe(distinctUntilChanged<RawResponseForSearchDetailsMessageReceived>(isEqual)),
 		]).pipe(
-			mapToSearchStats({ filtersByID, searchAttachMsg }),
+			map(makeToSearchStats({ filtersByID, searchAttachMsg })),
 
 			distinctUntilChanged<SearchStats>(isEqual),
 
