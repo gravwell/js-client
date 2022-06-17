@@ -214,6 +214,9 @@ export const mapToSearchStats: (
 		),
 	);
 
+/**
+ * Dynamically debounces after each message, then filters out finished events, and then sends the message in order.
+ */
 export const debouncedPooling: <MessageReceived, MessageSent>(
 	props: Readonly<{
 		rawSubscription: APISubscription<MessageReceived, MessageSent>;
