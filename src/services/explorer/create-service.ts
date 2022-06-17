@@ -6,7 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { makeAttachToOneExplorerSearch, makeSubscribeToOneExplorerSearch } from '~/functions';
+import { makeAttachToOneExplorerSearch, makeSubscribeToOneExplorerSearch } from '~/functions/searches';
 import { makeExploreOneTag } from '~/functions/searches/explore-one-tag';
 import { APIContext } from '~/functions/utils';
 import { ExplorerService } from './service';
@@ -20,7 +20,7 @@ export const createExplorerService = (context: APIContext): ExplorerService => (
 		one: makeSubscribeToOneExplorerSearch(context),
 	},
 
-	attach: {
+	get: {
 		one: makeAttachToOneExplorerSearch(context),
 	},
 });

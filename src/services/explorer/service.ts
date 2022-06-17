@@ -7,7 +7,7 @@
  **************************************************************************/
 
 import { DataExplorerEntry, ExplorerSearchSubscription, SearchFilter } from '~/models/search';
-import { RawJSON } from '~/value-objects';
+import { ID, RawJSON } from '~/value-objects';
 
 export interface ExplorerService {
 	readonly explore: {
@@ -25,14 +25,10 @@ export interface ExplorerService {
 		) => Promise<ExplorerSearchSubscription>;
 	};
 
-	readonly attach: {
+	readonly get: {
 		readonly one: (
-			query: string,
-			options?: {
-				filter?: SearchFilter | undefined;
-				metadata?: RawJSON | undefined;
-				noHistory?: boolean;
-			},
+			searchID: ID,
+			options: { filter?: Omit<SearchFilter, 'elementFilters'> },
 		) => Promise<ExplorerSearchSubscription>;
 	};
 }
