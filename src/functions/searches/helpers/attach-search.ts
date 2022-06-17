@@ -8,18 +8,7 @@
 
 import { isAfter } from 'date-fns';
 import { isUndefined } from 'lodash';
-import {
-	catchError,
-	concatMap,
-	filter,
-	firstValueFrom,
-	map,
-	NEVER,
-	Observable,
-	of,
-	shareReplay,
-	skipUntil,
-} from 'rxjs';
+import { catchError, concatMap, filter, firstValueFrom, NEVER, Observable, of, shareReplay, skipUntil } from 'rxjs';
 import { DateRange } from '~/functions';
 import { APISubscription, debounceWithBackoffWhile } from '~/functions/utils';
 import { SearchFilter } from '~/main';
@@ -99,33 +88,31 @@ export const getPreviewDateRange: (props: {
 	};
 };
 
-export const extractZoomFromRawSearchStats: (
+export type MakeToStatsZoom = (
 	props: Readonly<{
 		filtersByID: Record<string, SearchFilter | undefined>;
 		initialFilter: RequiredSearchFilter;
 		previewDateRange: DateRange;
 	}>,
 ) => (
-	source: Observable<RawResponseForSearchStatsWithinRangeMessageReceived>,
-) => Observable<{
+	raw: RawResponseForSearchStatsWithinRangeMessageReceived,
+) => {
 	frequencyStats: Array<SearchFrequencyStats>;
 	filter: SearchFilter | undefined;
-}> = ({ filtersByID, initialFilter, previewDateRange }) => source =>
-	source.pipe(
-		map(set => {
-			const filterID = (set.data.Addendum?.filterID as string | undefined) ?? null;
-			const filter = filtersByID[filterID ?? ''] ?? undefined;
+};
+export const makeToStatsZoom: MakeToStatsZoom = ({ filtersByID, initialFilter, previewDateRange }) => set => {
+	const filterID = (set.data.Addendum?.filterID as string | undefined) ?? null;
+	const filter = filtersByID[filterID ?? ''] ?? undefined;
 
-			const filterEnd = filter?.dateRange === 'preview' ? previewDateRange.end : filter?.dateRange?.end;
-			const initialEnd = initialFilter.dateRange === 'preview' ? previewDateRange.end : initialFilter.dateRange.end;
-			const endDate = filterEnd ?? initialEnd;
+	const filterEnd = filter?.dateRange === 'preview' ? previewDateRange.end : filter?.dateRange?.end;
+	const initialEnd = initialFilter.dateRange === 'preview' ? previewDateRange.end : initialFilter.dateRange.end;
+	const endDate = filterEnd ?? initialEnd;
 
-			return {
-				frequencyStats: countEntriesFromModules(set).filter(f => !isAfter(f.timestamp, endDate)),
-				filter,
-			};
-		}),
-	);
+	return {
+		frequencyStats: countEntriesFromModules(set).filter(f => !isAfter(f.timestamp, endDate)),
+		filter,
+	};
+};
 
 export type MakeToSearchStats = (
 	props: Readonly<{

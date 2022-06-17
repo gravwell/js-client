@@ -11,8 +11,8 @@ import { BehaviorSubject, combineLatest, EMPTY, from, lastValueFrom, Observable,
 import { catchError, concatMap, distinctUntilChanged, filter, map, shareReplay, takeUntil, tap } from 'rxjs/operators';
 import {
 	createInitialSearchFilter,
-	extractZoomFromRawSearchStats,
 	makeToSearchStats,
+	makeToStatsZoom,
 } from '~/functions/searches/helpers/attach-search';
 import { getRawRequestExplorerEntriesMsg, makeRequestEntries } from '~/functions/searches/helpers/request-entries';
 import {
@@ -252,11 +252,13 @@ export const makeAttachToOneExplorerSearch = (context: APIContext) => {
 		);
 
 		const statsZoom$ = rawStatsZoom$.pipe(
-			extractZoomFromRawSearchStats({
-				filtersByID,
-				initialFilter,
-				previewDateRange,
-			}),
+			map(
+				makeToStatsZoom({
+					filtersByID,
+					initialFilter,
+					previewDateRange,
+				}),
+			),
 
 			shareReplay({ bufferSize: 1, refCount: true }),
 

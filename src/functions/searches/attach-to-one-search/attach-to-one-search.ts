@@ -12,7 +12,7 @@ import { catchError, concatMap, distinctUntilChanged, filter, map, shareReplay, 
 import { DateRange } from '~/functions';
 import {
 	createInitialSearchFilter,
-	extractZoomFromRawSearchStats,
+	makeToStatsZoom,
 	makeToSearchStats,
 } from '~/functions/searches/helpers/attach-search';
 import { getRawRequestEntriesMsg, makeRequestEntries } from '~/functions/searches/helpers/request-entries';
@@ -248,11 +248,11 @@ export const makeAttachToOneSearch = (context: APIContext) => {
 		);
 
 		const statsZoom$ = rawStatsZoom$.pipe(
-			extractZoomFromRawSearchStats({
+			map(makeToStatsZoom({
 				filtersByID,
 				initialFilter,
 				previewDateRange,
-			}),
+			})),
 
 			shareReplay({ bufferSize: 1, refCount: true }),
 
