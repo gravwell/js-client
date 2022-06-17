@@ -7,6 +7,7 @@
  **************************************************************************/
 
 export * from './attach-to-one-search';
+export * from './attach-to-one-explorer-search';
 export * from './background-one-search';
 export * from './delete-one-search';
 export * from './download-one-search';
