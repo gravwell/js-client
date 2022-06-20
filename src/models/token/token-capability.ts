@@ -59,4 +59,6 @@ export enum TokenCapability {
 	'SystemInfoRead' = 'SystemInfoRead',
 	'TokenRead' = 'TokenRead',
 	'TokenWrite' = 'TokenWrite',
+	'SecretRead' = 'SecretRead',
+	'SecretWrite' = 'SecretWrite',
 }
