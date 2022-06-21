@@ -6,6 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
+import { isString } from 'lodash';
 import { AutoExtractor, CreatableAutoExtractor, toRawCreatableAutoExtractor } from '~/models';
 import { RawNumericID, toNumericID } from '~/value-objects';
 import {
@@ -31,7 +32,11 @@ export const makeCreateOneAutoExtractor = (context: APIContext) => {
 			const req = buildHTTPRequestWithAuthFromContext(context, baseRequestOptions);
 
 			const raw = await context.fetch(url, { ...req, method: 'POST' });
-			const rawRes = await parseJSONResponse<RawNumericID>(raw);
+			const rawRes = await parseJSONResponse<RawNumericID | ErrorResponse>(raw);
+			if (isErrorResponse(rawRes)) {
+				throw Error(rawRes.Error);
+			}
+
 			const autoExtractorID = toNumericID(rawRes);
 
 			const allAutoExtractors = await getAllAutoExtractors();
@@ -42,4 +47,17 @@ export const makeCreateOneAutoExtractor = (context: APIContext) => {
 			throw Error('Unknown error');
 		}
 	};
+};
+
+interface ErrorResponse {
+	Error: string;
+}
+
+const isErrorResponse = (v: unknown): v is ErrorResponse => {
+	try {
+		const o = v as ErrorResponse;
+		return isString(o.Error);
+	} catch {
+		return false;
+	}
 };
