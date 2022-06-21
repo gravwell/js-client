@@ -16,18 +16,24 @@ import {
 } from '../utils';
 
 export const makeCreateOneLog = (context: APIContext) => {
+	const templatePath = '/api/logging/{lowerCaseRawLogLevel}';
+
 	return async (level: LogLevel, message: string): Promise<void> => {
-		const templatePath = '/api/logging/{lowerCaseRawLogLevel}';
-		const lowerCaseRawLogLevel = toRawLogLevel(level).toLowerCase();
-		const url = buildURL(templatePath, { ...context, protocol: 'http', pathParams: { lowerCaseRawLogLevel } });
+		try {
+			const lowerCaseRawLogLevel = toRawLogLevel(level).toLowerCase();
+			const url = buildURL(templatePath, { ...context, protocol: 'http', pathParams: { lowerCaseRawLogLevel } });
 
-		const baseRequestOptions: HTTPRequestOptions = {
-			body: JSON.stringify({ Body: message }),
-		};
-		const req = buildHTTPRequestWithAuthFromContext(context, baseRequestOptions);
+			const baseRequestOptions: HTTPRequestOptions = {
+				body: JSON.stringify({ Body: message }),
+			};
+			const req = buildHTTPRequestWithAuthFromContext(context, baseRequestOptions);
 
-		const raw = await context.fetch(url, { ...req, method: 'POST' });
-		const success = await parseJSONResponse<boolean>(raw);
-		if (!success) throw Error(`Couldn't create the log`);
+			const raw = await context.fetch(url, { ...req, method: 'POST' });
+			const success = await parseJSONResponse<boolean>(raw);
+			if (!success) throw Error(`Couldn't create the log`);
+		} catch (err) {
+			if (err instanceof Error) throw err;
+			throw Error('Unknown error');
+		}
 	};
 };

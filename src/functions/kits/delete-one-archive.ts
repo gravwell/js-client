@@ -6,17 +6,16 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL } from '../utils';
+import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, parseJSONResponse } from '../utils';
 
 export const makeDeleteOneKitArchive = (context: APIContext) => {
-	return async (archiveID: string): Promise<boolean> => {
-		const path = '/api/kits/build/history/' + archiveID;
-		const url = buildURL(path, { ...context, protocol: 'http' });
+	return async (archiveID: string): Promise<void> => {
+		const templatePath = '/api/kits/build/history/{archiveID}';
+		const url = buildURL(templatePath, { ...context, protocol: 'http', pathParams: { archiveID } });
 
 		const req = buildHTTPRequestWithAuthFromContext(context);
 
-		const respnse = await context.fetch(url, { ...req, method: 'DELETE' });
-		// The API response is empty so we just check on status
-		return respnse.status === 200;
+		const raw = await context.fetch(url, { ...req, method: 'DELETE' });
+		return parseJSONResponse(raw, { expect: 'void' });
 	};
 };
