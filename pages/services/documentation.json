@@ -5190,7 +5190,7 @@
 																		"typeArguments": [
 																			{
 																				"type": "intrinsic",
-																				"name": "boolean"
+																				"name": "void"
 																			}
 																		],
 																		"qualifiedName": "Promise",
