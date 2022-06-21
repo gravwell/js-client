@@ -9,6 +9,7 @@
 import { isBoolean, isDate, isNull, isString } from 'lodash';
 import { isNumericID, isUUID } from '~/value-objects';
 import { AutoExtractor, AutoExtractorModule } from './auto-extractor';
+import { AUTO_EXTRACTOR_MODULES } from './auto-extractor-modules';
 
 export const isAutoExtractor = (value: unknown): value is AutoExtractor => {
 	try {
@@ -33,12 +34,11 @@ export const isAutoExtractor = (value: unknown): value is AutoExtractor => {
 };
 
 const makeIsAutoExtractorModule = () => {
-	const extractorsModules = ['csv', 'fields', 'regex', 'slice', 'json'] as const;
+	const autoExtractorModulesSet = new Set(AUTO_EXTRACTOR_MODULES);
 
 	return (value: unknown): value is AutoExtractorModule => {
 		const m = <AutoExtractorModule>value;
-
-		return isString(m) && extractorsModules.includes(m);
+		return isString(m) && autoExtractorModulesSet.has(m);
 	};
 };
 export const isAutoExtractorModule = makeIsAutoExtractorModule();
