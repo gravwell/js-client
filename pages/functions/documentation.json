@@ -1113,7 +1113,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/auto-extractors/create-one-auto-extractor.ts",
-							"line": 20,
+							"line": 21,
 							"character": 13
 						}
 					],
@@ -1403,8 +1403,57 @@
 													{
 														"type": "array",
 														"elementType": {
-															"type": "reference",
-															"name": "RawAutoExtractorModule"
+															"type": "union",
+															"types": [
+																{
+																	"type": "literal",
+																	"value": "csv"
+																},
+																{
+																	"type": "literal",
+																	"value": "cef"
+																},
+																{
+																	"type": "literal",
+																	"value": "kv"
+																},
+																{
+																	"type": "literal",
+																	"value": "fields"
+																},
+																{
+																	"type": "literal",
+																	"value": "regex"
+																},
+																{
+																	"type": "literal",
+																	"value": "slice"
+																},
+																{
+																	"type": "literal",
+																	"value": "json"
+																},
+																{
+																	"type": "literal",
+																	"value": "winlog"
+																},
+																{
+																	"type": "literal",
+																	"value": "syslog"
+																},
+																{
+																	"type": "literal",
+																	"value": "netflow"
+																},
+																{
+																	"type": "literal",
+																	"value": "ipfix"
+																},
+																{
+																	"type": "literal",
+																	"value": "xml"
+																}
+															]
 														}
 													}
 												],
@@ -1652,7 +1701,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/auto-extractors/update-one-auto-extractor.ts",
-							"line": 25,
+							"line": 26,
 							"character": 13
 						}
 					],
