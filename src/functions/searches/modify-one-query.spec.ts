@@ -88,7 +88,7 @@ describe('modifyOneQuery()', () => {
 			expect(newQuery).withContext(`Expect new query to be different than initial one`).not.toBe(query);
 			expect(newQuery)
 				.withContext(`Expect new query to contain the applied filter`)
-				.toBe(`tag=${tag} json value.foo == "50" as "foo" | table`);
+				.toBe(`tag=${tag} json "value.foo" == "50" as "foo" | table`);
 		}),
 	);
 
@@ -112,7 +112,7 @@ describe('modifyOneQuery()', () => {
 			};
 			await expectAsync(modifyOneQuery(query, [filter]))
 				.withContext(`Expect invalid filter to cause an error`)
-				.toBeRejectedWithError(Error, 'netflow (module idx 0) error: Malformed IPv4 Address');
+				.toBeRejectedWithError(Error, 'netflow (module idx 0) error: Malformed IPv6 Address');
 		}),
 	);
 });

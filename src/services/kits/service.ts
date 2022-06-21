@@ -55,7 +55,7 @@ export interface KitsService {
 			readonly all: () => Promise<Array<KitArchive>>;
 		};
 		readonly delete: {
-			readonly one: (archiveID: string) => Promise<boolean>;
+			readonly one: (archiveID: string) => Promise<void>;
 		};
 	};
 }

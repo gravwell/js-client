@@ -6,8 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { CreatableTemplate, Template, toRawCreatableTemplate } from '~/models';
-import { UUID } from '~/value-objects';
+import { CreatableTemplate, RawTemplate, Template, toRawCreatableTemplate, toTemplate } from '~/models';
 import {
 	APIContext,
 	buildHTTPRequestWithAuthFromContext,
@@ -15,11 +14,8 @@ import {
 	HTTPRequestOptions,
 	parseJSONResponse,
 } from '../utils';
-import { makeGetOneTemplate } from './get-one-template';
 
 export const makeCreateOneTemplate = (context: APIContext) => {
-	const getOneTemplate = makeGetOneTemplate(context);
-
 	const templatePath = '/api/templates';
 	const url = buildURL(templatePath, { ...context, protocol: 'http' });
 
@@ -31,10 +27,9 @@ export const makeCreateOneTemplate = (context: APIContext) => {
 			const req = buildHTTPRequestWithAuthFromContext(context, baseRequestOptions);
 
 			const raw = await context.fetch(url, { ...req, method: 'POST' });
-			const rawID = await parseJSONResponse<UUID>(raw);
+			const rawRes = await parseJSONResponse<RawTemplate>(raw);
 
-			const templateID = rawID.toString();
-			return await getOneTemplate(templateID);
+			return toTemplate(rawRes);
 		} catch (err) {
 			if (err instanceof Error) throw err;
 			throw Error('Unknown error');

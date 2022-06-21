@@ -239,7 +239,7 @@ describe('subscribeToOneExplorerSearch()', () => {
 		const elementFilters: Array<ElementFilter> = [
 			{ path: 'value.foo', operation: '!=', value: '50', tag, module: 'json', arguments: null },
 		];
-		const query = `tag=${tag} json value.foo != "50" as "foo" | raw`;
+		const query = `tag=${tag} json "value.foo" != "50" as "foo" | raw`;
 		const countAfterFilter = count - 1;
 
 		const filter: SearchFilter = {
