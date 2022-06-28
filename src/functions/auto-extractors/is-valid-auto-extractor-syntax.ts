@@ -16,7 +16,7 @@ import {
 } from '../utils';
 
 export const makeIsValidAutoExtractorSyntax = (context: APIContext) => {
-	const templatePath = '/api/autoextractors';
+	const templatePath = '/api/autoextractors/test';
 	const url = buildURL(templatePath, { ...context, protocol: 'http' });
 
 	return async (data: CreatableAutoExtractor): Promise<IsValidAutoExtractorSyntaxResponse> => {

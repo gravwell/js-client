@@ -20,6 +20,7 @@ describe('updateOneAutoExtractor()', () => {
 	const getAllAutoExtractors = makeGetAllAutoExtractors(TEST_BASE_API_CONTEXT);
 
 	let createdAutoExtractor: AutoExtractor;
+	let createdAutoExtractor2: AutoExtractor;
 
 	beforeEach(async () => {
 		jasmine.addMatchers(myCustomMatchers);
@@ -40,6 +41,17 @@ describe('updateOneAutoExtractor()', () => {
 			parameters: 'a b c',
 		};
 		createdAutoExtractor = await createOneAutoExtractor(data);
+
+		// Create one more
+		const data2: CreatableAutoExtractor = {
+			name: 'AE2 name',
+			description: 'AE2 description',
+
+			tag: 'gravwell',
+			module: 'json',
+			parameters: 'a b c',
+		};
+		createdAutoExtractor2 = await createOneAutoExtractor(data2);
 	});
 
 	const updateTests: Array<Omit<UpdatableAutoExtractor, 'id'>> = [
@@ -81,4 +93,23 @@ describe('updateOneAutoExtractor()', () => {
 			}),
 		);
 	});
+
+	// Waiting on the backend because, right now, it accepts invalid data without throwing
+	xit(
+		'Should return a syntax error if attempt to update the auto extractor with an invalid syntax',
+		integrationTest(async () => {
+			expect(isAutoExtractor(createdAutoExtractor)).toBeTrue();
+			expect(isAutoExtractor(createdAutoExtractor2)).toBeTrue();
+			expect(createdAutoExtractor.tag).not.toBe(createdAutoExtractor2.tag);
+
+			const invalidData: UpdatableAutoExtractor = {
+				id: createdAutoExtractor.id,
+				tag: createdAutoExtractor2.tag,
+			};
+			await expectAsync(updateOneAutoExtractor(invalidData)).toBeRejectedWithError(
+				Error,
+				'Parse error for extractor on tag netflow: Unknown IPFix specifier',
+			);
+		}),
+	);
 });
