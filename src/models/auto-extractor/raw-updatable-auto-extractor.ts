@@ -12,6 +12,7 @@ import { RawAutoExtractorModule } from './raw-auto-extractor';
 export interface RawUpdatableAutoExtractor {
 	UUID: RawUUID;
 	GIDs: Array<RawNumericID>;
+	UID: RawNumericID;
 
 	Name: string;
 	Desc: string;
