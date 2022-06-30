@@ -18,6 +18,7 @@ export interface Dashboard {
 
 	userID: NumericID;
 	groupIDs: Array<NumericID>;
+	isGlobal: boolean;
 
 	name: string;
 	description: string | null;

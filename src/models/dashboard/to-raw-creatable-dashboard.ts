@@ -17,6 +17,7 @@ import { toRawCreatableDashboardTile } from './to-raw-creatable-dashboard-tile';
 
 export const toRawCreatableDashboard = (creatable: CreatableDashboard): RawCreatableDashboard => ({
 	GIDs: creatable.groupIDs?.map(toRawNumericID) ?? [],
+	Global: creatable.isGlobal ?? false,
 
 	Name: creatable.name.trim(),
 	Description: creatable.description?.trim() ?? null,
