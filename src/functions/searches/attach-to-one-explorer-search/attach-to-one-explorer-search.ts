@@ -9,14 +9,15 @@
 import { isBoolean, isEqual, isNull, uniqueId } from 'lodash';
 import { BehaviorSubject, combineLatest, EMPTY, from, lastValueFrom, Observable, Subject, Subscription } from 'rxjs';
 import { catchError, concatMap, distinctUntilChanged, filter, map, shareReplay, takeUntil, tap } from 'rxjs/operators';
-import { DateRange } from '~/functions';
 import {
 	createInitialSearchFilter,
 	makeToSearchStats,
 	makeToStatsZoom,
 } from '~/functions/searches/helpers/attach-search';
-import { getRawRequestEntriesMsg, makeRequestEntries } from '~/functions/searches/helpers/request-entries';
+import { getRawRequestExplorerEntriesMsg, makeRequestEntries } from '~/functions/searches/helpers/request-entries';
 import {
+	ExplorerSearchEntries,
+	ExplorerSearchSubscription,
 	RawRequestSearchCloseMessageSent,
 	RawResponseForSearchDetailsMessageReceived,
 	RawResponseForSearchStatsMessageReceived,
@@ -24,14 +25,14 @@ import {
 	SearchFilter,
 	SearchMessageCommands,
 	SearchStats,
-	SearchSubscription,
 	toSearchEntries,
 } from '~/models';
+import { toDataExplorerEntry } from '~/models/search/to-data-explorer-entry';
 import { ID, Percentage } from '~/value-objects';
 import { APIContext } from '../../utils';
 import { attachSearch } from '../attach-search';
 import { emitError, getPreviewDateRange } from '../helpers/attach-search';
-import { createRequiredSearchFilterObservable } from '../helpers/create-required-search-filter-observable';
+import { createRequiredSearchFilterObservable, DateRange } from '../helpers/create-required-search-filter-observable';
 import { makeSubscribeToOneRawSearch } from '../subscribe-to-one-raw-search';
 import {
 	countEntriesFromModules,
@@ -40,7 +41,7 @@ import {
 	SEARCH_FILTER_PREFIX,
 } from '../subscribe-to-one-search/helpers';
 
-export const makeAttachToOneSearch = (context: APIContext) => {
+export const makeAttachToOneExplorerSearch = (context: APIContext) => {
 	const subscribeToOneRawSearch = makeSubscribeToOneRawSearch(context);
 	let rawSubscriptionP: ReturnType<typeof subscribeToOneRawSearch> | null = null;
 	let closedSub: Subscription | null = null;
@@ -48,7 +49,7 @@ export const makeAttachToOneSearch = (context: APIContext) => {
 	return async (
 		searchID: ID,
 		options: { filter?: Omit<SearchFilter, 'elementFilters'> } = {},
-	): Promise<SearchSubscription> => {
+	): Promise<ExplorerSearchSubscription> => {
 		if (isNull(rawSubscriptionP)) {
 			rawSubscriptionP = subscribeToOneRawSearch();
 			if (closedSub?.closed === false) {
@@ -80,7 +81,6 @@ export const makeAttachToOneSearch = (context: APIContext) => {
 		const close$ = new Subject<void>();
 
 		const initialFilter = createInitialSearchFilter({ defaultStart, defaultEnd }, options);
-
 		const initialFilterID = uniqueId(SEARCH_FILTER_PREFIX);
 
 		const filtersByID: Record<string, SearchFilter | undefined> = {};
@@ -142,14 +142,17 @@ export const makeAttachToOneSearch = (context: APIContext) => {
 			takeUntil(close$),
 		);
 
-		const entries$: Observable<SearchEntries> = searchMessages$.pipe(
-			filter(filterMessageByCommand(SearchMessageCommands.RequestEntriesWithinRange)),
+		const entries$: Observable<ExplorerSearchEntries> = searchMessages$.pipe(
+			filter(filterMessageByCommand(SearchMessageCommands.RequestExplorerEntriesWithinRange)),
 			map(
-				(msg): SearchEntries => {
+				(msg): ExplorerSearchEntries => {
 					const base = toSearchEntries(rendererType, msg);
 					const filterID = (msg.data.Addendum?.filterID as string | undefined) ?? null;
 					const filter = filtersByID[filterID ?? ''] ?? undefined;
-					return { ...base, filter } as SearchEntries;
+					const searchEntries = { ...base, filter } as SearchEntries;
+					const explorerEntries = (msg.data.Explore ?? []).map(toDataExplorerEntry);
+
+					return { ...searchEntries, explorerEntries };
 				},
 			),
 			tap(entries => {
@@ -214,7 +217,7 @@ export const makeAttachToOneSearch = (context: APIContext) => {
 			rawSubscription,
 			searchMessages$,
 			searchTypeID,
-			getRawRequestEntriesMsg,
+			getRawRequestEntriesMsg: getRawRequestExplorerEntriesMsg,
 			isClosed: () => closed,
 		});
 
@@ -228,6 +231,7 @@ export const makeAttachToOneSearch = (context: APIContext) => {
 			rawSearchDetails$.pipe(distinctUntilChanged<RawResponseForSearchDetailsMessageReceived>(isEqual)),
 		]).pipe(
 			map(makeToSearchStats({ filtersByID, searchAttachMsg })),
+
 			distinctUntilChanged<SearchStats>(isEqual),
 
 			shareReplay({ bufferSize: 1, refCount: false }),
