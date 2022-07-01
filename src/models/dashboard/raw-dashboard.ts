@@ -17,6 +17,7 @@ export interface RawDashboard {
 
 	UID: RawNumericID;
 	GIDs: Array<RawNumericID> | null;
+	Global: boolean;
 
 	Name: string;
 	Description: string; // empty string is null

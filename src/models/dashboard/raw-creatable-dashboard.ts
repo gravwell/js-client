@@ -15,6 +15,7 @@ export type RawCreatableDashboardTile = RawCreatableDashboard['Data']['tiles'][n
 
 export interface RawCreatableDashboard {
 	GIDs: Array<RawNumericID>;
+	Global: boolean;
 
 	Name: string;
 	Description: string | null;

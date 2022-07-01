@@ -16,6 +16,7 @@ import { DashboardTile } from './dashboard-tile';
 export interface UpdatableDashboard {
 	id: NumericID;
 	groupIDs?: Array<NumericID>;
+	isGlobal?: boolean;
 
 	name?: string;
 	description?: string | null;
