@@ -12,6 +12,7 @@ export interface UpdatableScheduledTaskBase {
 	id: NumericID;
 
 	groupIDs?: Array<NumericID>;
+	isGlobal?: boolean;
 
 	name?: string;
 	description?: string;

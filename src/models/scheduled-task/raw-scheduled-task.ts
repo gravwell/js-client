@@ -14,6 +14,7 @@ export interface RawScheduledTask {
 
 	Owner: RawNumericID;
 	Groups: Array<RawNumericID> | null;
+	Global: boolean;
 
 	Name: string;
 	Description: string;
