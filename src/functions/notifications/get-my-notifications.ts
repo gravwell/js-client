@@ -5,10 +5,10 @@
  * This software may be modified and distributed under the terms of the
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
-
 import {
 	BaseTargetedNotification,
 	BroadcastedNotification,
+	DATA_TYPE,
 	Notification,
 	RawBroadcastedNotification,
 	RawNotification,
@@ -36,8 +36,11 @@ export const makeGetMyNotifications = (context: APIContext) => {
 	};
 };
 
-const toNotification = (raw: RawNotification, id: string): Notification =>
-	raw.Broadcast ? toBroadcastedNotification(raw, id) : toTargetedNotification(raw, id);
+const toNotification = (raw: RawNotification, id: string): Notification => {
+	const notification = raw.Broadcast ? toBroadcastedNotification(raw, id) : toTargetedNotification(raw, id);
+
+	return { ...notification, _type: DATA_TYPE.NOTIFICATION };
+};
 
 const toTargetedNotification = (raw: RawTargetedNotification, id: string): TargetedNotification => {
 	const base: BaseTargetedNotification = omitUndefinedShallow({

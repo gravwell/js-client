@@ -33,7 +33,13 @@ describe('getOneDashboard()', () => {
 			name: 'TEST',
 			searches: [],
 			tiles: [],
-			timeframe: { durationString: 'PT1H', end: null, start: null, timeframe: 'PT1H', timezone: null },
+			timeframe: {
+				durationString: 'PT1H',
+				end: null,
+				start: null,
+				timeframe: 'PT1H',
+				timezone: null,
+			},
 		};
 		createdDashboard = await createOneDashboard(data);
 	});

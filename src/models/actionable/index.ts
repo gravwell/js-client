@@ -19,3 +19,6 @@ export * from './to-raw-actionable';
 export * from './to-raw-creatable-actionable';
 export * from './to-raw-updatable-actionable';
 export * from './updatable-actionable';
+export * from './from-actionable-data-to-actionable';
+export * from './actionable-data';
+export * from './is-actionable-data';

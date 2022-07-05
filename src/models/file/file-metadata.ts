@@ -6,26 +6,9 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { NumericID, UUID } from '~/value-objects';
+import { DATA_TYPE } from '~/models';
+import { FileMetadataData } from './file-metadata-data';
 
-export interface FileMetadata {
-	id: UUID;
-	globalID: UUID;
-
-	userID: NumericID;
-	groupIDs: Array<NumericID>;
-	isGlobal: boolean;
-
-	name: string;
-	description: string | null;
-	labels: Array<string>;
-
-	lastUpdateDate: Date;
-
-	/**
-	 * Root URL to download the resource from the current host.
-	 */
-	downloadURL: string;
-	size: number;
-	contentType: string;
+export interface FileMetadata extends FileMetadataData {
+	_tag: DATA_TYPE.FILE_METADATA;
 }

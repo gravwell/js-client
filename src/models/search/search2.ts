@@ -6,15 +6,9 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { NumericID } from '~/value-objects';
+import { DATA_TYPE } from '../data-type';
+import { PersistentSearchData } from './persistent-search-data';
 
-export interface Search2 {
-	id: NumericID;
-	userID: NumericID;
-	groupID?: NumericID;
-	states: Array<'active' | 'dormant' | 'backgrounded' | 'saved' | 'attached' | 'saving'>;
-	attachedClients: number;
-	storedData: number;
+export interface Search2 extends PersistentSearchData {
+	_tag: DATA_TYPE.PERSISTENT_SEARCH;
 }
-
-export type Search2State = Search2['states'][number];

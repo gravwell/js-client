@@ -37,3 +37,4 @@ export * from './user-preferences';
 export * from './user-sessions';
 export * from './version';
 export * from './token';
+export * from './data-type';

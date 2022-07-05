@@ -6,11 +6,13 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
+import { DATA_TYPE } from '~/models';
 import { toNumericID } from '~/value-objects';
 import { FileMetadata } from './file-metadata';
 import { RawFileMetadata } from './raw-file-metadata';
 
 export const toFileMetadata = (raw: RawFileMetadata): FileMetadata => ({
+	_tag: DATA_TYPE.FILE_METADATA,
 	id: raw.ThingUUID,
 	globalID: raw.GUID,
 

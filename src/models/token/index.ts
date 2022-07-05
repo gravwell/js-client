@@ -22,3 +22,6 @@ export * from './token';
 export * from './token-capability';
 export * from './token-with-secret';
 export * from './updatable-token';
+export * from './from-token-data-to-token';
+export * from './token-data';
+export * from './is-token-data';

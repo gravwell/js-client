@@ -6,26 +6,15 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { isBoolean, isDate, isNull, isString, isUndefined } from 'lodash';
-import { isNumericID, isUUID } from '~/value-objects';
+import { isBoolean, isNull, isString, isUndefined } from 'lodash';
+import { DATA_TYPE } from '~/models';
+import { isTemplateData } from './is-template-data';
 import { Template, TemplateVariable } from './template';
 
-export const isTemplate = (value: any): value is Template => {
+export const isTemplate = (value: unknown): value is Template => {
 	try {
 		const t = <Template>value;
-		return (
-			isUUID(t.globalID) &&
-			isUUID(t.id) &&
-			isNumericID(t.userID) &&
-			t.groupIDs.every(isNumericID) &&
-			isString(t.name) &&
-			(isString(t.description) || isNull(t.description)) &&
-			t.labels.every(isString) &&
-			isBoolean(t.isGlobal) &&
-			isDate(t.lastUpdateDate) &&
-			isString(t.query) &&
-			t.variables.every(isTemplateVariable)
-		);
+		return t._tag === DATA_TYPE.TEMPLATE && isTemplateData(t);
 	} catch {
 		return false;
 	}

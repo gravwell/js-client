@@ -6,29 +6,17 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { isBoolean, isDate, isInteger, isNull, isString } from 'lodash';
-import { isNumericID, isRegex, isUUID } from '~/value-objects';
+import { isBoolean, isInteger, isNull, isString } from 'lodash';
+import { DATA_TYPE } from '~/models';
+import { isRegex, isUUID } from '~/value-objects';
 import { Actionable, ActionableAction, ActionableTimeVariable, ActionableTrigger } from './actionable';
 import { ActionableCommand } from './actionable-command';
+import { isActionableData } from './is-actionable-data';
 
-export const isActionable = (value: any): value is Actionable => {
+export const isActionable = (value: unknown): value is Actionable => {
 	try {
 		const a = <Actionable>value;
-		return (
-			isUUID(a.globalID) &&
-			isUUID(a.id) &&
-			isNumericID(a.userID) &&
-			a.groupIDs.every(isNumericID) &&
-			isString(a.name) &&
-			(isString(a.description) || isNull(a.description)) &&
-			(isString(a.menuLabel) || isNull(a.menuLabel)) &&
-			a.labels.every(isString) &&
-			isBoolean(a.isGlobal) &&
-			isBoolean(a.isDisabled) &&
-			isDate(a.lastUpdateDate) &&
-			a.triggers.every(isActionableTrigger) &&
-			a.actions.every(isActionableAction)
-		);
+		return a._tag === DATA_TYPE.ACTIONABLE && isActionableData(a);
 	} catch {
 		return false;
 	}

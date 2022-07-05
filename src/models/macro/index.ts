@@ -16,3 +16,6 @@ export * from './to-macro';
 export * from './to-raw-creatable-macro';
 export * from './to-raw-updatable-macro';
 export * from './updatable-macro';
+export * from './from-macro-data-to-macro';
+export * from './macro-data';
+export * from './is-macro-data';

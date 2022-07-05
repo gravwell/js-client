@@ -6,35 +6,14 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { isBoolean, isDate, isNumber, isString } from 'lodash';
-import { isUUID } from '~/value-objects';
-import { isVersion } from '../version';
-import { isKitAsset } from './kit-asset';
-import { isKitDependency } from './kit-dependency';
-import { isKitItem } from './kit-item';
+import { DATA_TYPE } from '~/models';
+import { isRemoteKitData } from './is-remote-kit-data';
 import { RemoteKit } from './remote-kit';
 
 export const isRemoteKit = (v: any): v is RemoteKit => {
 	try {
 		const k = <RemoteKit>v;
-		return (
-			isUUID(k.customID) &&
-			isUUID(k.globalID) &&
-			isString(k.name) &&
-			isString(k.description) &&
-			k.labels.every(isString) &&
-			isDate(k.creationDate) &&
-			isVersion(k.version) &&
-			isVersion(k.gravwellCompatibility.min) &&
-			isVersion(k.gravwellCompatibility.max) &&
-			isNumber(k.size) &&
-			k.ingesters.every(isString) &&
-			isBoolean(k.isSigned) &&
-			isBoolean(k.requiresAdminPrivilege) &&
-			k.assets.every(isKitAsset) &&
-			k.dependencies.every(isKitDependency) &&
-			k.items.every(isKitItem)
-		);
+		return k._tag === DATA_TYPE.REMOTE_KIT && isRemoteKitData(k);
 	} catch {
 		return false;
 	}

@@ -6,24 +6,14 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { isArray, isDate, isNull, isString } from 'lodash';
-import { isID, isUUID } from '~/value-objects';
-import { isTokenCapability } from './is-token-capability';
+import { DATA_TYPE } from '~/models';
+import { isTokenData } from './is-token-data';
 import { Token } from './token';
 
 export const isToken = (value: unknown): value is Token => {
 	try {
 		const t = <Token>value;
-		return (
-			isUUID(t.id) &&
-			isID(t.userID) &&
-			isString(t.name) &&
-			(isString(t.description) || isNull(t.description)) &&
-			isDate(t.createdAt) &&
-			isArray(t.capabilities) &&
-			t.capabilities.every(isTokenCapability) &&
-			(isDate(t.expiresAt) || isNull(t.expiresAt))
-		);
+		return t._tag === DATA_TYPE.TOKEN && isTokenData(t);
 	} catch {
 		return false;
 	}

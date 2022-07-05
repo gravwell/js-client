@@ -6,10 +6,12 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
+import { DATA_TYPE } from '~/models';
 import { RawTemplate } from './raw-template';
 import { Template } from './template';
 
 export const toTemplate = (raw: RawTemplate): Template => ({
+	_tag: DATA_TYPE.TEMPLATE,
 	globalID: raw.GUID,
 	id: raw.ThingUUID,
 	userID: raw.UID.toString(),

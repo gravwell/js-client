@@ -20,3 +20,6 @@ export * from './to-raw-updatable-auto-extractor';
 export * from './updatable-auto-extractor';
 export * from './uploadable-auto-extractor';
 export * from './generated-auto-extractors';
+export * from './from-auto-extractor-data-to-auto-extractor';
+export * from './auto-extractor-data';
+export * from './is-auto-extractor-data';
