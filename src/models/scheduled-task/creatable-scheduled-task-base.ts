@@ -10,6 +10,7 @@ import { NumericID } from '~/value-objects';
 
 export interface CreatableScheduledTaskBase {
 	groupIDs?: Array<NumericID>;
+	isGlobal?: boolean;
 
 	name: string;
 	description: string;

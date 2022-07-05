@@ -24,6 +24,7 @@ export const toRawUpdatableScheduledTask = (
 ): RawUpdatableScheduledTask => {
 	const base = {
 		Groups: (updatable.groupIDs ?? current.groupIDs).map(toRawNumericID),
+		Global: updatable.isGlobal ?? current.isGlobal,
 
 		Name: updatable.name ?? current.name,
 		Description: updatable.description ?? current.description,
