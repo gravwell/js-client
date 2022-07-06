@@ -6,11 +6,13 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
+import { DATA_TYPE } from '~/models';
 import { toNumericID } from '~/value-objects';
 import { Macro } from './macro';
 import { RawMacro } from './raw-macro';
 
 export const toMacro = (raw: RawMacro): Macro => ({
+	_tag: DATA_TYPE.MACRO,
 	id: toNumericID(raw.ID),
 	userID: toNumericID(raw.UID),
 	groupIDs: raw.GIDs?.map(toNumericID) ?? [],

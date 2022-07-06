@@ -6,41 +6,11 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { NumericID, UUID } from '~/value-objects';
-import { Version } from './../version';
-import { ConfigMacro } from './config-macro';
+import { DATA_TYPE } from '~/models';
+import { KitArchiveData } from './kit-archive-data';
 
-export interface KitArchive {
-	id: NumericID;
-	userID: NumericID;
-	buildDate: Date | null;
-	name: string;
-	description: string;
-	version: number;
-	minVersion: Version;
-	maxVersion: Version;
-	readme: string;
-	scriptDeployRules: Record<string, DeployRules>;
-	// Images
-	icon: UUID;
-	cover: UUID;
-	banner: UUID;
-	// embedded items
-	embeddedItems: Array<{ content: string; name: string; type: 'license' }>;
-	// Contents
-	actionables?: Array<UUID>;
-	dashboards?: Array<number>;
-	extractors?: Array<UUID>;
-	files?: Array<UUID>;
-	macros?: Array<number>;
-	playbooks?: Array<UUID>;
-	savedQueries?: Array<UUID>;
-	resources?: Array<UUID>;
-	scheduledSearches?: Array<UUID>;
-	scripts?: Array<UUID>;
-	templates?: Array<UUID>;
-	// config macros
-	configMacros?: Array<ConfigMacro>;
+export interface KitArchive extends KitArchiveData {
+	_tag: DATA_TYPE.KIT_ARCHIVE;
 }
 
 export interface DeployRules {

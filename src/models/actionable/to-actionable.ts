@@ -7,6 +7,7 @@
  **************************************************************************/
 
 import { isString } from 'lodash';
+import { DATA_TYPE } from '~/models';
 import { toRegex } from '~/value-objects';
 import { Actionable, ActionableAction, ActionableTimeVariable, ActionableTrigger } from './actionable';
 import { ActionableCommand } from './actionable-command';
@@ -14,6 +15,7 @@ import { RawActionable, RawActionableAction, RawActionableTimeVariable, RawActio
 import { RawActionableCommand } from './raw-actionable-command';
 
 export const toActionable = (raw: RawActionable): Actionable => ({
+	_tag: DATA_TYPE.ACTIONABLE,
 	globalID: raw.GUID,
 	id: raw.ThingUUID,
 

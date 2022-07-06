@@ -6,13 +6,15 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
+import { DATA_TYPE } from '~/models';
 import { FileMetadata } from './file-metadata';
+import { isFileMetadataData } from './is-file-metadata-data';
 
-export const isFileMetadata = (value: any): value is FileMetadata => {
+export const isFileMetadata = (value: unknown): value is FileMetadata => {
 	try {
 		// TODO
 		const f = <FileMetadata>value;
-		return !!f;
+		return f._tag === DATA_TYPE.FILE_METADATA && isFileMetadataData(f);
 	} catch {
 		return false;
 	}

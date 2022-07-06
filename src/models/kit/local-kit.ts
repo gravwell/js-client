@@ -6,34 +6,9 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { NumericID, UUID } from '~/value-objects';
-import { Version } from '../version';
-import { ConfigMacro } from './config-macro';
-import { KitItem } from './kit-item';
+import { DATA_TYPE } from '~/main';
+import { LocalKitData } from './local-kit-data';
 
-export interface LocalKit {
-	customID: UUID;
-	globalID: UUID;
-
-	userID: NumericID;
-	groupIDs: Array<NumericID>;
-
-	name: string;
-	description: string;
-	labels: Array<string>;
-
-	installationDate: Date;
-
-	version: Version;
-	gravwellCompatibility: {
-		min: Version;
-		max: Version;
-	};
-
-	status: 'installed' | 'uploaded';
-	isSigned: boolean;
-	requiresAdminPrivilege: boolean;
-
-	items: Array<KitItem>;
-	configMacros: Array<ConfigMacro>;
+export interface LocalKit extends LocalKitData {
+	_tag: DATA_TYPE.LOCAL_KIT;
 }

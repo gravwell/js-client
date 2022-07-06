@@ -7,6 +7,7 @@
  **************************************************************************/
 
 import { isNil, isNumber, isString, isUndefined } from 'lodash';
+import { DATA_TYPE } from '~/models';
 import { toNumericID } from '~/value-objects';
 import { RawTimeframe, toTimeframe } from '../timeframe';
 import { toVersion } from '../version';
@@ -17,6 +18,8 @@ import { RawDashboard } from './raw-dashboard';
 const DASHBOARD_DEFAULT_VERSION = '2.0.0';
 
 export const toDashboard = (raw: RawDashboard): Dashboard => ({
+	_tag: DATA_TYPE.DASHBOARD,
+
 	id: toNumericID(raw.ID),
 	globalID: raw.GUID ?? null,
 

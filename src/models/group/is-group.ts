@@ -6,14 +6,14 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { isNull, isString } from 'lodash';
-import { isNumericID } from '~/value-objects';
+import { DATA_TYPE } from '~/models';
 import { Group } from './group';
+import { isGroupData } from './is-group-data';
 
-export const isGroup = (value: any): value is Group => {
+export const isGroup = (value: unknown): value is Group => {
 	try {
 		const g = <Group>value;
-		return isNumericID(g.id) && isString(g.name) && (isString(g.description) || isNull(g.description));
+		return g._tag === DATA_TYPE.GROUP && isGroupData(value);
 	} catch {
 		return false;
 	}

@@ -6,11 +6,9 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { ScheduledTaskBase } from './scheduled-task-base';
+import { DATA_TYPE } from '~/models';
+import { ScheduledScriptData } from './scheduled-script-data';
 
-export interface ScheduledScript extends ScheduledTaskBase {
-	type: 'script';
-	script: string;
-	isDebugging: boolean;
-	debugOutput: string | null;
+export interface ScheduledScript extends ScheduledScriptData {
+	_tag: DATA_TYPE.SCHEDULED_SCRIPT;
 }

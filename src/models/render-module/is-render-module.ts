@@ -6,13 +6,14 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { isString } from 'lodash';
+import { DATA_TYPE } from '~/models';
+import { isRenderModuleData } from './is-render-module-data';
 import { RenderModule } from './render-module';
 
-export const isRenderModule = (value: any): value is RenderModule => {
+export const isRenderModule = (value: unknown): value is RenderModule => {
 	try {
 		const m = <RenderModule>value;
-		return isString(m.name) && isString(m.description) && m.examples.every(isString);
+		return m._tag === DATA_TYPE.RENDER_MODULE && isRenderModuleData(m);
 	} catch {
 		return false;
 	}

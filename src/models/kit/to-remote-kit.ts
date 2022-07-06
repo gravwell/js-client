@@ -6,6 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
+import { DATA_TYPE } from '~/models';
 import { toVersion } from '../version';
 import { KitAsset } from './kit-asset';
 import { RawRemoteKit } from './raw-remote-kit';
@@ -13,6 +14,7 @@ import { RemoteKit } from './remote-kit';
 import { toKitItem } from './to-kit-item';
 
 export const toRemoteKit = (raw: RawRemoteKit): RemoteKit => ({
+	_tag: DATA_TYPE.REMOTE_KIT,
 	customID: raw.ID,
 	globalID: raw.UUID,
 

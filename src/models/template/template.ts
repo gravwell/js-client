@@ -6,20 +6,11 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { NumericID, UUID } from '~/value-objects';
+import { DATA_TYPE } from '../data-type';
+import { TemplateData } from './template-data';
 
-export interface Template {
-	globalID: UUID;
-	id: UUID;
-	userID: NumericID;
-	groupIDs: Array<NumericID>;
-	name: string;
-	description: string | null;
-	labels: Array<string>;
-	isGlobal: boolean;
-	lastUpdateDate: Date;
-	query: string;
-	variables: Array<TemplateVariable>;
+export interface Template extends TemplateData {
+	_tag: DATA_TYPE.TEMPLATE;
 }
 
 export type TemplateVariable = {

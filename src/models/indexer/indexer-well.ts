@@ -12,12 +12,12 @@ import { isReplicatedState, ReplicatedState } from './replicated-state';
 import { isWell, Well } from './well';
 
 /** An indexer's well. */
-export type IndexerWell = {
+export interface IndexerWell {
 	name: string;
 	uuid: string;
 	wells: Array<Well>;
 	replicated?: Record<string, Array<ReplicatedState>>;
-};
+}
 
 export const isIndexerWell = (value: unknown): value is IndexerWell => {
 	try {
