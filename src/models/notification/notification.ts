@@ -10,5 +10,5 @@ import { DATA_TYPE } from '~/models';
 import { NotificationData } from './notification-data';
 
 export type Notification = NotificationData & {
-	_type: DATA_TYPE.NOTIFICATION;
+	_tag: DATA_TYPE.NOTIFICATION;
 };
