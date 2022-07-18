@@ -6,14 +6,26 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { ElementFilter } from './element-filter';
-import { RawElementFilter } from './raw-element-filter';
+import { ElementFilter, ExtractionFilter, OperationFilter } from './element-filter';
+import { isRawOperationFilter, RawElementFilter } from './raw-element-filter';
 
-export const toElementFilter = (raw: RawElementFilter): ElementFilter => ({
-	tag: raw.Tag,
-	module: raw.Module,
-	path: raw.Path,
-	arguments: raw.Args ?? null,
-	operation: raw.Op,
-	value: raw.Value,
-});
+export const toElementFilter = (raw: RawElementFilter): ElementFilter => {
+	if (isRawOperationFilter(raw)) {
+		const opFilter: OperationFilter = {
+			tag: raw.Tag,
+			module: raw.Module,
+			path: raw.Path,
+			arguments: raw.Args ?? null,
+			operation: raw.Op,
+			value: raw.Value,
+		};
+		return opFilter;
+	}
+	const exFilter: ExtractionFilter = {
+		tag: raw.Tag,
+		module: raw.Module,
+		path: raw.Path,
+		arguments: raw.Args ?? null,
+	};
+	return exFilter;
+};
