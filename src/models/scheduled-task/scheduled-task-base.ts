@@ -24,10 +24,12 @@ export interface ScheduledTaskBase {
 	isDisabled: boolean;
 
 	lastUpdateDate: Date;
-	lastRunDate: Date;
+	lastRun: null | {
+		date: Date;
+		duration: number;
+	};
 
-	lastSearchIDs: null;
-	lastRunDuration: number;
+	lastSearchIDs: null | Array<NumericID>;
 	lastError: string | null;
 
 	schedule: string;
