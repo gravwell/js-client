@@ -49,7 +49,7 @@ export interface RawScheduledTask {
 	 * Search IDs of the most recently performed searches from this scheduled
 	 * search.
 	 */
-	LastSearchIDs: null;
+	LastSearchIDs: null | Array<Number>;
 
 	Timezone: string; //empty string is null
 

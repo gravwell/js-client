@@ -11,5 +11,9 @@ import { ScheduledTaskBase } from './scheduled-task-base';
 export interface ScheduledQueryData extends ScheduledTaskBase {
 	type: 'query';
 	query: string;
-	searchSince: { lastRun: boolean; secondsAgo: number };
+	searchSince: {
+		lastRun: boolean;
+		/** Always negative and in seconds */
+		secondsAgo: number; // It's the same as `raw.Duration`
+	};
 }

@@ -10,7 +10,7 @@ import { isBoolean, isDate, isNull, isNumber, isString } from 'lodash';
 import { isNumericID, isUUID } from '~/value-objects';
 import { ScheduledTaskBase } from './scheduled-task-base';
 
-export const isScheduledTaskBase = (value: any): value is ScheduledTaskBase => {
+export const isScheduledTaskBase = (value: unknown): value is ScheduledTaskBase => {
 	try {
 		const ss = <ScheduledTaskBase>value;
 		return (
@@ -25,9 +25,8 @@ export const isScheduledTaskBase = (value: any): value is ScheduledTaskBase => {
 			isBoolean(ss.oneShot) &&
 			isBoolean(ss.isDisabled) &&
 			isDate(ss.lastUpdateDate) &&
-			isDate(ss.lastRunDate) &&
+			(isNull(ss.lastRun) || (isDate(ss.lastRun.date) && isNumber(ss.lastRun.duration))) &&
 			isNull(ss.lastSearchIDs) &&
-			isNumber(ss.lastRunDuration) &&
 			(isString(ss.lastError) || isNull(ss.lastError)) &&
 			isString(ss.schedule) &&
 			(isString(ss.timezone) || isNull(ss.timezone))

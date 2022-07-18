@@ -11,7 +11,7 @@ import { CreatableScheduledTask } from './creatable-scheduled-task';
 import { RawCreatableScheduledTask } from './raw-creatable-scheduled-task';
 
 export const toRawCreatableScheduledTask = (data: CreatableScheduledTask): RawCreatableScheduledTask => {
-	const base = {
+	const base: Omit<RawCreatableScheduledTask, 'DebugMode'> = {
 		Groups: (data.groupIDs ?? []).map(toRawNumericID),
 		Global: data.isGlobal ?? false,
 
