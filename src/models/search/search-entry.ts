@@ -12,7 +12,7 @@ export interface SearchEntry {
 	timestamp: Date;
 	tag: number;
 	/** Raw, binary or text data for the whole entry. Original data. */
-	data: string;
+	data: string | null;
 	values: Array<SearchEntryValue>;
 }
 
