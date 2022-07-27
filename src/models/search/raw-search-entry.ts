@@ -6,7 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { isArray, isNumber, isString } from 'lodash';
+import { isArray, isNull, isNumber, isString } from 'lodash';
 
 // Named SearchEntry in Go
 /**
@@ -16,7 +16,7 @@ export interface RawSearchEntry {
 	TS: string;
 	Tag: number;
 	SRC: string; // IP
-	Data: string; // base64
+	Data: string | null; // base64
 	Enumerated: Array<RawEnumeratedPair>;
 }
 
@@ -27,7 +27,7 @@ export const isRawSearchEntry = (v: unknown): v is RawSearchEntry => {
 			isString(s.TS) &&
 			isString(s.SRC) &&
 			isNumber(s.Tag) &&
-			isString(s.Data) &&
+			(isString(s.Data) || isNull(s.Data)) &&
 			isArray(s.Enumerated) &&
 			s.Enumerated.every(isRawEnumeratedPair)
 		);
@@ -44,7 +44,7 @@ export interface RawStringTagEntry {
 	TS: string;
 	Tag: string;
 	SRC: string; // IP
-	Data: string; // base64
+	Data: string | null; // base64
 	Enumerated: Array<RawEnumeratedPair>;
 }
 
@@ -55,7 +55,7 @@ export const isRawStringTagEntry = (v: unknown): v is RawStringTagEntry => {
 			isString(s.TS) &&
 			isString(s.Tag) &&
 			isString(s.SRC) &&
-			isString(s.Data) &&
+			(isString(s.Data) || isNull(s.Data)) &&
 			isArray(s.Enumerated) &&
 			s.Enumerated.every(isRawEnumeratedPair)
 		);
