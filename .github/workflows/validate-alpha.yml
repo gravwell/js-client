@@ -2,7 +2,7 @@ name: Validate Pull Request for Alpha
 
 on:
   pull_request:
-    branches: [dev]
+    branches: [dev, 'release/*']
 
 jobs:
   lint:

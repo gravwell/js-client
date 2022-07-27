@@ -183,6 +183,9 @@ describe('attachToOneExplorerSearch()', () => {
 				.toEqual(1);
 			const lastEntry = textEntries.data[0];
 			expect(lastEntry).toBeDefined();
+			if (!lastEntry.data) {
+				throw new Error('expected entry data to be string');
+			}
 			expect(base64.decode(lastEntry.data))
 				.withContext('The total count of entries should equal what we ingested')
 				.toEqual(`count ${count}`);
@@ -247,6 +250,9 @@ describe('attachToOneExplorerSearch()', () => {
 					return;
 				}
 
+				if (!entry.data) {
+					throw new Error('expected entry data to be string');
+				}
 				const value: Entry = JSON.parse(base64.decode(entry.data));
 				const enumeratedValues = entry.values;
 				const _timestamp = enumeratedValues.find(v => v.name === 'timestamp')!;
@@ -359,6 +365,9 @@ describe('attachToOneExplorerSearch()', () => {
 						return;
 					}
 
+					if (!entry.data) {
+						throw new Error('expected entry data to be string');
+					}
 					const value: Entry = JSON.parse(base64.decode(entry.data));
 					const enumeratedValues = entry.values;
 					const _timestamp = enumeratedValues.find(v => v.name === 'timestamp')!;
@@ -511,6 +520,9 @@ describe('attachToOneExplorerSearch()', () => {
 				////
 				expect(textEntries.data.length).withContext("Should be 90 entries since it's a 90 minute window").toEqual(90);
 				textEntries.data.forEach((entry, index) => {
+					if (!entry.data) {
+						throw new Error('expected entry data to be string');
+					}
 					const value: Entry = JSON.parse(base64.decode(entry.data));
 					expect(value.value).toEqual(minutes - index - 1);
 				});
