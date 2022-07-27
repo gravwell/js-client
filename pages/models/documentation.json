@@ -64300,8 +64300,17 @@
 								}
 							],
 							"type": {
-								"type": "intrinsic",
-								"name": "string"
+								"type": "union",
+								"types": [
+									{
+										"type": "literal",
+										"value": null
+									},
+									{
+										"type": "intrinsic",
+										"name": "string"
+									}
+								]
 							}
 						},
 						{
@@ -69989,8 +69998,17 @@
 								}
 							],
 							"type": {
-								"type": "intrinsic",
-								"name": "string"
+								"type": "union",
+								"types": [
+									{
+										"type": "literal",
+										"value": null
+									},
+									{
+										"type": "intrinsic",
+										"name": "string"
+									}
+								]
 							}
 						},
 						{
@@ -70930,8 +70948,17 @@
 								}
 							],
 							"type": {
-								"type": "intrinsic",
-								"name": "string"
+								"type": "union",
+								"types": [
+									{
+										"type": "literal",
+										"value": null
+									},
+									{
+										"type": "intrinsic",
+										"name": "string"
+									}
+								]
 							}
 						},
 						{
