@@ -6,19 +6,17 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { NumericID } from '~/value-objects';
-
-export interface CreatableScheduledTaskBase {
-	groupIDs?: Array<NumericID>;
-	isGlobal?: boolean;
-
-	name: string;
-	description: string;
-	labels?: Array<string>;
-
-	oneShot?: boolean;
-	isDisabled?: boolean;
-
-	schedule: string;
-	timezone?: string | null;
-}
+export const AUTO_EXTRACTOR_MODULES = [
+	'csv',
+	'cef',
+	'kv',
+	'fields',
+	'regex',
+	'slice',
+	'json',
+	'winlog',
+	'syslog',
+	'netflow',
+	'ipfix',
+	'xml',
+] as const;

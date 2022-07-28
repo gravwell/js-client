@@ -14,6 +14,7 @@ import { DashboardLiveUpdate } from './dashboard-live-update';
 
 export interface CreatableDashboard {
 	groupIDs?: Array<NumericID>;
+	isGlobal?: boolean;
 
 	/**
 	 * All uppercase and no spaces.

@@ -22,6 +22,7 @@ export const toDashboard = (raw: RawDashboard): Dashboard => ({
 
 	userID: toNumericID(raw.UID),
 	groupIDs: (raw.GIDs ?? []).map(toNumericID),
+	isGlobal: raw.Global ?? false,
 
 	name: raw.Name,
 	description: raw.Description.trim() === '' ? null : raw.Description.trim(),

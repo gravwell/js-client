@@ -14,6 +14,7 @@ export interface ScheduledTaskBase {
 
 	userID: NumericID;
 	groupIDs: Array<NumericID>;
+	isGlobal: boolean;
 
 	name: string;
 	description: string;

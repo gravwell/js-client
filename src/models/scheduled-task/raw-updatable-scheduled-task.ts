@@ -10,6 +10,7 @@ import { RawNumericID } from '~/value-objects';
 
 export interface RawUpdatableScheduledTask {
 	Groups: Array<RawNumericID>;
+	Global: boolean;
 
 	Name: string;
 	Description: string;

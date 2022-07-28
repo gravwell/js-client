@@ -16,6 +16,7 @@ export const toScheduledTaskBase = (raw: RawScheduledTask): ScheduledTaskBase =>
 
 	userID: toNumericID(raw.Owner),
 	groupIDs: raw.Groups?.map(toNumericID) ?? [],
+	isGlobal: raw.Global ?? false,
 
 	name: raw.Name,
 	description: raw.Description,

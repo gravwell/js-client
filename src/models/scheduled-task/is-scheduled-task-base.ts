@@ -16,6 +16,7 @@ export const isScheduledTaskBase = (value: any): value is ScheduledTaskBase => {
 		return (
 			isNumericID(ss.id) &&
 			isUUID(ss.globalID) &&
+			isBoolean(ss.isGlobal) &&
 			isNumericID(ss.userID) &&
 			ss.groupIDs.every(isNumericID) &&
 			isString(ss.name) &&

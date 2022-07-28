@@ -13,6 +13,7 @@ import { RawCreatableScheduledTask } from './raw-creatable-scheduled-task';
 export const toRawCreatableScheduledTask = (data: CreatableScheduledTask): RawCreatableScheduledTask => {
 	const base = {
 		Groups: (data.groupIDs ?? []).map(toRawNumericID),
+		Global: data.isGlobal ?? false,
 
 		Name: data.name,
 		Description: data.description,

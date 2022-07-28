@@ -17,6 +17,7 @@ import { UpdatableDashboard } from './updatable-dashboard';
 
 export const toRawUpdatableDashboard = (updatable: UpdatableDashboard, current: Dashboard): RawUpdatableDashboard => ({
 	GIDs: (updatable.groupIDs ?? current.groupIDs).map(toRawNumericID),
+	Global: updatable.isGlobal ?? current.isGlobal,
 
 	Name: updatable.name ?? current.name,
 	Description: (isUndefined(updatable.description) ? current.description : updatable.description) ?? '',

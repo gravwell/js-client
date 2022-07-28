@@ -12,6 +12,7 @@ import { DashboardRendererOptions } from './dashboard-renderer-options';
 
 export interface RawUpdatableDashboard {
 	GIDs: Array<RawNumericID>;
+	Global: boolean;
 
 	Name: string;
 	Description: string; // Use empty string for null

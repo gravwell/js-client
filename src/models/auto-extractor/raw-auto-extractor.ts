@@ -7,6 +7,7 @@
  **************************************************************************/
 
 import { RawNumericID, RawUUID } from '~/value-objects';
+import { AUTO_EXTRACTOR_MODULES } from './auto-extractor-modules';
 
 // Named as AXDefinition in the Go source
 export interface RawAutoExtractor {
@@ -29,4 +30,4 @@ export interface RawAutoExtractor {
 	Accelerated: '';
 }
 
-export type RawAutoExtractorModule = 'csv' | 'fields' | 'regex' | 'slice' | 'json';
+export type RawAutoExtractorModule = typeof AUTO_EXTRACTOR_MODULES[number];
