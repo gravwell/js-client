@@ -194,7 +194,7 @@ describe('GravwellClient', () => {
 			expectTypeOf(client.notifications.get.mine).toEqualTypeOf<() => Promise<Array<Notification>>>();
 			expectTypeOf(client.notifications.subscribeTo.mine).toEqualTypeOf<
 				(options?: {
-					pollInterval?: number;
+					pollInterval?: number | undefined;
 				}) => Promise<APISubscription<MyNotificationsMessageReceived, MyNotificationsMessageSent>>
 			>();
 			expectTypeOf(client.notifications.update.one).toEqualTypeOf<
@@ -251,7 +251,7 @@ describe('GravwellClient', () => {
 			expectTypeOf(client.searches.create.one).toEqualTypeOf<
 				(
 					query: Query,
-					options?: { filter?: Partial<SearchFilter>; metadata?: RawJSON; noHistory?: boolean },
+					options?: { filter?: Partial<SearchFilter> | undefined; metadata?: RawJSON | undefined; noHistory?: boolean },
 				) => Promise<SearchSubscription>
 			>();
 			expectTypeOf(client.searches.stop.one).toEqualTypeOf<(searchID: string) => Promise<void>>();
@@ -264,7 +264,10 @@ describe('GravwellClient', () => {
 
 			// Scripts
 			expectTypeOf(client.scriptLibraries.get.one).toEqualTypeOf<
-				(scriptPath: string, options?: { repository?: string; commitID?: string }) => Promise<Script>
+				(
+					scriptPath: string,
+					options?: { repository?: string | undefined; commitID?: string | undefined },
+				) => Promise<Script>
 			>();
 			expectTypeOf(client.scriptLibraries.sync.all).toEqualTypeOf<() => Promise<void>>();
 
@@ -272,7 +275,9 @@ describe('GravwellClient', () => {
 			expectTypeOf(client.groups.create.one).toEqualTypeOf<(data: CreatableGroup) => Promise<Group>>();
 			expectTypeOf(client.groups.delete.one).toEqualTypeOf<(groupID: NumericID) => Promise<void>>();
 			expectTypeOf(client.groups.get.one).toEqualTypeOf<(groupID: NumericID) => Promise<Group>>();
-			expectTypeOf(client.groups.get.many).toEqualTypeOf<(filter?: { userID?: NumericID }) => Promise<Array<Group>>>();
+			expectTypeOf(client.groups.get.many).toEqualTypeOf<
+				(filter?: { userID?: NumericID | undefined }) => Promise<Array<Group>>
+			>();
 			expectTypeOf(client.groups.get.all).toEqualTypeOf<() => Promise<Array<Group>>>();
 			expectTypeOf(client.groups.update.one).toEqualTypeOf<(data: UpdatableGroup) => Promise<Group>>();
 			expectTypeOf(client.groups.addUserTo.many).toEqualTypeOf<
@@ -314,7 +319,7 @@ describe('GravwellClient', () => {
 			expectTypeOf(client.resources.get.all).toEqualTypeOf<() => Promise<Array<Resource>>>();
 			expectTypeOf(client.resources.get.authorizedTo.me).toEqualTypeOf<() => Promise<Array<Resource>>>();
 			expectTypeOf(client.resources.preview.one).toEqualTypeOf<
-				(resourceID: ID, options?: { bytes?: number }) => Promise<ResourceContentPreview>
+				(resourceID: ID, options?: { bytes?: number | undefined }) => Promise<ResourceContentPreview>
 			>();
 			expectTypeOf(client.resources.create.one).toEqualTypeOf<(data: CreatableResource) => Promise<Resource>>();
 			expectTypeOf(client.resources.update.one).toEqualTypeOf<(data: UpdatableResource) => Promise<Resource>>();
@@ -454,7 +459,7 @@ describe('GravwellClient', () => {
 			expectTypeOf(client.explorer.searchAndExplore.one).toEqualTypeOf<
 				(
 					query: Query,
-					options?: { filter?: Partial<SearchFilter>; metadata?: RawJSON; noHistory?: boolean },
+					options?: { filter?: Partial<SearchFilter> | undefined; metadata?: RawJSON | undefined; noHistory?: boolean },
 				) => Promise<ExplorerSearchSubscription>
 			>();
 
