@@ -7,7 +7,7 @@ module.exports = {
 		'eslint:recommended',
 		'plugin:@typescript-eslint/eslint-recommended',
 		'plugin:@typescript-eslint/recommended',
-		'prettier/@typescript-eslint',
+		'prettier',
 	],
 	parser: '@typescript-eslint/parser',
 	parserOptions: {
@@ -23,7 +23,7 @@ module.exports = {
 	plugins: ['@typescript-eslint', 'simple-import-sort', 'import'],
 	rules: {
 		'no-extra-semi': 'off',
-		'curly': 'off',
+		curly: 'off',
 		'no-mixed-spaces-and-tabs': 'off',
 		'no-unused-vars': 'off',
 
