@@ -10,11 +10,11 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - name: Use Node.js 10.20.1
+      - name: Use Node.js 16.14.0
         uses: actions/setup-node@v1
         with:
-          node-version: '10.20.1'
-      - run: npm i -g npm@6.14.5
+          node-version: '16.14.0'
+      - run: npm i -g npm@8.5.3
       - run: npm ci
       - run: npm run lint
 
@@ -23,11 +23,11 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - name: Use Node.js 10.20.1
+      - name: Use Node.js 16.14.0
         uses: actions/setup-node@v1
         with:
-          node-version: '10.20.1'
-      - run: npm i -g npm@6.14.5
+          node-version: '16.14.0'
+      - run: npm i -g npm@8.5.3
       - run: npm ci
       - run: npm run build
       - run: npm run build:tests
@@ -37,11 +37,11 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - name: Use Node.js 10.20.1
+      - name: Use Node.js 16.14.0
         uses: actions/setup-node@v1
         with:
-          node-version: '10.20.1'
-      - run: npm i -g npm@6.14.5
+          node-version: '16.14.0'
+      - run: npm i -g npm@8.5.3
       - run: npm ci
       - run: npm run test:ts-compatibility
 
@@ -100,11 +100,11 @@ jobs:
           fi
           sleep 10
           curl --silent --fail http://localhost:8080/api/test || ( echo "api test failed"; exit 1 )
-      - name: Use Node.js 10.20.1
+      - name: Use Node.js 16.14.0
         uses: actions/setup-node@v1
         with:
-          node-version: '10.20.1'
-      - run: npm i -g npm@6.14.5
+          node-version: '16.14.0'
+      - run: npm i -g npm@8.5.3
       - run: npm ci
       - shell: bash
         env:
@@ -169,11 +169,11 @@ jobs:
           fi
           sleep 10
           curl --silent --fail http://localhost:8080/api/test || ( echo "api test failed"; exit 1 )
-      - name: Use Node.js 10.20.1
+      - name: Use Node.js 16.14.0
         uses: actions/setup-node@v1
         with:
-          node-version: '10.20.1'
-      - run: npm i -g npm@6.14.5
+          node-version: '16.14.0'
+      - run: npm i -g npm@8.5.3
       - run: npm ci
       - shell: bash
         env:
@@ -238,11 +238,11 @@ jobs:
           fi
           sleep 10
           curl --silent --fail http://localhost:8080/api/test || ( echo "api test failed"; exit 1 )
-      - name: Use Node.js 10.20.1
+      - name: Use Node.js 16.14.0
         uses: actions/setup-node@v1
         with:
-          node-version: '10.20.1'
-      - run: npm i -g npm@6.14.5
+          node-version: '16.14.0'
+      - run: npm i -g npm@8.5.3
       - run: npm ci
       - shell: bash
         env:
