@@ -92,10 +92,10 @@
 		"rename-cli": "^6.2.1",
 		"rimraf": "^3.0.2",
 		"rxjs": "^7.5.5",
-		"ts-node": "^9.1.1",
+		"ts-node": "^10.9.1",
 		"tsc-alias": "^1.2.6",
 		"typedoc": "^0.22.17",
-		"typescript": "^4.5.4",
+		"typescript": "^4.7.4",
 		"uuid": "^8.3.2",
 		"webpack": "^5.21.2",
 		"yargs": "^16.2.0"
