@@ -13,9 +13,18 @@ import { makeDeleteAllGroups } from '../groups/delete-all-groups';
 import { makeCreateOneDashboard } from './create-one-dashboard';
 
 describe('createOneDashboard()', () => {
-	const createOneDashboard = makeCreateOneDashboard(TEST_BASE_API_CONTEXT);
-	const createOneGroup = makeCreateOneGroup(TEST_BASE_API_CONTEXT);
-	const deleteAllGroups = makeDeleteAllGroups(TEST_BASE_API_CONTEXT);
+	let createOneDashboard: ReturnType<typeof makeCreateOneDashboard>;
+	beforeAll(async () => {
+		createOneDashboard = makeCreateOneDashboard(await TEST_BASE_API_CONTEXT());
+	});
+	let createOneGroup: ReturnType<typeof makeCreateOneGroup>;
+	beforeAll(async () => {
+		createOneGroup = makeCreateOneGroup(await TEST_BASE_API_CONTEXT());
+	});
+	let deleteAllGroups: ReturnType<typeof makeDeleteAllGroups>;
+	beforeAll(async () => {
+		deleteAllGroups = makeDeleteAllGroups(await TEST_BASE_API_CONTEXT());
+	});
 
 	// let groupIDs: Array<NumericID>;
 
@@ -56,13 +65,7 @@ describe('createOneDashboard()', () => {
 						searchIndex: 0,
 					},
 				],
-				timeframe: {
-					durationString: 'PT1H',
-					end: null,
-					start: null,
-					timeframe: 'PT1H',
-					timezone: null,
-				},
+				timeframe: { durationString: 'PT1H', end: null, start: null, timeframe: 'PT1H', timezone: null },
 			};
 
 			const dashboard = await createOneDashboard(data);

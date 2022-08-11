@@ -12,7 +12,7 @@ import { ResourceData } from './resource-data';
 
 export const isResourceData = (value: unknown): value is ResourceData => {
 	try {
-		const r = <ResourceData>value;
+		const r = value as ResourceData;
 		return (
 			isUUID(r.id) &&
 			isNumericID(r.userID) &&

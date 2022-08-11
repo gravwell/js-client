@@ -9,8 +9,9 @@
 import { UUID } from '~/value-objects';
 import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, parseJSONResponse } from '../utils';
 
-export const makeDownloadManyAutoExtractors = (context: APIContext) => {
-	return async (filter: AutoExtractorsFilter): Promise<string> => {
+export const makeDownloadManyAutoExtractors =
+	(context: APIContext) =>
+	async (filter: AutoExtractorsFilter): Promise<string> => {
 		const path = '/api/autoextractors/download';
 		const url = buildURL(path, {
 			...context,
@@ -25,7 +26,6 @@ export const makeDownloadManyAutoExtractors = (context: APIContext) => {
 		const raw = await context.fetch(url, { ...req, method: 'GET' });
 		return await parseJSONResponse(raw, { expect: 'text' });
 	};
-};
 
 export interface AutoExtractorsFilter {
 	ids: Array<UUID>;

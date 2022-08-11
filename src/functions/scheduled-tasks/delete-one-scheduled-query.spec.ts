@@ -7,6 +7,7 @@
  **************************************************************************/
 
 import { integrationTest, TEST_BASE_API_CONTEXT } from '~/tests';
+import { assertIsNotNil } from '../utils/type-guards';
 import { makeCreateManyScheduledQueries } from './create-many-scheduled-queries';
 import { makeDeleteAllScheduledQueries } from './delete-all-scheduled-queries';
 import { makeDeleteOneScheduledQuery } from './delete-one-scheduled-query';
@@ -14,11 +15,26 @@ import { makeGetAllScheduledQueries } from './get-all-scheduled-queries';
 import { makeGetOneScheduledQuery } from './get-one-scheduled-query';
 
 describe('deleteOneScheduledQuery()', () => {
-	const deleteOneScheduledQuery = makeDeleteOneScheduledQuery(TEST_BASE_API_CONTEXT);
-	const getAllScheduledQueries = makeGetAllScheduledQueries(TEST_BASE_API_CONTEXT);
-	const getOneScheduledQuery = makeGetOneScheduledQuery(TEST_BASE_API_CONTEXT);
-	const deleteAllScheduledQueries = makeDeleteAllScheduledQueries(TEST_BASE_API_CONTEXT);
-	const createManyScheduledQueries = makeCreateManyScheduledQueries(TEST_BASE_API_CONTEXT);
+	let deleteOneScheduledQuery: ReturnType<typeof makeDeleteOneScheduledQuery>;
+	beforeAll(async () => {
+		deleteOneScheduledQuery = makeDeleteOneScheduledQuery(await TEST_BASE_API_CONTEXT());
+	});
+	let getAllScheduledQueries: ReturnType<typeof makeGetAllScheduledQueries>;
+	beforeAll(async () => {
+		getAllScheduledQueries = makeGetAllScheduledQueries(await TEST_BASE_API_CONTEXT());
+	});
+	let getOneScheduledQuery: ReturnType<typeof makeGetOneScheduledQuery>;
+	beforeAll(async () => {
+		getOneScheduledQuery = makeGetOneScheduledQuery(await TEST_BASE_API_CONTEXT());
+	});
+	let deleteAllScheduledQueries: ReturnType<typeof makeDeleteAllScheduledQueries>;
+	beforeAll(async () => {
+		deleteAllScheduledQueries = makeDeleteAllScheduledQueries(await TEST_BASE_API_CONTEXT());
+	});
+	let createManyScheduledQueries: ReturnType<typeof makeCreateManyScheduledQueries>;
+	beforeAll(async () => {
+		createManyScheduledQueries = makeCreateManyScheduledQueries(await TEST_BASE_API_CONTEXT());
+	});
 
 	beforeEach(async () => {
 		await deleteAllScheduledQueries();
@@ -50,6 +66,8 @@ describe('deleteOneScheduledQuery()', () => {
 			expect(currentScheduledQueryIDs.length).toBe(2);
 
 			const deleteScheduledQueryID = currentScheduledQueryIDs[0];
+			assertIsNotNil(deleteScheduledQueryID);
+
 			await deleteOneScheduledQuery(deleteScheduledQueryID);
 			await expectAsync(getOneScheduledQuery(deleteScheduledQueryID)).toBeRejected();
 

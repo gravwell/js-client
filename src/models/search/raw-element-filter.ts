@@ -23,7 +23,7 @@ export interface RawOperationFilter {
 
 export const isRawOperationFilter = (v: RawElementFilter): v is RawOperationFilter => {
 	try {
-		const ef = <RawOperationFilter>v;
+		const ef = v as RawOperationFilter;
 		return isRawElementFilterOperation(ef.Op) && isString(ef.Value);
 	} catch {
 		return false;

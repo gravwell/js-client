@@ -12,7 +12,7 @@ import { TokenWithSecret } from './token-with-secret';
 
 export const isTokenWithSecret = (value: unknown): value is TokenWithSecret => {
 	try {
-		const t = <TokenWithSecret>value;
+		const t = value as TokenWithSecret;
 		return isToken(t) && isString(t.token);
 	} catch {
 		return false;

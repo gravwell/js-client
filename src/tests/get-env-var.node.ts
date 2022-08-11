@@ -10,6 +10,4 @@ import * as dotenv from 'dotenv';
 
 dotenv.config();
 
-export const getEnvVar = (key: string): string | undefined => {
-	return process.env[key];
-};
+export const getEnvVar = (key: string): string | undefined => process.env[key];

@@ -9,8 +9,9 @@
 import { RawUser, toUser, User } from '~/models';
 import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, parseJSONResponse } from '../utils';
 
-export const makeGetOneUser = (context: APIContext) => {
-	return async (userID: string): Promise<User> => {
+export const makeGetOneUser =
+	(context: APIContext) =>
+	async (userID: string): Promise<User> => {
 		const templatePath = '/api/users/{userID}';
 		const url = buildURL(templatePath, { ...context, protocol: 'http', pathParams: { userID } });
 		const req = buildHTTPRequestWithAuthFromContext(context);
@@ -19,4 +20,3 @@ export const makeGetOneUser = (context: APIContext) => {
 		const rawRes = await parseJSONResponse<RawUser>(raw);
 		return toUser(rawRes);
 	};
-};

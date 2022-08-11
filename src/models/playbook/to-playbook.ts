@@ -48,7 +48,9 @@ export const toPlaybook = <IncludeBody extends boolean = true>(
 	};
 
 	const includeBody = options.includeBody ?? true;
-	if (includeBody === false) return playbookWithoutBody as any;
+	if (includeBody === false) {
+		return playbookWithoutBody as any;
+	}
 
 	const body = isString(raw.Body) ? base64Decode(raw.Body) : '';
 	const playbook: Playbook = { ...playbookWithoutBody, body };

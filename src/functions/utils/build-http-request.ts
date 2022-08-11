@@ -18,19 +18,14 @@ export const buildHTTPRequest = (base: HTTPRequestOptions): RequestInit => {
 		...(base.headers ?? {}),
 	});
 	const body = base.body ?? undefined;
-	return { headers, body };
+	return omitUndefinedShallow({ headers, body });
 };
 
-export const buildHTTPRequestWithAuthFromContext = (
-	context: APIContext,
-	base: HTTPRequestOptions = {},
-): RequestInit => {
-	return isString(context.authToken) ? buildHTTPRequestWithAuth(context.authToken, base) : buildHTTPRequest(base);
-};
+export const buildHTTPRequestWithAuthFromContext = (context: APIContext, base: HTTPRequestOptions = {}): RequestInit =>
+	isString(context.authToken) ? buildHTTPRequestWithAuth(context.authToken, base) : buildHTTPRequest(base);
 
-export const buildHTTPRequestWithAuth = (authToken: string, base: HTTPRequestOptions = {}): RequestInit => {
-	return addTokenToRequest(authToken, buildHTTPRequest(base));
-};
+export const buildHTTPRequestWithAuth = (authToken: string, base: HTTPRequestOptions = {}): RequestInit =>
+	addTokenToRequest(authToken, buildHTTPRequest(base));
 
 const addTokenToRequest = (authToken: string | null, request: RequestInit): RequestInit => {
 	if (isNotNull(authToken)) {

@@ -12,7 +12,7 @@ import { FileMetadataData } from './file-metadata-data';
 
 export const isFileMetadataData = (value: unknown): value is FileMetadataData => {
 	try {
-		const f = <FileMetadataData>value;
+		const f = value as FileMetadataData;
 		return (
 			isUUID(f.id) &&
 			isUUID(f.globalID) &&

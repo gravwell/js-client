@@ -8,11 +8,16 @@
 
 import { APISubscription } from './api-subscription';
 
-export interface APISubscriptionFunction<R, S> {
-	// (authToken: string | null): Promise<APISubscription<R, S>>;
-	// (authToken: string | null, one: any): Promise<APISubscription<R, S>>;
-	// (authToken: string | null, one: any, two: any): Promise<APISubscription<R, S>>;
-	// (authToken: string | null, one: any, two: any, three: any): Promise<APISubscription<R, S>>;
-	// (authToken: string | null, one: any, two: any, three: any, four: any): Promise<APISubscription<R, S>>;
-	(authToken: string | null, one: any, two: any, three: any, four: any, five: any): Promise<APISubscription<R, S>>;
-}
+// (authToken: string | null): Promise<APISubscription<R, S>>;
+// (authToken: string | null, one: any): Promise<APISubscription<R, S>>;
+// (authToken: string | null, one: any, two: any): Promise<APISubscription<R, S>>;
+// (authToken: string | null, one: any, two: any, three: any): Promise<APISubscription<R, S>>;
+// (authToken: string | null, one: any, two: any, three: any, four: any): Promise<APISubscription<R, S>>;
+export type APISubscriptionFunction<R, S> = (
+	authToken: string | null,
+	one: any,
+	two: any,
+	three: any,
+	four: any,
+	five: any,
+) => Promise<APISubscription<R, S>>;

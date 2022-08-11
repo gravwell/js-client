@@ -19,7 +19,7 @@ export const makeSubscribeToMyNotifications = (context: APIContext) => {
 	const getMyNotifications = makeGetMyNotifications(context);
 
 	return async (
-		options: { pollInterval?: number } = { pollInterval: 10000 },
+		options: { pollInterval?: number | undefined } = { pollInterval: 10000 },
 	): Promise<APISubscription<MyNotificationsMessageReceived, MyNotificationsMessageSent>> => {
 		const pollInterval = options.pollInterval ?? 10000;
 

@@ -30,9 +30,13 @@ export const makeCreateOneLog = (context: APIContext) => {
 
 			const raw = await context.fetch(url, { ...req, method: 'POST' });
 			const success = await parseJSONResponse<boolean>(raw);
-			if (!success) throw Error(`Couldn't create the log`);
+			if (!success) {
+				throw Error(`Couldn't create the log`);
+			}
 		} catch (err) {
-			if (err instanceof Error) throw err;
+			if (err instanceof Error) {
+				throw err;
+			}
 			throw Error('Unknown error');
 		}
 	};

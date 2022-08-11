@@ -9,8 +9,9 @@
 import { UUID } from '~/value-objects';
 import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, parseJSONResponse } from '../utils';
 
-export const makeGetOneFileContent = (context: APIContext) => {
-	return async (fileID: UUID): Promise<string> => {
+export const makeGetOneFileContent =
+	(context: APIContext) =>
+	async (fileID: UUID): Promise<string> => {
 		const templatePath = '/api/files/{fileID}';
 		const url = buildURL(templatePath, { ...context, protocol: 'http', pathParams: { fileID } });
 
@@ -19,4 +20,3 @@ export const makeGetOneFileContent = (context: APIContext) => {
 		const raw = await context.fetch(url, { ...req, method: 'GET' });
 		return parseJSONResponse(raw, { expect: 'text' });
 	};
-};

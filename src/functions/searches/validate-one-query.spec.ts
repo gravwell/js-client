@@ -13,7 +13,7 @@ describe('validateOneQuery()', () => {
 	it(
 		'Should approve a valid query',
 		integrationTest(async () => {
-			const validateOneQuery = makeValidateOneQuery(TEST_BASE_API_CONTEXT);
+			const validateOneQuery = makeValidateOneQuery(await TEST_BASE_API_CONTEXT());
 			const query = 'tag=netflow netflow Src';
 			const validation = await validateOneQuery(query);
 			expect(validation).toEqual({ query, isValid: true, error: null });
@@ -23,7 +23,7 @@ describe('validateOneQuery()', () => {
 	it(
 		'Should repprove an invalid query',
 		integrationTest(async () => {
-			const validateOneQuery = makeValidateOneQuery(TEST_BASE_API_CONTEXT);
+			const validateOneQuery = makeValidateOneQuery(await TEST_BASE_API_CONTEXT());
 			const query = 'tag=non-existant';
 			const validation = await validateOneQuery(query);
 			expect(validation).toEqual({

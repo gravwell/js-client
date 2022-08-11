@@ -17,15 +17,42 @@ import { makeGetAllTokens } from './get-all-tokens';
 import { makeGetTokensAuthorizedToMe } from './get-tokens-authorized-to-me';
 
 describe('getTokensAuthorizedToMe()', () => {
-	const getTokensAuthorizedToMe = makeGetTokensAuthorizedToMe(TEST_BASE_API_CONTEXT);
-	const createOneToken = makeCreateOneToken(TEST_BASE_API_CONTEXT);
-	const deleteOneToken = makeDeleteOneToken(TEST_BASE_API_CONTEXT);
-	const getAllTokens = makeGetAllTokens(TEST_BASE_API_CONTEXT);
-	const createOneUser = makeCreateOneUser(TEST_BASE_API_CONTEXT);
-	const login = makeLoginOneUser(TEST_BASE_API_CONTEXT);
-	const deleteOneUser = makeDeleteOneUser(TEST_BASE_API_CONTEXT);
-	const getAllUsers = makeGetAllUsers(TEST_BASE_API_CONTEXT);
-	const getMyUser = makeGetMyUser(TEST_BASE_API_CONTEXT);
+	let getTokensAuthorizedToMe: ReturnType<typeof makeGetTokensAuthorizedToMe>;
+	beforeAll(async () => {
+		getTokensAuthorizedToMe = makeGetTokensAuthorizedToMe(await TEST_BASE_API_CONTEXT());
+	});
+	let createOneToken: ReturnType<typeof makeCreateOneToken>;
+	beforeAll(async () => {
+		createOneToken = makeCreateOneToken(await TEST_BASE_API_CONTEXT());
+	});
+	let deleteOneToken: ReturnType<typeof makeDeleteOneToken>;
+	beforeAll(async () => {
+		deleteOneToken = makeDeleteOneToken(await TEST_BASE_API_CONTEXT());
+	});
+	let getAllTokens: ReturnType<typeof makeGetAllTokens>;
+	beforeAll(async () => {
+		getAllTokens = makeGetAllTokens(await TEST_BASE_API_CONTEXT());
+	});
+	let createOneUser: ReturnType<typeof makeCreateOneUser>;
+	beforeAll(async () => {
+		createOneUser = makeCreateOneUser(await TEST_BASE_API_CONTEXT());
+	});
+	let login: ReturnType<typeof makeLoginOneUser>;
+	beforeAll(async () => {
+		login = makeLoginOneUser(await TEST_BASE_API_CONTEXT());
+	});
+	let deleteOneUser: ReturnType<typeof makeDeleteOneUser>;
+	beforeAll(async () => {
+		deleteOneUser = makeDeleteOneUser(await TEST_BASE_API_CONTEXT());
+	});
+	let getAllUsers: ReturnType<typeof makeGetAllUsers>;
+	beforeAll(async () => {
+		getAllUsers = makeGetAllUsers(await TEST_BASE_API_CONTEXT());
+	});
+	let getMyUser: ReturnType<typeof makeGetMyUser>;
+	beforeAll(async () => {
+		getMyUser = makeGetMyUser(await TEST_BASE_API_CONTEXT());
+	});
 
 	let adminTokens: Array<Token>;
 
@@ -90,7 +117,7 @@ describe('getTokensAuthorizedToMe()', () => {
 		];
 
 		const createOneTokenAsAnalyst = makeCreateOneToken({
-			...TEST_BASE_API_CONTEXT,
+			...(await TEST_BASE_API_CONTEXT()),
 			authToken: analystAuth,
 		});
 
@@ -103,20 +130,26 @@ describe('getTokensAuthorizedToMe()', () => {
 		integrationTest(async () => {
 			const actualAdminTokens = await getTokensAuthorizedToMe();
 			expect(sortBy(actualAdminTokens, t => t.id)).toEqual(sortBy(adminTokens, t => t.id));
-			for (const token of actualAdminTokens) expect(isToken(token)).toBeTrue();
+			for (const token of actualAdminTokens) {
+				expect(isToken(token)).toBeTrue();
+			}
 
 			const getTokensAuthorizedToAnalyst = makeGetTokensAuthorizedToMe({
-				...TEST_BASE_API_CONTEXT,
+				...(await TEST_BASE_API_CONTEXT()),
 				authToken: analystAuth,
 			});
 
 			const actualAnalystTokens = await getTokensAuthorizedToAnalyst();
 			expect(sortBy(actualAnalystTokens, t => t.id)).toEqual(sortBy(analystTokens, t => t.id));
-			for (const token of actualAnalystTokens) expect(isToken(token)).toBeTrue();
+			for (const token of actualAnalystTokens) {
+				expect(isToken(token)).toBeTrue();
+			}
 
 			const allTokens = await getAllTokens();
 			expect(sortBy(allTokens, t => t.id)).toEqual(sortBy([...analystTokens, ...adminTokens], t => t.id));
-			for (const token of allTokens) expect(isToken(token)).toBeTrue();
+			for (const token of allTokens) {
+				expect(isToken(token)).toBeTrue();
+			}
 		}),
 	);
 });

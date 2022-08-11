@@ -10,7 +10,10 @@ import { integrationTest, TEST_BASE_API_CONTEXT } from '~/tests';
 import { makeSystemIsConnected } from './system-is-connected';
 
 describe('systemIsConnected()', () => {
-	const systemIsConnected = makeSystemIsConnected(TEST_BASE_API_CONTEXT);
+	let systemIsConnected: ReturnType<typeof makeSystemIsConnected>;
+	beforeAll(async () => {
+		systemIsConnected = makeSystemIsConnected(await TEST_BASE_API_CONTEXT());
+	});
 
 	it(
 		'Should tell if the system is connect',

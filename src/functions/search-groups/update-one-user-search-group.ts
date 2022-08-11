@@ -16,8 +16,9 @@ import {
 	parseJSONResponse,
 } from '../utils';
 
-export const makeUpdateOneUserSearchGroup = (context: APIContext) => {
-	return async (userID: NumericID, groupID: NumericID | null): Promise<void> => {
+export const makeUpdateOneUserSearchGroup =
+	(context: APIContext) =>
+	async (userID: NumericID, groupID: NumericID | null): Promise<void> => {
 		try {
 			const path = '/api/users/{userID}/searchgroup';
 			const url = buildURL(path, { ...context, protocol: 'http', pathParams: { userID } });
@@ -42,11 +43,12 @@ export const makeUpdateOneUserSearchGroup = (context: APIContext) => {
 			const raw = await context.fetch(url, { ...req, method: 'PUT' });
 			return parseJSONResponse(raw, { expect: 'void' });
 		} catch (err) {
-			if (err instanceof Error) throw err;
+			if (err instanceof Error) {
+				throw err;
+			}
 			throw Error('Unknown error');
 		}
 	};
-};
 
 interface UpdateOneUserSearchGroupRawRequest {
 	GID: number | null;

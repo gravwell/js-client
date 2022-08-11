@@ -36,7 +36,9 @@ export const makeCreateOneActionable = (context: APIContext) => {
 			const actionableID = rawID.toString();
 			return await getOneActionable(actionableID);
 		} catch (err) {
-			if (err instanceof Error) throw err;
+			if (err instanceof Error) {
+				throw err;
+			}
 			throw Error('Unknown error');
 		}
 	};

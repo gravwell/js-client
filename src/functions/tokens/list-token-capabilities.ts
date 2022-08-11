@@ -9,15 +9,13 @@
 import { TokenCapability } from '~/models';
 import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, parseJSONResponse } from '../utils';
 
-export const makeListTokenCapabilities = (context: APIContext) => {
-	return async (): Promise<Array<TokenCapability>> => {
-		const templatePath = '/api/tokens/capabilities';
-		const url = buildURL(templatePath, { ...context, protocol: 'http' });
+export const makeListTokenCapabilities = (context: APIContext) => async (): Promise<Array<TokenCapability>> => {
+	const templatePath = '/api/tokens/capabilities';
+	const url = buildURL(templatePath, { ...context, protocol: 'http' });
 
-		const req = buildHTTPRequestWithAuthFromContext(context);
+	const req = buildHTTPRequestWithAuthFromContext(context);
 
-		const raw = await context.fetch(url, { ...req, method: 'GET' });
-		const rawRes = await parseJSONResponse<Array<TokenCapability>>(raw);
-		return rawRes;
-	};
+	const raw = await context.fetch(url, { ...req, method: 'GET' });
+	const rawRes = await parseJSONResponse<Array<TokenCapability>>(raw);
+	return rawRes;
 };

@@ -36,7 +36,9 @@ export const makeCreateOnePlaybook = (context: APIContext) => {
 			const playbookID = rawID.toString();
 			return await getOnePlaybook(playbookID);
 		} catch (err) {
-			if (err instanceof Error) throw err;
+			if (err instanceof Error) {
+				throw err;
+			}
 			throw Error('Unknown error');
 		}
 	};

@@ -6,7 +6,13 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { CreatableTemplate, RawTemplate, Template, toRawCreatableTemplate, toTemplate } from '~/models';
+import {
+	CreatableTemplate,
+	RawTemplate,
+	Template,
+	toRawCreatableTemplate,
+	toTemplate,
+} from '~/models';
 import {
 	APIContext,
 	buildHTTPRequestWithAuthFromContext,
@@ -31,7 +37,9 @@ export const makeCreateOneTemplate = (context: APIContext) => {
 
 			return toTemplate(rawRes);
 		} catch (err) {
-			if (err instanceof Error) throw err;
+			if (err instanceof Error) {
+				throw err;
+			}
 			throw Error('Unknown error');
 		}
 	};

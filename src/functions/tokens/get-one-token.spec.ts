@@ -15,10 +15,22 @@ import { makeGetAllTokens } from './get-all-tokens';
 import { makeGetOneToken } from './get-one-token';
 
 describe('getOneToken()', () => {
-	const getOneToken = makeGetOneToken(TEST_BASE_API_CONTEXT);
-	const createOneToken = makeCreateOneToken(TEST_BASE_API_CONTEXT);
-	const getAllTokens = makeGetAllTokens(TEST_BASE_API_CONTEXT);
-	const deleteOneToken = makeDeleteOneToken(TEST_BASE_API_CONTEXT);
+	let getOneToken: ReturnType<typeof makeGetOneToken>;
+	beforeAll(async () => {
+		getOneToken = makeGetOneToken(await TEST_BASE_API_CONTEXT());
+	});
+	let createOneToken: ReturnType<typeof makeCreateOneToken>;
+	beforeAll(async () => {
+		createOneToken = makeCreateOneToken(await TEST_BASE_API_CONTEXT());
+	});
+	let getAllTokens: ReturnType<typeof makeGetAllTokens>;
+	beforeAll(async () => {
+		getAllTokens = makeGetAllTokens(await TEST_BASE_API_CONTEXT());
+	});
+	let deleteOneToken: ReturnType<typeof makeDeleteOneToken>;
+	beforeAll(async () => {
+		deleteOneToken = makeDeleteOneToken(await TEST_BASE_API_CONTEXT());
+	});
 
 	let createdToken: TokenWithSecret;
 

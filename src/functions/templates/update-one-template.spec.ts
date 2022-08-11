@@ -7,19 +7,32 @@
  **************************************************************************/
 
 import { omit } from 'lodash';
-import { CreatableTemplate, isTemplate, Template, TemplateVariable, UpdatableTemplate } from '~/models';
+import {
+	CreatableTemplate,
+	isTemplate,
+	Template,
+	TemplateVariable,
+	UpdatableTemplate,
+} from '~/models';
 import { integrationTest, TEST_BASE_API_CONTEXT } from '~/tests';
 import { omitUndefinedShallow } from '../utils';
 import { makeCreateOneTemplate } from './create-one-template';
 import { makeDeleteOneTemplate } from './delete-one-template';
-import { makeGetOneTemplate } from './get-one-template';
 import { makeUpdateOneTemplate } from './update-one-template';
 
 describe('updateOneTemplate()', () => {
-	const createOneTemplate = makeCreateOneTemplate(TEST_BASE_API_CONTEXT);
-	const getOneTemplate = makeGetOneTemplate(TEST_BASE_API_CONTEXT);
-	const updateOneTemplate = makeUpdateOneTemplate(TEST_BASE_API_CONTEXT);
-	const deleteOneTemplate = makeDeleteOneTemplate(TEST_BASE_API_CONTEXT);
+	let createOneTemplate: ReturnType<typeof makeCreateOneTemplate>;
+	beforeAll(async () => {
+		createOneTemplate = makeCreateOneTemplate(await TEST_BASE_API_CONTEXT());
+	});
+	let updateOneTemplate: ReturnType<typeof makeUpdateOneTemplate>;
+	beforeAll(async () => {
+		updateOneTemplate = makeUpdateOneTemplate(await TEST_BASE_API_CONTEXT());
+	});
+	let deleteOneTemplate: ReturnType<typeof makeDeleteOneTemplate>;
+	beforeAll(async () => {
+		deleteOneTemplate = makeDeleteOneTemplate(await TEST_BASE_API_CONTEXT());
+	});
 
 	let createdTemplate: Template;
 

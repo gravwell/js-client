@@ -84,7 +84,7 @@ const validMockData = () => {
 	];
 
 	// Raw Replicated
-	const _replicatedShards: Array<RawShard> = [];
+	// const _replicatedShards: Array<RawShard> = [];
 	const _rawReplicated: Record<string, Array<RawReplicatedState>> = {
 		['replicated-key']: [
 			{

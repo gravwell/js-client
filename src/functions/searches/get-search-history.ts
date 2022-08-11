@@ -9,8 +9,9 @@
 import { RawSearch, Search, toSearch } from '~/models';
 import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, parseJSONResponse } from '../utils';
 
-export const makeGetSearchHistory = (context: APIContext) => {
-	return async (filter: SearchHistoryFilter): Promise<Array<Search>> => {
+export const makeGetSearchHistory =
+	(context: APIContext) =>
+	async (filter: SearchHistoryFilter): Promise<Array<Search>> => {
 		const baseURLOptions = { ...context, protocol: 'http' } as const;
 		const url = ((): string => {
 			switch (filter.target) {
@@ -43,7 +44,6 @@ export const makeGetSearchHistory = (context: APIContext) => {
 		const rawSearches = (await parseJSONResponse<Array<RawSearch> | null>(raw)) ?? [];
 		return rawSearches.map(toSearch);
 	};
-};
 
 export type SearchHistoryFilter =
 	| { target: 'myself' }

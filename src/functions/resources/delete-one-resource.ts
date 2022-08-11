@@ -9,8 +9,9 @@
 import { NumericID } from '~/value-objects';
 import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, parseJSONResponse } from '../utils';
 
-export const makeDeleteOneResource = (context: APIContext) => {
-	return async (resourceID: NumericID): Promise<void> => {
+export const makeDeleteOneResource =
+	(context: APIContext) =>
+	async (resourceID: NumericID): Promise<void> => {
 		const resourcePath = '/api/resources/{resourceID}';
 		const url = buildURL(resourcePath, { ...context, protocol: 'http', pathParams: { resourceID } });
 
@@ -19,4 +20,3 @@ export const makeDeleteOneResource = (context: APIContext) => {
 		const raw = await context.fetch(url, { ...req, method: 'DELETE' });
 		return parseJSONResponse(raw, { expect: 'void' });
 	};
-};

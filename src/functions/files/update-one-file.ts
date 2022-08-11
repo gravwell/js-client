@@ -26,7 +26,7 @@ export const makeUpdateOneFile = (context: APIContext) => {
 
 		try {
 			const current = await getOneFile(data.id);
-			const updatedKeys = <Set<keyof UpdatableFile>>new Set(Object.keys(data));
+			const updatedKeys = new Set(Object.keys(data)) as Set<keyof UpdatableFile>;
 
 			const metadataP = (async (): Promise<any> => {
 				const targettedKeys: Array<keyof Required<UpdatableFile>> = [
@@ -38,7 +38,9 @@ export const makeUpdateOneFile = (context: APIContext) => {
 					'isGlobal',
 				];
 				const hasTargettedKey = targettedKeys.some(key => updatedKeys.has(key));
-				if (!hasTargettedKey) return Promise.resolve();
+				if (!hasTargettedKey) {
+					return Promise.resolve();
+				}
 
 				const baseRequestOptions: HTTPRequestOptions = {
 					body: JSON.stringify(toRawUpdatableFile(data, current)),
@@ -52,7 +54,9 @@ export const makeUpdateOneFile = (context: APIContext) => {
 			const fileP = (async (): Promise<any> => {
 				const targettedKeys: Array<keyof Required<UpdatableFile>> = ['file'];
 				const hasTargettedKey = targettedKeys.some(key => updatedKeys.has(key));
-				if (!hasTargettedKey) return Promise.resolve();
+				if (!hasTargettedKey) {
+					return Promise.resolve();
+				}
 
 				const formData = new FormData();
 				formData.append('file', data.file);
@@ -69,7 +73,9 @@ export const makeUpdateOneFile = (context: APIContext) => {
 			await Promise.all([metadataP, fileP]);
 			return getOneFile(data.id);
 		} catch (err) {
-			if (err instanceof Error) throw err;
+			if (err instanceof Error) {
+				throw err;
+			}
 			throw Error('Unknown error');
 		}
 	};

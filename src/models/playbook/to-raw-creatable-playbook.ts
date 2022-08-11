@@ -17,12 +17,14 @@ export const toRawCreatablePlaybook = (creatable: CreatablePlaybook): RawCreatab
 	const metadata: Required<RawPlaybookDecodedMetadata> = { dashboards: [], attachments: [] };
 
 	// Add cover image to metadata, if it exists
-	if (isUUID(creatable.coverImageFileGlobalID))
+	if (isUUID(creatable.coverImageFileGlobalID)) {
 		metadata.attachments.push({ context: 'cover', type: 'image', fileGUID: creatable.coverImageFileGlobalID });
+	}
 
 	// Add banner image to metadata, if it exists
-	if (isUUID(creatable.bannerImageFileGlobalID))
+	if (isUUID(creatable.bannerImageFileGlobalID)) {
 		metadata.attachments.push({ context: 'banner', type: 'image', fileGUID: creatable.bannerImageFileGlobalID });
+	}
 
 	return omitUndefinedShallow({
 		UID: creatable.userID ? toRawNumericID(creatable.userID) : undefined,

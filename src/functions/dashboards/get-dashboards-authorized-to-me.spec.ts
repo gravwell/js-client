@@ -17,12 +17,30 @@ import { makeGetAllDashboards } from './get-all-dashboards';
 import { makeGetDashboardsAuthorizedToMe } from './get-dashboards-authorized-to-me';
 
 describe('getDashboardsAuthorizedToMe()', () => {
-	const getDashboardsAuthorizedToMe = makeGetDashboardsAuthorizedToMe(TEST_BASE_API_CONTEXT);
-	const createOneDashboard = makeCreateOneDashboard(TEST_BASE_API_CONTEXT);
-	const deleteOneDashboard = makeDeleteOneDashboard(TEST_BASE_API_CONTEXT);
-	const getAllDashboards = makeGetAllDashboards(TEST_BASE_API_CONTEXT);
-	const createOneUser = makeCreateOneUser(TEST_BASE_API_CONTEXT);
-	const login = makeLoginOneUser(TEST_BASE_API_CONTEXT);
+	let getDashboardsAuthorizedToMe: ReturnType<typeof makeGetDashboardsAuthorizedToMe>;
+	beforeAll(async () => {
+		getDashboardsAuthorizedToMe = makeGetDashboardsAuthorizedToMe(await TEST_BASE_API_CONTEXT());
+	});
+	let createOneDashboard: ReturnType<typeof makeCreateOneDashboard>;
+	beforeAll(async () => {
+		createOneDashboard = makeCreateOneDashboard(await TEST_BASE_API_CONTEXT());
+	});
+	let deleteOneDashboard: ReturnType<typeof makeDeleteOneDashboard>;
+	beforeAll(async () => {
+		deleteOneDashboard = makeDeleteOneDashboard(await TEST_BASE_API_CONTEXT());
+	});
+	let getAllDashboards: ReturnType<typeof makeGetAllDashboards>;
+	beforeAll(async () => {
+		getAllDashboards = makeGetAllDashboards(await TEST_BASE_API_CONTEXT());
+	});
+	let createOneUser: ReturnType<typeof makeCreateOneUser>;
+	beforeAll(async () => {
+		createOneUser = makeCreateOneUser(await TEST_BASE_API_CONTEXT());
+	});
+	let login: ReturnType<typeof makeLoginOneUser>;
+	beforeAll(async () => {
+		login = makeLoginOneUser(await TEST_BASE_API_CONTEXT());
+	});
 
 	let adminDashboards: Array<Dashboard>;
 
@@ -43,25 +61,13 @@ describe('getDashboardsAuthorizedToMe()', () => {
 				name: 'D1',
 				searches: [],
 				tiles: [],
-				timeframe: {
-					durationString: 'PT1H',
-					end: null,
-					start: null,
-					timeframe: 'PT1H',
-					timezone: null,
-				},
+				timeframe: { durationString: 'PT1H', end: null, start: null, timeframe: 'PT1H', timezone: null },
 			},
 			{
 				name: 'D2',
 				searches: [],
 				tiles: [],
-				timeframe: {
-					durationString: 'PT1H',
-					end: null,
-					start: null,
-					timeframe: 'PT1H',
-					timezone: null,
-				},
+				timeframe: { durationString: 'PT1H', end: null, start: null, timeframe: 'PT1H', timezone: null },
 			},
 		];
 		const createPromises = creatableDashboards.map(creatable => createOneDashboard(creatable));
@@ -85,42 +91,24 @@ describe('getDashboardsAuthorizedToMe()', () => {
 				name: 'D3',
 				searches: [],
 				tiles: [],
-				timeframe: {
-					durationString: 'PT1H',
-					end: null,
-					start: null,
-					timeframe: 'PT1H',
-					timezone: null,
-				},
+				timeframe: { durationString: 'PT1H', end: null, start: null, timeframe: 'PT1H', timezone: null },
 			},
 			{
 				name: 'D4',
 				searches: [],
 				tiles: [],
-				timeframe: {
-					durationString: 'PT1H',
-					end: null,
-					start: null,
-					timeframe: 'PT1H',
-					timezone: null,
-				},
+				timeframe: { durationString: 'PT1H', end: null, start: null, timeframe: 'PT1H', timezone: null },
 			},
 			{
 				name: 'D5',
 				searches: [],
 				tiles: [],
-				timeframe: {
-					durationString: 'PT1H',
-					end: null,
-					start: null,
-					timeframe: 'PT1H',
-					timezone: null,
-				},
+				timeframe: { durationString: 'PT1H', end: null, start: null, timeframe: 'PT1H', timezone: null },
 			},
 		];
 
 		const createOneDashboardAsAnalyst = makeCreateOneDashboard({
-			...TEST_BASE_API_CONTEXT,
+			...(await TEST_BASE_API_CONTEXT()),
 			authToken: analystAuth,
 		});
 
@@ -133,20 +121,26 @@ describe('getDashboardsAuthorizedToMe()', () => {
 		integrationTest(async () => {
 			const actualAdminDashboards = await getDashboardsAuthorizedToMe();
 			expect(sortBy(actualAdminDashboards, m => m.id)).toEqual(sortBy(adminDashboards, m => m.id));
-			for (const dashboard of actualAdminDashboards) expect(isDashboard(dashboard)).toBeTrue();
+			for (const dashboard of actualAdminDashboards) {
+				expect(isDashboard(dashboard)).toBeTrue();
+			}
 
 			const getDashboardsAuthorizedToAnalyst = makeGetDashboardsAuthorizedToMe({
-				...TEST_BASE_API_CONTEXT,
+				...(await TEST_BASE_API_CONTEXT()),
 				authToken: analystAuth,
 			});
 
 			const actualAnalystDashboards = await getDashboardsAuthorizedToAnalyst();
 			expect(sortBy(actualAnalystDashboards, m => m.id)).toEqual(sortBy(analystDashboards, m => m.id));
-			for (const dashboard of actualAnalystDashboards) expect(isDashboard(dashboard)).toBeTrue();
+			for (const dashboard of actualAnalystDashboards) {
+				expect(isDashboard(dashboard)).toBeTrue();
+			}
 
 			const allDashboards = await getAllDashboards();
 			expect(sortBy(allDashboards, m => m.id)).toEqual(sortBy([...analystDashboards, ...adminDashboards], m => m.id));
-			for (const dashboard of allDashboards) expect(isDashboard(dashboard)).toBeTrue();
+			for (const dashboard of allDashboards) {
+				expect(isDashboard(dashboard)).toBeTrue();
+			}
 		}),
 	);
 });

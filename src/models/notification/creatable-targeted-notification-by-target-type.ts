@@ -13,12 +13,11 @@ import {
 } from './creatable-targeted-notification';
 import { TargetedNotificationTargetType } from './targeted-notification';
 
-export type CreatableTargetedNotificationByTargetType<
-	TargetType extends TargetedNotificationTargetType
-> = TargetType extends 'myself'
-	? CreatableMyselfTargetedNotification
-	: TargetType extends 'group'
-	? CreatableGroupTargetedNotification
-	: TargetType extends 'user'
-	? CreatableUserTargetedNotification
-	: never;
+export type CreatableTargetedNotificationByTargetType<TargetType extends TargetedNotificationTargetType> =
+	TargetType extends 'myself'
+		? CreatableMyselfTargetedNotification
+		: TargetType extends 'group'
+		? CreatableGroupTargetedNotification
+		: TargetType extends 'user'
+		? CreatableUserTargetedNotification
+		: never;

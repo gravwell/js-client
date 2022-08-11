@@ -6,9 +6,11 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-export const lazyLast = <Last>(getLast: () => Last) => <F extends (...args: Array<any>) => any>(f: F) => (
-	...args: DropLast<Parameters<F>>
-): ReturnType<F> => f(...args, getLast());
+export const lazyLast =
+	<Last>(getLast: () => Last) =>
+	<F extends (...args: Array<any>) => any>(f: F) =>
+	(...args: DropLast<Parameters<F>>): ReturnType<F> =>
+		f(...args, getLast());
 
 export type DropLast<Args extends Array<any>> = TupleLength<Required<Args>> extends 0
 	? []

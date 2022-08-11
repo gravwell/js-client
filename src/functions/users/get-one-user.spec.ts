@@ -11,7 +11,10 @@ import { integrationTest, TEST_BASE_API_CONTEXT } from '~/tests';
 import { makeGetOneUser } from './get-one-user';
 
 describe('getOneUser()', () => {
-	const getOneUser = makeGetOneUser(TEST_BASE_API_CONTEXT);
+	let getOneUser: ReturnType<typeof makeGetOneUser>;
+	beforeAll(async () => {
+		getOneUser = makeGetOneUser(await TEST_BASE_API_CONTEXT());
+	});
 
 	it(
 		'Should return a user',

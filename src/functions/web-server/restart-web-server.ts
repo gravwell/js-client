@@ -19,7 +19,9 @@ export const makeRestartWebServer = (context: APIContext) => {
 			const raw = await context.fetch(url, { ...req, method: 'POST' });
 			await parseJSONResponse(raw, { expect: 'void' });
 		} catch (err) {
-			if (err instanceof Error && err.message.includes('socket hang up')) return;
+			if (err instanceof Error && err.message.includes('socket hang up')) {
+				return;
+			}
 			throw err;
 		}
 	};

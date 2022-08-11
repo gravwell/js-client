@@ -12,8 +12,14 @@ import { makeCreateServerTest } from './create-server-test';
 import { makeUpdateConfig } from './update-config';
 
 describe('makeCreateServerTest()', () => {
-	const updateMailServerConfig = makeUpdateConfig(TEST_BASE_API_CONTEXT);
-	const createServerTest = makeCreateServerTest(TEST_BASE_API_CONTEXT);
+	let updateMailServerConfig: ReturnType<typeof makeUpdateConfig>;
+	beforeAll(async () => {
+		updateMailServerConfig = makeUpdateConfig(await TEST_BASE_API_CONTEXT());
+	});
+	let createServerTest: ReturnType<typeof makeCreateServerTest>;
+	beforeAll(async () => {
+		createServerTest = makeCreateServerTest(await TEST_BASE_API_CONTEXT());
+	});
 
 	it(
 		'Should enqueue an email when mail server config is set',

@@ -10,16 +10,30 @@ import { createReadStream } from 'fs';
 import { omit } from 'lodash';
 import { join } from 'path';
 import { CreatableFile, isFileMetadata } from '~/models';
-import { integrationTest, myCustomMatchers, TEST_ASSETS_PATH, TEST_BASE_API_CONTEXT } from '~/tests';
+import {
+	integrationTest,
+	myCustomMatchers,
+	TEST_ASSETS_PATH,
+	TEST_BASE_API_CONTEXT,
+} from '~/tests';
 import { NumericID } from '~/value-objects';
 import { makeCreateOneGroup } from '../groups/create-one-group';
 import { makeDeleteAllGroups } from '../groups/delete-all-groups';
 import { makeCreateOneFile } from './create-one-file';
 
 describe('createOneFile()', () => {
-	const createOneFile = makeCreateOneFile(TEST_BASE_API_CONTEXT);
-	const createOneGroup = makeCreateOneGroup(TEST_BASE_API_CONTEXT);
-	const deleteAllGroups = makeDeleteAllGroups(TEST_BASE_API_CONTEXT);
+	let createOneFile: ReturnType<typeof makeCreateOneFile>;
+	beforeAll(async () => {
+		createOneFile = makeCreateOneFile(await TEST_BASE_API_CONTEXT());
+	});
+	let createOneGroup: ReturnType<typeof makeCreateOneGroup>;
+	beforeAll(async () => {
+		createOneGroup = makeCreateOneGroup(await TEST_BASE_API_CONTEXT());
+	});
+	let deleteAllGroups: ReturnType<typeof makeDeleteAllGroups>;
+	beforeAll(async () => {
+		deleteAllGroups = makeDeleteAllGroups(await TEST_BASE_API_CONTEXT());
+	});
 
 	let groupIDs: Array<NumericID>;
 

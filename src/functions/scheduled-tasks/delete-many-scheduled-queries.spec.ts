@@ -17,12 +17,30 @@ import { makeDeleteManyScheduledQueries } from './delete-many-scheduled-queries'
 import { makeGetAllScheduledQueries } from './get-all-scheduled-queries';
 
 describe('deleteManyScheduledQueries()', () => {
-	const createOneUser = makeCreateOneUser(TEST_BASE_API_CONTEXT);
-	const login = makeLoginOneUser(TEST_BASE_API_CONTEXT);
-	const getAllScheduledQueries = makeGetAllScheduledQueries(TEST_BASE_API_CONTEXT);
-	const deleteAllScheduledQueries = makeDeleteAllScheduledQueries(TEST_BASE_API_CONTEXT);
-	const createManyScheduledQueries = makeCreateManyScheduledQueries(TEST_BASE_API_CONTEXT);
-	const deleteManyScheduledQueries = makeDeleteManyScheduledQueries(TEST_BASE_API_CONTEXT);
+	let createOneUser: ReturnType<typeof makeCreateOneUser>;
+	beforeAll(async () => {
+		createOneUser = makeCreateOneUser(await TEST_BASE_API_CONTEXT());
+	});
+	let login: ReturnType<typeof makeLoginOneUser>;
+	beforeAll(async () => {
+		login = makeLoginOneUser(await TEST_BASE_API_CONTEXT());
+	});
+	let getAllScheduledQueries: ReturnType<typeof makeGetAllScheduledQueries>;
+	beforeAll(async () => {
+		getAllScheduledQueries = makeGetAllScheduledQueries(await TEST_BASE_API_CONTEXT());
+	});
+	let deleteAllScheduledQueries: ReturnType<typeof makeDeleteAllScheduledQueries>;
+	beforeAll(async () => {
+		deleteAllScheduledQueries = makeDeleteAllScheduledQueries(await TEST_BASE_API_CONTEXT());
+	});
+	let createManyScheduledQueries: ReturnType<typeof makeCreateManyScheduledQueries>;
+	beforeAll(async () => {
+		createManyScheduledQueries = makeCreateManyScheduledQueries(await TEST_BASE_API_CONTEXT());
+	});
+	let deleteManyScheduledQueries: ReturnType<typeof makeDeleteManyScheduledQueries>;
+	beforeAll(async () => {
+		deleteManyScheduledQueries = makeDeleteManyScheduledQueries(await TEST_BASE_API_CONTEXT());
+	});
 
 	let user: User;
 	let userAuth: string;
@@ -62,7 +80,7 @@ describe('deleteManyScheduledQueries()', () => {
 
 		// Create three scheduled queries as analyst
 		const createManyScheduledQueriesAsAnalyst = makeCreateManyScheduledQueries({
-			...TEST_BASE_API_CONTEXT,
+			...(await TEST_BASE_API_CONTEXT()),
 			authToken: userAuth,
 		});
 

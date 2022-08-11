@@ -6,8 +6,14 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { isUndefined } from 'lodash';
-import { RawResource, Resource, toRawUpdatableResourceMetadata, toResource, UpdatableResource } from '~/models';
+import { isNil, isUndefined } from 'lodash';
+import {
+	RawResource,
+	Resource,
+	toRawUpdatableResourceMetadata,
+	toResource,
+	UpdatableResource,
+} from '~/models';
 import {
 	APIContext,
 	buildHTTPRequestWithAuthFromContext,
@@ -55,9 +61,15 @@ export const makeUpdateOneResource = (context: APIContext) => {
 			await Promise.all([metadataP, contentP]);
 
 			const lastUpdatedResource = resources[resources.length - 1];
+			if (isNil(lastUpdatedResource)) {
+				throw new Error('No resources');
+			}
+
 			return lastUpdatedResource;
 		} catch (err) {
-			if (err instanceof Error) throw err;
+			if (err instanceof Error) {
+				throw err;
+			}
 			throw Error('Unknown error');
 		}
 	};

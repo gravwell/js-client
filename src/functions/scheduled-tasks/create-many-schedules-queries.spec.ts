@@ -15,10 +15,22 @@ import { makeCreateManyScheduledQueries } from './create-many-scheduled-queries'
 import { makeDeleteAllScheduledQueries } from './delete-all-scheduled-queries';
 
 describe('createManyScheduledQueries()', () => {
-	const createManyScheduledQueries = makeCreateManyScheduledQueries(TEST_BASE_API_CONTEXT);
-	const createOneGroup = makeCreateOneGroup(TEST_BASE_API_CONTEXT);
-	const deleteAllScheduledQueries = makeDeleteAllScheduledQueries(TEST_BASE_API_CONTEXT);
-	const deleteAllGroups = makeDeleteAllGroups(TEST_BASE_API_CONTEXT);
+	let createManyScheduledQueries: ReturnType<typeof makeCreateManyScheduledQueries>;
+	beforeAll(async () => {
+		createManyScheduledQueries = makeCreateManyScheduledQueries(await TEST_BASE_API_CONTEXT());
+	});
+	let createOneGroup: ReturnType<typeof makeCreateOneGroup>;
+	beforeAll(async () => {
+		createOneGroup = makeCreateOneGroup(await TEST_BASE_API_CONTEXT());
+	});
+	let deleteAllScheduledQueries: ReturnType<typeof makeDeleteAllScheduledQueries>;
+	beforeAll(async () => {
+		deleteAllScheduledQueries = makeDeleteAllScheduledQueries(await TEST_BASE_API_CONTEXT());
+	});
+	let deleteAllGroups: ReturnType<typeof makeDeleteAllGroups>;
+	beforeAll(async () => {
+		deleteAllGroups = makeDeleteAllGroups(await TEST_BASE_API_CONTEXT());
+	});
 
 	let groupIDs: Array<NumericID>;
 
@@ -75,7 +87,9 @@ describe('createManyScheduledQueries()', () => {
 			];
 
 			const scheduledQueries = await createManyScheduledQueries(data);
-			for (const q of scheduledQueries) expect(isScheduledQuery(q)).toBeTrue();
+			for (const q of scheduledQueries) {
+				expect(isScheduledQuery(q)).toBeTrue();
+			}
 			expect(scheduledQueries).toPartiallyEqual(data);
 		}),
 	);

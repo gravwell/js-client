@@ -14,7 +14,7 @@ import {
 	makeSaveOneSearch,
 	makeSubscribeToOneSearch,
 } from '~/functions/searches';
-import { makeStopOneSearch } from '~/functions/searches/stop one-search';
+import { makeStopOneSearch } from '~/functions/searches/stop-one-search';
 import { APIContext } from '~/functions/utils';
 import { SearchesService } from './service';
 

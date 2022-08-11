@@ -14,9 +14,18 @@ import { makeDeleteOnePlaybook } from './delete-one-playbook';
 import { makeGetAllPlaybooksRelatedToMe } from './get-all-playbooks-related-to-me';
 
 describe('getAllPlaybooksRelatedToMe()', () => {
-	const getAllPlaybooksRelatedToMe = makeGetAllPlaybooksRelatedToMe(TEST_BASE_API_CONTEXT);
-	const createOnePlaybook = makeCreateOnePlaybook(TEST_BASE_API_CONTEXT);
-	const deleteOnePlaybook = makeDeleteOnePlaybook(TEST_BASE_API_CONTEXT);
+	let getAllPlaybooksRelatedToMe: ReturnType<typeof makeGetAllPlaybooksRelatedToMe>;
+	beforeAll(async () => {
+		getAllPlaybooksRelatedToMe = makeGetAllPlaybooksRelatedToMe(await TEST_BASE_API_CONTEXT());
+	});
+	let createOnePlaybook: ReturnType<typeof makeCreateOnePlaybook>;
+	beforeAll(async () => {
+		createOnePlaybook = makeCreateOnePlaybook(await TEST_BASE_API_CONTEXT());
+	});
+	let deleteOnePlaybook: ReturnType<typeof makeDeleteOnePlaybook>;
+	beforeAll(async () => {
+		deleteOnePlaybook = makeDeleteOnePlaybook(await TEST_BASE_API_CONTEXT());
+	});
 
 	let createdPlaybooksUUIDs: Array<UUID> = [];
 
@@ -44,7 +53,9 @@ describe('getAllPlaybooksRelatedToMe()', () => {
 
 			expect(playbooks.map(p => ({ ...p, body: '' })).every(isPlaybook)).toBeTrue();
 			expect(playbooks.length).toBeGreaterThanOrEqual(createdPlaybooksUUIDs.length);
-			for (const playbookUUID of createdPlaybooksUUIDs) expect(playbookUUIDs).toContain(playbookUUID);
+			for (const playbookUUID of createdPlaybooksUUIDs) {
+				expect(playbookUUIDs).toContain(playbookUUID);
+			}
 		}),
 	);
 });

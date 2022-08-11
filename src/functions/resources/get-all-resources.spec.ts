@@ -11,7 +11,10 @@ import { integrationTest, TEST_BASE_API_CONTEXT } from '~/tests';
 import { makeGetAllResources } from './get-all-resources';
 
 describe('getAllResources()', () => {
-	const getAllResources = makeGetAllResources(TEST_BASE_API_CONTEXT);
+	let getAllResources: ReturnType<typeof makeGetAllResources>;
+	beforeAll(async () => {
+		getAllResources = makeGetAllResources(await TEST_BASE_API_CONTEXT());
+	});
 
 	beforeEach(async () => {
 		// TODO: Create two resources

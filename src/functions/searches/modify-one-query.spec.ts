@@ -7,10 +7,10 @@
  **************************************************************************/
 
 import { addMinutes } from 'date-fns';
-import { v4 as uuidv4 } from 'uuid';
 import { makeCreateOneAutoExtractor } from '~/functions/auto-extractors';
 import { ElementFilter } from '~/models';
 import { integrationTest, sleep, TEST_BASE_API_CONTEXT } from '~/tests';
+import { v4 as uuidv4 } from 'uuid';
 import { makeIngestMultiLineEntry } from '../ingestors/ingest-multi-line-entry';
 import { makeGetAllTags } from '../tags/get-all-tags';
 import { makeModifyOneQuery } from './modify-one-query';
@@ -32,11 +32,11 @@ describe('modifyOneQuery()', () => {
 	const start = new Date(2010, 0, 0);
 
 	// The end date for generated queries; one minute between each entry
-	const end = addMinutes(start, count - 1);
+	// const end = addMinutes(start, count - 1);
 
 	beforeAll(async () => {
 		// Generate and ingest some entries
-		const ingestMultiLineEntry = makeIngestMultiLineEntry(TEST_BASE_API_CONTEXT);
+		const ingestMultiLineEntry = makeIngestMultiLineEntry(await TEST_BASE_API_CONTEXT());
 		const values: Array<string> = [];
 		for (let i = 0; i < count; i++) {
 			const value: Entry = { timestamp: addMinutes(start, i).toISOString(), value: { foo: i } };
@@ -46,16 +46,17 @@ describe('modifyOneQuery()', () => {
 		await ingestMultiLineEntry({ data, tag, assumeLocalTimezone: false });
 
 		// Check the list of tags until our new tag appears
-		const getAllTags = makeGetAllTags(TEST_BASE_API_CONTEXT);
+		const getAllTags = makeGetAllTags(await TEST_BASE_API_CONTEXT());
 		while (!(await getAllTags()).includes(tag)) {
 			// Give the backend a moment to catch up
 			await sleep(1000);
 		}
 
 		// Create an AX definition for the generated tag
-		const createOneAutoExtractor = makeCreateOneAutoExtractor(TEST_BASE_API_CONTEXT);
+
+		const createOneAutoExtractor = makeCreateOneAutoExtractor(await TEST_BASE_API_CONTEXT());
 		await createOneAutoExtractor({
-			tag: tag,
+			tag,
 			name: `${tag} - JSON`,
 			description: '-',
 			module: 'json',
@@ -66,8 +67,8 @@ describe('modifyOneQuery()', () => {
 	it(
 		'Should return a new query with the filter applied',
 		integrationTest(async () => {
-			const validateOneQuery = makeValidateOneQuery(TEST_BASE_API_CONTEXT);
-			const modifyOneQuery = makeModifyOneQuery(TEST_BASE_API_CONTEXT);
+			const validateOneQuery = makeValidateOneQuery(await TEST_BASE_API_CONTEXT());
+			const modifyOneQuery = makeModifyOneQuery(await TEST_BASE_API_CONTEXT());
 
 			const query = `tag=${tag} table`;
 			const validation = await validateOneQuery(query);
@@ -95,8 +96,8 @@ describe('modifyOneQuery()', () => {
 	it(
 		'Should throw if the filters are invalid',
 		integrationTest(async () => {
-			const validateOneQuery = makeValidateOneQuery(TEST_BASE_API_CONTEXT);
-			const modifyOneQuery = makeModifyOneQuery(TEST_BASE_API_CONTEXT);
+			const validateOneQuery = makeValidateOneQuery(await TEST_BASE_API_CONTEXT());
+			const modifyOneQuery = makeModifyOneQuery(await TEST_BASE_API_CONTEXT());
 
 			const query = `tag=${tag} table`;
 			const validation = await validateOneQuery(query);

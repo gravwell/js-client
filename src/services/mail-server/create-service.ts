@@ -9,16 +9,14 @@ import { makeCreateServerTest, makeGetConfig, makeUpdateConfig } from '../../fun
 import { APIContext } from '../../functions/utils';
 import { MailServerService } from './service';
 
-export const createMailServerService = (context: APIContext): MailServerService => {
-	return {
-		get: {
-			config: makeGetConfig(context),
-		},
-		update: {
-			config: makeUpdateConfig(context),
-		},
-		create: {
-			test: makeCreateServerTest(context),
-		},
-	};
-};
+export const createMailServerService = (context: APIContext): MailServerService => ({
+	get: {
+		config: makeGetConfig(context),
+	},
+	update: {
+		config: makeUpdateConfig(context),
+	},
+	create: {
+		test: makeCreateServerTest(context),
+	},
+});

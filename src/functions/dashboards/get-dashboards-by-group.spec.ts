@@ -13,21 +13,49 @@ import { makeLoginOneUser } from '../auth/login-one-user';
 import { makeAddOneUserToManyGroups } from '../groups/add-one-user-to-many-groups';
 import { makeCreateOneGroup } from '../groups/create-one-group';
 import { makeCreateOneUser, makeGetMyUser } from '../users';
+import { assertIsNotNil } from '../utils/type-guards';
 import { makeCreateOneDashboard } from './create-one-dashboard';
 import { makeDeleteOneDashboard } from './delete-one-dashboard';
 import { makeGetAllDashboards } from './get-all-dashboards';
 import { makeGetDashboardsByGroup } from './get-dashboards-by-group';
 
 xdescribe('getDashboardsByGroup()', () => {
-	const getAllDashboards = makeGetAllDashboards(TEST_BASE_API_CONTEXT);
-	const createOneUser = makeCreateOneUser(TEST_BASE_API_CONTEXT);
-	const login = makeLoginOneUser(TEST_BASE_API_CONTEXT);
-	const createOneDashboard = makeCreateOneDashboard(TEST_BASE_API_CONTEXT);
-	const deleteOneDashboard = makeDeleteOneDashboard(TEST_BASE_API_CONTEXT);
-	const getDashboardsByGroup = makeGetDashboardsByGroup(TEST_BASE_API_CONTEXT);
-	const createOneGroup = makeCreateOneGroup(TEST_BASE_API_CONTEXT);
-	const addOneUserToManyGroups = makeAddOneUserToManyGroups(TEST_BASE_API_CONTEXT);
-	const getMyUser = makeGetMyUser(TEST_BASE_API_CONTEXT);
+	let getAllDashboards: ReturnType<typeof makeGetAllDashboards>;
+	beforeAll(async () => {
+		getAllDashboards = makeGetAllDashboards(await TEST_BASE_API_CONTEXT());
+	});
+	let createOneUser: ReturnType<typeof makeCreateOneUser>;
+	beforeAll(async () => {
+		createOneUser = makeCreateOneUser(await TEST_BASE_API_CONTEXT());
+	});
+	let login: ReturnType<typeof makeLoginOneUser>;
+	beforeAll(async () => {
+		login = makeLoginOneUser(await TEST_BASE_API_CONTEXT());
+	});
+	let createOneDashboard: ReturnType<typeof makeCreateOneDashboard>;
+	beforeAll(async () => {
+		createOneDashboard = makeCreateOneDashboard(await TEST_BASE_API_CONTEXT());
+	});
+	let deleteOneDashboard: ReturnType<typeof makeDeleteOneDashboard>;
+	beforeAll(async () => {
+		deleteOneDashboard = makeDeleteOneDashboard(await TEST_BASE_API_CONTEXT());
+	});
+	let getDashboardsByGroup: ReturnType<typeof makeGetDashboardsByGroup>;
+	beforeAll(async () => {
+		getDashboardsByGroup = makeGetDashboardsByGroup(await TEST_BASE_API_CONTEXT());
+	});
+	let createOneGroup: ReturnType<typeof makeCreateOneGroup>;
+	beforeAll(async () => {
+		createOneGroup = makeCreateOneGroup(await TEST_BASE_API_CONTEXT());
+	});
+	let addOneUserToManyGroups: ReturnType<typeof makeAddOneUserToManyGroups>;
+	beforeAll(async () => {
+		addOneUserToManyGroups = makeAddOneUserToManyGroups(await TEST_BASE_API_CONTEXT());
+	});
+	let getMyUser: ReturnType<typeof makeGetMyUser>;
+	beforeAll(async () => {
+		getMyUser = makeGetMyUser(await TEST_BASE_API_CONTEXT());
+	});
 
 	let admin: User;
 	let adminGroupID: string;
@@ -56,7 +84,10 @@ xdescribe('getDashboardsByGroup()', () => {
 		const creatableGroups: Array<CreatableGroup> = [{ name: 'Admin' }, { name: 'Analyst' }];
 		const groupCreationPs = creatableGroups.map(data => createOneGroup(data));
 		const groups = await Promise.all(groupCreationPs);
-		[adminGroupID, analystGroupID] = groups.map(g => g.id);
+		const [id0, id1] = groups.map(g => g.id);
+		assertIsNotNil(id0);
+		assertIsNotNil(id1);
+		[adminGroupID, analystGroupID] = [id0, id1];
 
 		// Assign admin to one group and analyst to the other
 		await Promise.all([
@@ -77,26 +108,14 @@ xdescribe('getDashboardsByGroup()', () => {
 				groupIDs: [adminGroupID],
 				searches: [],
 				tiles: [],
-				timeframe: {
-					durationString: 'PT1H',
-					end: null,
-					start: null,
-					timeframe: 'PT1H',
-					timezone: null,
-				},
+				timeframe: { durationString: 'PT1H', end: null, start: null, timeframe: 'PT1H', timezone: null },
 			},
 			{
 				name: 'D2',
 				groupIDs: [adminGroupID],
 				searches: [],
 				tiles: [],
-				timeframe: {
-					durationString: 'PT1H',
-					end: null,
-					start: null,
-					timeframe: 'PT1H',
-					timezone: null,
-				},
+				timeframe: { durationString: 'PT1H', end: null, start: null, timeframe: 'PT1H', timezone: null },
 			},
 		];
 		const createPromises = creatableDashboards.map(creatable => createOneDashboard(creatable));
@@ -109,44 +128,26 @@ xdescribe('getDashboardsByGroup()', () => {
 				groupIDs: [analystGroupID],
 				searches: [],
 				tiles: [],
-				timeframe: {
-					durationString: 'PT1H',
-					end: null,
-					start: null,
-					timeframe: 'PT1H',
-					timezone: null,
-				},
+				timeframe: { durationString: 'PT1H', end: null, start: null, timeframe: 'PT1H', timezone: null },
 			},
 			{
 				name: 'D4',
 				groupIDs: [analystGroupID],
 				searches: [],
 				tiles: [],
-				timeframe: {
-					durationString: 'PT1H',
-					end: null,
-					start: null,
-					timeframe: 'PT1H',
-					timezone: null,
-				},
+				timeframe: { durationString: 'PT1H', end: null, start: null, timeframe: 'PT1H', timezone: null },
 			},
 			{
 				name: 'D5',
 				groupIDs: [analystGroupID],
 				searches: [],
 				tiles: [],
-				timeframe: {
-					durationString: 'PT1H',
-					end: null,
-					start: null,
-					timeframe: 'PT1H',
-					timezone: null,
-				},
+				timeframe: { durationString: 'PT1H', end: null, start: null, timeframe: 'PT1H', timezone: null },
 			},
 		];
 
 		const createOneDashboardAsAnalyst = makeCreateOneDashboard({
-			...TEST_BASE_API_CONTEXT,
+			...(await TEST_BASE_API_CONTEXT()),
 			authToken: analystAuth,
 		});
 
@@ -195,7 +196,7 @@ xdescribe('getDashboardsByGroup()', () => {
 			await expectAsync(getDashboardsByGroup(analystGroupID)).toBeResolved();
 
 			const getDashboardsByGroupAsAnalyst = makeGetDashboardsByGroup({
-				...TEST_BASE_API_CONTEXT,
+				...(await TEST_BASE_API_CONTEXT()),
 				authToken: analystAuth,
 			});
 

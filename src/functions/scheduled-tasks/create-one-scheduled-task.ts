@@ -47,7 +47,9 @@ export const makeCreateOneScheduledTask = (context: APIContext) => {
 			const task: ScheduledTask = await getOneScheduledTask(scheduledTaskID);
 			return task as any;
 		} catch (err) {
-			if (err instanceof Error) throw err;
+			if (err instanceof Error) {
+				throw err;
+			}
 			throw Error('Unknown error');
 		}
 	};

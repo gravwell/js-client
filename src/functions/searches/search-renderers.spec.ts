@@ -9,8 +9,7 @@
 import { addMinutes } from 'date-fns';
 import { random, sample } from 'lodash';
 import { lastValueFrom } from 'rxjs';
-import { last, takeWhile } from 'rxjs/operators';
-import { v4 as uuidv4 } from 'uuid';
+import { takeWhile } from 'rxjs/operators';
 import {
 	HexSearchEntries,
 	PcapSearchEntries,
@@ -19,6 +18,7 @@ import {
 	StackGraphSearchEntries,
 } from '~/models';
 import { integrationTest, myCustomMatchers, sleep, TEST_BASE_API_CONTEXT } from '~/tests';
+import { v4 as uuidv4 } from 'uuid';
 import { makeIngestMultiLineEntry } from '../ingestors';
 import { makeGetAllTags } from '../tags';
 import { makeSubscribeToOneSearch } from './subscribe-to-one-search';
@@ -47,7 +47,10 @@ const randomCoordinate = (): Coordinate => ({ lat: random(-85, 85), lon: random(
 
 describe('search renderer types', () => {
 	// Make function to subscript to a search
-	const subscribeToOneSearch = makeSubscribeToOneSearch(TEST_BASE_API_CONTEXT);
+	let subscribeToOneSearch: ReturnType<typeof makeSubscribeToOneSearch>;
+	beforeAll(async () => {
+		subscribeToOneSearch = makeSubscribeToOneSearch(await TEST_BASE_API_CONTEXT());
+	});
 
 	// Use a randomly generated tag, so that we know exactly what we're going to query
 	const tag = uuidv4();
@@ -67,7 +70,7 @@ describe('search renderer types', () => {
 		jasmine.addMatchers(myCustomMatchers);
 
 		// Generate and ingest some entries
-		const ingestMultiLineEntry = makeIngestMultiLineEntry(TEST_BASE_API_CONTEXT);
+		const ingestMultiLineEntry = makeIngestMultiLineEntry(await TEST_BASE_API_CONTEXT());
 		const values: Array<string> = [];
 		for (let i = 0; i < count; i++) {
 			const value: Entry = {
@@ -87,7 +90,7 @@ describe('search renderer types', () => {
 		await ingestMultiLineEntry({ data, tag, assumeLocalTimezone: false });
 
 		// Check the list of tags until our new tag appears
-		const getAllTags = makeGetAllTags(TEST_BASE_API_CONTEXT);
+		const getAllTags = makeGetAllTags(await TEST_BASE_API_CONTEXT());
 		while (!(await getAllTags()).includes(tag)) {
 			// Give the backend a moment to catch up
 			await sleep(1000);
@@ -100,7 +103,7 @@ describe('search renderer types', () => {
 		integrationTest(async () => {
 			// Perform a query, rendering it as point2point
 			const query = `tag=${tag} json srclocation.lat as slat srclocation.lon as slon dstlocation.lat as dlat dstlocation.lon as dlon | point2point -srclat slat -srclong slon -dstlat dlat -dstlong dlon`;
-			const filter: SearchFilter = { entriesOffset: { index: 0, count: count }, dateRange: { start, end } };
+			const filter: SearchFilter = { entriesOffset: { index: 0, count }, dateRange: { start, end } };
 			const search = await subscribeToOneSearch(query, { filter });
 
 			// Wait on the entries to come back
@@ -122,7 +125,7 @@ describe('search renderer types', () => {
 		integrationTest(async () => {
 			// Perform a query, rendering it as hex
 			const query = `tag=${tag} hex`;
-			const filter: SearchFilter = { entriesOffset: { index: 0, count: count }, dateRange: { start, end } };
+			const filter: SearchFilter = { entriesOffset: { index: 0, count }, dateRange: { start, end } };
 			const search = await subscribeToOneSearch(query, { filter });
 
 			// Wait on the entries to come back
@@ -144,7 +147,7 @@ describe('search renderer types', () => {
 		integrationTest(async () => {
 			// Perform a query, rendering it as pcap
 			const query = `tag=${tag} pcap`;
-			const filter: SearchFilter = { entriesOffset: { index: 0, count: count }, dateRange: { start, end } };
+			const filter: SearchFilter = { entriesOffset: { index: 0, count }, dateRange: { start, end } };
 			const search = await subscribeToOneSearch(query, { filter });
 
 			// Wait on the entries to come back

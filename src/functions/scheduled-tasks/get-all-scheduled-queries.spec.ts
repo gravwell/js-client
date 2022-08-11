@@ -13,9 +13,18 @@ import { makeDeleteAllScheduledQueries } from './delete-all-scheduled-queries';
 import { makeGetAllScheduledQueries } from './get-all-scheduled-queries';
 
 describe('getAllScheduledQueries()', () => {
-	const getAllScheduledQueries = makeGetAllScheduledQueries(TEST_BASE_API_CONTEXT);
-	const deleteAllScheduledQueries = makeDeleteAllScheduledQueries(TEST_BASE_API_CONTEXT);
-	const createManyScheduledQueries = makeCreateManyScheduledQueries(TEST_BASE_API_CONTEXT);
+	let getAllScheduledQueries: ReturnType<typeof makeGetAllScheduledQueries>;
+	beforeAll(async () => {
+		getAllScheduledQueries = makeGetAllScheduledQueries(await TEST_BASE_API_CONTEXT());
+	});
+	let deleteAllScheduledQueries: ReturnType<typeof makeDeleteAllScheduledQueries>;
+	beforeAll(async () => {
+		deleteAllScheduledQueries = makeDeleteAllScheduledQueries(await TEST_BASE_API_CONTEXT());
+	});
+	let createManyScheduledQueries: ReturnType<typeof makeCreateManyScheduledQueries>;
+	beforeAll(async () => {
+		createManyScheduledQueries = makeCreateManyScheduledQueries(await TEST_BASE_API_CONTEXT());
+	});
 
 	beforeEach(async () => {
 		await deleteAllScheduledQueries();

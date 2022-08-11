@@ -13,7 +13,7 @@ import { UserData } from './user-data';
 
 export const isValidUserData = (value: unknown): value is UserData => {
 	try {
-		const u = <UserData>value;
+		const u = value as UserData;
 		return (
 			isNumericID(u.id) &&
 			u.groupIDs.every(isNumericID) &&

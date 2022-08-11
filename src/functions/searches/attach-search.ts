@@ -6,14 +6,11 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-/**
- * @file Similar to {@link ./initiate-search.ts} but for existing searches.
- */
+/** @file Similar to {@link ./initiate-search.ts} but for existing searches. */
 
 import { isNil } from 'lodash';
 import { defer, firstValueFrom, Observable, of, Subject, throwError } from 'rxjs';
 import { concatMap, delay, filter, first, map, share, withLatestFrom } from 'rxjs/operators';
-import { v4 as uuidv4 } from 'uuid';
 import {
 	RawAttachSearchMessageSent,
 	RawSearchAttachedMessageReceived,
@@ -21,6 +18,7 @@ import {
 	RawSearchMessageSent,
 } from '~/models';
 import { NumericID } from '~/value-objects';
+import { v4 as uuidv4 } from 'uuid';
 import { APISubscription } from '../utils';
 
 /*
@@ -57,12 +55,12 @@ const SEARCH_ATTACH_RESULTS: Observable<{
 		rawSubscription.received$.pipe(
 			withLatestFrom(
 				// Wait to send RawAttachSearchMessageSent until concatMap has subscribed to the outer Observable
-				defer(() => {
-					return rawSubscription.send(<RawAttachSearchMessageSent>{
+				defer(() =>
+					rawSubscription.send({
 						type: 'attach',
 						data: { ID: searchID },
-					});
-				}),
+					} as RawAttachSearchMessageSent),
+				),
 			),
 			// Discard the (void) result from rawSubscription.send(). We only need the messages coming from received$
 			map(([msg]) => msg),
@@ -70,7 +68,7 @@ const SEARCH_ATTACH_RESULTS: Observable<{
 			// Filter to only RawSearchAttachedMessageReceived messages
 			filter((msg): msg is RawSearchAttachedMessageReceived => {
 				try {
-					const _msg = <RawSearchAttachedMessageReceived>msg;
+					const _msg = msg as RawSearchAttachedMessageReceived;
 					// We only check the type so that we don't discard error messages
 					// eg. { type: 'attach', data: { Error: 'Search ID is not found' }
 					return _msg.type === 'attach';

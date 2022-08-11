@@ -8,16 +8,29 @@
 
 import { CreatableAutoExtractor } from '~/models';
 import { integrationTest, TEST_BASE_API_CONTEXT } from '~/tests';
+import { assertIsNotNil } from '../utils/type-guards';
 import { makeCreateOneAutoExtractor } from './create-one-auto-extractor';
 import { makeDeleteOneAutoExtractor } from './delete-one-auto-extractor';
 import { makeGetAllAutoExtractors } from './get-all-auto-extractors';
 import { makeGetOneAutoExtractor } from './get-one-auto-extractor';
 
 describe('deleteOneAutoExtractor()', () => {
-	const createOneAutoExtractor = makeCreateOneAutoExtractor(TEST_BASE_API_CONTEXT);
-	const deleteOneAutoExtractor = makeDeleteOneAutoExtractor(TEST_BASE_API_CONTEXT);
-	const getAllAutoExtractors = makeGetAllAutoExtractors(TEST_BASE_API_CONTEXT);
-	const getOneAutoExtractor = makeGetOneAutoExtractor(TEST_BASE_API_CONTEXT);
+	let createOneAutoExtractor: ReturnType<typeof makeCreateOneAutoExtractor>;
+	beforeAll(async () => {
+		createOneAutoExtractor = makeCreateOneAutoExtractor(await TEST_BASE_API_CONTEXT());
+	});
+	let deleteOneAutoExtractor: ReturnType<typeof makeDeleteOneAutoExtractor>;
+	beforeAll(async () => {
+		deleteOneAutoExtractor = makeDeleteOneAutoExtractor(await TEST_BASE_API_CONTEXT());
+	});
+	let getAllAutoExtractors: ReturnType<typeof makeGetAllAutoExtractors>;
+	beforeAll(async () => {
+		getAllAutoExtractors = makeGetAllAutoExtractors(await TEST_BASE_API_CONTEXT());
+	});
+	let getOneAutoExtractor: ReturnType<typeof makeGetOneAutoExtractor>;
+	beforeAll(async () => {
+		getOneAutoExtractor = makeGetOneAutoExtractor(await TEST_BASE_API_CONTEXT());
+	});
 
 	beforeEach(async () => {
 		// Delete all auto extractors
@@ -57,6 +70,7 @@ describe('deleteOneAutoExtractor()', () => {
 			expect(currentAutoExtractorIDs.length).toBe(2);
 
 			const deleteAutoExtractorID = currentAutoExtractorIDs[0];
+			assertIsNotNil(deleteAutoExtractorID);
 			await deleteOneAutoExtractor(deleteAutoExtractorID);
 			await expectAsync(getOneAutoExtractor(deleteAutoExtractorID)).toBeRejected();
 

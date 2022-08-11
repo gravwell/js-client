@@ -9,6 +9,7 @@
 import {
 	CreatableTargetedNotification,
 	CreatableTargetedNotificationByTargetType,
+	creatableTargetedNotificationGuard,
 	TargetedNotificationTargetType,
 	toRawCreatableTargetedNotification,
 } from '~/models';
@@ -21,13 +22,19 @@ import {
 	URLOptions,
 } from '../utils';
 
-export const makeCreateOneTargetedNotification = (context: APIContext) => {
-	return async <TargetType extends TargetedNotificationTargetType>(
+export const makeCreateOneTargetedNotification =
+	(context: APIContext) =>
+	async <TargetType extends TargetedNotificationTargetType>(
 		targetType: TargetType,
 		creatable: Omit<CreatableTargetedNotificationByTargetType<TargetType>, 'targetType'>,
 	): Promise<void> => {
 		try {
-			const _creatable: CreatableTargetedNotification = { ...creatable, targetType: targetType as any };
+			// There may be some trick to make {...creatable, targetType} pass as a CreatableTargetedNotification,
+			// but I couldn't make it work. Until someone figures that out, this guard will work.
+			const _creatable: CreatableTargetedNotification = creatableTargetedNotificationGuard({
+				...creatable,
+				targetType,
+			});
 			const url = _buildURL(_creatable, { ...context, protocol: 'http' });
 
 			const baseRequestOptions: HTTPRequestOptions = {
@@ -38,11 +45,12 @@ export const makeCreateOneTargetedNotification = (context: APIContext) => {
 			const raw = await context.fetch(url, { ...req, method: 'POST' });
 			return parseJSONResponse(raw, { expect: 'void' });
 		} catch (err) {
-			if (err instanceof Error) throw err;
+			if (err instanceof Error) {
+				throw err;
+			}
 			throw Error('Unknown error');
 		}
 	};
-};
 
 const _buildURL = (creatable: CreatableTargetedNotification, baseOptions: URLOptions): string => {
 	switch (creatable.targetType) {

@@ -10,8 +10,9 @@ import { RawSearch2, Search2, toSearch2 } from '~/models';
 import { NumericID } from '~/value-objects';
 import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, parseJSONResponse } from '../utils';
 
-export const makeGetOnePersistentSearchStatus = (context: APIContext) => {
-	return async (searchID: NumericID): Promise<Search2> => {
+export const makeGetOnePersistentSearchStatus =
+	(context: APIContext) =>
+	async (searchID: NumericID): Promise<Search2> => {
 		const templatePath = '/api/searchctrl/{searchID}';
 		const url = buildURL(templatePath, { ...context, protocol: 'http', pathParams: { searchID } });
 
@@ -21,4 +22,3 @@ export const makeGetOnePersistentSearchStatus = (context: APIContext) => {
 		const rawRes = await parseJSONResponse<RawSearch2>(raw);
 		return toSearch2(rawRes);
 	};
-};

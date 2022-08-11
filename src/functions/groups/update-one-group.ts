@@ -16,8 +16,9 @@ import {
 } from '../utils';
 import { makeGetOneGroup } from './get-one-group';
 
-export const makeUpdateOneGroup = (context: APIContext) => {
-	return async (data: UpdatableGroup): Promise<Group> => {
+export const makeUpdateOneGroup =
+	(context: APIContext) =>
+	async (data: UpdatableGroup): Promise<Group> => {
 		const getOneGroup = makeGetOneGroup(context);
 
 		const templatePath = '/api/groups/{groupID}';
@@ -33,8 +34,9 @@ export const makeUpdateOneGroup = (context: APIContext) => {
 			await parseJSONResponse(raw, { expect: 'void' });
 			return await getOneGroup(data.id);
 		} catch (err) {
-			if (err instanceof Error) throw err;
+			if (err instanceof Error) {
+				throw err;
+			}
 			throw Error('Unknown error');
 		}
 	};
-};

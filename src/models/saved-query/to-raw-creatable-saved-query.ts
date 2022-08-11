@@ -14,7 +14,7 @@ import { CreatableSavedQuery } from './creatable-saved-query';
 import { RawCreatableSavedQuery } from './raw-creatable-saved-query';
 
 export const toRawCreatableSavedQuery = (data: CreatableSavedQuery): RawCreatableSavedQuery =>
-	omitUndefinedShallow<RawCreatableSavedQuery>({
+	omitUndefinedShallow({
 		GUID: data.globalID,
 
 		GIDs: (data.groupIDs ?? []).map(toRawNumericID),

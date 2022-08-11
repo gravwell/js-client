@@ -17,12 +17,30 @@ import { makeGetAllSavedQueries } from './get-all-saved-queries';
 import { makeGetSavedQueriesAuthorizedToMe } from './get-saved-queries-authorized-to-me';
 
 describe('getSavedQueriesAuthorizedToMe()', () => {
-	const getSavedQueriesAuthorizedToMe = makeGetSavedQueriesAuthorizedToMe(TEST_BASE_API_CONTEXT);
-	const createOneSavedQuery = makeCreateOneSavedQuery(TEST_BASE_API_CONTEXT);
-	const deleteOneSavedQuery = makeDeleteOneSavedQuery(TEST_BASE_API_CONTEXT);
-	const getAllSavedQueries = makeGetAllSavedQueries(TEST_BASE_API_CONTEXT);
-	const createOneUser = makeCreateOneUser(TEST_BASE_API_CONTEXT);
-	const login = makeLoginOneUser(TEST_BASE_API_CONTEXT);
+	let getSavedQueriesAuthorizedToMe: ReturnType<typeof makeGetSavedQueriesAuthorizedToMe>;
+	beforeAll(async () => {
+		getSavedQueriesAuthorizedToMe = makeGetSavedQueriesAuthorizedToMe(await TEST_BASE_API_CONTEXT());
+	});
+	let createOneSavedQuery: ReturnType<typeof makeCreateOneSavedQuery>;
+	beforeAll(async () => {
+		createOneSavedQuery = makeCreateOneSavedQuery(await TEST_BASE_API_CONTEXT());
+	});
+	let deleteOneSavedQuery: ReturnType<typeof makeDeleteOneSavedQuery>;
+	beforeAll(async () => {
+		deleteOneSavedQuery = makeDeleteOneSavedQuery(await TEST_BASE_API_CONTEXT());
+	});
+	let getAllSavedQueries: ReturnType<typeof makeGetAllSavedQueries>;
+	beforeAll(async () => {
+		getAllSavedQueries = makeGetAllSavedQueries(await TEST_BASE_API_CONTEXT());
+	});
+	let createOneUser: ReturnType<typeof makeCreateOneUser>;
+	beforeAll(async () => {
+		createOneUser = makeCreateOneUser(await TEST_BASE_API_CONTEXT());
+	});
+	let login: ReturnType<typeof makeLoginOneUser>;
+	beforeAll(async () => {
+		login = makeLoginOneUser(await TEST_BASE_API_CONTEXT());
+	});
 
 	let adminSavedQueries: Array<SavedQuery>;
 
@@ -80,7 +98,7 @@ describe('getSavedQueriesAuthorizedToMe()', () => {
 		];
 
 		const createOneSavedQueryAsAnalyst = makeCreateOneSavedQuery({
-			...TEST_BASE_API_CONTEXT,
+			...(await TEST_BASE_API_CONTEXT()),
 			authToken: analystAuth,
 		});
 
@@ -93,22 +111,28 @@ describe('getSavedQueriesAuthorizedToMe()', () => {
 		integrationTest(async () => {
 			const actualAdminSavedQueries = await getSavedQueriesAuthorizedToMe();
 			expect(sortBy(actualAdminSavedQueries, m => m.id)).toEqual(sortBy(adminSavedQueries, m => m.id));
-			for (const savedQuery of actualAdminSavedQueries) expect(isSavedQuery(savedQuery)).toBeTrue();
+			for (const savedQuery of actualAdminSavedQueries) {
+				expect(isSavedQuery(savedQuery)).toBeTrue();
+			}
 
 			const getSavedQueriesAuthorizedToAnalyst = makeGetSavedQueriesAuthorizedToMe({
-				...TEST_BASE_API_CONTEXT,
+				...(await TEST_BASE_API_CONTEXT()),
 				authToken: analystAuth,
 			});
 
 			const actualAnalystSavedQueries = await getSavedQueriesAuthorizedToAnalyst();
 			expect(sortBy(actualAnalystSavedQueries, m => m.id)).toEqual(sortBy(analystSavedQueries, m => m.id));
-			for (const savedQuery of actualAnalystSavedQueries) expect(isSavedQuery(savedQuery)).toBeTrue();
+			for (const savedQuery of actualAnalystSavedQueries) {
+				expect(isSavedQuery(savedQuery)).toBeTrue();
+			}
 
 			const allSavedQueries = await getAllSavedQueries();
 			expect(sortBy(allSavedQueries, m => m.id)).toEqual(
 				sortBy([...analystSavedQueries, ...adminSavedQueries], m => m.id),
 			);
-			for (const savedQuery of allSavedQueries) expect(isSavedQuery(savedQuery)).toBeTrue();
+			for (const savedQuery of allSavedQueries) {
+				expect(isSavedQuery(savedQuery)).toBeTrue();
+			}
 		}),
 	);
 });

@@ -35,7 +35,9 @@ export const makeUpdateOneMacro = (context: APIContext) => {
 			const rawMacro = await parseJSONResponse<RawMacro>(raw);
 			return toMacro(rawMacro);
 		} catch (err) {
-			if (err instanceof Error) throw err;
+			if (err instanceof Error) {
+				throw err;
+			}
 			throw Error('Unknown error');
 		}
 	};

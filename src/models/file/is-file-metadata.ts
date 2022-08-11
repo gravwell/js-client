@@ -12,7 +12,7 @@ import { isFileMetadataData } from './is-file-metadata-data';
 
 export const isFileMetadata = (value: unknown): value is FileMetadata => {
 	try {
-		const f = <FileMetadata>value;
+		const f = value as FileMetadata;
 		return f._tag === DATA_TYPE.FILE_METADATA && isFileMetadataData(f);
 	} catch {
 		return false;

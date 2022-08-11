@@ -10,7 +10,10 @@ import { integrationTest, TEST_BASE_API_CONTEXT } from '~/tests';
 import { makeValidateOneScript } from './validate-one-script';
 
 describe('validateOneScript()', () => {
-	const validateOneScript = makeValidateOneScript(TEST_BASE_API_CONTEXT);
+	let validateOneScript: ReturnType<typeof makeValidateOneScript>;
+	beforeAll(async () => {
+		validateOneScript = makeValidateOneScript(await TEST_BASE_API_CONTEXT());
+	});
 
 	it(
 		'Should approve a valid script',

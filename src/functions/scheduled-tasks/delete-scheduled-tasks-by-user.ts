@@ -9,8 +9,9 @@
 import { NumericID } from '~/value-objects';
 import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, parseJSONResponse } from '../utils';
 
-export const makeDeleteScheduledTasksByUser = (context: APIContext) => {
-	return async (userID: NumericID): Promise<void> => {
+export const makeDeleteScheduledTasksByUser =
+	(context: APIContext) =>
+	async (userID: NumericID): Promise<void> => {
 		const path = '/api/scheduledsearches/user/{userID}';
 		const url = buildURL(path, { ...context, protocol: 'http', pathParams: { userID } });
 
@@ -19,4 +20,3 @@ export const makeDeleteScheduledTasksByUser = (context: APIContext) => {
 		const raw = await context.fetch(url, { ...req, method: 'DELETE' });
 		return parseJSONResponse(raw, { expect: 'void' });
 	};
-};

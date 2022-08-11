@@ -10,7 +10,10 @@ import { integrationTest, TEST_BASE_API_CONTEXT } from '~/tests';
 import { makeGetMyNotifications } from './get-my-notifications';
 
 describe('getMyNotifications', () => {
-	const getMyNotifications = makeGetMyNotifications(TEST_BASE_API_CONTEXT);
+	let getMyNotifications: ReturnType<typeof makeGetMyNotifications>;
+	beforeAll(async () => {
+		getMyNotifications = makeGetMyNotifications(await TEST_BASE_API_CONTEXT());
+	});
 
 	it(
 		'Should be able to get all my notifications',

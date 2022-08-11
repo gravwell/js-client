@@ -10,16 +10,29 @@ import { createReadStream } from 'fs';
 import { join } from 'path';
 import { CreatableFile } from '~/models';
 import { integrationTest, TEST_ASSETS_PATH, TEST_BASE_API_CONTEXT } from '~/tests';
+import { assertIsNotNil } from '../utils/type-guards';
 import { makeCreateOneFile } from './create-one-file';
 import { makeDeleteOneFile } from './delete-one-file';
 import { makeGetAllFiles } from './get-all-files';
 import { makeGetOneFile } from './get-one-file';
 
 describe('deleteOneFile()', () => {
-	const createOneFile = makeCreateOneFile(TEST_BASE_API_CONTEXT);
-	const deleteOneFile = makeDeleteOneFile(TEST_BASE_API_CONTEXT);
-	const getAllFiles = makeGetAllFiles(TEST_BASE_API_CONTEXT);
-	const getOneFile = makeGetOneFile(TEST_BASE_API_CONTEXT);
+	let createOneFile: ReturnType<typeof makeCreateOneFile>;
+	beforeAll(async () => {
+		createOneFile = makeCreateOneFile(await TEST_BASE_API_CONTEXT());
+	});
+	let deleteOneFile: ReturnType<typeof makeDeleteOneFile>;
+	beforeAll(async () => {
+		deleteOneFile = makeDeleteOneFile(await TEST_BASE_API_CONTEXT());
+	});
+	let getAllFiles: ReturnType<typeof makeGetAllFiles>;
+	beforeAll(async () => {
+		getAllFiles = makeGetAllFiles(await TEST_BASE_API_CONTEXT());
+	});
+	let getOneFile: ReturnType<typeof makeGetOneFile>;
+	beforeAll(async () => {
+		getOneFile = makeGetOneFile(await TEST_BASE_API_CONTEXT());
+	});
 
 	beforeEach(async () => {
 		// Delete all files
@@ -51,6 +64,7 @@ describe('deleteOneFile()', () => {
 			expect(currentFileIDs.length).toBe(2);
 
 			const deleteFileID = currentFileIDs[0];
+			assertIsNotNil(deleteFileID);
 			await deleteOneFile(deleteFileID);
 			await expectAsync(getOneFile(deleteFileID)).toBeRejected();
 

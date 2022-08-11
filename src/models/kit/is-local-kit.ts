@@ -12,7 +12,7 @@ import { LocalKit } from './local-kit';
 
 export const isLocalKit = (v: any): v is LocalKit => {
 	try {
-		const k = <LocalKit>v;
+		const k = v as LocalKit;
 		return k._tag === DATA_TYPE.LOCAL_KIT && isLocalKitData(k);
 	} catch {
 		return false;

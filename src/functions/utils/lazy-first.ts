@@ -6,9 +6,11 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-export const lazyFirst = <First>(getFirst: () => First) => <F extends (first: First, ...args: Array<any>) => any>(
-	f: F,
-) => (...args: DropFirst<Parameters<F>>): ReturnType<F> => f(getFirst(), ...args);
+export const lazyFirst =
+	<First>(getFirst: () => First) =>
+	<F extends (first: First, ...args: Array<any>) => any>(f: F) =>
+	(...args: DropFirst<Parameters<F>>): ReturnType<F> =>
+		f(getFirst(), ...args);
 
 export type DropFirst<Args extends Array<any>> = ((...args: Args) => any) extends (arg: any, ...rest: infer Rest) => any
 	? Rest

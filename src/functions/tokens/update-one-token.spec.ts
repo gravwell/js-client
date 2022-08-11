@@ -14,10 +14,22 @@ import { makeGetAllTokens } from './get-all-tokens';
 import { makeUpdateOneToken } from './update-one-token';
 
 describe('updateOneToken()', () => {
-	const createOneToken = makeCreateOneToken(TEST_BASE_API_CONTEXT);
-	const updateOneToken = makeUpdateOneToken(TEST_BASE_API_CONTEXT);
-	const deleteOneToken = makeDeleteOneToken(TEST_BASE_API_CONTEXT);
-	const getAllTokens = makeGetAllTokens(TEST_BASE_API_CONTEXT);
+	let createOneToken: ReturnType<typeof makeCreateOneToken>;
+	beforeAll(async () => {
+		createOneToken = makeCreateOneToken(await TEST_BASE_API_CONTEXT());
+	});
+	let updateOneToken: ReturnType<typeof makeUpdateOneToken>;
+	beforeAll(async () => {
+		updateOneToken = makeUpdateOneToken(await TEST_BASE_API_CONTEXT());
+	});
+	let deleteOneToken: ReturnType<typeof makeDeleteOneToken>;
+	beforeAll(async () => {
+		deleteOneToken = makeDeleteOneToken(await TEST_BASE_API_CONTEXT());
+	});
+	let getAllTokens: ReturnType<typeof makeGetAllTokens>;
+	beforeAll(async () => {
+		getAllTokens = makeGetAllTokens(await TEST_BASE_API_CONTEXT());
+	});
 
 	let createdToken: Token;
 

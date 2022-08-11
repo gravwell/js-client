@@ -11,18 +11,37 @@ import { CreatableDashboard, CreatableUser, isDashboard, User } from '~/models';
 import { integrationTest, TEST_BASE_API_CONTEXT } from '~/tests';
 import { makeLoginOneUser } from '../auth/login-one-user';
 import { makeCreateOneUser } from '../users';
+import { assertIsNotNil } from '../utils/type-guards';
 import { makeCreateOneDashboard } from './create-one-dashboard';
 import { makeDeleteOneDashboard } from './delete-one-dashboard';
 import { makeGetAllDashboards } from './get-all-dashboards';
 import { makeGetDashboardsByUser } from './get-dashboards-by-user';
 
 describe('getDashboardsByUser()', () => {
-	const getAllDashboards = makeGetAllDashboards(TEST_BASE_API_CONTEXT);
-	const getDashboardsByUser = makeGetDashboardsByUser(TEST_BASE_API_CONTEXT);
-	const createOneUser = makeCreateOneUser(TEST_BASE_API_CONTEXT);
-	const login = makeLoginOneUser(TEST_BASE_API_CONTEXT);
-	const createOneDashboard = makeCreateOneDashboard(TEST_BASE_API_CONTEXT);
-	const deleteOneDashboard = makeDeleteOneDashboard(TEST_BASE_API_CONTEXT);
+	let getAllDashboards: ReturnType<typeof makeGetAllDashboards>;
+	beforeAll(async () => {
+		getAllDashboards = makeGetAllDashboards(await TEST_BASE_API_CONTEXT());
+	});
+	let getDashboardsByUser: ReturnType<typeof makeGetDashboardsByUser>;
+	beforeAll(async () => {
+		getDashboardsByUser = makeGetDashboardsByUser(await TEST_BASE_API_CONTEXT());
+	});
+	let createOneUser: ReturnType<typeof makeCreateOneUser>;
+	beforeAll(async () => {
+		createOneUser = makeCreateOneUser(await TEST_BASE_API_CONTEXT());
+	});
+	let login: ReturnType<typeof makeLoginOneUser>;
+	beforeAll(async () => {
+		login = makeLoginOneUser(await TEST_BASE_API_CONTEXT());
+	});
+	let createOneDashboard: ReturnType<typeof makeCreateOneDashboard>;
+	beforeAll(async () => {
+		createOneDashboard = makeCreateOneDashboard(await TEST_BASE_API_CONTEXT());
+	});
+	let deleteOneDashboard: ReturnType<typeof makeDeleteOneDashboard>;
+	beforeAll(async () => {
+		deleteOneDashboard = makeDeleteOneDashboard(await TEST_BASE_API_CONTEXT());
+	});
 
 	let user: User;
 	let userAuth: string;
@@ -40,25 +59,13 @@ describe('getDashboardsByUser()', () => {
 				name: 'D1',
 				searches: [],
 				tiles: [],
-				timeframe: {
-					durationString: 'PT1H',
-					end: null,
-					start: null,
-					timeframe: 'PT1H',
-					timezone: null,
-				},
+				timeframe: { durationString: 'PT1H', end: null, start: null, timeframe: 'PT1H', timezone: null },
 			},
 			{
 				name: 'D2',
 				searches: [],
 				tiles: [],
-				timeframe: {
-					durationString: 'PT1H',
-					end: null,
-					start: null,
-					timeframe: 'PT1H',
-					timezone: null,
-				},
+				timeframe: { durationString: 'PT1H', end: null, start: null, timeframe: 'PT1H', timezone: null },
 			},
 		];
 		const createPromises1 = creatableDashboards1.map(creatable => createOneDashboard(creatable));
@@ -82,42 +89,24 @@ describe('getDashboardsByUser()', () => {
 				name: 'D3',
 				searches: [],
 				tiles: [],
-				timeframe: {
-					durationString: 'PT1H',
-					end: null,
-					start: null,
-					timeframe: 'PT1H',
-					timezone: null,
-				},
+				timeframe: { durationString: 'PT1H', end: null, start: null, timeframe: 'PT1H', timezone: null },
 			},
 			{
 				name: 'D4',
 				searches: [],
 				tiles: [],
-				timeframe: {
-					durationString: 'PT1H',
-					end: null,
-					start: null,
-					timeframe: 'PT1H',
-					timezone: null,
-				},
+				timeframe: { durationString: 'PT1H', end: null, start: null, timeframe: 'PT1H', timezone: null },
 			},
 			{
 				name: 'D5',
 				searches: [],
 				tiles: [],
-				timeframe: {
-					durationString: 'PT1H',
-					end: null,
-					start: null,
-					timeframe: 'PT1H',
-					timezone: null,
-				},
+				timeframe: { durationString: 'PT1H', end: null, start: null, timeframe: 'PT1H', timezone: null },
 			},
 		];
 
 		const createOneDashboardAsAnalyst = makeCreateOneDashboard({
-			...TEST_BASE_API_CONTEXT,
+			...(await TEST_BASE_API_CONTEXT()),
 			authToken: userAuth,
 		});
 
@@ -162,13 +151,14 @@ describe('getDashboardsByUser()', () => {
 			const allDashboards = await getAllDashboards();
 			const allDashboardIDs = allDashboards.map(m => m.id);
 			const analystDashboardIDs = allDashboards.filter(m => m.userID === user.id).map(m => m.id);
-			const adminID = allDashboards.filter(m => m.userID !== user.id)[0].userID;
+			const adminID = allDashboards.filter(m => m.userID !== user.id)[0]?.userID;
+			assertIsNotNil(adminID);
 
 			expect(allDashboardIDs.length).toBe(5);
 			expect(analystDashboardIDs.length).toBe(3);
 
 			const getDashboardsByUserAsAnalyst = makeGetDashboardsByUser({
-				...TEST_BASE_API_CONTEXT,
+				...(await TEST_BASE_API_CONTEXT()),
 				authToken: userAuth,
 			});
 

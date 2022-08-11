@@ -6,7 +6,12 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { CreatableResource, Resource, ResourceContentPreview, UpdatableResource } from '~/models/resource';
+import {
+	CreatableResource,
+	Resource,
+	ResourceContentPreview,
+	UpdatableResource,
+} from '~/models/resource';
 
 export interface ResourcesService {
 	readonly get: {

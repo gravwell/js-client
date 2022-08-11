@@ -12,7 +12,7 @@ import { ScheduledScriptData } from './scheduled-script-data';
 
 export const isScheduledScriptData = (value: unknown): value is ScheduledScriptData => {
 	try {
-		const ss = <ScheduledScriptData>value;
+		const ss = value as ScheduledScriptData;
 		return (
 			isScheduledTaskBase(ss) &&
 			ss.type === 'script' &&

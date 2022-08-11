@@ -16,7 +16,7 @@ import { RemoteKitData } from './remote-kit-data';
 
 export const isRemoteKitData = (v: unknown): v is RemoteKitData => {
 	try {
-		const k = <RemoteKitData>v;
+		const k = v as RemoteKitData;
 		return (
 			isUUID(k.customID) &&
 			isUUID(k.globalID) &&

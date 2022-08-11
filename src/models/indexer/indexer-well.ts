@@ -21,7 +21,7 @@ export interface IndexerWell {
 
 export const isIndexerWell = (value: unknown): value is IndexerWell => {
 	try {
-		const i = <IndexerWell>value;
+		const i = value as IndexerWell;
 
 		return (
 			isUUID(i.uuid) &&

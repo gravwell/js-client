@@ -14,10 +14,22 @@ import { makeGetAllSavedQueries } from './get-all-saved-queries';
 import { makeUpdateOneSavedQuery } from './update-one-saved-query';
 
 describe('updateOneSavedQuery()', () => {
-	const createOneSavedQuery = makeCreateOneSavedQuery(TEST_BASE_API_CONTEXT);
-	const updateOneSavedQuery = makeUpdateOneSavedQuery(TEST_BASE_API_CONTEXT);
-	const deleteOneSavedQuery = makeDeleteOneSavedQuery(TEST_BASE_API_CONTEXT);
-	const getAllSavedQueries = makeGetAllSavedQueries(TEST_BASE_API_CONTEXT);
+	let createOneSavedQuery: ReturnType<typeof makeCreateOneSavedQuery>;
+	beforeAll(async () => {
+		createOneSavedQuery = makeCreateOneSavedQuery(await TEST_BASE_API_CONTEXT());
+	});
+	let updateOneSavedQuery: ReturnType<typeof makeUpdateOneSavedQuery>;
+	beforeAll(async () => {
+		updateOneSavedQuery = makeUpdateOneSavedQuery(await TEST_BASE_API_CONTEXT());
+	});
+	let deleteOneSavedQuery: ReturnType<typeof makeDeleteOneSavedQuery>;
+	beforeAll(async () => {
+		deleteOneSavedQuery = makeDeleteOneSavedQuery(await TEST_BASE_API_CONTEXT());
+	});
+	let getAllSavedQueries: ReturnType<typeof makeGetAllSavedQueries>;
+	beforeAll(async () => {
+		getAllSavedQueries = makeGetAllSavedQueries(await TEST_BASE_API_CONTEXT());
+	});
 
 	let createdSavedQuery: SavedQuery;
 

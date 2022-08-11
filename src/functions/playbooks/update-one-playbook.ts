@@ -6,7 +6,13 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { Playbook, RawPlaybook, toPlaybook, toRawUpdatablePlaybook, UpdatablePlaybook } from '~/models';
+import {
+	Playbook,
+	RawPlaybook,
+	toPlaybook,
+	toRawUpdatablePlaybook,
+	UpdatablePlaybook,
+} from '~/models';
 import {
 	APIContext,
 	buildHTTPRequestWithAuthFromContext,
@@ -40,7 +46,9 @@ export const makeUpdateOnePlaybook = (context: APIContext) => {
 			const rawRes = await parseJSONResponse<RawPlaybook>(raw);
 			return toPlaybook(rawRes);
 		} catch (err) {
-			if (err instanceof Error) throw err;
+			if (err instanceof Error) {
+				throw err;
+			}
 			throw Error('Unknown error');
 		}
 	};

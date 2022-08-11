@@ -12,12 +12,16 @@ import { makeSubscribeToManySystemInformations } from './subscribe-to-many-syste
 const wait = (n: number) => new Promise(resolve => setTimeout(resolve, n));
 
 describe('subscribeToManySystemInformations()', () => {
-	const subscribeToManySystemInformations = makeSubscribeToManySystemInformations(TEST_BASE_API_CONTEXT);
+	let subscribeToManySystemInformations: ReturnType<typeof makeSubscribeToManySystemInformations>;
+	beforeAll(async () => {
+		subscribeToManySystemInformations = makeSubscribeToManySystemInformations(await TEST_BASE_API_CONTEXT());
+	});
 
 	it(
 		'Should return a function given a valid host',
 		unitTest(() => {
-			const fn = () => makeSubscribeToManySystemInformations({ ...TEST_BASE_API_CONTEXT, host: 'www.example.com' });
+			const fn = async () =>
+				makeSubscribeToManySystemInformations({ ...(await TEST_BASE_API_CONTEXT()), host: 'www.example.com' });
 			expect(fn).not.toThrow();
 			expect(typeof fn()).toBe('function');
 		}),
@@ -31,8 +35,11 @@ describe('subscribeToManySystemInformations()', () => {
 			pingSubscription.close();
 
 			for (const message of pingSubscription.received) {
-				if ((message as any).type !== undefined) expect((message as any).type).toBe('ping');
-				else expect(message).toEqual({ Resp: 'ACK' });
+				if ((message as any).type !== undefined) {
+					expect((message as any).type).toBe('ping');
+				} else {
+					expect(message).toEqual({ Resp: 'ACK' });
+				}
 			}
 		}),
 	);

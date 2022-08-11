@@ -6,7 +6,11 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { RawUserPreferencesWithMetadata, toUserPreferencesWithMetadata, UserPreferencesWithMetadata } from '~/models';
+import {
+	RawUserPreferencesWithMetadata,
+	toUserPreferencesWithMetadata,
+	UserPreferencesWithMetadata,
+} from '~/models';
 import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, parseJSONResponse } from '../utils';
 
 export const makeGetAllUserPreferences = (context: APIContext) => {

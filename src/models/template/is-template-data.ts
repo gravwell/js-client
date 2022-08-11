@@ -13,7 +13,7 @@ import { TemplateData } from './template-data';
 
 export const isTemplateData = (value: unknown): value is TemplateData => {
 	try {
-		const t = <TemplateData>value;
+		const t = value as TemplateData;
 		return (
 			isUUID(t.globalID) &&
 			isUUID(t.id) &&

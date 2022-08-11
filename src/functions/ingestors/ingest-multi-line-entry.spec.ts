@@ -10,7 +10,10 @@ import { integrationTest, TEST_BASE_API_CONTEXT } from '~/tests';
 import { makeIngestMultiLineEntry } from './ingest-multi-line-entry';
 
 describe('ingestMultiLineEntry()', () => {
-	const ingestMultiLineEntry = makeIngestMultiLineEntry(TEST_BASE_API_CONTEXT);
+	let ingestMultiLineEntry: ReturnType<typeof makeIngestMultiLineEntry>;
+	beforeAll(async () => {
+		ingestMultiLineEntry = makeIngestMultiLineEntry(await TEST_BASE_API_CONTEXT());
+	});
 
 	xit(
 		'Should ingest the file entry',

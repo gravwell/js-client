@@ -49,7 +49,9 @@ export const makeUpdateOneScheduledTask = (context: APIContext) => {
 			const task: ScheduledTask = toScheduledTask(rawScheduledTask);
 			return task as any;
 		} catch (err) {
-			if (err instanceof Error) throw err;
+			if (err instanceof Error) {
+				throw err;
+			}
 			throw Error('Unknown error');
 		}
 	};

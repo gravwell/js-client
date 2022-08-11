@@ -9,22 +9,21 @@
 import { addMinutes } from 'date-fns';
 import { range } from 'lodash';
 import { lastValueFrom } from 'rxjs';
-import { last, map, takeWhile } from 'rxjs/operators';
-import { v4 as uuidv4 } from 'uuid';
+import { map, takeWhile } from 'rxjs/operators';
 import { CreatableJSONEntry, RawSearchEntries } from '~/models';
 import { integrationTest, sleep, TEST_BASE_API_CONTEXT } from '~/tests';
+import { v4 as uuidv4 } from 'uuid';
 import { makeIngestJSONEntries } from '../ingestors';
 import { makeSubscribeToOneSearch } from '../searches';
 import { makeGetAllTags } from '../tags';
+import { assertIsNotNil } from '../utils/type-guards';
 import { makeGenerateAutoExtractors } from './generate-auto-extractors';
 
-interface Entry {
-	timestamp: string;
-	value: number;
-}
-
 describe('generateAutoExtractors()', () => {
-	const generateAutoExtractors = makeGenerateAutoExtractors(TEST_BASE_API_CONTEXT);
+	let generateAutoExtractors: ReturnType<typeof makeGenerateAutoExtractors>;
+	beforeAll(async () => {
+		generateAutoExtractors = makeGenerateAutoExtractors(await TEST_BASE_API_CONTEXT());
+	});
 
 	// Use a randomly generated tag, so that we know exactly what we're going to query
 	const tag = uuidv4();
@@ -40,7 +39,7 @@ describe('generateAutoExtractors()', () => {
 
 	beforeAll(async () => {
 		// Generate and ingest some entries
-		const ingestJSONEntries = makeIngestJSONEntries(TEST_BASE_API_CONTEXT);
+		const ingestJSONEntries = makeIngestJSONEntries(await TEST_BASE_API_CONTEXT());
 		const values: Array<CreatableJSONEntry> = range(0, count).map(i => {
 			const timestamp = addMinutes(start, i).toISOString();
 			return {
@@ -53,7 +52,7 @@ describe('generateAutoExtractors()', () => {
 		await ingestJSONEntries(values);
 
 		// Check the list of tags until our new tag appears
-		const getAllTags = makeGetAllTags(TEST_BASE_API_CONTEXT);
+		const getAllTags = makeGetAllTags(await TEST_BASE_API_CONTEXT());
 		while (!(await getAllTags()).includes(tag)) {
 			// Give the backend a moment to catch up
 			await sleep(1000);
@@ -63,7 +62,7 @@ describe('generateAutoExtractors()', () => {
 	it(
 		'Should generate auto extractors',
 		integrationTest(async () => {
-			const subscribeToOneSearch = makeSubscribeToOneSearch(TEST_BASE_API_CONTEXT);
+			const subscribeToOneSearch = makeSubscribeToOneSearch(await TEST_BASE_API_CONTEXT());
 			const query = `tag=${tag} limit 10`;
 			const search = await subscribeToOneSearch(query, { filter: { dateRange: { start, end } } });
 
@@ -76,11 +75,14 @@ describe('generateAutoExtractors()', () => {
 
 			const exploreResults = await generateAutoExtractors({ tag, entries });
 
-			expect(Object.keys(exploreResults).length).withContext('we should get >0 AX suggestions').toBeGreaterThan(0);
-			expect(exploreResults['json']).withContext('we should have a JSON AX suggestion').toBeDefined();
-			expect(exploreResults['json'].length).withContext('we should have >0 JSON AX suggestions').toBeGreaterThan(0);
+			const jsonResults = exploreResults['json'];
+			assertIsNotNil(jsonResults);
 
-			exploreResults['json'].forEach(ax => {
+			expect(Object.keys(exploreResults).length).withContext('we should get >0 AX suggestions').toBeGreaterThan(0);
+			expect(jsonResults).withContext('we should have a JSON AX suggestion').toBeDefined();
+			expect(jsonResults.length).withContext('we should have >0 JSON AX suggestions').toBeGreaterThan(0);
+
+			jsonResults.forEach(ax => {
 				expect(ax.autoExtractor.tag).withContext('the suggested AX tag should match the provided tag').toEqual(tag);
 				expect(ax.autoExtractor.module).withContext('the suggested AX module should be json').toEqual('json');
 				expect(ax.confidence).withContext('json is the right module, so its confidence should be 10').toEqual(10);

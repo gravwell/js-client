@@ -13,9 +13,18 @@ import { makeDeleteOneSavedQuery } from './delete-one-saved-query';
 import { makeGetAllSavedQueries } from './get-all-saved-queries';
 
 describe('getAllSavedQueries()', () => {
-	const createOneSavedQuery = makeCreateOneSavedQuery(TEST_BASE_API_CONTEXT);
-	const deleteOneSavedQuery = makeDeleteOneSavedQuery(TEST_BASE_API_CONTEXT);
-	const getAllSavedQueries = makeGetAllSavedQueries(TEST_BASE_API_CONTEXT);
+	let createOneSavedQuery: ReturnType<typeof makeCreateOneSavedQuery>;
+	beforeAll(async () => {
+		createOneSavedQuery = makeCreateOneSavedQuery(await TEST_BASE_API_CONTEXT());
+	});
+	let deleteOneSavedQuery: ReturnType<typeof makeDeleteOneSavedQuery>;
+	beforeAll(async () => {
+		deleteOneSavedQuery = makeDeleteOneSavedQuery(await TEST_BASE_API_CONTEXT());
+	});
+	let getAllSavedQueries: ReturnType<typeof makeGetAllSavedQueries>;
+	beforeAll(async () => {
+		getAllSavedQueries = makeGetAllSavedQueries(await TEST_BASE_API_CONTEXT());
+	});
 
 	beforeEach(async () => {
 		// Delete all saved queries

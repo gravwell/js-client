@@ -23,6 +23,4 @@ export const isMailServerConfig = (v: any): v is MailServerConfig => {
 	return false;
 };
 
-const isOfTypeOrNil = (v: any, func: (value: any) => boolean): boolean => {
-	return func(v) || isNil(v);
-};
+const isOfTypeOrNil = (v: any, func: (value: any) => boolean): boolean => func(v) || isNil(v);

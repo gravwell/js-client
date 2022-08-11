@@ -6,7 +6,13 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { CreatableToken, RawTokenWithSecret, TokenWithSecret, toRawCreatableToken, toTokenWithSecret } from '~/models';
+import {
+	CreatableToken,
+	RawTokenWithSecret,
+	TokenWithSecret,
+	toRawCreatableToken,
+	toTokenWithSecret,
+} from '~/models';
 import {
 	APIContext,
 	buildHTTPRequestWithAuthFromContext,
@@ -30,7 +36,9 @@ export const makeCreateOneToken = (context: APIContext) => {
 			const rawRes = await parseJSONResponse<RawTokenWithSecret>(raw);
 			return toTokenWithSecret(rawRes);
 		} catch (err) {
-			if (err instanceof Error) throw err;
+			if (err instanceof Error) {
+				throw err;
+			}
 			throw Error('Unknown error');
 		}
 	};

@@ -25,9 +25,13 @@ export const makeGetManyMacros = (context: APIContext) => {
 			return userMacros.filter(m => m.groupIDs.includes(groupID));
 		}
 
-		if (isNumericID(filter.userID)) return getMacrosByUser(filter.userID);
+		if (isNumericID(filter.userID)) {
+			return getMacrosByUser(filter.userID);
+		}
 
-		if (isNumericID(filter.groupID)) return getMacrosByGroup(filter.groupID);
+		if (isNumericID(filter.groupID)) {
+			return getMacrosByGroup(filter.groupID);
+		}
 
 		return getAllMacros();
 	};

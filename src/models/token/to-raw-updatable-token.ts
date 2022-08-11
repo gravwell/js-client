@@ -7,16 +7,14 @@
  **************************************************************************/
 
 import { isUndefined } from 'lodash';
-import { RawUpdatableToken } from '~/main';
+import { RawUpdatableToken } from '~/index';
 import { Token } from './token';
 import { UpdatableToken } from './updatable-token';
 
-export const toRawUpdatableToken = (updatable: UpdatableToken, current: Token): RawUpdatableToken => {
-	return {
-		id: updatable.id,
-		name: updatable.name ?? current.name,
-		description: isUndefined(updatable.description) ? current.description : updatable.description,
-		capabilities: updatable.capabilities ?? current.capabilities,
-		expiresAt: (isUndefined(updatable.expiresAt) ? current.expiresAt : updatable.expiresAt)?.toISOString() ?? null,
-	};
-};
+export const toRawUpdatableToken = (updatable: UpdatableToken, current: Token): RawUpdatableToken => ({
+	id: updatable.id,
+	name: updatable.name ?? current.name,
+	description: isUndefined(updatable.description) ? current.description : updatable.description,
+	capabilities: updatable.capabilities ?? current.capabilities,
+	expiresAt: (isUndefined(updatable.expiresAt) ? current.expiresAt : updatable.expiresAt)?.toISOString() ?? null,
+});

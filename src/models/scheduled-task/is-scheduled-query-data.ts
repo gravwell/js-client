@@ -12,7 +12,7 @@ import { ScheduledQuery } from './scheduled-query';
 
 export const isScheduledQueryData = (value: unknown): value is ScheduledQuery => {
 	try {
-		const sq = <ScheduledQuery>value;
+		const sq = value as ScheduledQuery;
 		return (
 			isScheduledTaskBase(sq) &&
 			sq.type === 'query' &&

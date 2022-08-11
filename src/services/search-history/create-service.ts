@@ -25,9 +25,13 @@ export const createSearchHistoryService = (context: APIContext): SearchHistorySe
 				return groupHistory.filter(s => s.userID === filter.userID);
 			}
 
-			if (isNumericID(filter.userID)) return await getSearchHistory({ target: 'user', userID: filter.userID });
+			if (isNumericID(filter.userID)) {
+				return await getSearchHistory({ target: 'user', userID: filter.userID });
+			}
 
-			if (isNumericID(filter.groupID)) return await getSearchHistory({ target: 'group', groupID: filter.groupID });
+			if (isNumericID(filter.groupID)) {
+				return await getSearchHistory({ target: 'group', groupID: filter.groupID });
+			}
 
 			return await getSearchHistory({ target: 'all' });
 		},

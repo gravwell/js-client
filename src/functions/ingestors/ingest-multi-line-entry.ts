@@ -6,7 +6,6 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import * as FormData from 'form-data';
 import { CreatableMultiLineEntry } from '~/models';
 import {
 	APIContext,
@@ -30,7 +29,9 @@ export const makeIngestMultiLineEntry = (context: APIContext) => {
 			const raw = await context.fetch(url, { ...req, method: 'POST' });
 			return parseJSONResponse(raw);
 		} catch (err) {
-			if (err instanceof Error) throw err;
+			if (err instanceof Error) {
+				throw err;
+			}
 			throw Error('Unknown error');
 		}
 	};
@@ -39,9 +40,16 @@ export const makeIngestMultiLineEntry = (context: APIContext) => {
 const toFormData = (creatable: CreatableMultiLineEntry): FormData => {
 	const formData = new FormData();
 	formData.append('tag', creatable.tag);
+	if (creatable.skipTimestampParsing) {
+		formData.append('noparsetimestamp', 'true');
+	}
+	if (creatable.assumeLocalTimezone) {
+		formData.append('assumelocaltimezone', 'true');
+	}
+
 	// !WARNING: Adding an empty line at the end because gravwell/gravwell#2285
-	formData.append('file', creatable.data + '\n', { filename: 'doesnt-matter.txt' });
-	if (creatable.skipTimestampParsing) formData.append('noparsetimestamp', true);
-	if (creatable.assumeLocalTimezone) formData.append('assumelocaltimezone', true);
+	const blob = new Blob([creatable.data + '\n'], { type: 'text/plain' });
+	formData.append('file', blob, 'doesnt-matter.txt');
+
 	return formData;
 };

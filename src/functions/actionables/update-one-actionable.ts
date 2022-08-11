@@ -6,7 +6,13 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { Actionable, RawActionable, toActionable, toRawUpdatableActionable, UpdatableActionable } from '~/models';
+import {
+	Actionable,
+	RawActionable,
+	toActionable,
+	toRawUpdatableActionable,
+	UpdatableActionable,
+} from '~/models';
 import {
 	APIContext,
 	buildHTTPRequestWithAuthFromContext,
@@ -39,7 +45,9 @@ export const makeUpdateOneActionable = (context: APIContext) => {
 			const rawRes = await parseJSONResponse<RawActionable>(raw);
 			return toActionable(rawRes);
 		} catch (err) {
-			if (err instanceof Error) throw err;
+			if (err instanceof Error) {
+				throw err;
+			}
 			throw Error('Unknown error');
 		}
 	};

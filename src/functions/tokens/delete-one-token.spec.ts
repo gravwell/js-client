@@ -8,16 +8,29 @@
 
 import { CreatableToken, TokenCapability } from '~/models';
 import { integrationTest, TEST_BASE_API_CONTEXT } from '~/tests';
+import { assertIsNotNil } from '../utils/type-guards';
 import { makeCreateOneToken } from './create-one-token';
 import { makeDeleteOneToken } from './delete-one-token';
 import { makeGetAllTokens } from './get-all-tokens';
 import { makeGetOneToken } from './get-one-token';
 
 describe('deleteOneToken()', () => {
-	const createOneToken = makeCreateOneToken(TEST_BASE_API_CONTEXT);
-	const deleteOneToken = makeDeleteOneToken(TEST_BASE_API_CONTEXT);
-	const getAllTokens = makeGetAllTokens(TEST_BASE_API_CONTEXT);
-	const getOneToken = makeGetOneToken(TEST_BASE_API_CONTEXT);
+	let createOneToken: ReturnType<typeof makeCreateOneToken>;
+	beforeAll(async () => {
+		createOneToken = makeCreateOneToken(await TEST_BASE_API_CONTEXT());
+	});
+	let deleteOneToken: ReturnType<typeof makeDeleteOneToken>;
+	beforeAll(async () => {
+		deleteOneToken = makeDeleteOneToken(await TEST_BASE_API_CONTEXT());
+	});
+	let getAllTokens: ReturnType<typeof makeGetAllTokens>;
+	beforeAll(async () => {
+		getAllTokens = makeGetAllTokens(await TEST_BASE_API_CONTEXT());
+	});
+	let getOneToken: ReturnType<typeof makeGetOneToken>;
+	beforeAll(async () => {
+		getOneToken = makeGetOneToken(await TEST_BASE_API_CONTEXT());
+	});
 
 	beforeEach(async () => {
 		// Delete all tokens
@@ -49,6 +62,8 @@ describe('deleteOneToken()', () => {
 			expect(currentTokenIDs.length).toBe(2);
 
 			const deleteTokenID = currentTokenIDs[0];
+			assertIsNotNil(deleteTokenID);
+
 			await deleteOneToken(deleteTokenID);
 			await expectAsync(getOneToken(deleteTokenID)).toBeRejected();
 

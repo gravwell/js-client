@@ -10,7 +10,10 @@ import { integrationTest, TEST_BASE_API_CONTEXT } from '~/tests';
 import { makeSyncAllScriptLibraries } from './sync-all-script-libraries';
 
 describe('syncAllScriptLibraries()', () => {
-	const syncAllScriptLibraries = makeSyncAllScriptLibraries(TEST_BASE_API_CONTEXT);
+	let syncAllScriptLibraries: ReturnType<typeof makeSyncAllScriptLibraries>;
+	beforeAll(async () => {
+		syncAllScriptLibraries = makeSyncAllScriptLibraries(await TEST_BASE_API_CONTEXT());
+	});
 
 	it(
 		'Should update all libraries',

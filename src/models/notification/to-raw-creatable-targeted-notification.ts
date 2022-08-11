@@ -20,7 +20,7 @@ import {
 export const toRawCreatableTargetedNotification = (
 	creatable: CreatableTargetedNotification,
 ): RawCreatableTargetedNotification => {
-	const base: RawCreatableBaseTargetedNotification = {
+	const base: RawCreatableBaseTargetedNotification = omitUndefinedShallow({
 		Msg: creatable.message,
 		Type: creatable.customID === undefined ? undefined : toRawNumericID(creatable.customID),
 		Broadcast: false,
@@ -28,7 +28,7 @@ export const toRawCreatableTargetedNotification = (
 		Sent: creatable.sentDate,
 		Expires: creatable.expirationDate,
 		IgnoreUntil: creatable.ignoreUntilDate,
-	};
+	});
 
 	switch (creatable.targetType) {
 		case 'myself':

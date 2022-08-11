@@ -29,7 +29,9 @@ export const makeIngestJSONEntries = (context: APIContext) => {
 			const raw = await context.fetch(url, { ...req, method: 'PUT' });
 			return parseJSONResponse(raw);
 		} catch (err) {
-			if (err instanceof Error) throw err;
+			if (err instanceof Error) {
+				throw err;
+			}
 			throw Error('Unknown error');
 		}
 	};

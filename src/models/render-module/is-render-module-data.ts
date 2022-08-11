@@ -11,7 +11,7 @@ import { RenderModuleData } from './render-module-data';
 
 export const isRenderModuleData = (value: unknown): value is RenderModuleData => {
 	try {
-		const m = <RenderModuleData>value;
+		const m = value as RenderModuleData;
 		return isString(m.name) && isString(m.description) && m.examples.every(isString);
 	} catch {
 		return false;

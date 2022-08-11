@@ -13,21 +13,49 @@ import { makeLoginOneUser } from '../auth/login-one-user';
 import { makeAddOneUserToManyGroups } from '../groups/add-one-user-to-many-groups';
 import { makeCreateOneGroup } from '../groups/create-one-group';
 import { makeCreateOneUser, makeGetMyUser } from '../users';
+import { assertIsNotNil } from '../utils/type-guards';
 import { makeCreateOneMacro } from './create-one-macro';
 import { makeDeleteOneMacro } from './delete-one-macro';
 import { makeGetAllMacros } from './get-all-macros';
 import { makeGetMacrosByGroup } from './get-macros-by-group';
 
 describe('getMacrosByGroup()', () => {
-	const getAllMacros = makeGetAllMacros(TEST_BASE_API_CONTEXT);
-	const createOneUser = makeCreateOneUser(TEST_BASE_API_CONTEXT);
-	const login = makeLoginOneUser(TEST_BASE_API_CONTEXT);
-	const createOneMacro = makeCreateOneMacro(TEST_BASE_API_CONTEXT);
-	const deleteOneMacro = makeDeleteOneMacro(TEST_BASE_API_CONTEXT);
-	const getMacrosByGroup = makeGetMacrosByGroup(TEST_BASE_API_CONTEXT);
-	const createOneGroup = makeCreateOneGroup(TEST_BASE_API_CONTEXT);
-	const addOneUserToManyGroups = makeAddOneUserToManyGroups(TEST_BASE_API_CONTEXT);
-	const getMyUser = makeGetMyUser(TEST_BASE_API_CONTEXT);
+	let getAllMacros: ReturnType<typeof makeGetAllMacros>;
+	beforeAll(async () => {
+		getAllMacros = makeGetAllMacros(await TEST_BASE_API_CONTEXT());
+	});
+	let createOneUser: ReturnType<typeof makeCreateOneUser>;
+	beforeAll(async () => {
+		createOneUser = makeCreateOneUser(await TEST_BASE_API_CONTEXT());
+	});
+	let login: ReturnType<typeof makeLoginOneUser>;
+	beforeAll(async () => {
+		login = makeLoginOneUser(await TEST_BASE_API_CONTEXT());
+	});
+	let createOneMacro: ReturnType<typeof makeCreateOneMacro>;
+	beforeAll(async () => {
+		createOneMacro = makeCreateOneMacro(await TEST_BASE_API_CONTEXT());
+	});
+	let deleteOneMacro: ReturnType<typeof makeDeleteOneMacro>;
+	beforeAll(async () => {
+		deleteOneMacro = makeDeleteOneMacro(await TEST_BASE_API_CONTEXT());
+	});
+	let getMacrosByGroup: ReturnType<typeof makeGetMacrosByGroup>;
+	beforeAll(async () => {
+		getMacrosByGroup = makeGetMacrosByGroup(await TEST_BASE_API_CONTEXT());
+	});
+	let createOneGroup: ReturnType<typeof makeCreateOneGroup>;
+	beforeAll(async () => {
+		createOneGroup = makeCreateOneGroup(await TEST_BASE_API_CONTEXT());
+	});
+	let addOneUserToManyGroups: ReturnType<typeof makeAddOneUserToManyGroups>;
+	beforeAll(async () => {
+		addOneUserToManyGroups = makeAddOneUserToManyGroups(await TEST_BASE_API_CONTEXT());
+	});
+	let getMyUser: ReturnType<typeof makeGetMyUser>;
+	beforeAll(async () => {
+		getMyUser = makeGetMyUser(await TEST_BASE_API_CONTEXT());
+	});
 
 	let admin: User;
 	let adminGroupID: string;
@@ -56,7 +84,10 @@ describe('getMacrosByGroup()', () => {
 		const creatableGroups: Array<CreatableGroup> = [{ name: 'Admin' }, { name: 'Analyst' }];
 		const groupCreationPs = creatableGroups.map(data => createOneGroup(data));
 		const groups = await Promise.all(groupCreationPs);
-		[adminGroupID, analystGroupID] = groups.map(g => g.id);
+		const [id0, id1] = groups.map(g => g.id);
+		assertIsNotNil(id0);
+		assertIsNotNil(id1);
+		[adminGroupID, analystGroupID] = [id0, id1];
 
 		// Assign admin to one group and analyst to the other
 		await Promise.all([
@@ -86,7 +117,7 @@ describe('getMacrosByGroup()', () => {
 		];
 
 		const createOneMacroAsAnalyst = makeCreateOneMacro({
-			...TEST_BASE_API_CONTEXT,
+			...(await TEST_BASE_API_CONTEXT()),
 			authToken: analystAuth,
 		});
 
@@ -135,7 +166,7 @@ describe('getMacrosByGroup()', () => {
 			await expectAsync(getMacrosByGroup(analystGroupID)).toBeResolved();
 
 			const getMacrosByGroupAsAnalyst = makeGetMacrosByGroup({
-				...TEST_BASE_API_CONTEXT,
+				...(await TEST_BASE_API_CONTEXT()),
 				authToken: analystAuth,
 			});
 

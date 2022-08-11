@@ -6,7 +6,13 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { Dashboard, RawDashboard, toDashboard, toRawUpdatableDashboard, UpdatableDashboard } from '~/models';
+import {
+	Dashboard,
+	RawDashboard,
+	toDashboard,
+	toRawUpdatableDashboard,
+	UpdatableDashboard,
+} from '~/models';
 import {
 	APIContext,
 	buildHTTPRequestWithAuthFromContext,
@@ -35,7 +41,9 @@ export const makeUpdateOneDashboard = (context: APIContext) => {
 			const rawDashboard = await parseJSONResponse<RawDashboard>(raw);
 			return toDashboard(rawDashboard);
 		} catch (err) {
-			if (err instanceof Error) throw err;
+			if (err instanceof Error) {
+				throw err;
+			}
 			throw Error('Unknown error');
 		}
 	};

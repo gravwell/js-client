@@ -8,12 +8,16 @@
 
 import { TEST_TYPES, TestType } from './config';
 
-type TestAssertion = Parameters<typeof it>[1];
+// from Jasmine
+type ImplementationCallback = (() => PromiseLike<any>) | (() => void) | ((done: DoneFn) => void);
 
-const makeRequireTestType = (testType: TestType, skipReason: string) => (assertion: TestAssertion): TestAssertion => {
-	const skip = !TEST_TYPES.includes(testType);
-	return skip ? () => pending(skipReason) : assertion;
-};
+const makeRequireTestType =
+	(testType: TestType, skipReason: string) =>
+	(assertion: ImplementationCallback): (() => PromiseLike<any>) =>
+	async () => {
+		const skip = !(await TEST_TYPES).includes(testType);
+		return skip ? () => pending(skipReason) : assertion;
+	};
 
 export const integrationTest = makeRequireTestType('integration', `Skipped because $INTEGRATION_TESTS is false`);
 export const unitTest = makeRequireTestType('unit', `Skipped because $UNIT_TESTS is false`);

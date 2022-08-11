@@ -10,8 +10,9 @@ import { RawToken, Token, toToken } from '~/models';
 import { UUID } from '~/value-objects';
 import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, parseJSONResponse } from '../utils';
 
-export const makeGetOneToken = (context: APIContext) => {
-	return async (tokenID: UUID): Promise<Token> => {
+export const makeGetOneToken =
+	(context: APIContext) =>
+	async (tokenID: UUID): Promise<Token> => {
 		const templatePath = '/api/tokens/{tokenID}';
 		const url = buildURL(templatePath, { ...context, protocol: 'http', pathParams: { tokenID } });
 
@@ -21,4 +22,3 @@ export const makeGetOneToken = (context: APIContext) => {
 		const rawRes = await parseJSONResponse<RawToken>(raw);
 		return toToken(rawRes);
 	};
-};

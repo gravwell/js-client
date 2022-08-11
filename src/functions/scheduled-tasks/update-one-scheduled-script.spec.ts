@@ -13,9 +13,18 @@ import { makeDeleteAllScheduledScripts } from './delete-all-scheduled-scripts';
 import { makeUpdateOneScheduledScript } from './update-one-scheduled-script';
 
 describe('updateOneScheduledScript()', () => {
-	const createOneScheduledScript = makeCreateOneScheduledScript(TEST_BASE_API_CONTEXT);
-	const updateOneScheduledScript = makeUpdateOneScheduledScript(TEST_BASE_API_CONTEXT);
-	const deleteAllScheduledScripts = makeDeleteAllScheduledScripts(TEST_BASE_API_CONTEXT);
+	let createOneScheduledScript: ReturnType<typeof makeCreateOneScheduledScript>;
+	beforeAll(async () => {
+		createOneScheduledScript = makeCreateOneScheduledScript(await TEST_BASE_API_CONTEXT());
+	});
+	let updateOneScheduledScript: ReturnType<typeof makeUpdateOneScheduledScript>;
+	beforeAll(async () => {
+		updateOneScheduledScript = makeUpdateOneScheduledScript(await TEST_BASE_API_CONTEXT());
+	});
+	let deleteAllScheduledScripts: ReturnType<typeof makeDeleteAllScheduledScripts>;
+	beforeAll(async () => {
+		deleteAllScheduledScripts = makeDeleteAllScheduledScripts(await TEST_BASE_API_CONTEXT());
+	});
 
 	let createdScheduledScript: ScheduledScript;
 

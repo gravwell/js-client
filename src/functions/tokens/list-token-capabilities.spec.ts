@@ -11,7 +11,10 @@ import { integrationTest, TEST_BASE_API_CONTEXT } from '~/tests';
 import { makeListTokenCapabilities } from './list-token-capabilities';
 
 describe('listTokenCapabilities()', () => {
-	const listTokenCapabilities = makeListTokenCapabilities(TEST_BASE_API_CONTEXT);
+	let listTokenCapabilities: ReturnType<typeof makeListTokenCapabilities>;
+	beforeAll(async () => {
+		listTokenCapabilities = makeListTokenCapabilities(await TEST_BASE_API_CONTEXT());
+	});
 
 	it(
 		'Should returns all token capabilities',

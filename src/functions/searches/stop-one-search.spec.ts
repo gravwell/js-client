@@ -7,15 +7,12 @@
  **************************************************************************/
 
 import { addMinutes } from 'date-fns';
-import { v4 as uuidv4 } from 'uuid';
 import { integrationTest, sleep, TEST_BASE_API_CONTEXT } from '~/tests';
+import { v4 as uuidv4 } from 'uuid';
 import { makeGetAllTags } from '..';
 import { makeIngestMultiLineEntry } from '../ingestors';
-import { makeGetAllPersistentSearchStatus, makeSubscribeToOneSearch } from '.';
-import { makeGetOnePersistentSearchStatus } from './get-one-persistent-search-status';
-import { makeGetPersistentSearchStatusRelatedToMe } from './get-persistent-search-status-related-to-me';
-import { makeSaveOneSearch } from './save-one-search';
-import { makeStopOneSearch } from './stop one-search';
+import { makeSubscribeToOneSearch } from '.';
+import { makeStopOneSearch } from './stop-one-search';
 
 interface Entry {
 	timestamp: string;
@@ -23,10 +20,6 @@ interface Entry {
 }
 
 describe('stopOneSearch()', () => {
-	const getPersistentSearchStatusRelatedToMe = makeGetPersistentSearchStatusRelatedToMe(TEST_BASE_API_CONTEXT);
-	const saveOneSearch = makeSaveOneSearch(TEST_BASE_API_CONTEXT);
-	const getOnePersistentSearchStatus = makeGetOnePersistentSearchStatus(TEST_BASE_API_CONTEXT);
-
 	// Use a randomly generated tag, so that we know exactly what we're going to query
 	const tag = uuidv4();
 
@@ -41,7 +34,7 @@ describe('stopOneSearch()', () => {
 
 	beforeAll(async () => {
 		// Generate and ingest some entries
-		const ingestMultiLineEntry = makeIngestMultiLineEntry(TEST_BASE_API_CONTEXT);
+		const ingestMultiLineEntry = makeIngestMultiLineEntry(await TEST_BASE_API_CONTEXT());
 		const values: Array<string> = [];
 		for (let i = 0; i < count; i++) {
 			const value: Entry = { timestamp: addMinutes(start, i).toISOString(), value: i };
@@ -51,7 +44,7 @@ describe('stopOneSearch()', () => {
 		await ingestMultiLineEntry({ data, tag, assumeLocalTimezone: false });
 
 		// Check the list of tags until our new tag appears
-		const getAllTags = makeGetAllTags(TEST_BASE_API_CONTEXT);
+		const getAllTags = makeGetAllTags(await TEST_BASE_API_CONTEXT());
 		while (!(await getAllTags()).includes(tag)) {
 			// Give the backend a moment to catch up
 			await sleep(1000);
@@ -61,11 +54,11 @@ describe('stopOneSearch()', () => {
 	xit(
 		'Should stop a search',
 		integrationTest(async () => {
-			const stopOneSearch = makeStopOneSearch(TEST_BASE_API_CONTEXT);
-			const subscribeToOneSearch = makeSubscribeToOneSearch(TEST_BASE_API_CONTEXT);
+			const stopOneSearch = makeStopOneSearch(await TEST_BASE_API_CONTEXT());
+			const subscribeToOneSearch = makeSubscribeToOneSearch(await TEST_BASE_API_CONTEXT());
 			const query = `tag=${tag} sleep 40ms`;
 			const search = await subscribeToOneSearch(query, {
-				filter: { entriesOffset: { index: 0, count: count }, dateRange: { start, end } },
+				filter: { entriesOffset: { index: 0, count }, dateRange: { start, end } },
 			});
 
 			expect(async () => await stopOneSearch(search.searchID)).not.toThrow();

@@ -13,7 +13,7 @@ import { Search2 } from './search2';
 
 export const isPersistentSearchData = (value: unknown): value is Search2 => {
 	try {
-		const s = <Search2>value;
+		const s = value as Search2;
 		return (
 			isNumericID(s.userID) &&
 			(isUndefined(s.groupID) || isNumericID(s.groupID)) &&
@@ -27,6 +27,6 @@ export const isPersistentSearchData = (value: unknown): value is Search2 => {
 };
 
 const isPersistentSearchState = (value: any): value is PersistentSearchDataState =>
-	(<Array<PersistentSearchDataState>>['active', 'dormant', 'backgrounded', 'saved', 'saving', 'attached']).includes(
+	(['active', 'dormant', 'backgrounded', 'saved', 'saving', 'attached'] as Array<PersistentSearchDataState>).includes(
 		value,
 	);

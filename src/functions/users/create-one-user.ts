@@ -35,7 +35,9 @@ export const makeCreateOneUser = (context: APIContext) => {
 			const userID = rawID.toString();
 			return await getOneUser(userID);
 		} catch (err) {
-			if (err instanceof Error) throw err;
+			if (err instanceof Error) {
+				throw err;
+			}
 			throw Error('Unknown error');
 		}
 	};

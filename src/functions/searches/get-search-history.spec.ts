@@ -14,10 +14,22 @@ import { makeCreateOneUser, makeGetMyUser } from '../users';
 import { makeGetSearchHistory } from './get-search-history';
 
 describe('getSearchHistory()', () => {
-	const getSearchHistory = makeGetSearchHistory(TEST_BASE_API_CONTEXT);
-	const createOneUser = makeCreateOneUser(TEST_BASE_API_CONTEXT);
-	const login = makeLoginOneUser(TEST_BASE_API_CONTEXT);
-	const getMyUser = makeGetMyUser(TEST_BASE_API_CONTEXT);
+	let getSearchHistory: ReturnType<typeof makeGetSearchHistory>;
+	beforeAll(async () => {
+		getSearchHistory = makeGetSearchHistory(await TEST_BASE_API_CONTEXT());
+	});
+	let createOneUser: ReturnType<typeof makeCreateOneUser>;
+	beforeAll(async () => {
+		createOneUser = makeCreateOneUser(await TEST_BASE_API_CONTEXT());
+	});
+	let login: ReturnType<typeof makeLoginOneUser>;
+	beforeAll(async () => {
+		login = makeLoginOneUser(await TEST_BASE_API_CONTEXT());
+	});
+	let getMyUser: ReturnType<typeof makeGetMyUser>;
+	beforeAll(async () => {
+		getMyUser = makeGetMyUser(await TEST_BASE_API_CONTEXT());
+	});
 
 	let admin: User;
 	let user: User;
@@ -82,7 +94,7 @@ describe('getSearchHistory()', () => {
 		'Should not get the search history of another user if the request was not from an admin',
 		integrationTest(async () => {
 			const getSearchHistoryAsAnalyst = makeGetSearchHistory({
-				...TEST_BASE_API_CONTEXT,
+				...(await TEST_BASE_API_CONTEXT()),
 				authToken: userAuth,
 			});
 

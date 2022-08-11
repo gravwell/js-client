@@ -17,12 +17,30 @@ import { makeGetAllMacros } from './get-all-macros';
 import { makeGetMacrosAuthorizedToMe } from './get-macros-authorized-to-me';
 
 describe('getMacrosAuthorizedToMe()', () => {
-	const getMacrosAuthorizedToMe = makeGetMacrosAuthorizedToMe(TEST_BASE_API_CONTEXT);
-	const createOneMacro = makeCreateOneMacro(TEST_BASE_API_CONTEXT);
-	const deleteOneMacro = makeDeleteOneMacro(TEST_BASE_API_CONTEXT);
-	const getAllMacros = makeGetAllMacros(TEST_BASE_API_CONTEXT);
-	const createOneUser = makeCreateOneUser(TEST_BASE_API_CONTEXT);
-	const login = makeLoginOneUser(TEST_BASE_API_CONTEXT);
+	let getMacrosAuthorizedToMe: ReturnType<typeof makeGetMacrosAuthorizedToMe>;
+	beforeAll(async () => {
+		getMacrosAuthorizedToMe = makeGetMacrosAuthorizedToMe(await TEST_BASE_API_CONTEXT());
+	});
+	let createOneMacro: ReturnType<typeof makeCreateOneMacro>;
+	beforeAll(async () => {
+		createOneMacro = makeCreateOneMacro(await TEST_BASE_API_CONTEXT());
+	});
+	let deleteOneMacro: ReturnType<typeof makeDeleteOneMacro>;
+	beforeAll(async () => {
+		deleteOneMacro = makeDeleteOneMacro(await TEST_BASE_API_CONTEXT());
+	});
+	let getAllMacros: ReturnType<typeof makeGetAllMacros>;
+	beforeAll(async () => {
+		getAllMacros = makeGetAllMacros(await TEST_BASE_API_CONTEXT());
+	});
+	let createOneUser: ReturnType<typeof makeCreateOneUser>;
+	beforeAll(async () => {
+		createOneUser = makeCreateOneUser(await TEST_BASE_API_CONTEXT());
+	});
+	let login: ReturnType<typeof makeLoginOneUser>;
+	beforeAll(async () => {
+		login = makeLoginOneUser(await TEST_BASE_API_CONTEXT());
+	});
 
 	let adminMacros: Array<Macro>;
 
@@ -65,7 +83,7 @@ describe('getMacrosAuthorizedToMe()', () => {
 		];
 
 		const createOneMacroAsAnalyst = makeCreateOneMacro({
-			...TEST_BASE_API_CONTEXT,
+			...(await TEST_BASE_API_CONTEXT()),
 			authToken: analystAuth,
 		});
 
@@ -78,20 +96,26 @@ describe('getMacrosAuthorizedToMe()', () => {
 		integrationTest(async () => {
 			const actualAdminMacros = await getMacrosAuthorizedToMe();
 			expect(sortBy(actualAdminMacros, m => m.id)).toEqual(sortBy(adminMacros, m => m.id));
-			for (const macro of actualAdminMacros) expect(isMacro(macro)).toBeTrue();
+			for (const macro of actualAdminMacros) {
+				expect(isMacro(macro)).toBeTrue();
+			}
 
 			const getMacrosAuthorizedToAnalyst = makeGetMacrosAuthorizedToMe({
-				...TEST_BASE_API_CONTEXT,
+				...(await TEST_BASE_API_CONTEXT()),
 				authToken: analystAuth,
 			});
 
 			const actualAnalystMacros = await getMacrosAuthorizedToAnalyst();
 			expect(sortBy(actualAnalystMacros, m => m.id)).toEqual(sortBy(analystMacros, m => m.id));
-			for (const macro of actualAnalystMacros) expect(isMacro(macro)).toBeTrue();
+			for (const macro of actualAnalystMacros) {
+				expect(isMacro(macro)).toBeTrue();
+			}
 
 			const allMacros = await getAllMacros();
 			expect(sortBy(allMacros, m => m.id)).toEqual(sortBy([...analystMacros, ...adminMacros], m => m.id));
-			for (const macro of allMacros) expect(isMacro(macro)).toBeTrue();
+			for (const macro of allMacros) {
+				expect(isMacro(macro)).toBeTrue();
+			}
 		}),
 	);
 });

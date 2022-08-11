@@ -13,7 +13,7 @@ import { TokenData } from './token-data';
 
 export const isTokenData = (value: unknown): value is TokenData => {
 	try {
-		const t = <TokenData>value;
+		const t = value as TokenData;
 		return (
 			isUUID(t.id) &&
 			isID(t.userID) &&

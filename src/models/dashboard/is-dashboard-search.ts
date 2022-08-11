@@ -13,7 +13,7 @@ import { DashboardSearch } from './dashboard-search';
 
 export const isDashboardSearch = (value: unknown): value is DashboardSearch => {
 	try {
-		const ds = <DashboardSearch>value;
+		const ds = value as DashboardSearch;
 		return (
 			(isString(ds.name) || isNull(ds.name)) &&
 			(isTimeframe(ds.timeframeOverride) || isNull(ds.timeframeOverride)) &&

@@ -7,7 +7,14 @@
  **************************************************************************/
 
 import { APISubscription, File } from '~/functions/utils';
-import { BuildableKit, InstallableKit, KitArchive, KitInstallationStatus, LocalKit, RemoteKit } from '~/models/kit';
+import {
+	BuildableKit,
+	InstallableKit,
+	KitArchive,
+	KitInstallationStatus,
+	LocalKit,
+	RemoteKit,
+} from '~/models/kit';
 
 export interface KitsService {
 	readonly get: {

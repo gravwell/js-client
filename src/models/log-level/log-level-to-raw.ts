@@ -7,8 +7,8 @@
  **************************************************************************/
 
 export const LOG_LEVEL_TO_RAW = {
-	'error': 'Error',
-	'warning': 'Warn',
-	'information': 'Info',
+	error: 'Error',
+	warning: 'Warn',
+	information: 'Info',
 	'web access': 'Web Access',
 } as const;

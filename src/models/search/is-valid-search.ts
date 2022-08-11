@@ -12,7 +12,7 @@ import { Search } from './search';
 
 export const isValidSearch = (value: unknown): value is Search => {
 	try {
-		const s = <Search>value;
+		const s = value as Search;
 		return s._tag === DATA_TYPE.SEARCH && isValidSearchData(s);
 	} catch {
 		return false;

@@ -15,9 +15,18 @@ import { makeGetAllAutoExtractors } from './get-all-auto-extractors';
 import { makeUploadManyAutoExtractors } from './upload-many-auto-extractors';
 
 describe('setOneAutoExtractorContent()', () => {
-	const deleteOneAutoExtractor = makeDeleteOneAutoExtractor(TEST_BASE_API_CONTEXT);
-	const uploadManyAutoExtractors = makeUploadManyAutoExtractors(TEST_BASE_API_CONTEXT);
-	const getAllAutoExtractors = makeGetAllAutoExtractors(TEST_BASE_API_CONTEXT);
+	let deleteOneAutoExtractor: ReturnType<typeof makeDeleteOneAutoExtractor>;
+	beforeAll(async () => {
+		deleteOneAutoExtractor = makeDeleteOneAutoExtractor(await TEST_BASE_API_CONTEXT());
+	});
+	let uploadManyAutoExtractors: ReturnType<typeof makeUploadManyAutoExtractors>;
+	beforeAll(async () => {
+		uploadManyAutoExtractors = makeUploadManyAutoExtractors(await TEST_BASE_API_CONTEXT());
+	});
+	let getAllAutoExtractors: ReturnType<typeof makeGetAllAutoExtractors>;
+	beforeAll(async () => {
+		getAllAutoExtractors = makeGetAllAutoExtractors(await TEST_BASE_API_CONTEXT());
+	});
 
 	beforeEach(async () => {
 		// Delete all autoExtractors
@@ -38,7 +47,9 @@ describe('setOneAutoExtractorContent()', () => {
 
 			const autoExtractors2 = await uploadManyAutoExtractors({ file: fileStream });
 			expect(autoExtractors2.length).toBe(2);
-			for (const ae of autoExtractors2) expect(isAutoExtractor(ae)).toBeTrue();
+			for (const ae of autoExtractors2) {
+				expect(isAutoExtractor(ae)).toBeTrue();
+			}
 		}),
 		10000,
 	);

@@ -6,7 +6,13 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { RawSavedQuery, SavedQuery, toRawUpdatableSavedQuery, toSavedQuery, UpdatableSavedQuery } from '~/models';
+import {
+	RawSavedQuery,
+	SavedQuery,
+	toRawUpdatableSavedQuery,
+	toSavedQuery,
+	UpdatableSavedQuery,
+} from '~/models';
 import {
 	APIContext,
 	buildHTTPRequestWithAuthFromContext,
@@ -35,7 +41,9 @@ export const makeUpdateOneSavedQuery = (context: APIContext) => {
 			const rawSavedQuery = await parseJSONResponse<RawSavedQuery>(raw);
 			return toSavedQuery(rawSavedQuery);
 		} catch (err) {
-			if (err instanceof Error) throw err;
+			if (err instanceof Error) {
+				throw err;
+			}
 			throw Error('Unknown error');
 		}
 	};

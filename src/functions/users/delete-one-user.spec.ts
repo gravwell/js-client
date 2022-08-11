@@ -14,9 +14,18 @@ import { makeDeleteOneUser } from './delete-one-user';
 import { makeGetOneUser } from './get-one-user';
 
 describe('deleteOneUser()', () => {
-	const deleteOneUser = makeDeleteOneUser(TEST_BASE_API_CONTEXT);
-	const createOneUser = makeCreateOneUser(TEST_BASE_API_CONTEXT);
-	const getOneUser = makeGetOneUser(TEST_BASE_API_CONTEXT);
+	let deleteOneUser: ReturnType<typeof makeDeleteOneUser>;
+	beforeAll(async () => {
+		deleteOneUser = makeDeleteOneUser(await TEST_BASE_API_CONTEXT());
+	});
+	let createOneUser: ReturnType<typeof makeCreateOneUser>;
+	beforeAll(async () => {
+		createOneUser = makeCreateOneUser(await TEST_BASE_API_CONTEXT());
+	});
+	let getOneUser: ReturnType<typeof makeGetOneUser>;
+	beforeAll(async () => {
+		getOneUser = makeGetOneUser(await TEST_BASE_API_CONTEXT());
+	});
 
 	xit(
 		'Should delete a user',

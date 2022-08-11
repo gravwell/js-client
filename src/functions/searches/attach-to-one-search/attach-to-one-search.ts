@@ -15,13 +15,17 @@ import {
 	makeToSearchStats,
 	makeToStatsZoom,
 } from '~/functions/searches/helpers/attach-search';
-import { getRawRequestEntriesMsg, makeRequestEntries } from '~/functions/searches/helpers/request-entries';
+import {
+	getRawRequestEntriesMsg,
+	makeRequestEntries,
+} from '~/functions/searches/helpers/request-entries';
 import {
 	RawRequestSearchCloseMessageSent,
 	RawResponseForSearchDetailsMessageReceived,
 	RawResponseForSearchStatsMessageReceived,
 	SearchEntries,
 	SearchFilter,
+	SearchFrequencyStats,
 	SearchMessageCommands,
 	SearchStats,
 	SearchSubscription,
@@ -117,7 +121,9 @@ export const makeAttachToOneSearch = (context: APIContext) => {
 		});
 
 		const close = async (): Promise<void> => {
-			if (closed) return undefined;
+			if (closed) {
+				return undefined;
+			}
 
 			const closeMsg: RawRequestSearchCloseMessageSent = {
 				type: searchTypeID,
@@ -144,14 +150,12 @@ export const makeAttachToOneSearch = (context: APIContext) => {
 
 		const entries$: Observable<SearchEntries> = searchMessages$.pipe(
 			filter(filterMessageByCommand(SearchMessageCommands.RequestEntriesWithinRange)),
-			map(
-				(msg): SearchEntries => {
-					const base = toSearchEntries(rendererType, msg);
-					const filterID = (msg.data.Addendum?.filterID as string | undefined) ?? null;
-					const filter = filtersByID[filterID ?? ''] ?? undefined;
-					return { ...base, filter } as SearchEntries;
-				},
-			),
+			map((msg): SearchEntries => {
+				const base = toSearchEntries(rendererType, msg);
+				const filterID = (msg.data.Addendum?.filterID as string | undefined) ?? null;
+				const filter = filtersByID[filterID ?? ''] ?? undefined;
+				return { ...base, filter } as SearchEntries;
+			}),
 			tap(entries => {
 				const defDesiredGranularity = getDefaultGranularityByRendererType(entries.type);
 				initialFilter.desiredGranularity = defDesiredGranularity;
@@ -165,7 +169,9 @@ export const makeAttachToOneSearch = (context: APIContext) => {
 
 		const _filter$ = new BehaviorSubject<SearchFilter>(initialFilter);
 		const setFilter = (filter: SearchFilter | null): void => {
-			if (closed) return undefined;
+			if (closed) {
+				return undefined;
+			}
 			_filter$.next(filter ?? initialFilter);
 		};
 
@@ -237,9 +243,7 @@ export const makeAttachToOneSearch = (context: APIContext) => {
 		);
 
 		const statsOverview$ = rawSearchStats$.pipe(
-			map(set => {
-				return { frequencyStats: countEntriesFromModules(set) };
-			}),
+			map(set => ({ frequencyStats: countEntriesFromModules(set) })),
 
 			shareReplay({ bufferSize: 1, refCount: true }),
 
@@ -247,7 +251,10 @@ export const makeAttachToOneSearch = (context: APIContext) => {
 			takeUntil(close$),
 		);
 
-		const statsZoom$ = rawStatsZoom$.pipe(
+		const statsZoom$: Observable<{
+			filter?: SearchFilter;
+			frequencyStats: Array<SearchFrequencyStats>;
+		}> = rawStatsZoom$.pipe(
 			map(
 				makeToStatsZoom({
 					filtersByID,

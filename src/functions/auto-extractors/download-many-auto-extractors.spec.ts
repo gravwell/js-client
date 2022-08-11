@@ -15,10 +15,22 @@ import { makeDownloadManyAutoExtractors } from './download-many-auto-extractors'
 import { makeGetAllAutoExtractors } from './get-all-auto-extractors';
 
 describe('downloadManyAutoExtractors()', () => {
-	const createOneAutoExtractor = makeCreateOneAutoExtractor(TEST_BASE_API_CONTEXT);
-	const deleteOneAutoExtractor = makeDeleteOneAutoExtractor(TEST_BASE_API_CONTEXT);
-	const getAllAutoExtractors = makeGetAllAutoExtractors(TEST_BASE_API_CONTEXT);
-	const downloadManyAutoExtractors = makeDownloadManyAutoExtractors(TEST_BASE_API_CONTEXT);
+	let createOneAutoExtractor: ReturnType<typeof makeCreateOneAutoExtractor>;
+	beforeAll(async () => {
+		createOneAutoExtractor = makeCreateOneAutoExtractor(await TEST_BASE_API_CONTEXT());
+	});
+	let deleteOneAutoExtractor: ReturnType<typeof makeDeleteOneAutoExtractor>;
+	beforeAll(async () => {
+		deleteOneAutoExtractor = makeDeleteOneAutoExtractor(await TEST_BASE_API_CONTEXT());
+	});
+	let getAllAutoExtractors: ReturnType<typeof makeGetAllAutoExtractors>;
+	beforeAll(async () => {
+		getAllAutoExtractors = makeGetAllAutoExtractors(await TEST_BASE_API_CONTEXT());
+	});
+	let downloadManyAutoExtractors: ReturnType<typeof makeDownloadManyAutoExtractors>;
+	beforeAll(async () => {
+		downloadManyAutoExtractors = makeDownloadManyAutoExtractors(await TEST_BASE_API_CONTEXT());
+	});
 
 	let createdAutoExtractors: Array<AutoExtractor>;
 
@@ -98,10 +110,9 @@ const toAutoExtractorInFile = (v: string): AutoExtractorInFile =>
 			return acc;
 		}, {} as AutoExtractorInFile);
 
-const parseAutoExtractorFile = (data: string): Array<AutoExtractorInFile> => {
-	return data
+const parseAutoExtractorFile = (data: string): Array<AutoExtractorInFile> =>
+	data
 		.split('[[extraction]]')
 		.map(v => v.trim())
 		.filter(v => v !== '')
 		.map(toAutoExtractorInFile);
-};

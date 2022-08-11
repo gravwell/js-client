@@ -10,7 +10,10 @@ import { integrationTest, TEST_BASE_API_CONTEXT } from '~/tests';
 import { makeIngestJSONEntries } from './ingest-json-entries';
 
 describe('ingestJSONEntries()', () => {
-	const ingestJSONEntries = makeIngestJSONEntries(TEST_BASE_API_CONTEXT);
+	let ingestJSONEntries: ReturnType<typeof makeIngestJSONEntries>;
+	beforeAll(async () => {
+		ingestJSONEntries = makeIngestJSONEntries(await TEST_BASE_API_CONTEXT());
+	});
 
 	xit(
 		'Should ingest the JSON entries',

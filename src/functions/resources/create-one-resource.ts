@@ -6,7 +6,13 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { CreatableResource, RawResource, Resource, toRawCreatableResource, toResource } from '~/models';
+import {
+	CreatableResource,
+	RawResource,
+	Resource,
+	toRawCreatableResource,
+	toResource,
+} from '~/models';
 import {
 	APIContext,
 	buildHTTPRequestWithAuthFromContext,
@@ -30,7 +36,9 @@ export const makeCreateOneResource = (context: APIContext) => {
 			const rawRes = await parseJSONResponse<RawResource>(raw);
 			return toResource(rawRes);
 		} catch (err) {
-			if (err instanceof Error) throw err;
+			if (err instanceof Error) {
+				throw err;
+			}
 			throw Error('Unknown error');
 		}
 	};

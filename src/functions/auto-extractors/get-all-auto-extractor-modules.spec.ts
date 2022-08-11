@@ -11,7 +11,10 @@ import { integrationTest, TEST_BASE_API_CONTEXT } from '~/tests';
 import { makeGetAllAutoExtractorModules } from './get-all-auto-extractor-modules';
 
 describe('getAllAutoExtractorModules()', () => {
-	const getAllAutoExtractorModules = makeGetAllAutoExtractorModules(TEST_BASE_API_CONTEXT);
+	let getAllAutoExtractorModules: ReturnType<typeof makeGetAllAutoExtractorModules>;
+	beforeAll(async () => {
+		getAllAutoExtractorModules = makeGetAllAutoExtractorModules(await TEST_BASE_API_CONTEXT());
+	});
 
 	it(
 		'Should return all auto extractors modules',

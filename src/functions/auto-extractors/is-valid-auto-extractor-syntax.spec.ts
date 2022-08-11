@@ -11,7 +11,10 @@ import { integrationTest, TEST_BASE_API_CONTEXT } from '~/tests';
 import { makeIsValidAutoExtractorSyntax } from './is-valid-auto-extractor-syntax';
 
 describe('isValidAutoExtractorSyntax()', () => {
-	const isValidAutoExtractorSyntax = makeIsValidAutoExtractorSyntax(TEST_BASE_API_CONTEXT);
+	let isValidAutoExtractorSyntax: ReturnType<typeof makeIsValidAutoExtractorSyntax>;
+	beforeAll(async () => {
+		isValidAutoExtractorSyntax = makeIsValidAutoExtractorSyntax(await TEST_BASE_API_CONTEXT());
+	});
 
 	it(
 		'Should validate an auto extractor syntax',

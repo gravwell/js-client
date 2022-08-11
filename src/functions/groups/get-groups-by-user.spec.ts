@@ -17,13 +17,34 @@ import { makeGetAllGroups } from './get-all-groups';
 import { makeGetGroupsByUser } from './get-groups-by-user';
 
 describe('getGroupsByUser()', () => {
-	const getAllGroups = makeGetAllGroups(TEST_BASE_API_CONTEXT);
-	const createOneGroup = makeCreateOneGroup(TEST_BASE_API_CONTEXT);
-	const deleteOneGroup = makeDeleteOneGroup(TEST_BASE_API_CONTEXT);
-	const getGroupsByUser = makeGetGroupsByUser(TEST_BASE_API_CONTEXT);
-	const createOneUser = makeCreateOneUser(TEST_BASE_API_CONTEXT);
-	const deleteOneUser = makeDeleteOneUser(TEST_BASE_API_CONTEXT);
-	const addOneUserToManyGroups = makeAddOneUserToManyGroups(TEST_BASE_API_CONTEXT);
+	let getAllGroups: ReturnType<typeof makeGetAllGroups>;
+	beforeAll(async () => {
+		getAllGroups = makeGetAllGroups(await TEST_BASE_API_CONTEXT());
+	});
+	let createOneGroup: ReturnType<typeof makeCreateOneGroup>;
+	beforeAll(async () => {
+		createOneGroup = makeCreateOneGroup(await TEST_BASE_API_CONTEXT());
+	});
+	let deleteOneGroup: ReturnType<typeof makeDeleteOneGroup>;
+	beforeAll(async () => {
+		deleteOneGroup = makeDeleteOneGroup(await TEST_BASE_API_CONTEXT());
+	});
+	let getGroupsByUser: ReturnType<typeof makeGetGroupsByUser>;
+	beforeAll(async () => {
+		getGroupsByUser = makeGetGroupsByUser(await TEST_BASE_API_CONTEXT());
+	});
+	let createOneUser: ReturnType<typeof makeCreateOneUser>;
+	beforeAll(async () => {
+		createOneUser = makeCreateOneUser(await TEST_BASE_API_CONTEXT());
+	});
+	let deleteOneUser: ReturnType<typeof makeDeleteOneUser>;
+	beforeAll(async () => {
+		deleteOneUser = makeDeleteOneUser(await TEST_BASE_API_CONTEXT());
+	});
+	let addOneUserToManyGroups: ReturnType<typeof makeAddOneUserToManyGroups>;
+	beforeAll(async () => {
+		addOneUserToManyGroups = makeAddOneUserToManyGroups(await TEST_BASE_API_CONTEXT());
+	});
 
 	let user: User;
 

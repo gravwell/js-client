@@ -25,7 +25,7 @@ export interface ImageKitAsset {
 
 export const isKitAsset = (v: any): v is KitAsset => {
 	try {
-		const k = <KitAsset>v;
+		const k = v as KitAsset;
 		switch (k.type) {
 			case 'readme':
 				return isString(k.url) && isBoolean(k.isFeatured);

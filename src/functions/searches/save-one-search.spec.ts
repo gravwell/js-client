@@ -8,14 +8,24 @@
 
 import { isSearch2 } from '~/models';
 import { integrationTest, TEST_BASE_API_CONTEXT } from '~/tests';
+import { assertIsNotNil } from '../utils/type-guards';
 import { makeGetOnePersistentSearchStatus } from './get-one-persistent-search-status';
 import { makeGetPersistentSearchStatusRelatedToMe } from './get-persistent-search-status-related-to-me';
 import { makeSaveOneSearch } from './save-one-search';
 
 describe('saveOneSearch()', () => {
-	const getPersistentSearchStatusRelatedToMe = makeGetPersistentSearchStatusRelatedToMe(TEST_BASE_API_CONTEXT);
-	const saveOneSearch = makeSaveOneSearch(TEST_BASE_API_CONTEXT);
-	const getOnePersistentSearchStatus = makeGetOnePersistentSearchStatus(TEST_BASE_API_CONTEXT);
+	let getPersistentSearchStatusRelatedToMe: ReturnType<typeof makeGetPersistentSearchStatusRelatedToMe>;
+	beforeAll(async () => {
+		getPersistentSearchStatusRelatedToMe = makeGetPersistentSearchStatusRelatedToMe(await TEST_BASE_API_CONTEXT());
+	});
+	let saveOneSearch: ReturnType<typeof makeSaveOneSearch>;
+	beforeAll(async () => {
+		saveOneSearch = makeSaveOneSearch(await TEST_BASE_API_CONTEXT());
+	});
+	let getOnePersistentSearchStatus: ReturnType<typeof makeGetOnePersistentSearchStatus>;
+	beforeAll(async () => {
+		getOnePersistentSearchStatus = makeGetOnePersistentSearchStatus(await TEST_BASE_API_CONTEXT());
+	});
 
 	xit(
 		'Should save a search',
@@ -25,8 +35,11 @@ describe('saveOneSearch()', () => {
 			const searches = await getPersistentSearchStatusRelatedToMe();
 			expect(searches.length).toBeGreaterThanOrEqual(1);
 
-			expect(searches[0].states).not.toContain('saved');
-			const searchID = searches[0].id;
+			const fst = searches[0];
+			assertIsNotNil(fst);
+
+			expect(fst.states).not.toContain('saved');
+			const searchID = fst.id;
 
 			await saveOneSearch(searchID);
 			await new Promise(res => setTimeout(res, 1500));

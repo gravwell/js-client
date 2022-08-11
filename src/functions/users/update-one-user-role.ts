@@ -10,8 +10,9 @@ import { UserRole } from '~/models';
 import { NumericID } from '~/value-objects';
 import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, parseJSONResponse } from '../utils';
 
-export const makeUpdateOneUserRole = (context: APIContext) => {
-	return async (userID: NumericID, role: UserRole): Promise<void> => {
+export const makeUpdateOneUserRole =
+	(context: APIContext) =>
+	async (userID: NumericID, role: UserRole): Promise<void> => {
 		try {
 			const templatePath = '/api/users/{userID}/admin';
 			const url = buildURL(templatePath, { ...context, protocol: 'http', pathParams: { userID } });
@@ -22,8 +23,9 @@ export const makeUpdateOneUserRole = (context: APIContext) => {
 			const raw = await context.fetch(url, { ...req, method });
 			return parseJSONResponse(raw, { expect: 'void' });
 		} catch (err) {
-			if (err instanceof Error) throw err;
+			if (err instanceof Error) {
+				throw err;
+			}
 			throw Error('Unknown error');
 		}
 	};
-};

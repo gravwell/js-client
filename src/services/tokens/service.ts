@@ -6,7 +6,13 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { CreatableToken, Token, TokenCapability, TokenWithSecret, UpdatableToken } from '~/models';
+import {
+	CreatableToken,
+	Token,
+	TokenCapability,
+	TokenWithSecret,
+	UpdatableToken,
+} from '~/models';
 import { ID } from '~/value-objects';
 
 export interface TokensService {

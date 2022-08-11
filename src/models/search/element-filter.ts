@@ -23,7 +23,7 @@ export interface OperationFilter {
 
 export const isOperationFilter = (v: ElementFilter): v is OperationFilter => {
 	try {
-		const ef = <OperationFilter>v;
+		const ef = v as OperationFilter;
 		return isElementFilterOperation(ef.operation) && isString(ef.value);
 	} catch {
 		return false;

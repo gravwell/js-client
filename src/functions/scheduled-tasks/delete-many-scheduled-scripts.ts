@@ -19,7 +19,9 @@ export const makeDeleteManyScheduledScripts = (context: APIContext) => {
 	return async (filter: ScheduledTasksFilter = {}): Promise<void> => {
 		const scripts = await getAllScheduledScripts();
 		const filtered = scripts.filter(s => {
-			if (isNil(filter.userID)) return true;
+			if (isNil(filter.userID)) {
+				return true;
+			}
 			return s.userID === filter.userID;
 		});
 

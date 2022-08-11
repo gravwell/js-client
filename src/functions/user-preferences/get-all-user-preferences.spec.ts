@@ -13,11 +13,26 @@ import { makeDeleteOneUser, makeGetAllUsers, makeGetMyUser } from '../users';
 import { makeGetAllUserPreferences } from './get-all-user-preferences';
 
 describe('getAllUserPreferences()', () => {
-	const getAllUserPreferences = makeGetAllUserPreferences(TEST_BASE_API_CONTEXT);
-	const deleteOneUser = makeDeleteOneUser(TEST_BASE_API_CONTEXT);
-	const getAllUsers = makeGetAllUsers(TEST_BASE_API_CONTEXT);
-	const getMyUser = makeGetMyUser(TEST_BASE_API_CONTEXT);
-	const updateOneUserPreferences = makeUpdateOneUserPreferences(TEST_BASE_API_CONTEXT);
+	let getAllUserPreferences: ReturnType<typeof makeGetAllUserPreferences>;
+	beforeAll(async () => {
+		getAllUserPreferences = makeGetAllUserPreferences(await TEST_BASE_API_CONTEXT());
+	});
+	let deleteOneUser: ReturnType<typeof makeDeleteOneUser>;
+	beforeAll(async () => {
+		deleteOneUser = makeDeleteOneUser(await TEST_BASE_API_CONTEXT());
+	});
+	let getAllUsers: ReturnType<typeof makeGetAllUsers>;
+	beforeAll(async () => {
+		getAllUsers = makeGetAllUsers(await TEST_BASE_API_CONTEXT());
+	});
+	let getMyUser: ReturnType<typeof makeGetMyUser>;
+	beforeAll(async () => {
+		getMyUser = makeGetMyUser(await TEST_BASE_API_CONTEXT());
+	});
+	let updateOneUserPreferences: ReturnType<typeof makeUpdateOneUserPreferences>;
+	beforeAll(async () => {
+		updateOneUserPreferences = makeUpdateOneUserPreferences(await TEST_BASE_API_CONTEXT());
+	});
 
 	beforeEach(async () => {
 		// Delete all users, except the admin

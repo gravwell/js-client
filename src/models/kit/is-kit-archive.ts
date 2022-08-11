@@ -12,7 +12,7 @@ import { KitArchive } from './kit-archive';
 
 export const isKitArchive = (v: unknown): v is KitArchive => {
 	try {
-		const k = <KitArchive>v;
+		const k = v as KitArchive;
 		return k._tag === DATA_TYPE.KIT_ARCHIVE && isKitArchiveData(k);
 	} catch (e) {
 		console.error(e);

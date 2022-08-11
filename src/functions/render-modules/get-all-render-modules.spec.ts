@@ -11,7 +11,10 @@ import { integrationTest, TEST_BASE_API_CONTEXT } from '~/tests';
 import { makeGetAllRenderModules } from './get-all-render-modules';
 
 describe('getAllRenderModules()', () => {
-	const getAllRenderModules = makeGetAllRenderModules(TEST_BASE_API_CONTEXT);
+	let getAllRenderModules: ReturnType<typeof makeGetAllRenderModules>;
+	beforeAll(async () => {
+		getAllRenderModules = makeGetAllRenderModules(await TEST_BASE_API_CONTEXT());
+	});
 
 	it(
 		'Should return all render modules',

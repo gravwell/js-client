@@ -11,8 +11,9 @@ import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL } from '../ut
 import { toRawMailServerConfig } from './conversion';
 import { MAIL_CONFIG_PATH } from './paths';
 
-export const makeUpdateConfig = (context: APIContext) => {
-	return async (config: MailServerConfig): Promise<boolean> => {
+export const makeUpdateConfig =
+	(context: APIContext) =>
+	async (config: MailServerConfig): Promise<boolean> => {
 		try {
 			const url = buildURL(MAIL_CONFIG_PATH, { ...context, protocol: 'http' });
 			const req = buildHTTPRequestWithAuthFromContext(context, {
@@ -22,8 +23,9 @@ export const makeUpdateConfig = (context: APIContext) => {
 			// The API response is empty so we just check on status
 			return rawRes.status === 200;
 		} catch (err) {
-			if (err instanceof Error) throw err;
+			if (err instanceof Error) {
+				throw err;
+			}
 			throw Error('Unknown error');
 		}
 	};
-};

@@ -32,7 +32,7 @@ export const makeUpdateOneAutoExtractor = (context: APIContext) => {
 
 		try {
 			const allAutoExtractors = await getAllAutoExtractors();
-			const current = <AutoExtractor>allAutoExtractors.find(ae => ae.id === data.id);
+			const current = allAutoExtractors.find(ae => ae.id === data.id) as AutoExtractor;
 
 			const baseRequestOptions: HTTPRequestOptions = {
 				body: JSON.stringify(toRawUpdatableAutoExtractor(data, current)),
@@ -47,7 +47,9 @@ export const makeUpdateOneAutoExtractor = (context: APIContext) => {
 
 			return toAutoExtractor(rawRes);
 		} catch (err) {
-			if (err instanceof Error) throw err;
+			if (err instanceof Error) {
+				throw err;
+			}
 			throw Error('Unknown error');
 		}
 	};

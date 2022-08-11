@@ -17,8 +17,9 @@ import {
 import { NumericID } from '~/value-objects';
 import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, parseJSONResponse } from '../utils';
 
-export const makeGetOneScheduledTask = (context: APIContext) => {
-	return async <Type extends ScheduledTaskType = ScheduledTaskType>(
+export const makeGetOneScheduledTask =
+	(context: APIContext) =>
+	async <Type extends ScheduledTaskType = ScheduledTaskType>(
 		scheduledTaskID: NumericID,
 	): Promise<Type extends 'query' ? ScheduledQuery : Type extends 'script' ? ScheduledScript : ScheduledTask> => {
 		const templatePath = '/api/scheduledsearches/{scheduledTaskID}';
@@ -32,4 +33,3 @@ export const makeGetOneScheduledTask = (context: APIContext) => {
 		const task: ScheduledTask = await toScheduledTask(rawRes);
 		return task as any;
 	};
-};

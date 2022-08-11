@@ -9,8 +9,9 @@
 import { NumericID } from '~/value-objects';
 import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, parseJSONResponse } from '../utils';
 
-export const makeGetOneUserSearchGroup = (context: APIContext) => {
-	return async (userID: NumericID): Promise<NumericID> => {
+export const makeGetOneUserSearchGroup =
+	(context: APIContext) =>
+	async (userID: NumericID): Promise<NumericID> => {
 		try {
 			const path = '/api/users/{userID}/searchgroup';
 			const url = buildURL(path, { ...context, protocol: 'http', pathParams: { userID } });
@@ -21,8 +22,9 @@ export const makeGetOneUserSearchGroup = (context: APIContext) => {
 			const parsed = await parseJSONResponse<NumericID>(raw);
 			return parsed.toString(); // backend returns an int
 		} catch (err) {
-			if (err instanceof Error) throw err;
+			if (err instanceof Error) {
+				throw err;
+			}
 			throw Error('Unknown error');
 		}
 	};
-};

@@ -10,8 +10,9 @@ import { Playbook, RawPlaybook, toPlaybook } from '~/models';
 import { UUID } from '~/value-objects';
 import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, parseJSONResponse } from '../utils';
 
-export const makeGetOnePlaybook = (context: APIContext) => {
-	return async (playbookID: UUID): Promise<Playbook> => {
+export const makeGetOnePlaybook =
+	(context: APIContext) =>
+	async (playbookID: UUID): Promise<Playbook> => {
 		const playbookPath = '/api/playbooks/{playbookID}';
 		const url = buildURL(playbookPath, { ...context, protocol: 'http', pathParams: { playbookID } });
 
@@ -21,4 +22,3 @@ export const makeGetOnePlaybook = (context: APIContext) => {
 		const rawRes = await parseJSONResponse<RawPlaybook>(raw);
 		return toPlaybook(rawRes);
 	};
-};

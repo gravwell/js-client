@@ -10,8 +10,9 @@ import { isBlankRawResource, RawResource, Resource, toResource } from '~/models'
 import { UUID } from '~/value-objects';
 import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, parseJSONResponse } from '../utils';
 
-export const makeGetOneResource = (context: APIContext) => {
-	return async (resourceID: UUID): Promise<Resource> => {
+export const makeGetOneResource =
+	(context: APIContext) =>
+	async (resourceID: UUID): Promise<Resource> => {
 		const resourcePath = '/api/resources/{resourceID}';
 		const url = buildURL(resourcePath, { ...context, protocol: 'http', pathParams: { resourceID } });
 
@@ -20,7 +21,8 @@ export const makeGetOneResource = (context: APIContext) => {
 		const raw = await context.fetch(url, { ...req, method: 'GET' });
 		const rawResource = await parseJSONResponse<RawResource>(raw);
 		// gravwell/gravwell#2337 nº 3
-		if (isBlankRawResource(rawResource)) throw new Error('Not found');
+		if (isBlankRawResource(rawResource)) {
+			throw new Error('Not found');
+		}
 		return toResource(rawResource);
 	};
-};

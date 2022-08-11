@@ -6,7 +6,13 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { RawTemplate, Template, toRawUpdatableTemplate, toTemplate, UpdatableTemplate } from '~/models';
+import {
+	RawTemplate,
+	Template,
+	toRawUpdatableTemplate,
+	toTemplate,
+	UpdatableTemplate,
+} from '~/models';
 import {
 	APIContext,
 	buildHTTPRequestWithAuthFromContext,
@@ -39,7 +45,9 @@ export const makeUpdateOneTemplate = (context: APIContext) => {
 			const rawRes = await parseJSONResponse<RawTemplate>(raw);
 			return toTemplate(rawRes);
 		} catch (err) {
-			if (err instanceof Error) throw err;
+			if (err instanceof Error) {
+				throw err;
+			}
 			throw Error('Unknown error');
 		}
 	};

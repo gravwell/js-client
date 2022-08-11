@@ -18,15 +18,16 @@ export const toRawActionableTrigger = (trigger: ActionableTrigger): RawActionabl
 	hyperlink: trigger.activatesOn === 'clicks and selection',
 });
 
-export const toRawActionableAction = (action: ActionableAction): RawActionableAction => ({
-	name: action.name,
-	description: action.description,
-	placeholder: action.placeholder,
-	command: toRawActionableCommand(action.command),
-	noValueUrlEncode: action.noValueUrlEncode,
-	start: toRawActionableTimeVariable(action.start),
-	end: toRawActionableTimeVariable(action.end),
-});
+export const toRawActionableAction = (action: ActionableAction): RawActionableAction =>
+	omitUndefinedShallow({
+		name: action.name,
+		description: action.description,
+		placeholder: action.placeholder,
+		command: toRawActionableCommand(action.command),
+		noValueUrlEncode: action.noValueUrlEncode,
+		start: toRawActionableTimeVariable(action.start),
+		end: toRawActionableTimeVariable(action.end),
+	});
 
 export const toRawActionableCommand = (cmd: ActionableCommand): RawActionableCommand => {
 	switch (cmd.type) {
