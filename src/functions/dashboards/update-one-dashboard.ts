@@ -6,13 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import {
-	Dashboard,
-	RawDashboard,
-	toDashboard,
-	toRawUpdatableDashboard,
-	UpdatableDashboard,
-} from '~/models';
+import { Dashboard, RawDashboard, toDashboard, toRawUpdatableDashboard, UpdatableDashboard } from '~/models';
 import {
 	APIContext,
 	buildHTTPRequestWithAuthFromContext,

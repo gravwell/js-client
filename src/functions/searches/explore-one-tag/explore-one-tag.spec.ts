@@ -8,10 +8,10 @@
 
 import { addMinutes } from 'date-fns';
 import { isArray } from 'lodash';
+import { v4 as uuidv4 } from 'uuid';
 import { makeCreateOneAutoExtractor } from '~/functions/auto-extractors';
 import { isDataExplorerEntry } from '~/models/search/data-explorer-entry';
 import { integrationTest, sleep, TEST_BASE_API_CONTEXT } from '~/tests';
-import { v4 as uuidv4 } from 'uuid';
 import { makeIngestMultiLineEntry } from '../../ingestors/ingest-multi-line-entry';
 import { makeGetAllTags } from '../../tags/get-all-tags';
 import { assertIsNotNil } from '../../utils/type-guards';

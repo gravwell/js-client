@@ -6,13 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import {
-	RawSavedQuery,
-	SavedQuery,
-	toRawUpdatableSavedQuery,
-	toSavedQuery,
-	UpdatableSavedQuery,
-} from '~/models';
+import { RawSavedQuery, SavedQuery, toRawUpdatableSavedQuery, toSavedQuery, UpdatableSavedQuery } from '~/models';
 import {
 	APIContext,
 	buildHTTPRequestWithAuthFromContext,

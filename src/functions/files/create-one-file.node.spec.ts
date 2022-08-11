@@ -10,12 +10,7 @@ import { createReadStream } from 'fs';
 import { omit } from 'lodash';
 import { join } from 'path';
 import { CreatableFile, isFileMetadata } from '~/models';
-import {
-	integrationTest,
-	myCustomMatchers,
-	TEST_ASSETS_PATH,
-	TEST_BASE_API_CONTEXT,
-} from '~/tests';
+import { integrationTest, myCustomMatchers, TEST_ASSETS_PATH, TEST_BASE_API_CONTEXT } from '~/tests';
 import { NumericID } from '~/value-objects';
 import { makeCreateOneGroup } from '../groups/create-one-group';
 import { makeDeleteAllGroups } from '../groups/delete-all-groups';

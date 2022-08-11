@@ -11,6 +11,7 @@
 import { isNil } from 'lodash';
 import { defer, firstValueFrom, Observable, of, Subject, throwError } from 'rxjs';
 import { concatMap, delay, filter, first, map, share, withLatestFrom } from 'rxjs/operators';
+import { v4 as uuidv4 } from 'uuid';
 import {
 	RawAttachSearchMessageSent,
 	RawSearchAttachedMessageReceived,
@@ -18,7 +19,6 @@ import {
 	RawSearchMessageSent,
 } from '~/models';
 import { NumericID } from '~/value-objects';
-import { v4 as uuidv4 } from 'uuid';
 import { APISubscription } from '../utils';
 
 /*

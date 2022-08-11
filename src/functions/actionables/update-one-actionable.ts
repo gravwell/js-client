@@ -6,13 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import {
-	Actionable,
-	RawActionable,
-	toActionable,
-	toRawUpdatableActionable,
-	UpdatableActionable,
-} from '~/models';
+import { Actionable, RawActionable, toActionable, toRawUpdatableActionable, UpdatableActionable } from '~/models';
 import {
 	APIContext,
 	buildHTTPRequestWithAuthFromContext,

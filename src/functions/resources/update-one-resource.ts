@@ -7,13 +7,7 @@
  **************************************************************************/
 
 import { isNil, isUndefined } from 'lodash';
-import {
-	RawResource,
-	Resource,
-	toRawUpdatableResourceMetadata,
-	toResource,
-	UpdatableResource,
-} from '~/models';
+import { RawResource, Resource, toRawUpdatableResourceMetadata, toResource, UpdatableResource } from '~/models';
 import {
 	APIContext,
 	buildHTTPRequestWithAuthFromContext,

@@ -6,13 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import {
-	CreatableResource,
-	RawResource,
-	Resource,
-	toRawCreatableResource,
-	toResource,
-} from '~/models';
+import { CreatableResource, RawResource, Resource, toRawCreatableResource, toResource } from '~/models';
 import {
 	APIContext,
 	buildHTTPRequestWithAuthFromContext,

@@ -6,10 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import {
-	AutoExtractorsFilter,
-	IsValidAutoExtractorSyntaxResponse,
-} from '~/functions/auto-extractors';
+import { AutoExtractorsFilter, IsValidAutoExtractorSyntaxResponse } from '~/functions/auto-extractors';
 import {
 	AutoExtractor,
 	CreatableAutoExtractor,

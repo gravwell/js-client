@@ -14,10 +14,7 @@ import {
 	makeToSearchStats,
 	makeToStatsZoom,
 } from '~/functions/searches/helpers/attach-search';
-import {
-	getRawRequestExplorerEntriesMsg,
-	makeRequestEntries,
-} from '~/functions/searches/helpers/request-entries';
+import { getRawRequestExplorerEntriesMsg, makeRequestEntries } from '~/functions/searches/helpers/request-entries';
 import {
 	ExplorerSearchEntries,
 	ExplorerSearchSubscription,

@@ -6,13 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import {
-	CreatableToken,
-	RawTokenWithSecret,
-	TokenWithSecret,
-	toRawCreatableToken,
-	toTokenWithSecret,
-} from '~/models';
+import { CreatableToken, RawTokenWithSecret, TokenWithSecret, toRawCreatableToken, toTokenWithSecret } from '~/models';
 import {
 	APIContext,
 	buildHTTPRequestWithAuthFromContext,

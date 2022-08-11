@@ -7,8 +7,8 @@
  **************************************************************************/
 
 import { encode as base64Encode } from 'base-64';
-import { toRawNumericID } from '~/value-objects';
 import { encode as utf8Encode } from 'utf8';
+import { toRawNumericID } from '~/value-objects';
 import { omitUndefinedShallow } from '../../functions/utils';
 import { toRawVersionObject } from './../version/to-raw-version-object';
 import { BuildableKit } from './buildable-kit';

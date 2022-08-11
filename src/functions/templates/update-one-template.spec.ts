@@ -7,13 +7,7 @@
  **************************************************************************/
 
 import { omit } from 'lodash';
-import {
-	CreatableTemplate,
-	isTemplate,
-	Template,
-	TemplateVariable,
-	UpdatableTemplate,
-} from '~/models';
+import { CreatableTemplate, isTemplate, Template, TemplateVariable, UpdatableTemplate } from '~/models';
 import { integrationTest, TEST_BASE_API_CONTEXT } from '~/tests';
 import { omitUndefinedShallow } from '../utils';
 import { makeCreateOneTemplate } from './create-one-template';

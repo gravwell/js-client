@@ -6,13 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import {
-	CreatableTemplate,
-	RawTemplate,
-	Template,
-	toRawCreatableTemplate,
-	toTemplate,
-} from '~/models';
+import { CreatableTemplate, RawTemplate, Template, toRawCreatableTemplate, toTemplate } from '~/models';
 import {
 	APIContext,
 	buildHTTPRequestWithAuthFromContext,

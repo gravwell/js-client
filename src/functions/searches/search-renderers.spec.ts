@@ -10,6 +10,7 @@ import { addMinutes } from 'date-fns';
 import { random, sample } from 'lodash';
 import { lastValueFrom } from 'rxjs';
 import { takeWhile } from 'rxjs/operators';
+import { v4 as uuidv4 } from 'uuid';
 import {
 	HexSearchEntries,
 	PcapSearchEntries,
@@ -18,7 +19,6 @@ import {
 	StackGraphSearchEntries,
 } from '~/models';
 import { integrationTest, myCustomMatchers, sleep, TEST_BASE_API_CONTEXT } from '~/tests';
-import { v4 as uuidv4 } from 'uuid';
 import { makeIngestMultiLineEntry } from '../ingestors';
 import { makeGetAllTags } from '../tags';
 import { makeSubscribeToOneSearch } from './subscribe-to-one-search';

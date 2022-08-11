@@ -8,13 +8,9 @@
 
 import { isAfter } from 'date-fns';
 import { catchError, concatMap, filter, firstValueFrom, NEVER, Observable, of, shareReplay, skipUntil } from 'rxjs';
-import { SearchFilter } from '~/index';
 import { DateRange } from '~/functions';
-import {
-	APISubscription,
-	debounceWithBackoffWhile,
-	omitUndefinedShallow,
-} from '~/functions/utils';
+import { APISubscription, debounceWithBackoffWhile, omitUndefinedShallow } from '~/functions/utils';
+import { SearchFilter } from '~/index';
 import {
 	RawRequestSearchDetailsMessageSent,
 	RawResponseForSearchDetailsMessageReceived,

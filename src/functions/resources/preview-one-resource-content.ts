@@ -6,11 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import {
-	RawResourceContentPreview,
-	ResourceContentPreview,
-	toResourceContentPreview,
-} from '~/models';
+import { RawResourceContentPreview, ResourceContentPreview, toResourceContentPreview } from '~/models';
 import { UUID } from '~/value-objects';
 import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, parseJSONResponse } from '../utils';
 

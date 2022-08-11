@@ -15,10 +15,7 @@ import {
 	makeToSearchStats,
 	makeToStatsZoom,
 } from '~/functions/searches/helpers/attach-search';
-import {
-	getRawRequestEntriesMsg,
-	makeRequestEntries,
-} from '~/functions/searches/helpers/request-entries';
+import { getRawRequestEntriesMsg, makeRequestEntries } from '~/functions/searches/helpers/request-entries';
 import {
 	RawRequestSearchCloseMessageSent,
 	RawResponseForSearchDetailsMessageReceived,
