@@ -11,17 +11,25 @@ const INCLUDE_TESTS: boolean = !!argv.tests;
 
 type BuildEnvironment = 'Node' | 'Browsers';
 const BUILD_ENVIRONMENTS = ((): Array<BuildEnvironment> => {
-	if (argv.nodeOnly) return ['Node'];
-	if (argv.browsersOnly) return ['Browsers'];
+	if (argv.nodeOnly) {
+		return ['Node'];
+	}
+	if (argv.browsersOnly) {
+		return ['Browsers'];
+	}
 	return ['Node', 'Browsers'];
 })();
-if (BUILD_ENVIRONMENTS.length === 0) throw Error('No build environment');
+if (BUILD_ENVIRONMENTS.length === 0) {
+	throw Error('No build environment');
+}
 
 const execAsync = (command: string): Promise<string> =>
 	new Promise((resolve, reject) => {
 		exec(command, (err, stdout, stderr) => {
 			if (err) {
-				if (stdout) (err as any).logs = stdout;
+				if (stdout) {
+					(err as any).logs = stdout;
+				}
 				reject(err);
 			} else resolve(stdout);
 		});
@@ -42,7 +50,9 @@ const buildNode = async (): Promise<void> => {
 
 	debug('Copying files to dist/node');
 	await execAsync('npx copyfiles --up=2 "dist-tsc/node/**/*" dist/node');
-	if (INCLUDE_ASSETS) await execAsync('npx copyfiles --up=1 "src/**/!(*.ts)" dist/node');
+	if (INCLUDE_ASSETS) {
+		await execAsync('npx copyfiles --up=1 "src/**/!(*.ts)" dist/node');
+	}
 
 	debug('Generating types from browser files');
 	const browsersTsconfig = '.config/tsconfig.' + (INCLUDE_TESTS ? 'browsers-spec' : 'browsers-build') + '.json';
@@ -68,7 +78,9 @@ const buildBrowsers = async (): Promise<void> => {
 
 	debug('Copying files to dist/browsers');
 	await execAsync('npx copyfiles --up=2 "dist-tsc/browsers/**/*" dist/browsers');
-	if (INCLUDE_ASSETS) await execAsync('npx copyfiles --up=1 "src/**/!(*.ts)" dist/browsers');
+	if (INCLUDE_ASSETS) {
+		await execAsync('npx copyfiles --up=1 "src/**/!(*.ts)" dist/browsers');
+	}
 
 	debug('Cleaning the TypeScript builds');
 	await execAsync('npx rimraf "dist-tsc"');
@@ -81,15 +93,23 @@ const buildBrowsers = async (): Promise<void> => {
 	debug(`Will build for ${BUILD_ENVIRONMENTS.join(' and ')}`);
 
 	try {
-		if (BUILD_ENVIRONMENTS.includes('Node')) await buildNode();
-		if (BUILD_ENVIRONMENTS.includes('Browsers')) await buildBrowsers();
+		if (BUILD_ENVIRONMENTS.includes('Node')) {
+			await buildNode();
+		}
+		if (BUILD_ENVIRONMENTS.includes('Browsers')) {
+			await buildBrowsers();
+		}
 
 		debug(`Improving typescript compatibility`);
 		await improveTypescriptCompatibility('dist');
-	} catch (err) {
+	} catch (err: any) {
 		startDebugContext('Error', ['red', 'bold']);
-		if (err.message) debug(err.message);
-		if (err.logs) console.log(err.logs);
+		if (err.message) {
+			debug(err.message);
+		}
+		if (err.logs) {
+			console.log(err.logs);
+		}
 		endDebugContext();
 
 		process.exit(1);
