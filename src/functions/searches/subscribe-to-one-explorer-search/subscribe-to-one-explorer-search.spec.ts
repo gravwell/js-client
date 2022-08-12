@@ -171,7 +171,8 @@ describe('subscribeToOneExplorerSearch()', () => {
 				expect(valueEl.children.length).withContext(`Expect the value element to have one children`).toBe(1);
 				const child = valueEl.children[0];
 				assertIsNotNil(child);
-				expect(child.name).withContext(`Expect the value element child to be value.foo`).toBe('value.foo');
+				expect(child.name).withContext(`Expect the value element child to have name foo`).toBe('foo');
+				expect(child.path).withContext(`Expect the value element child to have path value.foo`).toBe('value.foo');
 			}
 
 			// Concat first because .reverse modifies the array
