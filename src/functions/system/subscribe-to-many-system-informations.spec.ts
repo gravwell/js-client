@@ -19,9 +19,9 @@ describe('subscribeToManySystemInformations()', () => {
 
 	it(
 		'Should return a function given a valid host',
-		unitTest(() => {
-			const fn = async () =>
-				makeSubscribeToManySystemInformations({ ...(await TEST_BASE_API_CONTEXT()), host: 'www.example.com' });
+		unitTest(async () => {
+			const context = await TEST_BASE_API_CONTEXT();
+			const fn = () => makeSubscribeToManySystemInformations({ ...context, host: 'www.example.com' });
 			expect(fn).not.toThrow();
 			expect(typeof fn()).toBe('function');
 		}),

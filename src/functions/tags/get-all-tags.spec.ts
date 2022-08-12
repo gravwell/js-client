@@ -17,8 +17,9 @@ describe('getAllTags()', () => {
 
 	it(
 		'Should return a function given a valid host',
-		unitTest(() => {
-			const fn = async () => makeGetAllTags({ ...(await TEST_BASE_API_CONTEXT()), host: 'www.example.com' });
+		unitTest(async () => {
+			const context = await TEST_BASE_API_CONTEXT();
+			const fn = () => makeGetAllTags({ ...context, host: 'www.example.com' });
 			expect(fn).not.toThrow();
 			expect(typeof fn()).toBe('function');
 		}),
