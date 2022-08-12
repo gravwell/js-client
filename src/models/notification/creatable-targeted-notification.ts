@@ -20,7 +20,7 @@ interface CreatableBaseTargetedNotification {
 
 const creatableBaseTargetedNotificationDecoderFields = {
 	message: string,
-	customID: string,
+	customID: optional(string),
 
 	sentDate: optional(string),
 	expirationDate: optional(string),
