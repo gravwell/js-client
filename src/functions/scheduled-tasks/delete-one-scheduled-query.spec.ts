@@ -6,7 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { integrationTest, TEST_BASE_API_CONTEXT } from '~/tests';
+import { integrationTest, sleep, TEST_BASE_API_CONTEXT } from '~/tests';
 import { assertIsNotNil } from '../utils/type-guards';
 import { makeCreateManyScheduledQueries } from './create-many-scheduled-queries';
 import { makeDeleteAllScheduledQueries } from './delete-all-scheduled-queries';
@@ -56,6 +56,9 @@ describe('deleteOneScheduledQuery()', () => {
 				searchSince: { lastRun: true, secondsAgo: 90 },
 			},
 		]);
+
+		// There appears to be a race with the backend to create the macros.
+		await sleep(3000);
 	});
 
 	it(

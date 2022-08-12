@@ -7,7 +7,7 @@
  **************************************************************************/
 
 import { CreatableMacro } from '~/models';
-import { integrationTest, TEST_BASE_API_CONTEXT } from '~/tests';
+import { integrationTest, sleep, TEST_BASE_API_CONTEXT } from '~/tests';
 import { assertIsNotNil } from '../utils/type-guards';
 import { makeCreateOneMacro } from './create-one-macro';
 import { makeDeleteOneMacro } from './delete-one-macro';
@@ -46,6 +46,9 @@ describe('deleteOneMacro()', () => {
 		];
 		const createPromises = creatableMacros.map(creatable => createOneMacro(creatable));
 		await Promise.all(createPromises);
+
+		// There appears to be a race with the backend to create the macros.
+		await sleep(3000);
 	});
 
 	it(
