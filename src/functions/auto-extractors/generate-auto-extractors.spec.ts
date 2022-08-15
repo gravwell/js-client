@@ -12,56 +12,56 @@ import { lastValueFrom } from 'rxjs';
 import { map, takeWhile } from 'rxjs/operators';
 import { v4 as uuidv4 } from 'uuid';
 import { CreatableJSONEntry, RawSearchEntries } from '~/models';
-import { integrationTest, sleep, TEST_BASE_API_CONTEXT } from '~/tests';
+import { integrationTestSpecDef, sleep, TEST_BASE_API_CONTEXT } from '~/tests';
 import { makeIngestJSONEntries } from '../ingestors';
 import { makeSubscribeToOneSearch } from '../searches';
 import { makeGetAllTags } from '../tags';
 import { assertIsNotNil } from '../utils/type-guards';
 import { makeGenerateAutoExtractors } from './generate-auto-extractors';
 
-describe('generateAutoExtractors()', () => {
-	let generateAutoExtractors: ReturnType<typeof makeGenerateAutoExtractors>;
-	beforeAll(async () => {
-		generateAutoExtractors = makeGenerateAutoExtractors(await TEST_BASE_API_CONTEXT());
-	});
-
-	// Use a randomly generated tag, so that we know exactly what we're going to query
-	const tag = uuidv4();
-
-	// The number of entries to generate
-	const count = 1000;
-
-	// The start date for generated queries
-	const start = new Date(2010, 0, 0);
-
-	// The end date for generated queries; one minute between each entry
-	const end = addMinutes(start, count - 1);
-
-	beforeAll(async () => {
-		// Generate and ingest some entries
-		const ingestJSONEntries = makeIngestJSONEntries(await TEST_BASE_API_CONTEXT());
-		const values: Array<CreatableJSONEntry> = range(0, count).map(i => {
-			const timestamp = addMinutes(start, i).toISOString();
-			return {
-				timestamp,
-				tag,
-				data: JSON.stringify({ timestamp, value: i }, null, 2), // Add vertical whitespace, so that JSON is recommended over CSV
-			};
+describe(
+	'generateAutoExtractors()',
+	integrationTestSpecDef(() => {
+		let generateAutoExtractors: ReturnType<typeof makeGenerateAutoExtractors>;
+		beforeAll(async () => {
+			generateAutoExtractors = makeGenerateAutoExtractors(await TEST_BASE_API_CONTEXT());
 		});
 
-		await ingestJSONEntries(values);
+		// Use a randomly generated tag, so that we know exactly what we're going to query
+		const tag = uuidv4();
 
-		// Check the list of tags until our new tag appears
-		const getAllTags = makeGetAllTags(await TEST_BASE_API_CONTEXT());
-		while (!(await getAllTags()).includes(tag)) {
-			// Give the backend a moment to catch up
-			await sleep(1000);
-		}
-	}, 25000);
+		// The number of entries to generate
+		const count = 1000;
 
-	it(
-		'Should generate auto extractors',
-		integrationTest(async () => {
+		// The start date for generated queries
+		const start = new Date(2010, 0, 0);
+
+		// The end date for generated queries; one minute between each entry
+		const end = addMinutes(start, count - 1);
+
+		beforeAll(async () => {
+			// Generate and ingest some entries
+			const ingestJSONEntries = makeIngestJSONEntries(await TEST_BASE_API_CONTEXT());
+			const values: Array<CreatableJSONEntry> = range(0, count).map(i => {
+				const timestamp = addMinutes(start, i).toISOString();
+				return {
+					timestamp,
+					tag,
+					data: JSON.stringify({ timestamp, value: i }, null, 2), // Add vertical whitespace, so that JSON is recommended over CSV
+				};
+			});
+
+			await ingestJSONEntries(values);
+
+			// Check the list of tags until our new tag appears
+			const getAllTags = makeGetAllTags(await TEST_BASE_API_CONTEXT());
+			while (!(await getAllTags()).includes(tag)) {
+				// Give the backend a moment to catch up
+				await sleep(1000);
+			}
+		}, 25000);
+
+		it('Should generate auto extractors', async () => {
 			const subscribeToOneSearch = makeSubscribeToOneSearch(await TEST_BASE_API_CONTEXT());
 			const query = `tag=${tag} limit 10`;
 			const search = await subscribeToOneSearch(query, { filter: { dateRange: { start, end } } });
@@ -101,7 +101,6 @@ describe('generateAutoExtractors()', () => {
 			});
 
 			// We can't really make assertions about what the other AX generators are going to do when we look at JSON data
-		}),
-		25000,
-	);
-});
+		}, 25000);
+	}),
+);

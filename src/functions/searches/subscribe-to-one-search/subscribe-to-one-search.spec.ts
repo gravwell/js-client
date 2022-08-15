@@ -15,7 +15,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { makeCreateOneMacro, makeDeleteOneMacro } from '~/functions/macros';
 import { SearchFilter, SearchSubscription } from '~/models';
 import { RawSearchEntries, TextSearchEntries } from '~/models/search/search-entries';
-import { integrationTest, myCustomMatchers, sleep, TEST_BASE_API_CONTEXT } from '~/tests';
+import { integrationTestSpecDef, myCustomMatchers, sleep, TEST_BASE_API_CONTEXT } from '~/tests';
 import { makeIngestMultiLineEntry } from '../../ingestors/ingest-multi-line-entry';
 import { makeGetAllTags } from '../../tags/get-all-tags';
 import { assertIsNotNil } from '../../utils/type-guards';
@@ -27,48 +27,48 @@ interface Entry {
 	value: number;
 }
 
-describe('subscribeToOneSearch()', () => {
-	// Use a randomly generated tag, so that we know exactly what we're going to query
-	const tag = uuidv4();
+describe(
+	'subscribeToOneSearch()',
+	integrationTestSpecDef(() => {
+		// Use a randomly generated tag, so that we know exactly what we're going to query
+		const tag = uuidv4();
 
-	// The number of entries to generate
-	const count = 1000;
+		// The number of entries to generate
+		const count = 1000;
 
-	// The start date for generated queries
-	const start = new Date(2010, 0, 0);
+		// The start date for generated queries
+		const start = new Date(2010, 0, 0);
 
-	// The end date for generated queries; one minute between each entry
-	const end = addMinutes(start, count);
+		// The end date for generated queries; one minute between each entry
+		const end = addMinutes(start, count);
 
-	const originalData: Array<Entry> = [];
+		const originalData: Array<Entry> = [];
 
-	beforeAll(async () => {
-		jasmine.addMatchers(myCustomMatchers);
+		beforeAll(async () => {
+			jasmine.addMatchers(myCustomMatchers);
 
-		// Generate and ingest some entries
-		const ingestMultiLineEntry = makeIngestMultiLineEntry(await TEST_BASE_API_CONTEXT());
+			// Generate and ingest some entries
+			const ingestMultiLineEntry = makeIngestMultiLineEntry(await TEST_BASE_API_CONTEXT());
 
-		const values: Array<string> = [];
-		for (let i = 0; i < count; i++) {
-			const value: Entry = { timestamp: addMinutes(start, i).toISOString(), value: i };
-			originalData.push(value);
-			values.push(JSON.stringify(value));
-		}
-		const data: string = values.join('\n');
-		await ingestMultiLineEntry({ data, tag, assumeLocalTimezone: false });
+			const values: Array<string> = [];
+			for (let i = 0; i < count; i++) {
+				const value: Entry = { timestamp: addMinutes(start, i).toISOString(), value: i };
+				originalData.push(value);
+				values.push(JSON.stringify(value));
+			}
+			const data: string = values.join('\n');
+			await ingestMultiLineEntry({ data, tag, assumeLocalTimezone: false });
 
-		// Check the list of tags until our new tag appears
-		const getAllTags = makeGetAllTags(await TEST_BASE_API_CONTEXT());
+			// Check the list of tags until our new tag appears
+			const getAllTags = makeGetAllTags(await TEST_BASE_API_CONTEXT());
 
-		while (!(await getAllTags()).includes(tag)) {
-			// Give the backend a moment to catch up
-			await sleep(1000);
-		}
-	}, 25000);
+			while (!(await getAllTags()).includes(tag)) {
+				// Give the backend a moment to catch up
+				await sleep(1000);
+			}
+		}, 25000);
 
-	it(
-		'Should complete the observables when the search closes',
-		integrationTest(async () => {
+		it('Should complete the observables when the search closes', async () => {
 			const subscribeToOneSearch = makeSubscribeToOneSearch(await TEST_BASE_API_CONTEXT());
 			const query = `tag=${tag}`;
 			const search = await subscribeToOneSearch(query, { filter: { dateRange: { start, end } } });
@@ -91,13 +91,9 @@ describe('subscribeToOneSearch()', () => {
 			expect(complete).toBe(0);
 			await search.close();
 			expect(complete).toBe(observables.length);
-		}),
-		25000,
-	);
+		}, 25000);
 
-	xit(
-		'Should work with queries using the raw renderer w/ count module',
-		integrationTest(async () => {
+		xit('Should work with queries using the raw renderer w/ count module', async () => {
 			// Create a macro to expand to "value" to test .query vs .effectiveQuery
 			const macroName = uuidv4().toUpperCase();
 
@@ -186,13 +182,9 @@ describe('subscribeToOneSearch()', () => {
 				.toEqual(`count ${count}`);
 
 			await deleteOneMacro(createdMacro.id);
-		}),
-		25000,
-	);
+		}, 25000);
 
-	xit(
-		'Should work with queries using the raw renderer',
-		integrationTest(async () => {
+		xit('Should work with queries using the raw renderer', async () => {
 			const subscribeToOneSearch = makeSubscribeToOneSearch(await TEST_BASE_API_CONTEXT());
 			const query = `tag=${tag} json value timestamp | raw`;
 			const filter: SearchFilter = { entriesOffset: { index: 0, count }, dateRange: { start, end } };
@@ -292,13 +284,9 @@ describe('subscribeToOneSearch()', () => {
 			expect(sum(statsZoom.frequencyStats.map(x => x.count)))
 				.withContext('The sum of counts from statsZoom should equal the total count ingested')
 				.toEqual(count);
-		}),
-		25000,
-	);
+		}, 25000);
 
-	it(
-		'Should treat multiple searches with the same query independently',
-		integrationTest(async () => {
+		it('Should treat multiple searches with the same query independently', async () => {
 			// Number of multiple searches to create at the same time
 			const SEARCHES_N = 4;
 
@@ -406,25 +394,17 @@ describe('subscribeToOneSearch()', () => {
 			});
 
 			await Promise.all(testsP);
-		}),
-		25000,
-	);
+		}, 25000);
 
-	it(
-		'Should reject on a bad query string',
-		integrationTest(async () => {
+		it('Should reject on a bad query string', async () => {
 			const subscribeToOneSearch = makeSubscribeToOneSearch(await TEST_BASE_API_CONTEXT());
 			const query = `this is an invalid query`;
 			const filter: SearchFilter = { entriesOffset: { index: 0, count }, dateRange: { start, end } };
 
 			await expectAsync(subscribeToOneSearch(query, { filter })).toBeRejected();
-		}),
-		25000,
-	);
+		}, 25000);
 
-	it(
-		'Should reject on a bad query range (end is before start)',
-		integrationTest(async () => {
+		it('Should reject on a bad query range (end is before start)', async () => {
 			const subscribeToOneSearch = makeSubscribeToOneSearch(await TEST_BASE_API_CONTEXT());
 			const query = `tag=${tag}`;
 			const filter: SearchFilter = {
@@ -433,13 +413,9 @@ describe('subscribeToOneSearch()', () => {
 			};
 
 			await expectAsync(subscribeToOneSearch(query, { filter })).toBeRejected();
-		}),
-		25000,
-	);
+		}, 25000);
 
-	it(
-		'Should reject bad searches without affecting good ones (different queries)',
-		integrationTest(async () => {
+		it('Should reject bad searches without affecting good ones (different queries)', async () => {
 			const subscribeToOneSearch = makeSubscribeToOneSearch(await TEST_BASE_API_CONTEXT());
 			const goodRange = { start, end };
 			const badRange = { start, end: subMinutes(start, 10) };
@@ -463,13 +439,9 @@ describe('subscribeToOneSearch()', () => {
 					.withContext('query with bad range should reject')
 					.toBeRejected(),
 			]);
-		}),
-		25000,
-	);
+		}, 25000);
 
-	it(
-		'Should reject bad searches without affecting good ones (same query)',
-		integrationTest(async () => {
+		it('Should reject bad searches without affecting good ones (same query)', async () => {
 			const subscribeToOneSearch = makeSubscribeToOneSearch(await TEST_BASE_API_CONTEXT());
 			const query = `tag=${tag}`;
 			const goodRange = { start, end };
@@ -494,13 +466,9 @@ describe('subscribeToOneSearch()', () => {
 					.withContext('query with bad range should reject')
 					.toBeRejected(),
 			]);
-		}),
-		25000,
-	);
+		}, 25000);
 
-	it(
-		'Should work with several searches initiated simultaneously',
-		integrationTest(async () => {
+		it('Should work with several searches initiated simultaneously', async () => {
 			const subscribeToOneSearch = makeSubscribeToOneSearch(await TEST_BASE_API_CONTEXT());
 			const filter: SearchFilter = { entriesOffset: { index: 0, count }, dateRange: { start, end } };
 
@@ -512,13 +480,9 @@ describe('subscribeToOneSearch()', () => {
 						.toBeResolved(),
 				),
 			);
-		}),
-		25000,
-	);
+		}, 25000);
 
-	it(
-		'Should send error over error$ when Last is less than First',
-		integrationTest(async () => {
+		it('Should send error over error$ when Last is less than First', async () => {
 			const subscribeToOneSearch = makeSubscribeToOneSearch(await TEST_BASE_API_CONTEXT());
 			const query = `tag=${tag} chart`;
 
@@ -542,13 +506,9 @@ describe('subscribeToOneSearch()', () => {
 			expect(error).toBeDefined();
 			expect(error.name.length).toBeGreaterThan(0);
 			expect(error.message.length).toBeGreaterThan(0);
-		}),
-		25000,
-	);
+		}, 25000);
 
-	xit(
-		'Should work with queries using the raw renderer and preview flag',
-		integrationTest(async () => {
+		xit('Should work with queries using the raw renderer and preview flag', async () => {
 			const subscribeToOneSearch = makeSubscribeToOneSearch(await TEST_BASE_API_CONTEXT());
 			const query = `tag=${tag} json value timestamp | raw`;
 			const filter: SearchFilter = {
@@ -659,14 +619,10 @@ describe('subscribeToOneSearch()', () => {
 				.withContext(`Start date should be the one we just set`)
 				.toBeTrue();
 			expect(datesAreEqual(lastEntries.end, end)).withContext(`End date should be the one we just set`).toBeTrue();
-		}),
-		25000,
-	);
+		}, 25000);
 
-	describe('stats', () => {
-		it(
-			'Should be evenly spread over a window matching the zoom/overview granularity',
-			integrationTest(async () => {
+		describe('stats', () => {
+			it('Should be evenly spread over a window matching the zoom/overview granularity', async () => {
 				const subscribeToOneSearch = makeSubscribeToOneSearch(await TEST_BASE_API_CONTEXT());
 				const query = `tag=${tag}`;
 				const minutes = 90;
@@ -726,13 +682,9 @@ describe('subscribeToOneSearch()', () => {
 				expect(statsZoom.frequencyStats.every(x => x.count == 1))
 					.withContext('Every statsZoom element should be 1 -- 90 entries over 90 minutes')
 					.toBeTrue();
-			}),
-			25000,
-		);
+			}, 25000);
 
-		it(
-			'Should adjust when the zoom window adjusts for nicely-aligned bins',
-			integrationTest(async () => {
+			it('Should adjust when the zoom window adjusts for nicely-aligned bins', async () => {
 				const subscribeToOneSearch = makeSubscribeToOneSearch(await TEST_BASE_API_CONTEXT());
 				const query = `tag=${tag}`;
 				const filter: SearchFilter = { entriesOffset: { index: 0, count }, dateRange: { start, end } };
@@ -782,13 +734,9 @@ describe('subscribeToOneSearch()', () => {
 						.withContext(`The filter should be equal to the one used, plus the default values for undefined properties`)
 						.toPartiallyEqual({ ...filter, ...filter2 });
 				}
-			}),
-			25000,
-		);
+			}, 25000);
 
-		it(
-			'Should adjust when the zoom window adjusts for odd bins',
-			integrationTest(async () => {
+			it('Should adjust when the zoom window adjusts for odd bins', async () => {
 				const subscribeToOneSearch = makeSubscribeToOneSearch(await TEST_BASE_API_CONTEXT());
 				const query = `tag=${tag}`;
 				const filter: SearchFilter = { entriesOffset: { index: 0, count }, dateRange: { start, end } };
@@ -836,13 +784,9 @@ describe('subscribeToOneSearch()', () => {
 						.withContext(`The filter should be equal to the one used, plus the default values for undefined properties`)
 						.toPartiallyEqual({ ...filter, ...filter2 });
 				}
-			}),
-			25000,
-		);
+			}, 25000);
 
-		it(
-			'Should provide the minimum zoom window',
-			integrationTest(async () => {
+			it('Should provide the minimum zoom window', async () => {
 				const subscribeToOneSearch = makeSubscribeToOneSearch(await TEST_BASE_API_CONTEXT());
 
 				const dateRange = { start, end };
@@ -874,13 +818,9 @@ describe('subscribeToOneSearch()', () => {
 						.withContext(`The filter should be equal to the one used, plus the default values for undefined properties`)
 						.toPartiallyEqual(filter33s);
 				}
-			}),
-			25000,
-		);
+			}, 25000);
 
-		it(
-			'Should adjust when the zoom window adjusts with a different granularity for nicely-aligned bins',
-			integrationTest(async () => {
+			it('Should adjust when the zoom window adjusts with a different granularity for nicely-aligned bins', async () => {
 				const subscribeToOneSearch = makeSubscribeToOneSearch(await TEST_BASE_API_CONTEXT());
 				const query = `tag=${tag}`;
 				const filter1: SearchFilter = { entriesOffset: { index: 0, count }, dateRange: { start, end } };
@@ -946,13 +886,9 @@ describe('subscribeToOneSearch()', () => {
 				expect(statsOverview.frequencyStats.length)
 					.withContext('statsZoom should use the default granularity')
 					.toEqual(90);
-			}),
-			25000,
-		);
+			}, 25000);
 
-		it(
-			'Should adjust when the zoom window adjusts with a different granularity for odd bins',
-			integrationTest(async () => {
+			it('Should adjust when the zoom window adjusts with a different granularity for odd bins', async () => {
 				const subscribeToOneSearch = makeSubscribeToOneSearch(await TEST_BASE_API_CONTEXT());
 				const query = `tag=${tag}`;
 				const filter1: SearchFilter = { entriesOffset: { index: 0, count }, dateRange: { start, end } };
@@ -1021,13 +957,9 @@ describe('subscribeToOneSearch()', () => {
 				expect(statsOverview.frequencyStats.length)
 					.withContext('statsZoom should use the default granularity')
 					.toEqual(90);
-			}),
-			25000,
-		);
+			}, 25000);
 
-		it(
-			'Should adjust zoom granularity and overview granularity independently for nicely-aligned bins',
-			integrationTest(async () => {
+			it('Should adjust zoom granularity and overview granularity independently for nicely-aligned bins', async () => {
 				const subscribeToOneSearch = makeSubscribeToOneSearch(await TEST_BASE_API_CONTEXT());
 				const query = `tag=${tag}`;
 				const overviewGranularity = 133;
@@ -1102,13 +1034,9 @@ describe('subscribeToOneSearch()', () => {
 				expect(statsOverview.frequencyStats.length)
 					.withContext('statsZoom should use the default granularity')
 					.toEqual(overviewGranularity);
-			}),
-			25000,
-		);
+			}, 25000);
 
-		it(
-			'Should adjust zoom granularity and overview granularity independently for odd bins',
-			integrationTest(async () => {
+			it('Should adjust zoom granularity and overview granularity independently for odd bins', async () => {
 				const subscribeToOneSearch = makeSubscribeToOneSearch(await TEST_BASE_API_CONTEXT());
 				const query = `tag=${tag}`;
 				const overviewGranularity = 133;
@@ -1182,13 +1110,11 @@ describe('subscribeToOneSearch()', () => {
 				expect(statsOverview.frequencyStats.length)
 					.withContext('statsZoom should use the default granularity')
 					.toEqual(overviewGranularity);
-			}),
-			25000,
-		);
+			}, 25000);
 
-		it(
-			'Should keep the dateRange when update the filter multiple times',
-			integrationTest(
+			it(
+				'Should keep the dateRange when update the filter multiple times',
+
 				makeKeepDataRangeTest({
 					start,
 					end,
@@ -1201,8 +1127,8 @@ describe('subscribeToOneSearch()', () => {
 						return await subscribeToOneSearch(query, { filter: initialFilter });
 					},
 				}),
-			),
-			25000,
-		);
-	});
-});
+				25000,
+			);
+		});
+	}),
+);

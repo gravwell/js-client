@@ -8,15 +8,18 @@
 
 import { APIContext } from '../functions/utils';
 
-export const getRunnerSettings = (): Promise<{
-	context: APIContext;
+export const getTestTypes = (): {
 	unitTests: boolean;
 	integrationTests: boolean;
-}> => {
-	console.log('Using browser settings for JS Client tests');
-	return Promise.resolve({
-		context: { host: '', useEncryption: false, authToken: null, fetch },
+} => {
+	console.log('Using browser settings for JS Client test types');
+	return {
 		unitTests: true,
 		integrationTests: false,
-	});
+	};
+};
+
+export const getTestContext = async (): Promise<APIContext> => {
+	console.log('Using browser settings for JS Client test context');
+	return Promise.resolve({ host: '', useEncryption: false, authToken: null, fetch });
 };

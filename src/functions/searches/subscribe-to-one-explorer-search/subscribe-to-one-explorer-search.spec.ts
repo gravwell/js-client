@@ -15,7 +15,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { makeCreateOneAutoExtractor } from '~/functions/auto-extractors';
 import { DataExplorerEntry, ElementFilter, isDataExplorerEntry, SearchFilter, SearchSubscription } from '~/models';
 import { RawSearchEntries } from '~/models/search/search-entries';
-import { integrationTest, myCustomMatchers, sleep, TEST_BASE_API_CONTEXT } from '~/tests';
+import { integrationTestSpecDef, myCustomMatchers, sleep, TEST_BASE_API_CONTEXT } from '~/tests';
 import { makeIngestMultiLineEntry } from '../../ingestors/ingest-multi-line-entry';
 import { makeGetAllTags } from '../../tags/get-all-tags';
 import { assertIsNotNil } from '../../utils/type-guards';
@@ -27,56 +27,56 @@ interface Entry {
 	value: { foo: number };
 }
 
-describe('subscribeToOneExplorerSearch()', () => {
-	// Use a randomly generated tag, so that we know exactly what we're going to query
-	const tag = uuidv4();
+describe(
+	'subscribeToOneExplorerSearch()',
+	integrationTestSpecDef(() => {
+		// Use a randomly generated tag, so that we know exactly what we're going to query
+		const tag = uuidv4();
 
-	// The number of entries to generate
-	const count = 1000;
+		// The number of entries to generate
+		const count = 1000;
 
-	// The start date for generated queries
-	const start = new Date(2010, 0, 0);
+		// The start date for generated queries
+		const start = new Date(2010, 0, 0);
 
-	// The end date for generated queries; one minute between each entry
-	const end = addMinutes(start, count);
+		// The end date for generated queries; one minute between each entry
+		const end = addMinutes(start, count);
 
-	const originalData: Array<Entry> = [];
+		const originalData: Array<Entry> = [];
 
-	beforeAll(async () => {
-		jasmine.addMatchers(myCustomMatchers);
+		beforeAll(async () => {
+			jasmine.addMatchers(myCustomMatchers);
 
-		// Generate and ingest some entries
-		const ingestMultiLineEntry = makeIngestMultiLineEntry(await TEST_BASE_API_CONTEXT());
-		const values: Array<string> = [];
-		for (let i = 0; i < count; i++) {
-			const value: Entry = { timestamp: addMinutes(start, i).toISOString(), value: { foo: i } };
-			originalData.push(value);
-			values.push(JSON.stringify(value));
-		}
-		const data: string = values.join('\n');
-		await ingestMultiLineEntry({ data, tag, assumeLocalTimezone: false });
+			// Generate and ingest some entries
+			const ingestMultiLineEntry = makeIngestMultiLineEntry(await TEST_BASE_API_CONTEXT());
+			const values: Array<string> = [];
+			for (let i = 0; i < count; i++) {
+				const value: Entry = { timestamp: addMinutes(start, i).toISOString(), value: { foo: i } };
+				originalData.push(value);
+				values.push(JSON.stringify(value));
+			}
+			const data: string = values.join('\n');
+			await ingestMultiLineEntry({ data, tag, assumeLocalTimezone: false });
 
-		// Check the list of tags until our new tag appears
-		const getAllTags = makeGetAllTags(await TEST_BASE_API_CONTEXT());
-		while (!(await getAllTags()).includes(tag)) {
-			// Give the backend a moment to catch up
-			await sleep(1000);
-		}
+			// Check the list of tags until our new tag appears
+			const getAllTags = makeGetAllTags(await TEST_BASE_API_CONTEXT());
+			while (!(await getAllTags()).includes(tag)) {
+				// Give the backend a moment to catch up
+				await sleep(1000);
+			}
 
-		// Create an AX definition for the generated tag
-		const createOneAutoExtractor = makeCreateOneAutoExtractor(await TEST_BASE_API_CONTEXT());
-		await createOneAutoExtractor({
-			tag,
-			name: `${tag} - JSON`,
-			description: '-',
-			module: 'json',
-			parameters: 'timestamp value value.foo',
-		});
-	}, 25000);
+			// Create an AX definition for the generated tag
+			const createOneAutoExtractor = makeCreateOneAutoExtractor(await TEST_BASE_API_CONTEXT());
+			await createOneAutoExtractor({
+				tag,
+				name: `${tag} - JSON`,
+				description: '-',
+				module: 'json',
+				parameters: 'timestamp value value.foo',
+			});
+		}, 25000);
 
-	it(
-		'Should complete the observables when the search closes',
-		integrationTest(async () => {
+		it('Should complete the observables when the search closes', async () => {
 			const subscribeToOneExplorerSearch = makeSubscribeToOneExplorerSearch(await TEST_BASE_API_CONTEXT());
 			const query = `tag=${tag}`;
 			const search = await subscribeToOneExplorerSearch(query, { filter: { dateRange: { start, end } } });
@@ -99,13 +99,9 @@ describe('subscribeToOneExplorerSearch()', () => {
 			expect(complete).toBe(0);
 			await search.close();
 			expect(complete).toBe(observables.length);
-		}),
-		25000,
-	);
+		}, 25000);
 
-	it(
-		'Should work with queries using the raw renderer',
-		integrationTest(async () => {
+		it('Should work with queries using the raw renderer', async () => {
 			const subscribeToOneExplorerSearch = makeSubscribeToOneExplorerSearch(await TEST_BASE_API_CONTEXT());
 			const query = `tag=${tag} ax | raw`;
 			const filter: SearchFilter = { entriesOffset: { index: 0, count }, dateRange: { start, end } };
@@ -235,86 +231,78 @@ describe('subscribeToOneExplorerSearch()', () => {
 			expect(sum(statsZoom.frequencyStats.map(x => x.count)))
 				.withContext('The sum of counts from statsZoom should equal the total count ingested')
 				.toEqual(count);
-		}),
-		25000,
-	);
+		}, 25000);
 
-	it('Should be able to apply element filters', async () => {
-		const subscribeToOneExplorerSearch = makeSubscribeToOneExplorerSearch(await TEST_BASE_API_CONTEXT());
+		it('Should be able to apply element filters', async () => {
+			const subscribeToOneExplorerSearch = makeSubscribeToOneExplorerSearch(await TEST_BASE_API_CONTEXT());
 
-		const unfilteredQuery = `tag=${tag} raw`;
-		const elementFilters: Array<ElementFilter> = [
-			{ path: 'value.foo', operation: '!=', value: '50', tag, module: 'json', arguments: null },
-		];
-		const query = `tag=${tag} json "value.foo" != "50" as "foo" | raw`;
-		const countAfterFilter = count - 1;
+			const unfilteredQuery = `tag=${tag} raw`;
+			const elementFilters: Array<ElementFilter> = [
+				{ path: 'value.foo', operation: '!=', value: '50', tag, module: 'json', arguments: null },
+			];
+			const query = `tag=${tag} json "value.foo" != "50" as "foo" | raw`;
+			const countAfterFilter = count - 1;
 
-		const filter: SearchFilter = {
-			entriesOffset: { index: 0, count },
-			elementFilters,
-			dateRange: { start, end },
-		};
-		const search = await subscribeToOneExplorerSearch(unfilteredQuery, { filter });
+			const filter: SearchFilter = {
+				entriesOffset: { index: 0, count },
+				elementFilters,
+				dateRange: { start, end },
+			};
+			const search = await subscribeToOneExplorerSearch(unfilteredQuery, { filter });
 
-		const textEntriesP = lastValueFrom(
-			search.entries$.pipe(
-				map(e => e as RawSearchEntries & { explorerEntries: Array<DataExplorerEntry> }),
-				takeWhile(e => !e.finished, true),
-			),
-		);
+			const textEntriesP = lastValueFrom(
+				search.entries$.pipe(
+					map(e => e as RawSearchEntries & { explorerEntries: Array<DataExplorerEntry> }),
+					takeWhile(e => !e.finished, true),
+				),
+			);
 
-		const statsP = lastValueFrom(
-			search.stats$.pipe(
-				takeWhile(e => !e.finished, true),
-				toArray(),
-			),
-		);
+			const statsP = lastValueFrom(
+				search.stats$.pipe(
+					takeWhile(e => !e.finished, true),
+					toArray(),
+				),
+			);
 
-		const [textEntries, stats] = await Promise.all([textEntriesP, statsP]);
+			const [textEntries, stats] = await Promise.all([textEntriesP, statsP]);
 
-		////
-		// Check entries
-		////
-		expect(textEntries.data.length)
-			.withContext('The number of entries should equal the total ingested')
-			.toEqual(countAfterFilter);
+			////
+			// Check entries
+			////
+			expect(textEntries.data.length)
+				.withContext('The number of entries should equal the total ingested')
+				.toEqual(countAfterFilter);
 
-		if (isUndefined(textEntries.filter) === false) {
-			expect(textEntries.filter)
-				.withContext(`The filter should be equal to the one used, plus the default values for undefined properties`)
-				.toPartiallyEqual(filter);
-		}
+			if (isUndefined(textEntries.filter) === false) {
+				expect(textEntries.filter)
+					.withContext(`The filter should be equal to the one used, plus the default values for undefined properties`)
+					.toPartiallyEqual(filter);
+			}
 
-		const explorerEntries = textEntries.explorerEntries;
-		expect(isArray(explorerEntries) && explorerEntries.every(isDataExplorerEntry))
-			.withContext('Expect a promise of an array of data explorer entries')
-			.toBeTrue();
-		expect(explorerEntries.length).withContext(`Expect ${countAfterFilter} entries`).toBe(countAfterFilter);
+			const explorerEntries = textEntries.explorerEntries;
+			expect(isArray(explorerEntries) && explorerEntries.every(isDataExplorerEntry))
+				.withContext('Expect a promise of an array of data explorer entries')
+				.toBeTrue();
+			expect(explorerEntries.length).withContext(`Expect ${countAfterFilter} entries`).toBe(countAfterFilter);
 
-		////
-		// Check stats
-		////
-		expect(stats.length).toBeGreaterThan(0);
-		const fst = stats[0];
-		assertIsNotNil(fst);
-		expect(fst.query).toBe(query);
-	});
+			////
+			// Check stats
+			////
+			expect(stats.length).toBeGreaterThan(0);
+			const fst = stats[0];
+			assertIsNotNil(fst);
+			expect(fst.query).toBe(query);
+		});
 
-	it(
-		'Should reject on a bad query string',
-		integrationTest(async () => {
+		it('Should reject on a bad query string', async () => {
 			const subscribeToOneExplorerSearch = makeSubscribeToOneExplorerSearch(await TEST_BASE_API_CONTEXT());
 			const query = `this is an invalid query`;
 			const filter: SearchFilter = { entriesOffset: { index: 0, count }, dateRange: { start, end } };
 
 			await expectAsync(subscribeToOneExplorerSearch(query, { filter })).toBeRejected();
-		}),
-		25000,
-	);
+		}, 25000);
 
-	it(
-		'Should reject on a bad query range (end is before start)',
-		integrationTest(async () => {
+		it('Should reject on a bad query range (end is before start)', async () => {
 			const subscribeToOneExplorerSearch = makeSubscribeToOneExplorerSearch(await TEST_BASE_API_CONTEXT());
 			const query = `tag=${tag}`;
 			const filter: SearchFilter = {
@@ -323,13 +311,9 @@ describe('subscribeToOneExplorerSearch()', () => {
 			};
 
 			await expectAsync(subscribeToOneExplorerSearch(query, { filter })).toBeRejected();
-		}),
-		25000,
-	);
+		}, 25000);
 
-	it(
-		'Should reject bad searches without affecting good ones (different queries)',
-		integrationTest(async () => {
+		it('Should reject bad searches without affecting good ones (different queries)', async () => {
 			const subscribeToOneExplorerSearch = makeSubscribeToOneExplorerSearch(await TEST_BASE_API_CONTEXT());
 			const goodRange = { start, end };
 			const badRange = { start, end: subMinutes(start, 10) };
@@ -363,13 +347,9 @@ describe('subscribeToOneExplorerSearch()', () => {
 					.withContext('query with bad range should reject')
 					.toBeRejected(),
 			]);
-		}),
-		25000,
-	);
+		}, 25000);
 
-	it(
-		'Should reject bad searches without affecting good ones (same query)',
-		integrationTest(async () => {
+		it('Should reject bad searches without affecting good ones (same query)', async () => {
 			const subscribeToOneExplorerSearch = makeSubscribeToOneExplorerSearch(await TEST_BASE_API_CONTEXT());
 			const query = `tag=${tag}`;
 			const goodRange = { start, end };
@@ -394,13 +374,9 @@ describe('subscribeToOneExplorerSearch()', () => {
 					.withContext('query with bad range should reject')
 					.toBeRejected(),
 			]);
-		}),
-		25000,
-	);
+		}, 25000);
 
-	it(
-		'Should send error over error$ when Last is less than First',
-		integrationTest(async () => {
+		it('Should send error over error$ when Last is less than First', async () => {
 			const subscribeToOneExplorerSearch = makeSubscribeToOneExplorerSearch(await TEST_BASE_API_CONTEXT());
 			const query = `tag=${tag} chart`;
 
@@ -424,13 +400,9 @@ describe('subscribeToOneExplorerSearch()', () => {
 			expect(error).toBeDefined();
 			expect(error.name.length).toBeGreaterThan(0);
 			expect(error.message.length).toBeGreaterThan(0);
-		}),
-		25000,
-	);
+		}, 25000);
 
-	xit(
-		'Should work with queries using the raw renderer and preview flag',
-		integrationTest(async () => {
+		xit('Should work with queries using the raw renderer and preview flag', async () => {
 			const subscribeToOneExplorerSearch = makeSubscribeToOneExplorerSearch(await TEST_BASE_API_CONTEXT());
 			const query = `tag=${tag} json value timestamp | raw`;
 			const filter: SearchFilter = {
@@ -583,13 +555,11 @@ describe('subscribeToOneExplorerSearch()', () => {
 				.withContext(`Start date should be the one we just set`)
 				.toBeTrue();
 			expect(datesAreEqual(lastEntries.end, end)).withContext(`End date should be the one we just set`).toBeTrue();
-		}),
-		25000,
-	);
+		}, 25000);
 
-	it(
-		'Should keep the dateRange when update the filter multiple times',
-		integrationTest(
+		it(
+			'Should keep the dateRange when update the filter multiple times',
+
 			makeKeepDataRangeTest({
 				start,
 				end,
@@ -602,7 +572,7 @@ describe('subscribeToOneExplorerSearch()', () => {
 					return await subscribeToOneExplorerSearch(query, { filter: initialFilter });
 				},
 			}),
-		),
-		25000,
-	);
-});
+			25000,
+		);
+	}),
+);

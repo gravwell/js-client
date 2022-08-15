@@ -6,25 +6,21 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { firstValueFrom, from, map, ReplaySubject } from 'rxjs';
+import { firstValueFrom, from, ReplaySubject } from 'rxjs';
 import { APIContext } from '~/functions/utils';
-import { getRunnerSettings } from './get-runner-settings';
+import { getTestContext, getTestTypes } from './get-runner-settings';
 
 export * from './paths';
 
-const settings$: ReplaySubject<{
-	context: APIContext;
-	unitTests: boolean;
-	integrationTests: boolean;
-}> = new ReplaySubject(1);
+const textContext: ReplaySubject<APIContext> = new ReplaySubject(1);
 
-from(getRunnerSettings()).subscribe(settings$);
+from(getTestContext()).subscribe(textContext);
 
-export const TEST_BASE_API_CONTEXT = (): Promise<APIContext> => firstValueFrom(settings$.pipe(map(s => s.context)));
+export const TEST_BASE_API_CONTEXT = (): Promise<APIContext> => firstValueFrom(textContext);
 
 export type TestType = 'unit' | 'integration';
-export const TEST_TYPES = (async (): Promise<Array<TestType>> => {
-	const s = await firstValueFrom(settings$);
+export const TEST_TYPES = ((): Array<TestType> => {
+	const s = getTestTypes();
 	const testTypes: Array<TestType> = [];
 	if (s.unitTests) {
 		testTypes.push('unit');

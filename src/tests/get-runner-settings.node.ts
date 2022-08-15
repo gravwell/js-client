@@ -63,21 +63,24 @@ const getAuthToken = (): Promise<string> => {
 		});
 };
 
-export const getRunnerSettings = async (): Promise<{
-	context: APIContext;
+export const getTestTypes = (): {
 	unitTests: boolean;
 	integrationTests: boolean;
-}> => {
-	console.log('Using Node settings for JS Client tests');
+} => {
+	console.log('Using Node settings for JS Client test types');
+	return {
+		unitTests: unitTestsEnv,
+		integrationTests: integrationTestsEnv,
+	};
+};
+
+export const getTestContext = async (): Promise<APIContext> => {
+	console.log('Using Node settings for JS Client test context');
 
 	const url = getTestHostUrl();
 
 	const host = integrationTestsEnv ? url.host : '';
 	const useEncryption = integrationTestsEnv && url.protocol === 'https';
 	const authToken = integrationTestsEnv ? await getAuthToken() : null;
-	return {
-		context: { host, useEncryption, authToken, fetch },
-		unitTests: unitTestsEnv,
-		integrationTests: integrationTestsEnv,
-	};
+	return { host, useEncryption, authToken, fetch };
 };

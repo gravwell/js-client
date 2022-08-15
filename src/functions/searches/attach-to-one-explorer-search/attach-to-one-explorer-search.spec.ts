@@ -17,7 +17,7 @@ import { makeAttachToOneExplorerSearch } from '~/functions/searches/attach-to-on
 import { makeSubscribeToOneExplorerSearch } from '~/functions/searches/subscribe-to-one-explorer-search';
 import { DataExplorerEntry, ExplorerSearchSubscription, SearchFilter } from '~/models';
 import { RawSearchEntries, TextSearchEntries } from '~/models/search/search-entries';
-import { integrationTest, myCustomMatchers, sleep, TEST_BASE_API_CONTEXT } from '~/tests';
+import { integrationTestSpecDef, myCustomMatchers, sleep, TEST_BASE_API_CONTEXT } from '~/tests';
 import { makeIngestMultiLineEntry } from '../../ingestors/ingest-multi-line-entry';
 import { makeGetAllTags } from '../../tags/get-all-tags';
 import { assertIsNotNil } from '../../utils/type-guards';
@@ -28,47 +28,47 @@ interface Entry {
 	value: number;
 }
 
-describe('attachToOneExplorerSearch()', () => {
-	// Use a randomly generated tag, so that we know exactly what we're going to query
-	const tag = uuidv4();
+describe(
+	'attachToOneExplorerSearch()',
+	integrationTestSpecDef(() => {
+		// Use a randomly generated tag, so that we know exactly what we're going to query
+		const tag = uuidv4();
 
-	// The number of entries to generate
-	const count = 1000;
+		// The number of entries to generate
+		const count = 1000;
 
-	// The start date for generated queries
-	const start = new Date(2010, 0, 0);
+		// The start date for generated queries
+		const start = new Date(2010, 0, 0);
 
-	// The end date for generated queries; one minute between each entry
-	const end = addMinutes(start, count);
+		// The end date for generated queries; one minute between each entry
+		const end = addMinutes(start, count);
 
-	const originalData: Array<Entry> = [];
+		const originalData: Array<Entry> = [];
 
-	beforeAll(async () => {
-		jasmine.addMatchers(myCustomMatchers);
+		beforeAll(async () => {
+			jasmine.addMatchers(myCustomMatchers);
 
-		// Generate and ingest some entries
-		const ingestMultiLineEntry = makeIngestMultiLineEntry(await TEST_BASE_API_CONTEXT());
-		const values: Array<string> = [];
-		for (let i = 0; i < count; i++) {
-			const value: Entry = { timestamp: addMinutes(start, i).toISOString(), value: i };
-			originalData.push(value);
-			values.push(JSON.stringify(value));
-		}
-		const data: string = values.join('\n');
-		await ingestMultiLineEntry({ data, tag, assumeLocalTimezone: false });
+			// Generate and ingest some entries
+			const ingestMultiLineEntry = makeIngestMultiLineEntry(await TEST_BASE_API_CONTEXT());
+			const values: Array<string> = [];
+			for (let i = 0; i < count; i++) {
+				const value: Entry = { timestamp: addMinutes(start, i).toISOString(), value: i };
+				originalData.push(value);
+				values.push(JSON.stringify(value));
+			}
+			const data: string = values.join('\n');
+			await ingestMultiLineEntry({ data, tag, assumeLocalTimezone: false });
 
-		// Check the list of tags until our new tag appears
+			// Check the list of tags until our new tag appears
 
-		const getAllTags = makeGetAllTags(await TEST_BASE_API_CONTEXT());
-		while (!(await getAllTags()).includes(tag)) {
-			// Give the backend a moment to catch up
-			await sleep(1000);
-		}
-	}, 25000);
+			const getAllTags = makeGetAllTags(await TEST_BASE_API_CONTEXT());
+			while (!(await getAllTags()).includes(tag)) {
+				// Give the backend a moment to catch up
+				await sleep(1000);
+			}
+		}, 25000);
 
-	it(
-		'Should complete the observables when the search closes',
-		integrationTest(async () => {
+		it('Should complete the observables when the search closes', async () => {
 			const subscribeToOneExplorerSearch = makeSubscribeToOneExplorerSearch(await TEST_BASE_API_CONTEXT());
 			const attachToOneExplorerSearch = makeAttachToOneExplorerSearch(await TEST_BASE_API_CONTEXT());
 
@@ -94,13 +94,9 @@ describe('attachToOneExplorerSearch()', () => {
 			expect(complete).toBe(0);
 			await search.close();
 			expect(complete).toBe(observables.length);
-		}),
-		25000,
-	);
+		}, 25000);
 
-	xit(
-		'Should work with queries using the raw renderer w/ count module',
-		integrationTest(async () => {
+		xit('Should work with queries using the raw renderer w/ count module', async () => {
 			// Create a macro to expand to "value" to test .query vs .effectiveQuery
 			const macroName = uuidv4().toUpperCase();
 
@@ -196,13 +192,9 @@ describe('attachToOneExplorerSearch()', () => {
 				.toEqual(`count ${count}`);
 
 			await deleteOneMacro(createdMacro.id);
-		}),
-		25000,
-	);
+		}, 25000);
 
-	it(
-		'Should work with queries using the raw renderer',
-		integrationTest(async () => {
+		it('Should work with queries using the raw renderer', async () => {
 			const subscribeToOneExplorerSearch = makeSubscribeToOneExplorerSearch(await TEST_BASE_API_CONTEXT());
 			const attachToOneExplorerSearch = makeAttachToOneExplorerSearch(await TEST_BASE_API_CONTEXT());
 
@@ -306,13 +298,9 @@ describe('attachToOneExplorerSearch()', () => {
 			expect(sum(statsZoom.frequencyStats.map(x => x.count)))
 				.withContext('The sum of counts from statsZoom should equal the total count ingested')
 				.toEqual(count);
-		}),
-		25000,
-	);
+		}, 25000);
 
-	it(
-		'Should treat multiple searches with the same query independently',
-		integrationTest(async () => {
+		it('Should treat multiple searches with the same query independently', async () => {
 			// Number of multiple searches to create at the same time
 			const SEARCHES_N = 4;
 
@@ -426,23 +414,15 @@ describe('attachToOneExplorerSearch()', () => {
 			});
 
 			await Promise.all(testsP);
-		}),
-		25000,
-	);
+		}, 25000);
 
-	it(
-		'Should reject on an inexistent search ID',
-		integrationTest(async () => {
+		it('Should reject on an inexistent search ID', async () => {
 			const attachToOneExplorerSearch = makeAttachToOneExplorerSearch(await TEST_BASE_API_CONTEXT());
 			const searchID = `4723947892379482378`;
 			await expectAsync(attachToOneExplorerSearch(searchID)).toBeRejected();
-		}),
-		25000,
-	);
+		}, 25000);
 
-	it(
-		'Should reject searches with invalid search IDs without affecting good ones',
-		integrationTest(async () => {
+		it('Should reject searches with invalid search IDs without affecting good ones', async () => {
 			const subscribeToOneExplorerSearch = makeSubscribeToOneExplorerSearch(await TEST_BASE_API_CONTEXT());
 			const attachToOneExplorerSearch = makeAttachToOneExplorerSearch(await TEST_BASE_API_CONTEXT());
 
@@ -467,13 +447,9 @@ describe('attachToOneExplorerSearch()', () => {
 					.withContext('invalid search ID should reject')
 					.toBeRejected(),
 			]);
-		}),
-		25000,
-	);
+		}, 25000);
 
-	it(
-		'Should work with several searches initiated simultaneously',
-		integrationTest(async () => {
+		it('Should work with several searches initiated simultaneously', async () => {
 			const subscribeToOneExplorerSearch = makeSubscribeToOneExplorerSearch(await TEST_BASE_API_CONTEXT());
 			const attachToOneExplorerSearch = makeAttachToOneExplorerSearch(await TEST_BASE_API_CONTEXT());
 
@@ -487,14 +463,10 @@ describe('attachToOneExplorerSearch()', () => {
 						.toBeResolved(),
 				),
 			);
-		}),
-		25000,
-	);
+		}, 25000);
 
-	describe('stats', () => {
-		it(
-			'Should be evenly spread over a window matching the zoom/overview granularity',
-			integrationTest(async () => {
+		describe('stats', () => {
+			it('Should be evenly spread over a window matching the zoom/overview granularity', async () => {
 				const subscribeToOneExplorerSearch = makeSubscribeToOneExplorerSearch(await TEST_BASE_API_CONTEXT());
 				const attachToOneExplorerSearch = makeAttachToOneExplorerSearch(await TEST_BASE_API_CONTEXT());
 
@@ -558,13 +530,9 @@ describe('attachToOneExplorerSearch()', () => {
 				expect(statsZoom.frequencyStats.every(x => x.count == 1))
 					.withContext('Every statsZoom element should be 1 -- 90 entries over 90 minutes')
 					.toBeTrue();
-			}),
-			25000,
-		);
+			}, 25000);
 
-		it(
-			'Should adjust when the zoom window adjusts for nicely-aligned bins',
-			integrationTest(async () => {
+			it('Should adjust when the zoom window adjusts for nicely-aligned bins', async () => {
 				const subscribeToOneExplorerSearch = makeSubscribeToOneExplorerSearch(await TEST_BASE_API_CONTEXT());
 				const attachToOneExplorerSearch = makeAttachToOneExplorerSearch(await TEST_BASE_API_CONTEXT());
 
@@ -620,13 +588,9 @@ describe('attachToOneExplorerSearch()', () => {
 						.withContext(`The filter should be equal to the one used, plus the default values for undefined properties`)
 						.toPartiallyEqual({ ...filter, ...filter2 });
 				}
-			}),
-			25000,
-		);
+			}, 25000);
 
-		it(
-			'Should adjust when the zoom window adjusts for odd bins',
-			integrationTest(async () => {
+			it('Should adjust when the zoom window adjusts for odd bins', async () => {
 				const subscribeToOneExplorerSearch = makeSubscribeToOneExplorerSearch(await TEST_BASE_API_CONTEXT());
 				const attachToOneExplorerSearch = makeAttachToOneExplorerSearch(await TEST_BASE_API_CONTEXT());
 
@@ -680,13 +644,9 @@ describe('attachToOneExplorerSearch()', () => {
 						.withContext(`The filter should be equal to the one used, plus the default values for undefined properties`)
 						.toPartiallyEqual({ ...filter, ...filter2 });
 				}
-			}),
-			25000,
-		);
+			}, 25000);
 
-		it(
-			'Should provide the minimum zoom window',
-			integrationTest(async () => {
+			it('Should provide the minimum zoom window', async () => {
 				const subscribeToOneExplorerSearch = makeSubscribeToOneExplorerSearch(await TEST_BASE_API_CONTEXT());
 				const attachToOneExplorerSearch = makeAttachToOneExplorerSearch(await TEST_BASE_API_CONTEXT());
 
@@ -723,13 +683,9 @@ describe('attachToOneExplorerSearch()', () => {
 						.withContext(`The filter should be equal to the one used, plus the default values for undefined properties`)
 						.toPartiallyEqual(filter33s);
 				}
-			}),
-			25000,
-		);
+			}, 25000);
 
-		it(
-			'Should adjust when the zoom window adjusts with a different granularity for nicely-aligned bins',
-			integrationTest(async () => {
+			it('Should adjust when the zoom window adjusts with a different granularity for nicely-aligned bins', async () => {
 				const subscribeToOneExplorerSearch = makeSubscribeToOneExplorerSearch(await TEST_BASE_API_CONTEXT());
 				const attachToOneExplorerSearch = makeAttachToOneExplorerSearch(await TEST_BASE_API_CONTEXT());
 
@@ -801,13 +757,9 @@ describe('attachToOneExplorerSearch()', () => {
 				expect(statsOverview.frequencyStats.length)
 					.withContext('statsZoom should use the default granularity')
 					.toEqual(90);
-			}),
-			25000,
-		);
+			}, 25000);
 
-		it(
-			'Should adjust when the zoom window adjusts with a different granularity for odd bins',
-			integrationTest(async () => {
+			it('Should adjust when the zoom window adjusts with a different granularity for odd bins', async () => {
 				const subscribeToOneExplorerSearch = makeSubscribeToOneExplorerSearch(await TEST_BASE_API_CONTEXT());
 				const attachToOneExplorerSearch = makeAttachToOneExplorerSearch(await TEST_BASE_API_CONTEXT());
 
@@ -880,13 +832,9 @@ describe('attachToOneExplorerSearch()', () => {
 				expect(statsOverview.frequencyStats.length)
 					.withContext('statsZoom should use the default granularity')
 					.toEqual(90);
-			}),
-			25000,
-		);
+			}, 25000);
 
-		it(
-			'Should adjust zoom granularity and overview granularity independently for nicely-aligned bins',
-			integrationTest(async () => {
+			it('Should adjust zoom granularity and overview granularity independently for nicely-aligned bins', async () => {
 				const subscribeToOneExplorerSearch = makeSubscribeToOneExplorerSearch(await TEST_BASE_API_CONTEXT());
 				const attachToOneExplorerSearch = makeAttachToOneExplorerSearch(await TEST_BASE_API_CONTEXT());
 
@@ -965,13 +913,9 @@ describe('attachToOneExplorerSearch()', () => {
 				expect(statsOverview.frequencyStats.length)
 					.withContext('statsZoom should use the default granularity')
 					.toEqual(overviewGranularity);
-			}),
-			25000,
-		);
+			}, 25000);
 
-		it(
-			'Should adjust zoom granularity and overview granularity independently for odd bins',
-			integrationTest(async () => {
+			it('Should adjust zoom granularity and overview granularity independently for odd bins', async () => {
 				const subscribeToOneExplorerSearch = makeSubscribeToOneExplorerSearch(await TEST_BASE_API_CONTEXT());
 				const attachToOneExplorerSearch = makeAttachToOneExplorerSearch(await TEST_BASE_API_CONTEXT());
 
@@ -1051,13 +995,11 @@ describe('attachToOneExplorerSearch()', () => {
 				expect(statsOverview.frequencyStats.length)
 					.withContext('statsZoom should use the default granularity')
 					.toEqual(overviewGranularity);
-			}),
-			25000,
-		);
+			}, 25000);
 
-		it(
-			'Should keep the dateRange when update the filter multiple times',
-			integrationTest(
+			it(
+				'Should keep the dateRange when update the filter multiple times',
+
 				makeKeepDataRangeTest({
 					start,
 					end,
@@ -1071,8 +1013,8 @@ describe('attachToOneExplorerSearch()', () => {
 						return await attachToOneExplorerSearch(searchCreated.searchID, { filter: initialFilter });
 					},
 				}),
-			),
-			25000,
-		);
-	});
-});
+				25000,
+			);
+		});
+	}),
+);
