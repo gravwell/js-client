@@ -14,9 +14,18 @@ import { makeDeleteAllGroups } from '../groups/delete-all-groups';
 import { makeCreateOneSavedQuery } from './create-one-saved-query';
 
 describe('createOneSavedQuery()', () => {
-	const createOneSavedQuery = makeCreateOneSavedQuery(TEST_BASE_API_CONTEXT);
-	const createOneGroup = makeCreateOneGroup(TEST_BASE_API_CONTEXT);
-	const deleteAllGroups = makeDeleteAllGroups(TEST_BASE_API_CONTEXT);
+	let createOneSavedQuery: ReturnType<typeof makeCreateOneSavedQuery>;
+	beforeAll(async () => {
+		createOneSavedQuery = makeCreateOneSavedQuery(await TEST_BASE_API_CONTEXT());
+	});
+	let createOneGroup: ReturnType<typeof makeCreateOneGroup>;
+	beforeAll(async () => {
+		createOneGroup = makeCreateOneGroup(await TEST_BASE_API_CONTEXT());
+	});
+	let deleteAllGroups: ReturnType<typeof makeDeleteAllGroups>;
+	beforeAll(async () => {
+		deleteAllGroups = makeDeleteAllGroups(await TEST_BASE_API_CONTEXT());
+	});
 
 	let groupIDs: Array<NumericID>;
 

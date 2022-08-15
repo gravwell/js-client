@@ -15,9 +15,18 @@ import { makeDeleteOneFile } from './delete-one-file';
 import { makeGetAllFiles } from './get-all-files';
 
 describe('getAllFiles()', () => {
-	const createOneFile = makeCreateOneFile(TEST_BASE_API_CONTEXT);
-	const deleteOneFile = makeDeleteOneFile(TEST_BASE_API_CONTEXT);
-	const getAllFiles = makeGetAllFiles(TEST_BASE_API_CONTEXT);
+	let createOneFile: ReturnType<typeof makeCreateOneFile>;
+	beforeAll(async () => {
+		createOneFile = makeCreateOneFile(await TEST_BASE_API_CONTEXT());
+	});
+	let deleteOneFile: ReturnType<typeof makeDeleteOneFile>;
+	beforeAll(async () => {
+		deleteOneFile = makeDeleteOneFile(await TEST_BASE_API_CONTEXT());
+	});
+	let getAllFiles: ReturnType<typeof makeGetAllFiles>;
+	beforeAll(async () => {
+		getAllFiles = makeGetAllFiles(await TEST_BASE_API_CONTEXT());
+	});
 
 	beforeEach(async () => {
 		// Delete all files

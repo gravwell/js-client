@@ -12,7 +12,7 @@ import { isGroupData } from './is-group-data';
 
 export const isGroup = (value: unknown): value is Group => {
 	try {
-		const g = <Group>value;
+		const g = value as Group;
 		return g._tag === DATA_TYPE.GROUP && isGroupData(value);
 	} catch {
 		return false;

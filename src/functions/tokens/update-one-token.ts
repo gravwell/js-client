@@ -35,7 +35,9 @@ export const makeUpdateOneToken = (context: APIContext) => {
 			const rawRes = await parseJSONResponse<RawToken>(raw);
 			return toToken(rawRes);
 		} catch (err) {
-			if (err instanceof Error) throw err;
+			if (err instanceof Error) {
+				throw err;
+			}
 			throw Error('Unknown error');
 		}
 	};

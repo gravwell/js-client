@@ -10,8 +10,9 @@ import { RawResourceContentPreview, ResourceContentPreview, toResourceContentPre
 import { UUID } from '~/value-objects';
 import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, parseJSONResponse } from '../utils';
 
-export const makePreviewOneResourceContent = (context: APIContext) => {
-	return async (resourceID: UUID, options: { bytes?: number } = {}): Promise<ResourceContentPreview> => {
+export const makePreviewOneResourceContent =
+	(context: APIContext) =>
+	async (resourceID: UUID, options: { bytes?: number | undefined } = {}): Promise<ResourceContentPreview> => {
 		const resourcePath = '/api/resources/{resourceID}/contenttype';
 		const url = buildURL(resourcePath, {
 			...context,
@@ -26,4 +27,3 @@ export const makePreviewOneResourceContent = (context: APIContext) => {
 		const rawPreview = await parseJSONResponse<RawResourceContentPreview>(raw);
 		return toResourceContentPreview(rawPreview);
 	};
-};

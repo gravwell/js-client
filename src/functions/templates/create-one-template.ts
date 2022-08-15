@@ -31,7 +31,9 @@ export const makeCreateOneTemplate = (context: APIContext) => {
 
 			return toTemplate(rawRes);
 		} catch (err) {
-			if (err instanceof Error) throw err;
+			if (err instanceof Error) {
+				throw err;
+			}
 			throw Error('Unknown error');
 		}
 	};

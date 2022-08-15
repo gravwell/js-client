@@ -6,6 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
+import { omitUndefinedShallow } from '../../functions/utils';
 import { assertIsRawIndexerWellResponse } from './assert-is-raw-indexer-response';
 import { IndexerWell } from './indexer-well';
 import { RawIndexerWellResponse } from './raw-indexer-well';
@@ -19,41 +20,44 @@ import { Well } from './well';
 export const toIndexerWell = (data: RawIndexerWellResponse): Array<IndexerWell> => {
 	assertIsRawIndexerWellResponse(data);
 
-	return Object.entries(data).map(([name, { UUID, Wells, Replicated }]) => ({
-		uuid: UUID,
-		name: name,
-		wells: Wells.map(toWell),
-		replicated: toReplicatedState(Replicated),
-	}));
+	return Object.entries(data).map(([name, { UUID, Wells, Replicated }]) =>
+		omitUndefinedShallow({
+			uuid: UUID,
+			name,
+			wells: Wells.map(toWell),
+			replicated: toReplicatedState(Replicated),
+		}),
+	);
 };
 
-const toWell = (well: RawWell): Well => {
-	return {
+const toWell = (well: RawWell): Well =>
+	omitUndefinedShallow({
 		name: well.Name,
 		accelerator: well.Accelerator,
 		engine: well.Engine,
 		path: well.Path,
 		tags: well.Tags,
 		shards: well.Shards.map(toShard),
-	};
-};
+	});
 
 const toReplicatedState = (
 	raw: Record<string, Array<RawReplicatedState>> | undefined,
 ): Record<string, Array<ReplicatedState>> | undefined => {
-	if (raw === undefined) return raw;
+	if (raw === undefined) {
+		return raw;
+	}
 
 	return Object.entries(raw)
 		.map(([key, replicatedStateList]) => {
-			const list = replicatedStateList.map(data => {
-				return {
+			const list = replicatedStateList.map(data =>
+				omitUndefinedShallow({
 					name: data.Name,
 					accelerator: data.Accelerator,
 					engine: data.Engine,
 					tags: data.Tags,
 					shards: data.Shards.map(toShard),
-				};
-			});
+				}),
+			);
 
 			return { key, list };
 		})

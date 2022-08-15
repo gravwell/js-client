@@ -13,9 +13,18 @@ import { makeDeleteOneToken } from './delete-one-token';
 import { makeGetAllTokens } from './get-all-tokens';
 
 describe('getAllTokens()', () => {
-	const createOneToken = makeCreateOneToken(TEST_BASE_API_CONTEXT);
-	const deleteOneToken = makeDeleteOneToken(TEST_BASE_API_CONTEXT);
-	const getAllTokens = makeGetAllTokens(TEST_BASE_API_CONTEXT);
+	let createOneToken: ReturnType<typeof makeCreateOneToken>;
+	beforeAll(async () => {
+		createOneToken = makeCreateOneToken(await TEST_BASE_API_CONTEXT());
+	});
+	let deleteOneToken: ReturnType<typeof makeDeleteOneToken>;
+	beforeAll(async () => {
+		deleteOneToken = makeDeleteOneToken(await TEST_BASE_API_CONTEXT());
+	});
+	let getAllTokens: ReturnType<typeof makeGetAllTokens>;
+	beforeAll(async () => {
+		getAllTokens = makeGetAllTokens(await TEST_BASE_API_CONTEXT());
+	});
 
 	beforeEach(async () => {
 		// Delete all tokens

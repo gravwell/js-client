@@ -10,8 +10,9 @@ import { UUID } from '~/value-objects';
 import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, parseJSONResponse } from '../utils';
 
 // !WARNING gravwell/gravwell#2505 can't use ThingUUID
-export const makeDeleteOneFile = (context: APIContext) => {
-	return async (fileID: UUID): Promise<void> => {
+export const makeDeleteOneFile =
+	(context: APIContext) =>
+	async (fileID: UUID): Promise<void> => {
 		const templatePath = '/api/files/{fileID}';
 		const url = buildURL(templatePath, { ...context, protocol: 'http', pathParams: { fileID } });
 
@@ -20,4 +21,3 @@ export const makeDeleteOneFile = (context: APIContext) => {
 		const raw = await context.fetch(url, { ...req, method: 'DELETE' });
 		return parseJSONResponse(raw, { expect: 'void' });
 	};
-};

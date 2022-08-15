@@ -7,6 +7,7 @@
  **************************************************************************/
 
 import { integrationTest, TEST_BASE_API_CONTEXT } from '~/tests';
+import { assertIsNotNil } from '../utils/type-guards';
 import { makeCreateManyScheduledScripts } from './create-many-scheduled-scripts';
 import { makeDeleteAllScheduledScripts } from './delete-all-scheduled-scripts';
 import { makeDeleteOneScheduledScript } from './delete-one-scheduled-script';
@@ -14,11 +15,26 @@ import { makeGetAllScheduledScripts } from './get-all-scheduled-scripts';
 import { makeGetOneScheduledScript } from './get-one-scheduled-script';
 
 describe('deleteOneScheduledScript()', () => {
-	const deleteOneScheduledScript = makeDeleteOneScheduledScript(TEST_BASE_API_CONTEXT);
-	const getAllScheduledScripts = makeGetAllScheduledScripts(TEST_BASE_API_CONTEXT);
-	const getOneScheduledScript = makeGetOneScheduledScript(TEST_BASE_API_CONTEXT);
-	const deleteAllScheduledScripts = makeDeleteAllScheduledScripts(TEST_BASE_API_CONTEXT);
-	const createManyScheduledScripts = makeCreateManyScheduledScripts(TEST_BASE_API_CONTEXT);
+	let deleteOneScheduledScript: ReturnType<typeof makeDeleteOneScheduledScript>;
+	beforeAll(async () => {
+		deleteOneScheduledScript = makeDeleteOneScheduledScript(await TEST_BASE_API_CONTEXT());
+	});
+	let getAllScheduledScripts: ReturnType<typeof makeGetAllScheduledScripts>;
+	beforeAll(async () => {
+		getAllScheduledScripts = makeGetAllScheduledScripts(await TEST_BASE_API_CONTEXT());
+	});
+	let getOneScheduledScript: ReturnType<typeof makeGetOneScheduledScript>;
+	beforeAll(async () => {
+		getOneScheduledScript = makeGetOneScheduledScript(await TEST_BASE_API_CONTEXT());
+	});
+	let deleteAllScheduledScripts: ReturnType<typeof makeDeleteAllScheduledScripts>;
+	beforeAll(async () => {
+		deleteAllScheduledScripts = makeDeleteAllScheduledScripts(await TEST_BASE_API_CONTEXT());
+	});
+	let createManyScheduledScripts: ReturnType<typeof makeCreateManyScheduledScripts>;
+	beforeAll(async () => {
+		createManyScheduledScripts = makeCreateManyScheduledScripts(await TEST_BASE_API_CONTEXT());
+	});
 
 	beforeEach(async () => {
 		await deleteAllScheduledScripts();
@@ -48,6 +64,8 @@ describe('deleteOneScheduledScript()', () => {
 			expect(currentScheduledScriptIDs.length).toBe(2);
 
 			const deleteScheduledScriptID = currentScheduledScriptIDs[0];
+			assertIsNotNil(deleteScheduledScriptID);
+
 			await deleteOneScheduledScript(deleteScheduledScriptID);
 			await expectAsync(getOneScheduledScript(deleteScheduledScriptID)).toBeRejected();
 

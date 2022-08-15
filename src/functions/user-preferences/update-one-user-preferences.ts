@@ -15,17 +15,16 @@ import {
 	parseJSONResponse,
 } from '../utils';
 
-export const makeUpdateOneUserPreferences = (context: APIContext) => async (
-	userID: string,
-	preferences: UserPreferences,
-): Promise<void> => {
-	const templatePath = '/api/users/{userID}/preferences';
-	const url = buildURL(templatePath, { ...context, protocol: 'http', pathParams: { userID } });
-	const baseRequestOptions: HTTPRequestOptions = {
-		body: JSON.stringify(preferences ?? {}),
-	};
-	const req = buildHTTPRequestWithAuthFromContext(context, baseRequestOptions);
+export const makeUpdateOneUserPreferences =
+	(context: APIContext) =>
+	async (userID: string, preferences: UserPreferences): Promise<void> => {
+		const templatePath = '/api/users/{userID}/preferences';
+		const url = buildURL(templatePath, { ...context, protocol: 'http', pathParams: { userID } });
+		const baseRequestOptions: HTTPRequestOptions = {
+			body: JSON.stringify(preferences ?? {}),
+		};
+		const req = buildHTTPRequestWithAuthFromContext(context, baseRequestOptions);
 
-	const raw = await context.fetch(url, { ...req, method: 'PUT' });
-	return parseJSONResponse(raw, { expect: 'void' });
-};
+		const raw = await context.fetch(url, { ...req, method: 'PUT' });
+		return parseJSONResponse(raw, { expect: 'void' });
+	};

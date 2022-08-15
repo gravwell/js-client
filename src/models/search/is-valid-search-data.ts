@@ -12,7 +12,7 @@ import { SearchData } from './search-data';
 
 export const isValidSearchData = (value: unknown): value is SearchData => {
 	try {
-		const s = <SearchData>value;
+		const s = value as SearchData;
 		return (
 			isNumericID(s.userID) &&
 			(isUndefined(s.groupID) || isNumericID(s.groupID)) &&

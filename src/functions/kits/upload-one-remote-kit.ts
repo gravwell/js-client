@@ -16,8 +16,9 @@ import {
 	parseJSONResponse,
 } from '../utils';
 
-export const makeUploadOneRemoteKit = (context: APIContext) => {
-	return async (kitID: ID): Promise<RemoteKit> => {
+export const makeUploadOneRemoteKit =
+	(context: APIContext) =>
+	async (kitID: ID): Promise<RemoteKit> => {
 		const resourcePath = '/api/kits';
 		const url = buildURL(resourcePath, { ...context, protocol: 'http' });
 
@@ -31,8 +32,9 @@ export const makeUploadOneRemoteKit = (context: APIContext) => {
 			const rawRes = await parseJSONResponse<RawRemoteKit>(raw);
 			return toRemoteKit(rawRes);
 		} catch (err) {
-			if (err instanceof Error) throw err;
+			if (err instanceof Error) {
+				throw err;
+			}
 			throw Error('Unknown error');
 		}
 	};
-};

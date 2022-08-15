@@ -125,9 +125,11 @@ export type KitItem =
 
 export const isKitItem = (v: any): v is KitItem => {
 	try {
-		const i = <KitItem>v;
+		const i = v as KitItem;
 		const base = i.hash.every(isNumber) && isString(i.name);
-		if (base === false) return false;
+		if (base === false) {
+			return false;
+		}
 
 		switch (i.type) {
 			case 'license':

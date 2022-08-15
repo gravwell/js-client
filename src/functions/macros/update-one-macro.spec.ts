@@ -15,10 +15,22 @@ import { makeGetAllMacros } from './get-all-macros';
 import { makeUpdateOneMacro } from './update-one-macro';
 
 describe('updateOneMacro()', () => {
-	const createOneMacro = makeCreateOneMacro(TEST_BASE_API_CONTEXT);
-	const updateOneMacro = makeUpdateOneMacro(TEST_BASE_API_CONTEXT);
-	const deleteOneMacro = makeDeleteOneMacro(TEST_BASE_API_CONTEXT);
-	const getAllMacros = makeGetAllMacros(TEST_BASE_API_CONTEXT);
+	let createOneMacro: ReturnType<typeof makeCreateOneMacro>;
+	beforeAll(async () => {
+		createOneMacro = makeCreateOneMacro(await TEST_BASE_API_CONTEXT());
+	});
+	let updateOneMacro: ReturnType<typeof makeUpdateOneMacro>;
+	beforeAll(async () => {
+		updateOneMacro = makeUpdateOneMacro(await TEST_BASE_API_CONTEXT());
+	});
+	let deleteOneMacro: ReturnType<typeof makeDeleteOneMacro>;
+	beforeAll(async () => {
+		deleteOneMacro = makeDeleteOneMacro(await TEST_BASE_API_CONTEXT());
+	});
+	let getAllMacros: ReturnType<typeof makeGetAllMacros>;
+	beforeAll(async () => {
+		getAllMacros = makeGetAllMacros(await TEST_BASE_API_CONTEXT());
+	});
 
 	let createdMacro: Macro;
 

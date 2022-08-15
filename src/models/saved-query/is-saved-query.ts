@@ -12,7 +12,7 @@ import { SavedQuery } from './saved-query';
 
 export const isSavedQuery = (value: unknown): value is SavedQuery => {
 	try {
-		const q = <SavedQuery>value;
+		const q = value as SavedQuery;
 		return q._tag === DATA_TYPE.SAVED_QUERY && isSavedQueryData(q);
 	} catch {
 		return false;

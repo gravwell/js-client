@@ -30,7 +30,9 @@ export const makeCreateOneSavedQuery = (context: APIContext) => {
 			const rawRes = await parseJSONResponse<RawSavedQuery>(raw);
 			return toSavedQuery(rawRes);
 		} catch (err) {
-			if (err instanceof Error) throw err;
+			if (err instanceof Error) {
+				throw err;
+			}
 			throw Error('Unknown error');
 		}
 	};

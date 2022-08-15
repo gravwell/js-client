@@ -14,7 +14,7 @@ import { LocalKitData } from './local-kit-data';
 
 export const isLocalKitData = (v: unknown): v is LocalKitData => {
 	try {
-		const k = <LocalKitData>v;
+		const k = v as LocalKitData;
 		return (
 			isID(k.customID) &&
 			isUUID(k.globalID) &&

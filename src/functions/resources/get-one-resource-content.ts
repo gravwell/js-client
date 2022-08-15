@@ -9,8 +9,9 @@
 import { ID } from '~/value-objects';
 import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, parseJSONResponse } from '../utils';
 
-export const makeGetOneResourceContent = (context: APIContext) => {
-	return async (resourceID: ID): Promise<string> => {
+export const makeGetOneResourceContent =
+	(context: APIContext) =>
+	async (resourceID: ID): Promise<string> => {
 		const path = '/api/resources/{resourceID}/raw';
 		const url = buildURL(path, { ...context, protocol: 'http', pathParams: { resourceID } });
 
@@ -19,4 +20,3 @@ export const makeGetOneResourceContent = (context: APIContext) => {
 		const raw = await context.fetch(url, { ...req, method: 'GET' });
 		return await parseJSONResponse(raw, { expect: 'text' });
 	};
-};

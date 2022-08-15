@@ -11,7 +11,7 @@ import { SearchModule } from './search-module';
 
 export const isSearchModule = (value: unknown): value is SearchModule => {
 	try {
-		const m = <SearchModule>value;
+		const m = value as SearchModule;
 		return m._tag === DATA_TYPE.SEARCH_MODULE && isSearchModuleData(m);
 	} catch {
 		return false;

@@ -13,9 +13,18 @@ import { makeDeleteOneAutoExtractor } from './delete-one-auto-extractor';
 import { makeGetAllAutoExtractors } from './get-all-auto-extractors';
 
 describe('createOneAutoExtractor()', () => {
-	const createOneAutoExtractor = makeCreateOneAutoExtractor(TEST_BASE_API_CONTEXT);
-	const deleteOneAutoExtractor = makeDeleteOneAutoExtractor(TEST_BASE_API_CONTEXT);
-	const getAllAutoExtractors = makeGetAllAutoExtractors(TEST_BASE_API_CONTEXT);
+	let createOneAutoExtractor: ReturnType<typeof makeCreateOneAutoExtractor>;
+	beforeAll(async () => {
+		createOneAutoExtractor = makeCreateOneAutoExtractor(await TEST_BASE_API_CONTEXT());
+	});
+	let deleteOneAutoExtractor: ReturnType<typeof makeDeleteOneAutoExtractor>;
+	beforeAll(async () => {
+		deleteOneAutoExtractor = makeDeleteOneAutoExtractor(await TEST_BASE_API_CONTEXT());
+	});
+	let getAllAutoExtractors: ReturnType<typeof makeGetAllAutoExtractors>;
+	beforeAll(async () => {
+		getAllAutoExtractors = makeGetAllAutoExtractors(await TEST_BASE_API_CONTEXT());
+	});
 
 	beforeEach(async () => {
 		jasmine.addMatchers(myCustomMatchers);

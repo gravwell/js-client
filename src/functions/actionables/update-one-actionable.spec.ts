@@ -15,11 +15,23 @@ import { makeDeleteOneActionable } from './delete-one-actionable';
 import { makeGetOneActionable } from './get-one-actionable';
 import { makeUpdateOneActionable } from './update-one-actionable';
 
-describe('updateOneActionable()', () => {
-	const createOneActionable = makeCreateOneActionable(TEST_BASE_API_CONTEXT);
-	const getOneActionable = makeGetOneActionable(TEST_BASE_API_CONTEXT);
-	const updateOneActionable = makeUpdateOneActionable(TEST_BASE_API_CONTEXT);
-	const deleteOneActionable = makeDeleteOneActionable(TEST_BASE_API_CONTEXT);
+xdescribe('updateOneActionable()', () => {
+	let createOneActionable: ReturnType<typeof makeCreateOneActionable>;
+	beforeAll(async () => {
+		createOneActionable = makeCreateOneActionable(await TEST_BASE_API_CONTEXT());
+	});
+	let getOneActionable: ReturnType<typeof makeGetOneActionable>;
+	beforeAll(async () => {
+		getOneActionable = makeGetOneActionable(await TEST_BASE_API_CONTEXT());
+	});
+	let updateOneActionable: ReturnType<typeof makeUpdateOneActionable>;
+	beforeAll(async () => {
+		updateOneActionable = makeUpdateOneActionable(await TEST_BASE_API_CONTEXT());
+	});
+	let deleteOneActionable: ReturnType<typeof makeDeleteOneActionable>;
+	beforeAll(async () => {
+		deleteOneActionable = makeDeleteOneActionable(await TEST_BASE_API_CONTEXT());
+	});
 
 	let createdActionable: Actionable;
 

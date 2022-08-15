@@ -11,7 +11,7 @@ import { DashboardRendererOptions } from './dashboard-renderer-options';
 
 export const isDashboardRendererOptions = (value: unknown): value is DashboardRendererOptions => {
 	try {
-		const d = <DashboardRendererOptions>value;
+		const d = value as DashboardRendererOptions;
 
 		return (
 			(isUndefined(d.XAxisSplitLine) || isString(d.XAxisSplitLine)) &&

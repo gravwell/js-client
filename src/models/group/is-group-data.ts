@@ -12,7 +12,7 @@ import { GroupData } from './group-data';
 
 export const isGroupData = (value: unknown): value is GroupData => {
 	try {
-		const g = <GroupData>value;
+		const g = value as GroupData;
 		return isNumericID(g.id) && isString(g.name) && (isString(g.description) || isNull(g.description));
 	} catch {
 		return false;

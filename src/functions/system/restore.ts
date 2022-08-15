@@ -21,6 +21,12 @@ export const makeRestore = (context: APIContext) => {
 			body: form as any,
 		};
 		const req = buildHTTPRequestWithAuthFromContext(context, baseRequestOptions);
-		await context.fetch(url, { ...req, method: 'POST', signal });
+
+		const init = { ...req, method: 'POST' };
+		if (signal) {
+			init.signal = signal;
+		}
+
+		await context.fetch(url, init);
 	};
 };

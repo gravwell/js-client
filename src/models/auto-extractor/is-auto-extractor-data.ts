@@ -14,7 +14,7 @@ import { AUTO_EXTRACTOR_MODULES } from './auto-extractor-modules';
 
 export const isAutoExtractorData = (value: unknown): value is AutoExtractorData => {
 	try {
-		const ae = <AutoExtractorData>value;
+		const ae = value as AutoExtractorData;
 		return (
 			isUUID(ae.id) &&
 			isNumericID(ae.userID) &&
@@ -38,7 +38,7 @@ const makeIsAutoExtractorModule = () => {
 	const autoExtractorModulesSet = new Set(AUTO_EXTRACTOR_MODULES);
 
 	return (value: unknown): value is AutoExtractorModule => {
-		const m = <AutoExtractorModule>value;
+		const m = value as AutoExtractorModule;
 		return isString(m) && autoExtractorModulesSet.has(m);
 	};
 };

@@ -11,7 +11,10 @@ import { integrationTest, TEST_BASE_API_CONTEXT } from '~/tests';
 import { makeCreateOneBroadcastedNotification } from './create-one-broadcasted-notification';
 
 describe('createOneBroadcastedNotification', () => {
-	const createOneBroadcastedNotification = makeCreateOneBroadcastedNotification(TEST_BASE_API_CONTEXT);
+	let createOneBroadcastedNotification: ReturnType<typeof makeCreateOneBroadcastedNotification>;
+	beforeAll(async () => {
+		createOneBroadcastedNotification = makeCreateOneBroadcastedNotification(await TEST_BASE_API_CONTEXT());
+	});
 
 	it(
 		'Should be able to create a broadcasted message',

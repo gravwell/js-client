@@ -14,9 +14,18 @@ import { makeDeleteOneTemplate } from './delete-one-template';
 import { makeGetOneTemplate } from './get-one-template';
 
 describe('getOneTemplate()', () => {
-	const getOneTemplate = makeGetOneTemplate(TEST_BASE_API_CONTEXT);
-	const createOneTemplate = makeCreateOneTemplate(TEST_BASE_API_CONTEXT);
-	const deleteOneTemplate = makeDeleteOneTemplate(TEST_BASE_API_CONTEXT);
+	let getOneTemplate: ReturnType<typeof makeGetOneTemplate>;
+	beforeAll(async () => {
+		getOneTemplate = makeGetOneTemplate(await TEST_BASE_API_CONTEXT());
+	});
+	let createOneTemplate: ReturnType<typeof makeCreateOneTemplate>;
+	beforeAll(async () => {
+		createOneTemplate = makeCreateOneTemplate(await TEST_BASE_API_CONTEXT());
+	});
+	let deleteOneTemplate: ReturnType<typeof makeDeleteOneTemplate>;
+	beforeAll(async () => {
+		deleteOneTemplate = makeDeleteOneTemplate(await TEST_BASE_API_CONTEXT());
+	});
 
 	let createdTemplateUUID: UUID;
 

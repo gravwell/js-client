@@ -18,11 +18,26 @@ import { makeGetOneFileContent } from './get-one-file-content';
 import { makeUpdateOneFile } from './update-one-file';
 
 describe('updateOneFile()', () => {
-	const createOneFile = makeCreateOneFile(TEST_BASE_API_CONTEXT);
-	const updateOneFile = makeUpdateOneFile(TEST_BASE_API_CONTEXT);
-	const deleteOneFile = makeDeleteOneFile(TEST_BASE_API_CONTEXT);
-	const getAllFiles = makeGetAllFiles(TEST_BASE_API_CONTEXT);
-	const getOneFileContent = makeGetOneFileContent(TEST_BASE_API_CONTEXT);
+	let createOneFile: ReturnType<typeof makeCreateOneFile>;
+	beforeAll(async () => {
+		createOneFile = makeCreateOneFile(await TEST_BASE_API_CONTEXT());
+	});
+	let updateOneFile: ReturnType<typeof makeUpdateOneFile>;
+	beforeAll(async () => {
+		updateOneFile = makeUpdateOneFile(await TEST_BASE_API_CONTEXT());
+	});
+	let deleteOneFile: ReturnType<typeof makeDeleteOneFile>;
+	beforeAll(async () => {
+		deleteOneFile = makeDeleteOneFile(await TEST_BASE_API_CONTEXT());
+	});
+	let getAllFiles: ReturnType<typeof makeGetAllFiles>;
+	beforeAll(async () => {
+		getAllFiles = makeGetAllFiles(await TEST_BASE_API_CONTEXT());
+	});
+	let getOneFileContent: ReturnType<typeof makeGetOneFileContent>;
+	beforeAll(async () => {
+		getOneFileContent = makeGetOneFileContent(await TEST_BASE_API_CONTEXT());
+	});
 
 	let createdFile: FileMetadata;
 

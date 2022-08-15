@@ -15,8 +15,9 @@ import {
 	parseJSONResponse,
 } from '../utils';
 
-export const makeUpdateOneNotification = (context: APIContext) => {
-	return async (updatable: UpdatableNotification): Promise<void> => {
+export const makeUpdateOneNotification =
+	(context: APIContext) =>
+	async (updatable: UpdatableNotification): Promise<void> => {
 		try {
 			const templatePath = '/api/notifications/{notificationID}';
 			const url = buildURL(templatePath, {
@@ -33,8 +34,9 @@ export const makeUpdateOneNotification = (context: APIContext) => {
 			const raw = await context.fetch(url, { ...req, method: 'POST' });
 			return parseJSONResponse(raw, { expect: 'void' });
 		} catch (err) {
-			if (err instanceof Error) throw err;
+			if (err instanceof Error) {
+				throw err;
+			}
 			throw Error('Unknown error');
 		}
 	};
-};

@@ -82,7 +82,7 @@ export const makeSubscribeToOneQueryParsing = (context: APIContext) => {
 						Sequence: msg.id,
 					},
 				};
-				if (msg.filters.length !== 0)
+				if (msg.filters.length !== 0) {
 					rawMsg.data.Filters = msg.filters.map(f => {
 						if (isOperationFilter(f)) {
 							const opFilter: RawOperationFilter = {
@@ -103,6 +103,7 @@ export const makeSubscribeToOneQueryParsing = (context: APIContext) => {
 						};
 						return exFilter;
 					});
+				}
 				await rawSubscription.send(rawMsg);
 			},
 			received$,

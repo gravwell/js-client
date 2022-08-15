@@ -9,16 +9,12 @@
 import { ConfigMacro } from './config-macro';
 import { RawConfigMacro } from './raw-config-macro';
 
-export const toConfigMacro = (macro: RawConfigMacro): ConfigMacro => {
-	return {
-		macroName: macro.MacroName,
-		description: macro.Description,
-		defaultValue: macro.DefaultValue,
-		value: macro.Value ?? null,
-		type: macro.Type === 'TAG' ? 'tag' : 'string',
-	};
-};
+export const toConfigMacro = (macro: RawConfigMacro): ConfigMacro => ({
+	macroName: macro.MacroName,
+	description: macro.Description,
+	defaultValue: macro.DefaultValue,
+	value: macro.Value ?? null,
+	type: macro.Type === 'TAG' ? 'tag' : 'string',
+});
 
-export const toConfigMacros = (macros: Array<RawConfigMacro>): Array<ConfigMacro> => {
-	return macros.map(toConfigMacro);
-};
+export const toConfigMacros = (macros: Array<RawConfigMacro>): Array<ConfigMacro> => macros.map(toConfigMacro);

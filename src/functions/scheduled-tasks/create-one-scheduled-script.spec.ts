@@ -15,10 +15,22 @@ import { makeCreateOneScheduledScript } from './create-one-scheduled-script';
 import { makeDeleteAllScheduledScripts } from './delete-all-scheduled-scripts';
 
 describe('createOneScheduledScript()', () => {
-	const createOneScheduledScript = makeCreateOneScheduledScript(TEST_BASE_API_CONTEXT);
-	const createOneGroup = makeCreateOneGroup(TEST_BASE_API_CONTEXT);
-	const deleteAllScheduledScripts = makeDeleteAllScheduledScripts(TEST_BASE_API_CONTEXT);
-	const deleteAllGroups = makeDeleteAllGroups(TEST_BASE_API_CONTEXT);
+	let createOneScheduledScript: ReturnType<typeof makeCreateOneScheduledScript>;
+	beforeAll(async () => {
+		createOneScheduledScript = makeCreateOneScheduledScript(await TEST_BASE_API_CONTEXT());
+	});
+	let createOneGroup: ReturnType<typeof makeCreateOneGroup>;
+	beforeAll(async () => {
+		createOneGroup = makeCreateOneGroup(await TEST_BASE_API_CONTEXT());
+	});
+	let deleteAllScheduledScripts: ReturnType<typeof makeDeleteAllScheduledScripts>;
+	beforeAll(async () => {
+		deleteAllScheduledScripts = makeDeleteAllScheduledScripts(await TEST_BASE_API_CONTEXT());
+	});
+	let deleteAllGroups: ReturnType<typeof makeDeleteAllGroups>;
+	beforeAll(async () => {
+		deleteAllGroups = makeDeleteAllGroups(await TEST_BASE_API_CONTEXT());
+	});
 
 	let groupIDs: Array<NumericID>;
 

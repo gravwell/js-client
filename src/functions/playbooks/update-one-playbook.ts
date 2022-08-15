@@ -40,7 +40,9 @@ export const makeUpdateOnePlaybook = (context: APIContext) => {
 			const rawRes = await parseJSONResponse<RawPlaybook>(raw);
 			return toPlaybook(rawRes);
 		} catch (err) {
-			if (err instanceof Error) throw err;
+			if (err instanceof Error) {
+				throw err;
+			}
 			throw Error('Unknown error');
 		}
 	};

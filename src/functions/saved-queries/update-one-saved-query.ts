@@ -35,7 +35,9 @@ export const makeUpdateOneSavedQuery = (context: APIContext) => {
 			const rawSavedQuery = await parseJSONResponse<RawSavedQuery>(raw);
 			return toSavedQuery(rawSavedQuery);
 		} catch (err) {
-			if (err instanceof Error) throw err;
+			if (err instanceof Error) {
+				throw err;
+			}
 			throw Error('Unknown error');
 		}
 	};

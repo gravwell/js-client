@@ -15,10 +15,22 @@ import { makeCreateOneScheduledQuery } from './create-one-scheduled-query';
 import { makeDeleteAllScheduledQueries } from './delete-all-scheduled-queries';
 
 describe('createOneScheduledQuery()', () => {
-	const createOneScheduledQuery = makeCreateOneScheduledQuery(TEST_BASE_API_CONTEXT);
-	const createOneGroup = makeCreateOneGroup(TEST_BASE_API_CONTEXT);
-	const deleteAllScheduledQueries = makeDeleteAllScheduledQueries(TEST_BASE_API_CONTEXT);
-	const deleteAllGroups = makeDeleteAllGroups(TEST_BASE_API_CONTEXT);
+	let createOneScheduledQuery: ReturnType<typeof makeCreateOneScheduledQuery>;
+	beforeAll(async () => {
+		createOneScheduledQuery = makeCreateOneScheduledQuery(await TEST_BASE_API_CONTEXT());
+	});
+	let createOneGroup: ReturnType<typeof makeCreateOneGroup>;
+	beforeAll(async () => {
+		createOneGroup = makeCreateOneGroup(await TEST_BASE_API_CONTEXT());
+	});
+	let deleteAllScheduledQueries: ReturnType<typeof makeDeleteAllScheduledQueries>;
+	beforeAll(async () => {
+		deleteAllScheduledQueries = makeDeleteAllScheduledQueries(await TEST_BASE_API_CONTEXT());
+	});
+	let deleteAllGroups: ReturnType<typeof makeDeleteAllGroups>;
+	beforeAll(async () => {
+		deleteAllGroups = makeDeleteAllGroups(await TEST_BASE_API_CONTEXT());
+	});
 
 	let groupIDs: Array<NumericID>;
 

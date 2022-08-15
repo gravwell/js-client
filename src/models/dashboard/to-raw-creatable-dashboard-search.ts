@@ -20,7 +20,9 @@ export const toRawCreatableDashboardSearch = (data: CreatableDashboardSearch): R
 		searchID: isNumericID(data.cachedSearchID) ? toRawNumericID(data.cachedSearchID) : undefined,
 		color: data.color,
 		reference: ((): RawCreatableDashboardSearch['reference'] => {
-			if (data.type === 'query') return undefined;
+			if (data.type === 'query') {
+				return undefined;
+			}
 
 			const extras = { defaultValue: data.variablePreviewValue ?? null };
 			switch (data.type) {

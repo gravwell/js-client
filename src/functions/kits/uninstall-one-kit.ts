@@ -9,8 +9,9 @@
 import { ID } from '~/value-objects';
 import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, parseJSONResponse } from '../utils';
 
-export const makeUninstallOneKit = (context: APIContext) => {
-	return async (kitID: ID): Promise<void> => {
+export const makeUninstallOneKit =
+	(context: APIContext) =>
+	async (kitID: ID): Promise<void> => {
 		const path = '/api/kits/{kitID}';
 		const url = buildURL(path, { ...context, protocol: 'http', pathParams: { kitID } });
 
@@ -19,4 +20,3 @@ export const makeUninstallOneKit = (context: APIContext) => {
 		const raw = await context.fetch(url, { ...req, method: 'DELETE' });
 		return parseJSONResponse(raw, { expect: 'void' });
 	};
-};

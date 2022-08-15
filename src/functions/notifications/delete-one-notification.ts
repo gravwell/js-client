@@ -8,12 +8,14 @@
 
 import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, parseJSONResponse } from '../utils';
 
-export const makeDeleteOneNotification = (context: APIContext) => async (notificationID: string): Promise<void> => {
-	const templatePath = '/api/notifications/{notificationID}';
-	const url = buildURL(templatePath, { ...context, protocol: 'http', pathParams: { notificationID } });
+export const makeDeleteOneNotification =
+	(context: APIContext) =>
+	async (notificationID: string): Promise<void> => {
+		const templatePath = '/api/notifications/{notificationID}';
+		const url = buildURL(templatePath, { ...context, protocol: 'http', pathParams: { notificationID } });
 
-	const req = buildHTTPRequestWithAuthFromContext(context);
+		const req = buildHTTPRequestWithAuthFromContext(context);
 
-	const raw = await context.fetch(url, { ...req, method: 'DELETE' });
-	return parseJSONResponse(raw, { expect: 'void' });
-};
+		const raw = await context.fetch(url, { ...req, method: 'DELETE' });
+		return parseJSONResponse(raw, { expect: 'void' });
+	};

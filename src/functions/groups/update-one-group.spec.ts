@@ -15,11 +15,26 @@ import { makeGetOneGroup } from './get-one-group';
 import { makeUpdateOneGroup } from './update-one-group';
 
 describe('updateOneGroup()', () => {
-	const createOneGroup = makeCreateOneGroup(TEST_BASE_API_CONTEXT);
-	const getOneGroup = makeGetOneGroup(TEST_BASE_API_CONTEXT);
-	const deleteOneGroup = makeDeleteOneGroup(TEST_BASE_API_CONTEXT);
-	const getAllGroups = makeGetAllGroups(TEST_BASE_API_CONTEXT);
-	const updateOneGroup = makeUpdateOneGroup(TEST_BASE_API_CONTEXT);
+	let createOneGroup: ReturnType<typeof makeCreateOneGroup>;
+	beforeAll(async () => {
+		createOneGroup = makeCreateOneGroup(await TEST_BASE_API_CONTEXT());
+	});
+	let getOneGroup: ReturnType<typeof makeGetOneGroup>;
+	beforeAll(async () => {
+		getOneGroup = makeGetOneGroup(await TEST_BASE_API_CONTEXT());
+	});
+	let deleteOneGroup: ReturnType<typeof makeDeleteOneGroup>;
+	beforeAll(async () => {
+		deleteOneGroup = makeDeleteOneGroup(await TEST_BASE_API_CONTEXT());
+	});
+	let getAllGroups: ReturnType<typeof makeGetAllGroups>;
+	beforeAll(async () => {
+		getAllGroups = makeGetAllGroups(await TEST_BASE_API_CONTEXT());
+	});
+	let updateOneGroup: ReturnType<typeof makeUpdateOneGroup>;
+	beforeAll(async () => {
+		updateOneGroup = makeUpdateOneGroup(await TEST_BASE_API_CONTEXT());
+	});
 
 	let createdGroup: Group;
 

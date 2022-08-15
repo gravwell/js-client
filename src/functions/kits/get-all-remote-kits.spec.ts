@@ -11,7 +11,10 @@ import { integrationTest, TEST_BASE_API_CONTEXT } from '~/tests';
 import { makeGetAllRemoteKits } from './get-all-remote-kits';
 
 describe('getAllRemoteKits()', () => {
-	const getAllRemoteKits = makeGetAllRemoteKits(TEST_BASE_API_CONTEXT);
+	let getAllRemoteKits: ReturnType<typeof makeGetAllRemoteKits>;
+	beforeAll(async () => {
+		getAllRemoteKits = makeGetAllRemoteKits(await TEST_BASE_API_CONTEXT());
+	});
 
 	xit(
 		'Should return all available kits from the remote server',

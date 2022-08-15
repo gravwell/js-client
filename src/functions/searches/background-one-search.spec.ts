@@ -8,14 +8,24 @@
 
 import { isSearch2 } from '~/models';
 import { integrationTest, TEST_BASE_API_CONTEXT } from '~/tests';
+import { assertIsNotNil } from '../utils/type-guards';
 import { makeBackgroundOneSearch } from './background-one-search';
 import { makeGetOnePersistentSearchStatus } from './get-one-persistent-search-status';
 import { makeGetPersistentSearchStatusRelatedToMe } from './get-persistent-search-status-related-to-me';
 
 describe('backgroundOneSearch()', () => {
-	const getPersistentSearchStatusRelatedToMe = makeGetPersistentSearchStatusRelatedToMe(TEST_BASE_API_CONTEXT);
-	const backgroundOneSearch = makeBackgroundOneSearch(TEST_BASE_API_CONTEXT);
-	const getOnePersistentSearchStatus = makeGetOnePersistentSearchStatus(TEST_BASE_API_CONTEXT);
+	let getPersistentSearchStatusRelatedToMe: ReturnType<typeof makeGetPersistentSearchStatusRelatedToMe>;
+	beforeAll(async () => {
+		getPersistentSearchStatusRelatedToMe = makeGetPersistentSearchStatusRelatedToMe(await TEST_BASE_API_CONTEXT());
+	});
+	let backgroundOneSearch: ReturnType<typeof makeBackgroundOneSearch>;
+	beforeAll(async () => {
+		backgroundOneSearch = makeBackgroundOneSearch(await TEST_BASE_API_CONTEXT());
+	});
+	let getOnePersistentSearchStatus: ReturnType<typeof makeGetOnePersistentSearchStatus>;
+	beforeAll(async () => {
+		getOnePersistentSearchStatus = makeGetOnePersistentSearchStatus(await TEST_BASE_API_CONTEXT());
+	});
 
 	xit(
 		'Should background a search',
@@ -25,8 +35,11 @@ describe('backgroundOneSearch()', () => {
 			const searches = await getPersistentSearchStatusRelatedToMe();
 			expect(searches.length).toBeGreaterThanOrEqual(1);
 
-			expect(searches[0].states).not.toContain('backgrounded');
-			const searchID = searches[0].id;
+			const fst = searches[0];
+			assertIsNotNil(fst);
+
+			expect(fst.states).not.toContain('backgrounded');
+			const searchID = fst.id;
 
 			await backgroundOneSearch(searchID);
 			const backgroundedSearch = await getOnePersistentSearchStatus(searchID);

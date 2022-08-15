@@ -12,7 +12,7 @@ import { RenderModule } from './render-module';
 
 export const isRenderModule = (value: unknown): value is RenderModule => {
 	try {
-		const m = <RenderModule>value;
+		const m = value as RenderModule;
 		return m._tag === DATA_TYPE.RENDER_MODULE && isRenderModuleData(m);
 	} catch {
 		return false;

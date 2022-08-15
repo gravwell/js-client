@@ -14,10 +14,22 @@ import { makeGetAllDashboards } from './get-all-dashboards';
 import { makeGetOneDashboard } from './get-one-dashboard';
 
 describe('getOneDashboard()', () => {
-	const getOneDashboard = makeGetOneDashboard(TEST_BASE_API_CONTEXT);
-	const createOneDashboard = makeCreateOneDashboard(TEST_BASE_API_CONTEXT);
-	const getAllDashboards = makeGetAllDashboards(TEST_BASE_API_CONTEXT);
-	const deleteOneDashboard = makeDeleteOneDashboard(TEST_BASE_API_CONTEXT);
+	let getOneDashboard: ReturnType<typeof makeGetOneDashboard>;
+	beforeAll(async () => {
+		getOneDashboard = makeGetOneDashboard(await TEST_BASE_API_CONTEXT());
+	});
+	let createOneDashboard: ReturnType<typeof makeCreateOneDashboard>;
+	beforeAll(async () => {
+		createOneDashboard = makeCreateOneDashboard(await TEST_BASE_API_CONTEXT());
+	});
+	let getAllDashboards: ReturnType<typeof makeGetAllDashboards>;
+	beforeAll(async () => {
+		getAllDashboards = makeGetAllDashboards(await TEST_BASE_API_CONTEXT());
+	});
+	let deleteOneDashboard: ReturnType<typeof makeDeleteOneDashboard>;
+	beforeAll(async () => {
+		deleteOneDashboard = makeDeleteOneDashboard(await TEST_BASE_API_CONTEXT());
+	});
 
 	let createdDashboard: Dashboard;
 
@@ -33,13 +45,7 @@ describe('getOneDashboard()', () => {
 			name: 'TEST',
 			searches: [],
 			tiles: [],
-			timeframe: {
-				durationString: 'PT1H',
-				end: null,
-				start: null,
-				timeframe: 'PT1H',
-				timezone: null,
-			},
+			timeframe: { durationString: 'PT1H', end: null, start: null, timeframe: 'PT1H', timezone: null },
 		};
 		createdDashboard = await createOneDashboard(data);
 	});

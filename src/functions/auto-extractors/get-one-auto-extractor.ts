@@ -18,7 +18,9 @@ export const makeGetOneAutoExtractor = (context: APIContext) => {
 	return async (autoExtractorID: UUID): Promise<AutoExtractor> => {
 		const autoExtractors = await getAllAutoExtractors();
 		const autoExtractor = autoExtractors.find(ae => ae.id === autoExtractorID);
-		if (isUndefined(autoExtractor)) throw Error('Not found');
+		if (isUndefined(autoExtractor)) {
+			throw Error('Not found');
+		}
 		return autoExtractor;
 	};
 };

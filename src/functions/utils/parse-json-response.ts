@@ -28,7 +28,9 @@ export const parseJSONResponse = async <T, Expect extends ResponseExpectation = 
 			try {
 				const json = JSON.parse(text);
 				const errorMessage = json?.Error ?? text;
-				if (isString(errorMessage)) error = new Error(errorMessage);
+				if (isString(errorMessage)) {
+					error = new Error(errorMessage);
+				}
 			} catch (e) {
 				// API may just return a string in the response
 				if (!isEmpty(text.trim())) {
@@ -56,7 +58,9 @@ export const parseJSONResponse = async <T, Expect extends ResponseExpectation = 
 			}
 		}
 	} catch (err) {
-		if (err instanceof Error) throw err;
+		if (err instanceof Error) {
+			throw err;
+		}
 		throw Error('Unknown error');
 	}
 };

@@ -17,9 +17,18 @@ import { makeDeleteAllGroups } from '../groups/delete-all-groups';
 import { makeCreateOneFile } from './create-one-file';
 
 describe('createOneFile()', () => {
-	const createOneFile = makeCreateOneFile(TEST_BASE_API_CONTEXT);
-	const createOneGroup = makeCreateOneGroup(TEST_BASE_API_CONTEXT);
-	const deleteAllGroups = makeDeleteAllGroups(TEST_BASE_API_CONTEXT);
+	let createOneFile: ReturnType<typeof makeCreateOneFile>;
+	beforeAll(async () => {
+		createOneFile = makeCreateOneFile(await TEST_BASE_API_CONTEXT());
+	});
+	let createOneGroup: ReturnType<typeof makeCreateOneGroup>;
+	beforeAll(async () => {
+		createOneGroup = makeCreateOneGroup(await TEST_BASE_API_CONTEXT());
+	});
+	let deleteAllGroups: ReturnType<typeof makeDeleteAllGroups>;
+	beforeAll(async () => {
+		deleteAllGroups = makeDeleteAllGroups(await TEST_BASE_API_CONTEXT());
+	});
 
 	let groupIDs: Array<NumericID>;
 

@@ -13,9 +13,18 @@ import { makeDeleteAllScheduledScripts } from './delete-all-scheduled-scripts';
 import { makeGetAllScheduledScripts } from './get-all-scheduled-scripts';
 
 describe('getAllScheduledScripts()', () => {
-	const getAllScheduledScripts = makeGetAllScheduledScripts(TEST_BASE_API_CONTEXT);
-	const deleteAllScheduledScripts = makeDeleteAllScheduledScripts(TEST_BASE_API_CONTEXT);
-	const createManyScheduledScripts = makeCreateManyScheduledScripts(TEST_BASE_API_CONTEXT);
+	let getAllScheduledScripts: ReturnType<typeof makeGetAllScheduledScripts>;
+	beforeAll(async () => {
+		getAllScheduledScripts = makeGetAllScheduledScripts(await TEST_BASE_API_CONTEXT());
+	});
+	let deleteAllScheduledScripts: ReturnType<typeof makeDeleteAllScheduledScripts>;
+	beforeAll(async () => {
+		deleteAllScheduledScripts = makeDeleteAllScheduledScripts(await TEST_BASE_API_CONTEXT());
+	});
+	let createManyScheduledScripts: ReturnType<typeof makeCreateManyScheduledScripts>;
+	beforeAll(async () => {
+		createManyScheduledScripts = makeCreateManyScheduledScripts(await TEST_BASE_API_CONTEXT());
+	});
 
 	beforeEach(async () => {
 		await deleteAllScheduledScripts();

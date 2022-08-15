@@ -11,7 +11,7 @@ import { Timeframe } from './timeframe';
 
 export const isTimeframe = (value: any): value is Timeframe => {
 	try {
-		const tf = <Timeframe>value;
+		const tf = value as Timeframe;
 		return (
 			(isString(tf.durationString) || isNull(tf.durationString)) &&
 			(isString(tf.timeframe) || isNull(tf.timeframe)) &&

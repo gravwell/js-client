@@ -12,7 +12,7 @@ import { Resource } from './resource';
 
 export const isResource = (value: unknown): value is Resource => {
 	try {
-		const r = <Resource>value;
+		const r = value as Resource;
 		return r._tag === DATA_TYPE.RESOURCE && isResourceData(r);
 	} catch {
 		return false;

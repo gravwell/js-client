@@ -18,13 +18,34 @@ import { makeGetOneUser } from './get-one-user';
 import { makeUpdateOneUser } from './update-one-user';
 
 describe('updateOneUser()', () => {
-	const updateOneUser = makeUpdateOneUser(TEST_BASE_API_CONTEXT);
-	const getOneUser = makeGetOneUser(TEST_BASE_API_CONTEXT);
-	const deleteOneUser = makeDeleteOneUser(TEST_BASE_API_CONTEXT);
-	const createOneUser = makeCreateOneUser(TEST_BASE_API_CONTEXT);
-	const getMyUser = makeGetMyUser(TEST_BASE_API_CONTEXT);
-	const login = makeLoginOneUser(TEST_BASE_API_CONTEXT);
-	const getAllUsers = makeGetAllUsers(TEST_BASE_API_CONTEXT);
+	let updateOneUser: ReturnType<typeof makeUpdateOneUser>;
+	beforeAll(async () => {
+		updateOneUser = makeUpdateOneUser(await TEST_BASE_API_CONTEXT());
+	});
+	let getOneUser: ReturnType<typeof makeGetOneUser>;
+	beforeAll(async () => {
+		getOneUser = makeGetOneUser(await TEST_BASE_API_CONTEXT());
+	});
+	let deleteOneUser: ReturnType<typeof makeDeleteOneUser>;
+	beforeAll(async () => {
+		deleteOneUser = makeDeleteOneUser(await TEST_BASE_API_CONTEXT());
+	});
+	let createOneUser: ReturnType<typeof makeCreateOneUser>;
+	beforeAll(async () => {
+		createOneUser = makeCreateOneUser(await TEST_BASE_API_CONTEXT());
+	});
+	let getMyUser: ReturnType<typeof makeGetMyUser>;
+	beforeAll(async () => {
+		getMyUser = makeGetMyUser(await TEST_BASE_API_CONTEXT());
+	});
+	let login: ReturnType<typeof makeLoginOneUser>;
+	beforeAll(async () => {
+		login = makeLoginOneUser(await TEST_BASE_API_CONTEXT());
+	});
+	let getAllUsers: ReturnType<typeof makeGetAllUsers>;
+	beforeAll(async () => {
+		getAllUsers = makeGetAllUsers(await TEST_BASE_API_CONTEXT());
+	});
 
 	let user: User;
 

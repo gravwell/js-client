@@ -12,7 +12,7 @@ import { RemoteKit } from './remote-kit';
 
 export const isRemoteKit = (v: any): v is RemoteKit => {
 	try {
-		const k = <RemoteKit>v;
+		const k = v as RemoteKit;
 		return k._tag === DATA_TYPE.REMOTE_KIT && isRemoteKitData(k);
 	} catch {
 		return false;

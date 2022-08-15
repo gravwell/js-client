@@ -65,19 +65,17 @@ export interface ChartSearchEntries extends BaseSearchEntries {
 
 export const normalizeToChartSearchEntries = (
 	v: RawSearchMessageReceivedRequestEntriesWithinRangeChartRenderer,
-): Omit<ChartSearchEntries, 'filter'> => {
-	return {
-		start: new Date(v.EntryRange.StartTS),
-		end: new Date(v.EntryRange.EndTS),
-		finished: v.Finished,
-		type: 'chart',
-		names: v.Entries?.Categories ?? [],
-		data: (v.Entries?.Values ?? []).map(rawV => ({
-			timestamp: new Date(rawV.TS),
-			values: rawV.Data,
-		})),
-	};
-};
+): Omit<ChartSearchEntries, 'filter'> => ({
+	start: new Date(v.EntryRange.StartTS),
+	end: new Date(v.EntryRange.EndTS),
+	finished: v.Finished,
+	type: 'chart',
+	names: v.Entries?.Categories ?? [],
+	data: (v.Entries?.Values ?? []).map(rawV => ({
+		timestamp: new Date(rawV.TS),
+		values: rawV.Data,
+	})),
+});
 
 export interface FDGSearchEntries extends BaseSearchEntries {
 	type: 'fdg';
@@ -90,24 +88,22 @@ export interface FDGSearchEntries extends BaseSearchEntries {
 
 export const normalizeToFDGSearchEntries = (
 	v: RawSearchMessageReceivedRequestEntriesWithinRangeFDGRenderer,
-): Omit<FDGSearchEntries, 'filter'> => {
-	return {
-		start: new Date(v.EntryRange.StartTS),
-		end: new Date(v.EntryRange.EndTS),
-		finished: v.Finished,
-		type: 'fdg',
-		nodes: (v.Entries?.nodes ?? []).map(rawNode => ({
-			name: rawNode.name,
-			groupIndex: rawNode.group,
-		})),
-		edges: (v.Entries?.links ?? []).map(rawEdge => ({
-			value: rawEdge.value,
-			sourceNodeIndex: rawEdge.source,
-			targetNodeIndex: rawEdge.target,
-		})),
-		groups: v.Entries?.groups ?? [],
-	};
-};
+): Omit<FDGSearchEntries, 'filter'> => ({
+	start: new Date(v.EntryRange.StartTS),
+	end: new Date(v.EntryRange.EndTS),
+	finished: v.Finished,
+	type: 'fdg',
+	nodes: (v.Entries?.nodes ?? []).map(rawNode => ({
+		name: rawNode.name,
+		groupIndex: rawNode.group,
+	})),
+	edges: (v.Entries?.links ?? []).map(rawEdge => ({
+		value: rawEdge.value,
+		sourceNodeIndex: rawEdge.source,
+		targetNodeIndex: rawEdge.target,
+	})),
+	groups: v.Entries?.groups ?? [],
+});
 
 export interface FDGNode {
 	name: string;
@@ -148,20 +144,18 @@ export interface NumberCardEntries extends BaseSearchEntries {
 
 export const normalizeToGaugeSearchEntries = (
 	v: RawSearchMessageReceivedRequestEntriesWithinRangeGaugeRenderer,
-): Omit<GaugeSearchEntries, 'filter'> => {
-	return {
-		start: new Date(v.EntryRange.StartTS),
-		end: new Date(v.EntryRange.EndTS),
-		finished: v.Finished,
-		type: 'gauge',
-		data: (v.Entries ?? []).map(rawEntry => ({
-			name: rawEntry.Name,
-			magnitude: rawEntry.Magnitude,
-			min: rawEntry.Min,
-			max: rawEntry.Max,
-		})),
-	};
-};
+): Omit<GaugeSearchEntries, 'filter'> => ({
+	start: new Date(v.EntryRange.StartTS),
+	end: new Date(v.EntryRange.EndTS),
+	finished: v.Finished,
+	type: 'gauge',
+	data: (v.Entries ?? []).map(rawEntry => ({
+		name: rawEntry.Name,
+		magnitude: rawEntry.Magnitude,
+		min: rawEntry.Min,
+		max: rawEntry.Max,
+	})),
+});
 
 export interface HeatmapSearchEntries extends BaseSearchEntries {
 	type: 'heatmap';
@@ -172,19 +166,17 @@ export interface HeatmapSearchEntries extends BaseSearchEntries {
 
 export const normalizeToHeatmapSearchEntries = (
 	v: RawSearchMessageReceivedRequestEntriesWithinRangeHeatmapRenderer,
-): Omit<HeatmapSearchEntries, 'filter'> => {
-	return {
-		start: new Date(v.EntryRange.StartTS),
-		end: new Date(v.EntryRange.EndTS),
-		finished: v.Finished,
-		type: 'heatmap',
-		data: (v.Entries ?? []).map(rawEntry => ({
-			latitude: rawEntry.Lat,
-			longitude: rawEntry.Long,
-			magnitude: rawEntry.Magnitude ?? null,
-		})),
-	};
-};
+): Omit<HeatmapSearchEntries, 'filter'> => ({
+	start: new Date(v.EntryRange.StartTS),
+	end: new Date(v.EntryRange.EndTS),
+	finished: v.Finished,
+	type: 'heatmap',
+	data: (v.Entries ?? []).map(rawEntry => ({
+		latitude: rawEntry.Lat,
+		longitude: rawEntry.Long,
+		magnitude: rawEntry.Magnitude ?? null,
+	})),
+});
 
 export interface PointToPointSearchEntries extends BaseSearchEntries {
 	type: 'point2point';
@@ -201,27 +193,25 @@ export interface PointToPointSearchEntries extends BaseSearchEntries {
 
 export const normalizeToPointToPointSearchEntries = (
 	v: RawSearchMessageReceivedRequestEntriesWithinRangePointToPointRenderer,
-): Omit<PointToPointSearchEntries, 'filter'> => {
-	return {
-		start: new Date(v.EntryRange.StartTS),
-		end: new Date(v.EntryRange.EndTS),
-		finished: v.Finished,
-		type: 'point2point',
-		names: v.ValueNames,
-		data: (v.Entries ?? []).map(rawEntry => ({
-			source: {
-				latitude: rawEntry.Src.Lat,
-				longitude: rawEntry.Src.Long,
-			},
-			target: {
-				latitude: rawEntry.Dst.Lat,
-				longitude: rawEntry.Dst.Long,
-			},
-			magnitude: rawEntry.Magnitude ?? null,
-			values: rawEntry.Values ?? [],
-		})),
-	};
-};
+): Omit<PointToPointSearchEntries, 'filter'> => ({
+	start: new Date(v.EntryRange.StartTS),
+	end: new Date(v.EntryRange.EndTS),
+	finished: v.Finished,
+	type: 'point2point',
+	names: v.ValueNames,
+	data: (v.Entries ?? []).map(rawEntry => ({
+		source: {
+			latitude: rawEntry.Src.Lat,
+			longitude: rawEntry.Src.Long,
+		},
+		target: {
+			latitude: rawEntry.Dst.Lat,
+			longitude: rawEntry.Dst.Long,
+		},
+		magnitude: rawEntry.Magnitude ?? null,
+		values: rawEntry.Values ?? [],
+	})),
+});
 
 export interface PointmapSearchEntries extends BaseSearchEntries {
 	type: 'pointmap';
@@ -238,24 +228,22 @@ export interface PointmapSearchEntries extends BaseSearchEntries {
 
 export const normalizeToPointmapSearchEntries = (
 	v: RawSearchMessageReceivedRequestEntriesWithinRangePointmapRenderer,
-): Omit<PointmapSearchEntries, 'filter'> => {
-	return {
-		start: new Date(v.EntryRange.StartTS),
-		end: new Date(v.EntryRange.EndTS),
-		finished: v.Finished,
-		type: 'pointmap',
-		data: (v.Entries ?? []).map(rawEntry => ({
-			location: {
-				latitude: rawEntry.Loc.Lat,
-				longitude: rawEntry.Loc.Long,
-			},
-			metadata: (rawEntry.Metadata ?? []).map(rawMeta => ({
-				key: rawMeta.Key,
-				value: rawMeta.Value,
-			})),
+): Omit<PointmapSearchEntries, 'filter'> => ({
+	start: new Date(v.EntryRange.StartTS),
+	end: new Date(v.EntryRange.EndTS),
+	finished: v.Finished,
+	type: 'pointmap',
+	data: (v.Entries ?? []).map(rawEntry => ({
+		location: {
+			latitude: rawEntry.Loc.Lat,
+			longitude: rawEntry.Loc.Long,
+		},
+		metadata: (rawEntry.Metadata ?? []).map(rawMeta => ({
+			key: rawMeta.Key,
+			value: rawMeta.Value,
 		})),
-	};
-};
+	})),
+});
 
 export interface MapLocation {
 	latitude: number;
@@ -274,17 +262,15 @@ export interface RawSearchEntries extends BaseSearchEntries {
 
 export const normalizeToRawSearchEntries = (
 	v: RawSearchMessageReceivedRequestEntriesWithinRangeRawRenderer,
-): Omit<RawSearchEntries, 'filter'> => {
-	return {
-		start: new Date(v.EntryRange.StartTS),
-		end: new Date(v.EntryRange.EndTS),
-		finished: v.Finished,
-		type: 'raw',
-		names: ['RAW'],
-		data: (v.Entries ?? []).map(toSearchEntry),
-		tags: v.Tags,
-	};
-};
+): Omit<RawSearchEntries, 'filter'> => ({
+	start: new Date(v.EntryRange.StartTS),
+	end: new Date(v.EntryRange.EndTS),
+	finished: v.Finished,
+	type: 'raw',
+	names: ['RAW'],
+	data: (v.Entries ?? []).map(toSearchEntry),
+	tags: v.Tags,
+});
 
 export interface HexSearchEntries extends BaseSearchEntries {
 	// hex entries are like raw entries
@@ -297,16 +283,14 @@ export interface HexSearchEntries extends BaseSearchEntries {
 
 export const normalizeToHexSearchEntries = (
 	v: RawSearchMessageReceivedRequestEntriesWithinRangeHexRenderer,
-): Omit<HexSearchEntries, 'filter'> => {
-	return {
-		start: new Date(v.EntryRange.StartTS),
-		end: new Date(v.EntryRange.EndTS),
-		finished: v.Finished,
-		type: 'hex',
-		names: ['HEX'],
-		data: (v.Entries ?? []).map(toSearchEntry),
-	};
-};
+): Omit<HexSearchEntries, 'filter'> => ({
+	start: new Date(v.EntryRange.StartTS),
+	end: new Date(v.EntryRange.EndTS),
+	finished: v.Finished,
+	type: 'hex',
+	names: ['HEX'],
+	data: (v.Entries ?? []).map(toSearchEntry),
+});
 
 export interface TextSearchEntries extends BaseSearchEntries {
 	type: 'text';
@@ -320,17 +304,15 @@ export interface TextSearchEntries extends BaseSearchEntries {
 
 export const normalizeToTextSearchEntries = (
 	v: RawSearchMessageReceivedRequestEntriesWithinRangeTextRenderer,
-): Omit<TextSearchEntries, 'filter'> => {
-	return {
-		start: new Date(v.EntryRange.StartTS),
-		end: new Date(v.EntryRange.EndTS),
-		finished: v.Finished,
-		type: 'text',
-		names: ['DATA'],
-		data: (v.Entries ?? []).map(toSearchEntry),
-		tags: v.Tags,
-	};
-};
+): Omit<TextSearchEntries, 'filter'> => ({
+	start: new Date(v.EntryRange.StartTS),
+	end: new Date(v.EntryRange.EndTS),
+	finished: v.Finished,
+	type: 'text',
+	names: ['DATA'],
+	data: (v.Entries ?? []).map(toSearchEntry),
+	tags: v.Tags,
+});
 
 export interface PcapSearchEntries extends BaseSearchEntries {
 	// pcap entries are like text entries
@@ -343,16 +325,14 @@ export interface PcapSearchEntries extends BaseSearchEntries {
 
 export const normalizeToPcapSearchEntries = (
 	v: RawSearchMessageReceivedRequestEntriesWithinRangePcapRenderer,
-): Omit<PcapSearchEntries, 'filter'> => {
-	return {
-		start: new Date(v.EntryRange.StartTS),
-		end: new Date(v.EntryRange.EndTS),
-		finished: v.Finished,
-		type: 'pcap',
-		names: ['PCAP'],
-		data: (v.Entries ?? []).map(toSearchEntry),
-	};
-};
+): Omit<PcapSearchEntries, 'filter'> => ({
+	start: new Date(v.EntryRange.StartTS),
+	end: new Date(v.EntryRange.EndTS),
+	finished: v.Finished,
+	type: 'pcap',
+	names: ['PCAP'],
+	data: (v.Entries ?? []).map(toSearchEntry),
+});
 
 export interface StackGraphSearchEntries extends BaseSearchEntries {
 	type: 'stackgraph';
@@ -369,21 +349,19 @@ export interface StackGraphSearchEntries extends BaseSearchEntries {
 
 export const normalizeToStackGraphSearchEntries = (
 	v: RawSearchMessageReceivedRequestEntriesWithinRangeStackGraphRenderer,
-): Omit<StackGraphSearchEntries, 'filter'> => {
-	return {
-		start: new Date(v.EntryRange.StartTS),
-		end: new Date(v.EntryRange.EndTS),
-		finished: v.Finished,
-		type: 'stackgraph',
-		data: (v.Entries ?? []).map(rawEntry => ({
-			key: rawEntry.Key,
-			values: rawEntry.Values.map(rawValue => ({
-				label: rawValue.Label,
-				value: rawValue.Value,
-			})),
+): Omit<StackGraphSearchEntries, 'filter'> => ({
+	start: new Date(v.EntryRange.StartTS),
+	end: new Date(v.EntryRange.EndTS),
+	finished: v.Finished,
+	type: 'stackgraph',
+	data: (v.Entries ?? []).map(rawEntry => ({
+		key: rawEntry.Key,
+		values: rawEntry.Values.map(rawValue => ({
+			label: rawValue.Label,
+			value: rawValue.Value,
 		})),
-	};
-};
+	})),
+});
 
 export interface TableSearchEntries extends BaseSearchEntries {
 	type: 'table';
@@ -398,19 +376,17 @@ export interface TableSearchEntries extends BaseSearchEntries {
 
 export const normalizeToTableSearchEntries = (
 	v: RawSearchMessageReceivedRequestEntriesWithinRangeTableRenderer,
-): Omit<TableSearchEntries, 'filter'> => {
-	return {
-		start: new Date(v.EntryRange.StartTS),
-		end: new Date(v.EntryRange.EndTS),
-		finished: v.Finished,
-		type: 'table',
-		columns: v.Entries?.Columns ?? [],
-		rows: (v.Entries?.Rows ?? []).map(rawRow => ({
-			timestamp: new Date(rawRow.TS),
-			values: rawRow.Row,
-		})),
-	};
-};
+): Omit<TableSearchEntries, 'filter'> => ({
+	start: new Date(v.EntryRange.StartTS),
+	end: new Date(v.EntryRange.EndTS),
+	finished: v.Finished,
+	type: 'table',
+	columns: v.Entries?.Columns ?? [],
+	rows: (v.Entries?.Rows ?? []).map(rawRow => ({
+		timestamp: new Date(rawRow.TS),
+		values: rawRow.Row,
+	})),
+});
 
 export interface WordcloudSearchEntries extends BaseSearchEntries {
 	type: 'wordcloud';

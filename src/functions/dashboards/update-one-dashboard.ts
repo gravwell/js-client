@@ -35,7 +35,9 @@ export const makeUpdateOneDashboard = (context: APIContext) => {
 			const rawDashboard = await parseJSONResponse<RawDashboard>(raw);
 			return toDashboard(rawDashboard);
 		} catch (err) {
-			if (err instanceof Error) throw err;
+			if (err instanceof Error) {
+				throw err;
+			}
 			throw Error('Unknown error');
 		}
 	};

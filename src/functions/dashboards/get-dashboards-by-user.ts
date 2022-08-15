@@ -10,8 +10,9 @@ import { Dashboard, RawDashboard, toDashboard } from '~/models';
 import { NumericID } from '~/value-objects';
 import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, parseJSONResponse } from '../utils';
 
-export const makeGetDashboardsByUser = (context: APIContext) => {
-	return async (userID: NumericID): Promise<Array<Dashboard>> => {
+export const makeGetDashboardsByUser =
+	(context: APIContext) =>
+	async (userID: NumericID): Promise<Array<Dashboard>> => {
 		const path = '/api/users/{userID}/dashboards';
 		const url = buildURL(path, { ...context, protocol: 'http', pathParams: { userID } });
 
@@ -21,4 +22,3 @@ export const makeGetDashboardsByUser = (context: APIContext) => {
 		const rawRes = (await parseJSONResponse<Array<RawDashboard> | null>(raw)) ?? [];
 		return rawRes.map(toDashboard);
 	};
-};

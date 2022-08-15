@@ -9,8 +9,9 @@
 import { UUID } from '~/value-objects';
 import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, parseJSONResponse } from '../utils';
 
-export const makeDeleteOneToken = (context: APIContext) => {
-	return async (tokenID: UUID): Promise<void> => {
+export const makeDeleteOneToken =
+	(context: APIContext) =>
+	async (tokenID: UUID): Promise<void> => {
 		const templatePath = '/api/tokens/{tokenID}?admin=true';
 		const url = buildURL(templatePath, { ...context, protocol: 'http', pathParams: { tokenID } });
 
@@ -19,4 +20,3 @@ export const makeDeleteOneToken = (context: APIContext) => {
 		const raw = await context.fetch(url, { ...req, method: 'DELETE' });
 		return parseJSONResponse(raw, { expect: 'void' });
 	};
-};

@@ -14,9 +14,18 @@ import { makeDeleteOneResource } from './delete-one-resource';
 import { makeGetResourcesAuthorizedToMe } from './get-resources-authorized-to-me';
 
 describe('getResourcesAuthorizedToMe()', () => {
-	const getResourcesAuthorizedToMe = makeGetResourcesAuthorizedToMe(TEST_BASE_API_CONTEXT);
-	const createOneResource = makeCreateOneResource(TEST_BASE_API_CONTEXT);
-	const deleteOneResource = makeDeleteOneResource(TEST_BASE_API_CONTEXT);
+	let getResourcesAuthorizedToMe: ReturnType<typeof makeGetResourcesAuthorizedToMe>;
+	beforeAll(async () => {
+		getResourcesAuthorizedToMe = makeGetResourcesAuthorizedToMe(await TEST_BASE_API_CONTEXT());
+	});
+	let createOneResource: ReturnType<typeof makeCreateOneResource>;
+	beforeAll(async () => {
+		createOneResource = makeCreateOneResource(await TEST_BASE_API_CONTEXT());
+	});
+	let deleteOneResource: ReturnType<typeof makeDeleteOneResource>;
+	beforeAll(async () => {
+		deleteOneResource = makeDeleteOneResource(await TEST_BASE_API_CONTEXT());
+	});
 
 	let createdResourcesIDs: Array<UUID> = [];
 
@@ -45,7 +54,9 @@ describe('getResourcesAuthorizedToMe()', () => {
 
 			expect(resources.every(isResource)).toBeTrue();
 			expect(resources.length).toBeGreaterThanOrEqual(createdResourcesIDs.length);
-			for (const resourceID of createdResourcesIDs) expect(resourceIDs).toContain(resourceID);
+			for (const resourceID of createdResourcesIDs) {
+				expect(resourceIDs).toContain(resourceID);
+			}
 		}),
 	);
 });

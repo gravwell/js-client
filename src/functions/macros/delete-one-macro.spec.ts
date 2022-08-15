@@ -7,17 +7,30 @@
  **************************************************************************/
 
 import { CreatableMacro } from '~/models';
-import { integrationTest, TEST_BASE_API_CONTEXT } from '~/tests';
+import { integrationTest, sleep, TEST_BASE_API_CONTEXT } from '~/tests';
+import { assertIsNotNil } from '../utils/type-guards';
 import { makeCreateOneMacro } from './create-one-macro';
 import { makeDeleteOneMacro } from './delete-one-macro';
 import { makeGetAllMacros } from './get-all-macros';
 import { makeGetOneMacro } from './get-one-macro';
 
 describe('deleteOneMacro()', () => {
-	const createOneMacro = makeCreateOneMacro(TEST_BASE_API_CONTEXT);
-	const deleteOneMacro = makeDeleteOneMacro(TEST_BASE_API_CONTEXT);
-	const getAllMacros = makeGetAllMacros(TEST_BASE_API_CONTEXT);
-	const getOneMacro = makeGetOneMacro(TEST_BASE_API_CONTEXT);
+	let createOneMacro: ReturnType<typeof makeCreateOneMacro>;
+	beforeAll(async () => {
+		createOneMacro = makeCreateOneMacro(await TEST_BASE_API_CONTEXT());
+	});
+	let deleteOneMacro: ReturnType<typeof makeDeleteOneMacro>;
+	beforeAll(async () => {
+		deleteOneMacro = makeDeleteOneMacro(await TEST_BASE_API_CONTEXT());
+	});
+	let getAllMacros: ReturnType<typeof makeGetAllMacros>;
+	beforeAll(async () => {
+		getAllMacros = makeGetAllMacros(await TEST_BASE_API_CONTEXT());
+	});
+	let getOneMacro: ReturnType<typeof makeGetOneMacro>;
+	beforeAll(async () => {
+		getOneMacro = makeGetOneMacro(await TEST_BASE_API_CONTEXT());
+	});
 
 	beforeEach(async () => {
 		// Delete all macros
@@ -33,6 +46,9 @@ describe('deleteOneMacro()', () => {
 		];
 		const createPromises = creatableMacros.map(creatable => createOneMacro(creatable));
 		await Promise.all(createPromises);
+
+		// There appears to be a race with the backend to create the macros.
+		await sleep(3000);
 	});
 
 	it(
@@ -43,6 +59,7 @@ describe('deleteOneMacro()', () => {
 			expect(currentMacroIDs.length).toBe(2);
 
 			const deleteMacroID = currentMacroIDs[0];
+			assertIsNotNil(deleteMacroID);
 			await deleteOneMacro(deleteMacroID);
 			await expectAsync(getOneMacro(deleteMacroID)).toBeRejected();
 

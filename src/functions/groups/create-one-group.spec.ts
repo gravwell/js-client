@@ -13,9 +13,18 @@ import { makeDeleteOneGroup } from './delete-one-group';
 import { makeGetAllGroups } from './get-all-groups';
 
 describe('createOneGroup()', () => {
-	const createOneGroup = makeCreateOneGroup(TEST_BASE_API_CONTEXT);
-	const deleteOneGroup = makeDeleteOneGroup(TEST_BASE_API_CONTEXT);
-	const getAllGroups = makeGetAllGroups(TEST_BASE_API_CONTEXT);
+	let createOneGroup: ReturnType<typeof makeCreateOneGroup>;
+	beforeAll(async () => {
+		createOneGroup = makeCreateOneGroup(await TEST_BASE_API_CONTEXT());
+	});
+	let deleteOneGroup: ReturnType<typeof makeDeleteOneGroup>;
+	beforeAll(async () => {
+		deleteOneGroup = makeDeleteOneGroup(await TEST_BASE_API_CONTEXT());
+	});
+	let getAllGroups: ReturnType<typeof makeGetAllGroups>;
+	beforeAll(async () => {
+		getAllGroups = makeGetAllGroups(await TEST_BASE_API_CONTEXT());
+	});
 
 	beforeEach(async () => {
 		// Delete all groups

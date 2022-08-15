@@ -17,12 +17,30 @@ import { makeGetAllAutoExtractors } from './get-all-auto-extractors';
 import { makeGetAutoExtractorsAuthorizedToMe } from './get-auto-extractors-authorized-to-me';
 
 describe('getAutoExtractorsAuthorizedToMe()', () => {
-	const getAutoExtractorsAuthorizedToMe = makeGetAutoExtractorsAuthorizedToMe(TEST_BASE_API_CONTEXT);
-	const createOneAutoExtractor = makeCreateOneAutoExtractor(TEST_BASE_API_CONTEXT);
-	const deleteOneAutoExtractor = makeDeleteOneAutoExtractor(TEST_BASE_API_CONTEXT);
-	const getAllAutoExtractors = makeGetAllAutoExtractors(TEST_BASE_API_CONTEXT);
-	const createOneUser = makeCreateOneUser(TEST_BASE_API_CONTEXT);
-	const login = makeLoginOneUser(TEST_BASE_API_CONTEXT);
+	let getAutoExtractorsAuthorizedToMe: ReturnType<typeof makeGetAutoExtractorsAuthorizedToMe>;
+	beforeAll(async () => {
+		getAutoExtractorsAuthorizedToMe = makeGetAutoExtractorsAuthorizedToMe(await TEST_BASE_API_CONTEXT());
+	});
+	let createOneAutoExtractor: ReturnType<typeof makeCreateOneAutoExtractor>;
+	beforeAll(async () => {
+		createOneAutoExtractor = makeCreateOneAutoExtractor(await TEST_BASE_API_CONTEXT());
+	});
+	let deleteOneAutoExtractor: ReturnType<typeof makeDeleteOneAutoExtractor>;
+	beforeAll(async () => {
+		deleteOneAutoExtractor = makeDeleteOneAutoExtractor(await TEST_BASE_API_CONTEXT());
+	});
+	let getAllAutoExtractors: ReturnType<typeof makeGetAllAutoExtractors>;
+	beforeAll(async () => {
+		getAllAutoExtractors = makeGetAllAutoExtractors(await TEST_BASE_API_CONTEXT());
+	});
+	let createOneUser: ReturnType<typeof makeCreateOneUser>;
+	beforeAll(async () => {
+		createOneUser = makeCreateOneUser(await TEST_BASE_API_CONTEXT());
+	});
+	let login: ReturnType<typeof makeLoginOneUser>;
+	beforeAll(async () => {
+		login = makeLoginOneUser(await TEST_BASE_API_CONTEXT());
+	});
 
 	let adminAutoExtractors: Array<AutoExtractor>;
 
@@ -100,7 +118,7 @@ describe('getAutoExtractorsAuthorizedToMe()', () => {
 		];
 
 		const createOneAutoExtractorAsAnalyst = makeCreateOneAutoExtractor({
-			...TEST_BASE_API_CONTEXT,
+			...(await TEST_BASE_API_CONTEXT()),
 			authToken: analystAuth,
 		});
 
@@ -113,22 +131,28 @@ describe('getAutoExtractorsAuthorizedToMe()', () => {
 		integrationTest(async () => {
 			const actualAdminAutoExtractors = await getAutoExtractorsAuthorizedToMe();
 			expect(sortBy(actualAdminAutoExtractors, m => m.id)).toEqual(sortBy(adminAutoExtractors, m => m.id));
-			for (const autoExtractor of actualAdminAutoExtractors) expect(isAutoExtractor(autoExtractor)).toBeTrue();
+			for (const autoExtractor of actualAdminAutoExtractors) {
+				expect(isAutoExtractor(autoExtractor)).toBeTrue();
+			}
 
 			const getAutoExtractorsAuthorizedToAnalyst = makeGetAutoExtractorsAuthorizedToMe({
-				...TEST_BASE_API_CONTEXT,
+				...(await TEST_BASE_API_CONTEXT()),
 				authToken: analystAuth,
 			});
 
 			const actualAnalystAutoExtractors = await getAutoExtractorsAuthorizedToAnalyst();
 			expect(sortBy(actualAnalystAutoExtractors, m => m.id)).toEqual(sortBy(analystAutoExtractors, m => m.id));
-			for (const autoExtractor of actualAnalystAutoExtractors) expect(isAutoExtractor(autoExtractor)).toBeTrue();
+			for (const autoExtractor of actualAnalystAutoExtractors) {
+				expect(isAutoExtractor(autoExtractor)).toBeTrue();
+			}
 
 			const allAutoExtractors = await getAllAutoExtractors();
 			expect(sortBy(allAutoExtractors, m => m.id)).toEqual(
 				sortBy([...analystAutoExtractors, ...adminAutoExtractors], m => m.id),
 			);
-			for (const autoExtractor of allAutoExtractors) expect(isAutoExtractor(autoExtractor)).toBeTrue();
+			for (const autoExtractor of allAutoExtractors) {
+				expect(isAutoExtractor(autoExtractor)).toBeTrue();
+			}
 		}),
 	);
 });

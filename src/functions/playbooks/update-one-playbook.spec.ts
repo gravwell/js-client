@@ -15,9 +15,18 @@ import { makeDeleteOnePlaybook } from './delete-one-playbook';
 import { makeUpdateOnePlaybook } from './update-one-playbook';
 
 describe('updateOnePlaybook()', () => {
-	const createOnePlaybook = makeCreateOnePlaybook(TEST_BASE_API_CONTEXT);
-	const updateOnePlaybook = makeUpdateOnePlaybook(TEST_BASE_API_CONTEXT);
-	const deleteOnePlaybook = makeDeleteOnePlaybook(TEST_BASE_API_CONTEXT);
+	let createOnePlaybook: ReturnType<typeof makeCreateOnePlaybook>;
+	beforeAll(async () => {
+		createOnePlaybook = makeCreateOnePlaybook(await TEST_BASE_API_CONTEXT());
+	});
+	let updateOnePlaybook: ReturnType<typeof makeUpdateOnePlaybook>;
+	beforeAll(async () => {
+		updateOnePlaybook = makeUpdateOnePlaybook(await TEST_BASE_API_CONTEXT());
+	});
+	let deleteOnePlaybook: ReturnType<typeof makeDeleteOnePlaybook>;
+	beforeAll(async () => {
+		deleteOnePlaybook = makeDeleteOnePlaybook(await TEST_BASE_API_CONTEXT());
+	});
 
 	let createdPlaybook: Playbook;
 

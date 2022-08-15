@@ -16,8 +16,9 @@ import {
 	parseJSONResponse,
 } from '../utils';
 
-export const makeUpdateOneUserPassword = (context: APIContext) => {
-	return async (userID: NumericID, newPassword: string, currentPassword?: string): Promise<void> => {
+export const makeUpdateOneUserPassword =
+	(context: APIContext) =>
+	async (userID: NumericID, newPassword: string, currentPassword?: string): Promise<void> => {
 		try {
 			const templatePath = '/api/users/{userID}/pwd';
 			const url = buildURL(templatePath, { ...context, protocol: 'http', pathParams: { userID } });
@@ -34,11 +35,12 @@ export const makeUpdateOneUserPassword = (context: APIContext) => {
 			const raw = await context.fetch(url, { ...req, method: 'PUT' });
 			return parseJSONResponse(raw, { expect: 'void' });
 		} catch (err) {
-			if (err instanceof Error) throw err;
+			if (err instanceof Error) {
+				throw err;
+			}
 			throw Error('Unknown error');
 		}
 	};
-};
 
 interface UpdateOneUserPasswordRawRequest {
 	OrigPass?: string;

@@ -19,7 +19,9 @@ export const makeDeleteManyScheduledQueries = (context: APIContext) => {
 	return async (filter: ScheduledTasksFilter = {}): Promise<void> => {
 		const queries = await getAllScheduledQueries();
 		const filtered = queries.filter(q => {
-			if (isNil(filter.userID)) return true;
+			if (isNil(filter.userID)) {
+				return true;
+			}
 			return q.userID === filter.userID;
 		});
 

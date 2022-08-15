@@ -29,7 +29,9 @@ export const makeCreateOneBroadcastedNotification = (context: APIContext) => {
 			const raw = await context.fetch(url, { ...req, method: 'POST' });
 			return parseJSONResponse(raw, { expect: 'void' });
 		} catch (err) {
-			if (err instanceof Error) throw err;
+			if (err instanceof Error) {
+				throw err;
+			}
 			throw Error('Unknown error');
 		}
 	};

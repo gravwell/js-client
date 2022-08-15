@@ -16,10 +16,22 @@ import { makeGetOneResourceContent } from './get-one-resource-content';
 import { makeSetOneResourceContent } from './set-one-resource-content';
 
 describe('setOneResourceContent()', () => {
-	const createOneResource = makeCreateOneResource(TEST_BASE_API_CONTEXT);
-	const setOneResourceContent = makeSetOneResourceContent(TEST_BASE_API_CONTEXT);
-	const deleteOneResource = makeDeleteOneResource(TEST_BASE_API_CONTEXT);
-	const getOneResourceContent = makeGetOneResourceContent(TEST_BASE_API_CONTEXT);
+	let createOneResource: ReturnType<typeof makeCreateOneResource>;
+	beforeAll(async () => {
+		createOneResource = makeCreateOneResource(await TEST_BASE_API_CONTEXT());
+	});
+	let setOneResourceContent: ReturnType<typeof makeSetOneResourceContent>;
+	beforeAll(async () => {
+		setOneResourceContent = makeSetOneResourceContent(await TEST_BASE_API_CONTEXT());
+	});
+	let deleteOneResource: ReturnType<typeof makeDeleteOneResource>;
+	beforeAll(async () => {
+		deleteOneResource = makeDeleteOneResource(await TEST_BASE_API_CONTEXT());
+	});
+	let getOneResourceContent: ReturnType<typeof makeGetOneResourceContent>;
+	beforeAll(async () => {
+		getOneResourceContent = makeGetOneResourceContent(await TEST_BASE_API_CONTEXT());
+	});
 
 	let createdResource: Resource;
 

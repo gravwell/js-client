@@ -14,14 +14,13 @@ import { MAIL_CONFIG_PATH } from './paths';
 
 /**
  * Makes request to get mail server config
+ *
  * @param context
  */
-export const makeGetConfig = (context: APIContext) => {
-	return async (): Promise<Omit<MailServerConfig, 'password'>> => {
-		const url = buildURL(MAIL_CONFIG_PATH, { ...context, protocol: 'http' });
-		const req = buildHTTPRequestWithAuthFromContext(context);
-		const res = await context.fetch(url, { ...req, method: 'GET' });
-		const rawObj = await parseJSONResponse<RawMailServerConfig>(res);
-		return omit(toMailServerConfig(rawObj), 'password');
-	};
+export const makeGetConfig = (context: APIContext) => async (): Promise<Omit<MailServerConfig, 'password'>> => {
+	const url = buildURL(MAIL_CONFIG_PATH, { ...context, protocol: 'http' });
+	const req = buildHTTPRequestWithAuthFromContext(context);
+	const res = await context.fetch(url, { ...req, method: 'GET' });
+	const rawObj = await parseJSONResponse<RawMailServerConfig>(res);
+	return omit(toMailServerConfig(rawObj), 'password');
 };

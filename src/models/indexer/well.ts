@@ -20,7 +20,7 @@ export type Well = {
 
 export const isWell = (value: unknown): value is Well => {
 	try {
-		const w = <Well>value;
+		const w = value as Well;
 
 		return (
 			isString(w.name) &&

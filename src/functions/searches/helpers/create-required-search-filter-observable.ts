@@ -7,7 +7,7 @@
  **************************************************************************/
 
 import { Observable, scan } from 'rxjs';
-import { SearchFilter } from '~/main';
+import { SearchFilter } from '~/index';
 import { RequiredSearchFilter } from '../subscribe-to-one-search/helpers';
 
 export type DateRange = { start: Date; end: Date };
@@ -41,7 +41,9 @@ export const createRequiredSearchFilterObservable = ({
 	defaultValues,
 }: CreateRequiredSearchFilterObservable): Observable<RequiredSearchFilter> => {
 	const expandDateRange = (dateRange: SearchFilter['dateRange']): Partial<DateRange> => {
-		if (dateRange === 'preview') return previewDateRange;
+		if (dateRange === 'preview') {
+			return previewDateRange;
+		}
 		return dateRange ?? {};
 	};
 

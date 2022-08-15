@@ -31,7 +31,9 @@ export const makeBuildOneLocalKit = (context: APIContext) => {
 			const rawRes = await parseJSONResponse<BuildOneKitRawResponse>(raw);
 			return rawRes.UUID;
 		} catch (err) {
-			if (err instanceof Error) throw err;
+			if (err instanceof Error) {
+				throw err;
+			}
 			throw Error('Unknown error');
 		}
 	};

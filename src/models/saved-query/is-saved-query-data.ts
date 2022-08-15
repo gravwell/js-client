@@ -13,7 +13,7 @@ import { SavedQueryData } from './saved-query-data';
 
 export const isSavedQueryData = (value: unknown): value is SavedQueryData => {
 	try {
-		const q = <SavedQueryData>value;
+		const q = value as SavedQueryData;
 		return (
 			isUUID(q.id) &&
 			isUUID(q.globalID) &&

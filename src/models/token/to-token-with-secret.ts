@@ -6,7 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { RawTokenWithSecret, TokenWithSecret } from '~/main';
+import { RawTokenWithSecret, TokenWithSecret } from '~/index';
 import { toToken } from './to-token';
 
 export const toTokenWithSecret = (raw: RawTokenWithSecret): TokenWithSecret => ({

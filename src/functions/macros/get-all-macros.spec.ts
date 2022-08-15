@@ -13,9 +13,18 @@ import { makeDeleteOneMacro } from './delete-one-macro';
 import { makeGetAllMacros } from './get-all-macros';
 
 describe('getAllMacros()', () => {
-	const createOneMacro = makeCreateOneMacro(TEST_BASE_API_CONTEXT);
-	const deleteOneMacro = makeDeleteOneMacro(TEST_BASE_API_CONTEXT);
-	const getAllMacros = makeGetAllMacros(TEST_BASE_API_CONTEXT);
+	let createOneMacro: ReturnType<typeof makeCreateOneMacro>;
+	beforeAll(async () => {
+		createOneMacro = makeCreateOneMacro(await TEST_BASE_API_CONTEXT());
+	});
+	let deleteOneMacro: ReturnType<typeof makeDeleteOneMacro>;
+	beforeAll(async () => {
+		deleteOneMacro = makeDeleteOneMacro(await TEST_BASE_API_CONTEXT());
+	});
+	let getAllMacros: ReturnType<typeof makeGetAllMacros>;
+	beforeAll(async () => {
+		getAllMacros = makeGetAllMacros(await TEST_BASE_API_CONTEXT());
+	});
 
 	beforeEach(async () => {
 		// Delete all macros

@@ -11,7 +11,7 @@ import { isDashboardData } from './is-dashboard-data';
 
 export const isDashboard = (value: unknown): value is Dashboard => {
 	try {
-		const d = <Dashboard>value;
+		const d = value as Dashboard;
 		return d._tag === DATA_TYPE.DASHBOARD && isDashboardData(d);
 	} catch {
 		return false;

@@ -10,7 +10,10 @@ import { integrationTest, TEST_BASE_API_CONTEXT } from '~/tests';
 import { makeSetLogLevel } from './set-log-level';
 
 describe('setLogLevel()', () => {
-	const setLogLevel = makeSetLogLevel(TEST_BASE_API_CONTEXT);
+	let setLogLevel: ReturnType<typeof makeSetLogLevel>;
+	beforeAll(async () => {
+		setLogLevel = makeSetLogLevel(await TEST_BASE_API_CONTEXT());
+	});
 
 	xit(
 		'Should set the current active log level',

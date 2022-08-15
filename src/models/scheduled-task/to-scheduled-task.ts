@@ -43,8 +43,12 @@ export const toScheduledTask = (raw: RawScheduledTask): ScheduledTask => {
 export const getScheduledTaskType = <T extends { Script?: string; SearchString?: string }>(
 	raw: T,
 ): ScheduledTask['type'] => {
-	if (isNil(raw.Script)) return 'query';
-	if (raw.Script.trim() !== '') return 'script';
+	if (isNil(raw.Script)) {
+		return 'query';
+	}
+	if (raw.Script.trim() !== '') {
+		return 'script';
+	}
 	// From the [docs](https://docs.gravwell.io/#!api/scheduledsearches.md#Creating_a_scheduled_search):
 	// If both (Script and SearchString) are populated, the script will take precedence.
 	return (raw.SearchString ?? '').trim() === '' ? 'script' : 'query';

@@ -15,7 +15,7 @@ import { isDashboardTile } from './is-dashboard-tile';
 
 export const isDashboardData = (value: unknown): value is DashboardData => {
 	try {
-		const d = <DashboardData>value;
+		const d = value as DashboardData;
 		return (
 			isNumericID(d.id) &&
 			(isNull(d.globalID) || isUUID(d.globalID)) &&

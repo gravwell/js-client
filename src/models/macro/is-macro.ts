@@ -12,7 +12,7 @@ import { Macro } from './macro';
 
 export const isMacro = (value: unknown): value is Macro => {
 	try {
-		const m = <Macro>value;
+		const m = value as Macro;
 		return m._tag === DATA_TYPE.MACRO && isMacroData(m);
 	} catch {
 		return false;

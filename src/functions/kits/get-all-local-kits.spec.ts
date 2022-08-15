@@ -11,7 +11,10 @@ import { integrationTest, TEST_BASE_API_CONTEXT } from '~/tests';
 import { makeGetAllLocalKits } from './get-all-local-kits';
 
 describe('getAllLocalKits()', () => {
-	const getAllLocalKits = makeGetAllLocalKits(TEST_BASE_API_CONTEXT);
+	let getAllLocalKits: ReturnType<typeof makeGetAllLocalKits>;
+	beforeAll(async () => {
+		getAllLocalKits = makeGetAllLocalKits(await TEST_BASE_API_CONTEXT());
+	});
 
 	it(
 		'Should return all kits in the system',

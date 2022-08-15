@@ -12,7 +12,7 @@ import { Playbook } from './playbook';
 
 export const isPlaybook = (value: unknown): value is Playbook => {
 	try {
-		const p = <Playbook>value;
+		const p = value as Playbook;
 		return p._tag === DATA_TYPE.PLAYBOOK && isPlaybookData(p);
 	} catch {
 		return false;

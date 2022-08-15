@@ -13,9 +13,18 @@ import { makeDeleteOnePlaybook } from './delete-one-playbook';
 import { makeGetOnePlaybook } from './get-one-playbook';
 
 describe('deleteOnePlaybook()', () => {
-	const deleteOnePlaybook = makeDeleteOnePlaybook(TEST_BASE_API_CONTEXT);
-	const createOnePlaybook = makeCreateOnePlaybook(TEST_BASE_API_CONTEXT);
-	const getOnePlaybook = makeGetOnePlaybook(TEST_BASE_API_CONTEXT);
+	let deleteOnePlaybook: ReturnType<typeof makeDeleteOnePlaybook>;
+	beforeAll(async () => {
+		deleteOnePlaybook = makeDeleteOnePlaybook(await TEST_BASE_API_CONTEXT());
+	});
+	let createOnePlaybook: ReturnType<typeof makeCreateOnePlaybook>;
+	beforeAll(async () => {
+		createOnePlaybook = makeCreateOnePlaybook(await TEST_BASE_API_CONTEXT());
+	});
+	let getOnePlaybook: ReturnType<typeof makeGetOnePlaybook>;
+	beforeAll(async () => {
+		getOnePlaybook = makeGetOnePlaybook(await TEST_BASE_API_CONTEXT());
+	});
 
 	it(
 		'Should delete an playbook',

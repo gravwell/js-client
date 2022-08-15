@@ -6,7 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { RawCreatableToken } from '~/main';
+import { RawCreatableToken } from '~/index';
 import { CreatableToken } from './creatable-token';
 
 export const toRawCreatableToken = (creatable: CreatableToken): RawCreatableToken => ({

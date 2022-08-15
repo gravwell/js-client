@@ -9,10 +9,8 @@
 import { RawVersionObject } from './raw-version-object';
 import { Version } from './version';
 
-export const toRawVersionObject = (version: Version): RawVersionObject => {
-	return {
-		Major: version.major,
-		Minor: version.minor,
-		Point: version.patch,
-	};
-};
+export const toRawVersionObject = (version: Version): RawVersionObject => ({
+	Major: version.major,
+	Minor: version.minor,
+	Point: version.patch,
+});

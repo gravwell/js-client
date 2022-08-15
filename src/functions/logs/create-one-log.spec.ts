@@ -10,7 +10,10 @@ import { integrationTest, TEST_BASE_API_CONTEXT } from '~/tests';
 import { makeCreateOneLog } from './create-one-log';
 
 describe('createOneLog()', () => {
-	const createOneLog = makeCreateOneLog(TEST_BASE_API_CONTEXT);
+	let createOneLog: ReturnType<typeof makeCreateOneLog>;
+	beforeAll(async () => {
+		createOneLog = makeCreateOneLog(await TEST_BASE_API_CONTEXT());
+	});
 
 	it(
 		'Should create a log',

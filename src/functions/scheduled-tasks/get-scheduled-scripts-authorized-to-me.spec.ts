@@ -17,12 +17,30 @@ import { makeGetAllScheduledScripts } from './get-all-scheduled-scripts';
 import { makeGetScheduledScriptsAuthorizedToMe } from './get-scheduled-scripts-authorized-to-me';
 
 describe('getScheduledScriptsAuthorizedToMe()', () => {
-	const getScheduledScriptsAuthorizedToMe = makeGetScheduledScriptsAuthorizedToMe(TEST_BASE_API_CONTEXT);
-	const getAllScheduledScripts = makeGetAllScheduledScripts(TEST_BASE_API_CONTEXT);
-	const createOneUser = makeCreateOneUser(TEST_BASE_API_CONTEXT);
-	const login = makeLoginOneUser(TEST_BASE_API_CONTEXT);
-	const deleteAllScheduledScripts = makeDeleteAllScheduledScripts(TEST_BASE_API_CONTEXT);
-	const createManyScheduledScripts = makeCreateManyScheduledScripts(TEST_BASE_API_CONTEXT);
+	let getScheduledScriptsAuthorizedToMe: ReturnType<typeof makeGetScheduledScriptsAuthorizedToMe>;
+	beforeAll(async () => {
+		getScheduledScriptsAuthorizedToMe = makeGetScheduledScriptsAuthorizedToMe(await TEST_BASE_API_CONTEXT());
+	});
+	let getAllScheduledScripts: ReturnType<typeof makeGetAllScheduledScripts>;
+	beforeAll(async () => {
+		getAllScheduledScripts = makeGetAllScheduledScripts(await TEST_BASE_API_CONTEXT());
+	});
+	let createOneUser: ReturnType<typeof makeCreateOneUser>;
+	beforeAll(async () => {
+		createOneUser = makeCreateOneUser(await TEST_BASE_API_CONTEXT());
+	});
+	let login: ReturnType<typeof makeLoginOneUser>;
+	beforeAll(async () => {
+		login = makeLoginOneUser(await TEST_BASE_API_CONTEXT());
+	});
+	let deleteAllScheduledScripts: ReturnType<typeof makeDeleteAllScheduledScripts>;
+	beforeAll(async () => {
+		deleteAllScheduledScripts = makeDeleteAllScheduledScripts(await TEST_BASE_API_CONTEXT());
+	});
+	let createManyScheduledScripts: ReturnType<typeof makeCreateManyScheduledScripts>;
+	beforeAll(async () => {
+		createManyScheduledScripts = makeCreateManyScheduledScripts(await TEST_BASE_API_CONTEXT());
+	});
 
 	let adminScheduledScripts: Array<ScheduledScript>;
 
@@ -63,7 +81,7 @@ describe('getScheduledScriptsAuthorizedToMe()', () => {
 
 		// Create three scheduled scripts as analyst
 		const createManyScheduledScriptsAsAnalyst = makeCreateManyScheduledScripts({
-			...TEST_BASE_API_CONTEXT,
+			...(await TEST_BASE_API_CONTEXT()),
 			authToken: analystAuth,
 		});
 
@@ -94,23 +112,28 @@ describe('getScheduledScriptsAuthorizedToMe()', () => {
 		integrationTest(async () => {
 			const actualAdminScheduledScripts = await getScheduledScriptsAuthorizedToMe();
 			expect(sortBy(actualAdminScheduledScripts, s => s.id)).toEqual(sortBy(adminScheduledScripts, s => s.id));
-			for (const scheduledScript of actualAdminScheduledScripts) expect(isScheduledScript(scheduledScript)).toBeTrue();
+			for (const scheduledScript of actualAdminScheduledScripts) {
+				expect(isScheduledScript(scheduledScript)).toBeTrue();
+			}
 
 			const getScheduledScriptsAuthorizedToAnalyst = makeGetScheduledScriptsAuthorizedToMe({
-				...TEST_BASE_API_CONTEXT,
+				...(await TEST_BASE_API_CONTEXT()),
 				authToken: analystAuth,
 			});
 
 			const actualAnalystScheduledScripts = await getScheduledScriptsAuthorizedToAnalyst();
 			expect(sortBy(actualAnalystScheduledScripts, s => s.id)).toEqual(sortBy(analystScheduledScripts, s => s.id));
-			for (const scheduledScript of actualAnalystScheduledScripts)
+			for (const scheduledScript of actualAnalystScheduledScripts) {
 				expect(isScheduledScript(scheduledScript)).toBeTrue();
+			}
 
 			const allScheduledScripts = await getAllScheduledScripts();
 			expect(sortBy(allScheduledScripts, s => s.id)).toEqual(
 				sortBy([...analystScheduledScripts, ...adminScheduledScripts], s => s.id),
 			);
-			for (const scheduledScript of allScheduledScripts) expect(isScheduledScript(scheduledScript)).toBeTrue();
+			for (const scheduledScript of allScheduledScripts) {
+				expect(isScheduledScript(scheduledScript)).toBeTrue();
+			}
 		}),
 	);
 });

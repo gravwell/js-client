@@ -10,8 +10,9 @@ import { Dashboard, RawDashboard, toDashboard } from '~/models';
 import { NumericID } from '~/value-objects';
 import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, parseJSONResponse } from '../utils';
 
-export const makeGetDashboardsByGroup = (context: APIContext) => {
-	return async (groupID: NumericID): Promise<Array<Dashboard>> => {
+export const makeGetDashboardsByGroup =
+	(context: APIContext) =>
+	async (groupID: NumericID): Promise<Array<Dashboard>> => {
 		const path = '/api/groups/{groupID}/dashboards';
 		const url = buildURL(path, { ...context, protocol: 'http', pathParams: { groupID } });
 
@@ -21,4 +22,3 @@ export const makeGetDashboardsByGroup = (context: APIContext) => {
 		const rawRes = (await parseJSONResponse<Array<RawDashboard> | null>(raw)) ?? [];
 		return rawRes.map(toDashboard);
 	};
-};

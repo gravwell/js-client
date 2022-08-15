@@ -11,8 +11,14 @@ import { makeCreateOneGroup } from '../groups';
 import { makeCreateOneTargetedNotification } from './create-one-targeted-notification';
 
 describe('createOneTargetedNotification', () => {
-	const createOneTargetedNotification = makeCreateOneTargetedNotification(TEST_BASE_API_CONTEXT);
-	const createOneGroup = makeCreateOneGroup(TEST_BASE_API_CONTEXT);
+	let createOneTargetedNotification: ReturnType<typeof makeCreateOneTargetedNotification>;
+	beforeAll(async () => {
+		createOneTargetedNotification = makeCreateOneTargetedNotification(await TEST_BASE_API_CONTEXT());
+	});
+	let createOneGroup: ReturnType<typeof makeCreateOneGroup>;
+	beforeAll(async () => {
+		createOneGroup = makeCreateOneGroup(await TEST_BASE_API_CONTEXT());
+	});
 
 	it(
 		'Should be able to create a targeted message to myself',

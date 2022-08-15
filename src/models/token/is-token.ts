@@ -12,7 +12,7 @@ import { Token } from './token';
 
 export const isToken = (value: unknown): value is Token => {
 	try {
-		const t = <Token>value;
+		const t = value as Token;
 		return t._tag === DATA_TYPE.TOKEN && isTokenData(t);
 	} catch {
 		return false;

@@ -147,8 +147,12 @@ export class GravwellClient {
 	constructor(host: string, options: GravwellClientOptions = {}) {
 		this.host = host;
 		this._initialOptions = options;
-		if (!isUndefined(options.useEncryption)) this.useEncryption = options.useEncryption;
-		if (!isUndefined(options.authToken)) this.authenticate(options.authToken);
+		if (!isUndefined(options.useEncryption)) {
+			this.useEncryption = options.useEncryption;
+		}
+		if (!isUndefined(options.authToken)) {
+			this.authenticate(options.authToken);
+		}
 
 		this.authToken$.subscribe(authToken => (this._authToken = authToken));
 

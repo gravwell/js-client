@@ -12,15 +12,23 @@ import { makeGetAllRemoteKits } from './get-all-remote-kits';
 import { makeGetOneRemoteKit } from './get-one-remote-kit';
 
 describe('getOneRemoteKit()', () => {
-	const getOneRemoteKit = makeGetOneRemoteKit(TEST_BASE_API_CONTEXT);
-	const getAllRemoteKits = makeGetAllRemoteKits(TEST_BASE_API_CONTEXT);
+	let getOneRemoteKit: ReturnType<typeof makeGetOneRemoteKit>;
+	beforeAll(async () => {
+		getOneRemoteKit = makeGetOneRemoteKit(await TEST_BASE_API_CONTEXT());
+	});
+	let getAllRemoteKits: ReturnType<typeof makeGetAllRemoteKits>;
+	beforeAll(async () => {
+		getAllRemoteKits = makeGetAllRemoteKits(await TEST_BASE_API_CONTEXT());
+	});
 
 	xit(
 		'Returns a remote kit',
 		integrationTest(async () => {
 			const kits = (await getAllRemoteKits()).slice(0, 6);
 			expect(kits.length).toBeGreaterThan(5);
-			for (const kit of kits) expect(isRemoteKit(kit)).toBeTrue();
+			for (const kit of kits) {
+				expect(isRemoteKit(kit)).toBeTrue();
+			}
 
 			const ps = kits.map(async kit => {
 				const _kit = await getOneRemoteKit(kit.globalID);

@@ -10,7 +10,10 @@ import { integrationTest, TEST_BASE_API_CONTEXT } from '~/tests';
 import { makeGetOneUserActiveSessions } from './get-one-user-active-sessions';
 
 describe('getOneUserActiveSessions', () => {
-	const getOneUserActiveSessions = makeGetOneUserActiveSessions(TEST_BASE_API_CONTEXT);
+	let getOneUserActiveSessions: ReturnType<typeof makeGetOneUserActiveSessions>;
+	beforeAll(async () => {
+		getOneUserActiveSessions = makeGetOneUserActiveSessions(await TEST_BASE_API_CONTEXT());
+	});
 
 	it(
 		'Should return an array of sessions',

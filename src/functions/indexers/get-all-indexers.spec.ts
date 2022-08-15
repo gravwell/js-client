@@ -11,7 +11,10 @@ import { integrationTest, TEST_BASE_API_CONTEXT } from '~/tests';
 import { makeGetAllIndexers } from './get-all-indexers';
 
 describe('getAllIndexers()', () => {
-	const getAllIndexers = makeGetAllIndexers(TEST_BASE_API_CONTEXT);
+	let getAllIndexers: ReturnType<typeof makeGetAllIndexers>;
+	beforeAll(async () => {
+		getAllIndexers = makeGetAllIndexers(await TEST_BASE_API_CONTEXT());
+	});
 
 	it(
 		'Should return all IndexerWells',

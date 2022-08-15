@@ -355,7 +355,8 @@
 					M = new RegExp('([^aeiouylsz])\\1$'),
 					B = new RegExp('^' + s + i + '[^aeiouwxy]$'),
 					V = /^(.+?[^aeiou])y$/,
-					q = /^(.+?)(ational|tional|enci|anci|izer|bli|alli|entli|eli|ousli|ization|ation|ator|alism|iveness|fulness|ousness|aliti|iviti|biliti|logi)$/,
+					q =
+						/^(.+?)(ational|tional|enci|anci|izer|bli|alli|entli|eli|ousli|ization|ation|ator|alism|iveness|fulness|ousness|aliti|iviti|biliti|logi)$/,
 					$ = /^(.+?)(icate|ative|alize|iciti|ical|ful|ness)$/,
 					H = /^(.+?)(al|ance|ence|er|ic|able|ible|ant|ement|ment|ent|ou|ism|ate|iti|ous|ive|ize)$/,
 					W = /^(.+?)(s|t)(ion)$/,

@@ -15,10 +15,22 @@ import { makeCreateManyScheduledScripts } from './create-many-scheduled-scripts'
 import { makeDeleteAllScheduledScripts } from './delete-all-scheduled-scripts';
 
 describe('createManyScheduledScripts()', () => {
-	const createManyScheduledScripts = makeCreateManyScheduledScripts(TEST_BASE_API_CONTEXT);
-	const createOneGroup = makeCreateOneGroup(TEST_BASE_API_CONTEXT);
-	const deleteAllScheduledScripts = makeDeleteAllScheduledScripts(TEST_BASE_API_CONTEXT);
-	const deleteAllGroups = makeDeleteAllGroups(TEST_BASE_API_CONTEXT);
+	let createManyScheduledScripts: ReturnType<typeof makeCreateManyScheduledScripts>;
+	beforeAll(async () => {
+		createManyScheduledScripts = makeCreateManyScheduledScripts(await TEST_BASE_API_CONTEXT());
+	});
+	let createOneGroup: ReturnType<typeof makeCreateOneGroup>;
+	beforeAll(async () => {
+		createOneGroup = makeCreateOneGroup(await TEST_BASE_API_CONTEXT());
+	});
+	let deleteAllScheduledScripts: ReturnType<typeof makeDeleteAllScheduledScripts>;
+	beforeAll(async () => {
+		deleteAllScheduledScripts = makeDeleteAllScheduledScripts(await TEST_BASE_API_CONTEXT());
+	});
+	let deleteAllGroups: ReturnType<typeof makeDeleteAllGroups>;
+	beforeAll(async () => {
+		deleteAllGroups = makeDeleteAllGroups(await TEST_BASE_API_CONTEXT());
+	});
 
 	let groupIDs: Array<NumericID>;
 
@@ -75,7 +87,9 @@ describe('createManyScheduledScripts()', () => {
 			];
 
 			const scheduledScripts = await createManyScheduledScripts(data);
-			for (const q of scheduledScripts) expect(isScheduledScript(q)).toBeTrue();
+			for (const q of scheduledScripts) {
+				expect(isScheduledScript(q)).toBeTrue();
+			}
 			expect(scheduledScripts).toPartiallyEqual(data);
 		}),
 	);

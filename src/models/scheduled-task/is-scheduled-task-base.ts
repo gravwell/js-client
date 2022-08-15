@@ -12,7 +12,7 @@ import { ScheduledTaskBase } from './scheduled-task-base';
 
 export const isScheduledTaskBase = (value: unknown): value is ScheduledTaskBase => {
 	try {
-		const ss = <ScheduledTaskBase>value;
+		const ss = value as ScheduledTaskBase;
 		return (
 			isNumericID(ss.id) &&
 			isUUID(ss.globalID) &&

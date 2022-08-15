@@ -11,7 +11,10 @@ import { integrationTest, myCustomMatchers, TEST_BASE_API_CONTEXT } from '~/test
 import { makeCreateOneToken } from './create-one-token';
 
 describe('createOneToken()', () => {
-	const createOneToken = makeCreateOneToken(TEST_BASE_API_CONTEXT);
+	let createOneToken: ReturnType<typeof makeCreateOneToken>;
+	beforeAll(async () => {
+		createOneToken = makeCreateOneToken(await TEST_BASE_API_CONTEXT());
+	});
 
 	beforeEach(async () => {
 		jasmine.addMatchers(myCustomMatchers);

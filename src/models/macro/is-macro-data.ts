@@ -12,7 +12,7 @@ import { MacroData } from './macro-data';
 
 export const isMacroData = (value: unknown): value is MacroData => {
 	try {
-		const m = <MacroData>value;
+		const m = value as MacroData;
 		return (
 			isNumericID(m.id) &&
 			isNumericID(m.userID) &&

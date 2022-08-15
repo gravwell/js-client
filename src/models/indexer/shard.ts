@@ -27,7 +27,7 @@ export type ShardRemoteState = {
 
 export const isShard = (value: unknown): value is Shard => {
 	try {
-		const s = <Shard>value;
+		const s = value as Shard;
 
 		return (
 			isString(s.name) &&

@@ -14,10 +14,22 @@ import { makeGetAllDashboards } from './get-all-dashboards';
 import { makeUpdateOneDashboard } from './update-one-dashboard';
 
 describe('updateOneDashboard()', () => {
-	const createOneDashboard = makeCreateOneDashboard(TEST_BASE_API_CONTEXT);
-	const updateOneDashboard = makeUpdateOneDashboard(TEST_BASE_API_CONTEXT);
-	const deleteOneDashboard = makeDeleteOneDashboard(TEST_BASE_API_CONTEXT);
-	const getAllDashboards = makeGetAllDashboards(TEST_BASE_API_CONTEXT);
+	let createOneDashboard: ReturnType<typeof makeCreateOneDashboard>;
+	beforeAll(async () => {
+		createOneDashboard = makeCreateOneDashboard(await TEST_BASE_API_CONTEXT());
+	});
+	let updateOneDashboard: ReturnType<typeof makeUpdateOneDashboard>;
+	beforeAll(async () => {
+		updateOneDashboard = makeUpdateOneDashboard(await TEST_BASE_API_CONTEXT());
+	});
+	let deleteOneDashboard: ReturnType<typeof makeDeleteOneDashboard>;
+	beforeAll(async () => {
+		deleteOneDashboard = makeDeleteOneDashboard(await TEST_BASE_API_CONTEXT());
+	});
+	let getAllDashboards: ReturnType<typeof makeGetAllDashboards>;
+	beforeAll(async () => {
+		getAllDashboards = makeGetAllDashboards(await TEST_BASE_API_CONTEXT());
+	});
 
 	let createdDashboard: Dashboard;
 
@@ -35,13 +47,7 @@ describe('updateOneDashboard()', () => {
 			name: 'Current name',
 			searches: [],
 			tiles: [],
-			timeframe: {
-				durationString: 'PT1H',
-				end: null,
-				start: null,
-				timeframe: 'PT1H',
-				timezone: null,
-			},
+			timeframe: { durationString: 'PT1H', end: null, start: null, timeframe: 'PT1H', timezone: null },
 		};
 		createdDashboard = await createOneDashboard(data);
 	});
@@ -77,15 +83,7 @@ describe('updateOneDashboard()', () => {
 		{ gridOptions: {} },
 
 		{ timeframe: { durationString: '1M', timeframe: '1M', timezone: null } },
-		{
-			timeframe: {
-				durationString: 'A',
-				timeframe: 'B',
-				start: new Date(1000000),
-				end: new Date(),
-				timezone: null,
-			},
-		},
+		{ timeframe: { durationString: 'A', timeframe: 'B', start: new Date(1000000), end: new Date(), timezone: null } },
 
 		{ searches: [] },
 		{ searches: [{ name: 'Search 1', type: 'query', query: 'tag=netflow' }] },

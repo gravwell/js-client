@@ -13,7 +13,7 @@ import { Template, TemplateVariable } from './template';
 
 export const isTemplate = (value: unknown): value is Template => {
 	try {
-		const t = <Template>value;
+		const t = value as Template;
 		return t._tag === DATA_TYPE.TEMPLATE && isTemplateData(t);
 	} catch {
 		return false;
@@ -21,7 +21,7 @@ export const isTemplate = (value: unknown): value is Template => {
 };
 export const isTemplateVariable = (value: unknown): value is TemplateVariable => {
 	try {
-		const v = <TemplateVariable>value;
+		const v = value as TemplateVariable;
 		return (
 			isString(v.label) &&
 			isString(v.name) &&

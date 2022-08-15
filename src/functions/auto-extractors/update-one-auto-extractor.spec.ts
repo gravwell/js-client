@@ -14,10 +14,22 @@ import { makeGetAllAutoExtractors } from './get-all-auto-extractors';
 import { makeUpdateOneAutoExtractor } from './update-one-auto-extractor';
 
 describe('updateOneAutoExtractor()', () => {
-	const createOneAutoExtractor = makeCreateOneAutoExtractor(TEST_BASE_API_CONTEXT);
-	const updateOneAutoExtractor = makeUpdateOneAutoExtractor(TEST_BASE_API_CONTEXT);
-	const deleteOneAutoExtractor = makeDeleteOneAutoExtractor(TEST_BASE_API_CONTEXT);
-	const getAllAutoExtractors = makeGetAllAutoExtractors(TEST_BASE_API_CONTEXT);
+	let createOneAutoExtractor: ReturnType<typeof makeCreateOneAutoExtractor>;
+	beforeAll(async () => {
+		createOneAutoExtractor = makeCreateOneAutoExtractor(await TEST_BASE_API_CONTEXT());
+	});
+	let updateOneAutoExtractor: ReturnType<typeof makeUpdateOneAutoExtractor>;
+	beforeAll(async () => {
+		updateOneAutoExtractor = makeUpdateOneAutoExtractor(await TEST_BASE_API_CONTEXT());
+	});
+	let deleteOneAutoExtractor: ReturnType<typeof makeDeleteOneAutoExtractor>;
+	beforeAll(async () => {
+		deleteOneAutoExtractor = makeDeleteOneAutoExtractor(await TEST_BASE_API_CONTEXT());
+	});
+	let getAllAutoExtractors: ReturnType<typeof makeGetAllAutoExtractors>;
+	beforeAll(async () => {
+		getAllAutoExtractors = makeGetAllAutoExtractors(await TEST_BASE_API_CONTEXT());
+	});
 
 	let createdAutoExtractor: AutoExtractor;
 	let createdAutoExtractor2: AutoExtractor;

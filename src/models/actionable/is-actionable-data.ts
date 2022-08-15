@@ -13,7 +13,7 @@ import { isActionableAction, isActionableTrigger } from './is-actionable';
 
 export const isActionableData = (value: unknown): value is ActionableData => {
 	try {
-		const a = <ActionableData>value;
+		const a = value as ActionableData;
 		return (
 			isUUID(a.globalID) &&
 			isUUID(a.id) &&

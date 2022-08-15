@@ -59,7 +59,7 @@ export const makeExploreOneTag = (context: APIContext) => {
 			searchMessages$.pipe(
 				filter((msg): msg is RawSearchMessageReceivedRequestExplorerEntriesWithinRange => {
 					try {
-						const _msg = <RawSearchMessageReceivedRequestExplorerEntriesWithinRange>msg;
+						const _msg = msg as RawSearchMessageReceivedRequestExplorerEntriesWithinRange;
 						return _msg.data.ID === SearchMessageCommands.RequestExplorerEntriesWithinRange;
 					} catch {
 						return false;

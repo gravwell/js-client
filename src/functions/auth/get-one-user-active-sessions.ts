@@ -9,8 +9,9 @@
 import { RawUserSessions, toUserSessions, UserSessions } from '~/models';
 import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, parseJSONResponse } from '../utils';
 
-export const makeGetOneUserActiveSessions = (context: APIContext) => {
-	return async (userID: string): Promise<UserSessions> => {
+export const makeGetOneUserActiveSessions =
+	(context: APIContext) =>
+	async (userID: string): Promise<UserSessions> => {
 		const templatePath = '/api/users/{userID}/sessions';
 		const url = buildURL(templatePath, { ...context, protocol: 'http', pathParams: { userID } });
 
@@ -21,8 +22,9 @@ export const makeGetOneUserActiveSessions = (context: APIContext) => {
 			const data = await parseJSONResponse<RawUserSessions>(raw);
 			return toUserSessions(data);
 		} catch (err) {
-			if (err instanceof Error) throw err;
+			if (err instanceof Error) {
+				throw err;
+			}
 			throw Error('Unknown error');
 		}
 	};
-};

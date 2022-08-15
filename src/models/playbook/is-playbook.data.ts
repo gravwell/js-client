@@ -12,7 +12,7 @@ import { PlaybookData } from './playbook-data';
 
 export const isPlaybookData = (value: unknown): value is PlaybookData => {
 	try {
-		const p = <PlaybookData>value;
+		const p = value as PlaybookData;
 		return (
 			isUUID(p.id) &&
 			isUUID(p.globalID) &&

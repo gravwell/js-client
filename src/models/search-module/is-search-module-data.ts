@@ -11,7 +11,7 @@ import { SearchModuleData } from './search-module-data';
 
 export const isSearchModuleData = (value: unknown): value is SearchModuleData => {
 	try {
-		const m = <SearchModuleData>value;
+		const m = value as SearchModuleData;
 		return (
 			isString(m.name) &&
 			isString(m.description) &&

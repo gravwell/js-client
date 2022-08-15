@@ -11,7 +11,7 @@ import { SystemSettings } from './system-settings';
 
 export const isSystemSettings = (value: any): value is SystemSettings => {
 	try {
-		const s = <SystemSettings>value;
+		const s = value as SystemSettings;
 		return (
 			isString(s.mapTileURL) &&
 			isBoolean(s.disableMapTileProxy) &&

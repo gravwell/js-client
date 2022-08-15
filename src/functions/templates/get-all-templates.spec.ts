@@ -14,9 +14,18 @@ import { makeDeleteOneTemplate } from './delete-one-template';
 import { makeGetAllTemplates } from './get-all-templates';
 
 describe('getAllTemplates()', () => {
-	const getAllTemplates = makeGetAllTemplates(TEST_BASE_API_CONTEXT);
-	const createOneTemplate = makeCreateOneTemplate(TEST_BASE_API_CONTEXT);
-	const deleteOneTemplate = makeDeleteOneTemplate(TEST_BASE_API_CONTEXT);
+	let getAllTemplates: ReturnType<typeof makeGetAllTemplates>;
+	beforeAll(async () => {
+		getAllTemplates = makeGetAllTemplates(await TEST_BASE_API_CONTEXT());
+	});
+	let createOneTemplate: ReturnType<typeof makeCreateOneTemplate>;
+	beforeAll(async () => {
+		createOneTemplate = makeCreateOneTemplate(await TEST_BASE_API_CONTEXT());
+	});
+	let deleteOneTemplate: ReturnType<typeof makeDeleteOneTemplate>;
+	beforeAll(async () => {
+		deleteOneTemplate = makeDeleteOneTemplate(await TEST_BASE_API_CONTEXT());
+	});
 
 	let createdTemplatesUUIDs: Array<UUID> = [];
 
@@ -45,7 +54,9 @@ describe('getAllTemplates()', () => {
 
 			expect(templates.every(isTemplate)).toBeTrue();
 			expect(templates.length).toBeGreaterThanOrEqual(createdTemplatesUUIDs.length);
-			for (const templateID of createdTemplatesUUIDs) expect(templateIDs).toContain(templateID);
+			for (const templateID of createdTemplatesUUIDs) {
+				expect(templateIDs).toContain(templateID);
+			}
 		}),
 	);
 });

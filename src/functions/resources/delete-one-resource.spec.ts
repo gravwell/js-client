@@ -13,9 +13,18 @@ import { makeDeleteOneResource } from './delete-one-resource';
 import { makeGetOneResource } from './get-one-resource';
 
 describe('deleteOneResource()', () => {
-	const deleteOneResource = makeDeleteOneResource(TEST_BASE_API_CONTEXT);
-	const createOneResource = makeCreateOneResource(TEST_BASE_API_CONTEXT);
-	const getOneResource = makeGetOneResource(TEST_BASE_API_CONTEXT);
+	let deleteOneResource: ReturnType<typeof makeDeleteOneResource>;
+	beforeAll(async () => {
+		deleteOneResource = makeDeleteOneResource(await TEST_BASE_API_CONTEXT());
+	});
+	let createOneResource: ReturnType<typeof makeCreateOneResource>;
+	beforeAll(async () => {
+		createOneResource = makeCreateOneResource(await TEST_BASE_API_CONTEXT());
+	});
+	let getOneResource: ReturnType<typeof makeGetOneResource>;
+	beforeAll(async () => {
+		getOneResource = makeGetOneResource(await TEST_BASE_API_CONTEXT());
+	});
 
 	it(
 		'Should delete a resource',

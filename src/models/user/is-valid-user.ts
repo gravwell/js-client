@@ -11,11 +11,11 @@ import { isValidUserData } from './is-valid-user-data';
 import { User, UserRole } from './user';
 
 export const isValidUserRole = (value: any): value is UserRole =>
-	(<Array<UserRole>>['admin', 'analyst']).includes(value);
+	(['admin', 'analyst'] as Array<UserRole>).includes(value);
 
 export const isValidUser = (value: unknown): value is User => {
 	try {
-		const u = <User>value;
+		const u = value as User;
 		return u._tag === DATA_TYPE.USER && isValidUserData(u);
 	} catch {
 		return false;

@@ -11,7 +11,7 @@ import { DashboardLiveUpdate } from './dashboard-live-update';
 
 export const isDashboardLiveUpdate = (value: unknown): value is DashboardLiveUpdate => {
 	try {
-		const d = <DashboardLiveUpdate>value;
+		const d = value as DashboardLiveUpdate;
 		return (d.enabled === true && isNumber(d.interval)) || (d.enabled === false && isNil(d.interval));
 	} catch {
 		return false;

@@ -71,7 +71,9 @@ export const makeRequestEntries: (props: {
 	let pollingSubs: Subscription;
 
 	return async (filter): Promise<void> => {
-		if (isClosed()) return undefined;
+		if (isClosed()) {
+			return undefined;
+		}
 
 		if (!isNil(pollingSubs)) {
 			pollingSubs.unsubscribe();
@@ -217,42 +219,33 @@ export const getRawRequestEntriesMsg: IGetRequestEntries<RawRequestSearchEntries
 	last,
 	searchTypeID,
 	start,
-}) => {
-	return {
-		type: searchTypeID,
-		data: {
-			ID: SearchMessageCommands.RequestEntriesWithinRange,
-			Addendum: { filterID },
-			EntryRange: {
-				First: first,
-				Last: last,
-				StartTS: start,
-				EndTS: end,
-			},
+}) => ({
+	type: searchTypeID,
+	data: {
+		ID: SearchMessageCommands.RequestEntriesWithinRange,
+		Addendum: { filterID },
+		EntryRange: {
+			First: first,
+			Last: last,
+			StartTS: start,
+			EndTS: end,
 		},
-	};
-};
+	},
+});
 
 /* Get the Raw */
-export const getRawRequestExplorerEntriesMsg: IGetRequestEntries<RawRequestExplorerSearchEntriesWithinRangeMessageSent> = ({
-	end,
-	filterID,
-	first,
-	last,
-	searchTypeID,
-	start,
-}) => {
-	return {
-		type: searchTypeID,
-		data: {
-			ID: SearchMessageCommands.RequestExplorerEntriesWithinRange,
-			Addendum: { filterID },
-			EntryRange: {
-				First: first,
-				Last: last,
-				StartTS: start,
-				EndTS: end,
-			},
+export const getRawRequestExplorerEntriesMsg: IGetRequestEntries<
+	RawRequestExplorerSearchEntriesWithinRangeMessageSent
+> = ({ end, filterID, first, last, searchTypeID, start }) => ({
+	type: searchTypeID,
+	data: {
+		ID: SearchMessageCommands.RequestExplorerEntriesWithinRange,
+		Addendum: { filterID },
+		EntryRange: {
+			First: first,
+			Last: last,
+			StartTS: start,
+			EndTS: end,
 		},
-	};
-};
+	},
+});

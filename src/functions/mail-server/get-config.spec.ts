@@ -16,8 +16,8 @@ describe('getMailServerConfig()', () => {
 	it(
 		'Should return the mail server config',
 		integrationTest(async () => {
-			const getMailServerConfig = makeGetConfig(TEST_BASE_API_CONTEXT);
-			const updateMailServerConfig = makeUpdateConfig(TEST_BASE_API_CONTEXT);
+			const getMailServerConfig = makeGetConfig(await TEST_BASE_API_CONTEXT());
+			const updateMailServerConfig = makeUpdateConfig(await TEST_BASE_API_CONTEXT());
 
 			const config: MailServerConfig = {
 				server: 'localhost',

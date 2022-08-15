@@ -11,18 +11,37 @@ import { CreatableMacro, CreatableUser, isMacro, User } from '~/models';
 import { integrationTest, TEST_BASE_API_CONTEXT } from '~/tests';
 import { makeLoginOneUser } from '../auth/login-one-user';
 import { makeCreateOneUser } from '../users';
+import { assertIsNotNil } from '../utils/type-guards';
 import { makeCreateOneMacro } from './create-one-macro';
 import { makeDeleteOneMacro } from './delete-one-macro';
 import { makeGetAllMacros } from './get-all-macros';
 import { makeGetMacrosByUser } from './get-macros-by-user';
 
 describe('getMacrosByUser()', () => {
-	const getAllMacros = makeGetAllMacros(TEST_BASE_API_CONTEXT);
-	const getMacrosByUser = makeGetMacrosByUser(TEST_BASE_API_CONTEXT);
-	const createOneUser = makeCreateOneUser(TEST_BASE_API_CONTEXT);
-	const login = makeLoginOneUser(TEST_BASE_API_CONTEXT);
-	const createOneMacro = makeCreateOneMacro(TEST_BASE_API_CONTEXT);
-	const deleteOneMacro = makeDeleteOneMacro(TEST_BASE_API_CONTEXT);
+	let getAllMacros: ReturnType<typeof makeGetAllMacros>;
+	beforeAll(async () => {
+		getAllMacros = makeGetAllMacros(await TEST_BASE_API_CONTEXT());
+	});
+	let getMacrosByUser: ReturnType<typeof makeGetMacrosByUser>;
+	beforeAll(async () => {
+		getMacrosByUser = makeGetMacrosByUser(await TEST_BASE_API_CONTEXT());
+	});
+	let createOneUser: ReturnType<typeof makeCreateOneUser>;
+	beforeAll(async () => {
+		createOneUser = makeCreateOneUser(await TEST_BASE_API_CONTEXT());
+	});
+	let login: ReturnType<typeof makeLoginOneUser>;
+	beforeAll(async () => {
+		login = makeLoginOneUser(await TEST_BASE_API_CONTEXT());
+	});
+	let createOneMacro: ReturnType<typeof makeCreateOneMacro>;
+	beforeAll(async () => {
+		createOneMacro = makeCreateOneMacro(await TEST_BASE_API_CONTEXT());
+	});
+	let deleteOneMacro: ReturnType<typeof makeDeleteOneMacro>;
+	beforeAll(async () => {
+		deleteOneMacro = makeDeleteOneMacro(await TEST_BASE_API_CONTEXT());
+	});
 
 	let user: User;
 	let userAuth: string;
@@ -62,7 +81,7 @@ describe('getMacrosByUser()', () => {
 		];
 
 		const createOneMacroAsAnalyst = makeCreateOneMacro({
-			...TEST_BASE_API_CONTEXT,
+			...(await TEST_BASE_API_CONTEXT()),
 			authToken: userAuth,
 		});
 
@@ -107,13 +126,14 @@ describe('getMacrosByUser()', () => {
 			const allMacros = await getAllMacros();
 			const allMacroIDs = allMacros.map(m => m.id);
 			const analystMacroIDs = allMacros.filter(m => m.userID === user.id).map(m => m.id);
-			const adminID = allMacros.filter(m => m.userID !== user.id)[0].userID;
+			const adminID = allMacros.filter(m => m.userID !== user.id)[0]?.userID;
+			assertIsNotNil(adminID);
 
 			expect(allMacroIDs.length).toBe(5);
 			expect(analystMacroIDs.length).toBe(3);
 
 			const getMacrosByUserAsAnalyst = makeGetMacrosByUser({
-				...TEST_BASE_API_CONTEXT,
+				...(await TEST_BASE_API_CONTEXT()),
 				authToken: userAuth,
 			});
 

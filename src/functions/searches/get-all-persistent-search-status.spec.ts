@@ -11,7 +11,10 @@ import { integrationTest, TEST_BASE_API_CONTEXT } from '~/tests';
 import { makeGetAllPersistentSearchStatus } from './get-all-persistent-search-status';
 
 describe('getAllPersistentSearchStatus()', () => {
-	const getAllPersistentSearchStatus = makeGetAllPersistentSearchStatus(TEST_BASE_API_CONTEXT);
+	let getAllPersistentSearchStatus: ReturnType<typeof makeGetAllPersistentSearchStatus>;
+	beforeAll(async () => {
+		getAllPersistentSearchStatus = makeGetAllPersistentSearchStatus(await TEST_BASE_API_CONTEXT());
+	});
 
 	it(
 		'Should return all persistent searches',

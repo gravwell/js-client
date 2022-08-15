@@ -41,7 +41,9 @@ export const makeUploadManyAutoExtractors = (context: APIContext) => {
 			// Only upload and return it
 			const uploaded = await getAllAutoExtractors().then(aes => aes.filter(ae => createdIDs.has(ae.id)));
 			const dataKeys = Object.keys(data);
-			if (dataKeys.length === 1 && dataKeys.includes('file')) return uploaded;
+			if (dataKeys.length === 1 && dataKeys.includes('file')) {
+				return uploaded;
+			}
 
 			// Upload and also change some access properties
 			return Promise.all(
@@ -51,7 +53,9 @@ export const makeUploadManyAutoExtractors = (context: APIContext) => {
 				}),
 			);
 		} catch (err) {
-			if (err instanceof Error) throw err;
+			if (err instanceof Error) {
+				throw err;
+			}
 			throw Error('Unknown error');
 		}
 	};

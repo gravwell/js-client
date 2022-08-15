@@ -6,23 +6,30 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { isKitArchive } from '~/models';
 import { integrationTest, TEST_BASE_API_CONTEXT } from '~/tests';
+import { assertIsNotNil } from '../utils/type-guards';
 import { makeDeleteOneKitArchive } from './delete-one-archive';
 import { makeGetKitArchives } from './get-all-archives';
 
 describe('deleteOneArchive()', () => {
-	const getAllArchives = makeGetKitArchives(TEST_BASE_API_CONTEXT);
-	const deleteOneArchive = makeDeleteOneKitArchive(TEST_BASE_API_CONTEXT);
+	let getAllArchives: ReturnType<typeof makeGetKitArchives>;
+	beforeAll(async () => {
+		getAllArchives = makeGetKitArchives(await TEST_BASE_API_CONTEXT());
+	});
+	let deleteOneArchive: ReturnType<typeof makeDeleteOneKitArchive>;
+	beforeAll(async () => {
+		deleteOneArchive = makeDeleteOneKitArchive(await TEST_BASE_API_CONTEXT());
+	});
 
-	it(
+	// Can't delete an archive until we build a kit. Skipping for now.
+	xit(
 		'Should delete an archive',
 		integrationTest(async () => {
 			const archives = await getAllArchives();
-			if (archives.length > 0) {
-				const deleted = await deleteOneArchive(archives[0].id);
-				expect(deleted).toBeTrue();
-			}
+			const archive = archives[0];
+			assertIsNotNil(archive);
+			const deleted = await deleteOneArchive(archive.id);
+			expect(deleted).toBeTrue();
 		}),
 	);
 });

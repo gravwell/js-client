@@ -8,8 +8,9 @@
 
 import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, parseJSONResponse } from '../utils';
 
-export const makeDeleteOneUser = (context: APIContext) => {
-	return async (userID: string): Promise<void> => {
+export const makeDeleteOneUser =
+	(context: APIContext) =>
+	async (userID: string): Promise<void> => {
 		const templatePath = '/api/users/{userID}';
 		const url = buildURL(templatePath, { ...context, protocol: 'http', pathParams: { userID } });
 
@@ -18,4 +19,3 @@ export const makeDeleteOneUser = (context: APIContext) => {
 		const raw = await context.fetch(url, { ...req, method: 'DELETE' });
 		return parseJSONResponse(raw, { expect: 'void' });
 	};
-};

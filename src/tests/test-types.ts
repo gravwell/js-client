@@ -8,12 +8,47 @@
 
 import { TEST_TYPES, TestType } from './config';
 
-type TestAssertion = Parameters<typeof it>[1];
+// from Jasmine
+type ImplementationCallback = (() => PromiseLike<any>) | (() => void);
 
-const makeRequireTestType = (testType: TestType, skipReason: string) => (assertion: TestAssertion): TestAssertion => {
-	const skip = !TEST_TYPES.includes(testType);
-	return skip ? () => pending(skipReason) : assertion;
-};
+const makeRequireTestType =
+	(testType: TestType, skipReason: string) =>
+	(assertion: ImplementationCallback): ImplementationCallback => {
+		if (!TEST_TYPES.includes(testType)) {
+			return () => pending(skipReason);
+		} else {
+			return assertion;
+		}
+	};
 
-export const integrationTest = makeRequireTestType('integration', `Skipped because $INTEGRATION_TESTS is false`);
-export const unitTest = makeRequireTestType('unit', `Skipped because $UNIT_TESTS is false`);
+export const integrationTest: (f: ImplementationCallback) => ImplementationCallback = makeRequireTestType(
+	'integration',
+	`Skipped because $INTEGRATION_TESTS is false`,
+);
+export const unitTest: (f: ImplementationCallback) => ImplementationCallback = makeRequireTestType(
+	'unit',
+	`Skipped because $UNIT_TESTS is false`,
+);
+
+const makeRequireTestTypeDescribe =
+	(testType: TestType, skipReason: string) =>
+	(specDefinitions: () => void): (() => void) => {
+		if (!TEST_TYPES.includes(testType)) {
+			// return an xit since Jasmine gets angry about describe()'s with no tests
+			return () =>
+				xit(skipReason, () => {
+					console.log('skipped');
+				});
+		} else {
+			return specDefinitions;
+		}
+	};
+
+export const integrationTestSpecDef: (f: () => void) => () => void = makeRequireTestTypeDescribe(
+	'integration',
+	`Skipped because $INTEGRATION_TESTS is false`,
+);
+export const unitTestSpecDef: (f: () => void) => () => void = makeRequireTestTypeDescribe(
+	'unit',
+	`Skipped because $UNIT_TESTS is false`,
+);

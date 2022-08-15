@@ -16,8 +16,9 @@ import {
 	parseJSONResponse,
 } from '../utils';
 
-export const makeUpdateOneUserInformation = (context: APIContext) => {
-	return async (data: UpdatableUserInformation): Promise<void> => {
+export const makeUpdateOneUserInformation =
+	(context: APIContext) =>
+	async (data: UpdatableUserInformation): Promise<void> => {
 		try {
 			const templatePath = '/api/users/{userID}';
 			const url = buildURL(templatePath, { ...context, protocol: 'http', pathParams: { userID: data.id } });
@@ -30,11 +31,12 @@ export const makeUpdateOneUserInformation = (context: APIContext) => {
 			const raw = await context.fetch(url, { ...req, method: 'PUT' });
 			return parseJSONResponse(raw, { expect: 'void' });
 		} catch (err) {
-			if (err instanceof Error) throw err;
+			if (err instanceof Error) {
+				throw err;
+			}
 			throw Error('Unknown error');
 		}
 	};
-};
 
 export interface UpdatableUserInformation {
 	id: NumericID;

@@ -12,7 +12,7 @@ import { isAutoExtractorData } from './is-auto-extractor-data';
 
 export const isAutoExtractor = (value: unknown): value is AutoExtractor => {
 	try {
-		const ae = <AutoExtractor>value;
+		const ae = value as AutoExtractor;
 		return ae._tag === DATA_TYPE.AUTO_EXTRACTOR && isAutoExtractorData(ae);
 	} catch {
 		return false;

@@ -17,12 +17,30 @@ import { makeDeleteManyScheduledScripts } from './delete-many-scheduled-scripts'
 import { makeGetAllScheduledScripts } from './get-all-scheduled-scripts';
 
 describe('deleteManyScheduledScripts()', () => {
-	const createOneUser = makeCreateOneUser(TEST_BASE_API_CONTEXT);
-	const login = makeLoginOneUser(TEST_BASE_API_CONTEXT);
-	const getAllScheduledScripts = makeGetAllScheduledScripts(TEST_BASE_API_CONTEXT);
-	const deleteAllScheduledScripts = makeDeleteAllScheduledScripts(TEST_BASE_API_CONTEXT);
-	const createManyScheduledScripts = makeCreateManyScheduledScripts(TEST_BASE_API_CONTEXT);
-	const deleteManyScheduledScripts = makeDeleteManyScheduledScripts(TEST_BASE_API_CONTEXT);
+	let createOneUser: ReturnType<typeof makeCreateOneUser>;
+	beforeAll(async () => {
+		createOneUser = makeCreateOneUser(await TEST_BASE_API_CONTEXT());
+	});
+	let login: ReturnType<typeof makeLoginOneUser>;
+	beforeAll(async () => {
+		login = makeLoginOneUser(await TEST_BASE_API_CONTEXT());
+	});
+	let getAllScheduledScripts: ReturnType<typeof makeGetAllScheduledScripts>;
+	beforeAll(async () => {
+		getAllScheduledScripts = makeGetAllScheduledScripts(await TEST_BASE_API_CONTEXT());
+	});
+	let deleteAllScheduledScripts: ReturnType<typeof makeDeleteAllScheduledScripts>;
+	beforeAll(async () => {
+		deleteAllScheduledScripts = makeDeleteAllScheduledScripts(await TEST_BASE_API_CONTEXT());
+	});
+	let createManyScheduledScripts: ReturnType<typeof makeCreateManyScheduledScripts>;
+	beforeAll(async () => {
+		createManyScheduledScripts = makeCreateManyScheduledScripts(await TEST_BASE_API_CONTEXT());
+	});
+	let deleteManyScheduledScripts: ReturnType<typeof makeDeleteManyScheduledScripts>;
+	beforeAll(async () => {
+		deleteManyScheduledScripts = makeDeleteManyScheduledScripts(await TEST_BASE_API_CONTEXT());
+	});
 
 	let user: User;
 	let userAuth: string;
@@ -60,7 +78,7 @@ describe('deleteManyScheduledScripts()', () => {
 
 		// Create three scheduled scripts as analyst
 		const createManyScheduledScriptsAsAnalyst = makeCreateManyScheduledScripts({
-			...TEST_BASE_API_CONTEXT,
+			...(await TEST_BASE_API_CONTEXT()),
 			authToken: userAuth,
 		});
 
