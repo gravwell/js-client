@@ -684,7 +684,7 @@ describe(
 					.toBeTrue();
 			}, 25000);
 
-			it('Should adjust when the zoom window adjusts for nicely-aligned bins', async () => {
+			xit('Should adjust when the zoom window adjusts for nicely-aligned bins', async () => {
 				const subscribeToOneSearch = makeSubscribeToOneSearch(await TEST_BASE_API_CONTEXT());
 				const query = `tag=${tag}`;
 				const filter: SearchFilter = { entriesOffset: { index: 0, count }, dateRange: { start, end } };
@@ -736,7 +736,7 @@ describe(
 				}
 			}, 25000);
 
-			it('Should adjust when the zoom window adjusts for odd bins', async () => {
+			xit('Should adjust when the zoom window adjusts for odd bins', async () => {
 				const subscribeToOneSearch = makeSubscribeToOneSearch(await TEST_BASE_API_CONTEXT());
 				const query = `tag=${tag}`;
 				const filter: SearchFilter = { entriesOffset: { index: 0, count }, dateRange: { start, end } };
@@ -820,7 +820,7 @@ describe(
 				}
 			}, 25000);
 
-			it('Should adjust when the zoom window adjusts with a different granularity for nicely-aligned bins', async () => {
+			xit('Should adjust when the zoom window adjusts with a different granularity for nicely-aligned bins', async () => {
 				const subscribeToOneSearch = makeSubscribeToOneSearch(await TEST_BASE_API_CONTEXT());
 				const query = `tag=${tag}`;
 				const filter1: SearchFilter = { entriesOffset: { index: 0, count }, dateRange: { start, end } };
@@ -888,7 +888,7 @@ describe(
 					.toEqual(90);
 			}, 25000);
 
-			it('Should adjust when the zoom window adjusts with a different granularity for odd bins', async () => {
+			xit('Should adjust when the zoom window adjusts with a different granularity for odd bins', async () => {
 				const subscribeToOneSearch = makeSubscribeToOneSearch(await TEST_BASE_API_CONTEXT());
 				const query = `tag=${tag}`;
 				const filter1: SearchFilter = { entriesOffset: { index: 0, count }, dateRange: { start, end } };
