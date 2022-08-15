@@ -1036,7 +1036,7 @@ describe(
 					.toEqual(overviewGranularity);
 			}, 25000);
 
-			it('Should adjust zoom granularity and overview granularity independently for odd bins', async () => {
+			xit('Should adjust zoom granularity and overview granularity independently for odd bins', async () => {
 				const subscribeToOneSearch = makeSubscribeToOneSearch(await TEST_BASE_API_CONTEXT());
 				const query = `tag=${tag}`;
 				const overviewGranularity = 133;
