@@ -7,73 +7,105 @@
  **************************************************************************/
 
 import { CreatableGroup, CreatableUser, User } from '~/models';
-import { integrationTest, TEST_BASE_API_CONTEXT } from '~/tests';
+import { integrationTest, integrationTestSpecDef, TEST_BASE_API_CONTEXT } from '~/tests';
 import { NumericID } from '~/value-objects';
 import { makeCreateOneUser, makeDeleteOneUser, makeGetOneUser } from '../users';
+import { assertNoneNil } from '../utils/type-guards';
 import { makeAddOneUserToManyGroups } from './add-one-user-to-many-groups';
 import { makeCreateOneGroup } from './create-one-group';
 import { makeDeleteOneGroup } from './delete-one-group';
 import { makeGetAllGroups } from './get-all-groups';
 
-describe('addOneUserToManyGroups()', () => {
-	const getAllGroups = makeGetAllGroups(TEST_BASE_API_CONTEXT);
-	const createOneGroup = makeCreateOneGroup(TEST_BASE_API_CONTEXT);
-	const deleteOneGroup = makeDeleteOneGroup(TEST_BASE_API_CONTEXT);
-	const getOneUser = makeGetOneUser(TEST_BASE_API_CONTEXT);
-	const createOneUser = makeCreateOneUser(TEST_BASE_API_CONTEXT);
-	const deleteOneUser = makeDeleteOneUser(TEST_BASE_API_CONTEXT);
-	const addOneUserToManyGroups = makeAddOneUserToManyGroups(TEST_BASE_API_CONTEXT);
+describe(
+	'addOneUserToManyGroups()',
+	integrationTestSpecDef(() => {
+		let getAllGroups: ReturnType<typeof makeGetAllGroups>;
+		beforeAll(async () => {
+			getAllGroups = makeGetAllGroups(await TEST_BASE_API_CONTEXT());
+		});
+		let createOneGroup: ReturnType<typeof makeCreateOneGroup>;
+		beforeAll(async () => {
+			createOneGroup = makeCreateOneGroup(await TEST_BASE_API_CONTEXT());
+		});
+		let deleteOneGroup: ReturnType<typeof makeDeleteOneGroup>;
+		beforeAll(async () => {
+			deleteOneGroup = makeDeleteOneGroup(await TEST_BASE_API_CONTEXT());
+		});
+		let getOneUser: ReturnType<typeof makeGetOneUser>;
+		beforeAll(async () => {
+			getOneUser = makeGetOneUser(await TEST_BASE_API_CONTEXT());
+		});
+		let createOneUser: ReturnType<typeof makeCreateOneUser>;
+		beforeAll(async () => {
+			createOneUser = makeCreateOneUser(await TEST_BASE_API_CONTEXT());
+		});
+		let deleteOneUser: ReturnType<typeof makeDeleteOneUser>;
+		beforeAll(async () => {
+			deleteOneUser = makeDeleteOneUser(await TEST_BASE_API_CONTEXT());
+		});
+		let addOneUserToManyGroups: ReturnType<typeof makeAddOneUserToManyGroups>;
+		beforeAll(async () => {
+			addOneUserToManyGroups = makeAddOneUserToManyGroups(await TEST_BASE_API_CONTEXT());
+		});
 
-	let user: User;
+		let user: User;
 
-	beforeEach(async () => {
-		// Delete all groups
-		const currentGroups = await getAllGroups();
-		const currentGroupIDs = currentGroups.map(g => g.id);
-		const deletePromises = currentGroupIDs.map(groupID => deleteOneGroup(groupID));
-		await Promise.all(deletePromises);
+		beforeEach(async () => {
+			// Delete all groups
+			const currentGroups = await getAllGroups();
+			const currentGroupIDs = currentGroups.map(g => g.id);
+			const deletePromises = currentGroupIDs.map(groupID => deleteOneGroup(groupID));
+			await Promise.all(deletePromises);
 
-		// Create three groups
-		const creatableGroups: Array<CreatableGroup> = [{ name: '1' }, { name: '2' }, { name: '3' }];
-		const createPromises = creatableGroups.map(creatable => createOneGroup(creatable));
-		await Promise.all(createPromises);
+			// Create three groups
+			const creatableGroups: Array<CreatableGroup> = [{ name: '1' }, { name: '2' }, { name: '3' }];
+			const createPromises = creatableGroups.map(creatable => createOneGroup(creatable));
+			await Promise.all(createPromises);
 
-		// Creates a user
-		const userSeed = 'whatever4324234';
-		const data: CreatableUser = {
-			name: 'Test',
-			email: userSeed + '@example.com',
-			password: 'changeme',
-			role: 'analyst',
-			user: userSeed,
-		};
-		user = await createOneUser(data);
-	});
+			// Creates a user
+			const userSeed = 'whatever4324234';
+			const data: CreatableUser = {
+				name: 'Test',
+				email: userSeed + '@example.com',
+				password: 'changeme',
+				role: 'analyst',
+				user: userSeed,
+			};
+			user = await createOneUser(data);
+		});
 
-	afterEach(async () => {
-		await deleteOneUser(user.id);
-	});
+		afterEach(async () => {
+			await deleteOneUser(user.id);
+		});
 
-	xit(
-		'Should add the user to the groups',
-		integrationTest(async () => {
-			const allGroups = await getAllGroups();
-			const allGroupIDs = allGroups.map(g => g.id);
-			expect(allGroupIDs.length).toBe(3);
-			expect(user.groupIDs.length).toBe(0);
+		xit(
+			'Should add the user to the groups',
+			integrationTest(async () => {
+				const allGroups = await getAllGroups();
+				const allGroupIDs = allGroups.map(g => g.id);
+				expect(allGroupIDs.length).toBe(3);
+				expect(user.groupIDs.length).toBe(0);
 
-			const tests: Array<Array<NumericID>> = [[allGroupIDs[0]], [allGroupIDs[1], allGroupIDs[2]]];
+				const part1 = [allGroupIDs[0]];
+				const part2 = [allGroupIDs[1], allGroupIDs[2]];
+				assertNoneNil(part1);
+				assertNoneNil(part2);
 
-			const addedGroupIDs: Array<NumericID> = [];
-			for (const groupIDs of tests) {
-				await addOneUserToManyGroups(user.id, groupIDs);
-				addedGroupIDs.push(...groupIDs);
+				const tests: Array<Array<NumericID>> = [part1, part2];
 
-				const _user = await getOneUser(user.id);
-				expect(_user.groupIDs.length).toBe(addedGroupIDs.length);
-				for (const groupID of groupIDs) expect(_user.groupIDs).toContain(groupID);
-				expect(_user.groupIDs.sort()).toEqual(addedGroupIDs.sort());
-			}
-		}),
-	);
-});
+				const addedGroupIDs: Array<NumericID> = [];
+				for (const groupIDs of tests) {
+					await addOneUserToManyGroups(user.id, groupIDs);
+					addedGroupIDs.push(...groupIDs);
+
+					const _user = await getOneUser(user.id);
+					expect(_user.groupIDs.length).toBe(addedGroupIDs.length);
+					for (const groupID of groupIDs) {
+						expect(_user.groupIDs).toContain(groupID);
+					}
+					expect(_user.groupIDs.sort()).toEqual(addedGroupIDs.sort());
+				}
+			}),
+		);
+	}),
+);

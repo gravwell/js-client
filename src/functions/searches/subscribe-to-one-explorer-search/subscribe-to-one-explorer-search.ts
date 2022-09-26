@@ -7,7 +7,7 @@
  **************************************************************************/
 
 import { isAfter, subHours } from 'date-fns';
-import { isBoolean, isEqual, isNil, isNull, isUndefined, uniqueId } from 'lodash';
+import { isBoolean, isEqual, isNil, isNull, uniqueId } from 'lodash';
 import {
 	BehaviorSubject,
 	combineLatest,
@@ -53,7 +53,7 @@ import {
 } from '~/models';
 import { toDataExplorerEntry } from '~/models/search/to-data-explorer-entry';
 import { Percentage, RawJSON, toNumericID } from '~/value-objects';
-import { APIContext, debounceWithBackoffWhile } from '../../utils';
+import { APIContext, debounceWithBackoffWhile, omitUndefinedShallow } from '../../utils';
 import { createRequiredSearchFilterObservable } from '../helpers/create-required-search-filter-observable';
 import { initiateSearch } from '../initiate-search';
 import { makeModifyOneQuery } from '../modify-one-query';
@@ -75,7 +75,11 @@ export const makeSubscribeToOneExplorerSearch = (context: APIContext) => {
 
 	return async (
 		query: Query,
-		options: { filter?: SearchFilter; metadata?: RawJSON; noHistory?: boolean } = {},
+		options: {
+			filter?: SearchFilter | undefined;
+			metadata?: RawJSON | undefined;
+			noHistory?: boolean | undefined;
+		} = {},
 	): Promise<ExplorerSearchSubscription> => {
 		if (isNull(rawSubscriptionP)) {
 			rawSubscriptionP = subscribeToOneRawSearch();
@@ -132,15 +136,19 @@ export const makeSubscribeToOneExplorerSearch = (context: APIContext) => {
 		const modifiedQuery =
 			initialFilter.elementFilters.length === 0 ? query : await modifyOneQuery(query, initialFilter.elementFilters);
 
-		const searchInitMsg = await initiateSearch(rawSubscription, modifiedQuery, {
-			initialFilterID,
-			metadata: options.metadata,
-			range:
-				initialFilter.dateRange === 'preview'
-					? 'preview'
-					: [initialFilter.dateRange.start, initialFilter.dateRange.end],
-			noHistory: options.noHistory,
-		});
+		const searchInitMsg = await initiateSearch(
+			rawSubscription,
+			modifiedQuery,
+			omitUndefinedShallow({
+				initialFilterID,
+				metadata: options.metadata,
+				range:
+					initialFilter.dateRange === 'preview'
+						? 'preview'
+						: [initialFilter.dateRange.start, initialFilter.dateRange.end],
+				noHistory: options.noHistory,
+			}),
+		);
 		const searchTypeID = searchInitMsg.data.OutputSearchSubproto;
 		const isResponseError = filterMessageByCommand(SearchMessageCommands.ResponseError);
 		const searchMessages$ = rawSubscription.received$.pipe(
@@ -168,7 +176,9 @@ export const makeSubscribeToOneExplorerSearch = (context: APIContext) => {
 		type DateRange = { start: Date; end: Date };
 		const previewDateRange: DateRange = await (async (): Promise<DateRange> => {
 			// Not in preview mode, so return the initial filter date range, whatever, it won't be used
-			if (initialFilter.dateRange !== 'preview') return initialFilter.dateRange;
+			if (initialFilter.dateRange !== 'preview') {
+				return initialFilter.dateRange;
+			}
 
 			// In preview mode, so we need to request search details and use the timerange that we get back
 			const detailsP = firstValueFrom(
@@ -188,7 +198,9 @@ export const makeSubscribeToOneExplorerSearch = (context: APIContext) => {
 		})();
 
 		const close = async (): Promise<void> => {
-			if (closed) return undefined;
+			if (closed) {
+				return undefined;
+			}
 
 			const closeMsg: RawRequestSearchCloseMessageSent = {
 				type: searchTypeID,
@@ -215,16 +227,14 @@ export const makeSubscribeToOneExplorerSearch = (context: APIContext) => {
 
 		const entries$: Observable<ExplorerSearchEntries> = searchMessages$.pipe(
 			filter(filterMessageByCommand(SearchMessageCommands.RequestExplorerEntriesWithinRange)),
-			map(
-				(msg): ExplorerSearchEntries => {
-					const base = toSearchEntries(rendererType, msg);
-					const filterID = (msg.data.Addendum?.filterID as string | undefined) ?? null;
-					const filter = filtersByID[filterID ?? ''] ?? undefined;
-					const searchEntries = { ...base, filter } as SearchEntries;
-					const explorerEntries = (msg.data.Explore ?? []).map(toDataExplorerEntry);
-					return { ...searchEntries, explorerEntries };
-				},
-			),
+			map((msg): ExplorerSearchEntries => {
+				const base = toSearchEntries(rendererType, msg);
+				const filterID = (msg.data.Addendum?.filterID as string | undefined) ?? null;
+				const filter = filtersByID[filterID ?? ''] ?? undefined;
+				const searchEntries = { ...base, filter } as SearchEntries;
+				const explorerEntries = (msg.data.Explore ?? []).map(toDataExplorerEntry);
+				return { ...searchEntries, explorerEntries };
+			}),
 			tap(entries => {
 				const defDesiredGranularity = getDefaultGranularityByRendererType(entries.type);
 				initialFilter.desiredGranularity = defDesiredGranularity;
@@ -238,7 +248,9 @@ export const makeSubscribeToOneExplorerSearch = (context: APIContext) => {
 
 		const _filter$ = new BehaviorSubject<SearchFilter>(initialFilter);
 		const setFilter = (filter: SearchFilter | null): void => {
-			if (closed) return undefined;
+			if (closed) {
+				return undefined;
+			}
 			_filter$.next(filter ?? initialFilter);
 		};
 
@@ -267,7 +279,9 @@ export const makeSubscribeToOneExplorerSearch = (context: APIContext) => {
 		let pollingSubs: Subscription;
 
 		const requestEntries = async (filter: RequiredSearchFilter): Promise<void> => {
-			if (closed) return undefined;
+			if (closed) {
+				return undefined;
+			}
 
 			if (!isNil(pollingSubs)) {
 				pollingSubs.unsubscribe();
@@ -464,82 +478,81 @@ export const makeSubscribeToOneExplorerSearch = (context: APIContext) => {
 			rawSearchStats$.pipe(distinctUntilChanged<RawResponseForSearchStatsMessageReceived>(isEqual)),
 			rawSearchDetails$.pipe(distinctUntilChanged<RawResponseForSearchDetailsMessageReceived>(isEqual)),
 		]).pipe(
-			map(
-				([rawStats, rawDetails]): SearchStats => {
-					const filterID =
-						(rawStats.data.Addendum?.filterID as string | undefined) ??
-						(rawDetails.data.Addendum?.filterID as string | undefined) ??
-						null;
-					const filter = filtersByID[filterID ?? ''] ?? undefined;
+			map(([rawStats, rawDetails]): SearchStats => {
+				const filterID =
+					(rawStats.data.Addendum?.filterID as string | undefined) ??
+					(rawDetails.data.Addendum?.filterID as string | undefined) ??
+					null;
+				const filter = filtersByID[filterID ?? ''] ?? undefined;
 
-					const pipeline = rawStats.data.Stats.Set.map(s => s.Stats)
-						.reduce<
-							Array<Array<RawResponseForSearchStatsMessageReceived['data']['Stats']['Set'][number]['Stats'][number]>>
-						>((acc, curr) => {
-							curr.forEach((_curr, i) => {
-								if (isUndefined(acc[i])) acc[i] = [];
-								acc[i].push(_curr);
-							});
-							return acc;
-						}, [])
-						.map(s =>
-							s
-								.map(_s => ({
-									module: _s.Name,
-									arguments: _s.Args,
-									duration: _s.Duration,
-									input: {
-										bytes: _s.InputBytes,
-										entries: _s.InputCount,
-									},
-									output: {
-										bytes: _s.OutputBytes,
-										entries: _s.OutputCount,
-									},
-								}))
-								.reduce((acc, curr) => ({
-									...curr,
-									duration: acc.duration + curr.duration,
-									input: {
-										bytes: acc.input.bytes + curr.input.bytes,
-										entries: acc.input.entries + curr.input.entries,
-									},
-									output: {
-										bytes: acc.output.bytes + curr.output.bytes,
-										entries: acc.output.entries + curr.output.entries,
-									},
-								})),
-						);
+				const pipeline = rawStats.data.Stats.Set.map(s => s.Stats)
+					.reduce<
+						Array<Array<RawResponseForSearchStatsMessageReceived['data']['Stats']['Set'][number]['Stats'][number]>>
+					>((acc, curr) => {
+						curr.forEach((_curr, i) => {
+							const tmp = acc[i] ?? [];
+							tmp.push(_curr);
+							acc[i] = tmp;
+						});
+						return acc;
+					}, [])
+					.map(s =>
+						s
+							.map(_s => ({
+								module: _s.Name,
+								arguments: _s.Args,
+								duration: _s.Duration,
+								input: {
+									bytes: _s.InputBytes,
+									entries: _s.InputCount,
+								},
+								output: {
+									bytes: _s.OutputBytes,
+									entries: _s.OutputCount,
+								},
+							}))
+							.reduce((acc, curr) => ({
+								...curr,
+								duration: acc.duration + curr.duration,
+								input: {
+									bytes: acc.input.bytes + curr.input.bytes,
+									entries: acc.input.entries + curr.input.entries,
+								},
+								output: {
+									bytes: acc.output.bytes + curr.output.bytes,
+									entries: acc.output.entries + curr.output.entries,
+								},
+							})),
+					);
 
-					return {
-						id: rawDetails.data.SearchInfo.ID,
-						userID: toNumericID(rawDetails.data.SearchInfo.UID),
+				return omitUndefinedShallow({
+					id: rawDetails.data.SearchInfo.ID,
+					userID: toNumericID(rawDetails.data.SearchInfo.UID),
 
-						filter,
-						finished: rawStats.data.Finished && rawDetails.data.Finished,
+					filter,
+					finished: rawStats.data.Finished && rawDetails.data.Finished,
 
-						query: searchInitMsg.data.RawQuery,
-						effectiveQuery: searchInitMsg.data.SearchString,
+					query: searchInitMsg.data.RawQuery,
+					effectiveQuery: searchInitMsg.data.SearchString,
 
-						metadata: searchInitMsg.data.Metadata,
-						entries: rawStats.data.EntryCount,
-						duration: rawDetails.data.SearchInfo.Duration,
-						start: new Date(rawDetails.data.SearchInfo.StartRange),
-						end: new Date(rawDetails.data.SearchInfo.EndRange),
-						minZoomWindow: rawDetails.data.SearchInfo.MinZoomWindow,
-						downloadFormats: rawDetails.data.SearchInfo.RenderDownloadFormats,
-						tags: searchInitMsg.data.Tags,
+					metadata: searchInitMsg.data.Metadata,
+					entries: rawStats.data.EntryCount,
+					duration: rawDetails.data.SearchInfo.Duration,
+					start: new Date(rawDetails.data.SearchInfo.StartRange),
+					end: new Date(rawDetails.data.SearchInfo.EndRange),
+					minZoomWindow: rawDetails.data.SearchInfo.MinZoomWindow,
+					downloadFormats: rawDetails.data.SearchInfo.RenderDownloadFormats,
+					tags: searchInitMsg.data.Tags,
 
-						storeSize: rawDetails.data.SearchInfo.StoreSize,
-						processed: {
-							entries: pipeline[0]?.input?.entries ?? 0,
-							bytes: pipeline[0]?.input?.bytes ?? 0,
-						},
+					storeSize: rawDetails.data.SearchInfo.StoreSize,
+					processed: {
+						entries: pipeline[0]?.input?.entries ?? 0,
+						bytes: pipeline[0]?.input?.bytes ?? 0,
+					},
 
-						pipeline,
-					};
-				},
-			),
+					pipeline,
+				});
+			}),
 
 			distinctUntilChanged<SearchStats>(isEqual),
 
@@ -550,9 +563,7 @@ export const makeSubscribeToOneExplorerSearch = (context: APIContext) => {
 		);
 
 		const statsOverview$ = rawSearchStats$.pipe(
-			map(set => {
-				return { frequencyStats: countEntriesFromModules(set) };
-			}),
+			map(set => ({ frequencyStats: countEntriesFromModules(set) })),
 
 			shareReplay({ bufferSize: 1, refCount: true }),
 
@@ -569,10 +580,10 @@ export const makeSubscribeToOneExplorerSearch = (context: APIContext) => {
 				const initialEnd = initialFilter.dateRange === 'preview' ? previewDateRange.end : initialFilter.dateRange.end;
 				const endDate = filterEnd ?? initialEnd;
 
-				return {
+				return omitUndefinedShallow({
 					frequencyStats: countEntriesFromModules(set).filter(f => !isAfter(f.timestamp, endDate)),
 					filter,
-				};
+				});
 			}),
 
 			shareReplay({ bufferSize: 1, refCount: true }),

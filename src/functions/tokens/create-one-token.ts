@@ -30,7 +30,9 @@ export const makeCreateOneToken = (context: APIContext) => {
 			const rawRes = await parseJSONResponse<RawTokenWithSecret>(raw);
 			return toTokenWithSecret(rawRes);
 		} catch (err) {
-			if (err instanceof Error) throw err;
+			if (err instanceof Error) {
+				throw err;
+			}
 			throw Error('Unknown error');
 		}
 	};

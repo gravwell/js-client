@@ -40,10 +40,12 @@ export const makeCreateOneAutoExtractor = (context: APIContext) => {
 			const autoExtractorID = toNumericID(rawRes);
 
 			const allAutoExtractors = await getAllAutoExtractors();
-			const autoExtractor = <AutoExtractor>allAutoExtractors.find(ae => ae.id === autoExtractorID);
+			const autoExtractor = allAutoExtractors.find(ae => ae.id === autoExtractorID) as AutoExtractor;
 			return autoExtractor;
 		} catch (err) {
-			if (err instanceof Error) throw err;
+			if (err instanceof Error) {
+				throw err;
+			}
 			throw Error('Unknown error');
 		}
 	};

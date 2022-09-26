@@ -6,7 +6,11 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
+import { RawNumericID } from '~/value-objects';
+import { BroadcastedLevel } from './broadcasted-notification';
+
 export interface RawBroadcastedNotification {
+	UID: RawNumericID;
 	Sender: number; // 0 for undefined
 	Type: number;
 	Broadcast: true;
@@ -15,4 +19,6 @@ export interface RawBroadcastedNotification {
 	IgnoreUntil: string;
 	Msg: string;
 	Origin: string;
+	Level: BroadcastedLevel;
+	Link: string | null;
 }

@@ -35,7 +35,9 @@ export const makeCreateOneGroup = (context: APIContext) => {
 			const groupID = rawID.toString();
 			return await getOneGroup(groupID);
 		} catch (err) {
-			if (err instanceof Error) throw err;
+			if (err instanceof Error) {
+				throw err;
+			}
 			throw Error('Unknown error');
 		}
 	};

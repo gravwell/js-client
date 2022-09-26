@@ -13,8 +13,9 @@ import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, parseJSONRes
 import { toRawMailServerTestData } from './conversion';
 import { MAIL_PATH } from './paths';
 
-export const makeCreateServerTest = (context: APIContext) => {
-	return async (data: MailServerTestData): Promise<MailServerTestResult> => {
+export const makeCreateServerTest =
+	(context: APIContext) =>
+	async (data: MailServerTestData): Promise<MailServerTestResult> => {
 		try {
 			const url = buildURL(MAIL_PATH, { ...context, protocol: 'http' });
 			const req = buildHTTPRequestWithAuthFromContext(context, {
@@ -32,8 +33,9 @@ export const makeCreateServerTest = (context: APIContext) => {
 
 			return result;
 		} catch (err) {
-			if (err instanceof Error) throw err;
+			if (err instanceof Error) {
+				throw err;
+			}
 			throw Error('Unknown error');
 		}
 	};
-};

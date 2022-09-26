@@ -14,6 +14,7 @@ import { UpdatableMacro } from './updatable-macro';
 
 export const toRawUpdatableMacro = (updatable: UpdatableMacro, current: Macro): RawUpdatableMacro => ({
 	GIDs: (updatable.groupIDs ?? current.groupIDs).map(toRawNumericID),
+	Global: updatable.isGlobal ?? current.isGlobal,
 
 	Name: updatable.name ?? current.name,
 	Description: (isUndefined(updatable.description) ? current.description : updatable.description) ?? '',

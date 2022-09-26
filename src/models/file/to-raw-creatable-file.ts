@@ -11,7 +11,7 @@ import { CreatableFile } from './creatable-file';
 import { RawCreatableFile } from './raw-creatable-file';
 
 export const toRawCreatableFile = (data: CreatableFile): RawCreatableFile =>
-	omitUndefinedShallow<RawCreatableFile>({
+	omitUndefinedShallow({
 		guid: data.globalID,
 		name: data.name,
 		desc: data.description ?? '',

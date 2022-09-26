@@ -7,6 +7,7 @@
  **************************************************************************/
 
 import { isNull } from 'lodash';
+import { DATA_TYPE } from '~/models';
 import { toNumericID } from '~/value-objects';
 import { toTimeframe } from '../timeframe';
 import { RawSavedQuery } from './raw-saved-query';
@@ -17,6 +18,7 @@ export const toSavedQuery = (raw: RawSavedQuery): SavedQuery => {
 	const defaultTimeframe = isNull(rawTimeframe) ? null : toTimeframe(rawTimeframe);
 
 	return {
+		_tag: DATA_TYPE.SAVED_QUERY,
 		id: raw.ThingUUID,
 		globalID: raw.GUID,
 

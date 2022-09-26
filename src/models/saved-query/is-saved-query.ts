@@ -6,26 +6,14 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { isBoolean, isNull, isString } from 'lodash';
-import { isNumericID, isUUID } from '~/value-objects';
-import { isTimeframe } from '../timeframe';
+import { DATA_TYPE } from '~/models';
+import { isSavedQueryData } from './is-saved-query-data';
 import { SavedQuery } from './saved-query';
 
-export const isSavedQuery = (value: any): value is SavedQuery => {
+export const isSavedQuery = (value: unknown): value is SavedQuery => {
 	try {
-		const q = <SavedQuery>value;
-		return (
-			isUUID(q.id) &&
-			isUUID(q.globalID) &&
-			isNumericID(q.userID) &&
-			q.groupIDs.every(isNumericID) &&
-			isBoolean(q.isGlobal) &&
-			isString(q.name) &&
-			(isString(q.description) || isNull(q.description)) &&
-			q.labels.every(isString) &&
-			isString(q.query) &&
-			(isTimeframe(q.defaultTimeframe) || isNull(q.defaultTimeframe))
-		);
+		const q = value as SavedQuery;
+		return q._tag === DATA_TYPE.SAVED_QUERY && isSavedQueryData(q);
 	} catch {
 		return false;
 	}

@@ -13,19 +13,10 @@ import { SearchFilter, SearchStats, SearchSubscription } from '~/models';
 
 export type CreateSearchFn = (initialFilter: SearchFilter) => Promise<SearchSubscription>;
 
-export const makeKeepDataRangeTest = ({
-	start,
-	end,
-	count,
-	createSearch,
-}: {
-	start: Date;
-	end: Date;
-	count: number;
-	createSearch: CreateSearchFn;
-}) => {
-	return async () => {
-		const initialFilter: SearchFilter = { entriesOffset: { index: 0, count: count }, dateRange: { start, end } };
+export const makeKeepDataRangeTest =
+	({ start, end, count, createSearch }: { start: Date; end: Date; count: number; createSearch: CreateSearchFn }) =>
+	async () => {
+		const initialFilter: SearchFilter = { entriesOffset: { index: 0, count }, dateRange: { start, end } };
 
 		const search = await createSearch(initialFilter);
 		// Expect the filter to be the initial one
@@ -34,7 +25,7 @@ export const makeKeepDataRangeTest = ({
 		////
 		// Update property
 		////
-		const updatedDateRange = { dateRange: { start: start, end: addMinutes(end, 10000) } };
+		const updatedDateRange = { dateRange: { start, end: addMinutes(end, 10000) } };
 		const entriesUpdatedFilter = { entriesOffset: { index: 0, count: count / 2 } };
 
 		search.setFilter(updatedDateRange);
@@ -58,7 +49,6 @@ export const makeKeepDataRangeTest = ({
 			.withContext(`The filter should be equal to the one used, plus the default values for undefined properties`)
 			.toPartiallyEqual(updatedDateRange);
 	};
-};
 
 export const expectStatsFilter = async (stats$: Observable<SearchStats>, filter: SearchFilter): Promise<void> => {
 	const matchesFilter = matches(filter);

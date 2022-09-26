@@ -9,8 +9,9 @@
 import { NumericID } from '~/value-objects';
 import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, parseJSONResponse } from '../utils';
 
-export const makeDeleteOneActionable = (context: APIContext) => {
-	return async (actionableID: NumericID): Promise<void> => {
+export const makeDeleteOneActionable =
+	(context: APIContext) =>
+	async (actionableID: NumericID): Promise<void> => {
 		const templatePath = '/api/pivots/{actionableID}';
 		const url = buildURL(templatePath, { ...context, protocol: 'http', pathParams: { actionableID } });
 
@@ -19,4 +20,3 @@ export const makeDeleteOneActionable = (context: APIContext) => {
 		const raw = await context.fetch(url, { ...req, method: 'DELETE' });
 		return parseJSONResponse(raw, { expect: 'void' });
 	};
-};

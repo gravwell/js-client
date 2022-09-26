@@ -35,7 +35,9 @@ export const makeCreateOneDashboard = (context: APIContext) => {
 			const dashboardID = toNumericID(rawRes);
 			return getOneDashboard(dashboardID);
 		} catch (err) {
-			if (err instanceof Error) throw err;
+			if (err instanceof Error) {
+				throw err;
+			}
 			throw Error('Unknown error');
 		}
 	};

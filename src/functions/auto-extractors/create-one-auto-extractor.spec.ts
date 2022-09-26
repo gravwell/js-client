@@ -7,47 +7,59 @@
  **************************************************************************/
 
 import { CreatableAutoExtractor, isAutoExtractor } from '~/models';
-import { integrationTest, myCustomMatchers, TEST_BASE_API_CONTEXT } from '~/tests';
+import { integrationTest, integrationTestSpecDef, myCustomMatchers, TEST_BASE_API_CONTEXT } from '~/tests';
 import { makeCreateOneAutoExtractor } from './create-one-auto-extractor';
 import { makeDeleteOneAutoExtractor } from './delete-one-auto-extractor';
 import { makeGetAllAutoExtractors } from './get-all-auto-extractors';
 
-describe('createOneAutoExtractor()', () => {
-	const createOneAutoExtractor = makeCreateOneAutoExtractor(TEST_BASE_API_CONTEXT);
-	const deleteOneAutoExtractor = makeDeleteOneAutoExtractor(TEST_BASE_API_CONTEXT);
-	const getAllAutoExtractors = makeGetAllAutoExtractors(TEST_BASE_API_CONTEXT);
+describe(
+	'createOneAutoExtractor()',
+	integrationTestSpecDef(() => {
+		let createOneAutoExtractor: ReturnType<typeof makeCreateOneAutoExtractor>;
+		beforeAll(async () => {
+			createOneAutoExtractor = makeCreateOneAutoExtractor(await TEST_BASE_API_CONTEXT());
+		});
+		let deleteOneAutoExtractor: ReturnType<typeof makeDeleteOneAutoExtractor>;
+		beforeAll(async () => {
+			deleteOneAutoExtractor = makeDeleteOneAutoExtractor(await TEST_BASE_API_CONTEXT());
+		});
+		let getAllAutoExtractors: ReturnType<typeof makeGetAllAutoExtractors>;
+		beforeAll(async () => {
+			getAllAutoExtractors = makeGetAllAutoExtractors(await TEST_BASE_API_CONTEXT());
+		});
 
-	beforeEach(async () => {
-		jasmine.addMatchers(myCustomMatchers);
+		beforeEach(async () => {
+			jasmine.addMatchers(myCustomMatchers);
 
-		// Delete all autoExtractors
-		const currentAutoExtractors = await getAllAutoExtractors();
-		const currentAutoExtractorIDs = currentAutoExtractors.map(m => m.id);
-		const deletePromises = currentAutoExtractorIDs.map(autoExtractorID => deleteOneAutoExtractor(autoExtractorID));
-		await Promise.all(deletePromises);
-	});
+			// Delete all autoExtractors
+			const currentAutoExtractors = await getAllAutoExtractors();
+			const currentAutoExtractorIDs = currentAutoExtractors.map(m => m.id);
+			const deletePromises = currentAutoExtractorIDs.map(autoExtractorID => deleteOneAutoExtractor(autoExtractorID));
+			await Promise.all(deletePromises);
+		});
 
-	it(
-		'Should create a auto extractor and return it',
-		integrationTest(async () => {
-			const data: CreatableAutoExtractor = {
-				name: 'name',
-				description: 'description',
-				labels: ['Label 1', 'Label 2'],
+		it(
+			'Should create a auto extractor and return it',
+			integrationTest(async () => {
+				const data: CreatableAutoExtractor = {
+					name: 'name',
+					description: 'description',
+					labels: ['Label 1', 'Label 2'],
 
-				groupIDs: ['1', '2', '3'],
-				isGlobal: false,
+					groupIDs: ['1', '2', '3'],
+					isGlobal: false,
 
-				tag: 'netflow',
-				module: 'csv',
+					tag: 'netflow',
+					module: 'csv',
 
-				parameters: 'a b c',
-				arguments: '1 2 3',
-			};
+					parameters: 'a b c',
+					arguments: '1 2 3',
+				};
 
-			const autoExtractor = await createOneAutoExtractor(data);
-			expect(isAutoExtractor(autoExtractor)).toBeTrue();
-			expect(autoExtractor).toPartiallyEqual(data);
-		}),
-	);
-});
+				const autoExtractor = await createOneAutoExtractor(data);
+				expect(isAutoExtractor(autoExtractor)).toBeTrue();
+				expect(autoExtractor).toPartiallyEqual(data);
+			}),
+		);
+	}),
+);

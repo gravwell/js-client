@@ -10,7 +10,9 @@ import { LogLevel } from './log-level';
 import { LOG_LEVEL_TO_RAW } from './log-level-to-raw';
 
 export const isLogLevel = (value: any): value is LogLevel => {
-	if (typeof value !== 'string') return false;
+	if (typeof value !== 'string') {
+		return false;
+	}
 	const logLevels = Object.keys(LOG_LEVEL_TO_RAW) as Array<LogLevel>;
-	return logLevels.includes(<LogLevel>value);
+	return logLevels.includes(value as LogLevel);
 };

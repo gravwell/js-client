@@ -6,23 +6,14 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { isDate, isNull, isString } from 'lodash';
-import { isNumericID } from '~/value-objects';
+import { DATA_TYPE } from '~/models';
+import { isMacroData } from './is-macro-data';
 import { Macro } from './macro';
 
-export const isMacro = (value: any): value is Macro => {
+export const isMacro = (value: unknown): value is Macro => {
 	try {
-		const m = <Macro>value;
-		return (
-			isNumericID(m.id) &&
-			isNumericID(m.userID) &&
-			m.groupIDs.every(isNumericID) &&
-			isString(m.name) &&
-			(isString(m.description) || isNull(m.description)) &&
-			m.labels.every(isString) &&
-			isString(m.expansion) &&
-			isDate(m.lastUpdateDate)
-		);
+		const m = value as Macro;
+		return m._tag === DATA_TYPE.MACRO && isMacroData(m);
 	} catch {
 		return false;
 	}

@@ -30,7 +30,9 @@ export const makeIsValidAutoExtractorSyntax = (context: APIContext) => {
 			const rawRes = await parseJSONResponse<RawIsValidAutoExtractorSyntaxResponse>(raw, { returnError: true });
 			return toIsValidAutoExtractorSyntaxResponse(rawRes);
 		} catch (err) {
-			if (err instanceof Error) throw err;
+			if (err instanceof Error) {
+				throw err;
+			}
 			throw Error('Unknown error');
 		}
 	};

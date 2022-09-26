@@ -10,8 +10,9 @@ import { LocalKit, RawLocalKit, toLocalKit } from '~/models';
 import { NumericID } from '~/value-objects';
 import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, parseJSONResponse } from '../utils';
 
-export const makeGetOneLocalKit = (context: APIContext) => {
-	return async (kitID: NumericID): Promise<LocalKit> => {
+export const makeGetOneLocalKit =
+	(context: APIContext) =>
+	async (kitID: NumericID): Promise<LocalKit> => {
 		const templatePath = '/api/kits/{kitID}';
 		const url = buildURL(templatePath, { ...context, protocol: 'http', pathParams: { kitID } });
 
@@ -21,4 +22,3 @@ export const makeGetOneLocalKit = (context: APIContext) => {
 		const rawRes = await parseJSONResponse<RawLocalKit>(raw);
 		return toLocalKit(rawRes);
 	};
-};

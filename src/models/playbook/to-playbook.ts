@@ -8,6 +8,8 @@
 
 import { decode as base64Decode } from 'base-64';
 import { isString } from 'lodash';
+import * as utf8 from 'utf8';
+import { DATA_TYPE } from '~/models';
 import { Playbook } from './playbook';
 import { RawPlaybook } from './raw-playbook';
 import { RawPlaybookDecodedMetadata } from './raw-playbook-decoded-metadata';
@@ -18,6 +20,7 @@ export const toPlaybook = <IncludeBody extends boolean = true>(
 ): IncludeBody extends true ? Playbook : Omit<Playbook, 'body'> => {
 	const metadata: RawPlaybookDecodedMetadata = JSON.parse(base64Decode(raw.Metadata));
 	const playbookWithoutBody: Omit<Playbook, 'body'> = {
+		_tag: DATA_TYPE.PLAYBOOK,
 		id: raw.UUID,
 		globalID: raw.GUID,
 
@@ -46,9 +49,11 @@ export const toPlaybook = <IncludeBody extends boolean = true>(
 	};
 
 	const includeBody = options.includeBody ?? true;
-	if (includeBody === false) return playbookWithoutBody as any;
+	if (includeBody === false) {
+		return playbookWithoutBody as any;
+	}
 
-	const body = isString(raw.Body) ? base64Decode(raw.Body) : '';
+	const body = isString(raw.Body) ? utf8.decode(base64Decode(raw.Body)) : '';
 	const playbook: Playbook = { ...playbookWithoutBody, body };
 	return playbook as any;
 };

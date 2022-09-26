@@ -34,7 +34,9 @@ export const makeInstallOneKit = (context: APIContext) => {
 					try {
 						const status = await getOneKitInstallationStatus(installationID);
 						observer.next(status);
-						if (status.isDone) observer.complete();
+						if (status.isDone) {
+							observer.complete();
+						}
 						await wait(1000);
 					} catch (err) {
 						observer.error(err);
@@ -77,8 +79,9 @@ export const makeInstallOneKit = (context: APIContext) => {
 
 const wait = (ms: number) => new Promise<void>(res => setTimeout(res, ms));
 
-const makeGetOneKitInstallationStatus = (context: APIContext) => {
-	return async (installationID: NumericID): Promise<KitInstallationStatus> => {
+const makeGetOneKitInstallationStatus =
+	(context: APIContext) =>
+	async (installationID: NumericID): Promise<KitInstallationStatus> => {
 		const templatePath = '/api/kits/status/{installationID}';
 		const url = buildURL(templatePath, { ...context, protocol: 'http', pathParams: { installationID } });
 
@@ -88,10 +91,10 @@ const makeGetOneKitInstallationStatus = (context: APIContext) => {
 		const rawRes = await parseJSONResponse<RawKitInstallationStatus>(raw);
 		return toKitInstallationStatus(rawRes);
 	};
-};
 
-const makeQueueOneKitForInstallation = (context: APIContext) => {
-	return async (data: InstallableKit): Promise<NumericID> => {
+const makeQueueOneKitForInstallation =
+	(context: APIContext) =>
+	async (data: InstallableKit): Promise<NumericID> => {
 		const templatePath = '/api/kits/{kitID}';
 		const url = buildURL(templatePath, { ...context, protocol: 'http' });
 
@@ -105,8 +108,9 @@ const makeQueueOneKitForInstallation = (context: APIContext) => {
 			const rawStatusID = await parseJSONResponse<RawNumericID>(raw);
 			return toNumericID(rawStatusID);
 		} catch (err) {
-			if (err instanceof Error) throw err;
+			if (err instanceof Error) {
+				throw err;
+			}
 			throw Error('Unknown error');
 		}
 	};
-};

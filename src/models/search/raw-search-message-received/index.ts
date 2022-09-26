@@ -183,7 +183,7 @@ export interface RawChartEntries {
 
 export const isRawTableEntries = (v: unknown): v is RawTableEntries => {
 	try {
-		const e = <RawTableEntries>v;
+		const e = v as RawTableEntries;
 		return isArray(e.Columns) && e.Columns.every(isString);
 	} catch {
 		return false;
@@ -192,7 +192,7 @@ export const isRawTableEntries = (v: unknown): v is RawTableEntries => {
 
 export const isRawChartEntries = (v: RawEntries): v is RawChartEntries => {
 	try {
-		const e = <RawChartEntries>v;
+		const e = v as RawChartEntries;
 		return isArray(e.Names) && e.Names.every(isString);
 	} catch {
 		return false;

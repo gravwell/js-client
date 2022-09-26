@@ -14,7 +14,7 @@ export const myCustomMatchers: jasmine.CustomMatcherFactories = {
 			const pass = matches(expected)(actual);
 			const result: jasmine.CustomMatcherResult = { pass };
 
-			if (pass == false) {
+			if (pass === false) {
 				const serialize = (v: any): string => JSON.stringify(v, null, '  ');
 				result.message = `Expected:\n${serialize(actual)}\n\nTo partially equal:\n${serialize(expected)}`;
 			}

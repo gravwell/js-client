@@ -10,8 +10,9 @@ import { RawUser, toUser, User } from '~/models';
 import { NumericID } from '~/value-objects';
 import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, parseJSONResponse } from '../utils';
 
-export const makeGetUsersByGroup = (context: APIContext) => {
-	return async (groupID: NumericID): Promise<Array<User>> => {
+export const makeGetUsersByGroup =
+	(context: APIContext) =>
+	async (groupID: NumericID): Promise<Array<User>> => {
 		const templatePath = '/api/groups/{groupID}/members';
 		const url = buildURL(templatePath, { ...context, protocol: 'http', pathParams: { groupID } });
 
@@ -21,4 +22,3 @@ export const makeGetUsersByGroup = (context: APIContext) => {
 		const rawRes = (await parseJSONResponse<Array<RawUser> | null>(raw)) ?? [];
 		return rawRes.map(toUser);
 	};
-};

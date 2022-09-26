@@ -7,36 +7,48 @@
  **************************************************************************/
 
 import { CreatableGroup, isGroup } from '~/models';
-import { integrationTest, TEST_BASE_API_CONTEXT } from '~/tests';
+import { integrationTest, integrationTestSpecDef, TEST_BASE_API_CONTEXT } from '~/tests';
 import { NumericID } from '~/value-objects';
 import { makeCreateOneGroup } from './create-one-group';
 import { makeDeleteOneGroup } from './delete-one-group';
 import { makeGetOneGroup } from './get-one-group';
 
-describe('getOneGroup()', () => {
-	const getOneGroup = makeGetOneGroup(TEST_BASE_API_CONTEXT);
-	const createOneGroup = makeCreateOneGroup(TEST_BASE_API_CONTEXT);
-	const deleteOneGroup = makeDeleteOneGroup(TEST_BASE_API_CONTEXT);
+describe(
+	'getOneGroup()',
+	integrationTestSpecDef(() => {
+		let getOneGroup: ReturnType<typeof makeGetOneGroup>;
+		beforeAll(async () => {
+			getOneGroup = makeGetOneGroup(await TEST_BASE_API_CONTEXT());
+		});
+		let createOneGroup: ReturnType<typeof makeCreateOneGroup>;
+		beforeAll(async () => {
+			createOneGroup = makeCreateOneGroup(await TEST_BASE_API_CONTEXT());
+		});
+		let deleteOneGroup: ReturnType<typeof makeDeleteOneGroup>;
+		beforeAll(async () => {
+			deleteOneGroup = makeDeleteOneGroup(await TEST_BASE_API_CONTEXT());
+		});
 
-	let groupID: NumericID;
+		let groupID: NumericID;
 
-	beforeEach(async () => {
-		const data: CreatableGroup = {
-			name: 'Name test ' + Date.now(),
-			description: 'Description test',
-		};
-		groupID = (await createOneGroup(data)).id;
-	});
+		beforeEach(async () => {
+			const data: CreatableGroup = {
+				name: 'Name test ' + Date.now(),
+				description: 'Description test',
+			};
+			groupID = (await createOneGroup(data)).id;
+		});
 
-	afterEach(async () => {
-		await deleteOneGroup(groupID);
-	});
+		afterEach(async () => {
+			await deleteOneGroup(groupID);
+		});
 
-	it(
-		'Should return a group',
-		integrationTest(async () => {
-			const group = await getOneGroup(groupID);
-			expect(isGroup(group)).toBeTrue();
-		}),
-	);
-});
+		it(
+			'Should return a group',
+			integrationTest(async () => {
+				const group = await getOneGroup(groupID);
+				expect(isGroup(group)).toBeTrue();
+			}),
+		);
+	}),
+);

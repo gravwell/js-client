@@ -7,48 +7,63 @@
  **************************************************************************/
 
 import { CreatableMacro, isMacro, Macro } from '~/models';
-import { integrationTest, TEST_BASE_API_CONTEXT } from '~/tests';
+import { integrationTest, integrationTestSpecDef, TEST_BASE_API_CONTEXT } from '~/tests';
 import { makeCreateOneMacro } from './create-one-macro';
 import { makeDeleteOneMacro } from './delete-one-macro';
 import { makeGetAllMacros } from './get-all-macros';
 import { makeGetOneMacro } from './get-one-macro';
 
-describe('getOneMacro()', () => {
-	const getOneMacro = makeGetOneMacro(TEST_BASE_API_CONTEXT);
-	const createOneMacro = makeCreateOneMacro(TEST_BASE_API_CONTEXT);
-	const getAllMacros = makeGetAllMacros(TEST_BASE_API_CONTEXT);
-	const deleteOneMacro = makeDeleteOneMacro(TEST_BASE_API_CONTEXT);
+describe(
+	'getOneMacro()',
+	integrationTestSpecDef(() => {
+		let getOneMacro: ReturnType<typeof makeGetOneMacro>;
+		beforeAll(async () => {
+			getOneMacro = makeGetOneMacro(await TEST_BASE_API_CONTEXT());
+		});
+		let createOneMacro: ReturnType<typeof makeCreateOneMacro>;
+		beforeAll(async () => {
+			createOneMacro = makeCreateOneMacro(await TEST_BASE_API_CONTEXT());
+		});
+		let getAllMacros: ReturnType<typeof makeGetAllMacros>;
+		beforeAll(async () => {
+			getAllMacros = makeGetAllMacros(await TEST_BASE_API_CONTEXT());
+		});
+		let deleteOneMacro: ReturnType<typeof makeDeleteOneMacro>;
+		beforeAll(async () => {
+			deleteOneMacro = makeDeleteOneMacro(await TEST_BASE_API_CONTEXT());
+		});
 
-	let createdMacro: Macro;
+		let createdMacro: Macro;
 
-	beforeEach(async () => {
-		// Delete all macros
-		const currentMacros = await getAllMacros();
-		const currentMacroIDs = currentMacros.map(m => m.id);
-		const deletePromises = currentMacroIDs.map(macroID => deleteOneMacro(macroID));
-		await Promise.all(deletePromises);
+		beforeEach(async () => {
+			// Delete all macros
+			const currentMacros = await getAllMacros();
+			const currentMacroIDs = currentMacros.map(m => m.id);
+			const deletePromises = currentMacroIDs.map(macroID => deleteOneMacro(macroID));
+			await Promise.all(deletePromises);
 
-		// Create on macro
-		const data: CreatableMacro = {
-			name: 'TEST',
-			expansion: 'test',
-		};
-		createdMacro = await createOneMacro(data);
-	});
+			// Create on macro
+			const data: CreatableMacro = {
+				name: 'TEST',
+				expansion: 'test',
+			};
+			createdMacro = await createOneMacro(data);
+		});
 
-	it(
-		'Returns a macro',
-		integrationTest(async () => {
-			const macro = await getOneMacro(createdMacro.id);
-			expect(isMacro(macro)).toBeTrue();
-			expect(macro).toEqual(createdMacro);
-		}),
-	);
+		it(
+			'Returns a macro',
+			integrationTest(async () => {
+				const macro = await getOneMacro(createdMacro.id);
+				expect(isMacro(macro)).toBeTrue();
+				expect(macro).toEqual(createdMacro);
+			}),
+		);
 
-	it(
-		"Returns an error if the macro doesn't exist",
-		integrationTest(async () => {
-			await expectAsync(getOneMacro('non-existent')).toBeRejected();
-		}),
-	);
-});
+		it(
+			"Returns an error if the macro doesn't exist",
+			integrationTest(async () => {
+				await expectAsync(getOneMacro('non-existent')).toBeRejected();
+			}),
+		);
+	}),
+);

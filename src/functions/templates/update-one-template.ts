@@ -39,7 +39,9 @@ export const makeUpdateOneTemplate = (context: APIContext) => {
 			const rawRes = await parseJSONResponse<RawTemplate>(raw);
 			return toTemplate(rawRes);
 		} catch (err) {
-			if (err instanceof Error) throw err;
+			if (err instanceof Error) {
+				throw err;
+			}
 			throw Error('Unknown error');
 		}
 	};

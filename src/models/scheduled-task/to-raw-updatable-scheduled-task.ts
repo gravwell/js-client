@@ -40,8 +40,8 @@ export const toRawUpdatableScheduledTask = (
 	const type = updatable.type ?? current.type;
 	switch (type) {
 		case 'query': {
-			const _updatable = <TaggedUpdatableScheduledQuery>updatable;
-			const _current = <ScheduledQuery>current;
+			const _updatable = updatable as TaggedUpdatableScheduledQuery;
+			const _current = current as ScheduledQuery;
 
 			return {
 				...base,
@@ -54,8 +54,8 @@ export const toRawUpdatableScheduledTask = (
 			};
 		}
 		case 'script': {
-			const _updatable = <TaggedUpdatableScheduledScript>updatable;
-			const _current = <ScheduledScript>current;
+			const _updatable = updatable as TaggedUpdatableScheduledScript;
+			const _current = current as ScheduledScript;
 
 			return {
 				...base,

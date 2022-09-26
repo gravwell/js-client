@@ -40,11 +40,15 @@ export const makeCreateOneFile = (context: APIContext) => {
 			// !WARNING: Can't set all properties on file creation gravwell/gravwell#2506
 			const updateProps: Array<keyof CreatableFile> = ['globalID', 'groupIDs', 'isGlobal', 'labels'];
 			const needsUpdate = Object.keys(data).some(k => updateProps.includes(k as keyof CreatableFile));
-			if (needsUpdate) return updateOneFile({ ...pick(data, updateProps), id: globalID });
+			if (needsUpdate) {
+				return updateOneFile({ ...pick(data, updateProps), id: globalID });
+			}
 
 			return getOneFile(globalID);
 		} catch (err) {
-			if (err instanceof Error) throw err;
+			if (err instanceof Error) {
+				throw err;
+			}
 			throw Error('Unknown error');
 		}
 	};
@@ -53,7 +57,9 @@ export const makeCreateOneFile = (context: APIContext) => {
 const toFormData = (data: CreatableFile): FormData => {
 	const raw = toRawCreatableFile(data);
 	const formData = new FormData();
-	if (isString(raw.guid)) formData.append('guid', raw.guid);
+	if (isString(raw.guid)) {
+		formData.append('guid', raw.guid);
+	}
 	formData.append('name', raw.name);
 	formData.append('desc', raw.desc);
 	formData.append('file', raw.file);

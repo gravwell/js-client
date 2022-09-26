@@ -30,26 +30,36 @@ export const makeUpdateOneUser = (context: APIContext) => {
 			const promises: Array<Promise<void>> = [];
 
 			// Update .locked
-			if (isBoolean(data.locked)) promises.push(updateOneUserLockedState(data.id, data.locked));
+			if (isBoolean(data.locked)) {
+				promises.push(updateOneUserLockedState(data.id, data.locked));
+			}
 
 			// Update .role
-			if (isValidUserRole(data.role)) promises.push(updateOneUserRole(data.id, data.role));
+			if (isValidUserRole(data.role)) {
+				promises.push(updateOneUserRole(data.id, data.role));
+			}
 
 			// Update .username .name or .email
-			if ([data.username, data.name, data.email].some(negate(isUndefined)))
+			if ([data.username, data.name, data.email].some(negate(isUndefined))) {
 				promises.push(updateOneUserInformation(data));
+			}
 
 			// Update password
-			if (isString(data.password)) promises.push(updateOneUserPassword(data.id, data.password, data.currentPassword));
+			if (isString(data.password)) {
+				promises.push(updateOneUserPassword(data.id, data.password, data.currentPassword));
+			}
 
 			// Search group ID
-			if (isNumericID(data.searchGroupID) || isNull(data.searchGroupID))
+			if (isNumericID(data.searchGroupID) || isNull(data.searchGroupID)) {
 				promises.push(updateOneUserSearchGroup(data.id, data.searchGroupID));
+			}
 
 			await Promise.all(promises);
 			return await getOneUser(data.id);
 		} catch (err) {
-			if (err instanceof Error) throw err;
+			if (err instanceof Error) {
+				throw err;
+			}
 			throw Error('Unknown error');
 		}
 	};

@@ -10,7 +10,10 @@ import { integrationTest, TEST_BASE_API_CONTEXT } from '~/tests';
 import { makeRestartWebServer } from './restart-web-server';
 
 describe('restartWebServer()', () => {
-	const restartWebServer = makeRestartWebServer(TEST_BASE_API_CONTEXT);
+	let restartWebServer: ReturnType<typeof makeRestartWebServer>;
+	beforeAll(async () => {
+		restartWebServer = makeRestartWebServer(await TEST_BASE_API_CONTEXT());
+	});
 
 	// !WARNING: This causes panic for the backend guys see gravwell/gravwell#2277
 	xit(

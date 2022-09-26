@@ -135,7 +135,7 @@ const SYSTEM_STATUS_CATEGORIES = {
 	'system status': 'sysStats',
 	'ingestors status': 'igstStats',
 	'indexers status': 'idxStats',
-	'ping': 'ping',
+	ping: 'ping',
 } as const;
 export type SystemStatusCategory = keyof typeof SYSTEM_STATUS_CATEGORIES;
 type SystemStatusCategoryToken = typeof SYSTEM_STATUS_CATEGORIES[SystemStatusCategory];

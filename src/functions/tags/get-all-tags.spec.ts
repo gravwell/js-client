@@ -10,12 +10,16 @@ import { integrationTest, TEST_BASE_API_CONTEXT, unitTest } from '~/tests';
 import { makeGetAllTags } from './get-all-tags';
 
 describe('getAllTags()', () => {
-	const getAllTags = makeGetAllTags(TEST_BASE_API_CONTEXT);
+	let getAllTags: ReturnType<typeof makeGetAllTags>;
+	beforeAll(async () => {
+		getAllTags = makeGetAllTags(await TEST_BASE_API_CONTEXT());
+	});
 
 	it(
 		'Should return a function given a valid host',
-		unitTest(() => {
-			const fn = () => makeGetAllTags({ ...TEST_BASE_API_CONTEXT, host: 'www.example.com' });
+		unitTest(async () => {
+			const context = await TEST_BASE_API_CONTEXT();
+			const fn = () => makeGetAllTags({ ...context, host: 'www.example.com' });
 			expect(fn).not.toThrow();
 			expect(typeof fn()).toBe('function');
 		}),
@@ -26,7 +30,9 @@ describe('getAllTags()', () => {
 		integrationTest(async () => {
 			const tags = await getAllTags();
 			expect(tags instanceof Array).toBe(true);
-			for (const tag of tags) expect(typeof tag).toBe('string');
+			for (const tag of tags) {
+				expect(typeof tag).toBe('string');
+			}
 		}),
 	);
 });

@@ -6,6 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
+import { isArray } from 'lodash';
 import { toNumericID } from '~/value-objects';
 import { RawScheduledTask } from './raw-scheduled-task';
 import { ScheduledTaskBase } from './scheduled-task-base';
@@ -26,12 +27,20 @@ export const toScheduledTaskBase = (raw: RawScheduledTask): ScheduledTaskBase =>
 	isDisabled: raw.Disabled,
 
 	lastUpdateDate: new Date(raw.Updated),
-	lastRunDate: new Date(raw.LastRun),
+	lastRun: isLastRunNull(raw.LastRun)
+		? null
+		: {
+				date: new Date(raw.LastRun),
+				duration: raw.LastRunDuration,
+		  },
 
-	lastSearchIDs: raw.LastSearchIDs,
-	lastRunDuration: raw.LastRunDuration,
+	lastSearchIDs: isArray(raw.LastSearchIDs) ? raw.LastSearchIDs.map(id => id.toString()) : null,
 	lastError: raw.LastError.trim() === '' ? null : raw.LastError,
 
 	schedule: raw.Schedule,
 	timezone: raw.Timezone.trim() === '' ? null : raw.Timezone,
 });
+
+/* "0001-01-01T00:00:00Z" is the value that the backend returns when the ScheduledSearch hasn't ever been run */
+const NULL_DATE = '0001-01-01T00:00:00Z';
+export const isLastRunNull = (lastRun: string): boolean => lastRun === NULL_DATE;

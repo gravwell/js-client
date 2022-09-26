@@ -30,7 +30,9 @@ export const makeCreateOneResource = (context: APIContext) => {
 			const rawRes = await parseJSONResponse<RawResource>(raw);
 			return toResource(rawRes);
 		} catch (err) {
-			if (err instanceof Error) throw err;
+			if (err instanceof Error) {
+				throw err;
+			}
 			throw Error('Unknown error');
 		}
 	};

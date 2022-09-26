@@ -6,29 +6,17 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { isBoolean, isDate, isInteger, isNull, isString } from 'lodash';
-import { isNumericID, isRegex, isUUID } from '~/value-objects';
+import { isBoolean, isInteger, isNull, isString } from 'lodash';
+import { DATA_TYPE } from '~/models';
+import { isRegex, isUUID } from '~/value-objects';
 import { Actionable, ActionableAction, ActionableTimeVariable, ActionableTrigger } from './actionable';
 import { ActionableCommand } from './actionable-command';
+import { isActionableData } from './is-actionable-data';
 
-export const isActionable = (value: any): value is Actionable => {
+export const isActionable = (value: unknown): value is Actionable => {
 	try {
-		const a = <Actionable>value;
-		return (
-			isUUID(a.globalID) &&
-			isUUID(a.id) &&
-			isNumericID(a.userID) &&
-			a.groupIDs.every(isNumericID) &&
-			isString(a.name) &&
-			(isString(a.description) || isNull(a.description)) &&
-			(isString(a.menuLabel) || isNull(a.menuLabel)) &&
-			a.labels.every(isString) &&
-			isBoolean(a.isGlobal) &&
-			isBoolean(a.isDisabled) &&
-			isDate(a.lastUpdateDate) &&
-			a.triggers.every(isActionableTrigger) &&
-			a.actions.every(isActionableAction)
-		);
+		const a = value as Actionable;
+		return a._tag === DATA_TYPE.ACTIONABLE && isActionableData(a);
 	} catch {
 		return false;
 	}
@@ -36,7 +24,7 @@ export const isActionable = (value: any): value is Actionable => {
 
 export const isActionableTrigger = (value: any): value is ActionableTrigger => {
 	try {
-		const t = <ActionableTrigger>value;
+		const t = value as ActionableTrigger;
 		return isRegex(t.pattern) && ['selection', 'clicks and selection'].includes(t.activatesOn);
 	} catch {
 		return false;
@@ -45,7 +33,7 @@ export const isActionableTrigger = (value: any): value is ActionableTrigger => {
 
 export const isActionableAction = (value: any): value is ActionableAction => {
 	try {
-		const a = <ActionableAction>value;
+		const a = value as ActionableAction;
 		return (
 			isString(a.name) &&
 			(isString(a.description) || isNull(a.description)) &&
@@ -61,7 +49,7 @@ export const isActionableAction = (value: any): value is ActionableAction => {
 
 export const isActionableTimeVariable = (value: any): value is ActionableTimeVariable => {
 	try {
-		const t = <ActionableTimeVariable>value;
+		const t = value as ActionableTimeVariable;
 		switch (t.type) {
 			case 'timestamp':
 				return isString(t.placeholder) || isNull(t.placeholder);
@@ -77,7 +65,7 @@ export const isActionableTimeVariable = (value: any): value is ActionableTimeVar
 
 export const isActionableCommand = (value: any): value is ActionableCommand => {
 	try {
-		const cmd = <ActionableCommand>value;
+		const cmd = value as ActionableCommand;
 		switch (cmd.type) {
 			case 'query':
 				return isString(cmd.userQuery);

@@ -7,11 +7,10 @@
  **************************************************************************/
 
 import { isAfter } from 'date-fns';
-import { isUndefined } from 'lodash';
 import { catchError, concatMap, filter, firstValueFrom, NEVER, Observable, of, shareReplay, skipUntil } from 'rxjs';
 import { DateRange } from '~/functions';
-import { APISubscription, debounceWithBackoffWhile } from '~/functions/utils';
-import { SearchFilter } from '~/main';
+import { APISubscription, debounceWithBackoffWhile, omitUndefinedShallow } from '~/functions/utils';
+import { SearchFilter } from '~/index';
 import {
 	RawRequestSearchDetailsMessageSent,
 	RawResponseForSearchDetailsMessageReceived,
@@ -69,7 +68,9 @@ export const getPreviewDateRange: (props: {
 	rawSubscription: APISubscription<RawSearchMessageReceived, RawSearchMessageSent>;
 }) => Promise<DateRange> = async ({ initialFilter, searchTypeID, searchMessages$, rawSubscription }) => {
 	// Not in preview mode, so return the initial filter date range, whatever, it won't be used
-	if (initialFilter.dateRange !== 'preview') return initialFilter.dateRange;
+	if (initialFilter.dateRange !== 'preview') {
+		return initialFilter.dateRange;
+	}
 
 	// In preview mode, so we need to request search details and use the timerange that we get back
 	const detailsP = firstValueFrom(
@@ -94,25 +95,26 @@ export type MakeToStatsZoom = (
 		initialFilter: RequiredSearchFilter;
 		previewDateRange: DateRange;
 	}>,
-) => (
-	raw: RawResponseForSearchStatsWithinRangeMessageReceived,
-) => {
+) => (raw: RawResponseForSearchStatsWithinRangeMessageReceived) => {
 	frequencyStats: Array<SearchFrequencyStats>;
-	filter: SearchFilter | undefined;
+	filter?: SearchFilter;
 };
-export const makeToStatsZoom: MakeToStatsZoom = ({ filtersByID, initialFilter, previewDateRange }) => set => {
-	const filterID = (set.data.Addendum?.filterID as string | undefined) ?? null;
-	const filter = filtersByID[filterID ?? ''] ?? undefined;
 
-	const filterEnd = filter?.dateRange === 'preview' ? previewDateRange.end : filter?.dateRange?.end;
-	const initialEnd = initialFilter.dateRange === 'preview' ? previewDateRange.end : initialFilter.dateRange.end;
-	const endDate = filterEnd ?? initialEnd;
+export const makeToStatsZoom: MakeToStatsZoom =
+	({ filtersByID, initialFilter, previewDateRange }) =>
+	set => {
+		const filterID = (set.data.Addendum?.filterID as string | undefined) ?? null;
+		const filter = filtersByID[filterID ?? ''] ?? undefined;
 
-	return {
-		frequencyStats: countEntriesFromModules(set).filter(f => !isAfter(f.timestamp, endDate)),
-		filter,
+		const filterEnd = filter?.dateRange === 'preview' ? previewDateRange.end : filter?.dateRange?.end;
+		const initialEnd = initialFilter.dateRange === 'preview' ? previewDateRange.end : initialFilter.dateRange.end;
+		const endDate = filterEnd ?? initialEnd;
+
+		return omitUndefinedShallow({
+			frequencyStats: countEntriesFromModules(set).filter(f => !isAfter(f.timestamp, endDate)),
+			filter,
+		});
 	};
-};
 
 export type MakeToSearchStats = (
 	props: Readonly<{
@@ -120,100 +122,106 @@ export type MakeToSearchStats = (
 		searchAttachMsg: RawSearchAttachedMessageReceived;
 	}>,
 ) => (args: [RawResponseForSearchStatsMessageReceived, RawResponseForSearchDetailsMessageReceived]) => SearchStats;
-export const makeToSearchStats: MakeToSearchStats = ({ filtersByID, searchAttachMsg }) => ([rawStats, rawDetails]) => {
-	const filterID =
-		(rawStats.data.Addendum?.filterID as string | undefined) ??
-		(rawDetails.data.Addendum?.filterID as string | undefined) ??
-		null;
-	const filter = filtersByID[filterID ?? ''] ?? undefined;
+export const makeToSearchStats: MakeToSearchStats =
+	({ filtersByID, searchAttachMsg }) =>
+	([rawStats, rawDetails]) => {
+		const filterID =
+			(rawStats.data.Addendum?.filterID as string | undefined) ??
+			(rawDetails.data.Addendum?.filterID as string | undefined) ??
+			null;
+		const filter = filtersByID[filterID ?? ''] ?? undefined;
 
-	const pipeline = rawStats.data.Stats.Set.map(s => s.Stats)
-		.reduce<Array<Array<RawResponseForSearchStatsMessageReceived['data']['Stats']['Set'][number]['Stats'][number]>>>(
-			(acc, curr) => {
-				curr.forEach((_curr, i) => {
-					if (isUndefined(acc[i])) acc[i] = [];
-					acc[i].push(_curr);
-				});
-				return acc;
+		const pipeline = rawStats.data.Stats.Set.map(s => s.Stats)
+			.reduce<Array<Array<RawResponseForSearchStatsMessageReceived['data']['Stats']['Set'][number]['Stats'][number]>>>(
+				(acc, curr) => {
+					curr.forEach((_curr, i) => {
+						const tmp = acc[i] ?? [];
+						tmp.push(_curr);
+						acc[i] = tmp;
+					});
+					return acc;
+				},
+				[],
+			)
+			.map(s =>
+				s
+					.map(_s => ({
+						module: _s.Name,
+						arguments: _s.Args,
+						duration: _s.Duration,
+						input: {
+							bytes: _s.InputBytes,
+							entries: _s.InputCount,
+						},
+						output: {
+							bytes: _s.OutputBytes,
+							entries: _s.OutputCount,
+						},
+					}))
+					.reduce((acc, curr) => ({
+						...curr,
+						duration: acc.duration + curr.duration,
+						input: {
+							bytes: acc.input.bytes + curr.input.bytes,
+							entries: acc.input.entries + curr.input.entries,
+						},
+						output: {
+							bytes: acc.output.bytes + curr.output.bytes,
+							entries: acc.output.entries + curr.output.entries,
+						},
+					})),
+			);
+
+		return omitUndefinedShallow({
+			id: rawDetails.data.SearchInfo.ID,
+			userID: toNumericID(rawDetails.data.SearchInfo.UID),
+
+			filter,
+			finished: rawStats.data.Finished && rawDetails.data.Finished,
+
+			query: searchAttachMsg.data.Info.UserQuery,
+			effectiveQuery: searchAttachMsg.data.Info.EffectiveQuery,
+
+			metadata: searchAttachMsg.data.Info.Metadata ?? {},
+			entries: rawStats.data.EntryCount,
+			duration: rawDetails.data.SearchInfo.Duration,
+			start: new Date(rawDetails.data.SearchInfo.StartRange),
+			end: new Date(rawDetails.data.SearchInfo.EndRange),
+			minZoomWindow: rawDetails.data.SearchInfo.MinZoomWindow,
+			downloadFormats: rawDetails.data.SearchInfo.RenderDownloadFormats,
+			tags: searchAttachMsg.data.Info.Tags,
+
+			storeSize: rawDetails.data.SearchInfo.StoreSize,
+			processed: {
+				entries: pipeline[0]?.input?.entries ?? 0,
+				bytes: pipeline[0]?.input?.bytes ?? 0,
 			},
-			[],
-		)
-		.map(s =>
-			s
-				.map(_s => ({
-					module: _s.Name,
-					arguments: _s.Args,
-					duration: _s.Duration,
-					input: {
-						bytes: _s.InputBytes,
-						entries: _s.InputCount,
-					},
-					output: {
-						bytes: _s.OutputBytes,
-						entries: _s.OutputCount,
-					},
-				}))
-				.reduce((acc, curr) => ({
-					...curr,
-					duration: acc.duration + curr.duration,
-					input: {
-						bytes: acc.input.bytes + curr.input.bytes,
-						entries: acc.input.entries + curr.input.entries,
-					},
-					output: {
-						bytes: acc.output.bytes + curr.output.bytes,
-						entries: acc.output.entries + curr.output.entries,
-					},
-				})),
-		);
 
-	return {
-		id: rawDetails.data.SearchInfo.ID,
-		userID: toNumericID(rawDetails.data.SearchInfo.UID),
-
-		filter,
-		finished: rawStats.data.Finished && rawDetails.data.Finished,
-
-		query: searchAttachMsg.data.Info.UserQuery,
-		effectiveQuery: searchAttachMsg.data.Info.EffectiveQuery,
-
-		metadata: searchAttachMsg.data.Info.Metadata ?? {},
-		entries: rawStats.data.EntryCount,
-		duration: rawDetails.data.SearchInfo.Duration,
-		start: new Date(rawDetails.data.SearchInfo.StartRange),
-		end: new Date(rawDetails.data.SearchInfo.EndRange),
-		minZoomWindow: rawDetails.data.SearchInfo.MinZoomWindow,
-		downloadFormats: rawDetails.data.SearchInfo.RenderDownloadFormats,
-		tags: searchAttachMsg.data.Info.Tags,
-
-		storeSize: rawDetails.data.SearchInfo.StoreSize,
-		processed: {
-			entries: pipeline[0]?.input?.entries ?? 0,
-			bytes: pipeline[0]?.input?.bytes ?? 0,
-		},
-
-		pipeline,
+			pipeline,
+		});
 	};
-};
 
 /**
- * Dynamically debounces after each message, then filters out finished events, and then sends the message in order.
+ * Dynamically debounces after each message, then filters out finished events,
+ * and then sends the message in order.
  */
 export const debouncedPooling: <MessageReceived, MessageSent>(
 	props: Readonly<{
 		rawSubscription: APISubscription<MessageReceived, MessageSent>;
 		message: MessageSent;
 	}>,
-) => (source: Observable<boolean>) => Observable<void> = ({ rawSubscription, message }) => source =>
-	source.pipe(
-		// Add dynamic debounce after each message
-		debounceWithBackoffWhile(DEBOUNCE_OPTIONS),
+) => (source: Observable<boolean>) => Observable<void> =
+	({ rawSubscription, message }) =>
+	source =>
+		source.pipe(
+			// Add dynamic debounce after each message
+			debounceWithBackoffWhile(DEBOUNCE_OPTIONS),
 
-		// Filter out finished events
-		filter(isFinished => isFinished === false),
+			// Filter out finished events
+			filter(isFinished => isFinished === false),
 
-		concatMap(() => rawSubscription.send(message)),
-	);
+			concatMap(() => rawSubscription.send(message)),
+		);
 
 export const emitError: () => <T>(source: Observable<T>) => Observable<Error> = () => source =>
 	source.pipe(

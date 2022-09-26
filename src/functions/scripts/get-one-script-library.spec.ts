@@ -10,7 +10,10 @@ import { integrationTest, TEST_BASE_API_CONTEXT } from '~/tests';
 import { makeGetOneScriptLibrary } from './get-one-script-library';
 
 describe('getOneScriptLibrary()', () => {
-	const getOneScriptLibrary = makeGetOneScriptLibrary(TEST_BASE_API_CONTEXT);
+	let getOneScriptLibrary: ReturnType<typeof makeGetOneScriptLibrary>;
+	beforeAll(async () => {
+		getOneScriptLibrary = makeGetOneScriptLibrary(await TEST_BASE_API_CONTEXT());
+	});
 
 	it(
 		'Should return the code for a script library',

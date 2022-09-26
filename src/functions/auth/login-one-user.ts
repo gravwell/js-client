@@ -22,10 +22,14 @@ export const makeLoginOneUser = (context: APIContext) => {
 		try {
 			const raw = await context.fetch(url, { ...req, method: 'POST' });
 			const data = await parseJSONResponse<RawResponse>(raw);
-			if (data.LoginStatus === false) throw Error(data.Reason);
+			if (data.LoginStatus === false) {
+				throw Error(data.Reason);
+			}
 			return data.JWT;
 		} catch (err) {
-			if (err instanceof Error) throw err;
+			if (err instanceof Error) {
+				throw err;
+			}
 			throw Error('Unknown error');
 		}
 	};

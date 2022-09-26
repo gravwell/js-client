@@ -9,8 +9,9 @@
 import { NumericID } from '~/value-objects';
 import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, parseJSONResponse } from '../utils';
 
-export const makeDeleteOneMacro = (context: APIContext) => {
-	return async (macroID: NumericID): Promise<void> => {
+export const makeDeleteOneMacro =
+	(context: APIContext) =>
+	async (macroID: NumericID): Promise<void> => {
 		const templatePath = '/api/macros/{macroID}';
 		const url = buildURL(templatePath, { ...context, protocol: 'http', pathParams: { macroID } });
 
@@ -19,4 +20,3 @@ export const makeDeleteOneMacro = (context: APIContext) => {
 		const raw = await context.fetch(url, { ...req, method: 'DELETE' });
 		return parseJSONResponse(raw, { expect: 'void' });
 	};
-};

@@ -18,8 +18,9 @@ import {
 	parseJSONResponse,
 } from '../utils';
 
-export const makeUploadOneLocalKit = (context: APIContext) => {
-	return async (kit: File): Promise<LocalKit> => {
+export const makeUploadOneLocalKit =
+	(context: APIContext) =>
+	async (kit: File): Promise<LocalKit> => {
 		const resourcePath = '/api/kits';
 		const url = buildURL(resourcePath, { ...context, protocol: 'http' });
 
@@ -33,11 +34,12 @@ export const makeUploadOneLocalKit = (context: APIContext) => {
 			const rawRes = await parseJSONResponse<RawLocalKit>(raw);
 			return toLocalKit(rawRes);
 		} catch (err) {
-			if (err instanceof Error) throw err;
+			if (err instanceof Error) {
+				throw err;
+			}
 			throw Error('Unknown error');
 		}
 	};
-};
 
 const toFormData = (file: File): FormData => {
 	const formData = new FormData();

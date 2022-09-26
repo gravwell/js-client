@@ -9,8 +9,12 @@
 import { Script } from '~/models';
 import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, parseJSONResponse } from '../utils';
 
-export const makeGetOneScriptLibrary = (context: APIContext) => {
-	return async (path: string, options: { repository?: string; commitID?: string } = {}): Promise<Script> => {
+export const makeGetOneScriptLibrary =
+	(context: APIContext) =>
+	async (
+		path: string,
+		options: { repository?: string | undefined; commitID?: string | undefined } = {},
+	): Promise<Script> => {
 		const templatePath = '/api/libs';
 		const url = buildURL(templatePath, {
 			...context,
@@ -23,4 +27,3 @@ export const makeGetOneScriptLibrary = (context: APIContext) => {
 		const raw = await context.fetch(url, { ...req, method: 'GET' });
 		return parseJSONResponse(raw, { expect: 'text' });
 	};
-};

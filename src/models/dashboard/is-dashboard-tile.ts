@@ -13,7 +13,7 @@ import { isDashboardRendererOptions } from './is-dashboard-renderer-options';
 
 export const isDashboardTile = (value: unknown): value is DashboardTile => {
 	try {
-		const dt = <DashboardTile>value;
+		const dt = value as DashboardTile;
 		return (
 			isNumericID(dt.id) &&
 			isString(dt.title) &&

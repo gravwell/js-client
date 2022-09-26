@@ -6,39 +6,15 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { isBoolean, isDate, isNull, isString } from 'lodash';
-import { isNumericID, isUUID } from '~/value-objects';
-import { AutoExtractor, AutoExtractorModule } from './auto-extractor';
-import { AUTO_EXTRACTOR_MODULES } from './auto-extractor-modules';
+import { DATA_TYPE } from '~/models';
+import { AutoExtractor } from './auto-extractor';
+import { isAutoExtractorData } from './is-auto-extractor-data';
 
 export const isAutoExtractor = (value: unknown): value is AutoExtractor => {
 	try {
-		const ae = <AutoExtractor>value;
-		return (
-			isUUID(ae.id) &&
-			isNumericID(ae.userID) &&
-			ae.groupIDs.every(isNumericID) &&
-			isString(ae.name) &&
-			isString(ae.description) &&
-			ae.labels.every(isString) &&
-			isBoolean(ae.isGlobal) &&
-			isDate(ae.lastUpdateDate) &&
-			isString(ae.tag) &&
-			isAutoExtractorModule(ae.module) &&
-			isString(ae.parameters) &&
-			(isString(ae.arguments) || isNull(ae.arguments))
-		);
+		const ae = value as AutoExtractor;
+		return ae._tag === DATA_TYPE.AUTO_EXTRACTOR && isAutoExtractorData(ae);
 	} catch {
 		return false;
 	}
 };
-
-const makeIsAutoExtractorModule = () => {
-	const autoExtractorModulesSet = new Set(AUTO_EXTRACTOR_MODULES);
-
-	return (value: unknown): value is AutoExtractorModule => {
-		const m = <AutoExtractorModule>value;
-		return isString(m) && autoExtractorModulesSet.has(m);
-	};
-};
-export const isAutoExtractorModule = makeIsAutoExtractorModule();

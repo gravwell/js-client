@@ -19,10 +19,14 @@ export const makeGetOneFile = (context: APIContext) => {
 		try {
 			const all = await getAllFiles();
 			const file = all.find(f => f.id === fileID || f.globalID === fileID);
-			if (isUndefined(file)) throw new Error('Not found');
+			if (isUndefined(file)) {
+				throw new Error('Not found');
+			}
 			return file;
 		} catch (err) {
-			if (err instanceof Error) throw err;
+			if (err instanceof Error) {
+				throw err;
+			}
 			throw Error('Unknown error');
 		}
 	};

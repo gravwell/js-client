@@ -31,7 +31,9 @@ export const toRawCreatableDashboard = (creatable: CreatableDashboard): RawCreat
 		liveUpdateInterval: creatable.liveUpdate?.interval ?? undefined,
 		linkZooming: creatable.updateOnZoom ?? false,
 		grid: (() => {
-			if (isUndefined(creatable.gridOptions)) return undefined;
+			if (isUndefined(creatable.gridOptions)) {
+				return undefined;
+			}
 			return omitUndefinedShallow({
 				gutter: creatable.gridOptions?.gutter ?? undefined,
 				margin: creatable.gridOptions?.margin ?? undefined,

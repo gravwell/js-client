@@ -6,19 +6,14 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { isBoolean, isNumber, isString } from 'lodash';
-import { isScheduledTaskBase } from './is-scheduled-task-base';
+import { DATA_TYPE } from '~/models';
+import { isScheduledQueryData } from './is-scheduled-query-data';
 import { ScheduledQuery } from './scheduled-query';
 
-export const isScheduledQuery = (value: any): value is ScheduledQuery => {
+export const isScheduledQuery = (value: unknown): value is ScheduledQuery => {
 	try {
-		const sq = <ScheduledQuery>value;
-		return (
-			isScheduledTaskBase(sq) &&
-			sq.type === 'query' &&
-			isString(sq.query) &&
-			(isNumber(sq.searchSince.secondsAgo) || isBoolean(sq.searchSince.lastRun))
-		);
+		const sq = value as ScheduledQuery;
+		return sq._tag === DATA_TYPE.SCHEDULED_QUERY && isScheduledQueryData(sq);
 	} catch {
 		return false;
 	}

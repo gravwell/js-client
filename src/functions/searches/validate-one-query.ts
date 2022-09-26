@@ -18,7 +18,9 @@ export const makeValidateOneQuery = (context: APIContext) => {
 	let querySubP: ReturnType<typeof subscribeToOneQueryValidation> | null = null;
 
 	return async (query: Query): Promise<ValidatedQuery> => {
-		if (isNull(querySubP)) querySubP = subscribeToOneQueryValidation();
+		if (isNull(querySubP)) {
+			querySubP = subscribeToOneQueryValidation();
+		}
 		const querySub = await querySubP;
 		const id = SEARCH_SOCKET_ID_GENERATOR.generate();
 

@@ -6,8 +6,6 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { Dictionary } from 'lodash';
-
 export interface HTTPRequestOptions {
 	query?: QueryParams;
 	headers?: { [key: string]: string | undefined };
@@ -15,5 +13,5 @@ export interface HTTPRequestOptions {
 	body?: string;
 }
 
-export type QueryParams = Dictionary<undefined | string | boolean | number | Array<string | boolean | number>>;
-export type URLParams = Dictionary<string>;
+export type QueryParams = Record<string, undefined | string | boolean | number | Array<string | boolean | number>>;
+export type URLParams = Record<string, string>;

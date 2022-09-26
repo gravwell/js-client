@@ -7,9 +7,11 @@
  **************************************************************************/
 
 import { isEmpty, isNil } from 'lodash';
-import { RawToken, Token } from '~/main';
+import { RawToken, Token } from '~/index';
+import { DATA_TYPE } from '~/models';
 
 export const toToken = (raw: RawToken): Token => ({
+	_tag: DATA_TYPE.TOKEN,
 	id: raw.id,
 	userID: raw.uid.toString(),
 	name: raw.name,

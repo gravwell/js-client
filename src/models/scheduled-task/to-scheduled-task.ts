@@ -7,6 +7,7 @@
  **************************************************************************/
 
 import { isNil } from 'lodash';
+import { DATA_TYPE } from '~/models';
 import { RawScheduledTask } from './raw-scheduled-task';
 import { ScheduledTask, ScheduledTaskType } from './scheduled-task';
 import { toScheduledTaskBase } from './to-scheduled-task-base';
@@ -19,6 +20,7 @@ export const toScheduledTask = (raw: RawScheduledTask): ScheduledTask => {
 		case 'query':
 			return {
 				...base,
+				_tag: DATA_TYPE.SCHEDULED_QUERY,
 				type,
 				query: raw.SearchString,
 				searchSince: {
@@ -29,6 +31,7 @@ export const toScheduledTask = (raw: RawScheduledTask): ScheduledTask => {
 		case 'script':
 			return {
 				...base,
+				_tag: DATA_TYPE.SCHEDULED_SCRIPT,
 				type,
 				script: raw.Script,
 				isDebugging: raw.DebugMode,
@@ -40,8 +43,12 @@ export const toScheduledTask = (raw: RawScheduledTask): ScheduledTask => {
 export const getScheduledTaskType = <T extends { Script?: string; SearchString?: string }>(
 	raw: T,
 ): ScheduledTask['type'] => {
-	if (isNil(raw.Script)) return 'query';
-	if (raw.Script.trim() !== '') return 'script';
+	if (isNil(raw.Script)) {
+		return 'query';
+	}
+	if (raw.Script.trim() !== '') {
+		return 'script';
+	}
 	// From the [docs](https://docs.gravwell.io/#!api/scheduledsearches.md#Creating_a_scheduled_search):
 	// If both (Script and SearchString) are populated, the script will take precedence.
 	return (raw.SearchString ?? '').trim() === '' ? 'script' : 'query';

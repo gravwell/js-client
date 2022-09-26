@@ -10,8 +10,9 @@ import { Macro, RawMacro, toMacro } from '~/models';
 import { NumericID } from '~/value-objects';
 import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, parseJSONResponse } from '../utils';
 
-export const makeGetOneMacro = (context: APIContext) => {
-	return async (macroID: NumericID): Promise<Macro> => {
+export const makeGetOneMacro =
+	(context: APIContext) =>
+	async (macroID: NumericID): Promise<Macro> => {
 		const templatePath = '/api/macros/{macroID}';
 		const url = buildURL(templatePath, { ...context, protocol: 'http', pathParams: { macroID } });
 
@@ -21,4 +22,3 @@ export const makeGetOneMacro = (context: APIContext) => {
 		const rawRes = await parseJSONResponse<RawMacro>(raw);
 		return toMacro(rawRes);
 	};
-};

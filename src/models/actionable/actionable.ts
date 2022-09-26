@@ -6,28 +6,12 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { NumericID, UUID } from '~/value-objects';
+import { DATA_TYPE } from '~/models/data-type';
 import { ActionableCommand } from './actionable-command';
+import { ActionableData } from './actionable-data';
 
-export interface Actionable {
-	globalID: UUID;
-	id: UUID;
-
-	userID: NumericID;
-	groupIDs: Array<NumericID>;
-
-	name: string;
-	description: string | null;
-	menuLabel: null | string;
-	labels: Array<string>;
-
-	isGlobal: boolean;
-	isDisabled: boolean;
-
-	lastUpdateDate: Date;
-
-	triggers: Array<ActionableTrigger>;
-	actions: Array<ActionableAction>;
+export interface Actionable extends ActionableData {
+	_tag: DATA_TYPE.ACTIONABLE;
 }
 
 export interface ActionableTrigger {

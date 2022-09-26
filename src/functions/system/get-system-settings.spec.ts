@@ -11,7 +11,10 @@ import { integrationTest, TEST_BASE_API_CONTEXT } from '~/tests';
 import { makeGetSystemSettings } from './get-system-settings';
 
 describe('getSystemSettings()', () => {
-	const getSystemSettings = makeGetSystemSettings(TEST_BASE_API_CONTEXT);
+	let getSystemSettings: ReturnType<typeof makeGetSystemSettings>;
+	beforeAll(async () => {
+		getSystemSettings = makeGetSystemSettings(await TEST_BASE_API_CONTEXT());
+	});
 
 	it(
 		'Should get the system settings',

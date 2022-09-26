@@ -23,7 +23,7 @@ export const toRawUpdatableDashboard = (updatable: UpdatableDashboard, current: 
 	Description: (isUndefined(updatable.description) ? current.description : updatable.description) ?? '',
 	Labels: updatable.labels ?? current.labels,
 
-	Data: {
+	Data: omitUndefinedShallow({
 		timeframe: updatable.timeframe
 			? toRawTimeframe(updatable.timeframe)
 			: current.timeframe
@@ -32,20 +32,22 @@ export const toRawUpdatableDashboard = (updatable: UpdatableDashboard, current: 
 
 		searches: (updatable.searches ?? current.searches).map(toRawCreatableDashboardSearch),
 
-		tiles: (updatable.tiles ?? current.tiles).map(t => ({
-			/** Legacy support: `id` may be undefined. */
-			id: t.id ? toRawNumericID(t.id) : undefined,
-			title: t.title,
-			renderer: t.renderer,
-			span: {
-				col: t.dimensions.columns,
-				row: t.dimensions.rows,
-				x: t.position.x ?? undefined,
-				y: t.position.y ?? undefined,
-			},
-			searchesIndex: t.searchIndex,
-			rendererOptions: t.rendererOptions ?? undefined,
-		})),
+		tiles: (updatable.tiles ?? current.tiles).map(t =>
+			omitUndefinedShallow({
+				/** Legacy support: `id` may be undefined. */
+				id: t.id ? toRawNumericID(t.id) : undefined,
+				title: t.title,
+				renderer: t.renderer,
+				span: omitUndefinedShallow({
+					col: t.dimensions.columns,
+					row: t.dimensions.rows,
+					x: t.position.x ?? undefined,
+					y: t.position.y ?? undefined,
+				}),
+				searchesIndex: t.searchIndex,
+				rendererOptions: t.rendererOptions ?? undefined,
+			}),
+		),
 
 		liveUpdateInterval: (updatable.liveUpdate ?? current.liveUpdate).interval ?? undefined,
 		linkZooming: updatable.updateOnZoom ?? current.updateOnZoom,
@@ -57,5 +59,5 @@ export const toRawUpdatableDashboard = (updatable: UpdatableDashboard, current: 
 			});
 		})(),
 		version: updatable.version?.major ?? current.version.major,
-	},
+	}),
 });

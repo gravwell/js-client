@@ -11,7 +11,7 @@ import { Version } from './version';
 
 export const isVersion = (value: any): value is Version => {
 	try {
-		const v = <Version>value;
+		const v = value as Version;
 		return isInteger(v.major) && isInteger(v.minor) && isInteger(v.patch);
 	} catch {
 		return false;

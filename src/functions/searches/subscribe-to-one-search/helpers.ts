@@ -56,21 +56,19 @@ export const countEntriesFromModules = (
 	}));
 };
 
-export const filterMessageByCommand = <Command extends SearchMessageCommands>(command: Command) => <
-	M extends RawSearchMessageReceived
->(
-	msg: M,
-): msg is Extract<M, { data: { ID: Command } }> => {
-	try {
-		const _msg = msg as Exclude<
-			RawSearchMessageReceived,
-			RawSearchInitiatedMessageReceived | RawSearchAttachedMessageReceived
-		>;
-		return _msg.data?.ID === command;
-	} catch {
-		return false;
-	}
-};
+export const filterMessageByCommand =
+	<Command extends SearchMessageCommands>(command: Command) =>
+	<M extends RawSearchMessageReceived>(msg: M): msg is Extract<M, { data: { ID: Command } }> => {
+		try {
+			const _msg = msg as Exclude<
+				RawSearchMessageReceived,
+				RawSearchInitiatedMessageReceived | RawSearchAttachedMessageReceived
+			>;
+			return _msg.data?.ID === command;
+		} catch {
+			return false;
+		}
+	};
 
 export type RequiredSearchFilter = Required<
 	Omit<SearchFilter, 'dateRange'> & { dateRange: Required<NonNullable<SearchFilter['dateRange']>> }

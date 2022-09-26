@@ -10,7 +10,10 @@ import { integrationTest, TEST_BASE_API_CONTEXT } from '~/tests';
 import { makeWebServerIsDistributed } from './web-server-is-distributed';
 
 describe('webServerIsDistributed()', () => {
-	const webServerIsDistributed = makeWebServerIsDistributed(TEST_BASE_API_CONTEXT);
+	let webServerIsDistributed: ReturnType<typeof makeWebServerIsDistributed>;
+	beforeAll(async () => {
+		webServerIsDistributed = makeWebServerIsDistributed(await TEST_BASE_API_CONTEXT());
+	});
 
 	xit(
 		'Should tell if the web server is distributed',

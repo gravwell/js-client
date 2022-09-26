@@ -10,8 +10,9 @@ import { RawRemoteKit, RemoteKit, toRemoteKit } from '~/models';
 import { NumericID } from '~/value-objects';
 import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, parseJSONResponse } from '../utils';
 
-export const makeGetOneRemoteKit = (context: APIContext) => {
-	return async (kitID: NumericID): Promise<RemoteKit> => {
+export const makeGetOneRemoteKit =
+	(context: APIContext) =>
+	async (kitID: NumericID): Promise<RemoteKit> => {
 		const templatePath = '/api/kits/remote/{kitID}';
 		const url = buildURL(templatePath, { ...context, protocol: 'http', pathParams: { kitID } });
 
@@ -21,4 +22,3 @@ export const makeGetOneRemoteKit = (context: APIContext) => {
 		const rawRes = await parseJSONResponse<RawRemoteKit>(raw);
 		return toRemoteKit(rawRes);
 	};
-};

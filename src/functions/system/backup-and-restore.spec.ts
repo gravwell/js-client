@@ -11,8 +11,14 @@ import { makeBackup } from './backup';
 import { makeRestore } from './restore';
 
 xdescribe('backup()', () => {
-	const backup = makeBackup(TEST_BASE_API_CONTEXT);
-	const restore = makeRestore(TEST_BASE_API_CONTEXT);
+	let backup: ReturnType<typeof makeBackup>;
+	beforeAll(async () => {
+		backup = makeBackup(await TEST_BASE_API_CONTEXT());
+	});
+	let restore: ReturnType<typeof makeRestore>;
+	beforeAll(async () => {
+		restore = makeRestore(await TEST_BASE_API_CONTEXT());
+	});
 
 	it(
 		'Backup then restore',

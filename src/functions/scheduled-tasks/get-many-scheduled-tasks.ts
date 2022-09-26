@@ -17,7 +17,9 @@ export const makeGetManyScheduledTasks = (context: APIContext) => {
 	const getAllScheduledTasks = makeGetAllScheduledTasks(context);
 
 	return async (filter: ScheduledTasksFilter = {}): Promise<Array<ScheduledTask>> => {
-		if (isNumericID(filter.userID)) return getScheduledTasksByUser(filter.userID);
+		if (isNumericID(filter.userID)) {
+			return getScheduledTasksByUser(filter.userID);
+		}
 
 		return getAllScheduledTasks();
 	};

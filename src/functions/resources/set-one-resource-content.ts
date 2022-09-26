@@ -19,8 +19,9 @@ import {
 	parseJSONResponse,
 } from '../utils';
 
-export const makeSetOneResourceContent = (context: APIContext) => {
-	return async (resourceID: UUID, file: File): Promise<Resource> => {
+export const makeSetOneResourceContent =
+	(context: APIContext) =>
+	async (resourceID: UUID, file: File): Promise<Resource> => {
 		const resourcePath = '/api/resources/{resourceID}/raw';
 		const url = buildURL(resourcePath, { ...context, protocol: 'http', pathParams: { resourceID } });
 
@@ -34,11 +35,12 @@ export const makeSetOneResourceContent = (context: APIContext) => {
 			const rawRes = await parseJSONResponse<RawResource>(raw);
 			return toResource(rawRes);
 		} catch (err) {
-			if (err instanceof Error) throw err;
+			if (err instanceof Error) {
+				throw err;
+			}
 			throw Error('Unknown error');
 		}
 	};
-};
 
 const toFormData = (file: File): FormData => {
 	const formData = new FormData();

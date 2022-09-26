@@ -6,7 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { TokenCapability } from '~/main';
+import { TokenCapability } from '~/index';
 import { ID } from '~/value-objects';
 
 /**

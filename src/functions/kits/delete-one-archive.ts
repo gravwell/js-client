@@ -8,8 +8,9 @@
 
 import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, parseJSONResponse } from '../utils';
 
-export const makeDeleteOneKitArchive = (context: APIContext) => {
-	return async (archiveID: string): Promise<void> => {
+export const makeDeleteOneKitArchive =
+	(context: APIContext) =>
+	async (archiveID: string): Promise<void> => {
 		const templatePath = '/api/kits/build/history/{archiveID}';
 		const url = buildURL(templatePath, { ...context, protocol: 'http', pathParams: { archiveID } });
 
@@ -18,4 +19,3 @@ export const makeDeleteOneKitArchive = (context: APIContext) => {
 		const raw = await context.fetch(url, { ...req, method: 'DELETE' });
 		return parseJSONResponse(raw, { expect: 'void' });
 	};
-};

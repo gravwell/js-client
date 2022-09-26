@@ -25,9 +25,13 @@ export const makeGetManyDashboards = (context: APIContext) => {
 			return userDashboards.filter(m => m.groupIDs.includes(groupID));
 		}
 
-		if (isNumericID(filter.userID)) return getDashboardsByUser(filter.userID);
+		if (isNumericID(filter.userID)) {
+			return getDashboardsByUser(filter.userID);
+		}
 
-		if (isNumericID(filter.groupID)) return getDashboardsByGroup(filter.groupID);
+		if (isNumericID(filter.groupID)) {
+			return getDashboardsByGroup(filter.groupID);
+		}
 
 		return getAllDashboards();
 	};

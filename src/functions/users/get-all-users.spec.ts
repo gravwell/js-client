@@ -11,7 +11,10 @@ import { integrationTest, TEST_BASE_API_CONTEXT } from '~/tests';
 import { makeGetAllUsers } from './get-all-users';
 
 describe('getAllUsers()', () => {
-	const getAllUsers = makeGetAllUsers(TEST_BASE_API_CONTEXT);
+	let getAllUsers: ReturnType<typeof makeGetAllUsers>;
+	beforeAll(async () => {
+		getAllUsers = makeGetAllUsers(await TEST_BASE_API_CONTEXT());
+	});
 
 	it(
 		'Should return users',

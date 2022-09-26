@@ -10,8 +10,11 @@ import { CreatableActionable, isActionable } from '~/models';
 import { integrationTest, TEST_BASE_API_CONTEXT } from '~/tests';
 import { makeCreateOneActionable } from './create-one-actionable';
 
-describe('createOneActionable()', () => {
-	const createOneActionable = makeCreateOneActionable(TEST_BASE_API_CONTEXT);
+xdescribe('createOneActionable()', () => {
+	let createOneActionable: ReturnType<typeof makeCreateOneActionable>;
+	beforeAll(async () => {
+		createOneActionable = makeCreateOneActionable(await TEST_BASE_API_CONTEXT());
+	});
 
 	// gravwell/gravwell#2425
 	xit(

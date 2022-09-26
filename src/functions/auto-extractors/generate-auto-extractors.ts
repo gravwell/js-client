@@ -34,7 +34,9 @@ export const makeGenerateAutoExtractors = (context: APIContext) => {
 
 			return toGeneratedAutoExtractors(rawRes);
 		} catch (err) {
-			if (err instanceof Error) throw err;
+			if (err instanceof Error) {
+				throw err;
+			}
 			throw Error('Unknown error');
 		}
 	};

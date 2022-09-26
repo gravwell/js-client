@@ -18,13 +18,16 @@ export const makeUpdateMyUser = (context: APIContext) => {
 
 	return async (data: Omit<UpdatableUser, 'id'>): Promise<User> => {
 		try {
-			if (isString(data.password) && isUndefined(data.currentPassword))
+			if (isString(data.password) && isUndefined(data.currentPassword)) {
 				throw new Error('You must specify your current password to change it');
+			}
 
 			const myUser = await getMyUser();
 			return updateOneUser({ ...data, id: myUser.id });
 		} catch (err) {
-			if (err instanceof Error) throw err;
+			if (err instanceof Error) {
+				throw err;
+			}
 			throw Error('Unknown error');
 		}
 	};

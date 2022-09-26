@@ -6,6 +6,7 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
+import { DATA_TYPE } from '~/models';
 import { ID, NumericID, RawNumericID, RawUUID, toNumericID, UUID } from '~/value-objects';
 import { isScheduledQuery, isScheduledScript, ScheduledTask } from '../scheduled-task';
 import { toVersion } from './../version';
@@ -44,6 +45,7 @@ export const toKitArchive = (raw: RawKitArchive, scheduledTasks: Array<Scheduled
 	const configMacros = toConfigMacros(rawConfigMacros);
 
 	return {
+		_tag: DATA_TYPE.KIT_ARCHIVE,
 		id: raw.ID.toString(),
 		userID: raw.UID.toString(),
 		buildDate,
@@ -76,13 +78,10 @@ export const toKitArchive = (raw: RawKitArchive, scheduledTasks: Array<Scheduled
 	};
 };
 
-export const toDeployRules = (raw: RawDeployRules): DeployRules => {
-	return {
-		disabled: raw.Disabled,
-		runImmediately: raw.RunImmediately,
-	};
-};
+export const toDeployRules = (raw: RawDeployRules): DeployRules => ({
+	disabled: raw.Disabled,
+	runImmediately: raw.RunImmediately,
+});
 
-const toStringArray = (raw: Array<RawUUID | RawNumericID>): Array<UUID | NumericID> => {
-	return raw ? raw.map(i => i.toString()) : [];
-};
+const toStringArray = (raw: Array<RawUUID | RawNumericID>): Array<UUID | NumericID> =>
+	raw ? raw.map(i => i.toString()) : [];

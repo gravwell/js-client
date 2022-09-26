@@ -10,8 +10,9 @@ import { RawTemplate, Template, toTemplate } from '~/models';
 import { NumericID } from '~/value-objects';
 import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, parseJSONResponse } from '../utils';
 
-export const makeGetOneTemplate = (context: APIContext) => {
-	return async (templateID: NumericID): Promise<Template> => {
+export const makeGetOneTemplate =
+	(context: APIContext) =>
+	async (templateID: NumericID): Promise<Template> => {
 		const templatePath = '/api/templates/{templateID}';
 		const url = buildURL(templatePath, { ...context, protocol: 'http', pathParams: { templateID } });
 
@@ -21,4 +22,3 @@ export const makeGetOneTemplate = (context: APIContext) => {
 		const rawRes = await parseJSONResponse<RawTemplate>(raw);
 		return toTemplate(rawRes);
 	};
-};

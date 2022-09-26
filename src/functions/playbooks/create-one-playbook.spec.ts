@@ -12,8 +12,14 @@ import { makeCreateOnePlaybook } from './create-one-playbook';
 import { makeDeleteOnePlaybook } from './delete-one-playbook';
 
 describe('createOnePlaybook()', () => {
-	const createOnePlaybook = makeCreateOnePlaybook(TEST_BASE_API_CONTEXT);
-	const deleteOnePlaybook = makeDeleteOnePlaybook(TEST_BASE_API_CONTEXT);
+	let createOnePlaybook: ReturnType<typeof makeCreateOnePlaybook>;
+	beforeAll(async () => {
+		createOnePlaybook = makeCreateOnePlaybook(await TEST_BASE_API_CONTEXT());
+	});
+	let deleteOnePlaybook: ReturnType<typeof makeDeleteOnePlaybook>;
+	beforeAll(async () => {
+		deleteOnePlaybook = makeDeleteOnePlaybook(await TEST_BASE_API_CONTEXT());
+	});
 
 	it(
 		"Should create an playbook and return it's UUID",

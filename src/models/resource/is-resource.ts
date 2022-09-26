@@ -6,26 +6,14 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { isBoolean, isDate, isInteger, isString } from 'lodash';
-import { isNumericID, isUUID } from '~/value-objects';
+import { DATA_TYPE } from '~/models';
+import { isResourceData } from './is-resource-data';
 import { Resource } from './resource';
 
-export const isResource = (value: any): value is Resource => {
+export const isResource = (value: unknown): value is Resource => {
 	try {
-		const r = <Resource>value;
-		return (
-			isUUID(r.id) &&
-			isNumericID(r.userID) &&
-			r.groupIDs.every(isNumericID) &&
-			isString(r.name) &&
-			isString(r.description) &&
-			r.labels.every(isString) &&
-			isBoolean(r.isGlobal) &&
-			isDate(r.lastUpdateDate) &&
-			isInteger(r.version) &&
-			isString(r.hash) &&
-			isInteger(r.size)
-		);
+		const r = value as Resource;
+		return r._tag === DATA_TYPE.RESOURCE && isResourceData(r);
 	} catch {
 		return false;
 	}

@@ -7,6 +7,7 @@
  **************************************************************************/
 
 import { encode as base64Encode } from 'base-64';
+import * as utf8 from 'utf8';
 import { omitUndefinedShallow } from '~/functions/utils';
 import { isUUID, toRawNumericID } from '~/value-objects';
 import { CreatablePlaybook } from './creatable-playbook';
@@ -17,12 +18,14 @@ export const toRawCreatablePlaybook = (creatable: CreatablePlaybook): RawCreatab
 	const metadata: Required<RawPlaybookDecodedMetadata> = { dashboards: [], attachments: [] };
 
 	// Add cover image to metadata, if it exists
-	if (isUUID(creatable.coverImageFileGlobalID))
+	if (isUUID(creatable.coverImageFileGlobalID)) {
 		metadata.attachments.push({ context: 'cover', type: 'image', fileGUID: creatable.coverImageFileGlobalID });
+	}
 
 	// Add banner image to metadata, if it exists
-	if (isUUID(creatable.bannerImageFileGlobalID))
+	if (isUUID(creatable.bannerImageFileGlobalID)) {
 		metadata.attachments.push({ context: 'banner', type: 'image', fileGUID: creatable.bannerImageFileGlobalID });
+	}
 
 	return omitUndefinedShallow({
 		UID: creatable.userID ? toRawNumericID(creatable.userID) : undefined,
@@ -34,7 +37,7 @@ export const toRawCreatablePlaybook = (creatable: CreatablePlaybook): RawCreatab
 		Name: creatable.name ?? '',
 		Desc: creatable.description ?? null,
 
-		Body: base64Encode(creatable.body),
+		Body: base64Encode(utf8.encode(creatable.body)),
 		Metadata: base64Encode(JSON.stringify(metadata)),
 
 		Author: {

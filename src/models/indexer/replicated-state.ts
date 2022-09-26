@@ -19,7 +19,7 @@ export interface ReplicatedState {
 
 export const isReplicatedState = (value: unknown): value is ReplicatedState => {
 	try {
-		const r = <ReplicatedState>value;
+		const r = value as ReplicatedState;
 
 		return (
 			isString(r.name) &&

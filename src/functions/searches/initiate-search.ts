@@ -55,8 +55,8 @@ const QUERY_INIT_RESULTS: Observable<{
 		rawSubscription.received$.pipe(
 			withLatestFrom(
 				// Wait to send RawInitiateSearchMessageSent until concatMap has subscribed to the outer Observable
-				defer(() => {
-					return rawSubscription.send(<RawInitiateSearchMessageSent>{
+				defer(() =>
+					rawSubscription.send({
 						type: 'search',
 						data: {
 							Addendum: options.initialFilterID ? { filterID: options.initialFilterID } : {},
@@ -68,8 +68,8 @@ const QUERY_INIT_RESULTS: Observable<{
 							Preview: options.range === 'preview',
 							NoHistory: options.noHistory ?? false,
 						},
-					});
-				}),
+					} as RawInitiateSearchMessageSent),
+				),
 			),
 			// Discard the (void) result from rawSubscription.send(). We only need the messages coming from received$
 			map(([msg]) => msg),
@@ -77,7 +77,7 @@ const QUERY_INIT_RESULTS: Observable<{
 			// Filter to only RawSearchInitiatedMessageReceived messages
 			filter((msg): msg is RawSearchInitiatedMessageReceived => {
 				try {
-					const _msg = <RawSearchInitiatedMessageReceived>msg;
+					const _msg = msg as RawSearchInitiatedMessageReceived;
 
 					// the type is about all we can count on -- in Error cases, Metadata and Addendum are unavailable.
 					return _msg.type === 'search';
@@ -98,9 +98,9 @@ const QUERY_INIT_RESULTS: Observable<{
 
 export type InitiateSearchOptions = {
 	range: [Date, Date] | 'preview';
-	initialFilterID?: string;
-	metadata?: RawJSON;
-	noHistory?: boolean;
+	initialFilterID?: string | undefined;
+	metadata?: RawJSON | undefined;
+	noHistory?: boolean | undefined;
 };
 
 export const initiateSearch = (
@@ -125,10 +125,10 @@ export const initiateSearch = (
 
 		// If we didn't throw, everything is fine. Send a RawAcceptSearchMessageSent to continue setting up the search
 		tap(msg =>
-			rawSubscription.send(<RawAcceptSearchMessageSent>{
+			rawSubscription.send({
 				type: 'search',
 				data: { OK: true, OutputSearchSubproto: msg.data.OutputSearchSubproto },
-			}),
+			} as RawAcceptSearchMessageSent),
 		),
 
 		// It takes the backend a fraction of a second to be ready for requests after we set up the search

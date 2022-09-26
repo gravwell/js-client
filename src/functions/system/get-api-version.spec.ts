@@ -11,7 +11,10 @@ import { integrationTest, TEST_BASE_API_CONTEXT } from '~/tests';
 import { makeGetAPIVersion } from './get-api-version';
 
 describe('getAPIVersion()', () => {
-	const getAPIVersion = makeGetAPIVersion(TEST_BASE_API_CONTEXT);
+	let getAPIVersion: ReturnType<typeof makeGetAPIVersion>;
+	beforeAll(async () => {
+		getAPIVersion = makeGetAPIVersion(await TEST_BASE_API_CONTEXT());
+	});
 
 	it(
 		'Should get the API version',

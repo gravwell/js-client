@@ -12,17 +12,15 @@ import { RawUpdatableTemplate } from './raw-updatable-template';
 import { Template } from './template';
 import { UpdatableTemplate } from './updatable-template';
 
-export const toRawUpdatableTemplate = (updatable: UpdatableTemplate, current: Template): RawUpdatableTemplate => {
-	return {
-		UID: toRawNumericID(updatable.userID ?? current.userID),
-		GIDs: (updatable.groupIDs ?? current.groupIDs).map(toRawNumericID),
-		Global: updatable.isGlobal ?? current.isGlobal,
-		Labels: updatable.labels ?? current.labels,
-		Name: updatable.name ?? current.name,
-		Description: isUndefined(updatable.description) ? current.description : updatable.description,
-		Contents: {
-			query: updatable.query ?? current.query,
-			variables: updatable.variables ?? current.variables,
-		},
-	};
-};
+export const toRawUpdatableTemplate = (updatable: UpdatableTemplate, current: Template): RawUpdatableTemplate => ({
+	UID: toRawNumericID(updatable.userID ?? current.userID),
+	GIDs: (updatable.groupIDs ?? current.groupIDs).map(toRawNumericID),
+	Global: updatable.isGlobal ?? current.isGlobal,
+	Labels: updatable.labels ?? current.labels,
+	Name: updatable.name ?? current.name,
+	Description: isUndefined(updatable.description) ? current.description : updatable.description,
+	Contents: {
+		query: updatable.query ?? current.query,
+		variables: updatable.variables ?? current.variables,
+	},
+});

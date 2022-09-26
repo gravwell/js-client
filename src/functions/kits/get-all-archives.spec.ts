@@ -11,7 +11,10 @@ import { integrationTest, TEST_BASE_API_CONTEXT } from '~/tests';
 import { makeGetKitArchives } from './get-all-archives';
 
 describe('getAllArchives()', () => {
-	const getAllArchives = makeGetKitArchives(TEST_BASE_API_CONTEXT);
+	let getAllArchives: ReturnType<typeof makeGetKitArchives>;
+	beforeAll(async () => {
+		getAllArchives = makeGetKitArchives(await TEST_BASE_API_CONTEXT());
+	});
 
 	it(
 		'Should return all kit archives in the system',

@@ -6,19 +6,11 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { NumericID } from '~/value-objects';
+import { DATA_TYPE } from '~/models';
+import { UserData } from './user-data';
 
-export interface User {
-	id: NumericID;
-	groupIDs: Array<NumericID>;
-
-	username: string;
-	name: string;
-	email: string;
-	role: 'admin' | 'analyst';
-	locked: boolean;
-	lastActivityDate: Date | null;
-	searchGroupID: string | null;
+export interface User extends UserData {
+	_tag: DATA_TYPE.USER;
 }
 
 export type UserRole = User['role'];

@@ -7,13 +7,16 @@
  **************************************************************************/
 
 import { isString } from 'lodash';
+import { DATA_TYPE } from '~/models';
 import { toRegex } from '~/value-objects';
+import { omitUndefinedShallow } from '../../functions/utils';
 import { Actionable, ActionableAction, ActionableTimeVariable, ActionableTrigger } from './actionable';
 import { ActionableCommand } from './actionable-command';
 import { RawActionable, RawActionableAction, RawActionableTimeVariable, RawActionableTrigger } from './raw-actionable';
 import { RawActionableCommand } from './raw-actionable-command';
 
 export const toActionable = (raw: RawActionable): Actionable => ({
+	_tag: DATA_TYPE.ACTIONABLE,
 	globalID: raw.GUID,
 	id: raw.ThingUUID,
 
@@ -40,15 +43,16 @@ export const toActionableTrigger = (raw: RawActionableTrigger): ActionableTrigge
 	activatesOn: isString(raw) ? 'clicks and selection' : raw.hyperlink ? 'clicks and selection' : 'selection',
 });
 
-export const toActionableAction = (raw: RawActionableAction): ActionableAction => ({
-	name: raw.name,
-	description: raw.description,
-	placeholder: raw.placeholder,
-	command: toActionableCommand(raw.command),
-	noValueUrlEncode: raw.noValueUrlEncode,
-	start: raw.start ? toActionableTimeVariable(raw.start) : { type: 'stringFormat', placeholder: null, format: null },
-	end: raw.end ? toActionableTimeVariable(raw.end) : { type: 'stringFormat', placeholder: null, format: null },
-});
+export const toActionableAction = (raw: RawActionableAction): ActionableAction =>
+	omitUndefinedShallow({
+		name: raw.name,
+		description: raw.description,
+		placeholder: raw.placeholder,
+		command: toActionableCommand(raw.command),
+		noValueUrlEncode: raw.noValueUrlEncode,
+		start: raw.start ? toActionableTimeVariable(raw.start) : { type: 'stringFormat', placeholder: null, format: null },
+		end: raw.end ? toActionableTimeVariable(raw.end) : { type: 'stringFormat', placeholder: null, format: null },
+	});
 
 export const toActionableCommand = (raw: RawActionableCommand): ActionableCommand => {
 	switch (raw.type) {

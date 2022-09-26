@@ -10,11 +10,11 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - name: Use Node.js 10.20.1
+      - name: Use Node.js 16.14.0
         uses: actions/setup-node@v1
         with:
-          node-version: '10.20.1'
-      - run: npm i -g npm@6.14.5
+          node-version: '16.14.0'
+      - run: npm i -g npm@8.5.3
       - run: npm ci
       - run: npm run lint
 
@@ -23,11 +23,11 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - name: Use Node.js 10.20.1
+      - name: Use Node.js 16.14.0
         uses: actions/setup-node@v1
         with:
-          node-version: '10.20.1'
-      - run: npm i -g npm@6.14.5
+          node-version: '16.14.0'
+      - run: npm i -g npm@8.5.3
       - run: npm ci
       - run: npm run build
       - run: npm run build:tests
@@ -37,11 +37,11 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - name: Use Node.js 10.20.1
+      - name: Use Node.js 16.14.0
         uses: actions/setup-node@v1
         with:
-          node-version: '10.20.1'
-      - run: npm i -g npm@6.14.5
+          node-version: '16.14.0'
+      - run: npm i -g npm@8.5.3
       - run: npm ci
       - run: npm run test:ts-compatibility
 
@@ -100,18 +100,18 @@ jobs:
           fi
           sleep 10
           curl --silent --fail http://localhost:8080/api/test || ( echo "api test failed"; exit 1 )
-      - name: Use Node.js 10.20.1
+      - name: Use Node.js 16.14.0
         uses: actions/setup-node@v1
         with:
-          node-version: '10.20.1'
-      - run: npm i -g npm@6.14.5
+          node-version: '16.14.0'
+      - run: npm i -g npm@8.5.3
       - run: npm ci
       - shell: bash
         env:
           INTEGRATION_TESTS: true
           UNIT_TESTS: true
+          TEST_HOST: http://localhost:8080
         run: |
-          export TEST_AUTH_TOKEN="$(curl --silent --header "Content-Type:  application/json" --request POST --data '{"User":"admin","Pass":"changeme"}' http://localhost:8080/api/login | jq -r .JWT)"
           npm run test:node
 
   test-firefox:
@@ -169,19 +169,18 @@ jobs:
           fi
           sleep 10
           curl --silent --fail http://localhost:8080/api/test || ( echo "api test failed"; exit 1 )
-      - name: Use Node.js 10.20.1
+      - name: Use Node.js 16.14.0
         uses: actions/setup-node@v1
         with:
-          node-version: '10.20.1'
-      - run: npm i -g npm@6.14.5
+          node-version: '16.14.0'
+      - run: npm i -g npm@8.5.3
       - run: npm ci
       - shell: bash
         env:
           INTEGRATION_TESTS: true
           UNIT_TESTS: true
         run: |
-          export TEST_AUTH_TOKEN="$(curl --silent --header "Content-Type:  application/json" --request POST --data '{"User":"admin","Pass":"changeme"}' http://localhost:8080/api/login | jq -r .JWT)"
-        # npm run test:browsers -- --browsers=FirefoxHeadlessCI
+          # npm run test:browsers -- --browsers=FirefoxHeadlessCI
 
   test-chrome:
     runs-on: ubuntu-latest
@@ -238,17 +237,16 @@ jobs:
           fi
           sleep 10
           curl --silent --fail http://localhost:8080/api/test || ( echo "api test failed"; exit 1 )
-      - name: Use Node.js 10.20.1
+      - name: Use Node.js 16.14.0
         uses: actions/setup-node@v1
         with:
-          node-version: '10.20.1'
-      - run: npm i -g npm@6.14.5
+          node-version: '16.14.0'
+      - run: npm i -g npm@8.5.3
       - run: npm ci
       - shell: bash
         env:
           INTEGRATION_TESTS: true
           UNIT_TESTS: true
         run: |
-          export TEST_AUTH_TOKEN="$(curl --silent --header "Content-Type:  application/json" --request POST --data '{"User":"admin","Pass":"changeme"}' http://localhost:8080/api/login | jq -r .JWT)"
           export CHROME_BIN=$(which google-chrome-stable)
-        # npm run test:browsers -- --browsers=ChromeHeadlessCI
+          # npm run test:browsers -- --browsers=ChromeHeadlessCI

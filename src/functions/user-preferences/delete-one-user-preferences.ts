@@ -8,12 +8,14 @@
 
 import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, parseJSONResponse } from '../utils';
 
-export const makeDeleteOneUserPreferences = (context: APIContext) => async (userID: string): Promise<void> => {
-	const templatePath = '/api/users/{userID}/preferences';
-	const url = buildURL(templatePath, { ...context, protocol: 'http', pathParams: { userID } });
+export const makeDeleteOneUserPreferences =
+	(context: APIContext) =>
+	async (userID: string): Promise<void> => {
+		const templatePath = '/api/users/{userID}/preferences';
+		const url = buildURL(templatePath, { ...context, protocol: 'http', pathParams: { userID } });
 
-	const req = buildHTTPRequestWithAuthFromContext(context);
+		const req = buildHTTPRequestWithAuthFromContext(context);
 
-	const raw = await context.fetch(url, { ...req, method: 'DELETE' });
-	return parseJSONResponse(raw);
-};
+		const raw = await context.fetch(url, { ...req, method: 'DELETE' });
+		return parseJSONResponse(raw);
+	};

@@ -10,7 +10,7 @@ import { Version } from '~/models';
 import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, parseJSONResponse } from '../utils';
 
 export const makeGetAPIVersion = (context: APIContext) => {
-	const templatePath = '/api/version/';
+	const templatePath = '/api/version';
 	const url = buildURL(templatePath, { ...context, protocol: 'http' });
 
 	return async (): Promise<GetAPIVersionResponse> => {

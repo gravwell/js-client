@@ -12,8 +12,14 @@ import { makeCreateOneTemplate } from './create-one-template';
 import { makeDeleteOneTemplate } from './delete-one-template';
 
 describe('createOneTemplate()', () => {
-	const createOneTemplate = makeCreateOneTemplate(TEST_BASE_API_CONTEXT);
-	const deleteOneTemplate = makeDeleteOneTemplate(TEST_BASE_API_CONTEXT);
+	let createOneTemplate: ReturnType<typeof makeCreateOneTemplate>;
+	beforeAll(async () => {
+		createOneTemplate = makeCreateOneTemplate(await TEST_BASE_API_CONTEXT());
+	});
+	let deleteOneTemplate: ReturnType<typeof makeDeleteOneTemplate>;
+	beforeAll(async () => {
+		deleteOneTemplate = makeDeleteOneTemplate(await TEST_BASE_API_CONTEXT());
+	});
 
 	it(
 		"Should create an template and return it's UUID",

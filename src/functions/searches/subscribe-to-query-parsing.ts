@@ -9,7 +9,15 @@
 import { Observable, timer } from 'rxjs';
 import { filter, last, map, mapTo, startWith, takeUntil } from 'rxjs/operators';
 import { ElementFilter, Query, RawQuery } from '~/models';
-import { RawElementFilter, RawPongMessageSent, toElementFilter, ValidatedQuery } from '~/models/search';
+import {
+	isOperationFilter,
+	RawElementFilter,
+	RawExtractionFilter,
+	RawOperationFilter,
+	RawPongMessageSent,
+	toElementFilter,
+	ValidatedQuery,
+} from '~/models/search';
 import { APIContext, APISubscription, apiSubscriptionFromWebSocket, buildURL, WebSocket } from '../utils';
 
 export const makeSubscribeToOneQueryParsing = (context: APIContext) => {
@@ -74,15 +82,28 @@ export const makeSubscribeToOneQueryParsing = (context: APIContext) => {
 						Sequence: msg.id,
 					},
 				};
-				if (msg.filters.length !== 0)
-					rawMsg.data.Filters = msg.filters.map(f => ({
-						Tag: f.tag,
-						Module: f.module,
-						Path: f.path,
-						Args: f.arguments ?? undefined,
-						Op: f.operation,
-						Value: f.value,
-					}));
+				if (msg.filters.length !== 0) {
+					rawMsg.data.Filters = msg.filters.map(f => {
+						if (isOperationFilter(f)) {
+							const opFilter: RawOperationFilter = {
+								Tag: f.tag,
+								Module: f.module,
+								Path: f.path,
+								Args: f.arguments ?? undefined,
+								Op: f.operation,
+								Value: f.value,
+							};
+							return opFilter;
+						}
+						const exFilter: RawExtractionFilter = {
+							Tag: f.tag ?? undefined,
+							Module: f.module,
+							Path: f.path,
+							Args: f.arguments ?? undefined,
+						};
+						return exFilter;
+					});
+				}
 				await rawSubscription.send(rawMsg);
 			},
 			received$,

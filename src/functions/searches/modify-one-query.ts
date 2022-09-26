@@ -18,7 +18,9 @@ export const makeModifyOneQuery = (context: APIContext) => {
 	let querySubP: ReturnType<typeof subscribeToOneQueryParsing> | null = null;
 
 	return async (query: Query, filters: Array<ElementFilter>): Promise<Query> => {
-		if (isNull(querySubP)) querySubP = subscribeToOneQueryParsing();
+		if (isNull(querySubP)) {
+			querySubP = subscribeToOneQueryParsing();
+		}
 		const querySub = await querySubP;
 		const id = SEARCH_SOCKET_ID_GENERATOR.generate();
 

@@ -13,9 +13,18 @@ import { makeDeleteOneMacro } from './delete-one-macro';
 import { makeGetOneMacro } from './get-one-macro';
 
 describe('createOneMacro()', () => {
-	const createOneMacro = makeCreateOneMacro(TEST_BASE_API_CONTEXT);
-	const getOneMacro = makeGetOneMacro(TEST_BASE_API_CONTEXT);
-	const deleteOneMacro = makeDeleteOneMacro(TEST_BASE_API_CONTEXT);
+	let createOneMacro: ReturnType<typeof makeCreateOneMacro>;
+	beforeAll(async () => {
+		createOneMacro = makeCreateOneMacro(await TEST_BASE_API_CONTEXT());
+	});
+	let getOneMacro: ReturnType<typeof makeGetOneMacro>;
+	beforeAll(async () => {
+		getOneMacro = makeGetOneMacro(await TEST_BASE_API_CONTEXT());
+	});
+	let deleteOneMacro: ReturnType<typeof makeDeleteOneMacro>;
+	beforeAll(async () => {
+		deleteOneMacro = makeDeleteOneMacro(await TEST_BASE_API_CONTEXT());
+	});
 
 	it(
 		'Should create a macro and return it',

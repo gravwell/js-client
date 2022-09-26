@@ -9,8 +9,9 @@
 import { NumericID } from '~/value-objects';
 import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, parseJSONResponse } from '../utils';
 
-export const makeUpdateOneUserLockedState = (context: APIContext) => {
-	return async (userID: NumericID, lock: boolean): Promise<void> => {
+export const makeUpdateOneUserLockedState =
+	(context: APIContext) =>
+	async (userID: NumericID, lock: boolean): Promise<void> => {
 		try {
 			const templatePath = '/api/users/{userID}/lock';
 			const url = buildURL(templatePath, { ...context, protocol: 'http', pathParams: { userID } });
@@ -21,8 +22,9 @@ export const makeUpdateOneUserLockedState = (context: APIContext) => {
 			const raw = await context.fetch(url, { ...req, method });
 			return parseJSONResponse(raw, { expect: 'void' });
 		} catch (err) {
-			if (err instanceof Error) throw err;
+			if (err instanceof Error) {
+				throw err;
+			}
 			throw Error('Unknown error');
 		}
 	};
-};

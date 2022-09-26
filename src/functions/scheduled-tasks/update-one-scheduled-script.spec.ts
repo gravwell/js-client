@@ -7,76 +7,88 @@
  **************************************************************************/
 
 import { isScheduledScript, ScheduledScript, UpdatableScheduledScript } from '~/models';
-import { integrationTest, myCustomMatchers, TEST_BASE_API_CONTEXT } from '~/tests';
+import { integrationTest, integrationTestSpecDef, myCustomMatchers, TEST_BASE_API_CONTEXT } from '~/tests';
 import { makeCreateOneScheduledScript } from './create-one-scheduled-script';
 import { makeDeleteAllScheduledScripts } from './delete-all-scheduled-scripts';
 import { makeUpdateOneScheduledScript } from './update-one-scheduled-script';
 
-describe('updateOneScheduledScript()', () => {
-	const createOneScheduledScript = makeCreateOneScheduledScript(TEST_BASE_API_CONTEXT);
-	const updateOneScheduledScript = makeUpdateOneScheduledScript(TEST_BASE_API_CONTEXT);
-	const deleteAllScheduledScripts = makeDeleteAllScheduledScripts(TEST_BASE_API_CONTEXT);
-
-	let createdScheduledScript: ScheduledScript;
-
-	beforeEach(async () => {
-		jasmine.addMatchers(myCustomMatchers);
-
-		await deleteAllScheduledScripts();
-		createdScheduledScript = await createOneScheduledScript({
-			name: 'Script1',
-			description: 'D1',
-			schedule: '0 1 * * *',
-			script: '1 + 2',
+describe(
+	'updateOneScheduledScript()',
+	integrationTestSpecDef(() => {
+		let createOneScheduledScript: ReturnType<typeof makeCreateOneScheduledScript>;
+		beforeAll(async () => {
+			createOneScheduledScript = makeCreateOneScheduledScript(await TEST_BASE_API_CONTEXT());
 		});
-	});
+		let updateOneScheduledScript: ReturnType<typeof makeUpdateOneScheduledScript>;
+		beforeAll(async () => {
+			updateOneScheduledScript = makeUpdateOneScheduledScript(await TEST_BASE_API_CONTEXT());
+		});
+		let deleteAllScheduledScripts: ReturnType<typeof makeDeleteAllScheduledScripts>;
+		beforeAll(async () => {
+			deleteAllScheduledScripts = makeDeleteAllScheduledScripts(await TEST_BASE_API_CONTEXT());
+		});
 
-	const updateTests: Array<Omit<UpdatableScheduledScript, 'id'>> = [
-		{ name: 'New Name' },
+		let createdScheduledScript: ScheduledScript;
 
-		{ description: 'New description' },
+		beforeEach(async () => {
+			jasmine.addMatchers(myCustomMatchers);
 
-		{ groupIDs: ['1'] },
-		{ groupIDs: ['1', '2'] },
-		{ groupIDs: [] },
+			await deleteAllScheduledScripts();
+			createdScheduledScript = await createOneScheduledScript({
+				name: 'Script1',
+				description: 'D1',
+				schedule: '0 1 * * *',
+				script: '1 + 2',
+			});
+		});
 
-		{ labels: ['Label 1'] },
-		{ labels: ['Label 1', 'Label 2'] },
-		{ labels: [] },
+		const updateTests: Array<Omit<UpdatableScheduledScript, 'id'>> = [
+			{ name: 'New Name' },
 
-		{ oneShot: true },
-		{ oneShot: false },
+			{ description: 'New description' },
 
-		{ isDisabled: true },
-		{ isDisabled: false },
+			{ groupIDs: ['1'] },
+			{ groupIDs: ['1', '2'] },
+			{ groupIDs: [] },
 
-		{ schedule: '1 0 * * *' },
+			{ labels: ['Label 1'] },
+			{ labels: ['Label 1', 'Label 2'] },
+			{ labels: [] },
 
-		{ timezone: 'America/Sao_Paulo' },
-		{ timezone: null },
+			{ oneShot: true },
+			{ oneShot: false },
 
-		{ script: '1 + 2' },
+			{ isDisabled: true },
+			{ isDisabled: false },
 
-		{ isDebugging: false },
-		{ isDebugging: true },
-	];
-	updateTests.forEach((_data, testIndex) => {
-		const updatedFields = Object.keys(_data);
-		const formatedUpdatedFields = updatedFields.join(', ');
-		const formatedTestIndex = (testIndex + 1).toString().padStart(2, '0');
+			{ schedule: '1 0 * * *' },
 
-		it(
-			`Test ${formatedTestIndex}: Should update a scheduled script ${formatedUpdatedFields} and return itself updated`,
-			integrationTest(async () => {
-				const current = createdScheduledScript;
-				expect(isScheduledScript(current)).toBeTrue();
+			{ timezone: 'America/Sao_Paulo' },
+			{ timezone: null },
 
-				const data: UpdatableScheduledScript = { ..._data, id: current.id };
-				const updated = await updateOneScheduledScript(data);
+			{ script: '1 + 2' },
 
-				expect(isScheduledScript(updated)).toBeTrue();
-				expect(updated).toPartiallyEqual(data);
-			}),
-		);
-	});
-});
+			{ isDebugging: false },
+			{ isDebugging: true },
+		];
+		updateTests.forEach((_data, testIndex) => {
+			const updatedFields = Object.keys(_data);
+			const formatedUpdatedFields = updatedFields.join(', ');
+			const formatedTestIndex = (testIndex + 1).toString().padStart(2, '0');
+
+			it(
+				`Test ${formatedTestIndex}: Should update a scheduled script ${formatedUpdatedFields} and return itself updated`,
+				integrationTest(async () => {
+					const current = createdScheduledScript;
+					expect(isScheduledScript(current)).toBeTrue();
+
+					const data: UpdatableScheduledScript = { ..._data, id: current.id };
+					const updated = await updateOneScheduledScript(data);
+
+					expect(isScheduledScript(updated)).toBeTrue();
+					expect(updated).toPartiallyEqual(data);
+				}),
+			);
+		});
+	}),
+);

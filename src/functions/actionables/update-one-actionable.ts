@@ -39,7 +39,9 @@ export const makeUpdateOneActionable = (context: APIContext) => {
 			const rawRes = await parseJSONResponse<RawActionable>(raw);
 			return toActionable(rawRes);
 		} catch (err) {
-			if (err instanceof Error) throw err;
+			if (err instanceof Error) {
+				throw err;
+			}
 			throw Error('Unknown error');
 		}
 	};

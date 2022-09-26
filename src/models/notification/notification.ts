@@ -6,7 +6,9 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { BroadcastedNotification } from './broadcasted-notification';
-import { TargetedNotification } from './targeted-notification';
+import { DATA_TYPE } from '~/models';
+import { NotificationData } from './notification-data';
 
-export type Notification = BroadcastedNotification | TargetedNotification;
+export type Notification = NotificationData & {
+	_tag: DATA_TYPE.NOTIFICATION;
+};

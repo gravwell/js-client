@@ -11,7 +11,10 @@ import { integrationTest, TEST_BASE_API_CONTEXT } from '~/tests';
 import { makeGetPersistentSearchStatusRelatedToMe } from './get-persistent-search-status-related-to-me';
 
 describe('getPersistentSearchStatusRelatedToMe()', () => {
-	const getPersistentSearchStatusRelatedToMe = makeGetPersistentSearchStatusRelatedToMe(TEST_BASE_API_CONTEXT);
+	let getPersistentSearchStatusRelatedToMe: ReturnType<typeof makeGetPersistentSearchStatusRelatedToMe>;
+	beforeAll(async () => {
+		getPersistentSearchStatusRelatedToMe = makeGetPersistentSearchStatusRelatedToMe(await TEST_BASE_API_CONTEXT());
+	});
 
 	it(
 		'Should return all persistent searches related to me',

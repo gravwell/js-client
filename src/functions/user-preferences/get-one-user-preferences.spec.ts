@@ -10,7 +10,10 @@ import { integrationTest, TEST_BASE_API_CONTEXT } from '~/tests';
 import { makeGetOneUserPreferences } from './get-one-user-preferences';
 
 describe('getOneUserPreferences()', () => {
-	const getOneUserPreferences = makeGetOneUserPreferences(TEST_BASE_API_CONTEXT);
+	let getOneUserPreferences: ReturnType<typeof makeGetOneUserPreferences>;
+	beforeAll(async () => {
+		getOneUserPreferences = makeGetOneUserPreferences(await TEST_BASE_API_CONTEXT());
+	});
 
 	it(
 		'Should return 200 with the user preferences',

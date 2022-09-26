@@ -12,9 +12,18 @@ import { makeDeleteOneNotification } from './delete-one-notification';
 import { makeGetMyNotifications } from './get-my-notifications';
 
 describe('deleteOneNotification()', () => {
-	const deleteOneNotification = makeDeleteOneNotification(TEST_BASE_API_CONTEXT);
-	const getMyNotifications = makeGetMyNotifications(TEST_BASE_API_CONTEXT);
-	const targetOneNotification = makeCreateOneTargetedNotification(TEST_BASE_API_CONTEXT);
+	let deleteOneNotification: ReturnType<typeof makeDeleteOneNotification>;
+	beforeAll(async () => {
+		deleteOneNotification = makeDeleteOneNotification(await TEST_BASE_API_CONTEXT());
+	});
+	let getMyNotifications: ReturnType<typeof makeGetMyNotifications>;
+	beforeAll(async () => {
+		getMyNotifications = makeGetMyNotifications(await TEST_BASE_API_CONTEXT());
+	});
+	let targetOneNotification: ReturnType<typeof makeCreateOneTargetedNotification>;
+	beforeAll(async () => {
+		targetOneNotification = makeCreateOneTargetedNotification(await TEST_BASE_API_CONTEXT());
+	});
 
 	it(
 		'Should delete the notification',

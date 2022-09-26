@@ -14,8 +14,11 @@ import {
 	HTTPRequestOptions,
 	parseJSONResponse,
 } from '../utils';
+import { makeGetMyNotifications } from './get-my-notifications';
 
 export const makeUpdateOneNotification = (context: APIContext) => {
+	const getAllNotification = makeGetMyNotifications(context);
+
 	return async (updatable: UpdatableNotification): Promise<void> => {
 		try {
 			const templatePath = '/api/notifications/{notificationID}';
@@ -25,15 +28,22 @@ export const makeUpdateOneNotification = (context: APIContext) => {
 				pathParams: { notificationID: updatable.id },
 			});
 
+			const currentNotification = (await getAllNotification()).find(notification => notification.id === updatable.id);
+
+			if (!currentNotification) {
+				throw Error('The current Notification is not valid.');
+			}
 			const baseRequestOptions: HTTPRequestOptions = {
-				body: JSON.stringify(toRawUpdatableNotification(updatable)),
+				body: JSON.stringify(toRawUpdatableNotification(updatable, currentNotification)),
 			};
 			const req = buildHTTPRequestWithAuthFromContext(context, baseRequestOptions);
 
-			const raw = await context.fetch(url, { ...req, method: 'POST' });
+			const raw = await context.fetch(url, { ...req, method: 'PUT' });
 			return parseJSONResponse(raw, { expect: 'void' });
 		} catch (err) {
-			if (err instanceof Error) throw err;
+			if (err instanceof Error) {
+				throw err;
+			}
 			throw Error('Unknown error');
 		}
 	};

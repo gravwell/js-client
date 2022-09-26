@@ -16,3 +16,6 @@ export * from './to-raw-creatable-template';
 export * from './to-raw-updatable-template';
 export * from './to-template';
 export * from './updatable-template';
+export * from './from-template-data-to-template';
+export * from './template-data';
+export * from './is-template-data';

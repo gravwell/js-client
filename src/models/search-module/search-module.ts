@@ -6,12 +6,9 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-export interface SearchModule {
-	name: string;
-	description: string;
-	examples: Array<string>;
+import { DATA_TYPE } from '~/models';
+import { SearchModuleData } from './search-module-data';
 
-	frontendOnly: boolean;
-	collapsing: boolean;
-	sorting: boolean;
+export interface SearchModule extends SearchModuleData {
+	_tag: DATA_TYPE.SEARCH_MODULE;
 }

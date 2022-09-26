@@ -117,7 +117,9 @@ export const makeAttachToOneExplorerSearch = (context: APIContext) => {
 		});
 
 		const close = async (): Promise<void> => {
-			if (closed) return undefined;
+			if (closed) {
+				return undefined;
+			}
 
 			const closeMsg: RawRequestSearchCloseMessageSent = {
 				type: searchTypeID,
@@ -144,17 +146,15 @@ export const makeAttachToOneExplorerSearch = (context: APIContext) => {
 
 		const entries$: Observable<ExplorerSearchEntries> = searchMessages$.pipe(
 			filter(filterMessageByCommand(SearchMessageCommands.RequestExplorerEntriesWithinRange)),
-			map(
-				(msg): ExplorerSearchEntries => {
-					const base = toSearchEntries(rendererType, msg);
-					const filterID = (msg.data.Addendum?.filterID as string | undefined) ?? null;
-					const filter = filtersByID[filterID ?? ''] ?? undefined;
-					const searchEntries = { ...base, filter } as SearchEntries;
-					const explorerEntries = (msg.data.Explore ?? []).map(toDataExplorerEntry);
+			map((msg): ExplorerSearchEntries => {
+				const base = toSearchEntries(rendererType, msg);
+				const filterID = (msg.data.Addendum?.filterID as string | undefined) ?? null;
+				const filter = filtersByID[filterID ?? ''] ?? undefined;
+				const searchEntries = { ...base, filter } as SearchEntries;
+				const explorerEntries = (msg.data.Explore ?? []).map(toDataExplorerEntry);
 
-					return { ...searchEntries, explorerEntries };
-				},
-			),
+				return { ...searchEntries, explorerEntries };
+			}),
 			tap(entries => {
 				const defDesiredGranularity = getDefaultGranularityByRendererType(entries.type);
 				initialFilter.desiredGranularity = defDesiredGranularity;
@@ -168,7 +168,9 @@ export const makeAttachToOneExplorerSearch = (context: APIContext) => {
 
 		const _filter$ = new BehaviorSubject<SearchFilter>(initialFilter);
 		const setFilter = (filter: SearchFilter | null): void => {
-			if (closed) return undefined;
+			if (closed) {
+				return undefined;
+			}
 			_filter$.next(filter ?? initialFilter);
 		};
 
@@ -241,9 +243,7 @@ export const makeAttachToOneExplorerSearch = (context: APIContext) => {
 		);
 
 		const statsOverview$ = rawSearchStats$.pipe(
-			map(set => {
-				return { frequencyStats: countEntriesFromModules(set) };
-			}),
+			map(set => ({ frequencyStats: countEntriesFromModules(set) })),
 
 			shareReplay({ bufferSize: 1, refCount: true }),
 

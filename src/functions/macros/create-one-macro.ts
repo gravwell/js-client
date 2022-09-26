@@ -35,7 +35,9 @@ export const makeCreateOneMacro = (context: APIContext) => {
 			const macroID = toNumericID(rawRes);
 			return getOneMacro(macroID);
 		} catch (err) {
-			if (err instanceof Error) throw err;
+			if (err instanceof Error) {
+				throw err;
+			}
 			throw Error('Unknown error');
 		}
 	};

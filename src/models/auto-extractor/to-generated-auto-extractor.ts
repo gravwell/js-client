@@ -7,6 +7,7 @@
  **************************************************************************/
 
 import { mapValues } from 'lodash';
+import { omitUndefinedShallow } from '../../functions/utils';
 import { toDataExplorerEntry } from '../search/to-data-explorer-entry';
 import { toSearchEntry } from '../search/to-search-entry';
 import { GeneratedAutoExtractor, GeneratedAutoExtractors } from './generated-auto-extractors';
@@ -16,11 +17,12 @@ import { toAutoExtractor } from './to-auto-extractor';
 export const toGeneratedAutoExtractors = (raw: RawGeneratedAutoExtractors): GeneratedAutoExtractors =>
 	mapValues(raw, extractors =>
 		extractors.map(
-			(ex): GeneratedAutoExtractor => ({
-				confidence: ex.Confidence,
-				entries: (ex.Entries ?? []).map(toSearchEntry),
-				explorerEntries: (ex.Explore ?? []).map(toDataExplorerEntry),
-				autoExtractor: toAutoExtractor(ex.Extractor),
-			}),
+			(ex): GeneratedAutoExtractor =>
+				omitUndefinedShallow({
+					confidence: ex.Confidence,
+					entries: (ex.Entries ?? []).map(toSearchEntry),
+					explorerEntries: (ex.Explore ?? []).map(toDataExplorerEntry),
+					autoExtractor: toAutoExtractor(ex.Extractor),
+				}),
 		),
 	);

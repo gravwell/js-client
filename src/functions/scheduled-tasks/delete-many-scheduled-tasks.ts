@@ -13,7 +13,5 @@ import { ScheduledTasksFilter } from './get-many-scheduled-tasks';
 export const makeDeleteManyScheduledTasks = (context: APIContext) => {
 	const deleteScheduledTasksByUser = makeDeleteScheduledTasksByUser(context);
 
-	return async (filter: Required<ScheduledTasksFilter>): Promise<void> => {
-		return deleteScheduledTasksByUser(filter.userID);
-	};
+	return async (filter: Required<ScheduledTasksFilter>): Promise<void> => deleteScheduledTasksByUser(filter.userID);
 };
