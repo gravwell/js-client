@@ -34,7 +34,7 @@ export const isRawOperationFilter = (v: RawElementFilter): v is RawOperationFilt
  * Filter to extract a field.
  */
 export interface RawExtractionFilter {
-	Tag: string;
+	Tag?: string | undefined;
 	Module: string;
 	Path: string;
 	Args?: string | undefined;

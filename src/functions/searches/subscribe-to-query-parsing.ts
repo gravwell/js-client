@@ -96,7 +96,7 @@ export const makeSubscribeToOneQueryParsing = (context: APIContext) => {
 							return opFilter;
 						}
 						const exFilter: RawExtractionFilter = {
-							Tag: f.tag,
+							Tag: f.tag ?? undefined,
 							Module: f.module,
 							Path: f.path,
 							Args: f.arguments ?? undefined,

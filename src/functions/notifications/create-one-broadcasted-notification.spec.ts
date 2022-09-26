@@ -19,7 +19,7 @@ describe('createOneBroadcastedNotification', () => {
 	it(
 		'Should be able to create a broadcasted message',
 		integrationTest(async () => {
-			const creatable: CreatableBroadcastNotification = { message: 'test' };
+			const creatable: CreatableBroadcastNotification = { message: 'test', level: 'info', link: '' };
 			const result = await createOneBroadcastedNotification(creatable);
 			expect(result).toBeUndefined();
 		}),

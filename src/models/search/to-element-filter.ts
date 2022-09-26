@@ -22,7 +22,7 @@ export const toElementFilter = (raw: RawElementFilter): ElementFilter => {
 		return opFilter;
 	}
 	const exFilter: ExtractionFilter = {
-		tag: raw.Tag,
+		tag: raw.Tag ?? null,
 		module: raw.Module,
 		path: raw.Path,
 		arguments: raw.Args ?? null,

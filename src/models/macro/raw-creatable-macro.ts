@@ -10,6 +10,7 @@ import { RawNumericID } from '~/value-objects';
 
 export interface RawCreatableMacro {
 	GIDs: Array<RawNumericID>;
+	Global: boolean;
 	Name: string;
 	Description: string | null;
 	Expansion: string;

@@ -7,90 +7,93 @@
  **************************************************************************/
 
 import { isScheduledQuery, ScheduledQuery, UpdatableScheduledQuery } from '~/models';
-import { integrationTest, myCustomMatchers, TEST_BASE_API_CONTEXT } from '~/tests';
+import { integrationTest, integrationTestSpecDef, myCustomMatchers, TEST_BASE_API_CONTEXT } from '~/tests';
 import { makeCreateOneScheduledQuery } from './create-one-scheduled-query';
 import { makeDeleteAllScheduledQueries } from './delete-all-scheduled-queries';
 import { makeUpdateOneScheduledQuery } from './update-one-scheduled-query';
 
-describe('updateOneScheduledQuery()', () => {
-	let createOneScheduledQuery: ReturnType<typeof makeCreateOneScheduledQuery>;
-	beforeAll(async () => {
-		createOneScheduledQuery = makeCreateOneScheduledQuery(await TEST_BASE_API_CONTEXT());
-	});
-	let updateOneScheduledQuery: ReturnType<typeof makeUpdateOneScheduledQuery>;
-	beforeAll(async () => {
-		updateOneScheduledQuery = makeUpdateOneScheduledQuery(await TEST_BASE_API_CONTEXT());
-	});
-	let deleteAllScheduledQueries: ReturnType<typeof makeDeleteAllScheduledQueries>;
-	beforeAll(async () => {
-		deleteAllScheduledQueries = makeDeleteAllScheduledQueries(await TEST_BASE_API_CONTEXT());
-	});
-
-	let createdScheduledQuery: ScheduledQuery;
-
-	beforeEach(async () => {
-		jasmine.addMatchers(myCustomMatchers);
-
-		await deleteAllScheduledQueries();
-		createdScheduledQuery = await createOneScheduledQuery({
-			name: 'Q1',
-			description: 'D1',
-			schedule: '0 1 * * *',
-
-			query: 'tag=netflow',
-			searchSince: { secondsAgo: 60 * 60 },
+describe(
+	'updateOneScheduledQuery()',
+	integrationTestSpecDef(() => {
+		let createOneScheduledQuery: ReturnType<typeof makeCreateOneScheduledQuery>;
+		beforeAll(async () => {
+			createOneScheduledQuery = makeCreateOneScheduledQuery(await TEST_BASE_API_CONTEXT());
 		});
-	});
+		let updateOneScheduledQuery: ReturnType<typeof makeUpdateOneScheduledQuery>;
+		beforeAll(async () => {
+			updateOneScheduledQuery = makeUpdateOneScheduledQuery(await TEST_BASE_API_CONTEXT());
+		});
+		let deleteAllScheduledQueries: ReturnType<typeof makeDeleteAllScheduledQueries>;
+		beforeAll(async () => {
+			deleteAllScheduledQueries = makeDeleteAllScheduledQueries(await TEST_BASE_API_CONTEXT());
+		});
 
-	const updateTests: Array<Omit<UpdatableScheduledQuery, 'id'>> = [
-		{ name: 'New Name' },
+		let createdScheduledQuery: ScheduledQuery;
 
-		{ description: 'New description' },
+		beforeEach(async () => {
+			jasmine.addMatchers(myCustomMatchers);
 
-		{ groupIDs: ['1'] },
-		{ groupIDs: ['1', '2'] },
-		{ groupIDs: [] },
+			await deleteAllScheduledQueries();
+			createdScheduledQuery = await createOneScheduledQuery({
+				name: 'Q1',
+				description: 'D1',
+				schedule: '0 1 * * *',
 
-		{ labels: ['Label 1'] },
-		{ labels: ['Label 1', 'Label 2'] },
-		{ labels: [] },
+				query: 'tag=netflow',
+				searchSince: { secondsAgo: 60 * 60 },
+			});
+		});
 
-		{ oneShot: true },
-		{ oneShot: false },
+		const updateTests: Array<Omit<UpdatableScheduledQuery, 'id'>> = [
+			{ name: 'New Name' },
 
-		{ isDisabled: true },
-		{ isDisabled: false },
+			{ description: 'New description' },
 
-		{ schedule: '1 0 * * *' },
+			{ groupIDs: ['1'] },
+			{ groupIDs: ['1', '2'] },
+			{ groupIDs: [] },
 
-		{ timezone: 'America/Sao_Paulo' },
-		{ timezone: null },
+			{ labels: ['Label 1'] },
+			{ labels: ['Label 1', 'Label 2'] },
+			{ labels: [] },
 
-		{ query: 'tag=custom' },
+			{ oneShot: true },
+			{ oneShot: false },
 
-		{ searchSince: { lastRun: true } },
-		{ searchSince: { lastRun: false } },
-		{ searchSince: { secondsAgo: 0 } },
-		{ searchSince: { secondsAgo: 60 } },
-		{ searchSince: { lastRun: true, secondsAgo: 15 } },
-	];
-	updateTests.forEach((_data, testIndex) => {
-		const updatedFields = Object.keys(_data);
-		const formatedUpdatedFields = updatedFields.join(', ');
-		const formatedTestIndex = (testIndex + 1).toString().padStart(2, '0');
+			{ isDisabled: true },
+			{ isDisabled: false },
 
-		it(
-			`Test ${formatedTestIndex}: Should update a scheduled query ${formatedUpdatedFields} and return itself updated`,
-			integrationTest(async () => {
-				const current = createdScheduledQuery;
-				expect(isScheduledQuery(current)).toBeTrue();
+			{ schedule: '1 0 * * *' },
 
-				const data: UpdatableScheduledQuery = { ..._data, id: current.id };
-				const updated = await updateOneScheduledQuery(data);
+			{ timezone: 'America/Sao_Paulo' },
+			{ timezone: null },
 
-				expect(isScheduledQuery(updated)).toBeTrue();
-				expect(updated).toPartiallyEqual(data);
-			}),
-		);
-	});
-});
+			{ query: 'tag=custom' },
+
+			{ searchSince: { lastRun: true } },
+			{ searchSince: { lastRun: false } },
+			{ searchSince: { secondsAgo: 0 } },
+			{ searchSince: { secondsAgo: 60 } },
+			{ searchSince: { lastRun: true, secondsAgo: 15 } },
+		];
+		updateTests.forEach((_data, testIndex) => {
+			const updatedFields = Object.keys(_data);
+			const formatedUpdatedFields = updatedFields.join(', ');
+			const formatedTestIndex = (testIndex + 1).toString().padStart(2, '0');
+
+			it(
+				`Test ${formatedTestIndex}: Should update a scheduled query ${formatedUpdatedFields} and return itself updated`,
+				integrationTest(async () => {
+					const current = createdScheduledQuery;
+					expect(isScheduledQuery(current)).toBeTrue();
+
+					const data: UpdatableScheduledQuery = { ..._data, id: current.id };
+					const updated = await updateOneScheduledQuery(data);
+
+					expect(isScheduledQuery(updated)).toBeTrue();
+					expect(updated).toPartiallyEqual(data);
+				}),
+			);
+		});
+	}),
+);

@@ -22,4 +22,6 @@ export const toRawCreatableBroadcastedNotification = (
 		Sent: creatable.sentDate,
 		Expires: creatable.expirationDate,
 		IgnoreUntil: creatable.ignoreUntilDate,
+		Level: creatable.level ?? undefined,
+		Link: creatable.link ?? undefined,
 	});

@@ -11,6 +11,7 @@ import { NumericID } from '~/value-objects';
 export interface UpdatableMacro {
 	id: NumericID;
 	groupIDs?: Array<NumericID>;
+	isGlobal?: boolean;
 
 	name?: string;
 	description?: string | null;

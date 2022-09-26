@@ -7,7 +7,7 @@
  **************************************************************************/
 
 import { constant, Decoder, either3, Guard, guard, object, optional, string } from 'decoders';
-import { mkTypeGuard } from '../../functions/utils/type-guards';
+import { mkTypeGuard } from '~/functions/utils/type-guards';
 
 interface CreatableBaseTargetedNotification {
 	message: string;

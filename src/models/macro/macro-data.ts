@@ -12,10 +12,9 @@ export interface MacroData {
 	id: NumericID;
 	userID: NumericID;
 	groupIDs: Array<NumericID>;
+	isGlobal: boolean;
 
-	/**
-	 * All uppercase and no spaces.
-	 */
+	/** All uppercase and no spaces. */
 	name: string;
 	description: string | null;
 	labels: Array<string>;

@@ -6,15 +6,14 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { RawNumericID } from '~/value-objects';
+import { isString } from 'lodash';
 
-export interface RawUpdatableMacro {
-	GIDs: Array<RawNumericID>;
-	Global: boolean;
+const TIMESTAMP_REGEX = /[0-9]{4}-[0-9]{2}-[0-9]{2}[T][0-9]{2}:[0-9]{2}:[0-9]{2}([.][0-9]{1,9}[Z]|[Z])/;
 
-	Name: string;
-	Description: string; // Use empty string for null
-	Labels: Array<string>;
-
-	Expansion: string;
-}
+export const isTimestamp = (value: unknown): boolean => {
+	try {
+		return isString(value) && TIMESTAMP_REGEX.test(value);
+	} catch {
+		return false;
+	}
+};

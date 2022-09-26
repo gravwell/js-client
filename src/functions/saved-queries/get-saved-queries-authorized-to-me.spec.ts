@@ -8,7 +8,7 @@
 
 import { random, sortBy } from 'lodash';
 import { CreatableSavedQuery, CreatableUser, isSavedQuery, SavedQuery, User } from '~/models';
-import { integrationTest, TEST_BASE_API_CONTEXT } from '~/tests';
+import { integrationTest, integrationTestSpecDef, TEST_BASE_API_CONTEXT } from '~/tests';
 import { makeLoginOneUser } from '../auth/login-one-user';
 import { makeCreateOneUser } from '../users';
 import { makeCreateOneSavedQuery } from './create-one-saved-query';
@@ -16,123 +16,126 @@ import { makeDeleteOneSavedQuery } from './delete-one-saved-query';
 import { makeGetAllSavedQueries } from './get-all-saved-queries';
 import { makeGetSavedQueriesAuthorizedToMe } from './get-saved-queries-authorized-to-me';
 
-describe('getSavedQueriesAuthorizedToMe()', () => {
-	let getSavedQueriesAuthorizedToMe: ReturnType<typeof makeGetSavedQueriesAuthorizedToMe>;
-	beforeAll(async () => {
-		getSavedQueriesAuthorizedToMe = makeGetSavedQueriesAuthorizedToMe(await TEST_BASE_API_CONTEXT());
-	});
-	let createOneSavedQuery: ReturnType<typeof makeCreateOneSavedQuery>;
-	beforeAll(async () => {
-		createOneSavedQuery = makeCreateOneSavedQuery(await TEST_BASE_API_CONTEXT());
-	});
-	let deleteOneSavedQuery: ReturnType<typeof makeDeleteOneSavedQuery>;
-	beforeAll(async () => {
-		deleteOneSavedQuery = makeDeleteOneSavedQuery(await TEST_BASE_API_CONTEXT());
-	});
-	let getAllSavedQueries: ReturnType<typeof makeGetAllSavedQueries>;
-	beforeAll(async () => {
-		getAllSavedQueries = makeGetAllSavedQueries(await TEST_BASE_API_CONTEXT());
-	});
-	let createOneUser: ReturnType<typeof makeCreateOneUser>;
-	beforeAll(async () => {
-		createOneUser = makeCreateOneUser(await TEST_BASE_API_CONTEXT());
-	});
-	let login: ReturnType<typeof makeLoginOneUser>;
-	beforeAll(async () => {
-		login = makeLoginOneUser(await TEST_BASE_API_CONTEXT());
-	});
-
-	let adminSavedQueries: Array<SavedQuery>;
-
-	let analyst: User;
-	let analystAuth: string;
-	let analystSavedQueries: Array<SavedQuery>;
-
-	beforeEach(async () => {
-		// Delete all saved queries
-		const currentSavedQueries = await getAllSavedQueries();
-		const currentSavedQueryIDs = currentSavedQueries.map(m => m.id);
-		const deletePromises = currentSavedQueryIDs.map(savedQueryID => deleteOneSavedQuery(savedQueryID));
-		await Promise.all(deletePromises);
-
-		// Create two saved queries as admin
-		const creatableSavedQueries: Array<CreatableSavedQuery> = [
-			{
-				name: 'Q1',
-				query: 'tag=netflow',
-			},
-			{
-				name: 'Q2',
-				query: 'tag=custom-test',
-			},
-		];
-		const createPromises = creatableSavedQueries.map(creatable => createOneSavedQuery(creatable));
-		adminSavedQueries = await Promise.all(createPromises);
-
-		// Creates an analyst
-		const userSeed = random(0, Number.MAX_SAFE_INTEGER).toString();
-		const data: CreatableUser = {
-			name: 'Test',
-			email: userSeed + '@example.com',
-			password: 'changeme',
-			role: 'analyst',
-			user: userSeed,
-		};
-		analyst = await createOneUser(data);
-		analystAuth = await login(analyst.username, data.password);
-
-		// Create three saved queries as analyst
-		const creatableSavedQueries2: Array<CreatableSavedQuery> = [
-			{
-				name: 'Q3',
-				query: 'tag=idk',
-			},
-			{
-				name: 'Q4',
-				query: 'tag=test',
-			},
-			{
-				name: 'Q5',
-				query: 'tag=default',
-			},
-		];
-
-		const createOneSavedQueryAsAnalyst = makeCreateOneSavedQuery({
-			...(await TEST_BASE_API_CONTEXT()),
-			authToken: analystAuth,
+describe(
+	'getSavedQueriesAuthorizedToMe()',
+	integrationTestSpecDef(() => {
+		let getSavedQueriesAuthorizedToMe: ReturnType<typeof makeGetSavedQueriesAuthorizedToMe>;
+		beforeAll(async () => {
+			getSavedQueriesAuthorizedToMe = makeGetSavedQueriesAuthorizedToMe(await TEST_BASE_API_CONTEXT());
+		});
+		let createOneSavedQuery: ReturnType<typeof makeCreateOneSavedQuery>;
+		beforeAll(async () => {
+			createOneSavedQuery = makeCreateOneSavedQuery(await TEST_BASE_API_CONTEXT());
+		});
+		let deleteOneSavedQuery: ReturnType<typeof makeDeleteOneSavedQuery>;
+		beforeAll(async () => {
+			deleteOneSavedQuery = makeDeleteOneSavedQuery(await TEST_BASE_API_CONTEXT());
+		});
+		let getAllSavedQueries: ReturnType<typeof makeGetAllSavedQueries>;
+		beforeAll(async () => {
+			getAllSavedQueries = makeGetAllSavedQueries(await TEST_BASE_API_CONTEXT());
+		});
+		let createOneUser: ReturnType<typeof makeCreateOneUser>;
+		beforeAll(async () => {
+			createOneUser = makeCreateOneUser(await TEST_BASE_API_CONTEXT());
+		});
+		let login: ReturnType<typeof makeLoginOneUser>;
+		beforeAll(async () => {
+			login = makeLoginOneUser(await TEST_BASE_API_CONTEXT());
 		});
 
-		const createPromises2 = creatableSavedQueries2.map(creatable => createOneSavedQueryAsAnalyst(creatable));
-		analystSavedQueries = await Promise.all(createPromises2);
-	});
+		let adminSavedQueries: Array<SavedQuery>;
 
-	xit(
-		'Returns all my saved queries',
-		integrationTest(async () => {
-			const actualAdminSavedQueries = await getSavedQueriesAuthorizedToMe();
-			expect(sortBy(actualAdminSavedQueries, m => m.id)).toEqual(sortBy(adminSavedQueries, m => m.id));
-			for (const savedQuery of actualAdminSavedQueries) {
-				expect(isSavedQuery(savedQuery)).toBeTrue();
-			}
+		let analyst: User;
+		let analystAuth: string;
+		let analystSavedQueries: Array<SavedQuery>;
 
-			const getSavedQueriesAuthorizedToAnalyst = makeGetSavedQueriesAuthorizedToMe({
+		beforeEach(async () => {
+			// Delete all saved queries
+			const currentSavedQueries = await getAllSavedQueries();
+			const currentSavedQueryIDs = currentSavedQueries.map(m => m.id);
+			const deletePromises = currentSavedQueryIDs.map(savedQueryID => deleteOneSavedQuery(savedQueryID));
+			await Promise.all(deletePromises);
+
+			// Create two saved queries as admin
+			const creatableSavedQueries: Array<CreatableSavedQuery> = [
+				{
+					name: 'Q1',
+					query: 'tag=netflow',
+				},
+				{
+					name: 'Q2',
+					query: 'tag=custom-test',
+				},
+			];
+			const createPromises = creatableSavedQueries.map(creatable => createOneSavedQuery(creatable));
+			adminSavedQueries = await Promise.all(createPromises);
+
+			// Creates an analyst
+			const userSeed = random(0, Number.MAX_SAFE_INTEGER).toString();
+			const data: CreatableUser = {
+				name: 'Test',
+				email: userSeed + '@example.com',
+				password: 'changeme',
+				role: 'analyst',
+				user: userSeed,
+			};
+			analyst = await createOneUser(data);
+			analystAuth = await login(analyst.username, data.password);
+
+			// Create three saved queries as analyst
+			const creatableSavedQueries2: Array<CreatableSavedQuery> = [
+				{
+					name: 'Q3',
+					query: 'tag=idk',
+				},
+				{
+					name: 'Q4',
+					query: 'tag=test',
+				},
+				{
+					name: 'Q5',
+					query: 'tag=default',
+				},
+			];
+
+			const createOneSavedQueryAsAnalyst = makeCreateOneSavedQuery({
 				...(await TEST_BASE_API_CONTEXT()),
 				authToken: analystAuth,
 			});
 
-			const actualAnalystSavedQueries = await getSavedQueriesAuthorizedToAnalyst();
-			expect(sortBy(actualAnalystSavedQueries, m => m.id)).toEqual(sortBy(analystSavedQueries, m => m.id));
-			for (const savedQuery of actualAnalystSavedQueries) {
-				expect(isSavedQuery(savedQuery)).toBeTrue();
-			}
+			const createPromises2 = creatableSavedQueries2.map(creatable => createOneSavedQueryAsAnalyst(creatable));
+			analystSavedQueries = await Promise.all(createPromises2);
+		});
 
-			const allSavedQueries = await getAllSavedQueries();
-			expect(sortBy(allSavedQueries, m => m.id)).toEqual(
-				sortBy([...analystSavedQueries, ...adminSavedQueries], m => m.id),
-			);
-			for (const savedQuery of allSavedQueries) {
-				expect(isSavedQuery(savedQuery)).toBeTrue();
-			}
-		}),
-	);
-});
+		xit(
+			'Returns all my saved queries',
+			integrationTest(async () => {
+				const actualAdminSavedQueries = await getSavedQueriesAuthorizedToMe();
+				expect(sortBy(actualAdminSavedQueries, m => m.id)).toEqual(sortBy(adminSavedQueries, m => m.id));
+				for (const savedQuery of actualAdminSavedQueries) {
+					expect(isSavedQuery(savedQuery)).toBeTrue();
+				}
+
+				const getSavedQueriesAuthorizedToAnalyst = makeGetSavedQueriesAuthorizedToMe({
+					...(await TEST_BASE_API_CONTEXT()),
+					authToken: analystAuth,
+				});
+
+				const actualAnalystSavedQueries = await getSavedQueriesAuthorizedToAnalyst();
+				expect(sortBy(actualAnalystSavedQueries, m => m.id)).toEqual(sortBy(analystSavedQueries, m => m.id));
+				for (const savedQuery of actualAnalystSavedQueries) {
+					expect(isSavedQuery(savedQuery)).toBeTrue();
+				}
+
+				const allSavedQueries = await getAllSavedQueries();
+				expect(sortBy(allSavedQueries, m => m.id)).toEqual(
+					sortBy([...analystSavedQueries, ...adminSavedQueries], m => m.id),
+				);
+				for (const savedQuery of allSavedQueries) {
+					expect(isSavedQuery(savedQuery)).toBeTrue();
+				}
+			}),
+		);
+	}),
+);

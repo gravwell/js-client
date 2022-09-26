@@ -6,17 +6,37 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
+import { isNull } from 'lodash';
 import { omitUndefinedShallow } from '~/functions/utils';
-import { toRawNumericID } from '~/value-objects';
+import { isNumericID, NumericID, RawNumericID, toRawNumericID } from '~/value-objects';
+import { Notification } from './notification';
 import { RawUpdatableNotification } from './raw-updatable-notification';
 import { UpdatableNotification } from './updatable-notification';
 
-export const toRawUpdatableNotification = (updatable: UpdatableNotification): RawUpdatableNotification =>
+export const toRawUpdatableNotification = (
+	updatable: UpdatableNotification,
+	current: Notification,
+): RawUpdatableNotification =>
 	omitUndefinedShallow({
-		Msg: updatable.message,
-		Type: updatable.customID === undefined ? undefined : toRawNumericID(updatable.customID),
+		Msg: updatable.message ?? current.message,
+		Type: getType(current.customID, updatable.customID),
+		UID: toRawNumericID(current.userID),
+		GID: 0,
+		Broadcast: true,
 
-		Sent: updatable.sentDate,
-		Expires: updatable.expirationDate,
-		IgnoreUntil: updatable.ignoreUntilDate,
+		Sent: updatable.sentDate ?? current.sentDate,
+		Expires: updatable.expirationDate ?? current.expirationDate,
+		IgnoreUntil: updatable.ignoreUntilDate ?? current.ignoreUntilDate,
+		Level: undefined,
+		Link: undefined,
 	});
+
+const getType = (currentType: NumericID | null, updatableType?: NumericID | null): RawNumericID => {
+	if (isNumericID(updatableType)) {
+		return toRawNumericID(updatableType);
+	}
+	if (isNull(updatableType) || isNull(currentType)) {
+		return 0;
+	}
+	return toRawNumericID(currentType);
+};

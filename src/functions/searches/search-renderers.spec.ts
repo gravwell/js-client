@@ -45,7 +45,7 @@ const randomIp = (): string => {
 };
 const randomCoordinate = (): Coordinate => ({ lat: random(-85, 85), lon: random(-180, 180) });
 
-describe(
+xdescribe(
 	'search renderer types',
 	integrationTestSpecDef(() => {
 		// Make function to subscript to a search

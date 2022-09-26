@@ -8,6 +8,7 @@
 
 import { decode as base64Decode } from 'base-64';
 import { isString } from 'lodash';
+import * as utf8 from 'utf8';
 import { DATA_TYPE } from '~/models';
 import { Playbook } from './playbook';
 import { RawPlaybook } from './raw-playbook';
@@ -52,7 +53,7 @@ export const toPlaybook = <IncludeBody extends boolean = true>(
 		return playbookWithoutBody as any;
 	}
 
-	const body = isString(raw.Body) ? base64Decode(raw.Body) : '';
+	const body = isString(raw.Body) ? utf8.decode(base64Decode(raw.Body)) : '';
 	const playbook: Playbook = { ...playbookWithoutBody, body };
 	return playbook as any;
 };

@@ -7,59 +7,62 @@
  **************************************************************************/
 
 import { CreatableSavedQuery, isSavedQuery } from '~/models';
-import { integrationTest, myCustomMatchers, TEST_BASE_API_CONTEXT } from '~/tests';
+import { integrationTest, integrationTestSpecDef, myCustomMatchers, TEST_BASE_API_CONTEXT } from '~/tests';
 import { NumericID } from '~/value-objects';
 import { makeCreateOneGroup } from '../groups/create-one-group';
 import { makeDeleteAllGroups } from '../groups/delete-all-groups';
 import { makeCreateOneSavedQuery } from './create-one-saved-query';
 
-describe('createOneSavedQuery()', () => {
-	let createOneSavedQuery: ReturnType<typeof makeCreateOneSavedQuery>;
-	beforeAll(async () => {
-		createOneSavedQuery = makeCreateOneSavedQuery(await TEST_BASE_API_CONTEXT());
-	});
-	let createOneGroup: ReturnType<typeof makeCreateOneGroup>;
-	beforeAll(async () => {
-		createOneGroup = makeCreateOneGroup(await TEST_BASE_API_CONTEXT());
-	});
-	let deleteAllGroups: ReturnType<typeof makeDeleteAllGroups>;
-	beforeAll(async () => {
-		deleteAllGroups = makeDeleteAllGroups(await TEST_BASE_API_CONTEXT());
-	});
+describe(
+	'createOneSavedQuery()',
+	integrationTestSpecDef(() => {
+		let createOneSavedQuery: ReturnType<typeof makeCreateOneSavedQuery>;
+		beforeAll(async () => {
+			createOneSavedQuery = makeCreateOneSavedQuery(await TEST_BASE_API_CONTEXT());
+		});
+		let createOneGroup: ReturnType<typeof makeCreateOneGroup>;
+		beforeAll(async () => {
+			createOneGroup = makeCreateOneGroup(await TEST_BASE_API_CONTEXT());
+		});
+		let deleteAllGroups: ReturnType<typeof makeDeleteAllGroups>;
+		beforeAll(async () => {
+			deleteAllGroups = makeDeleteAllGroups(await TEST_BASE_API_CONTEXT());
+		});
 
-	let groupIDs: Array<NumericID>;
+		let groupIDs: Array<NumericID>;
 
-	beforeEach(async () => {
-		jasmine.addMatchers(myCustomMatchers);
+		beforeEach(async () => {
+			jasmine.addMatchers(myCustomMatchers);
 
-		await deleteAllGroups();
+			await deleteAllGroups();
 
-		groupIDs = (
-			await Promise.all(
-				Array.from({ length: 3 })
-					.map((_, i) => `G${i}`)
-					.map(name => createOneGroup({ name })),
-			)
-		).map(g => g.id);
-	});
+			groupIDs = (
+				await Promise.all(
+					Array.from({ length: 3 })
+						.map((_, i) => `G${i}`)
+						.map(name => createOneGroup({ name })),
+				)
+			).map(g => g.id);
+		});
 
-	it(
-		'Should create a saved query and return it',
-		integrationTest(async () => {
-			const data: CreatableSavedQuery = {
-				groupIDs,
-				isGlobal: true,
+		it(
+			'Should create a saved query and return it',
+			integrationTest(async () => {
+				const data: CreatableSavedQuery = {
+					groupIDs,
+					isGlobal: true,
 
-				name: 'name',
-				description: 'description',
-				labels: ['Label 1', 'Label 2'],
+					name: 'name',
+					description: 'description',
+					labels: ['Label 1', 'Label 2'],
 
-				query: 'tag=netflow',
-			};
+					query: 'tag=netflow',
+				};
 
-			const savedQuery = await createOneSavedQuery(data);
-			expect(isSavedQuery(savedQuery)).toBeTrue();
-			expect(savedQuery).toPartiallyEqual(data);
-		}),
-	);
-});
+				const savedQuery = await createOneSavedQuery(data);
+				expect(isSavedQuery(savedQuery)).toBeTrue();
+				expect(savedQuery).toPartiallyEqual(data);
+			}),
+		);
+	}),
+);

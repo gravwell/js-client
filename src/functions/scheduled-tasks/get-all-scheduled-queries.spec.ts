@@ -7,63 +7,66 @@
  **************************************************************************/
 
 import { isScheduledTaskBase } from '~/models';
-import { integrationTest, TEST_BASE_API_CONTEXT } from '~/tests';
+import { integrationTest, integrationTestSpecDef, TEST_BASE_API_CONTEXT } from '~/tests';
 import { makeCreateManyScheduledQueries } from './create-many-scheduled-queries';
 import { makeDeleteAllScheduledQueries } from './delete-all-scheduled-queries';
 import { makeGetAllScheduledQueries } from './get-all-scheduled-queries';
 
-describe('getAllScheduledQueries()', () => {
-	let getAllScheduledQueries: ReturnType<typeof makeGetAllScheduledQueries>;
-	beforeAll(async () => {
-		getAllScheduledQueries = makeGetAllScheduledQueries(await TEST_BASE_API_CONTEXT());
-	});
-	let deleteAllScheduledQueries: ReturnType<typeof makeDeleteAllScheduledQueries>;
-	beforeAll(async () => {
-		deleteAllScheduledQueries = makeDeleteAllScheduledQueries(await TEST_BASE_API_CONTEXT());
-	});
-	let createManyScheduledQueries: ReturnType<typeof makeCreateManyScheduledQueries>;
-	beforeAll(async () => {
-		createManyScheduledQueries = makeCreateManyScheduledQueries(await TEST_BASE_API_CONTEXT());
-	});
+describe(
+	'getAllScheduledQueries()',
+	integrationTestSpecDef(() => {
+		let getAllScheduledQueries: ReturnType<typeof makeGetAllScheduledQueries>;
+		beforeAll(async () => {
+			getAllScheduledQueries = makeGetAllScheduledQueries(await TEST_BASE_API_CONTEXT());
+		});
+		let deleteAllScheduledQueries: ReturnType<typeof makeDeleteAllScheduledQueries>;
+		beforeAll(async () => {
+			deleteAllScheduledQueries = makeDeleteAllScheduledQueries(await TEST_BASE_API_CONTEXT());
+		});
+		let createManyScheduledQueries: ReturnType<typeof makeCreateManyScheduledQueries>;
+		beforeAll(async () => {
+			createManyScheduledQueries = makeCreateManyScheduledQueries(await TEST_BASE_API_CONTEXT());
+		});
 
-	beforeEach(async () => {
-		await deleteAllScheduledQueries();
-	});
+		beforeEach(async () => {
+			await deleteAllScheduledQueries();
+		});
 
-	it(
-		'Should return all scheduled queries',
-		integrationTest(async () => {
-			// Create two scheduled queries
-			await createManyScheduledQueries([
-				{
-					name: 'Q1',
-					description: 'D1',
-					schedule: '0 1 * * *',
+		it(
+			'Should return all scheduled queries',
+			integrationTest(async () => {
+				// Create two scheduled queries
+				await createManyScheduledQueries([
+					{
+						name: 'Q1',
+						description: 'D1',
+						schedule: '0 1 * * *',
 
-					query: 'tag=netflow',
-					searchSince: { secondsAgo: 60 * 60 },
-				},
-				{
-					name: 'Q2',
-					description: 'D2',
-					schedule: '0 0 * * *',
+						query: 'tag=netflow',
+						searchSince: { secondsAgo: 60 * 60 },
+					},
+					{
+						name: 'Q2',
+						description: 'D2',
+						schedule: '0 0 * * *',
 
-					query: 'tag=custom-test',
-					searchSince: { lastRun: true },
-				},
-			]);
+						query: 'tag=custom-test',
+						searchSince: { lastRun: true },
+					},
+				]);
 
-			const scheduledQueries = await getAllScheduledQueries();
-			expect(scheduledQueries.length).toBe(2);
-			expect(scheduledQueries.every(isScheduledTaskBase)).toBeTrue();
-		}),
-	);
+				const scheduledQueries = await getAllScheduledQueries();
+				expect(scheduledQueries.length).toBe(2);
+				expect(scheduledQueries.every(isScheduledTaskBase)).toBeTrue();
+			}),
+		);
 
-	it(
-		'Should return an empty array if there are no scheduled queries',
-		integrationTest(async () => {
-			const scheduledQueries = await getAllScheduledQueries();
-			expect(scheduledQueries.length).toBe(0);
-		}),
-	);
-});
+		it(
+			'Should return an empty array if there are no scheduled queries',
+			integrationTest(async () => {
+				const scheduledQueries = await getAllScheduledQueries();
+				expect(scheduledQueries.length).toBe(0);
+			}),
+		);
+	}),
+);
