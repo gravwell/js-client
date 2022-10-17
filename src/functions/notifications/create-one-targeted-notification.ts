@@ -39,6 +39,7 @@ export const makeCreateOneTargetedNotification =
 
 			const baseRequestOptions: HTTPRequestOptions = {
 				body: JSON.stringify(toRawCreatableTargetedNotification(_creatable)),
+				headers: { 'Content-Type': 'application/json' },
 			};
 			const req = buildHTTPRequestWithAuthFromContext(context, baseRequestOptions);
 

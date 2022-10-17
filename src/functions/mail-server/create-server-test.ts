@@ -20,6 +20,7 @@ export const makeCreateServerTest =
 			const url = buildURL(MAIL_PATH, { ...context, protocol: 'http' });
 			const req = buildHTTPRequestWithAuthFromContext(context, {
 				body: JSON.stringify(toRawMailServerTestData(data)),
+				headers: { 'Content-Type': 'application/json' },
 			});
 			const rawRes = await context.fetch(url, { ...req, method: 'POST' });
 

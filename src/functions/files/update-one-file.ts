@@ -44,6 +44,7 @@ export const makeUpdateOneFile = (context: APIContext) => {
 
 				const baseRequestOptions: HTTPRequestOptions = {
 					body: JSON.stringify(toRawUpdatableFile(data, current)),
+					headers: { 'Content-Type': 'application/json' },
 				};
 				const req = buildHTTPRequestWithAuthFromContext(context, baseRequestOptions);
 
