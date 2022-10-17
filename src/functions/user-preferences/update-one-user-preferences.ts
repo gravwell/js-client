@@ -22,6 +22,7 @@ export const makeUpdateOneUserPreferences =
 		const url = buildURL(templatePath, { ...context, protocol: 'http', pathParams: { userID } });
 		const baseRequestOptions: HTTPRequestOptions = {
 			body: JSON.stringify(preferences ?? {}),
+			headers: { 'Content-Type': 'application/json' },
 		};
 		const req = buildHTTPRequestWithAuthFromContext(context, baseRequestOptions);
 

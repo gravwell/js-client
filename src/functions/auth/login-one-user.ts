@@ -16,6 +16,7 @@ export const makeLoginOneUser = (context: APIContext) => {
 	return async (username: string, password: string): Promise<JWT> => {
 		const baseRequestOptions: HTTPRequestOptions = {
 			body: JSON.stringify({ User: username, Pass: password }),
+			headers: { 'Content-Type': 'application/json' },
 		};
 		const req = buildHTTPRequest(baseRequestOptions);
 

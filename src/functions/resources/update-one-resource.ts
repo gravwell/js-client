@@ -39,6 +39,7 @@ export const makeUpdateOneResource = (context: APIContext) => {
 
 			const baseRequestOptions: HTTPRequestOptions = {
 				body: JSON.stringify(toRawUpdatableResourceMetadata(data, current)),
+				headers: { 'Content-Type': 'application/json' },
 			};
 			const req = buildHTTPRequestWithAuthFromContext(context, baseRequestOptions);
 

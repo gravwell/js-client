@@ -18,6 +18,7 @@ export const makeUpdateConfig =
 			const url = buildURL(MAIL_CONFIG_PATH, { ...context, protocol: 'http' });
 			const req = buildHTTPRequestWithAuthFromContext(context, {
 				body: JSON.stringify(toRawMailServerConfig(config)),
+				headers: { 'Content-Type': 'application/json' },
 			});
 			const rawRes = await context.fetch(url, { ...req, method: 'POST' });
 			// The API response is empty so we just check on status

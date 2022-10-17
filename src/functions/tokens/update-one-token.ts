@@ -28,6 +28,7 @@ export const makeUpdateOneToken = (context: APIContext) => {
 
 			const baseRequestOptions: HTTPRequestOptions = {
 				body: JSON.stringify(toRawUpdatableToken(data, current)),
+				headers: { 'Content-Type': 'application/json' },
 			};
 			const req = buildHTTPRequestWithAuthFromContext(context, baseRequestOptions);
 

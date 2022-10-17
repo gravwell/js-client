@@ -22,6 +22,7 @@ export const makeValidateOneScript = (context: APIContext) => {
 	return async (script: Script): Promise<ValidatedScript> => {
 		const baseRequestOptions: HTTPRequestOptions = {
 			body: JSON.stringify({ Script: script }),
+			headers: { 'Content-Type': 'application/json' },
 		};
 		const req = buildHTTPRequestWithAuthFromContext(context, baseRequestOptions);
 

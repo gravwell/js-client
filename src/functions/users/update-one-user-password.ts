@@ -29,6 +29,7 @@ export const makeUpdateOneUserPassword =
 			});
 			const baseRequestOptions: HTTPRequestOptions = {
 				body: JSON.stringify(body),
+				headers: { 'Content-Type': 'application/json' },
 			};
 			const req = buildHTTPRequestWithAuthFromContext(context, baseRequestOptions);
 
