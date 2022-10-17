@@ -28,6 +28,7 @@ export const makeUpdateOneSavedQuery = (context: APIContext) => {
 
 			const baseRequestOptions: HTTPRequestOptions = {
 				body: JSON.stringify(toRawUpdatableSavedQuery(data, current)),
+				headers: { 'Content-Type': 'application/json' },
 			};
 			const req = buildHTTPRequestWithAuthFromContext(context, baseRequestOptions);
 

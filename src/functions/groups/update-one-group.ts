@@ -27,6 +27,7 @@ export const makeUpdateOneGroup =
 		try {
 			const baseRequestOptions: HTTPRequestOptions = {
 				body: JSON.stringify(toRawUpdatableGroup(data)),
+				headers: { 'Content-Type': 'application/json' },
 			};
 			const req = buildHTTPRequestWithAuthFromContext(context, baseRequestOptions);
 

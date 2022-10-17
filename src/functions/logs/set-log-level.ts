@@ -22,6 +22,7 @@ export const makeSetLogLevel = (context: APIContext) => {
 	return async (level: LogLevel | 'off'): Promise<void> => {
 		const baseRequestOptions: HTTPRequestOptions = {
 			body: JSON.stringify({ Level: level === 'off' ? 'Off' : toRawLogLevel(level) }),
+			headers: { 'Content-Type': 'application/json' },
 		};
 		const req = buildHTTPRequestWithAuthFromContext(context, baseRequestOptions);
 

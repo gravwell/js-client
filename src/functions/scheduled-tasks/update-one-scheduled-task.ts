@@ -40,6 +40,7 @@ export const makeUpdateOneScheduledTask = (context: APIContext) => {
 
 			const baseRequestOptions: HTTPRequestOptions = {
 				body: JSON.stringify(toRawUpdatableScheduledTask(data, current)),
+				headers: { 'Content-Type': 'application/json' },
 			};
 			const req = buildHTTPRequestWithAuthFromContext(context, baseRequestOptions);
 

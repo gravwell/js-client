@@ -27,6 +27,7 @@ export const makeCreateOneMacro = (context: APIContext) => {
 		try {
 			const baseRequestOptions: HTTPRequestOptions = {
 				body: JSON.stringify(toRawCreatableMacro(data)),
+				headers: { 'Content-Type': 'application/json' },
 			};
 			const req = buildHTTPRequestWithAuthFromContext(context, baseRequestOptions);
 
