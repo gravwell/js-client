@@ -10,6 +10,7 @@ import { RawNumericID } from '~/value-objects';
 
 export interface RawUpdatableMacro {
 	GIDs: Array<RawNumericID>;
+	Global: boolean;
 
 	Name: string;
 	Description: string; // Use empty string for null

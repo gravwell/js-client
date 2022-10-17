@@ -27,7 +27,7 @@ interface Entry {
 	value: { foo: number };
 }
 
-describe(
+xdescribe(
 	'subscribeToOneExplorerSearch()',
 	integrationTestSpecDef(() => {
 		// Use a randomly generated tag, so that we know exactly what we're going to query

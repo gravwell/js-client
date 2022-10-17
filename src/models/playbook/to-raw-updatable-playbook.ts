@@ -8,6 +8,7 @@
 
 import { encode as base64Encode } from 'base-64';
 import { isNull, isUndefined } from 'lodash';
+import * as utf8 from 'utf8';
 import { omitUndefinedShallow } from '~/functions/utils';
 import { isUUID, toRawNumericID } from '~/value-objects';
 import { Playbook } from './playbook';
@@ -76,7 +77,7 @@ export const toRawUpdatablePlaybook = (updatable: UpdatablePlaybook, current: Pl
 		Name: nullToEmptyString(updatable.name) ?? nullToEmptyString(current.name),
 		Desc: isUndefined(updatable.description) ? current.description : updatable.description,
 
-		Body: base64Encode(updatable.body ?? current.body),
+		Body: base64Encode(utf8.encode(updatable.body ?? current.body)),
 		Metadata: base64Encode(JSON.stringify(omitUndefinedShallow(metadata))),
 
 		Author: {

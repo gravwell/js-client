@@ -7,31 +7,34 @@
  **************************************************************************/
 
 import { CreatableToken, isTokenWithSecret, TokenCapability } from '~/models';
-import { integrationTest, myCustomMatchers, TEST_BASE_API_CONTEXT } from '~/tests';
+import { integrationTest, integrationTestSpecDef, myCustomMatchers, TEST_BASE_API_CONTEXT } from '~/tests';
 import { makeCreateOneToken } from './create-one-token';
 
-describe('createOneToken()', () => {
-	let createOneToken: ReturnType<typeof makeCreateOneToken>;
-	beforeAll(async () => {
-		createOneToken = makeCreateOneToken(await TEST_BASE_API_CONTEXT());
-	});
+describe(
+	'createOneToken()',
+	integrationTestSpecDef(() => {
+		let createOneToken: ReturnType<typeof makeCreateOneToken>;
+		beforeAll(async () => {
+			createOneToken = makeCreateOneToken(await TEST_BASE_API_CONTEXT());
+		});
 
-	beforeEach(async () => {
-		jasmine.addMatchers(myCustomMatchers);
-	});
+		beforeEach(async () => {
+			jasmine.addMatchers(myCustomMatchers);
+		});
 
-	it(
-		'Should create a token and return it',
-		integrationTest(async () => {
-			const data: CreatableToken = {
-				name: 'name',
-				description: 'description',
-				capabilities: [TokenCapability.KitWrite],
-			};
+		it(
+			'Should create a token and return it',
+			integrationTest(async () => {
+				const data: CreatableToken = {
+					name: 'name',
+					description: 'description',
+					capabilities: [TokenCapability.KitWrite],
+				};
 
-			const token = await createOneToken(data);
-			expect(isTokenWithSecret(token)).toBeTrue();
-			expect(token).toPartiallyEqual(data);
-		}),
-	);
-});
+				const token = await createOneToken(data);
+				expect(isTokenWithSecret(token)).toBeTrue();
+				expect(token).toPartiallyEqual(data);
+			}),
+		);
+	}),
+);

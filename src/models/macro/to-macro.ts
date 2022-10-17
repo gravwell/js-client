@@ -16,6 +16,7 @@ export const toMacro = (raw: RawMacro): Macro => ({
 	id: toNumericID(raw.ID),
 	userID: toNumericID(raw.UID),
 	groupIDs: raw.GIDs?.map(toNumericID) ?? [],
+	isGlobal: raw.Global ?? false,
 
 	name: raw.Name,
 	description: raw.Description.trim() === '' ? null : raw.Description,

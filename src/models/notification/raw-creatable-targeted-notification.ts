@@ -33,4 +33,5 @@ export interface RawCreatableBaseTargetedNotification {
 	Expires?: string; // Timestamp eg. '2019-04-23T03:44:01.776918756-06:00'
 	IgnoreUntil?: string; // Timestamp eg. '0001-01-01T00:00:00Z'
 	Msg: string;
+	Link?: string;
 }

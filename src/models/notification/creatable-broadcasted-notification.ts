@@ -6,6 +6,8 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
+import { BroadcastedLevel } from './broadcasted-notification';
+
 export interface CreatableBroadcastNotification {
 	message: string;
 	customID?: string;
@@ -13,4 +15,6 @@ export interface CreatableBroadcastNotification {
 	sentDate?: string; // Timestamp eg. '2019-04-22T21:44:01.776942432Z'
 	expirationDate?: string; // Timestamp eg. '2019-04-23T03:44:01.776918756-06:00'
 	ignoreUntilDate?: string; // Timestamp eg. '0001-01-01T00:00:00Z'
+	level: BroadcastedLevel;
+	link: string | null;
 }

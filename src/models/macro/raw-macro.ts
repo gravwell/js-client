@@ -12,6 +12,7 @@ export interface RawMacro {
 	ID: RawNumericID;
 	UID: RawNumericID;
 	GIDs: Array<RawNumericID> | null;
+	Global: boolean;
 	Name: string;
 	Description: string; // Empty string is null
 	Expansion: string;

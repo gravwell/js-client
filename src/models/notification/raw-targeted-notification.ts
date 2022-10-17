@@ -17,4 +17,5 @@ export interface RawTargetedNotification {
 	IgnoreUntil: string;
 	Msg: string;
 	Origin: string;
+	Link: string | null;
 }

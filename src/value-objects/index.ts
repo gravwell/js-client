@@ -11,3 +11,4 @@ export * from './json';
 export * from './markdown';
 export * from './percentage';
 export * from './regex';
+export * from './date';

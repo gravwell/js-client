@@ -10,10 +10,9 @@ import { NumericID } from '~/value-objects';
 
 export interface CreatableMacro {
 	groupIDs?: Array<NumericID>;
+	isGlobal?: boolean;
 
-	/**
-	 * All uppercase and no spaces.
-	 */
+	/** All uppercase and no spaces. */
 	name: string;
 	description?: string | null;
 	labels?: Array<string>;

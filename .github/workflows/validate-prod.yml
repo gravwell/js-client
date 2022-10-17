@@ -50,6 +50,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+      - name: Build image for Backend Beta
+        run: docker build -t gravwell-beta .config/test-config/test-backend-beta/
       - shell: bash
         run: |
           docker run -p 8080:80 -d \
@@ -57,9 +59,9 @@ jobs:
             -e GRAVWELL_INGEST_AUTH=MyIngestSecret \
             -e GRAVWELL_CONTROL_AUTH=MyControlSecret \
             -e GRAVWELL_SEARCHAGENT_AUTH=MySearchAgentAuth \
-            --name gravwell \
+            --name gravwell-beta \
             -v ${GITHUB_WORKSPACE}/.config/test-config/etc:/opt/gravwell/etc \
-            gravwell/gravwell:latest
+            gravwell-beta
       - shell: bash
         env:
           LICENSE: ${{ secrets.TEST_LICENSE }}
@@ -117,6 +119,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+      - name: Build image for Backend Beta
+        run: docker build -t gravwell-beta .config/test-config/test-backend-beta/
       - shell: bash
         run: |
           docker run -p 8080:80 -d \
@@ -124,9 +128,9 @@ jobs:
             -e GRAVWELL_INGEST_AUTH=MyIngestSecret \
             -e GRAVWELL_CONTROL_AUTH=MyControlSecret \
             -e GRAVWELL_SEARCHAGENT_AUTH=MySearchAgentAuth \
-            --name gravwell \
+            --name gravwell-beta \
             -v ${GITHUB_WORKSPACE}/.config/test-config/etc:/opt/gravwell/etc \
-            gravwell/gravwell:latest
+            gravwell-beta
       - shell: bash
         env:
           LICENSE: ${{ secrets.TEST_LICENSE }}
@@ -183,6 +187,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+      - name: Build image for Backend Beta
+        run: docker build -t gravwell-beta .config/test-config/test-backend-beta/
       - shell: bash
         run: |
           docker run -p 8080:80 -d \
@@ -190,9 +196,9 @@ jobs:
             -e GRAVWELL_INGEST_AUTH=MyIngestSecret \
             -e GRAVWELL_CONTROL_AUTH=MyControlSecret \
             -e GRAVWELL_SEARCHAGENT_AUTH=MySearchAgentAuth \
-            --name gravwell \
+            --name gravwell-beta \
             -v ${GITHUB_WORKSPACE}/.config/test-config/etc:/opt/gravwell/etc \
-            gravwell/gravwell:latest
+            gravwell-beta
       - shell: bash
         env:
           LICENSE: ${{ secrets.TEST_LICENSE }}

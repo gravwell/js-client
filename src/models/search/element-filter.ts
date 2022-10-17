@@ -34,7 +34,7 @@ export const isOperationFilter = (v: ElementFilter): v is OperationFilter => {
  * Filter to extract a field.
  */
 export interface ExtractionFilter {
-	tag: string;
+	tag: string | null;
 	module: string;
 	path: string;
 	arguments: string | null;

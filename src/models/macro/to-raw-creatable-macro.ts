@@ -12,6 +12,7 @@ import { RawCreatableMacro } from './raw-creatable-macro';
 
 export const toRawCreatableMacro = (creatable: CreatableMacro): RawCreatableMacro => ({
 	GIDs: creatable.groupIDs?.map(toRawNumericID) ?? [],
+	Global: creatable.isGlobal ?? false,
 
 	Name: creatable.name.trim(),
 	Description: creatable.description?.trim() ?? null,

@@ -7,6 +7,7 @@
  **************************************************************************/
 
 import { encode as base64Encode } from 'base-64';
+import * as utf8 from 'utf8';
 import { omitUndefinedShallow } from '~/functions/utils';
 import { isUUID, toRawNumericID } from '~/value-objects';
 import { CreatablePlaybook } from './creatable-playbook';
@@ -36,7 +37,7 @@ export const toRawCreatablePlaybook = (creatable: CreatablePlaybook): RawCreatab
 		Name: creatable.name ?? '',
 		Desc: creatable.description ?? null,
 
-		Body: base64Encode(creatable.body),
+		Body: base64Encode(utf8.encode(creatable.body)),
 		Metadata: base64Encode(JSON.stringify(metadata)),
 
 		Author: {

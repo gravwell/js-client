@@ -7,8 +7,8 @@
  **************************************************************************/
 
 import { isEqual, isUndefined } from 'lodash';
-import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
-import { distinctUntilChanged, map, shareReplay } from 'rxjs/operators';
+import { BehaviorSubject, combineLatest, firstValueFrom, Observable } from 'rxjs';
+import { distinctUntilChanged, first, map, shareReplay } from 'rxjs/operators';
 import { APIContext, fetch } from '~/functions/utils';
 import {
 	ActionablesService,
@@ -113,7 +113,11 @@ export class GravwellClient {
 	}
 	protected _authToken: string | null = null;
 	protected _authToken$ = new BehaviorSubject<string | null>(this._authToken);
+
 	public readonly authToken$ = this._authToken$.asObservable();
+
+	/** Whether the user is authenticated or not */
+	public readonly isAuthenticated$: Observable<boolean> = this.authToken$.pipe(map(value => value !== null));
 
 	private readonly _initialOptions: GravwellClientOptions;
 
@@ -134,6 +138,11 @@ export class GravwellClient {
 
 	public isAuthenticated(): boolean {
 		return this.authToken !== null;
+	}
+
+	public async whenAuthenticated(): Promise<void> {
+		const isAuthenticated$ = this.isAuthenticated$.pipe(first(value => value === true));
+		await firstValueFrom(isAuthenticated$);
 	}
 
 	public authenticate(authToken: string): void {
