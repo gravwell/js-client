@@ -31,4 +31,5 @@ export interface UserPreferences {
 	dashboardAutosave?: boolean;
 	developer?: boolean;
 	experimental?: boolean;
+	queryStudioPaneSettings?: Array<{ id: string; size?: number | '*' | undefined }> | undefined;
 }

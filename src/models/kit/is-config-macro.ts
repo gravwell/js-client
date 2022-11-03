@@ -6,12 +6,16 @@
  * MIT license. See the LICENSE file for details.
  **************************************************************************/
 
-import { isNull, isString } from 'lodash';
+import { constant, Decoder, either, null_, object, string } from 'decoders';
+import { mkTypeGuard } from '../../functions/utils/type-guards';
 import { ConfigMacro } from './config-macro';
 
-export const isConfigMacro = (v: any): v is ConfigMacro =>
-	v.type === 'macro value' &&
-	isString(v.macroName) &&
-	isString(v.description) &&
-	isString(v.defaultValue) &&
-	(isString(v.value) || (isNull(v.value) && ['tag', 'string'].includes(v.valueType)));
+const configMacroDecoder: Decoder<ConfigMacro> = object({
+	macroName: string,
+	description: string,
+	defaultValue: string,
+	value: either(string, null_),
+	type: either(constant('tag'), constant('string')),
+});
+
+export const isConfigMacro: (v: unknown) => v is ConfigMacro = mkTypeGuard(configMacroDecoder);
