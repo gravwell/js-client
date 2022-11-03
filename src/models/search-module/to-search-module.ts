@@ -17,6 +17,5 @@ export const toSearchModule = (raw: RawSearchModule): SearchModule => ({
 	examples: raw.Examples,
 
 	frontendOnly: raw.FrontendOnly,
-	collapsing: raw.Collapsing,
 	sorting: raw.Sorting,
 });
