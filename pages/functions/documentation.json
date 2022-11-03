@@ -913,7 +913,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/auto-extractors/is-valid-auto-extractor-syntax.ts",
-							"line": 46,
+							"line": 47,
 							"character": 12
 						}
 					],
@@ -938,7 +938,7 @@
 											"sources": [
 												{
 													"fileName": "src/functions/auto-extractors/is-valid-auto-extractor-syntax.ts",
-													"line": 46,
+													"line": 47,
 													"character": 51
 												}
 											],
@@ -960,7 +960,7 @@
 									"sources": [
 										{
 											"fileName": "src/functions/auto-extractors/is-valid-auto-extractor-syntax.ts",
-											"line": 46,
+											"line": 47,
 											"character": 49
 										}
 									]
@@ -987,7 +987,7 @@
 													"sources": [
 														{
 															"fileName": "src/functions/auto-extractors/is-valid-auto-extractor-syntax.ts",
-															"line": 47,
+															"line": 48,
 															"character": 5
 														}
 													],
@@ -1005,7 +1005,7 @@
 													"sources": [
 														{
 															"fileName": "src/functions/auto-extractors/is-valid-auto-extractor-syntax.ts",
-															"line": 47,
+															"line": 48,
 															"character": 26
 														}
 													],
@@ -1028,7 +1028,7 @@
 											"sources": [
 												{
 													"fileName": "src/functions/auto-extractors/is-valid-auto-extractor-syntax.ts",
-													"line": 47,
+													"line": 48,
 													"character": 3
 												}
 											]
@@ -1052,7 +1052,7 @@
 													"sources": [
 														{
 															"fileName": "src/functions/auto-extractors/is-valid-auto-extractor-syntax.ts",
-															"line": 48,
+															"line": 49,
 															"character": 5
 														}
 													],
@@ -1070,7 +1070,7 @@
 													"sources": [
 														{
 															"fileName": "src/functions/auto-extractors/is-valid-auto-extractor-syntax.ts",
-															"line": 48,
+															"line": 49,
 															"character": 27
 														}
 													],
@@ -1093,7 +1093,7 @@
 											"sources": [
 												{
 													"fileName": "src/functions/auto-extractors/is-valid-auto-extractor-syntax.ts",
-													"line": 48,
+													"line": 49,
 													"character": 3
 												}
 											]
