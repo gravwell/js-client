@@ -17,7 +17,6 @@ export const isSearchModuleData = (value: unknown): value is SearchModuleData =>
 			isString(m.description) &&
 			m.examples.every(isString) &&
 			isBoolean(m.frontendOnly) &&
-			isBoolean(m.collapsing) &&
 			isBoolean(m.sorting)
 		);
 	} catch {

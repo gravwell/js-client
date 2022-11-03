@@ -29,7 +29,7 @@ export const toFileMetadata = (raw: RawFileMetadata): FileMetadata => ({
 
 	lastUpdateDate: new Date(raw.Updated),
 
-	downloadURL: `/api/files/${raw.ThingUUID}`,
+	downloadURL: `/api/files/${raw.GUID}`,
 	size: raw.Size,
 	contentType: raw.Type,
 });

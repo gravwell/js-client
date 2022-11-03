@@ -12,6 +12,5 @@ export interface SearchModuleData {
 	examples: Array<string>;
 
 	frontendOnly: boolean;
-	collapsing: boolean;
 	sorting: boolean;
 }

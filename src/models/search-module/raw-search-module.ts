@@ -12,6 +12,5 @@ export interface RawSearchModule {
 	Examples: Array<string>;
 
 	FrontendOnly: boolean;
-	Collapsing: boolean;
 	Sorting: boolean;
 }
