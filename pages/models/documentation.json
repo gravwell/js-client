@@ -8858,7 +8858,7 @@
 									},
 									{
 										"type": "reference",
-										"id": 5183,
+										"id": 5180,
 										"name": "Timeframe"
 									}
 								]
@@ -9212,7 +9212,7 @@
 							],
 							"type": {
 								"type": "reference",
-								"id": 5173,
+								"id": 5170,
 								"name": "CreatableTimeframe"
 							}
 						},
@@ -9745,7 +9745,7 @@
 							],
 							"type": {
 								"type": "reference",
-								"id": 5183,
+								"id": 5180,
 								"name": "Timeframe"
 							},
 							"inheritedFrom": {
@@ -9818,7 +9818,7 @@
 							],
 							"type": {
 								"type": "reference",
-								"id": 5505,
+								"id": 5506,
 								"name": "Version"
 							},
 							"inheritedFrom": {
@@ -10263,7 +10263,7 @@
 							],
 							"type": {
 								"type": "reference",
-								"id": 5183,
+								"id": 5180,
 								"name": "Timeframe"
 							}
 						},
@@ -10321,7 +10321,7 @@
 							],
 							"type": {
 								"type": "reference",
-								"id": 5505,
+								"id": 5506,
 								"name": "Version"
 							}
 						}
@@ -11530,7 +11530,7 @@
 																],
 																"type": {
 																	"type": "reference",
-																	"id": 5177,
+																	"id": 5174,
 																	"name": "RawTimeframe"
 																}
 															}
@@ -11811,7 +11811,7 @@
 											],
 											"type": {
 												"type": "reference",
-												"id": 5177,
+												"id": 5174,
 												"name": "RawTimeframe"
 											}
 										},
@@ -12257,7 +12257,7 @@
 											],
 											"type": {
 												"type": "reference",
-												"id": 5177,
+												"id": 5174,
 												"name": "RawTimeframe"
 											}
 										},
@@ -12966,7 +12966,7 @@
 																		},
 																		{
 																			"type": "reference",
-																			"id": 5177,
+																			"id": 5174,
 																			"name": "RawTimeframe"
 																		}
 																	]
@@ -13283,7 +13283,7 @@
 											],
 											"type": {
 												"type": "reference",
-												"id": 5177,
+												"id": 5174,
 												"name": "RawTimeframe"
 											}
 										},
@@ -13768,7 +13768,7 @@
 							],
 							"type": {
 								"type": "reference",
-								"id": 5173,
+								"id": 5170,
 								"name": "CreatableTimeframe"
 							}
 						},
@@ -13809,7 +13809,7 @@
 							],
 							"type": {
 								"type": "reference",
-								"id": 5505,
+								"id": 5506,
 								"name": "Version"
 							}
 						}
@@ -15399,7 +15399,7 @@
 											],
 											"type": {
 												"type": "reference",
-												"id": 5177,
+												"id": 5174,
 												"name": "RawTimeframe"
 											}
 										}
@@ -21205,7 +21205,7 @@
 									},
 									{
 										"type": "reference",
-										"id": 5505,
+										"id": 5506,
 										"name": "Version"
 									}
 								]
@@ -21233,7 +21233,7 @@
 									},
 									{
 										"type": "reference",
-										"id": 5505,
+										"id": 5506,
 										"name": "Version"
 									}
 								]
@@ -22427,7 +22427,7 @@
 							],
 							"type": {
 								"type": "reference",
-								"id": 5505,
+								"id": 5506,
 								"name": "Version"
 							},
 							"inheritedFrom": {
@@ -22451,7 +22451,7 @@
 							],
 							"type": {
 								"type": "reference",
-								"id": 5505,
+								"id": 5506,
 								"name": "Version"
 							},
 							"inheritedFrom": {
@@ -23181,7 +23181,7 @@
 							],
 							"type": {
 								"type": "reference",
-								"id": 5505,
+								"id": 5506,
 								"name": "Version"
 							}
 						},
@@ -23200,7 +23200,7 @@
 							],
 							"type": {
 								"type": "reference",
-								"id": 5505,
+								"id": 5506,
 								"name": "Version"
 							}
 						},
@@ -23824,7 +23824,7 @@
 											],
 											"type": {
 												"type": "reference",
-												"id": 5505,
+												"id": 5506,
 												"name": "Version"
 											}
 										},
@@ -23843,7 +23843,7 @@
 											],
 											"type": {
 												"type": "reference",
-												"id": 5505,
+												"id": 5506,
 												"name": "Version"
 											}
 										}
@@ -24108,7 +24108,7 @@
 							],
 							"type": {
 								"type": "reference",
-								"id": 5505,
+								"id": 5506,
 								"name": "Version"
 							},
 							"inheritedFrom": {
@@ -24277,7 +24277,7 @@
 											],
 											"type": {
 												"type": "reference",
-												"id": 5505,
+												"id": 5506,
 												"name": "Version"
 											}
 										},
@@ -24296,7 +24296,7 @@
 											],
 											"type": {
 												"type": "reference",
-												"id": 5505,
+												"id": 5506,
 												"name": "Version"
 											}
 										}
@@ -24511,7 +24511,7 @@
 							],
 							"type": {
 								"type": "reference",
-								"id": 5505,
+								"id": 5506,
 								"name": "Version"
 							}
 						}
@@ -24815,7 +24815,7 @@
 									},
 									{
 										"type": "reference",
-										"id": 5494,
+										"id": 5495,
 										"name": "RawVersionObject"
 									}
 								]
@@ -24843,7 +24843,7 @@
 									},
 									{
 										"type": "reference",
-										"id": 5494,
+										"id": 5495,
 										"name": "RawVersionObject"
 									}
 								]
@@ -25819,7 +25819,7 @@
 							],
 							"type": {
 								"type": "reference",
-								"id": 5494,
+								"id": 5495,
 								"name": "RawVersionObject"
 							}
 						},
@@ -25838,7 +25838,7 @@
 							],
 							"type": {
 								"type": "reference",
-								"id": 5494,
+								"id": 5495,
 								"name": "RawVersionObject"
 							}
 						},
@@ -26549,7 +26549,7 @@
 							],
 							"type": {
 								"type": "reference",
-								"id": 5494,
+								"id": 5495,
 								"name": "RawVersionObject"
 							}
 						},
@@ -26568,7 +26568,7 @@
 							],
 							"type": {
 								"type": "reference",
-								"id": 5494,
+								"id": 5495,
 								"name": "RawVersionObject"
 							}
 						},
@@ -27104,7 +27104,7 @@
 							],
 							"type": {
 								"type": "reference",
-								"id": 5494,
+								"id": 5495,
 								"name": "RawVersionObject"
 							}
 						},
@@ -27123,7 +27123,7 @@
 							],
 							"type": {
 								"type": "reference",
-								"id": 5494,
+								"id": 5495,
 								"name": "RawVersionObject"
 							}
 						},
@@ -27489,7 +27489,7 @@
 											],
 											"type": {
 												"type": "reference",
-												"id": 5505,
+												"id": 5506,
 												"name": "Version"
 											}
 										},
@@ -27508,7 +27508,7 @@
 											],
 											"type": {
 												"type": "reference",
-												"id": 5505,
+												"id": 5506,
 												"name": "Version"
 											}
 										}
@@ -27716,7 +27716,7 @@
 							],
 							"type": {
 								"type": "reference",
-								"id": 5505,
+								"id": 5506,
 								"name": "Version"
 							},
 							"inheritedFrom": {
@@ -27925,7 +27925,7 @@
 											],
 											"type": {
 												"type": "reference",
-												"id": 5505,
+												"id": 5506,
 												"name": "Version"
 											}
 										},
@@ -27944,7 +27944,7 @@
 											],
 											"type": {
 												"type": "reference",
-												"id": 5505,
+												"id": 5506,
 												"name": "Version"
 											}
 										}
@@ -28112,7 +28112,7 @@
 							],
 							"type": {
 								"type": "reference",
-								"id": 5505,
+								"id": 5506,
 								"name": "Version"
 							}
 						}
@@ -43547,7 +43547,7 @@
 									},
 									{
 										"type": "reference",
-										"id": 5183,
+										"id": 5180,
 										"name": "Timeframe"
 									}
 								]
@@ -43878,7 +43878,7 @@
 													},
 													{
 														"type": "reference",
-														"id": 5177,
+														"id": 5174,
 														"name": "RawTimeframe"
 													}
 												]
@@ -44138,7 +44138,7 @@
 															},
 															{
 																"type": "reference",
-																"id": 5177,
+																"id": 5174,
 																"name": "RawTimeframe"
 															}
 														]
@@ -44407,7 +44407,7 @@
 													},
 													{
 														"type": "reference",
-														"id": 5177,
+														"id": 5174,
 														"name": "RawTimeframe"
 													}
 												]
@@ -44572,7 +44572,7 @@
 									},
 									{
 										"type": "reference",
-										"id": 5183,
+										"id": 5180,
 										"name": "Timeframe"
 									}
 								]
@@ -44869,7 +44869,7 @@
 									},
 									{
 										"type": "reference",
-										"id": 5183,
+										"id": 5180,
 										"name": "Timeframe"
 									}
 								]
@@ -45117,7 +45117,7 @@
 									},
 									{
 										"type": "reference",
-										"id": 5173,
+										"id": 5170,
 										"name": "CreatableTimeframe"
 									}
 								]
@@ -79615,24 +79615,6 @@
 					},
 					"children": [
 						{
-							"id": 5019,
-							"name": "Collapsing",
-							"kind": 1024,
-							"kindString": "Property",
-							"flags": {},
-							"sources": [
-								{
-									"fileName": "search-module/raw-search-module.ts",
-									"line": 15,
-									"character": 1
-								}
-							],
-							"type": {
-								"type": "intrinsic",
-								"name": "boolean"
-							}
-						},
-						{
 							"id": 5017,
 							"name": "Examples",
 							"kind": 1024,
@@ -79708,7 +79690,7 @@
 							}
 						},
 						{
-							"id": 5020,
+							"id": 5019,
 							"name": "Sorting",
 							"kind": 1024,
 							"kindString": "Property",
@@ -79716,7 +79698,7 @@
 							"sources": [
 								{
 									"fileName": "search-module/raw-search-module.ts",
-									"line": 16,
+									"line": 15,
 									"character": 1
 								}
 							],
@@ -79731,12 +79713,11 @@
 							"title": "Properties",
 							"kind": 1024,
 							"children": [
-								5019,
 								5017,
 								5018,
 								5016,
 								5015,
-								5020
+								5019
 							]
 						}
 					],
@@ -79749,14 +79730,14 @@
 					]
 				},
 				{
-					"id": 5021,
+					"id": 5020,
 					"name": "SearchModule",
 					"kind": 256,
 					"kindString": "Interface",
 					"flags": {},
 					"children": [
 						{
-							"id": 5022,
+							"id": 5021,
 							"name": "_tag",
 							"kind": 1024,
 							"kindString": "Property",
@@ -79774,30 +79755,7 @@
 							}
 						},
 						{
-							"id": 5027,
-							"name": "collapsing",
-							"kind": 1024,
-							"kindString": "Property",
-							"flags": {},
-							"sources": [
-								{
-									"fileName": "search-module/search-module-data.ts",
-									"line": 15,
-									"character": 1
-								}
-							],
-							"type": {
-								"type": "intrinsic",
-								"name": "boolean"
-							},
-							"inheritedFrom": {
-								"type": "reference",
-								"id": 5040,
-								"name": "SearchModuleData.collapsing"
-							}
-						},
-						{
-							"id": 5024,
+							"id": 5023,
 							"name": "description",
 							"kind": 1024,
 							"kindString": "Property",
@@ -79815,12 +79773,12 @@
 							},
 							"inheritedFrom": {
 								"type": "reference",
-								"id": 5037,
+								"id": 5035,
 								"name": "SearchModuleData.description"
 							}
 						},
 						{
-							"id": 5025,
+							"id": 5024,
 							"name": "examples",
 							"kind": 1024,
 							"kindString": "Property",
@@ -79841,12 +79799,12 @@
 							},
 							"inheritedFrom": {
 								"type": "reference",
-								"id": 5038,
+								"id": 5036,
 								"name": "SearchModuleData.examples"
 							}
 						},
 						{
-							"id": 5026,
+							"id": 5025,
 							"name": "frontendOnly",
 							"kind": 1024,
 							"kindString": "Property",
@@ -79864,12 +79822,12 @@
 							},
 							"inheritedFrom": {
 								"type": "reference",
-								"id": 5039,
+								"id": 5037,
 								"name": "SearchModuleData.frontendOnly"
 							}
 						},
 						{
-							"id": 5023,
+							"id": 5022,
 							"name": "name",
 							"kind": 1024,
 							"kindString": "Property",
@@ -79887,12 +79845,12 @@
 							},
 							"inheritedFrom": {
 								"type": "reference",
-								"id": 5036,
+								"id": 5034,
 								"name": "SearchModuleData.name"
 							}
 						},
 						{
-							"id": 5028,
+							"id": 5026,
 							"name": "sorting",
 							"kind": 1024,
 							"kindString": "Property",
@@ -79900,7 +79858,7 @@
 							"sources": [
 								{
 									"fileName": "search-module/search-module-data.ts",
-									"line": 16,
+									"line": 15,
 									"character": 1
 								}
 							],
@@ -79910,7 +79868,7 @@
 							},
 							"inheritedFrom": {
 								"type": "reference",
-								"id": 5041,
+								"id": 5038,
 								"name": "SearchModuleData.sorting"
 							}
 						}
@@ -79920,13 +79878,12 @@
 							"title": "Properties",
 							"kind": 1024,
 							"children": [
-								5022,
-								5027,
+								5021,
+								5023,
 								5024,
 								5025,
-								5026,
-								5023,
-								5028
+								5022,
+								5026
 							]
 						}
 					],
@@ -79940,13 +79897,13 @@
 					"extendedTypes": [
 						{
 							"type": "reference",
-							"id": 5035,
+							"id": 5033,
 							"name": "SearchModuleData"
 						}
 					]
 				},
 				{
-					"id": 5035,
+					"id": 5033,
 					"name": "SearchModuleData",
 					"kind": 256,
 					"kindString": "Interface",
@@ -79957,25 +79914,7 @@
 					},
 					"children": [
 						{
-							"id": 5040,
-							"name": "collapsing",
-							"kind": 1024,
-							"kindString": "Property",
-							"flags": {},
-							"sources": [
-								{
-									"fileName": "search-module/search-module-data.ts",
-									"line": 15,
-									"character": 1
-								}
-							],
-							"type": {
-								"type": "intrinsic",
-								"name": "boolean"
-							}
-						},
-						{
-							"id": 5037,
+							"id": 5035,
 							"name": "description",
 							"kind": 1024,
 							"kindString": "Property",
@@ -79993,7 +79932,7 @@
 							}
 						},
 						{
-							"id": 5038,
+							"id": 5036,
 							"name": "examples",
 							"kind": 1024,
 							"kindString": "Property",
@@ -80014,7 +79953,7 @@
 							}
 						},
 						{
-							"id": 5039,
+							"id": 5037,
 							"name": "frontendOnly",
 							"kind": 1024,
 							"kindString": "Property",
@@ -80032,7 +79971,7 @@
 							}
 						},
 						{
-							"id": 5036,
+							"id": 5034,
 							"name": "name",
 							"kind": 1024,
 							"kindString": "Property",
@@ -80050,7 +79989,7 @@
 							}
 						},
 						{
-							"id": 5041,
+							"id": 5038,
 							"name": "sorting",
 							"kind": 1024,
 							"kindString": "Property",
@@ -80058,7 +79997,7 @@
 							"sources": [
 								{
 									"fileName": "search-module/search-module-data.ts",
-									"line": 16,
+									"line": 15,
 									"character": 1
 								}
 							],
@@ -80073,12 +80012,11 @@
 							"title": "Properties",
 							"kind": 1024,
 							"children": [
-								5040,
-								5037,
-								5038,
-								5039,
+								5035,
 								5036,
-								5041
+								5037,
+								5034,
+								5038
 							]
 						}
 					],
@@ -80092,13 +80030,13 @@
 					"extendedBy": [
 						{
 							"type": "reference",
-							"id": 5021,
+							"id": 5020,
 							"name": "SearchModule"
 						}
 					]
 				},
 				{
-					"id": 5032,
+					"id": 5030,
 					"name": "fromSearchModuleDataToSearchModule",
 					"kind": 64,
 					"kindString": "Function",
@@ -80112,28 +80050,28 @@
 					],
 					"signatures": [
 						{
-							"id": 5033,
+							"id": 5031,
 							"name": "fromSearchModuleDataToSearchModule",
 							"kind": 4096,
 							"kindString": "Call signature",
 							"flags": {},
 							"parameters": [
 								{
-									"id": 5034,
+									"id": 5032,
 									"name": "data",
 									"kind": 32768,
 									"kindString": "Parameter",
 									"flags": {},
 									"type": {
 										"type": "reference",
-										"id": 5035,
+										"id": 5033,
 										"name": "SearchModuleData"
 									}
 								}
 							],
 							"type": {
 								"type": "reference",
-								"id": 5021,
+								"id": 5020,
 								"name": "SearchModule"
 							}
 						}
@@ -80178,7 +80116,7 @@
 								"asserts": false,
 								"targetType": {
 									"type": "reference",
-									"id": 5021,
+									"id": 5020,
 									"name": "SearchModule"
 								}
 							}
@@ -80186,7 +80124,7 @@
 					]
 				},
 				{
-					"id": 5042,
+					"id": 5039,
 					"name": "isSearchModuleData",
 					"kind": 64,
 					"kindString": "Function",
@@ -80200,14 +80138,14 @@
 					],
 					"signatures": [
 						{
-							"id": 5043,
+							"id": 5040,
 							"name": "isSearchModuleData",
 							"kind": 4096,
 							"kindString": "Call signature",
 							"flags": {},
 							"parameters": [
 								{
-									"id": 5044,
+									"id": 5041,
 									"name": "value",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -80224,7 +80162,7 @@
 								"asserts": false,
 								"targetType": {
 									"type": "reference",
-									"id": 5035,
+									"id": 5033,
 									"name": "SearchModuleData"
 								}
 							}
@@ -80232,7 +80170,7 @@
 					]
 				},
 				{
-					"id": 5029,
+					"id": 5027,
 					"name": "toSearchModule",
 					"kind": 64,
 					"kindString": "Function",
@@ -80246,14 +80184,14 @@
 					],
 					"signatures": [
 						{
-							"id": 5030,
+							"id": 5028,
 							"name": "toSearchModule",
 							"kind": 4096,
 							"kindString": "Call signature",
 							"flags": {},
 							"parameters": [
 								{
-									"id": 5031,
+									"id": 5029,
 									"name": "raw",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -80267,7 +80205,7 @@
 							],
 							"type": {
 								"type": "reference",
-								"id": 5021,
+								"id": 5020,
 								"name": "SearchModule"
 							}
 						}
@@ -80280,18 +80218,18 @@
 					"kind": 256,
 					"children": [
 						5014,
-						5021,
-						5035
+						5020,
+						5033
 					]
 				},
 				{
 					"title": "Functions",
 					"kind": 64,
 					"children": [
-						5032,
+						5030,
 						5011,
-						5042,
-						5029
+						5039,
+						5027
 					]
 				}
 			],
@@ -80311,7 +80249,7 @@
 			"flags": {},
 			"children": [
 				{
-					"id": 5048,
+					"id": 5045,
 					"name": "RawSystemSettings",
 					"kind": 256,
 					"kindString": "Interface",
@@ -80322,7 +80260,7 @@
 					},
 					"children": [
 						{
-							"id": 5049,
+							"id": 5046,
 							"name": "DisableMapTileProxy",
 							"kind": 1024,
 							"kindString": "Property",
@@ -80340,7 +80278,7 @@
 							}
 						},
 						{
-							"id": 5050,
+							"id": 5047,
 							"name": "DistributedWebservers",
 							"kind": 1024,
 							"kindString": "Property",
@@ -80358,7 +80296,7 @@
 							}
 						},
 						{
-							"id": 5051,
+							"id": 5048,
 							"name": "MapTileUrl",
 							"kind": 1024,
 							"kindString": "Property",
@@ -80376,7 +80314,7 @@
 							}
 						},
 						{
-							"id": 5052,
+							"id": 5049,
 							"name": "MaxFileSize",
 							"kind": 1024,
 							"kindString": "Property",
@@ -80394,7 +80332,7 @@
 							}
 						},
 						{
-							"id": 5053,
+							"id": 5050,
 							"name": "MaxResourceSize",
 							"kind": 1024,
 							"kindString": "Property",
@@ -80417,11 +80355,11 @@
 							"title": "Properties",
 							"kind": 1024,
 							"children": [
+								5046,
+								5047,
+								5048,
 								5049,
-								5050,
-								5051,
-								5052,
-								5053
+								5050
 							]
 						}
 					],
@@ -80434,7 +80372,7 @@
 					]
 				},
 				{
-					"id": 5054,
+					"id": 5051,
 					"name": "SystemSettings",
 					"kind": 256,
 					"kindString": "Interface",
@@ -80445,7 +80383,7 @@
 					},
 					"children": [
 						{
-							"id": 5056,
+							"id": 5053,
 							"name": "disableMapTileProxy",
 							"kind": 1024,
 							"kindString": "Property",
@@ -80463,7 +80401,7 @@
 							}
 						},
 						{
-							"id": 5055,
+							"id": 5052,
 							"name": "mapTileURL",
 							"kind": 1024,
 							"kindString": "Property",
@@ -80481,7 +80419,7 @@
 							}
 						},
 						{
-							"id": 5058,
+							"id": 5055,
 							"name": "maxFileSize",
 							"kind": 1024,
 							"kindString": "Property",
@@ -80499,7 +80437,7 @@
 							}
 						},
 						{
-							"id": 5059,
+							"id": 5056,
 							"name": "maxResourceSize",
 							"kind": 1024,
 							"kindString": "Property",
@@ -80517,7 +80455,7 @@
 							}
 						},
 						{
-							"id": 5057,
+							"id": 5054,
 							"name": "webServerIsDistributed",
 							"kind": 1024,
 							"kindString": "Property",
@@ -80540,11 +80478,11 @@
 							"title": "Properties",
 							"kind": 1024,
 							"children": [
-								5056,
+								5053,
+								5052,
 								5055,
-								5058,
-								5059,
-								5057
+								5056,
+								5054
 							]
 						}
 					],
@@ -80557,7 +80495,7 @@
 					]
 				},
 				{
-					"id": 5045,
+					"id": 5042,
 					"name": "isSystemSettings",
 					"kind": 64,
 					"kindString": "Function",
@@ -80571,14 +80509,14 @@
 					],
 					"signatures": [
 						{
-							"id": 5046,
+							"id": 5043,
 							"name": "isSystemSettings",
 							"kind": 4096,
 							"kindString": "Call signature",
 							"flags": {},
 							"parameters": [
 								{
-									"id": 5047,
+									"id": 5044,
 									"name": "value",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -80595,7 +80533,7 @@
 								"asserts": false,
 								"targetType": {
 									"type": "reference",
-									"id": 5054,
+									"id": 5051,
 									"name": "SystemSettings"
 								}
 							}
@@ -80603,7 +80541,7 @@
 					]
 				},
 				{
-					"id": 5060,
+					"id": 5057,
 					"name": "toSystemSettings",
 					"kind": 64,
 					"kindString": "Function",
@@ -80617,28 +80555,28 @@
 					],
 					"signatures": [
 						{
-							"id": 5061,
+							"id": 5058,
 							"name": "toSystemSettings",
 							"kind": 4096,
 							"kindString": "Call signature",
 							"flags": {},
 							"parameters": [
 								{
-									"id": 5062,
+									"id": 5059,
 									"name": "raw",
 									"kind": 32768,
 									"kindString": "Parameter",
 									"flags": {},
 									"type": {
 										"type": "reference",
-										"id": 5048,
+										"id": 5045,
 										"name": "RawSystemSettings"
 									}
 								}
 							],
 							"type": {
 								"type": "reference",
-								"id": 5054,
+								"id": 5051,
 								"name": "SystemSettings"
 							}
 						}
@@ -80650,16 +80588,16 @@
 					"title": "Interfaces",
 					"kind": 256,
 					"children": [
-						5048,
-						5054
+						5045,
+						5051
 					]
 				},
 				{
 					"title": "Functions",
 					"kind": 64,
 					"children": [
-						5045,
-						5060
+						5042,
+						5057
 					]
 				}
 			],
@@ -80679,14 +80617,14 @@
 			"flags": {},
 			"children": [
 				{
-					"id": 5063,
+					"id": 5060,
 					"name": "CreatableTemplate",
 					"kind": 256,
 					"kindString": "Interface",
 					"flags": {},
 					"children": [
 						{
-							"id": 5067,
+							"id": 5064,
 							"name": "description",
 							"kind": 1024,
 							"kindString": "Property",
@@ -80715,7 +80653,7 @@
 							}
 						},
 						{
-							"id": 5065,
+							"id": 5062,
 							"name": "groupIDs",
 							"kind": 1024,
 							"kindString": "Property",
@@ -80738,7 +80676,7 @@
 							}
 						},
 						{
-							"id": 5069,
+							"id": 5066,
 							"name": "isGlobal",
 							"kind": 1024,
 							"kindString": "Property",
@@ -80758,7 +80696,7 @@
 							}
 						},
 						{
-							"id": 5068,
+							"id": 5065,
 							"name": "labels",
 							"kind": 1024,
 							"kindString": "Property",
@@ -80781,7 +80719,7 @@
 							}
 						},
 						{
-							"id": 5066,
+							"id": 5063,
 							"name": "name",
 							"kind": 1024,
 							"kindString": "Property",
@@ -80799,7 +80737,7 @@
 							}
 						},
 						{
-							"id": 5070,
+							"id": 5067,
 							"name": "query",
 							"kind": 1024,
 							"kindString": "Property",
@@ -80817,7 +80755,7 @@
 							}
 						},
 						{
-							"id": 5064,
+							"id": 5061,
 							"name": "userID",
 							"kind": 1024,
 							"kindString": "Property",
@@ -80837,7 +80775,7 @@
 							}
 						},
 						{
-							"id": 5071,
+							"id": 5068,
 							"name": "variables",
 							"kind": 1024,
 							"kindString": "Property",
@@ -80853,7 +80791,7 @@
 								"type": "array",
 								"elementType": {
 									"type": "reference",
-									"id": 5127,
+									"id": 5124,
 									"name": "TemplateVariable"
 								}
 							}
@@ -80864,14 +80802,14 @@
 							"title": "Properties",
 							"kind": 1024,
 							"children": [
-								5067,
-								5065,
-								5069,
-								5068,
-								5066,
-								5070,
 								5064,
-								5071
+								5062,
+								5066,
+								5065,
+								5063,
+								5067,
+								5061,
+								5068
 							]
 						}
 					],
@@ -80884,14 +80822,14 @@
 					]
 				},
 				{
-					"id": 5078,
+					"id": 5075,
 					"name": "RawCreatableTemplate",
 					"kind": 256,
 					"kindString": "Interface",
 					"flags": {},
 					"children": [
 						{
-							"id": 5085,
+							"id": 5082,
 							"name": "Contents",
 							"kind": 1024,
 							"kindString": "Property",
@@ -80906,14 +80844,14 @@
 							"type": {
 								"type": "reflection",
 								"declaration": {
-									"id": 5086,
+									"id": 5083,
 									"name": "__type",
 									"kind": 65536,
 									"kindString": "Type literal",
 									"flags": {},
 									"children": [
 										{
-											"id": 5087,
+											"id": 5084,
 											"name": "query",
 											"kind": 1024,
 											"kindString": "Property",
@@ -80931,7 +80869,7 @@
 											}
 										},
 										{
-											"id": 5088,
+											"id": 5085,
 											"name": "variables",
 											"kind": 1024,
 											"kindString": "Property",
@@ -80947,7 +80885,7 @@
 												"type": "array",
 												"elementType": {
 													"type": "reference",
-													"id": 5127,
+													"id": 5124,
 													"name": "TemplateVariable"
 												}
 											}
@@ -80958,8 +80896,8 @@
 											"title": "Properties",
 											"kind": 1024,
 											"children": [
-												5087,
-												5088
+												5084,
+												5085
 											]
 										}
 									]
@@ -80967,7 +80905,7 @@
 							}
 						},
 						{
-							"id": 5082,
+							"id": 5079,
 							"name": "Description",
 							"kind": 1024,
 							"kindString": "Property",
@@ -80994,7 +80932,7 @@
 							}
 						},
 						{
-							"id": 5079,
+							"id": 5076,
 							"name": "GIDs",
 							"kind": 1024,
 							"kindString": "Property",
@@ -81015,7 +80953,7 @@
 							}
 						},
 						{
-							"id": 5083,
+							"id": 5080,
 							"name": "Global",
 							"kind": 1024,
 							"kindString": "Property",
@@ -81033,7 +80971,7 @@
 							}
 						},
 						{
-							"id": 5084,
+							"id": 5081,
 							"name": "Labels",
 							"kind": 1024,
 							"kindString": "Property",
@@ -81054,7 +80992,7 @@
 							}
 						},
 						{
-							"id": 5081,
+							"id": 5078,
 							"name": "Name",
 							"kind": 1024,
 							"kindString": "Property",
@@ -81072,7 +81010,7 @@
 							}
 						},
 						{
-							"id": 5080,
+							"id": 5077,
 							"name": "UID",
 							"kind": 1024,
 							"kindString": "Property",
@@ -81097,13 +81035,13 @@
 							"title": "Properties",
 							"kind": 1024,
 							"children": [
-								5085,
 								5082,
 								5079,
-								5083,
-								5084,
+								5076,
+								5080,
 								5081,
-								5080
+								5078,
+								5077
 							]
 						}
 					],
@@ -81116,14 +81054,14 @@
 					]
 				},
 				{
-					"id": 5089,
+					"id": 5086,
 					"name": "RawTemplate",
 					"kind": 256,
 					"kindString": "Interface",
 					"flags": {},
 					"children": [
 						{
-							"id": 5099,
+							"id": 5096,
 							"name": "Contents",
 							"kind": 1024,
 							"kindString": "Property",
@@ -81138,14 +81076,14 @@
 							"type": {
 								"type": "reflection",
 								"declaration": {
-									"id": 5100,
+									"id": 5097,
 									"name": "__type",
 									"kind": 65536,
 									"kindString": "Type literal",
 									"flags": {},
 									"children": [
 										{
-											"id": 5101,
+											"id": 5098,
 											"name": "query",
 											"kind": 1024,
 											"kindString": "Property",
@@ -81163,7 +81101,7 @@
 											}
 										},
 										{
-											"id": 5102,
+											"id": 5099,
 											"name": "variables",
 											"kind": 1024,
 											"kindString": "Property",
@@ -81179,7 +81117,7 @@
 												"type": "array",
 												"elementType": {
 													"type": "reference",
-													"id": 5127,
+													"id": 5124,
 													"name": "TemplateVariable"
 												}
 											}
@@ -81190,8 +81128,8 @@
 											"title": "Properties",
 											"kind": 1024,
 											"children": [
-												5101,
-												5102
+												5098,
+												5099
 											]
 										}
 									]
@@ -81199,7 +81137,7 @@
 							}
 						},
 						{
-							"id": 5097,
+							"id": 5094,
 							"name": "Description",
 							"kind": 1024,
 							"kindString": "Property",
@@ -81217,7 +81155,7 @@
 							}
 						},
 						{
-							"id": 5093,
+							"id": 5090,
 							"name": "GIDs",
 							"kind": 1024,
 							"kindString": "Property",
@@ -81247,7 +81185,7 @@
 							}
 						},
 						{
-							"id": 5090,
+							"id": 5087,
 							"name": "GUID",
 							"kind": 1024,
 							"kindString": "Property",
@@ -81265,7 +81203,7 @@
 							}
 						},
 						{
-							"id": 5094,
+							"id": 5091,
 							"name": "Global",
 							"kind": 1024,
 							"kindString": "Property",
@@ -81283,7 +81221,7 @@
 							}
 						},
 						{
-							"id": 5095,
+							"id": 5092,
 							"name": "Labels",
 							"kind": 1024,
 							"kindString": "Property",
@@ -81313,7 +81251,7 @@
 							}
 						},
 						{
-							"id": 5096,
+							"id": 5093,
 							"name": "Name",
 							"kind": 1024,
 							"kindString": "Property",
@@ -81331,7 +81269,7 @@
 							}
 						},
 						{
-							"id": 5091,
+							"id": 5088,
 							"name": "ThingUUID",
 							"kind": 1024,
 							"kindString": "Property",
@@ -81349,7 +81287,7 @@
 							}
 						},
 						{
-							"id": 5092,
+							"id": 5089,
 							"name": "UID",
 							"kind": 1024,
 							"kindString": "Property",
@@ -81367,7 +81305,7 @@
 							}
 						},
 						{
-							"id": 5098,
+							"id": 5095,
 							"name": "Updated",
 							"kind": 1024,
 							"kindString": "Property",
@@ -81390,16 +81328,16 @@
 							"title": "Properties",
 							"kind": 1024,
 							"children": [
-								5099,
-								5097,
-								5093,
-								5090,
-								5094,
-								5095,
 								5096,
+								5094,
+								5090,
+								5087,
 								5091,
 								5092,
-								5098
+								5093,
+								5088,
+								5089,
+								5095
 							]
 						}
 					],
@@ -81412,14 +81350,14 @@
 					]
 				},
 				{
-					"id": 5103,
+					"id": 5100,
 					"name": "RawUpdatableTemplate",
 					"kind": 256,
 					"kindString": "Interface",
 					"flags": {},
 					"children": [
 						{
-							"id": 5110,
+							"id": 5107,
 							"name": "Contents",
 							"kind": 1024,
 							"kindString": "Property",
@@ -81434,14 +81372,14 @@
 							"type": {
 								"type": "reflection",
 								"declaration": {
-									"id": 5111,
+									"id": 5108,
 									"name": "__type",
 									"kind": 65536,
 									"kindString": "Type literal",
 									"flags": {},
 									"children": [
 										{
-											"id": 5112,
+											"id": 5109,
 											"name": "query",
 											"kind": 1024,
 											"kindString": "Property",
@@ -81459,7 +81397,7 @@
 											}
 										},
 										{
-											"id": 5113,
+											"id": 5110,
 											"name": "variables",
 											"kind": 1024,
 											"kindString": "Property",
@@ -81475,7 +81413,7 @@
 												"type": "array",
 												"elementType": {
 													"type": "reference",
-													"id": 5127,
+													"id": 5124,
 													"name": "TemplateVariable"
 												}
 											}
@@ -81486,8 +81424,8 @@
 											"title": "Properties",
 											"kind": 1024,
 											"children": [
-												5112,
-												5113
+												5109,
+												5110
 											]
 										}
 									]
@@ -81495,7 +81433,7 @@
 							}
 						},
 						{
-							"id": 5109,
+							"id": 5106,
 							"name": "Description",
 							"kind": 1024,
 							"kindString": "Property",
@@ -81522,7 +81460,7 @@
 							}
 						},
 						{
-							"id": 5105,
+							"id": 5102,
 							"name": "GIDs",
 							"kind": 1024,
 							"kindString": "Property",
@@ -81543,7 +81481,7 @@
 							}
 						},
 						{
-							"id": 5106,
+							"id": 5103,
 							"name": "Global",
 							"kind": 1024,
 							"kindString": "Property",
@@ -81561,7 +81499,7 @@
 							}
 						},
 						{
-							"id": 5107,
+							"id": 5104,
 							"name": "Labels",
 							"kind": 1024,
 							"kindString": "Property",
@@ -81582,7 +81520,7 @@
 							}
 						},
 						{
-							"id": 5108,
+							"id": 5105,
 							"name": "Name",
 							"kind": 1024,
 							"kindString": "Property",
@@ -81600,7 +81538,7 @@
 							}
 						},
 						{
-							"id": 5104,
+							"id": 5101,
 							"name": "UID",
 							"kind": 1024,
 							"kindString": "Property",
@@ -81623,13 +81561,13 @@
 							"title": "Properties",
 							"kind": 1024,
 							"children": [
-								5110,
-								5109,
-								5105,
-								5106,
 								5107,
-								5108,
-								5104
+								5106,
+								5102,
+								5103,
+								5104,
+								5105,
+								5101
 							]
 						}
 					],
@@ -81642,14 +81580,14 @@
 					]
 				},
 				{
-					"id": 5114,
+					"id": 5111,
 					"name": "Template",
 					"kind": 256,
 					"kindString": "Interface",
 					"flags": {},
 					"children": [
 						{
-							"id": 5115,
+							"id": 5112,
 							"name": "_tag",
 							"kind": 1024,
 							"kindString": "Property",
@@ -81667,7 +81605,7 @@
 							}
 						},
 						{
-							"id": 5121,
+							"id": 5118,
 							"name": "description",
 							"kind": 1024,
 							"kindString": "Property",
@@ -81694,12 +81632,12 @@
 							},
 							"inheritedFrom": {
 								"type": "reference",
-								"id": 5164,
+								"id": 5161,
 								"name": "TemplateData.description"
 							}
 						},
 						{
-							"id": 5116,
+							"id": 5113,
 							"name": "globalID",
 							"kind": 1024,
 							"kindString": "Property",
@@ -81717,12 +81655,12 @@
 							},
 							"inheritedFrom": {
 								"type": "reference",
-								"id": 5159,
+								"id": 5156,
 								"name": "TemplateData.globalID"
 							}
 						},
 						{
-							"id": 5119,
+							"id": 5116,
 							"name": "groupIDs",
 							"kind": 1024,
 							"kindString": "Property",
@@ -81731,6 +81669,78 @@
 								{
 									"fileName": "template/template-data.ts",
 									"line": 16,
+									"character": 1
+								}
+							],
+							"type": {
+								"type": "array",
+								"elementType": {
+									"type": "intrinsic",
+									"name": "string"
+								}
+							},
+							"inheritedFrom": {
+								"type": "reference",
+								"id": 5159,
+								"name": "TemplateData.groupIDs"
+							}
+						},
+						{
+							"id": 5114,
+							"name": "id",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {},
+							"sources": [
+								{
+									"fileName": "template/template-data.ts",
+									"line": 14,
+									"character": 1
+								}
+							],
+							"type": {
+								"type": "intrinsic",
+								"name": "string"
+							},
+							"inheritedFrom": {
+								"type": "reference",
+								"id": 5157,
+								"name": "TemplateData.id"
+							}
+						},
+						{
+							"id": 5120,
+							"name": "isGlobal",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {},
+							"sources": [
+								{
+									"fileName": "template/template-data.ts",
+									"line": 20,
+									"character": 1
+								}
+							],
+							"type": {
+								"type": "intrinsic",
+								"name": "boolean"
+							},
+							"inheritedFrom": {
+								"type": "reference",
+								"id": 5163,
+								"name": "TemplateData.isGlobal"
+							}
+						},
+						{
+							"id": 5119,
+							"name": "labels",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {},
+							"sources": [
+								{
+									"fileName": "template/template-data.ts",
+									"line": 19,
 									"character": 1
 								}
 							],
@@ -81744,83 +81754,11 @@
 							"inheritedFrom": {
 								"type": "reference",
 								"id": 5162,
-								"name": "TemplateData.groupIDs"
-							}
-						},
-						{
-							"id": 5117,
-							"name": "id",
-							"kind": 1024,
-							"kindString": "Property",
-							"flags": {},
-							"sources": [
-								{
-									"fileName": "template/template-data.ts",
-									"line": 14,
-									"character": 1
-								}
-							],
-							"type": {
-								"type": "intrinsic",
-								"name": "string"
-							},
-							"inheritedFrom": {
-								"type": "reference",
-								"id": 5160,
-								"name": "TemplateData.id"
-							}
-						},
-						{
-							"id": 5123,
-							"name": "isGlobal",
-							"kind": 1024,
-							"kindString": "Property",
-							"flags": {},
-							"sources": [
-								{
-									"fileName": "template/template-data.ts",
-									"line": 20,
-									"character": 1
-								}
-							],
-							"type": {
-								"type": "intrinsic",
-								"name": "boolean"
-							},
-							"inheritedFrom": {
-								"type": "reference",
-								"id": 5166,
-								"name": "TemplateData.isGlobal"
-							}
-						},
-						{
-							"id": 5122,
-							"name": "labels",
-							"kind": 1024,
-							"kindString": "Property",
-							"flags": {},
-							"sources": [
-								{
-									"fileName": "template/template-data.ts",
-									"line": 19,
-									"character": 1
-								}
-							],
-							"type": {
-								"type": "array",
-								"elementType": {
-									"type": "intrinsic",
-									"name": "string"
-								}
-							},
-							"inheritedFrom": {
-								"type": "reference",
-								"id": 5165,
 								"name": "TemplateData.labels"
 							}
 						},
 						{
-							"id": 5124,
+							"id": 5121,
 							"name": "lastUpdateDate",
 							"kind": 1024,
 							"kindString": "Property",
@@ -81840,12 +81778,12 @@
 							},
 							"inheritedFrom": {
 								"type": "reference",
-								"id": 5167,
+								"id": 5164,
 								"name": "TemplateData.lastUpdateDate"
 							}
 						},
 						{
-							"id": 5120,
+							"id": 5117,
 							"name": "name",
 							"kind": 1024,
 							"kindString": "Property",
@@ -81863,12 +81801,12 @@
 							},
 							"inheritedFrom": {
 								"type": "reference",
-								"id": 5163,
+								"id": 5160,
 								"name": "TemplateData.name"
 							}
 						},
 						{
-							"id": 5125,
+							"id": 5122,
 							"name": "query",
 							"kind": 1024,
 							"kindString": "Property",
@@ -81886,12 +81824,12 @@
 							},
 							"inheritedFrom": {
 								"type": "reference",
-								"id": 5168,
+								"id": 5165,
 								"name": "TemplateData.query"
 							}
 						},
 						{
-							"id": 5118,
+							"id": 5115,
 							"name": "userID",
 							"kind": 1024,
 							"kindString": "Property",
@@ -81909,12 +81847,12 @@
 							},
 							"inheritedFrom": {
 								"type": "reference",
-								"id": 5161,
+								"id": 5158,
 								"name": "TemplateData.userID"
 							}
 						},
 						{
-							"id": 5126,
+							"id": 5123,
 							"name": "variables",
 							"kind": 1024,
 							"kindString": "Property",
@@ -81930,13 +81868,13 @@
 								"type": "array",
 								"elementType": {
 									"type": "reference",
-									"id": 5127,
+									"id": 5124,
 									"name": "TemplateVariable"
 								}
 							},
 							"inheritedFrom": {
 								"type": "reference",
-								"id": 5169,
+								"id": 5166,
 								"name": "TemplateData.variables"
 							}
 						}
@@ -81946,18 +81884,18 @@
 							"title": "Properties",
 							"kind": 1024,
 							"children": [
-								5115,
-								5121,
-								5116,
-								5119,
-								5117,
-								5123,
-								5122,
-								5124,
-								5120,
-								5125,
+								5112,
 								5118,
-								5126
+								5113,
+								5116,
+								5114,
+								5120,
+								5119,
+								5121,
+								5117,
+								5122,
+								5115,
+								5123
 							]
 						}
 					],
@@ -81971,20 +81909,20 @@
 					"extendedTypes": [
 						{
 							"type": "reference",
-							"id": 5158,
+							"id": 5155,
 							"name": "TemplateData"
 						}
 					]
 				},
 				{
-					"id": 5158,
+					"id": 5155,
 					"name": "TemplateData",
 					"kind": 256,
 					"kindString": "Interface",
 					"flags": {},
 					"children": [
 						{
-							"id": 5164,
+							"id": 5161,
 							"name": "description",
 							"kind": 1024,
 							"kindString": "Property",
@@ -82011,7 +81949,7 @@
 							}
 						},
 						{
-							"id": 5159,
+							"id": 5156,
 							"name": "globalID",
 							"kind": 1024,
 							"kindString": "Property",
@@ -82029,7 +81967,7 @@
 							}
 						},
 						{
-							"id": 5162,
+							"id": 5159,
 							"name": "groupIDs",
 							"kind": 1024,
 							"kindString": "Property",
@@ -82050,7 +81988,7 @@
 							}
 						},
 						{
-							"id": 5160,
+							"id": 5157,
 							"name": "id",
 							"kind": 1024,
 							"kindString": "Property",
@@ -82068,7 +82006,7 @@
 							}
 						},
 						{
-							"id": 5166,
+							"id": 5163,
 							"name": "isGlobal",
 							"kind": 1024,
 							"kindString": "Property",
@@ -82086,7 +82024,7 @@
 							}
 						},
 						{
-							"id": 5165,
+							"id": 5162,
 							"name": "labels",
 							"kind": 1024,
 							"kindString": "Property",
@@ -82107,7 +82045,7 @@
 							}
 						},
 						{
-							"id": 5167,
+							"id": 5164,
 							"name": "lastUpdateDate",
 							"kind": 1024,
 							"kindString": "Property",
@@ -82127,7 +82065,7 @@
 							}
 						},
 						{
-							"id": 5163,
+							"id": 5160,
 							"name": "name",
 							"kind": 1024,
 							"kindString": "Property",
@@ -82145,7 +82083,7 @@
 							}
 						},
 						{
-							"id": 5168,
+							"id": 5165,
 							"name": "query",
 							"kind": 1024,
 							"kindString": "Property",
@@ -82163,7 +82101,7 @@
 							}
 						},
 						{
-							"id": 5161,
+							"id": 5158,
 							"name": "userID",
 							"kind": 1024,
 							"kindString": "Property",
@@ -82181,7 +82119,7 @@
 							}
 						},
 						{
-							"id": 5169,
+							"id": 5166,
 							"name": "variables",
 							"kind": 1024,
 							"kindString": "Property",
@@ -82197,7 +82135,7 @@
 								"type": "array",
 								"elementType": {
 									"type": "reference",
-									"id": 5127,
+									"id": 5124,
 									"name": "TemplateVariable"
 								}
 							}
@@ -82208,17 +82146,17 @@
 							"title": "Properties",
 							"kind": 1024,
 							"children": [
-								5164,
-								5159,
-								5162,
-								5160,
-								5166,
-								5165,
-								5167,
-								5163,
-								5168,
 								5161,
-								5169
+								5156,
+								5159,
+								5157,
+								5163,
+								5162,
+								5164,
+								5160,
+								5165,
+								5158,
+								5166
 							]
 						}
 					],
@@ -82232,20 +82170,20 @@
 					"extendedBy": [
 						{
 							"type": "reference",
-							"id": 5114,
+							"id": 5111,
 							"name": "Template"
 						}
 					]
 				},
 				{
-					"id": 5145,
+					"id": 5142,
 					"name": "UpdatableTemplate",
 					"kind": 256,
 					"kindString": "Interface",
 					"flags": {},
 					"children": [
 						{
-							"id": 5150,
+							"id": 5147,
 							"name": "description",
 							"kind": 1024,
 							"kindString": "Property",
@@ -82274,7 +82212,7 @@
 							}
 						},
 						{
-							"id": 5148,
+							"id": 5145,
 							"name": "groupIDs",
 							"kind": 1024,
 							"kindString": "Property",
@@ -82297,7 +82235,7 @@
 							}
 						},
 						{
-							"id": 5146,
+							"id": 5143,
 							"name": "id",
 							"kind": 1024,
 							"kindString": "Property",
@@ -82315,7 +82253,7 @@
 							}
 						},
 						{
-							"id": 5152,
+							"id": 5149,
 							"name": "isGlobal",
 							"kind": 1024,
 							"kindString": "Property",
@@ -82335,7 +82273,7 @@
 							}
 						},
 						{
-							"id": 5151,
+							"id": 5148,
 							"name": "labels",
 							"kind": 1024,
 							"kindString": "Property",
@@ -82358,7 +82296,7 @@
 							}
 						},
 						{
-							"id": 5149,
+							"id": 5146,
 							"name": "name",
 							"kind": 1024,
 							"kindString": "Property",
@@ -82378,7 +82316,7 @@
 							}
 						},
 						{
-							"id": 5153,
+							"id": 5150,
 							"name": "query",
 							"kind": 1024,
 							"kindString": "Property",
@@ -82398,7 +82336,7 @@
 							}
 						},
 						{
-							"id": 5147,
+							"id": 5144,
 							"name": "userID",
 							"kind": 1024,
 							"kindString": "Property",
@@ -82418,7 +82356,7 @@
 							}
 						},
 						{
-							"id": 5154,
+							"id": 5151,
 							"name": "variables",
 							"kind": 1024,
 							"kindString": "Property",
@@ -82436,7 +82374,7 @@
 								"type": "array",
 								"elementType": {
 									"type": "reference",
-									"id": 5127,
+									"id": 5124,
 									"name": "TemplateVariable"
 								}
 							}
@@ -82447,15 +82385,15 @@
 							"title": "Properties",
 							"kind": 1024,
 							"children": [
-								5150,
+								5147,
+								5145,
+								5143,
+								5149,
 								5148,
 								5146,
-								5152,
-								5151,
-								5149,
-								5153,
-								5147,
-								5154
+								5150,
+								5144,
+								5151
 							]
 						}
 					],
@@ -82468,7 +82406,7 @@
 					]
 				},
 				{
-					"id": 5127,
+					"id": 5124,
 					"name": "TemplateVariable",
 					"kind": 4194304,
 					"kindString": "Type alias",
@@ -82483,14 +82421,14 @@
 					"type": {
 						"type": "reflection",
 						"declaration": {
-							"id": 5128,
+							"id": 5125,
 							"name": "__type",
 							"kind": 65536,
 							"kindString": "Type literal",
 							"flags": {},
 							"children": [
 								{
-									"id": 5133,
+									"id": 5130,
 									"name": "defaultValue",
 									"kind": 1024,
 									"kindString": "Property",
@@ -82510,7 +82448,7 @@
 									}
 								},
 								{
-									"id": 5131,
+									"id": 5128,
 									"name": "description",
 									"kind": 1024,
 									"kindString": "Property",
@@ -82530,7 +82468,7 @@
 									}
 								},
 								{
-									"id": 5130,
+									"id": 5127,
 									"name": "label",
 									"kind": 1024,
 									"kindString": "Property",
@@ -82548,7 +82486,7 @@
 									}
 								},
 								{
-									"id": 5129,
+									"id": 5126,
 									"name": "name",
 									"kind": 1024,
 									"kindString": "Property",
@@ -82566,7 +82504,7 @@
 									}
 								},
 								{
-									"id": 5134,
+									"id": 5131,
 									"name": "previewValue",
 									"kind": 1024,
 									"kindString": "Property",
@@ -82595,7 +82533,7 @@
 									}
 								},
 								{
-									"id": 5132,
+									"id": 5129,
 									"name": "required",
 									"kind": 1024,
 									"kindString": "Property",
@@ -82620,12 +82558,12 @@
 									"title": "Properties",
 									"kind": 1024,
 									"children": [
-										5133,
-										5131,
 										5130,
-										5129,
-										5134,
-										5132
+										5128,
+										5127,
+										5126,
+										5131,
+										5129
 									]
 								}
 							],
@@ -82640,7 +82578,7 @@
 					}
 				},
 				{
-					"id": 5155,
+					"id": 5152,
 					"name": "fromTemplateDataToTemplate",
 					"kind": 64,
 					"kindString": "Function",
@@ -82654,35 +82592,35 @@
 					],
 					"signatures": [
 						{
-							"id": 5156,
+							"id": 5153,
 							"name": "fromTemplateDataToTemplate",
 							"kind": 4096,
 							"kindString": "Call signature",
 							"flags": {},
 							"parameters": [
 								{
-									"id": 5157,
+									"id": 5154,
 									"name": "data",
 									"kind": 32768,
 									"kindString": "Parameter",
 									"flags": {},
 									"type": {
 										"type": "reference",
-										"id": 5158,
+										"id": 5155,
 										"name": "TemplateData"
 									}
 								}
 							],
 							"type": {
 								"type": "reference",
-								"id": 5114,
+								"id": 5111,
 								"name": "Template"
 							}
 						}
 					]
 				},
 				{
-					"id": 5072,
+					"id": 5069,
 					"name": "isTemplate",
 					"kind": 64,
 					"kindString": "Function",
@@ -82696,8 +82634,100 @@
 					],
 					"signatures": [
 						{
-							"id": 5073,
+							"id": 5070,
 							"name": "isTemplate",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {},
+							"parameters": [
+								{
+									"id": 5071,
+									"name": "value",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"type": {
+										"type": "intrinsic",
+										"name": "unknown"
+									}
+								}
+							],
+							"type": {
+								"type": "predicate",
+								"name": "value",
+								"asserts": false,
+								"targetType": {
+									"type": "reference",
+									"id": 5111,
+									"name": "Template"
+								}
+							}
+						}
+					]
+				},
+				{
+					"id": 5167,
+					"name": "isTemplateData",
+					"kind": 64,
+					"kindString": "Function",
+					"flags": {},
+					"sources": [
+						{
+							"fileName": "template/is-template-data.ts",
+							"line": 14,
+							"character": 13
+						}
+					],
+					"signatures": [
+						{
+							"id": 5168,
+							"name": "isTemplateData",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {},
+							"parameters": [
+								{
+									"id": 5169,
+									"name": "value",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"type": {
+										"type": "intrinsic",
+										"name": "unknown"
+									}
+								}
+							],
+							"type": {
+								"type": "predicate",
+								"name": "value",
+								"asserts": false,
+								"targetType": {
+									"type": "reference",
+									"id": 5155,
+									"name": "TemplateData"
+								}
+							}
+						}
+					]
+				},
+				{
+					"id": 5072,
+					"name": "isTemplateVariable",
+					"kind": 64,
+					"kindString": "Function",
+					"flags": {},
+					"sources": [
+						{
+							"fileName": "template/is-template.ts",
+							"line": 22,
+							"character": 13
+						}
+					],
+					"signatures": [
+						{
+							"id": 5073,
+							"name": "isTemplateVariable",
 							"kind": 4096,
 							"kindString": "Call signature",
 							"flags": {},
@@ -82720,99 +82750,7 @@
 								"asserts": false,
 								"targetType": {
 									"type": "reference",
-									"id": 5114,
-									"name": "Template"
-								}
-							}
-						}
-					]
-				},
-				{
-					"id": 5170,
-					"name": "isTemplateData",
-					"kind": 64,
-					"kindString": "Function",
-					"flags": {},
-					"sources": [
-						{
-							"fileName": "template/is-template-data.ts",
-							"line": 14,
-							"character": 13
-						}
-					],
-					"signatures": [
-						{
-							"id": 5171,
-							"name": "isTemplateData",
-							"kind": 4096,
-							"kindString": "Call signature",
-							"flags": {},
-							"parameters": [
-								{
-									"id": 5172,
-									"name": "value",
-									"kind": 32768,
-									"kindString": "Parameter",
-									"flags": {},
-									"type": {
-										"type": "intrinsic",
-										"name": "unknown"
-									}
-								}
-							],
-							"type": {
-								"type": "predicate",
-								"name": "value",
-								"asserts": false,
-								"targetType": {
-									"type": "reference",
-									"id": 5158,
-									"name": "TemplateData"
-								}
-							}
-						}
-					]
-				},
-				{
-					"id": 5075,
-					"name": "isTemplateVariable",
-					"kind": 64,
-					"kindString": "Function",
-					"flags": {},
-					"sources": [
-						{
-							"fileName": "template/is-template.ts",
-							"line": 22,
-							"character": 13
-						}
-					],
-					"signatures": [
-						{
-							"id": 5076,
-							"name": "isTemplateVariable",
-							"kind": 4096,
-							"kindString": "Call signature",
-							"flags": {},
-							"parameters": [
-								{
-									"id": 5077,
-									"name": "value",
-									"kind": 32768,
-									"kindString": "Parameter",
-									"flags": {},
-									"type": {
-										"type": "intrinsic",
-										"name": "unknown"
-									}
-								}
-							],
-							"type": {
-								"type": "predicate",
-								"name": "value",
-								"asserts": false,
-								"targetType": {
-									"type": "reference",
-									"id": 5127,
+									"id": 5124,
 									"name": "TemplateVariable"
 								}
 							}
@@ -82820,7 +82758,7 @@
 					]
 				},
 				{
-					"id": 5135,
+					"id": 5132,
 					"name": "toRawCreatableTemplate",
 					"kind": 64,
 					"kindString": "Function",
@@ -82834,35 +82772,35 @@
 					],
 					"signatures": [
 						{
-							"id": 5136,
+							"id": 5133,
 							"name": "toRawCreatableTemplate",
 							"kind": 4096,
 							"kindString": "Call signature",
 							"flags": {},
 							"parameters": [
 								{
-									"id": 5137,
+									"id": 5134,
 									"name": "creatable",
 									"kind": 32768,
 									"kindString": "Parameter",
 									"flags": {},
 									"type": {
 										"type": "reference",
-										"id": 5063,
+										"id": 5060,
 										"name": "CreatableTemplate"
 									}
 								}
 							],
 							"type": {
 								"type": "reference",
-								"id": 5078,
+								"id": 5075,
 								"name": "RawCreatableTemplate"
 							}
 						}
 					]
 				},
 				{
-					"id": 5138,
+					"id": 5135,
 					"name": "toRawUpdatableTemplate",
 					"kind": 64,
 					"kindString": "Function",
@@ -82876,47 +82814,47 @@
 					],
 					"signatures": [
 						{
-							"id": 5139,
+							"id": 5136,
 							"name": "toRawUpdatableTemplate",
 							"kind": 4096,
 							"kindString": "Call signature",
 							"flags": {},
 							"parameters": [
 								{
-									"id": 5140,
+									"id": 5137,
 									"name": "updatable",
 									"kind": 32768,
 									"kindString": "Parameter",
 									"flags": {},
 									"type": {
 										"type": "reference",
-										"id": 5145,
+										"id": 5142,
 										"name": "UpdatableTemplate"
 									}
 								},
 								{
-									"id": 5141,
+									"id": 5138,
 									"name": "current",
 									"kind": 32768,
 									"kindString": "Parameter",
 									"flags": {},
 									"type": {
 										"type": "reference",
-										"id": 5114,
+										"id": 5111,
 										"name": "Template"
 									}
 								}
 							],
 							"type": {
 								"type": "reference",
-								"id": 5103,
+								"id": 5100,
 								"name": "RawUpdatableTemplate"
 							}
 						}
 					]
 				},
 				{
-					"id": 5142,
+					"id": 5139,
 					"name": "toTemplate",
 					"kind": 64,
 					"kindString": "Function",
@@ -82930,28 +82868,28 @@
 					],
 					"signatures": [
 						{
-							"id": 5143,
+							"id": 5140,
 							"name": "toTemplate",
 							"kind": 4096,
 							"kindString": "Call signature",
 							"flags": {},
 							"parameters": [
 								{
-									"id": 5144,
+									"id": 5141,
 									"name": "raw",
 									"kind": 32768,
 									"kindString": "Parameter",
 									"flags": {},
 									"type": {
 										"type": "reference",
-										"id": 5089,
+										"id": 5086,
 										"name": "RawTemplate"
 									}
 								}
 							],
 							"type": {
 								"type": "reference",
-								"id": 5114,
+								"id": 5111,
 								"name": "Template"
 							}
 						}
@@ -82963,33 +82901,33 @@
 					"title": "Interfaces",
 					"kind": 256,
 					"children": [
-						5063,
-						5078,
-						5089,
-						5103,
-						5114,
-						5158,
-						5145
+						5060,
+						5075,
+						5086,
+						5100,
+						5111,
+						5155,
+						5142
 					]
 				},
 				{
 					"title": "Type Aliases",
 					"kind": 4194304,
 					"children": [
-						5127
+						5124
 					]
 				},
 				{
 					"title": "Functions",
 					"kind": 64,
 					"children": [
-						5155,
+						5152,
+						5069,
+						5167,
 						5072,
-						5170,
-						5075,
+						5132,
 						5135,
-						5138,
-						5142
+						5139
 					]
 				}
 			],
@@ -83009,7 +82947,7 @@
 			"flags": {},
 			"children": [
 				{
-					"id": 5177,
+					"id": 5174,
 					"name": "RawTimeframe",
 					"kind": 256,
 					"kindString": "Interface",
@@ -83020,7 +82958,7 @@
 					},
 					"children": [
 						{
-							"id": 5178,
+							"id": 5175,
 							"name": "durationString",
 							"kind": 1024,
 							"kindString": "Property",
@@ -83031,64 +82969,6 @@
 								{
 									"fileName": "timeframe/raw-timeframe.ts",
 									"line": 10,
-									"character": 1
-								}
-							],
-							"type": {
-								"type": "union",
-								"types": [
-									{
-										"type": "literal",
-										"value": null
-									},
-									{
-										"type": "intrinsic",
-										"name": "string"
-									}
-								]
-							}
-						},
-						{
-							"id": 5182,
-							"name": "end",
-							"kind": 1024,
-							"kindString": "Property",
-							"flags": {
-								"isOptional": true
-							},
-							"sources": [
-								{
-									"fileName": "timeframe/raw-timeframe.ts",
-									"line": 14,
-									"character": 1
-								}
-							],
-							"type": {
-								"type": "union",
-								"types": [
-									{
-										"type": "literal",
-										"value": null
-									},
-									{
-										"type": "intrinsic",
-										"name": "string"
-									}
-								]
-							}
-						},
-						{
-							"id": 5181,
-							"name": "start",
-							"kind": 1024,
-							"kindString": "Property",
-							"flags": {
-								"isOptional": true
-							},
-							"sources": [
-								{
-									"fileName": "timeframe/raw-timeframe.ts",
-									"line": 13,
 									"character": 1
 								}
 							],
@@ -83108,6 +82988,64 @@
 						},
 						{
 							"id": 5179,
+							"name": "end",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {
+								"isOptional": true
+							},
+							"sources": [
+								{
+									"fileName": "timeframe/raw-timeframe.ts",
+									"line": 14,
+									"character": 1
+								}
+							],
+							"type": {
+								"type": "union",
+								"types": [
+									{
+										"type": "literal",
+										"value": null
+									},
+									{
+										"type": "intrinsic",
+										"name": "string"
+									}
+								]
+							}
+						},
+						{
+							"id": 5178,
+							"name": "start",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {
+								"isOptional": true
+							},
+							"sources": [
+								{
+									"fileName": "timeframe/raw-timeframe.ts",
+									"line": 13,
+									"character": 1
+								}
+							],
+							"type": {
+								"type": "union",
+								"types": [
+									{
+										"type": "literal",
+										"value": null
+									},
+									{
+										"type": "intrinsic",
+										"name": "string"
+									}
+								]
+							}
+						},
+						{
+							"id": 5176,
 							"name": "timeframe",
 							"kind": 1024,
 							"kindString": "Property",
@@ -83136,7 +83074,7 @@
 							}
 						},
 						{
-							"id": 5180,
+							"id": 5177,
 							"name": "timezone",
 							"kind": 1024,
 							"kindString": "Property",
@@ -83170,11 +83108,11 @@
 							"title": "Properties",
 							"kind": 1024,
 							"children": [
-								5178,
-								5182,
-								5181,
+								5175,
 								5179,
-								5180
+								5178,
+								5176,
+								5177
 							]
 						}
 					],
@@ -83187,7 +83125,7 @@
 					]
 				},
 				{
-					"id": 5183,
+					"id": 5180,
 					"name": "Timeframe",
 					"kind": 256,
 					"kindString": "Interface",
@@ -83198,7 +83136,7 @@
 					},
 					"children": [
 						{
-							"id": 5184,
+							"id": 5181,
 							"name": "durationString",
 							"kind": 1024,
 							"kindString": "Property",
@@ -83225,7 +83163,7 @@
 							}
 						},
 						{
-							"id": 5188,
+							"id": 5185,
 							"name": "end",
 							"kind": 1024,
 							"kindString": "Property",
@@ -83254,7 +83192,7 @@
 							}
 						},
 						{
-							"id": 5187,
+							"id": 5184,
 							"name": "start",
 							"kind": 1024,
 							"kindString": "Property",
@@ -83283,7 +83221,7 @@
 							}
 						},
 						{
-							"id": 5185,
+							"id": 5182,
 							"name": "timeframe",
 							"kind": 1024,
 							"kindString": "Property",
@@ -83310,7 +83248,7 @@
 							}
 						},
 						{
-							"id": 5186,
+							"id": 5183,
 							"name": "timezone",
 							"kind": 1024,
 							"kindString": "Property",
@@ -83342,11 +83280,11 @@
 							"title": "Properties",
 							"kind": 1024,
 							"children": [
-								5184,
-								5188,
-								5187,
+								5181,
 								5185,
-								5186
+								5184,
+								5182,
+								5183
 							]
 						}
 					],
@@ -83359,7 +83297,7 @@
 					]
 				},
 				{
-					"id": 5173,
+					"id": 5170,
 					"name": "CreatableTimeframe",
 					"kind": 4194304,
 					"kindString": "Type alias",
@@ -83376,7 +83314,7 @@
 						"typeArguments": [
 							{
 								"type": "reference",
-								"id": 5183,
+								"id": 5180,
 								"name": "Timeframe"
 							},
 							{
@@ -83397,7 +83335,7 @@
 					}
 				},
 				{
-					"id": 5174,
+					"id": 5171,
 					"name": "isTimeframe",
 					"kind": 64,
 					"kindString": "Function",
@@ -83411,14 +83349,14 @@
 					],
 					"signatures": [
 						{
-							"id": 5175,
+							"id": 5172,
 							"name": "isTimeframe",
 							"kind": 4096,
 							"kindString": "Call signature",
 							"flags": {},
 							"parameters": [
 								{
-									"id": 5176,
+									"id": 5173,
 									"name": "value",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -83435,7 +83373,7 @@
 								"asserts": false,
 								"targetType": {
 									"type": "reference",
-									"id": 5183,
+									"id": 5180,
 									"name": "Timeframe"
 								}
 							}
@@ -83443,7 +83381,7 @@
 					]
 				},
 				{
-					"id": 5189,
+					"id": 5186,
 					"name": "toRawTimeframe",
 					"kind": 64,
 					"kindString": "Function",
@@ -83457,35 +83395,35 @@
 					],
 					"signatures": [
 						{
-							"id": 5190,
+							"id": 5187,
 							"name": "toRawTimeframe",
 							"kind": 4096,
 							"kindString": "Call signature",
 							"flags": {},
 							"parameters": [
 								{
-									"id": 5191,
+									"id": 5188,
 									"name": "tf",
 									"kind": 32768,
 									"kindString": "Parameter",
 									"flags": {},
 									"type": {
 										"type": "reference",
-										"id": 5173,
+										"id": 5170,
 										"name": "CreatableTimeframe"
 									}
 								}
 							],
 							"type": {
 								"type": "reference",
-								"id": 5177,
+								"id": 5174,
 								"name": "RawTimeframe"
 							}
 						}
 					]
 				},
 				{
-					"id": 5192,
+					"id": 5189,
 					"name": "toTimeframe",
 					"kind": 64,
 					"kindString": "Function",
@@ -83499,28 +83437,28 @@
 					],
 					"signatures": [
 						{
-							"id": 5193,
+							"id": 5190,
 							"name": "toTimeframe",
 							"kind": 4096,
 							"kindString": "Call signature",
 							"flags": {},
 							"parameters": [
 								{
-									"id": 5194,
+									"id": 5191,
 									"name": "raw",
 									"kind": 32768,
 									"kindString": "Parameter",
 									"flags": {},
 									"type": {
 										"type": "reference",
-										"id": 5177,
+										"id": 5174,
 										"name": "RawTimeframe"
 									}
 								}
 							],
 							"type": {
 								"type": "reference",
-								"id": 5183,
+								"id": 5180,
 								"name": "Timeframe"
 							}
 						}
@@ -83532,24 +83470,24 @@
 					"title": "Interfaces",
 					"kind": 256,
 					"children": [
-						5177,
-						5183
+						5174,
+						5180
 					]
 				},
 				{
 					"title": "Type Aliases",
 					"kind": 4194304,
 					"children": [
-						5173
+						5170
 					]
 				},
 				{
 					"title": "Functions",
 					"kind": 64,
 					"children": [
-						5174,
-						5189,
-						5192
+						5171,
+						5186,
+						5189
 					]
 				}
 			],
@@ -83569,7 +83507,7 @@
 			"flags": {},
 			"children": [
 				{
-					"id": 5259,
+					"id": 5256,
 					"name": "TokenCapability",
 					"kind": 8,
 					"kindString": "Enumeration",
@@ -83580,7 +83518,7 @@
 					},
 					"children": [
 						{
-							"id": 5263,
+							"id": 5260,
 							"name": "AttachSearch",
 							"kind": 16,
 							"kindString": "Enumeration Member",
@@ -83599,7 +83537,7 @@
 							"defaultValue": "\"AttachSearch\""
 						},
 						{
-							"id": 5264,
+							"id": 5261,
 							"name": "BackgroundSearch",
 							"kind": 16,
 							"kindString": "Enumeration Member",
@@ -83618,7 +83556,7 @@
 							"defaultValue": "\"BackgroundSearch\""
 						},
 						{
-							"id": 5270,
+							"id": 5267,
 							"name": "DashboardRead",
 							"kind": 16,
 							"kindString": "Enumeration Member",
@@ -83637,7 +83575,7 @@
 							"defaultValue": "\"DashboardRead\""
 						},
 						{
-							"id": 5271,
+							"id": 5268,
 							"name": "DashboardWrite",
 							"kind": 16,
 							"kindString": "Enumeration Member",
@@ -83656,7 +83594,7 @@
 							"defaultValue": "\"DashboardWrite\""
 						},
 						{
-							"id": 5261,
+							"id": 5258,
 							"name": "Download",
 							"kind": 16,
 							"kindString": "Enumeration Member",
@@ -83675,7 +83613,7 @@
 							"defaultValue": "\"Download\""
 						},
 						{
-							"id": 5282,
+							"id": 5279,
 							"name": "ExtractorRead",
 							"kind": 16,
 							"kindString": "Enumeration Member",
@@ -83694,7 +83632,7 @@
 							"defaultValue": "\"ExtractorRead\""
 						},
 						{
-							"id": 5283,
+							"id": 5280,
 							"name": "ExtractorWrite",
 							"kind": 16,
 							"kindString": "Enumeration Member",
@@ -83713,7 +83651,7 @@
 							"defaultValue": "\"ExtractorWrite\""
 						},
 						{
-							"id": 5265,
+							"id": 5262,
 							"name": "GetTags",
 							"kind": 16,
 							"kindString": "Enumeration Member",
@@ -83732,7 +83670,7 @@
 							"defaultValue": "\"GetTags\""
 						},
 						{
-							"id": 5298,
+							"id": 5295,
 							"name": "Ingest",
 							"kind": 16,
 							"kindString": "Enumeration Member",
@@ -83751,7 +83689,7 @@
 							"defaultValue": "\"Ingest\""
 						},
 						{
-							"id": 5288,
+							"id": 5285,
 							"name": "KitBuild",
 							"kind": 16,
 							"kindString": "Enumeration Member",
@@ -83770,7 +83708,7 @@
 							"defaultValue": "\"KitBuild\""
 						},
 						{
-							"id": 5289,
+							"id": 5286,
 							"name": "KitDownload",
 							"kind": 16,
 							"kindString": "Enumeration Member",
@@ -83789,7 +83727,7 @@
 							"defaultValue": "\"KitDownload\""
 						},
 						{
-							"id": 5286,
+							"id": 5283,
 							"name": "KitRead",
 							"kind": 16,
 							"kindString": "Enumeration Member",
@@ -83808,7 +83746,7 @@
 							"defaultValue": "\"KitRead\""
 						},
 						{
-							"id": 5287,
+							"id": 5284,
 							"name": "KitWrite",
 							"kind": 16,
 							"kindString": "Enumeration Member",
@@ -83827,7 +83765,7 @@
 							"defaultValue": "\"KitWrite\""
 						},
 						{
-							"id": 5280,
+							"id": 5277,
 							"name": "LibraryRead",
 							"kind": 16,
 							"kindString": "Enumeration Member",
@@ -83846,7 +83784,7 @@
 							"defaultValue": "\"LibraryRead\""
 						},
 						{
-							"id": 5281,
+							"id": 5278,
 							"name": "LibraryWrite",
 							"kind": 16,
 							"kindString": "Enumeration Member",
@@ -83865,7 +83803,7 @@
 							"defaultValue": "\"LibraryWrite\""
 						},
 						{
-							"id": 5296,
+							"id": 5293,
 							"name": "LicenseRead",
 							"kind": 16,
 							"kindString": "Enumeration Member",
@@ -83884,7 +83822,7 @@
 							"defaultValue": "\"LicenseRead\""
 						},
 						{
-							"id": 5301,
+							"id": 5298,
 							"name": "ListGroupMembers",
 							"kind": 16,
 							"kindString": "Enumeration Member",
@@ -83903,7 +83841,7 @@
 							"defaultValue": "\"ListGroupMembers\""
 						},
 						{
-							"id": 5300,
+							"id": 5297,
 							"name": "ListGroups",
 							"kind": 16,
 							"kindString": "Enumeration Member",
@@ -83922,7 +83860,7 @@
 							"defaultValue": "\"ListGroups\""
 						},
 						{
-							"id": 5299,
+							"id": 5296,
 							"name": "ListUsers",
 							"kind": 16,
 							"kindString": "Enumeration Member",
@@ -83941,7 +83879,7 @@
 							"defaultValue": "\"ListUsers\""
 						},
 						{
-							"id": 5278,
+							"id": 5275,
 							"name": "MacroRead",
 							"kind": 16,
 							"kindString": "Enumeration Member",
@@ -83960,7 +83898,7 @@
 							"defaultValue": "\"MacroRead\""
 						},
 						{
-							"id": 5279,
+							"id": 5276,
 							"name": "MacroWrite",
 							"kind": 16,
 							"kindString": "Enumeration Member",
@@ -83979,7 +83917,7 @@
 							"defaultValue": "\"MacroWrite\""
 						},
 						{
-							"id": 5302,
+							"id": 5299,
 							"name": "NotificationRead",
 							"kind": 16,
 							"kindString": "Enumeration Member",
@@ -83998,7 +83936,7 @@
 							"defaultValue": "\"NotificationRead\""
 						},
 						{
-							"id": 5303,
+							"id": 5300,
 							"name": "NotificationWrite",
 							"kind": 16,
 							"kindString": "Enumeration Member",
@@ -84017,7 +83955,7 @@
 							"defaultValue": "\"NotificationWrite\""
 						},
 						{
-							"id": 5276,
+							"id": 5273,
 							"name": "PivotRead",
 							"kind": 16,
 							"kindString": "Enumeration Member",
@@ -84036,7 +83974,7 @@
 							"defaultValue": "\"PivotRead\""
 						},
 						{
-							"id": 5277,
+							"id": 5274,
 							"name": "PivotWrite",
 							"kind": 16,
 							"kindString": "Enumeration Member",
@@ -84055,7 +83993,7 @@
 							"defaultValue": "\"PivotWrite\""
 						},
 						{
-							"id": 5294,
+							"id": 5291,
 							"name": "PlaybookRead",
 							"kind": 16,
 							"kindString": "Enumeration Member",
@@ -84074,7 +84012,7 @@
 							"defaultValue": "\"PlaybookRead\""
 						},
 						{
-							"id": 5295,
+							"id": 5292,
 							"name": "PlaybookWrite",
 							"kind": 16,
 							"kindString": "Enumeration Member",
@@ -84093,7 +84031,7 @@
 							"defaultValue": "\"PlaybookWrite\""
 						},
 						{
-							"id": 5272,
+							"id": 5269,
 							"name": "ResourceRead",
 							"kind": 16,
 							"kindString": "Enumeration Member",
@@ -84112,7 +84050,7 @@
 							"defaultValue": "\"ResourceRead\""
 						},
 						{
-							"id": 5273,
+							"id": 5270,
 							"name": "ResourceWrite",
 							"kind": 16,
 							"kindString": "Enumeration Member",
@@ -84131,7 +84069,7 @@
 							"defaultValue": "\"ResourceWrite\""
 						},
 						{
-							"id": 5293,
+							"id": 5290,
 							"name": "SOAREmail",
 							"kind": 16,
 							"kindString": "Enumeration Member",
@@ -84150,7 +84088,7 @@
 							"defaultValue": "\"SOAREmail\""
 						},
 						{
-							"id": 5292,
+							"id": 5289,
 							"name": "SOARLibs",
 							"kind": 16,
 							"kindString": "Enumeration Member",
@@ -84169,7 +84107,7 @@
 							"defaultValue": "\"SOARLibs\""
 						},
 						{
-							"id": 5262,
+							"id": 5259,
 							"name": "SaveSearch",
 							"kind": 16,
 							"kindString": "Enumeration Member",
@@ -84188,7 +84126,7 @@
 							"defaultValue": "\"SaveSearch\""
 						},
 						{
-							"id": 5290,
+							"id": 5287,
 							"name": "ScheduleRead",
 							"kind": 16,
 							"kindString": "Enumeration Member",
@@ -84207,7 +84145,7 @@
 							"defaultValue": "\"ScheduleRead\""
 						},
 						{
-							"id": 5291,
+							"id": 5288,
 							"name": "ScheduleWrite",
 							"kind": 16,
 							"kindString": "Enumeration Member",
@@ -84226,7 +84164,7 @@
 							"defaultValue": "\"ScheduleWrite\""
 						},
 						{
-							"id": 5260,
+							"id": 5257,
 							"name": "Search",
 							"kind": 16,
 							"kindString": "Enumeration Member",
@@ -84245,7 +84183,7 @@
 							"defaultValue": "\"Search\""
 						},
 						{
-							"id": 5269,
+							"id": 5266,
 							"name": "SearchAllHistory",
 							"kind": 16,
 							"kindString": "Enumeration Member",
@@ -84264,7 +84202,7 @@
 							"defaultValue": "\"SearchAllHistory\""
 						},
 						{
-							"id": 5268,
+							"id": 5265,
 							"name": "SearchGroupHistory",
 							"kind": 16,
 							"kindString": "Enumeration Member",
@@ -84283,7 +84221,7 @@
 							"defaultValue": "\"SearchGroupHistory\""
 						},
 						{
-							"id": 5267,
+							"id": 5264,
 							"name": "SearchHistory",
 							"kind": 16,
 							"kindString": "Enumeration Member",
@@ -84302,7 +84240,7 @@
 							"defaultValue": "\"SearchHistory\""
 						},
 						{
-							"id": 5307,
+							"id": 5304,
 							"name": "SecretRead",
 							"kind": 16,
 							"kindString": "Enumeration Member",
@@ -84321,7 +84259,7 @@
 							"defaultValue": "\"SecretRead\""
 						},
 						{
-							"id": 5308,
+							"id": 5305,
 							"name": "SecretWrite",
 							"kind": 16,
 							"kindString": "Enumeration Member",
@@ -84340,7 +84278,7 @@
 							"defaultValue": "\"SecretWrite\""
 						},
 						{
-							"id": 5266,
+							"id": 5263,
 							"name": "SetSearchGroup",
 							"kind": 16,
 							"kindString": "Enumeration Member",
@@ -84359,7 +84297,7 @@
 							"defaultValue": "\"SetSearchGroup\""
 						},
 						{
-							"id": 5297,
+							"id": 5294,
 							"name": "Stats",
 							"kind": 16,
 							"kindString": "Enumeration Member",
@@ -84378,7 +84316,7 @@
 							"defaultValue": "\"Stats\""
 						},
 						{
-							"id": 5304,
+							"id": 5301,
 							"name": "SystemInfoRead",
 							"kind": 16,
 							"kindString": "Enumeration Member",
@@ -84397,7 +84335,7 @@
 							"defaultValue": "\"SystemInfoRead\""
 						},
 						{
-							"id": 5274,
+							"id": 5271,
 							"name": "TemplateRead",
 							"kind": 16,
 							"kindString": "Enumeration Member",
@@ -84416,7 +84354,7 @@
 							"defaultValue": "\"TemplateRead\""
 						},
 						{
-							"id": 5275,
+							"id": 5272,
 							"name": "TemplateWrite",
 							"kind": 16,
 							"kindString": "Enumeration Member",
@@ -84435,7 +84373,7 @@
 							"defaultValue": "\"TemplateWrite\""
 						},
 						{
-							"id": 5305,
+							"id": 5302,
 							"name": "TokenRead",
 							"kind": 16,
 							"kindString": "Enumeration Member",
@@ -84454,7 +84392,7 @@
 							"defaultValue": "\"TokenRead\""
 						},
 						{
-							"id": 5306,
+							"id": 5303,
 							"name": "TokenWrite",
 							"kind": 16,
 							"kindString": "Enumeration Member",
@@ -84473,7 +84411,7 @@
 							"defaultValue": "\"TokenWrite\""
 						},
 						{
-							"id": 5284,
+							"id": 5281,
 							"name": "UserFileRead",
 							"kind": 16,
 							"kindString": "Enumeration Member",
@@ -84492,7 +84430,7 @@
 							"defaultValue": "\"UserFileRead\""
 						},
 						{
-							"id": 5285,
+							"id": 5282,
 							"name": "UserFileWrite",
 							"kind": 16,
 							"kindString": "Enumeration Member",
@@ -84516,55 +84454,55 @@
 							"title": "Enumeration Members",
 							"kind": 16,
 							"children": [
-								5263,
-								5264,
-								5270,
-								5271,
+								5260,
 								5261,
-								5282,
-								5283,
-								5265,
-								5298,
-								5288,
-								5289,
-								5286,
-								5287,
-								5280,
-								5281,
-								5296,
-								5301,
-								5300,
-								5299,
-								5278,
+								5267,
+								5268,
+								5258,
 								5279,
+								5280,
+								5262,
+								5295,
+								5285,
+								5286,
+								5283,
+								5284,
+								5277,
+								5278,
+								5293,
+								5298,
+								5297,
+								5296,
+								5275,
+								5276,
+								5299,
+								5300,
+								5273,
+								5274,
+								5291,
+								5292,
+								5269,
+								5270,
+								5290,
+								5289,
+								5259,
+								5287,
+								5288,
+								5257,
+								5266,
+								5265,
+								5264,
+								5304,
+								5305,
+								5263,
+								5294,
+								5301,
+								5271,
+								5272,
 								5302,
 								5303,
-								5276,
-								5277,
-								5294,
-								5295,
-								5272,
-								5273,
-								5293,
-								5292,
-								5262,
-								5290,
-								5291,
-								5260,
-								5269,
-								5268,
-								5267,
-								5307,
-								5308,
-								5266,
-								5297,
-								5304,
-								5274,
-								5275,
-								5305,
-								5306,
-								5284,
-								5285
+								5281,
+								5282
 							]
 						}
 					],
@@ -84577,7 +84515,7 @@
 					]
 				},
 				{
-					"id": 5195,
+					"id": 5192,
 					"name": "CreatableToken",
 					"kind": 256,
 					"kindString": "Interface",
@@ -84587,7 +84525,7 @@
 					},
 					"children": [
 						{
-							"id": 5198,
+							"id": 5195,
 							"name": "capabilities",
 							"kind": 1024,
 							"kindString": "Property",
@@ -84603,13 +84541,13 @@
 								"type": "array",
 								"elementType": {
 									"type": "reference",
-									"id": 5259,
+									"id": 5256,
 									"name": "TokenCapability"
 								}
 							}
 						},
 						{
-							"id": 5197,
+							"id": 5194,
 							"name": "description",
 							"kind": 1024,
 							"kindString": "Property",
@@ -84647,7 +84585,7 @@
 							}
 						},
 						{
-							"id": 5199,
+							"id": 5196,
 							"name": "expiresAt",
 							"kind": 1024,
 							"kindString": "Property",
@@ -84682,7 +84620,7 @@
 							}
 						},
 						{
-							"id": 5196,
+							"id": 5193,
 							"name": "name",
 							"kind": 1024,
 							"kindString": "Property",
@@ -84714,10 +84652,10 @@
 							"title": "Properties",
 							"kind": 1024,
 							"children": [
-								5198,
-								5197,
-								5199,
-								5196
+								5195,
+								5194,
+								5196,
+								5193
 							]
 						}
 					],
@@ -84730,7 +84668,7 @@
 					]
 				},
 				{
-					"id": 5209,
+					"id": 5206,
 					"name": "RawCreatableToken",
 					"kind": 256,
 					"kindString": "Interface",
@@ -84740,7 +84678,7 @@
 					},
 					"children": [
 						{
-							"id": 5212,
+							"id": 5209,
 							"name": "capabilities",
 							"kind": 1024,
 							"kindString": "Property",
@@ -84756,13 +84694,13 @@
 								"type": "array",
 								"elementType": {
 									"type": "reference",
-									"id": 5259,
+									"id": 5256,
 									"name": "TokenCapability"
 								}
 							}
 						},
 						{
-							"id": 5211,
+							"id": 5208,
 							"name": "description",
 							"kind": 1024,
 							"kindString": "Property",
@@ -84798,7 +84736,7 @@
 							}
 						},
 						{
-							"id": 5213,
+							"id": 5210,
 							"name": "expiresAt",
 							"kind": 1024,
 							"kindString": "Property",
@@ -84835,7 +84773,7 @@
 							}
 						},
 						{
-							"id": 5210,
+							"id": 5207,
 							"name": "name",
 							"kind": 1024,
 							"kindString": "Property",
@@ -84867,10 +84805,10 @@
 							"title": "Properties",
 							"kind": 1024,
 							"children": [
-								5212,
-								5211,
-								5213,
-								5210
+								5209,
+								5208,
+								5210,
+								5207
 							]
 						}
 					],
@@ -84883,7 +84821,7 @@
 					]
 				},
 				{
-					"id": 5214,
+					"id": 5211,
 					"name": "RawToken",
 					"kind": 256,
 					"kindString": "Interface",
@@ -84894,7 +84832,7 @@
 					},
 					"children": [
 						{
-							"id": 5219,
+							"id": 5216,
 							"name": "capabilities",
 							"kind": 1024,
 							"kindString": "Property",
@@ -84910,13 +84848,13 @@
 								"type": "array",
 								"elementType": {
 									"type": "reference",
-									"id": 5259,
+									"id": 5256,
 									"name": "TokenCapability"
 								}
 							}
 						},
 						{
-							"id": 5220,
+							"id": 5217,
 							"name": "createdAt",
 							"kind": 1024,
 							"kindString": "Property",
@@ -84943,7 +84881,7 @@
 							}
 						},
 						{
-							"id": 5218,
+							"id": 5215,
 							"name": "description",
 							"kind": 1024,
 							"kindString": "Property",
@@ -84979,7 +84917,7 @@
 							}
 						},
 						{
-							"id": 5221,
+							"id": 5218,
 							"name": "expiresAt",
 							"kind": 1024,
 							"kindString": "Property",
@@ -85020,7 +84958,7 @@
 							}
 						},
 						{
-							"id": 5215,
+							"id": 5212,
 							"name": "id",
 							"kind": 1024,
 							"kindString": "Property",
@@ -85038,7 +84976,7 @@
 							}
 						},
 						{
-							"id": 5217,
+							"id": 5214,
 							"name": "name",
 							"kind": 1024,
 							"kindString": "Property",
@@ -85059,7 +84997,7 @@
 							}
 						},
 						{
-							"id": 5216,
+							"id": 5213,
 							"name": "uid",
 							"kind": 1024,
 							"kindString": "Property",
@@ -85085,13 +85023,13 @@
 							"title": "Properties",
 							"kind": 1024,
 							"children": [
-								5219,
-								5220,
-								5218,
-								5221,
-								5215,
+								5216,
 								5217,
-								5216
+								5215,
+								5218,
+								5212,
+								5214,
+								5213
 							]
 						}
 					],
@@ -85105,13 +85043,13 @@
 					"extendedBy": [
 						{
 							"type": "reference",
-							"id": 5222,
+							"id": 5219,
 							"name": "RawTokenWithSecret"
 						}
 					]
 				},
 				{
-					"id": 5222,
+					"id": 5219,
 					"name": "RawTokenWithSecret",
 					"kind": 256,
 					"kindString": "Interface",
@@ -85121,7 +85059,7 @@
 					},
 					"children": [
 						{
-							"id": 5228,
+							"id": 5225,
 							"name": "capabilities",
 							"kind": 1024,
 							"kindString": "Property",
@@ -85137,18 +85075,18 @@
 								"type": "array",
 								"elementType": {
 									"type": "reference",
-									"id": 5259,
+									"id": 5256,
 									"name": "TokenCapability"
 								}
 							},
 							"inheritedFrom": {
 								"type": "reference",
-								"id": 5219,
+								"id": 5216,
 								"name": "RawToken.capabilities"
 							}
 						},
 						{
-							"id": 5229,
+							"id": 5226,
 							"name": "createdAt",
 							"kind": 1024,
 							"kindString": "Property",
@@ -85175,12 +85113,12 @@
 							},
 							"inheritedFrom": {
 								"type": "reference",
-								"id": 5220,
+								"id": 5217,
 								"name": "RawToken.createdAt"
 							}
 						},
 						{
-							"id": 5227,
+							"id": 5224,
 							"name": "description",
 							"kind": 1024,
 							"kindString": "Property",
@@ -85216,12 +85154,12 @@
 							},
 							"inheritedFrom": {
 								"type": "reference",
-								"id": 5218,
+								"id": 5215,
 								"name": "RawToken.description"
 							}
 						},
 						{
-							"id": 5230,
+							"id": 5227,
 							"name": "expiresAt",
 							"kind": 1024,
 							"kindString": "Property",
@@ -85262,12 +85200,12 @@
 							},
 							"inheritedFrom": {
 								"type": "reference",
-								"id": 5221,
+								"id": 5218,
 								"name": "RawToken.expiresAt"
 							}
 						},
 						{
-							"id": 5224,
+							"id": 5221,
 							"name": "id",
 							"kind": 1024,
 							"kindString": "Property",
@@ -85285,12 +85223,12 @@
 							},
 							"inheritedFrom": {
 								"type": "reference",
-								"id": 5215,
+								"id": 5212,
 								"name": "RawToken.id"
 							}
 						},
 						{
-							"id": 5226,
+							"id": 5223,
 							"name": "name",
 							"kind": 1024,
 							"kindString": "Property",
@@ -85311,12 +85249,12 @@
 							},
 							"inheritedFrom": {
 								"type": "reference",
-								"id": 5217,
+								"id": 5214,
 								"name": "RawToken.name"
 							}
 						},
 						{
-							"id": 5223,
+							"id": 5220,
 							"name": "token",
 							"kind": 1024,
 							"kindString": "Property",
@@ -85343,7 +85281,7 @@
 							}
 						},
 						{
-							"id": 5225,
+							"id": 5222,
 							"name": "uid",
 							"kind": 1024,
 							"kindString": "Property",
@@ -85364,7 +85302,7 @@
 							},
 							"inheritedFrom": {
 								"type": "reference",
-								"id": 5216,
+								"id": 5213,
 								"name": "RawToken.uid"
 							}
 						}
@@ -85374,14 +85312,14 @@
 							"title": "Properties",
 							"kind": 1024,
 							"children": [
-								5228,
-								5229,
-								5227,
-								5230,
-								5224,
+								5225,
 								5226,
+								5224,
+								5227,
+								5221,
 								5223,
-								5225
+								5220,
+								5222
 							]
 						}
 					],
@@ -85395,13 +85333,13 @@
 					"extendedTypes": [
 						{
 							"type": "reference",
-							"id": 5214,
+							"id": 5211,
 							"name": "RawToken"
 						}
 					]
 				},
 				{
-					"id": 5231,
+					"id": 5228,
 					"name": "RawUpdatableToken",
 					"kind": 256,
 					"kindString": "Interface",
@@ -85412,7 +85350,7 @@
 					},
 					"children": [
 						{
-							"id": 5235,
+							"id": 5232,
 							"name": "capabilities",
 							"kind": 1024,
 							"kindString": "Property",
@@ -85428,13 +85366,13 @@
 								"type": "array",
 								"elementType": {
 									"type": "reference",
-									"id": 5259,
+									"id": 5256,
 									"name": "TokenCapability"
 								}
 							}
 						},
 						{
-							"id": 5234,
+							"id": 5231,
 							"name": "description",
 							"kind": 1024,
 							"kindString": "Property",
@@ -85470,7 +85408,7 @@
 							}
 						},
 						{
-							"id": 5236,
+							"id": 5233,
 							"name": "expiresAt",
 							"kind": 1024,
 							"kindString": "Property",
@@ -85501,7 +85439,7 @@
 							}
 						},
 						{
-							"id": 5232,
+							"id": 5229,
 							"name": "id",
 							"kind": 1024,
 							"kindString": "Property",
@@ -85519,7 +85457,7 @@
 							}
 						},
 						{
-							"id": 5233,
+							"id": 5230,
 							"name": "name",
 							"kind": 1024,
 							"kindString": "Property",
@@ -85551,11 +85489,11 @@
 							"title": "Properties",
 							"kind": 1024,
 							"children": [
-								5235,
-								5234,
-								5236,
 								5232,
-								5233
+								5231,
+								5233,
+								5229,
+								5230
 							]
 						}
 					],
@@ -85568,7 +85506,7 @@
 					]
 				},
 				{
-					"id": 5250,
+					"id": 5247,
 					"name": "Token",
 					"kind": 256,
 					"kindString": "Interface",
@@ -85579,7 +85517,7 @@
 					},
 					"children": [
 						{
-							"id": 5251,
+							"id": 5248,
 							"name": "_tag",
 							"kind": 1024,
 							"kindString": "Property",
@@ -85597,7 +85535,7 @@
 							}
 						},
 						{
-							"id": 5256,
+							"id": 5253,
 							"name": "capabilities",
 							"kind": 1024,
 							"kindString": "Property",
@@ -85613,18 +85551,18 @@
 								"type": "array",
 								"elementType": {
 									"type": "reference",
-									"id": 5259,
+									"id": 5256,
 									"name": "TokenCapability"
 								}
 							},
 							"inheritedFrom": {
 								"type": "reference",
-								"id": 5333,
+								"id": 5330,
 								"name": "TokenData.capabilities"
 							}
 						},
 						{
-							"id": 5257,
+							"id": 5254,
 							"name": "createdAt",
 							"kind": 1024,
 							"kindString": "Property",
@@ -85647,12 +85585,12 @@
 							},
 							"inheritedFrom": {
 								"type": "reference",
-								"id": 5334,
+								"id": 5331,
 								"name": "TokenData.createdAt"
 							}
 						},
 						{
-							"id": 5255,
+							"id": 5252,
 							"name": "description",
 							"kind": 1024,
 							"kindString": "Property",
@@ -85688,12 +85626,12 @@
 							},
 							"inheritedFrom": {
 								"type": "reference",
-								"id": 5332,
+								"id": 5329,
 								"name": "TokenData.description"
 							}
 						},
 						{
-							"id": 5258,
+							"id": 5255,
 							"name": "expiresAt",
 							"kind": 1024,
 							"kindString": "Property",
@@ -85726,12 +85664,12 @@
 							},
 							"inheritedFrom": {
 								"type": "reference",
-								"id": 5335,
+								"id": 5332,
 								"name": "TokenData.expiresAt"
 							}
 						},
 						{
-							"id": 5252,
+							"id": 5249,
 							"name": "id",
 							"kind": 1024,
 							"kindString": "Property",
@@ -85749,12 +85687,12 @@
 							},
 							"inheritedFrom": {
 								"type": "reference",
-								"id": 5329,
+								"id": 5326,
 								"name": "TokenData.id"
 							}
 						},
 						{
-							"id": 5254,
+							"id": 5251,
 							"name": "name",
 							"kind": 1024,
 							"kindString": "Property",
@@ -85775,12 +85713,12 @@
 							},
 							"inheritedFrom": {
 								"type": "reference",
-								"id": 5331,
+								"id": 5328,
 								"name": "TokenData.name"
 							}
 						},
 						{
-							"id": 5253,
+							"id": 5250,
 							"name": "userID",
 							"kind": 1024,
 							"kindString": "Property",
@@ -85801,7 +85739,7 @@
 							},
 							"inheritedFrom": {
 								"type": "reference",
-								"id": 5330,
+								"id": 5327,
 								"name": "TokenData.userID"
 							}
 						}
@@ -85811,14 +85749,14 @@
 							"title": "Properties",
 							"kind": 1024,
 							"children": [
-								5251,
-								5256,
-								5257,
-								5255,
-								5258,
-								5252,
+								5248,
+								5253,
 								5254,
-								5253
+								5252,
+								5255,
+								5249,
+								5251,
+								5250
 							]
 						}
 					],
@@ -85832,20 +85770,20 @@
 					"extendedTypes": [
 						{
 							"type": "reference",
-							"id": 5328,
+							"id": 5325,
 							"name": "TokenData"
 						}
 					],
 					"extendedBy": [
 						{
 							"type": "reference",
-							"id": 5309,
+							"id": 5306,
 							"name": "TokenWithSecret"
 						}
 					]
 				},
 				{
-					"id": 5328,
+					"id": 5325,
 					"name": "TokenData",
 					"kind": 256,
 					"kindString": "Interface",
@@ -85856,7 +85794,7 @@
 					},
 					"children": [
 						{
-							"id": 5333,
+							"id": 5330,
 							"name": "capabilities",
 							"kind": 1024,
 							"kindString": "Property",
@@ -85872,13 +85810,13 @@
 								"type": "array",
 								"elementType": {
 									"type": "reference",
-									"id": 5259,
+									"id": 5256,
 									"name": "TokenCapability"
 								}
 							}
 						},
 						{
-							"id": 5334,
+							"id": 5331,
 							"name": "createdAt",
 							"kind": 1024,
 							"kindString": "Property",
@@ -85901,7 +85839,7 @@
 							}
 						},
 						{
-							"id": 5332,
+							"id": 5329,
 							"name": "description",
 							"kind": 1024,
 							"kindString": "Property",
@@ -85937,7 +85875,7 @@
 							}
 						},
 						{
-							"id": 5335,
+							"id": 5332,
 							"name": "expiresAt",
 							"kind": 1024,
 							"kindString": "Property",
@@ -85970,7 +85908,7 @@
 							}
 						},
 						{
-							"id": 5329,
+							"id": 5326,
 							"name": "id",
 							"kind": 1024,
 							"kindString": "Property",
@@ -85988,7 +85926,7 @@
 							}
 						},
 						{
-							"id": 5331,
+							"id": 5328,
 							"name": "name",
 							"kind": 1024,
 							"kindString": "Property",
@@ -86009,7 +85947,7 @@
 							}
 						},
 						{
-							"id": 5330,
+							"id": 5327,
 							"name": "userID",
 							"kind": 1024,
 							"kindString": "Property",
@@ -86035,13 +85973,13 @@
 							"title": "Properties",
 							"kind": 1024,
 							"children": [
-								5333,
-								5334,
-								5332,
-								5335,
-								5329,
+								5330,
 								5331,
-								5330
+								5329,
+								5332,
+								5326,
+								5328,
+								5327
 							]
 						}
 					],
@@ -86055,13 +85993,13 @@
 					"extendedBy": [
 						{
 							"type": "reference",
-							"id": 5250,
+							"id": 5247,
 							"name": "Token"
 						}
 					]
 				},
 				{
-					"id": 5309,
+					"id": 5306,
 					"name": "TokenWithSecret",
 					"kind": 256,
 					"kindString": "Interface",
@@ -86071,7 +86009,7 @@
 					},
 					"children": [
 						{
-							"id": 5311,
+							"id": 5308,
 							"name": "_tag",
 							"kind": 1024,
 							"kindString": "Property",
@@ -86089,12 +86027,12 @@
 							},
 							"inheritedFrom": {
 								"type": "reference",
-								"id": 5251,
+								"id": 5248,
 								"name": "Token._tag"
 							}
 						},
 						{
-							"id": 5316,
+							"id": 5313,
 							"name": "capabilities",
 							"kind": 1024,
 							"kindString": "Property",
@@ -86110,18 +86048,18 @@
 								"type": "array",
 								"elementType": {
 									"type": "reference",
-									"id": 5259,
+									"id": 5256,
 									"name": "TokenCapability"
 								}
 							},
 							"inheritedFrom": {
 								"type": "reference",
-								"id": 5256,
+								"id": 5253,
 								"name": "Token.capabilities"
 							}
 						},
 						{
-							"id": 5317,
+							"id": 5314,
 							"name": "createdAt",
 							"kind": 1024,
 							"kindString": "Property",
@@ -86144,12 +86082,12 @@
 							},
 							"inheritedFrom": {
 								"type": "reference",
-								"id": 5257,
+								"id": 5254,
 								"name": "Token.createdAt"
 							}
 						},
 						{
-							"id": 5315,
+							"id": 5312,
 							"name": "description",
 							"kind": 1024,
 							"kindString": "Property",
@@ -86185,12 +86123,12 @@
 							},
 							"inheritedFrom": {
 								"type": "reference",
-								"id": 5255,
+								"id": 5252,
 								"name": "Token.description"
 							}
 						},
 						{
-							"id": 5318,
+							"id": 5315,
 							"name": "expiresAt",
 							"kind": 1024,
 							"kindString": "Property",
@@ -86223,12 +86161,12 @@
 							},
 							"inheritedFrom": {
 								"type": "reference",
-								"id": 5258,
+								"id": 5255,
 								"name": "Token.expiresAt"
 							}
 						},
 						{
-							"id": 5312,
+							"id": 5309,
 							"name": "id",
 							"kind": 1024,
 							"kindString": "Property",
@@ -86246,12 +86184,12 @@
 							},
 							"inheritedFrom": {
 								"type": "reference",
-								"id": 5252,
+								"id": 5249,
 								"name": "Token.id"
 							}
 						},
 						{
-							"id": 5314,
+							"id": 5311,
 							"name": "name",
 							"kind": 1024,
 							"kindString": "Property",
@@ -86272,12 +86210,12 @@
 							},
 							"inheritedFrom": {
 								"type": "reference",
-								"id": 5254,
+								"id": 5251,
 								"name": "Token.name"
 							}
 						},
 						{
-							"id": 5310,
+							"id": 5307,
 							"name": "token",
 							"kind": 1024,
 							"kindString": "Property",
@@ -86304,7 +86242,7 @@
 							}
 						},
 						{
-							"id": 5313,
+							"id": 5310,
 							"name": "userID",
 							"kind": 1024,
 							"kindString": "Property",
@@ -86325,7 +86263,7 @@
 							},
 							"inheritedFrom": {
 								"type": "reference",
-								"id": 5253,
+								"id": 5250,
 								"name": "Token.userID"
 							}
 						}
@@ -86335,15 +86273,15 @@
 							"title": "Properties",
 							"kind": 1024,
 							"children": [
-								5311,
-								5316,
-								5317,
-								5315,
-								5318,
-								5312,
+								5308,
+								5313,
 								5314,
-								5310,
-								5313
+								5312,
+								5315,
+								5309,
+								5311,
+								5307,
+								5310
 							]
 						}
 					],
@@ -86357,13 +86295,13 @@
 					"extendedTypes": [
 						{
 							"type": "reference",
-							"id": 5250,
+							"id": 5247,
 							"name": "Token"
 						}
 					]
 				},
 				{
-					"id": 5319,
+					"id": 5316,
 					"name": "UpdatableToken",
 					"kind": 256,
 					"kindString": "Interface",
@@ -86374,7 +86312,7 @@
 					},
 					"children": [
 						{
-							"id": 5323,
+							"id": 5320,
 							"name": "capabilities",
 							"kind": 1024,
 							"kindString": "Property",
@@ -86392,13 +86330,13 @@
 								"type": "array",
 								"elementType": {
 									"type": "reference",
-									"id": 5259,
+									"id": 5256,
 									"name": "TokenCapability"
 								}
 							}
 						},
 						{
-							"id": 5322,
+							"id": 5319,
 							"name": "description",
 							"kind": 1024,
 							"kindString": "Property",
@@ -86436,7 +86374,7 @@
 							}
 						},
 						{
-							"id": 5324,
+							"id": 5321,
 							"name": "expiresAt",
 							"kind": 1024,
 							"kindString": "Property",
@@ -86471,7 +86409,7 @@
 							}
 						},
 						{
-							"id": 5320,
+							"id": 5317,
 							"name": "id",
 							"kind": 1024,
 							"kindString": "Property",
@@ -86489,7 +86427,7 @@
 							}
 						},
 						{
-							"id": 5321,
+							"id": 5318,
 							"name": "name",
 							"kind": 1024,
 							"kindString": "Property",
@@ -86523,11 +86461,11 @@
 							"title": "Properties",
 							"kind": 1024,
 							"children": [
-								5323,
-								5322,
-								5324,
 								5320,
-								5321
+								5319,
+								5321,
+								5317,
+								5318
 							]
 						}
 					],
@@ -86540,7 +86478,7 @@
 					]
 				},
 				{
-					"id": 5325,
+					"id": 5322,
 					"name": "fromTokenDataToToken",
 					"kind": 64,
 					"kindString": "Function",
@@ -86554,35 +86492,35 @@
 					],
 					"signatures": [
 						{
-							"id": 5326,
+							"id": 5323,
 							"name": "fromTokenDataToToken",
 							"kind": 4096,
 							"kindString": "Call signature",
 							"flags": {},
 							"parameters": [
 								{
-									"id": 5327,
+									"id": 5324,
 									"name": "data",
 									"kind": 32768,
 									"kindString": "Parameter",
 									"flags": {},
 									"type": {
 										"type": "reference",
-										"id": 5328,
+										"id": 5325,
 										"name": "TokenData"
 									}
 								}
 							],
 							"type": {
 								"type": "reference",
-								"id": 5250,
+								"id": 5247,
 								"name": "Token"
 							}
 						}
 					]
 				},
 				{
-					"id": 5200,
+					"id": 5197,
 					"name": "isToken",
 					"kind": 64,
 					"kindString": "Function",
@@ -86596,8 +86534,54 @@
 					],
 					"signatures": [
 						{
-							"id": 5201,
+							"id": 5198,
 							"name": "isToken",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {},
+							"parameters": [
+								{
+									"id": 5199,
+									"name": "value",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"type": {
+										"type": "intrinsic",
+										"name": "unknown"
+									}
+								}
+							],
+							"type": {
+								"type": "predicate",
+								"name": "value",
+								"asserts": false,
+								"targetType": {
+									"type": "reference",
+									"id": 5247,
+									"name": "Token"
+								}
+							}
+						}
+					]
+				},
+				{
+					"id": 5200,
+					"name": "isTokenCapability",
+					"kind": 64,
+					"kindString": "Function",
+					"flags": {},
+					"sources": [
+						{
+							"fileName": "token/is-token-capability.ts",
+							"line": 12,
+							"character": 13
+						}
+					],
+					"signatures": [
+						{
+							"id": 5201,
+							"name": "isTokenCapability",
 							"kind": 4096,
 							"kindString": "Call signature",
 							"flags": {},
@@ -86620,8 +86604,54 @@
 								"asserts": false,
 								"targetType": {
 									"type": "reference",
-									"id": 5250,
-									"name": "Token"
+									"id": 5256,
+									"name": "TokenCapability"
+								}
+							}
+						}
+					]
+				},
+				{
+					"id": 5333,
+					"name": "isTokenData",
+					"kind": 64,
+					"kindString": "Function",
+					"flags": {},
+					"sources": [
+						{
+							"fileName": "token/is-token-data.ts",
+							"line": 14,
+							"character": 13
+						}
+					],
+					"signatures": [
+						{
+							"id": 5334,
+							"name": "isTokenData",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {},
+							"parameters": [
+								{
+									"id": 5335,
+									"name": "value",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"type": {
+										"type": "intrinsic",
+										"name": "unknown"
+									}
+								}
+							],
+							"type": {
+								"type": "predicate",
+								"name": "value",
+								"asserts": false,
+								"targetType": {
+									"type": "reference",
+									"id": 5325,
+									"name": "TokenData"
 								}
 							}
 						}
@@ -86629,21 +86659,21 @@
 				},
 				{
 					"id": 5203,
-					"name": "isTokenCapability",
+					"name": "isTokenWithSecret",
 					"kind": 64,
 					"kindString": "Function",
 					"flags": {},
 					"sources": [
 						{
-							"fileName": "token/is-token-capability.ts",
-							"line": 12,
+							"fileName": "token/is-token-with-secret.ts",
+							"line": 13,
 							"character": 13
 						}
 					],
 					"signatures": [
 						{
 							"id": 5204,
-							"name": "isTokenCapability",
+							"name": "isTokenWithSecret",
 							"kind": 4096,
 							"kindString": "Call signature",
 							"flags": {},
@@ -86666,99 +86696,7 @@
 								"asserts": false,
 								"targetType": {
 									"type": "reference",
-									"id": 5259,
-									"name": "TokenCapability"
-								}
-							}
-						}
-					]
-				},
-				{
-					"id": 5336,
-					"name": "isTokenData",
-					"kind": 64,
-					"kindString": "Function",
-					"flags": {},
-					"sources": [
-						{
-							"fileName": "token/is-token-data.ts",
-							"line": 14,
-							"character": 13
-						}
-					],
-					"signatures": [
-						{
-							"id": 5337,
-							"name": "isTokenData",
-							"kind": 4096,
-							"kindString": "Call signature",
-							"flags": {},
-							"parameters": [
-								{
-									"id": 5338,
-									"name": "value",
-									"kind": 32768,
-									"kindString": "Parameter",
-									"flags": {},
-									"type": {
-										"type": "intrinsic",
-										"name": "unknown"
-									}
-								}
-							],
-							"type": {
-								"type": "predicate",
-								"name": "value",
-								"asserts": false,
-								"targetType": {
-									"type": "reference",
-									"id": 5328,
-									"name": "TokenData"
-								}
-							}
-						}
-					]
-				},
-				{
-					"id": 5206,
-					"name": "isTokenWithSecret",
-					"kind": 64,
-					"kindString": "Function",
-					"flags": {},
-					"sources": [
-						{
-							"fileName": "token/is-token-with-secret.ts",
-							"line": 13,
-							"character": 13
-						}
-					],
-					"signatures": [
-						{
-							"id": 5207,
-							"name": "isTokenWithSecret",
-							"kind": 4096,
-							"kindString": "Call signature",
-							"flags": {},
-							"parameters": [
-								{
-									"id": 5208,
-									"name": "value",
-									"kind": 32768,
-									"kindString": "Parameter",
-									"flags": {},
-									"type": {
-										"type": "intrinsic",
-										"name": "unknown"
-									}
-								}
-							],
-							"type": {
-								"type": "predicate",
-								"name": "value",
-								"asserts": false,
-								"targetType": {
-									"type": "reference",
-									"id": 5309,
+									"id": 5306,
 									"name": "TokenWithSecret"
 								}
 							}
@@ -86766,7 +86704,7 @@
 					]
 				},
 				{
-					"id": 5237,
+					"id": 5234,
 					"name": "toRawCreatableToken",
 					"kind": 64,
 					"kindString": "Function",
@@ -86780,35 +86718,35 @@
 					],
 					"signatures": [
 						{
-							"id": 5238,
+							"id": 5235,
 							"name": "toRawCreatableToken",
 							"kind": 4096,
 							"kindString": "Call signature",
 							"flags": {},
 							"parameters": [
 								{
-									"id": 5239,
+									"id": 5236,
 									"name": "creatable",
 									"kind": 32768,
 									"kindString": "Parameter",
 									"flags": {},
 									"type": {
 										"type": "reference",
-										"id": 5195,
+										"id": 5192,
 										"name": "CreatableToken"
 									}
 								}
 							],
 							"type": {
 								"type": "reference",
-								"id": 5209,
+								"id": 5206,
 								"name": "RawCreatableToken"
 							}
 						}
 					]
 				},
 				{
-					"id": 5240,
+					"id": 5237,
 					"name": "toRawUpdatableToken",
 					"kind": 64,
 					"kindString": "Function",
@@ -86822,47 +86760,47 @@
 					],
 					"signatures": [
 						{
-							"id": 5241,
+							"id": 5238,
 							"name": "toRawUpdatableToken",
 							"kind": 4096,
 							"kindString": "Call signature",
 							"flags": {},
 							"parameters": [
 								{
-									"id": 5242,
+									"id": 5239,
 									"name": "updatable",
 									"kind": 32768,
 									"kindString": "Parameter",
 									"flags": {},
 									"type": {
 										"type": "reference",
-										"id": 5319,
+										"id": 5316,
 										"name": "UpdatableToken"
 									}
 								},
 								{
-									"id": 5243,
+									"id": 5240,
 									"name": "current",
 									"kind": 32768,
 									"kindString": "Parameter",
 									"flags": {},
 									"type": {
 										"type": "reference",
-										"id": 5250,
+										"id": 5247,
 										"name": "Token"
 									}
 								}
 							],
 							"type": {
 								"type": "reference",
-								"id": 5231,
+								"id": 5228,
 								"name": "RawUpdatableToken"
 							}
 						}
 					]
 				},
 				{
-					"id": 5244,
+					"id": 5241,
 					"name": "toToken",
 					"kind": 64,
 					"kindString": "Function",
@@ -86876,35 +86814,35 @@
 					],
 					"signatures": [
 						{
-							"id": 5245,
+							"id": 5242,
 							"name": "toToken",
 							"kind": 4096,
 							"kindString": "Call signature",
 							"flags": {},
 							"parameters": [
 								{
-									"id": 5246,
+									"id": 5243,
 									"name": "raw",
 									"kind": 32768,
 									"kindString": "Parameter",
 									"flags": {},
 									"type": {
 										"type": "reference",
-										"id": 5214,
+										"id": 5211,
 										"name": "RawToken"
 									}
 								}
 							],
 							"type": {
 								"type": "reference",
-								"id": 5250,
+								"id": 5247,
 								"name": "Token"
 							}
 						}
 					]
 				},
 				{
-					"id": 5247,
+					"id": 5244,
 					"name": "toTokenWithSecret",
 					"kind": 64,
 					"kindString": "Function",
@@ -86918,28 +86856,28 @@
 					],
 					"signatures": [
 						{
-							"id": 5248,
+							"id": 5245,
 							"name": "toTokenWithSecret",
 							"kind": 4096,
 							"kindString": "Call signature",
 							"flags": {},
 							"parameters": [
 								{
-									"id": 5249,
+									"id": 5246,
 									"name": "raw",
 									"kind": 32768,
 									"kindString": "Parameter",
 									"flags": {},
 									"type": {
 										"type": "reference",
-										"id": 5222,
+										"id": 5219,
 										"name": "RawTokenWithSecret"
 									}
 								}
 							],
 							"type": {
 								"type": "reference",
-								"id": 5309,
+								"id": 5306,
 								"name": "TokenWithSecret"
 							}
 						}
@@ -86951,37 +86889,37 @@
 					"title": "Enumerations",
 					"kind": 8,
 					"children": [
-						5259
+						5256
 					]
 				},
 				{
 					"title": "Interfaces",
 					"kind": 256,
 					"children": [
-						5195,
-						5209,
-						5214,
-						5222,
-						5231,
-						5250,
-						5328,
-						5309,
-						5319
+						5192,
+						5206,
+						5211,
+						5219,
+						5228,
+						5247,
+						5325,
+						5306,
+						5316
 					]
 				},
 				{
 					"title": "Functions",
 					"kind": 64,
 					"children": [
-						5325,
+						5322,
+						5197,
 						5200,
+						5333,
 						5203,
-						5336,
-						5206,
+						5234,
 						5237,
-						5240,
-						5244,
-						5247
+						5241,
+						5244
 					]
 				}
 			],
@@ -87001,14 +86939,14 @@
 			"flags": {},
 			"children": [
 				{
-					"id": 5339,
+					"id": 5336,
 					"name": "CreatableUser",
 					"kind": 256,
 					"kindString": "Interface",
 					"flags": {},
 					"children": [
 						{
-							"id": 5343,
+							"id": 5340,
 							"name": "email",
 							"kind": 1024,
 							"kindString": "Property",
@@ -87026,7 +86964,7 @@
 							}
 						},
 						{
-							"id": 5342,
+							"id": 5339,
 							"name": "name",
 							"kind": 1024,
 							"kindString": "Property",
@@ -87044,7 +86982,7 @@
 							}
 						},
 						{
-							"id": 5341,
+							"id": 5338,
 							"name": "password",
 							"kind": 1024,
 							"kindString": "Property",
@@ -87062,7 +87000,7 @@
 							}
 						},
 						{
-							"id": 5344,
+							"id": 5341,
 							"name": "role",
 							"kind": 1024,
 							"kindString": "Property",
@@ -87089,7 +87027,7 @@
 							}
 						},
 						{
-							"id": 5340,
+							"id": 5337,
 							"name": "user",
 							"kind": 1024,
 							"kindString": "Property",
@@ -87112,11 +87050,11 @@
 							"title": "Properties",
 							"kind": 1024,
 							"children": [
-								5343,
-								5342,
+								5340,
+								5339,
+								5338,
 								5341,
-								5344,
-								5340
+								5337
 							]
 						}
 					],
@@ -87129,7 +87067,7 @@
 					]
 				},
 				{
-					"id": 5351,
+					"id": 5348,
 					"name": "RawCreatableUser",
 					"kind": 256,
 					"kindString": "Interface",
@@ -87140,7 +87078,7 @@
 					},
 					"children": [
 						{
-							"id": 5356,
+							"id": 5353,
 							"name": "Admin",
 							"kind": 1024,
 							"kindString": "Property",
@@ -87158,7 +87096,7 @@
 							}
 						},
 						{
-							"id": 5355,
+							"id": 5352,
 							"name": "Email",
 							"kind": 1024,
 							"kindString": "Property",
@@ -87176,7 +87114,7 @@
 							}
 						},
 						{
-							"id": 5354,
+							"id": 5351,
 							"name": "Name",
 							"kind": 1024,
 							"kindString": "Property",
@@ -87194,7 +87132,7 @@
 							}
 						},
 						{
-							"id": 5353,
+							"id": 5350,
 							"name": "Pass",
 							"kind": 1024,
 							"kindString": "Property",
@@ -87212,7 +87150,7 @@
 							}
 						},
 						{
-							"id": 5352,
+							"id": 5349,
 							"name": "User",
 							"kind": 1024,
 							"kindString": "Property",
@@ -87235,11 +87173,11 @@
 							"title": "Properties",
 							"kind": 1024,
 							"children": [
-								5356,
-								5355,
-								5354,
 								5353,
-								5352
+								5352,
+								5351,
+								5350,
+								5349
 							]
 						}
 					],
@@ -87252,7 +87190,7 @@
 					]
 				},
 				{
-					"id": 5357,
+					"id": 5354,
 					"name": "RawUser",
 					"kind": 256,
 					"kindString": "Interface",
@@ -87263,7 +87201,7 @@
 					},
 					"children": [
 						{
-							"id": 5362,
+							"id": 5359,
 							"name": "Admin",
 							"kind": 1024,
 							"kindString": "Property",
@@ -87281,7 +87219,7 @@
 							}
 						},
 						{
-							"id": 5366,
+							"id": 5363,
 							"name": "DefaultGID",
 							"kind": 1024,
 							"kindString": "Property",
@@ -87301,7 +87239,7 @@
 							}
 						},
 						{
-							"id": 5361,
+							"id": 5358,
 							"name": "Email",
 							"kind": 1024,
 							"kindString": "Property",
@@ -87319,7 +87257,7 @@
 							}
 						},
 						{
-							"id": 5367,
+							"id": 5364,
 							"name": "Groups",
 							"kind": 1024,
 							"kindString": "Property",
@@ -87336,14 +87274,14 @@
 								"elementType": {
 									"type": "reflection",
 									"declaration": {
-										"id": 5368,
+										"id": 5365,
 										"name": "__type",
 										"kind": 65536,
 										"kindString": "Type literal",
 										"flags": {},
 										"children": [
 											{
-												"id": 5371,
+												"id": 5368,
 												"name": "Desc",
 												"kind": 1024,
 												"kindString": "Property",
@@ -87361,7 +87299,7 @@
 												}
 											},
 											{
-												"id": 5369,
+												"id": 5366,
 												"name": "GID",
 												"kind": 1024,
 												"kindString": "Property",
@@ -87379,7 +87317,7 @@
 												}
 											},
 											{
-												"id": 5370,
+												"id": 5367,
 												"name": "Name",
 												"kind": 1024,
 												"kindString": "Property",
@@ -87397,7 +87335,7 @@
 												}
 											},
 											{
-												"id": 5372,
+												"id": 5369,
 												"name": "Synced",
 												"kind": 1024,
 												"kindString": "Property",
@@ -87420,10 +87358,10 @@
 												"title": "Properties",
 												"kind": 1024,
 												"children": [
-													5371,
-													5369,
-													5370,
-													5372
+													5368,
+													5366,
+													5367,
+													5369
 												]
 											}
 										]
@@ -87432,7 +87370,7 @@
 							}
 						},
 						{
-							"id": 5363,
+							"id": 5360,
 							"name": "Locked",
 							"kind": 1024,
 							"kindString": "Property",
@@ -87450,7 +87388,7 @@
 							}
 						},
 						{
-							"id": 5360,
+							"id": 5357,
 							"name": "Name",
 							"kind": 1024,
 							"kindString": "Property",
@@ -87468,7 +87406,7 @@
 							}
 						},
 						{
-							"id": 5365,
+							"id": 5362,
 							"name": "Synced",
 							"kind": 1024,
 							"kindString": "Property",
@@ -87486,7 +87424,7 @@
 							}
 						},
 						{
-							"id": 5364,
+							"id": 5361,
 							"name": "TS",
 							"kind": 1024,
 							"kindString": "Property",
@@ -87504,7 +87442,7 @@
 							}
 						},
 						{
-							"id": 5358,
+							"id": 5355,
 							"name": "UID",
 							"kind": 1024,
 							"kindString": "Property",
@@ -87522,7 +87460,7 @@
 							}
 						},
 						{
-							"id": 5359,
+							"id": 5356,
 							"name": "User",
 							"kind": 1024,
 							"kindString": "Property",
@@ -87545,16 +87483,16 @@
 							"title": "Properties",
 							"kind": 1024,
 							"children": [
-								5362,
-								5366,
-								5361,
-								5367,
+								5359,
 								5363,
-								5360,
-								5365,
-								5364,
 								5358,
-								5359
+								5364,
+								5360,
+								5357,
+								5362,
+								5361,
+								5355,
+								5356
 							]
 						}
 					],
@@ -87567,14 +87505,14 @@
 					]
 				},
 				{
-					"id": 5379,
+					"id": 5376,
 					"name": "UpdatableUser",
 					"kind": 256,
 					"kindString": "Interface",
 					"flags": {},
 					"children": [
 						{
-							"id": 5385,
+							"id": 5382,
 							"name": "currentPassword",
 							"kind": 1024,
 							"kindString": "Property",
@@ -87594,7 +87532,7 @@
 							}
 						},
 						{
-							"id": 5383,
+							"id": 5380,
 							"name": "email",
 							"kind": 1024,
 							"kindString": "Property",
@@ -87614,7 +87552,7 @@
 							}
 						},
 						{
-							"id": 5380,
+							"id": 5377,
 							"name": "id",
 							"kind": 1024,
 							"kindString": "Property",
@@ -87632,7 +87570,7 @@
 							}
 						},
 						{
-							"id": 5387,
+							"id": 5384,
 							"name": "locked",
 							"kind": 1024,
 							"kindString": "Property",
@@ -87652,7 +87590,7 @@
 							}
 						},
 						{
-							"id": 5382,
+							"id": 5379,
 							"name": "name",
 							"kind": 1024,
 							"kindString": "Property",
@@ -87672,7 +87610,7 @@
 							}
 						},
 						{
-							"id": 5384,
+							"id": 5381,
 							"name": "password",
 							"kind": 1024,
 							"kindString": "Property",
@@ -87692,7 +87630,7 @@
 							}
 						},
 						{
-							"id": 5386,
+							"id": 5383,
 							"name": "role",
 							"kind": 1024,
 							"kindString": "Property",
@@ -87721,7 +87659,7 @@
 							}
 						},
 						{
-							"id": 5388,
+							"id": 5385,
 							"name": "searchGroupID",
 							"kind": 1024,
 							"kindString": "Property",
@@ -87750,7 +87688,7 @@
 							}
 						},
 						{
-							"id": 5381,
+							"id": 5378,
 							"name": "username",
 							"kind": 1024,
 							"kindString": "Property",
@@ -87775,15 +87713,15 @@
 							"title": "Properties",
 							"kind": 1024,
 							"children": [
-								5385,
-								5383,
-								5380,
-								5387,
 								5382,
+								5380,
+								5377,
 								5384,
-								5386,
-								5388,
-								5381
+								5379,
+								5381,
+								5383,
+								5385,
+								5378
 							]
 						}
 					],
@@ -87796,14 +87734,14 @@
 					]
 				},
 				{
-					"id": 5389,
+					"id": 5386,
 					"name": "User",
 					"kind": 256,
 					"kindString": "Interface",
 					"flags": {},
 					"children": [
 						{
-							"id": 5390,
+							"id": 5387,
 							"name": "_tag",
 							"kind": 1024,
 							"kindString": "Property",
@@ -87821,7 +87759,7 @@
 							}
 						},
 						{
-							"id": 5395,
+							"id": 5392,
 							"name": "email",
 							"kind": 1024,
 							"kindString": "Property",
@@ -87839,12 +87777,12 @@
 							},
 							"inheritedFrom": {
 								"type": "reference",
-								"id": 5409,
+								"id": 5406,
 								"name": "UserData.email"
 							}
 						},
 						{
-							"id": 5392,
+							"id": 5389,
 							"name": "groupIDs",
 							"kind": 1024,
 							"kindString": "Property",
@@ -87865,12 +87803,12 @@
 							},
 							"inheritedFrom": {
 								"type": "reference",
-								"id": 5406,
+								"id": 5403,
 								"name": "UserData.groupIDs"
 							}
 						},
 						{
-							"id": 5391,
+							"id": 5388,
 							"name": "id",
 							"kind": 1024,
 							"kindString": "Property",
@@ -87888,12 +87826,12 @@
 							},
 							"inheritedFrom": {
 								"type": "reference",
-								"id": 5405,
+								"id": 5402,
 								"name": "UserData.id"
 							}
 						},
 						{
-							"id": 5398,
+							"id": 5395,
 							"name": "lastActivityDate",
 							"kind": 1024,
 							"kindString": "Property",
@@ -87922,12 +87860,12 @@
 							},
 							"inheritedFrom": {
 								"type": "reference",
-								"id": 5412,
+								"id": 5409,
 								"name": "UserData.lastActivityDate"
 							}
 						},
 						{
-							"id": 5397,
+							"id": 5394,
 							"name": "locked",
 							"kind": 1024,
 							"kindString": "Property",
@@ -87945,12 +87883,12 @@
 							},
 							"inheritedFrom": {
 								"type": "reference",
-								"id": 5411,
+								"id": 5408,
 								"name": "UserData.locked"
 							}
 						},
 						{
-							"id": 5394,
+							"id": 5391,
 							"name": "name",
 							"kind": 1024,
 							"kindString": "Property",
@@ -87968,12 +87906,12 @@
 							},
 							"inheritedFrom": {
 								"type": "reference",
-								"id": 5408,
+								"id": 5405,
 								"name": "UserData.name"
 							}
 						},
 						{
-							"id": 5396,
+							"id": 5393,
 							"name": "role",
 							"kind": 1024,
 							"kindString": "Property",
@@ -88000,12 +87938,12 @@
 							},
 							"inheritedFrom": {
 								"type": "reference",
-								"id": 5410,
+								"id": 5407,
 								"name": "UserData.role"
 							}
 						},
 						{
-							"id": 5399,
+							"id": 5396,
 							"name": "searchGroupID",
 							"kind": 1024,
 							"kindString": "Property",
@@ -88032,12 +87970,12 @@
 							},
 							"inheritedFrom": {
 								"type": "reference",
-								"id": 5413,
+								"id": 5410,
 								"name": "UserData.searchGroupID"
 							}
 						},
 						{
-							"id": 5393,
+							"id": 5390,
 							"name": "username",
 							"kind": 1024,
 							"kindString": "Property",
@@ -88055,7 +87993,7 @@
 							},
 							"inheritedFrom": {
 								"type": "reference",
-								"id": 5407,
+								"id": 5404,
 								"name": "UserData.username"
 							}
 						}
@@ -88065,16 +88003,16 @@
 							"title": "Properties",
 							"kind": 1024,
 							"children": [
-								5390,
-								5395,
+								5387,
 								5392,
-								5391,
-								5398,
-								5397,
+								5389,
+								5388,
+								5395,
 								5394,
+								5391,
+								5393,
 								5396,
-								5399,
-								5393
+								5390
 							]
 						}
 					],
@@ -88088,20 +88026,20 @@
 					"extendedTypes": [
 						{
 							"type": "reference",
-							"id": 5404,
+							"id": 5401,
 							"name": "UserData"
 						}
 					]
 				},
 				{
-					"id": 5404,
+					"id": 5401,
 					"name": "UserData",
 					"kind": 256,
 					"kindString": "Interface",
 					"flags": {},
 					"children": [
 						{
-							"id": 5409,
+							"id": 5406,
 							"name": "email",
 							"kind": 1024,
 							"kindString": "Property",
@@ -88119,7 +88057,7 @@
 							}
 						},
 						{
-							"id": 5406,
+							"id": 5403,
 							"name": "groupIDs",
 							"kind": 1024,
 							"kindString": "Property",
@@ -88140,7 +88078,7 @@
 							}
 						},
 						{
-							"id": 5405,
+							"id": 5402,
 							"name": "id",
 							"kind": 1024,
 							"kindString": "Property",
@@ -88158,7 +88096,7 @@
 							}
 						},
 						{
-							"id": 5412,
+							"id": 5409,
 							"name": "lastActivityDate",
 							"kind": 1024,
 							"kindString": "Property",
@@ -88187,7 +88125,7 @@
 							}
 						},
 						{
-							"id": 5411,
+							"id": 5408,
 							"name": "locked",
 							"kind": 1024,
 							"kindString": "Property",
@@ -88205,7 +88143,7 @@
 							}
 						},
 						{
-							"id": 5408,
+							"id": 5405,
 							"name": "name",
 							"kind": 1024,
 							"kindString": "Property",
@@ -88223,7 +88161,7 @@
 							}
 						},
 						{
-							"id": 5410,
+							"id": 5407,
 							"name": "role",
 							"kind": 1024,
 							"kindString": "Property",
@@ -88250,7 +88188,7 @@
 							}
 						},
 						{
-							"id": 5413,
+							"id": 5410,
 							"name": "searchGroupID",
 							"kind": 1024,
 							"kindString": "Property",
@@ -88277,7 +88215,7 @@
 							}
 						},
 						{
-							"id": 5407,
+							"id": 5404,
 							"name": "username",
 							"kind": 1024,
 							"kindString": "Property",
@@ -88300,15 +88238,15 @@
 							"title": "Properties",
 							"kind": 1024,
 							"children": [
-								5409,
 								5406,
-								5405,
-								5412,
-								5411,
+								5403,
+								5402,
+								5409,
 								5408,
+								5405,
+								5407,
 								5410,
-								5413,
-								5407
+								5404
 							]
 						}
 					],
@@ -88322,13 +88260,13 @@
 					"extendedBy": [
 						{
 							"type": "reference",
-							"id": 5389,
+							"id": 5386,
 							"name": "User"
 						}
 					]
 				},
 				{
-					"id": 5400,
+					"id": 5397,
 					"name": "UserRole",
 					"kind": 4194304,
 					"kindString": "Type alias",
@@ -88348,13 +88286,13 @@
 						},
 						"objectType": {
 							"type": "reference",
-							"id": 5389,
+							"id": 5386,
 							"name": "User"
 						}
 					}
 				},
 				{
-					"id": 5401,
+					"id": 5398,
 					"name": "fromUserDataToUser",
 					"kind": 64,
 					"kindString": "Function",
@@ -88368,35 +88306,35 @@
 					],
 					"signatures": [
 						{
-							"id": 5402,
+							"id": 5399,
 							"name": "fromUserDataToUser",
 							"kind": 4096,
 							"kindString": "Call signature",
 							"flags": {},
 							"parameters": [
 								{
-									"id": 5403,
+									"id": 5400,
 									"name": "data",
 									"kind": 32768,
 									"kindString": "Parameter",
 									"flags": {},
 									"type": {
 										"type": "reference",
-										"id": 5404,
+										"id": 5401,
 										"name": "UserData"
 									}
 								}
 							],
 							"type": {
 								"type": "reference",
-								"id": 5389,
+								"id": 5386,
 								"name": "User"
 							}
 						}
 					]
 				},
 				{
-					"id": 5348,
+					"id": 5345,
 					"name": "isValidUser",
 					"kind": 64,
 					"kindString": "Function",
@@ -88410,14 +88348,14 @@
 					],
 					"signatures": [
 						{
-							"id": 5349,
+							"id": 5346,
 							"name": "isValidUser",
 							"kind": 4096,
 							"kindString": "Call signature",
 							"flags": {},
 							"parameters": [
 								{
-									"id": 5350,
+									"id": 5347,
 									"name": "value",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -88434,7 +88372,7 @@
 								"asserts": false,
 								"targetType": {
 									"type": "reference",
-									"id": 5389,
+									"id": 5386,
 									"name": "User"
 								}
 							}
@@ -88442,7 +88380,7 @@
 					]
 				},
 				{
-					"id": 5414,
+					"id": 5411,
 					"name": "isValidUserData",
 					"kind": 64,
 					"kindString": "Function",
@@ -88456,14 +88394,14 @@
 					],
 					"signatures": [
 						{
-							"id": 5415,
+							"id": 5412,
 							"name": "isValidUserData",
 							"kind": 4096,
 							"kindString": "Call signature",
 							"flags": {},
 							"parameters": [
 								{
-									"id": 5416,
+									"id": 5413,
 									"name": "value",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -88480,7 +88418,7 @@
 								"asserts": false,
 								"targetType": {
 									"type": "reference",
-									"id": 5404,
+									"id": 5401,
 									"name": "UserData"
 								}
 							}
@@ -88488,7 +88426,7 @@
 					]
 				},
 				{
-					"id": 5345,
+					"id": 5342,
 					"name": "isValidUserRole",
 					"kind": 64,
 					"kindString": "Function",
@@ -88502,14 +88440,14 @@
 					],
 					"signatures": [
 						{
-							"id": 5346,
+							"id": 5343,
 							"name": "isValidUserRole",
 							"kind": 4096,
 							"kindString": "Call signature",
 							"flags": {},
 							"parameters": [
 								{
-									"id": 5347,
+									"id": 5344,
 									"name": "value",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -88542,7 +88480,7 @@
 					]
 				},
 				{
-					"id": 5373,
+					"id": 5370,
 					"name": "toRawCreatableUser",
 					"kind": 64,
 					"kindString": "Function",
@@ -88556,35 +88494,35 @@
 					],
 					"signatures": [
 						{
-							"id": 5374,
+							"id": 5371,
 							"name": "toRawCreatableUser",
 							"kind": 4096,
 							"kindString": "Call signature",
 							"flags": {},
 							"parameters": [
 								{
-									"id": 5375,
+									"id": 5372,
 									"name": "creatable",
 									"kind": 32768,
 									"kindString": "Parameter",
 									"flags": {},
 									"type": {
 										"type": "reference",
-										"id": 5339,
+										"id": 5336,
 										"name": "CreatableUser"
 									}
 								}
 							],
 							"type": {
 								"type": "reference",
-								"id": 5351,
+								"id": 5348,
 								"name": "RawCreatableUser"
 							}
 						}
 					]
 				},
 				{
-					"id": 5376,
+					"id": 5373,
 					"name": "toUser",
 					"kind": 64,
 					"kindString": "Function",
@@ -88598,28 +88536,28 @@
 					],
 					"signatures": [
 						{
-							"id": 5377,
+							"id": 5374,
 							"name": "toUser",
 							"kind": 4096,
 							"kindString": "Call signature",
 							"flags": {},
 							"parameters": [
 								{
-									"id": 5378,
+									"id": 5375,
 									"name": "raw",
 									"kind": 32768,
 									"kindString": "Parameter",
 									"flags": {},
 									"type": {
 										"type": "reference",
-										"id": 5357,
+										"id": 5354,
 										"name": "RawUser"
 									}
 								}
 							],
 							"type": {
 								"type": "reference",
-								"id": 5389,
+								"id": 5386,
 								"name": "User"
 							}
 						}
@@ -88631,31 +88569,31 @@
 					"title": "Interfaces",
 					"kind": 256,
 					"children": [
-						5339,
-						5351,
-						5357,
-						5379,
-						5389,
-						5404
+						5336,
+						5348,
+						5354,
+						5376,
+						5386,
+						5401
 					]
 				},
 				{
 					"title": "Type Aliases",
 					"kind": 4194304,
 					"children": [
-						5400
+						5397
 					]
 				},
 				{
 					"title": "Functions",
 					"kind": 64,
 					"children": [
-						5401,
-						5348,
-						5414,
+						5398,
 						5345,
-						5373,
-						5376
+						5411,
+						5342,
+						5370,
+						5373
 					]
 				}
 			],
@@ -88675,7 +88613,7 @@
 			"flags": {},
 			"children": [
 				{
-					"id": 5417,
+					"id": 5414,
 					"name": "RawUserPreferencesWithMetadata",
 					"kind": 256,
 					"kindString": "Interface",
@@ -88686,7 +88624,7 @@
 					},
 					"children": [
 						{
-							"id": 5419,
+							"id": 5416,
 							"name": "Data",
 							"kind": 1024,
 							"kindString": "Property",
@@ -88707,7 +88645,7 @@
 							}
 						},
 						{
-							"id": 5418,
+							"id": 5415,
 							"name": "Name",
 							"kind": 1024,
 							"kindString": "Property",
@@ -88725,7 +88663,7 @@
 							}
 						},
 						{
-							"id": 5420,
+							"id": 5417,
 							"name": "Synced",
 							"kind": 1024,
 							"kindString": "Property",
@@ -88743,7 +88681,7 @@
 							}
 						},
 						{
-							"id": 5421,
+							"id": 5418,
 							"name": "UID",
 							"kind": 1024,
 							"kindString": "Property",
@@ -88764,7 +88702,7 @@
 							}
 						},
 						{
-							"id": 5422,
+							"id": 5419,
 							"name": "Updated",
 							"kind": 1024,
 							"kindString": "Property",
@@ -88790,11 +88728,11 @@
 							"title": "Properties",
 							"kind": 1024,
 							"children": [
-								5419,
+								5416,
+								5415,
+								5417,
 								5418,
-								5420,
-								5421,
-								5422
+								5419
 							]
 						}
 					],
@@ -88807,7 +88745,7 @@
 					]
 				},
 				{
-					"id": 5426,
+					"id": 5423,
 					"name": "UserPreferences",
 					"kind": 256,
 					"kindString": "Interface",
@@ -88818,7 +88756,7 @@
 					},
 					"children": [
 						{
-							"id": 5446,
+							"id": 5443,
 							"name": "chartTheme",
 							"kind": 1024,
 							"kindString": "Property",
@@ -88838,7 +88776,7 @@
 							}
 						},
 						{
-							"id": 5462,
+							"id": 5459,
 							"name": "dashboardAutosave",
 							"kind": 1024,
 							"kindString": "Property",
@@ -88858,7 +88796,7 @@
 							}
 						},
 						{
-							"id": 5463,
+							"id": 5460,
 							"name": "developer",
 							"kind": 1024,
 							"kindString": "Property",
@@ -88878,7 +88816,7 @@
 							}
 						},
 						{
-							"id": 5440,
+							"id": 5437,
 							"name": "editor",
 							"kind": 1024,
 							"kindString": "Property",
@@ -88895,14 +88833,14 @@
 							"type": {
 								"type": "reflection",
 								"declaration": {
-									"id": 5441,
+									"id": 5438,
 									"name": "__type",
 									"kind": 65536,
 									"kindString": "Type literal",
 									"flags": {},
 									"children": [
 										{
-											"id": 5442,
+											"id": 5439,
 											"name": "fontSize",
 											"kind": 1024,
 											"kindString": "Property",
@@ -88922,7 +88860,7 @@
 											}
 										},
 										{
-											"id": 5443,
+											"id": 5440,
 											"name": "theme",
 											"kind": 1024,
 											"kindString": "Property",
@@ -88960,8 +88898,8 @@
 											"title": "Properties",
 											"kind": 1024,
 											"children": [
-												5442,
-												5443
+												5439,
+												5440
 											]
 										}
 									]
@@ -88969,7 +88907,7 @@
 							}
 						},
 						{
-							"id": 5464,
+							"id": 5461,
 							"name": "experimental",
 							"kind": 1024,
 							"kindString": "Property",
@@ -88989,7 +88927,7 @@
 							}
 						},
 						{
-							"id": 5448,
+							"id": 5445,
 							"name": "homepage",
 							"kind": 1024,
 							"kindString": "Property",
@@ -89009,7 +88947,7 @@
 							}
 						},
 						{
-							"id": 5445,
+							"id": 5442,
 							"name": "interfaceTheme",
 							"kind": 1024,
 							"kindString": "Property",
@@ -89029,7 +88967,7 @@
 							}
 						},
 						{
-							"id": 5455,
+							"id": 5452,
 							"name": "maps",
 							"kind": 1024,
 							"kindString": "Property",
@@ -89046,14 +88984,14 @@
 							"type": {
 								"type": "reflection",
 								"declaration": {
-									"id": 5456,
+									"id": 5453,
 									"name": "__type",
 									"kind": 65536,
 									"kindString": "Type literal",
 									"flags": {},
 									"children": [
 										{
-											"id": 5457,
+											"id": 5454,
 											"name": "center",
 											"kind": 1024,
 											"kindString": "Property",
@@ -89070,14 +89008,14 @@
 											"type": {
 												"type": "reflection",
 												"declaration": {
-													"id": 5458,
+													"id": 5455,
 													"name": "__type",
 													"kind": 65536,
 													"kindString": "Type literal",
 													"flags": {},
 													"children": [
 														{
-															"id": 5460,
+															"id": 5457,
 															"name": "lat",
 															"kind": 1024,
 															"kindString": "Property",
@@ -89097,7 +89035,7 @@
 															}
 														},
 														{
-															"id": 5461,
+															"id": 5458,
 															"name": "lng",
 															"kind": 1024,
 															"kindString": "Property",
@@ -89117,7 +89055,7 @@
 															}
 														},
 														{
-															"id": 5459,
+															"id": 5456,
 															"name": "zoom",
 															"kind": 1024,
 															"kindString": "Property",
@@ -89142,9 +89080,9 @@
 															"title": "Properties",
 															"kind": 1024,
 															"children": [
-																5460,
-																5461,
-																5459
+																5457,
+																5458,
+																5456
 															]
 														}
 													]
@@ -89157,7 +89095,7 @@
 											"title": "Properties",
 											"kind": 1024,
 											"children": [
-												5457
+												5454
 											]
 										}
 									]
@@ -89165,7 +89103,7 @@
 							}
 						},
 						{
-							"id": 5444,
+							"id": 5441,
 							"name": "menu",
 							"kind": 1024,
 							"kindString": "Property",
@@ -89194,7 +89132,7 @@
 							}
 						},
 						{
-							"id": 5447,
+							"id": 5444,
 							"name": "point2PointTheme",
 							"kind": 1024,
 							"kindString": "Property",
@@ -89214,7 +89152,95 @@
 							}
 						},
 						{
-							"id": 5449,
+							"id": 5462,
+							"name": "queryStudioPaneSettings",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {
+								"isOptional": true
+							},
+							"sources": [
+								{
+									"fileName": "user-preferences/user-preferences.ts",
+									"line": 34,
+									"character": 1
+								}
+							],
+							"type": {
+								"type": "array",
+								"elementType": {
+									"type": "reflection",
+									"declaration": {
+										"id": 5463,
+										"name": "__type",
+										"kind": 65536,
+										"kindString": "Type literal",
+										"flags": {},
+										"children": [
+											{
+												"id": 5464,
+												"name": "id",
+												"kind": 1024,
+												"kindString": "Property",
+												"flags": {},
+												"sources": [
+													{
+														"fileName": "user-preferences/user-preferences.ts",
+														"line": 34,
+														"character": 35
+													}
+												],
+												"type": {
+													"type": "intrinsic",
+													"name": "string"
+												}
+											},
+											{
+												"id": 5465,
+												"name": "size",
+												"kind": 1024,
+												"kindString": "Property",
+												"flags": {
+													"isOptional": true
+												},
+												"sources": [
+													{
+														"fileName": "user-preferences/user-preferences.ts",
+														"line": 34,
+														"character": 47
+													}
+												],
+												"type": {
+													"type": "union",
+													"types": [
+														{
+															"type": "intrinsic",
+															"name": "number"
+														},
+														{
+															"type": "literal",
+															"value": "*"
+														}
+													]
+												}
+											}
+										],
+										"groups": [
+											{
+												"title": "Properties",
+												"kind": 1024,
+												"children": [
+													5464,
+													5465
+												]
+											}
+										]
+									}
+								}
+							}
+						},
+						{
+							"id": 5446,
 							"name": "rendererSubstitutions",
 							"kind": 1024,
 							"kindString": "Property",
@@ -89231,14 +89257,14 @@
 							"type": {
 								"type": "reflection",
 								"declaration": {
-									"id": 5450,
+									"id": 5447,
 									"name": "__type",
 									"kind": 65536,
 									"kindString": "Type literal",
 									"flags": {},
 									"children": [
 										{
-											"id": 5451,
+											"id": 5448,
 											"name": "emptyCoords",
 											"kind": 1024,
 											"kindString": "Property",
@@ -89255,14 +89281,14 @@
 											"type": {
 												"type": "reflection",
 												"declaration": {
-													"id": 5452,
+													"id": 5449,
 													"name": "__type",
 													"kind": 65536,
 													"kindString": "Type literal",
 													"flags": {},
 													"children": [
 														{
-															"id": 5453,
+															"id": 5450,
 															"name": "lat",
 															"kind": 1024,
 															"kindString": "Property",
@@ -89280,7 +89306,7 @@
 															}
 														},
 														{
-															"id": 5454,
+															"id": 5451,
 															"name": "lng",
 															"kind": 1024,
 															"kindString": "Property",
@@ -89303,8 +89329,8 @@
 															"title": "Properties",
 															"kind": 1024,
 															"children": [
-																5453,
-																5454
+																5450,
+																5451
 															]
 														}
 													]
@@ -89317,7 +89343,7 @@
 											"title": "Properties",
 											"kind": 1024,
 											"children": [
-												5451
+												5448
 											]
 										}
 									]
@@ -89325,7 +89351,7 @@
 							}
 						},
 						{
-							"id": 5427,
+							"id": 5424,
 							"name": "system",
 							"kind": 1024,
 							"kindString": "Property",
@@ -89342,14 +89368,14 @@
 							"type": {
 								"type": "reflection",
 								"declaration": {
-									"id": 5428,
+									"id": 5425,
 									"name": "__type",
 									"kind": 65536,
 									"kindString": "Type literal",
 									"flags": {},
 									"children": [
 										{
-											"id": 5429,
+											"id": 5426,
 											"name": "dismiss",
 											"kind": 1024,
 											"kindString": "Property",
@@ -89372,7 +89398,7 @@
 											}
 										},
 										{
-											"id": 5434,
+											"id": 5431,
 											"name": "favs",
 											"kind": 1024,
 											"kindString": "Property",
@@ -89395,7 +89421,7 @@
 											}
 										},
 										{
-											"id": 5436,
+											"id": 5433,
 											"name": "onboarding",
 											"kind": 1024,
 											"kindString": "Property",
@@ -89412,14 +89438,14 @@
 											"type": {
 												"type": "reflection",
 												"declaration": {
-													"id": 5437,
+													"id": 5434,
 													"name": "__type",
 													"kind": 65536,
 													"kindString": "Type literal",
 													"flags": {},
 													"children": [
 														{
-															"id": 5439,
+															"id": 5436,
 															"name": "completed",
 															"kind": 1024,
 															"kindString": "Property",
@@ -89442,7 +89468,7 @@
 															}
 														},
 														{
-															"id": 5438,
+															"id": 5435,
 															"name": "percentage",
 															"kind": 1024,
 															"kindString": "Property",
@@ -89467,8 +89493,8 @@
 															"title": "Properties",
 															"kind": 1024,
 															"children": [
-																5439,
-																5438
+																5436,
+																5435
 															]
 														}
 													]
@@ -89476,7 +89502,7 @@
 											}
 										},
 										{
-											"id": 5430,
+											"id": 5427,
 											"name": "views",
 											"kind": 1024,
 											"kindString": "Property",
@@ -89493,20 +89519,20 @@
 											"type": {
 												"type": "reflection",
 												"declaration": {
-													"id": 5431,
+													"id": 5428,
 													"name": "__type",
 													"kind": 65536,
 													"kindString": "Type literal",
 													"flags": {},
 													"indexSignature": {
-														"id": 5432,
+														"id": 5429,
 														"name": "__index",
 														"kind": 8192,
 														"kindString": "Index signature",
 														"flags": {},
 														"parameters": [
 															{
-																"id": 5433,
+																"id": 5430,
 																"name": "key",
 																"kind": 32768,
 																"flags": {},
@@ -89525,7 +89551,7 @@
 											}
 										},
 										{
-											"id": 5435,
+											"id": 5432,
 											"name": "welcome",
 											"kind": 1024,
 											"kindString": "Property",
@@ -89550,11 +89576,11 @@
 											"title": "Properties",
 											"kind": 1024,
 											"children": [
-												5429,
-												5434,
-												5436,
-												5430,
-												5435
+												5426,
+												5431,
+												5433,
+												5427,
+												5432
 											]
 										}
 									]
@@ -89567,18 +89593,19 @@
 							"title": "Properties",
 							"kind": 1024,
 							"children": [
-								5446,
-								5462,
-								5463,
-								5440,
-								5464,
-								5448,
+								5443,
+								5459,
+								5460,
+								5437,
+								5461,
 								5445,
-								5455,
+								5442,
+								5452,
+								5441,
 								5444,
-								5447,
-								5449,
-								5427
+								5462,
+								5446,
+								5424
 							]
 						}
 					],
@@ -89591,14 +89618,14 @@
 					]
 				},
 				{
-					"id": 5465,
+					"id": 5466,
 					"name": "UserPreferencesWithMetadata",
 					"kind": 256,
 					"kindString": "Interface",
 					"flags": {},
 					"children": [
 						{
-							"id": 5467,
+							"id": 5468,
 							"name": "lastUpdateDate",
 							"kind": 1024,
 							"kindString": "Property",
@@ -89621,7 +89648,7 @@
 							}
 						},
 						{
-							"id": 5468,
+							"id": 5469,
 							"name": "preferences",
 							"kind": 1024,
 							"kindString": "Property",
@@ -89638,12 +89665,12 @@
 							],
 							"type": {
 								"type": "reference",
-								"id": 5426,
+								"id": 5423,
 								"name": "UserPreferences"
 							}
 						},
 						{
-							"id": 5466,
+							"id": 5467,
 							"name": "userID",
 							"kind": 1024,
 							"kindString": "Property",
@@ -89669,9 +89696,9 @@
 							"title": "Properties",
 							"kind": 1024,
 							"children": [
-								5467,
 								5468,
-								5466
+								5469,
+								5467
 							]
 						}
 					],
@@ -89684,7 +89711,7 @@
 					]
 				},
 				{
-					"id": 5423,
+					"id": 5420,
 					"name": "toUserPreferencesWithMetadata",
 					"kind": 64,
 					"kindString": "Function",
@@ -89698,28 +89725,28 @@
 					],
 					"signatures": [
 						{
-							"id": 5424,
+							"id": 5421,
 							"name": "toUserPreferencesWithMetadata",
 							"kind": 4096,
 							"kindString": "Call signature",
 							"flags": {},
 							"parameters": [
 								{
-									"id": 5425,
+									"id": 5422,
 									"name": "raw",
 									"kind": 32768,
 									"kindString": "Parameter",
 									"flags": {},
 									"type": {
 										"type": "reference",
-										"id": 5417,
+										"id": 5414,
 										"name": "RawUserPreferencesWithMetadata"
 									}
 								}
 							],
 							"type": {
 								"type": "reference",
-								"id": 5465,
+								"id": 5466,
 								"name": "UserPreferencesWithMetadata"
 							}
 						}
@@ -89731,16 +89758,16 @@
 					"title": "Interfaces",
 					"kind": 256,
 					"children": [
-						5417,
-						5426,
-						5465
+						5414,
+						5423,
+						5466
 					]
 				},
 				{
 					"title": "Functions",
 					"kind": 64,
 					"children": [
-						5423
+						5420
 					]
 				}
 			],
@@ -89760,7 +89787,7 @@
 			"flags": {},
 			"children": [
 				{
-					"id": 5469,
+					"id": 5470,
 					"name": "RawUserSessions",
 					"kind": 256,
 					"kindString": "Interface",
@@ -89771,7 +89798,7 @@
 					},
 					"children": [
 						{
-							"id": 5472,
+							"id": 5473,
 							"name": "Sessions",
 							"kind": 1024,
 							"kindString": "Property",
@@ -89788,14 +89815,14 @@
 								"elementType": {
 									"type": "reflection",
 									"declaration": {
-										"id": 5473,
+										"id": 5474,
 										"name": "__type",
 										"kind": 65536,
 										"kindString": "Type literal",
 										"flags": {},
 										"children": [
 											{
-												"id": 5475,
+												"id": 5476,
 												"name": "LastHit",
 												"kind": 1024,
 												"kindString": "Property",
@@ -89813,7 +89840,7 @@
 												}
 											},
 											{
-												"id": 5474,
+												"id": 5475,
 												"name": "Origin",
 												"kind": 1024,
 												"kindString": "Property",
@@ -89831,7 +89858,7 @@
 												}
 											},
 											{
-												"id": 5477,
+												"id": 5478,
 												"name": "Synced",
 												"kind": 1024,
 												"kindString": "Property",
@@ -89849,7 +89876,7 @@
 												}
 											},
 											{
-												"id": 5476,
+												"id": 5477,
 												"name": "TempSession",
 												"kind": 1024,
 												"kindString": "Property",
@@ -89872,10 +89899,10 @@
 												"title": "Properties",
 												"kind": 1024,
 												"children": [
+													5476,
 													5475,
-													5474,
-													5477,
-													5476
+													5478,
+													5477
 												]
 											}
 										]
@@ -89884,7 +89911,7 @@
 							}
 						},
 						{
-							"id": 5470,
+							"id": 5471,
 							"name": "UID",
 							"kind": 1024,
 							"kindString": "Property",
@@ -89902,7 +89929,7 @@
 							}
 						},
 						{
-							"id": 5471,
+							"id": 5472,
 							"name": "User",
 							"kind": 1024,
 							"kindString": "Property",
@@ -89925,9 +89952,9 @@
 							"title": "Properties",
 							"kind": 1024,
 							"children": [
-								5472,
-								5470,
-								5471
+								5473,
+								5471,
+								5472
 							]
 						}
 					],
@@ -89940,7 +89967,7 @@
 					]
 				},
 				{
-					"id": 5481,
+					"id": 5482,
 					"name": "UserSessions",
 					"kind": 256,
 					"kindString": "Interface",
@@ -89951,7 +89978,7 @@
 					},
 					"children": [
 						{
-							"id": 5484,
+							"id": 5485,
 							"name": "sessions",
 							"kind": 1024,
 							"kindString": "Property",
@@ -89968,14 +89995,14 @@
 								"elementType": {
 									"type": "reflection",
 									"declaration": {
-										"id": 5485,
+										"id": 5486,
 										"name": "__type",
 										"kind": 65536,
 										"kindString": "Type literal",
 										"flags": {},
 										"children": [
 											{
-												"id": 5489,
+												"id": 5490,
 												"name": "isSynced",
 												"kind": 1024,
 												"kindString": "Property",
@@ -89993,7 +90020,7 @@
 												}
 											},
 											{
-												"id": 5488,
+												"id": 5489,
 												"name": "isTemporary",
 												"kind": 1024,
 												"kindString": "Property",
@@ -90011,7 +90038,7 @@
 												}
 											},
 											{
-												"id": 5487,
+												"id": 5488,
 												"name": "lastHit",
 												"kind": 1024,
 												"kindString": "Property",
@@ -90029,7 +90056,7 @@
 												}
 											},
 											{
-												"id": 5486,
+												"id": 5487,
 												"name": "origin",
 												"kind": 1024,
 												"kindString": "Property",
@@ -90052,10 +90079,10 @@
 												"title": "Properties",
 												"kind": 1024,
 												"children": [
+													5490,
 													5489,
 													5488,
-													5487,
-													5486
+													5487
 												]
 											}
 										]
@@ -90064,7 +90091,7 @@
 							}
 						},
 						{
-							"id": 5482,
+							"id": 5483,
 							"name": "userID",
 							"kind": 1024,
 							"kindString": "Property",
@@ -90082,7 +90109,7 @@
 							}
 						},
 						{
-							"id": 5483,
+							"id": 5484,
 							"name": "username",
 							"kind": 1024,
 							"kindString": "Property",
@@ -90105,9 +90132,9 @@
 							"title": "Properties",
 							"kind": 1024,
 							"children": [
-								5484,
-								5482,
-								5483
+								5485,
+								5483,
+								5484
 							]
 						}
 					],
@@ -90120,7 +90147,7 @@
 					]
 				},
 				{
-					"id": 5478,
+					"id": 5479,
 					"name": "toUserSessions",
 					"kind": 64,
 					"kindString": "Function",
@@ -90134,28 +90161,28 @@
 					],
 					"signatures": [
 						{
-							"id": 5479,
+							"id": 5480,
 							"name": "toUserSessions",
 							"kind": 4096,
 							"kindString": "Call signature",
 							"flags": {},
 							"parameters": [
 								{
-									"id": 5480,
+									"id": 5481,
 									"name": "raw",
 									"kind": 32768,
 									"kindString": "Parameter",
 									"flags": {},
 									"type": {
 										"type": "reference",
-										"id": 5469,
+										"id": 5470,
 										"name": "RawUserSessions"
 									}
 								}
 							],
 							"type": {
 								"type": "reference",
-								"id": 5481,
+								"id": 5482,
 								"name": "UserSessions"
 							}
 						}
@@ -90167,15 +90194,15 @@
 					"title": "Interfaces",
 					"kind": 256,
 					"children": [
-						5469,
-						5481
+						5470,
+						5482
 					]
 				},
 				{
 					"title": "Functions",
 					"kind": 64,
 					"children": [
-						5478
+						5479
 					]
 				}
 			],
@@ -90195,7 +90222,7 @@
 			"flags": {},
 			"children": [
 				{
-					"id": 5505,
+					"id": 5506,
 					"name": "Version",
 					"kind": 256,
 					"kindString": "Interface",
@@ -90206,7 +90233,7 @@
 					},
 					"children": [
 						{
-							"id": 5506,
+							"id": 5507,
 							"name": "major",
 							"kind": 1024,
 							"kindString": "Property",
@@ -90224,7 +90251,7 @@
 							}
 						},
 						{
-							"id": 5507,
+							"id": 5508,
 							"name": "minor",
 							"kind": 1024,
 							"kindString": "Property",
@@ -90242,7 +90269,7 @@
 							}
 						},
 						{
-							"id": 5508,
+							"id": 5509,
 							"name": "patch",
 							"kind": 1024,
 							"kindString": "Property",
@@ -90265,9 +90292,9 @@
 							"title": "Properties",
 							"kind": 1024,
 							"children": [
-								5506,
 								5507,
-								5508
+								5508,
+								5509
 							]
 						}
 					],
@@ -90280,7 +90307,7 @@
 					]
 				},
 				{
-					"id": 5493,
+					"id": 5494,
 					"name": "RawVersion",
 					"kind": 4194304,
 					"kindString": "Type alias",
@@ -90306,7 +90333,7 @@
 					}
 				},
 				{
-					"id": 5494,
+					"id": 5495,
 					"name": "RawVersionObject",
 					"kind": 4194304,
 					"kindString": "Type alias",
@@ -90325,14 +90352,14 @@
 					"type": {
 						"type": "reflection",
 						"declaration": {
-							"id": 5495,
+							"id": 5496,
 							"name": "__type",
 							"kind": 65536,
 							"kindString": "Type literal",
 							"flags": {},
 							"children": [
 								{
-									"id": 5496,
+									"id": 5497,
 									"name": "Major",
 									"kind": 1024,
 									"kindString": "Property",
@@ -90350,7 +90377,7 @@
 									}
 								},
 								{
-									"id": 5497,
+									"id": 5498,
 									"name": "Minor",
 									"kind": 1024,
 									"kindString": "Property",
@@ -90370,7 +90397,7 @@
 									}
 								},
 								{
-									"id": 5498,
+									"id": 5499,
 									"name": "Point",
 									"kind": 1024,
 									"kindString": "Property",
@@ -90395,9 +90422,9 @@
 									"title": "Properties",
 									"kind": 1024,
 									"children": [
-										5496,
 										5497,
-										5498
+										5498,
+										5499
 									]
 								}
 							],
@@ -90412,7 +90439,7 @@
 					}
 				},
 				{
-					"id": 5490,
+					"id": 5491,
 					"name": "isVersion",
 					"kind": 64,
 					"kindString": "Function",
@@ -90426,14 +90453,14 @@
 					],
 					"signatures": [
 						{
-							"id": 5491,
+							"id": 5492,
 							"name": "isVersion",
 							"kind": 4096,
 							"kindString": "Call signature",
 							"flags": {},
 							"parameters": [
 								{
-									"id": 5492,
+									"id": 5493,
 									"name": "value",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -90450,7 +90477,7 @@
 								"asserts": false,
 								"targetType": {
 									"type": "reference",
-									"id": 5505,
+									"id": 5506,
 									"name": "Version"
 								}
 							}
@@ -90458,7 +90485,7 @@
 					]
 				},
 				{
-					"id": 5499,
+					"id": 5500,
 					"name": "toRawVersionObject",
 					"kind": 64,
 					"kindString": "Function",
@@ -90472,35 +90499,35 @@
 					],
 					"signatures": [
 						{
-							"id": 5500,
+							"id": 5501,
 							"name": "toRawVersionObject",
 							"kind": 4096,
 							"kindString": "Call signature",
 							"flags": {},
 							"parameters": [
 								{
-									"id": 5501,
+									"id": 5502,
 									"name": "version",
 									"kind": 32768,
 									"kindString": "Parameter",
 									"flags": {},
 									"type": {
 										"type": "reference",
-										"id": 5505,
+										"id": 5506,
 										"name": "Version"
 									}
 								}
 							],
 							"type": {
 								"type": "reference",
-								"id": 5494,
+								"id": 5495,
 								"name": "RawVersionObject"
 							}
 						}
 					]
 				},
 				{
-					"id": 5502,
+					"id": 5503,
 					"name": "toVersion",
 					"kind": 64,
 					"kindString": "Function",
@@ -90514,14 +90541,14 @@
 					],
 					"signatures": [
 						{
-							"id": 5503,
+							"id": 5504,
 							"name": "toVersion",
 							"kind": 4096,
 							"kindString": "Call signature",
 							"flags": {},
 							"parameters": [
 								{
-									"id": 5504,
+									"id": 5505,
 									"name": "raw",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -90539,7 +90566,7 @@
 											},
 											{
 												"type": "reference",
-												"id": 5494,
+												"id": 5495,
 												"name": "RawVersionObject"
 											}
 										]
@@ -90548,7 +90575,7 @@
 							],
 							"type": {
 								"type": "reference",
-								"id": 5505,
+								"id": 5506,
 								"name": "Version"
 							}
 						}
@@ -90560,24 +90587,24 @@
 					"title": "Interfaces",
 					"kind": 256,
 					"children": [
-						5505
+						5506
 					]
 				},
 				{
 					"title": "Type Aliases",
 					"kind": 4194304,
 					"children": [
-						5493,
-						5494
+						5494,
+						5495
 					]
 				},
 				{
 					"title": "Functions",
 					"kind": 64,
 					"children": [
-						5490,
-						5499,
-						5502
+						5491,
+						5500,
+						5503
 					]
 				}
 			],
