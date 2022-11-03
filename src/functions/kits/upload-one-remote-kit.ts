@@ -25,6 +25,7 @@ export const makeUploadOneRemoteKit =
 		try {
 			const baseRequestOptions: HTTPRequestOptions = {
 				body: JSON.stringify({ remote: kitID }),
+				headers: { 'Content-Type': 'application/json' },
 			};
 			const req = buildHTTPRequestWithAuthFromContext(context, baseRequestOptions);
 

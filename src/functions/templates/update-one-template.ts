@@ -32,6 +32,7 @@ export const makeUpdateOneTemplate = (context: APIContext) => {
 
 			const baseRequestOptions: HTTPRequestOptions = {
 				body: JSON.stringify(toRawUpdatableTemplate(data, current)),
+				headers: { 'Content-Type': 'application/json' },
 			};
 			const req = buildHTTPRequestWithAuthFromContext(context, baseRequestOptions);
 

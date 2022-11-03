@@ -26,6 +26,7 @@ export const makeCreateOneUser = (context: APIContext) => {
 		try {
 			const baseRequestOptions: HTTPRequestOptions = {
 				body: JSON.stringify(toRawCreatableUser(data)),
+				headers: { 'Content-Type': 'application/json' },
 			};
 			const req = buildHTTPRequestWithAuthFromContext(context, baseRequestOptions);
 

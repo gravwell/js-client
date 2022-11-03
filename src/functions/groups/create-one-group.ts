@@ -26,6 +26,7 @@ export const makeCreateOneGroup = (context: APIContext) => {
 		try {
 			const baseRequestOptions: HTTPRequestOptions = {
 				body: JSON.stringify(toRawCreatableGroup(data)),
+				headers: { 'Content-Type': 'application/json' },
 			};
 			const req = buildHTTPRequestWithAuthFromContext(context, baseRequestOptions);
 

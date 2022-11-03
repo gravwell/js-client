@@ -24,6 +24,7 @@ export const makeAddOneUserToManyGroups =
 		try {
 			const baseRequestOptions: HTTPRequestOptions = {
 				body: JSON.stringify({ GIDs: groupIDs.map(toRawNumericID) }),
+				headers: { 'Content-Type': 'application/json' },
 			};
 			const req = buildHTTPRequestWithAuthFromContext(context, baseRequestOptions);
 

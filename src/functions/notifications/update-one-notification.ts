@@ -35,6 +35,7 @@ export const makeUpdateOneNotification = (context: APIContext) => {
 			}
 			const baseRequestOptions: HTTPRequestOptions = {
 				body: JSON.stringify(toRawUpdatableNotification(updatable, currentNotification)),
+				headers: { 'Content-Type': 'application/json' },
 			};
 			const req = buildHTTPRequestWithAuthFromContext(context, baseRequestOptions);
 

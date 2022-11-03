@@ -23,6 +23,7 @@ export const makeIngestJSONEntries = (context: APIContext) => {
 		try {
 			const baseRequestOptions: HTTPRequestOptions = {
 				body: JSON.stringify(entries.map(toRawCreatableJSONEntry)),
+				headers: { 'Content-Type': 'application/json' },
 			};
 			const req = buildHTTPRequestWithAuthFromContext(context, baseRequestOptions);
 

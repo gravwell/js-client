@@ -23,6 +23,7 @@ export const makeCreateOneSavedQuery = (context: APIContext) => {
 		try {
 			const baseRequestOptions: HTTPRequestOptions = {
 				body: JSON.stringify(toRawCreatableSavedQuery(data)),
+				headers: { 'Content-Type': 'application/json' },
 			};
 			const req = buildHTTPRequestWithAuthFromContext(context, baseRequestOptions);
 
