@@ -20,6 +20,7 @@ import {
 	of,
 	Subject,
 	Subscription,
+	timer,
 } from 'rxjs';
 import {
 	catchError,
@@ -31,6 +32,7 @@ import {
 	shareReplay,
 	skipUntil,
 	startWith,
+	switchMap,
 	takeUntil,
 	tap,
 } from 'rxjs/operators';
@@ -262,10 +264,7 @@ export const makeSubscribeToOneExplorerSearch = (context: APIContext) => {
 				dateStart: defaultStart,
 				dateEnd: defaultEnd,
 			},
-		}).pipe(
-			// Complete when/if the user calls .close()
-			takeUntil(close$),
-		);
+		});
 
 		const nextDetailsMsg = () =>
 			firstValueFrom(
@@ -448,10 +447,23 @@ export const makeSubscribeToOneExplorerSearch = (context: APIContext) => {
 			await Promise.all([entriesP, statsP, detailsP, statsRangeP]);
 		};
 
-		filter$.subscribe(filter => {
-			requestEntries(filter);
-			setTimeout(() => requestEntries(filter), 2000); // TODO: Change this
+		/**
+		 * When filter is available, immediately apply and re-apply again after two seconds.
+		 * https://github.com/gravwell/js-client/pull/243/files#diff-84ea62a6dd70168a514bb4173174a56cbe5089b2004ac111d42e15a769b3fd7eR421.
+		 */
+		filter$.pipe(takeUntil(close$)).subscribe({
+			next: filter => requestEntries(filter),
+			error: err => console.warn('failed to apply filter to search', err),
 		});
+		filter$
+			.pipe(
+				switchMap(filter => timer(2000).pipe(map(() => filter))),
+				takeUntil(close$),
+			)
+			.subscribe({
+				next: filter => requestEntries(filter),
+				error: err => console.warn('failed to apply filter to search after two second delay', err),
+			});
 
 		const rawSearchStats$ = searchMessages$.pipe(
 			filter(filterMessageByCommand(SearchMessageCommands.RequestAllStats)),
