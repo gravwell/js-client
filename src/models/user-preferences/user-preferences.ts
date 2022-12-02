@@ -31,5 +31,10 @@ export interface UserPreferences {
 	dashboardAutosave?: boolean;
 	developer?: boolean;
 	experimental?: boolean;
-	queryStudioPaneSettings?: Array<{ id: string; size?: number | '*' | undefined }> | undefined;
+	queryStudio?:
+		| {
+				paneSettings?: Array<{ id: string; size?: number | '*' | undefined }> | undefined;
+				detailedViewType?: 'tree' | 'json' | 'table' | undefined;
+		  }
+		| undefined;
 }

@@ -7,8 +7,28 @@
  **************************************************************************/
 
 import { isBoolean, isEqual, isNull, uniqueId } from 'lodash';
-import { BehaviorSubject, combineLatest, EMPTY, from, lastValueFrom, Observable, Subject, Subscription } from 'rxjs';
-import { catchError, concatMap, distinctUntilChanged, filter, map, shareReplay, takeUntil, tap } from 'rxjs/operators';
+import {
+	BehaviorSubject,
+	combineLatest,
+	EMPTY,
+	from,
+	lastValueFrom,
+	Observable,
+	Subject,
+	Subscription,
+	timer,
+} from 'rxjs';
+import {
+	catchError,
+	concatMap,
+	distinctUntilChanged,
+	filter,
+	map,
+	shareReplay,
+	switchMap,
+	takeUntil,
+	tap,
+} from 'rxjs/operators';
 import {
 	createInitialSearchFilter,
 	makeToSearchStats,
@@ -182,10 +202,7 @@ export const makeAttachToOneExplorerSearch = (context: APIContext) => {
 				dateStart: defaultStart,
 				dateEnd: defaultEnd,
 			},
-		}).pipe(
-			// Complete when/if the user calls .close()
-			takeUntil(close$),
-		);
+		});
 
 		const rawSearchStats$ = searchMessages$.pipe(
 			filter(filterMessageByCommand(SearchMessageCommands.RequestAllStats)),
@@ -223,10 +240,23 @@ export const makeAttachToOneExplorerSearch = (context: APIContext) => {
 			isClosed: () => closed,
 		});
 
-		filter$.subscribe(filter => {
-			requestEntries(filter);
-			setTimeout(() => requestEntries(filter), 2000); // TODO: Change this
+		/**
+		 * When filter is available, immediately apply and re-apply again after two seconds.
+		 * https://github.com/gravwell/js-client/pull/243/files#diff-84ea62a6dd70168a514bb4173174a56cbe5089b2004ac111d42e15a769b3fd7eR421.
+		 */
+		filter$.pipe(takeUntil(close$)).subscribe({
+			next: filter => requestEntries(filter),
+			error: err => console.warn('failed to apply filter to search', err),
 		});
+		filter$
+			.pipe(
+				switchMap(filter => timer(2000).pipe(map(() => filter))),
+				takeUntil(close$),
+			)
+			.subscribe({
+				next: filter => requestEntries(filter),
+				error: err => console.warn('failed to apply filter to search after two second delay', err),
+			});
 
 		const stats$ = combineLatest([
 			rawSearchStats$.pipe(distinctUntilChanged<RawResponseForSearchStatsMessageReceived>(isEqual)),

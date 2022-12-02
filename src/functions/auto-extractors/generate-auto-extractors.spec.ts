@@ -86,9 +86,14 @@ describe(
 				expect(ax.autoExtractor.tag).withContext('the suggested AX tag should match the provided tag').toEqual(tag);
 				expect(ax.autoExtractor.module).withContext('the suggested AX module should be json').toEqual('json');
 				expect(ax.confidence).withContext('json is the right module, so its confidence should be 10').toEqual(10);
-				expect(ax.autoExtractor.parameters)
+				// API is non-deterministic. 'parameters' field will either be 'timestamp value' or 'value timestamp'.
+				const expectedParameters: Record<string, boolean> = {
+					'timestamp value': true,
+					'value timestamp': true,
+				};
+				expect(expectedParameters[ax.autoExtractor.parameters])
 					.withContext('the suggested AX module should break out the fields in the entries')
-					.toEqual('timestamp value');
+					.toEqual(true);
 				expect(ax.explorerEntries.length).withContext('explore should have >0 elements').toBeGreaterThan(0);
 				ax.explorerEntries.forEach(exploreEntry => {
 					expect(exploreEntry.elements.length)
