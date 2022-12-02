@@ -50,6 +50,7 @@ export interface BaseSearchEntries {
 	start: Date;
 	end: Date;
 	finished: boolean;
+	additionalEntries: boolean;
 }
 
 export interface ChartSearchEntries extends BaseSearchEntries {
@@ -75,6 +76,7 @@ export const normalizeToChartSearchEntries = (
 		timestamp: new Date(rawV.TS),
 		values: rawV.Data,
 	})),
+	additionalEntries: v.AdditionalEntries,
 });
 
 export interface FDGSearchEntries extends BaseSearchEntries {
@@ -103,6 +105,7 @@ export const normalizeToFDGSearchEntries = (
 		targetNodeIndex: rawEdge.target,
 	})),
 	groups: v.Entries?.groups ?? [],
+	additionalEntries: v.AdditionalEntries,
 });
 
 export interface FDGNode {
@@ -155,6 +158,7 @@ export const normalizeToGaugeSearchEntries = (
 		min: rawEntry.Min,
 		max: rawEntry.Max,
 	})),
+	additionalEntries: v.AdditionalEntries,
 });
 
 export interface HeatmapSearchEntries extends BaseSearchEntries {
@@ -176,6 +180,7 @@ export const normalizeToHeatmapSearchEntries = (
 		longitude: rawEntry.Long,
 		magnitude: rawEntry.Magnitude ?? null,
 	})),
+	additionalEntries: v.AdditionalEntries,
 });
 
 export interface PointToPointSearchEntries extends BaseSearchEntries {
@@ -211,6 +216,7 @@ export const normalizeToPointToPointSearchEntries = (
 		magnitude: rawEntry.Magnitude ?? null,
 		values: rawEntry.Values ?? [],
 	})),
+	additionalEntries: v.AdditionalEntries,
 });
 
 export interface PointmapSearchEntries extends BaseSearchEntries {
@@ -243,6 +249,7 @@ export const normalizeToPointmapSearchEntries = (
 			value: rawMeta.Value,
 		})),
 	})),
+	additionalEntries: v.AdditionalEntries,
 });
 
 export interface MapLocation {
@@ -270,6 +277,7 @@ export const normalizeToRawSearchEntries = (
 	names: ['RAW'],
 	data: (v.Entries ?? []).map(toSearchEntry),
 	tags: v.Tags,
+	additionalEntries: v.AdditionalEntries,
 });
 
 export interface HexSearchEntries extends BaseSearchEntries {
@@ -290,6 +298,7 @@ export const normalizeToHexSearchEntries = (
 	type: 'hex',
 	names: ['HEX'],
 	data: (v.Entries ?? []).map(toSearchEntry),
+	additionalEntries: v.AdditionalEntries,
 });
 
 export interface TextSearchEntries extends BaseSearchEntries {
@@ -312,6 +321,7 @@ export const normalizeToTextSearchEntries = (
 	names: ['DATA'],
 	data: (v.Entries ?? []).map(toSearchEntry),
 	tags: v.Tags,
+	additionalEntries: v.AdditionalEntries,
 });
 
 export interface PcapSearchEntries extends BaseSearchEntries {
@@ -332,6 +342,7 @@ export const normalizeToPcapSearchEntries = (
 	type: 'pcap',
 	names: ['PCAP'],
 	data: (v.Entries ?? []).map(toSearchEntry),
+	additionalEntries: v.AdditionalEntries,
 });
 
 export interface StackGraphSearchEntries extends BaseSearchEntries {
@@ -361,6 +372,7 @@ export const normalizeToStackGraphSearchEntries = (
 			value: rawValue.Value,
 		})),
 	})),
+	additionalEntries: v.AdditionalEntries,
 });
 
 export interface TableSearchEntries extends BaseSearchEntries {
@@ -386,6 +398,7 @@ export const normalizeToTableSearchEntries = (
 		timestamp: new Date(rawRow.TS),
 		values: rawRow.Row,
 	})),
+	additionalEntries: v.AdditionalEntries,
 });
 
 export interface WordcloudSearchEntries extends BaseSearchEntries {
@@ -411,4 +424,5 @@ export const normalizeToWordcloudSearchEntries = (
 		min: value.Min,
 		max: value.Max,
 	})),
+	additionalEntries: v.AdditionalEntries,
 });
