@@ -1,10 +1,11 @@
-/*************************************************************************
+/**
  * Copyright 2022 Gravwell, Inc. All rights reserved.
- * Contact: <legal@gravwell.io>
  *
- * This software may be modified and distributed under the terms of the
- * MIT license. See the LICENSE file for details.
- **************************************************************************/
+ * Contact: [legal@gravwell.io](mailto:legal@gravwell.io)
+ *
+ * This software may be modified and distributed under the terms of the MIT
+ * license. See the LICENSE file for details.
+ */
 
 import { isBoolean, isEqual, isNull, uniqueId } from 'lodash';
 import {
@@ -239,7 +240,8 @@ export const makeAttachToOneSearch = (context: APIContext) => {
 		});
 
 		/**
-		 * When filter is available, immediately apply and re-apply again after two seconds.
+		 * When filter is available, immediately apply and re-apply again after two
+		 * seconds.
 		 * https://github.com/gravwell/js-client/pull/243/files#diff-84ea62a6dd70168a514bb4173174a56cbe5089b2004ac111d42e15a769b3fd7eR421.
 		 */
 		filter$.pipe(takeUntil(close$)).subscribe({

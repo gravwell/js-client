@@ -1,10 +1,11 @@
-/*************************************************************************
+/**
  * Copyright 2022 Gravwell, Inc. All rights reserved.
- * Contact: <legal@gravwell.io>
  *
- * This software may be modified and distributed under the terms of the
- * MIT license. See the LICENSE file for details.
- **************************************************************************/
+ * Contact: [legal@gravwell.io](mailto:legal@gravwell.io)
+ *
+ * This software may be modified and distributed under the terms of the MIT
+ * license. See the LICENSE file for details.
+ */
 
 import { isNil } from 'lodash';
 import { defer, lastValueFrom, Observable, of, Subject, throwError } from 'rxjs';

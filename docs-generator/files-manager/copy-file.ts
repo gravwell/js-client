@@ -1,15 +1,18 @@
-/*************************************************************************
+/**
  * Copyright 2022 Gravwell, Inc. All rights reserved.
- * Contact: <legal@gravwell.io>
  *
- * This software may be modified and distributed under the terms of the
- * MIT license. See the LICENSE file for details.
- **************************************************************************/
+ * Contact: [legal@gravwell.io](mailto:legal@gravwell.io)
+ *
+ * This software may be modified and distributed under the terms of the MIT
+ * license. See the LICENSE file for details.
+ */
 
 import { copyFileSync, existsSync } from 'fs';
 
 /**
- * This function will make a copy from fileToBeCopyPath, and paste it inside pathWhereFileIsPasted
+ * This function will make a copy from fileToBeCopyPath, and paste it inside
+ * pathWhereFileIsPasted
+ *
  * @param pathWhereFileIsCopied is the path where the file is copied from
  * @param pathWhereFileIsPasted is the path whre the file will be copied
  */

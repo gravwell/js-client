@@ -1,10 +1,11 @@
-/*************************************************************************
+/**
  * Copyright 2022 Gravwell, Inc. All rights reserved.
- * Contact: <legal@gravwell.io>
  *
- * This software may be modified and distributed under the terms of the
- * MIT license. See the LICENSE file for details.
- **************************************************************************/
+ * Contact: [legal@gravwell.io](mailto:legal@gravwell.io)
+ *
+ * This software may be modified and distributed under the terms of the MIT
+ * license. See the LICENSE file for details.
+ */
 
 import { isArray, isNull, isString, isUndefined } from 'lodash';
 import { isRawElementFilterOperation, RawElementFilterOperation } from './element-filter-operation';
@@ -28,8 +29,8 @@ export const isRawDataExplorerEntry = (v: unknown): v is RawDataExplorerEntry =>
 
 // Named ExploreElement in Go
 /**
- * An Element is an item which has been extracted from an entry using the
- * data exploration system.
+ * An Element is an item which has been extracted from an entry using the data
+ * exploration system.
  */
 export interface RawDataExplorerElement {
 	Module: string; // Might be an empty string

@@ -1,10 +1,11 @@
-/*************************************************************************
+/**
  * Copyright 2022 Gravwell, Inc. All rights reserved.
- * Contact: <legal@gravwell.io>
  *
- * This software may be modified and distributed under the terms of the
- * MIT license. See the LICENSE file for details.
- **************************************************************************/
+ * Contact: [legal@gravwell.io](mailto:legal@gravwell.io)
+ *
+ * This software may be modified and distributed under the terms of the MIT
+ * license. See the LICENSE file for details.
+ */
 
 import { isArray, isBoolean, isNull, isNumber, isString } from 'lodash';
 import { ElementFilterOperation, isElementFilterOperation } from './element-filter-operation';
@@ -24,9 +25,7 @@ export const isDataExplorerEntry = (v: unknown): v is DataExplorerEntry => {
 	}
 };
 
-/**
- * Item extracted from an entry using the data exploration system.
- */
+/** Item extracted from an entry using the data exploration system. */
 export interface DataExplorerElement {
 	module: string;
 	name: string;

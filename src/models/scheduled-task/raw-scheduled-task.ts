@@ -1,10 +1,11 @@
-/*************************************************************************
+/**
  * Copyright 2022 Gravwell, Inc. All rights reserved.
- * Contact: <legal@gravwell.io>
  *
- * This software may be modified and distributed under the terms of the
- * MIT license. See the LICENSE file for details.
- **************************************************************************/
+ * Contact: [legal@gravwell.io](mailto:legal@gravwell.io)
+ *
+ * This software may be modified and distributed under the terms of the MIT
+ * license. See the LICENSE file for details.
+ */
 
 import { RawNumericID, RawUUID } from '~/value-objects';
 
@@ -33,17 +34,11 @@ export interface RawScheduledTask {
 
 	Updated: string; // Timestamp
 
-	/**
-	 * Any error resulting from the last run of this search.
-	 */
+	/** Any error resulting from the last run of this search. */
 	LastError: string; // empty string is null
-	/**
-	 * Time at which this scheduled search last ran.
-	 */
+	/** Time at which this scheduled search last ran. */
 	LastRun: string; // Timestamp
-	/**
-	 * How long the last run took.
-	 */
+	/** How long the last run took. */
 	LastRunDuration: number;
 	/**
 	 * Search IDs of the most recently performed searches from this scheduled
@@ -53,15 +48,11 @@ export interface RawScheduledTask {
 
 	Timezone: string; //empty string is null
 
-	/**
-	 * Cron-compatible string specifying when to run.
-	 */
+	/** Cron-compatible string specifying when to run. */
 	Schedule: string; // cron job format
 
 	// *START - Standard search properties
-	/**
-	 * Gravwell query to execute.
-	 */
+	/** Gravwell query to execute. */
 	SearchString: string; //empty string is null
 	/**
 	 * Value in seconds specifying how far back to run the search. This must be a
@@ -76,14 +67,10 @@ export interface RawScheduledTask {
 	// *END - Standard search properties
 
 	// *START - Script search properties
-	/**
-	 * String containing an anko script.
-	 */
+	/** String containing an anko script. */
 	Script: string; // empty string is null
 	DebugMode: boolean;
-	/**
-	 * Base64 string of debug output.
-	 */
+	/** Base64 string of debug output. */
 	DebugOutput: null;
 	// *END - Script search properties
 

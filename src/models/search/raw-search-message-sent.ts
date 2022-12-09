@@ -1,10 +1,11 @@
-/*************************************************************************
+/**
  * Copyright 2022 Gravwell, Inc. All rights reserved.
- * Contact: <legal@gravwell.io>
  *
- * This software may be modified and distributed under the terms of the
- * MIT license. See the LICENSE file for details.
- **************************************************************************/
+ * Contact: [legal@gravwell.io](mailto:legal@gravwell.io)
+ *
+ * This software may be modified and distributed under the terms of the MIT
+ * license. See the LICENSE file for details.
+ */
 
 import { RawJSON } from '~/value-objects';
 import { RawQuery } from '../query';
@@ -39,9 +40,10 @@ export interface RawInitiateSearchMessageSent {
 		/**
 		 * Per the Go client docs:
 		 *
-		 * > Preview indicates that the renderer should only capture enough to show some usage of data
-		 *   A raw, text, hex renderer will grab a few hundred or thousand entries
-		 *   charts will grab enough to draw something useful everything else will get "enough"
+		 * Preview indicates that the renderer should only capture enough to show>
+		 * some usage of data A raw, text, hex renderer will grab a few hundred or>
+		 * thousand entries charts will grab enough to draw something useful>
+		 * everything else will get "enough"
 		 */
 		Preview: boolean;
 
@@ -80,14 +82,10 @@ export interface RawRequestSearchEntriesMessageSent {
 		ID: SearchMessageCommands.RequestEntries;
 		Addendum?: RawJSON;
 		EntryRange: {
-			/**
-			 * @default 0
-			 */
+			/** default 0 */
 			First?: number;
 
-			/**
-			 * @default 1
-			 */
+			/** default 1 */
 			Last?: number;
 
 			// StartTS?: string; // timestamp, this field is ignored, see gravwell#3064
@@ -116,14 +114,10 @@ export interface RawRequestExplorerSearchEntriesMessageSent {
 		ID: SearchMessageCommands.RequestExplorerEntries;
 		Addendum?: RawJSON;
 		EntryRange: {
-			/**
-			 * @default 0
-			 */
+			/** default 0 */
 			First?: number;
 
-			/**
-			 * @default 1
-			 */
+			/** default 1 */
 			Last?: number;
 
 			// StartTS?: string; // timestamp, this field is ignored, see gravwell#3064

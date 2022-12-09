@@ -1,10 +1,11 @@
-/*************************************************************************
+/**
  * Copyright 2022 Gravwell, Inc. All rights reserved.
- * Contact: <legal@gravwell.io>
  *
- * This software may be modified and distributed under the terms of the
- * MIT license. See the LICENSE file for details.
- **************************************************************************/
+ * Contact: [legal@gravwell.io](mailto:legal@gravwell.io)
+ *
+ * This software may be modified and distributed under the terms of the MIT
+ * license. See the LICENSE file for details.
+ */
 
 import { ID, RawJSON } from '~/value-objects';
 import { Query } from '../query';
@@ -18,14 +19,10 @@ export interface SearchStats {
 
 	finished: boolean;
 
-	/**
-	 * Query typed by the user.
-	 */
+	/** Query typed by the user. */
 	query: Query;
 
-	/**
-	 * Final query (macros expanded).
-	 */
+	/** Final query (macros expanded). */
 	effectiveQuery: Query;
 
 	metadata: RawJSON;

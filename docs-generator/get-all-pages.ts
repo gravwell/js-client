@@ -1,10 +1,11 @@
-/*************************************************************************
+/**
  * Copyright 2022 Gravwell, Inc. All rights reserved.
- * Contact: <legal@gravwell.io>
  *
- * This software may be modified and distributed under the terms of the
- * MIT license. See the LICENSE file for details.
- **************************************************************************/
+ * Contact: [legal@gravwell.io](mailto:legal@gravwell.io)
+ *
+ * This software may be modified and distributed under the terms of the MIT
+ * license. See the LICENSE file for details.
+ */
 
 import { getSubfoldersFromFolder } from './folder-manager';
 import { getFilesFromFolder } from './files-manager';
@@ -13,6 +14,7 @@ import { Page } from './pages';
 
 /**
  * This function will create a function based on all folders inside './src'
+ *
  * @returns all the pages, that will be used inside createTypedocPage()
  */
 export const getAllPages = (): Array<Page> => {
