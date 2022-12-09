@@ -29,7 +29,7 @@
 					"sources": [
 						{
 							"fileName": "config.ts",
-							"line": 21,
+							"line": 22,
 							"character": 12
 						}
 					],
@@ -58,7 +58,7 @@
 					"sources": [
 						{
 							"fileName": "config.ts",
-							"line": 22,
+							"line": 23,
 							"character": 13
 						}
 					],
@@ -81,7 +81,7 @@
 					"sources": [
 						{
 							"fileName": "config.ts",
-							"line": 19,
+							"line": 20,
 							"character": 13
 						}
 					],
@@ -141,7 +141,7 @@
 			"sources": [
 				{
 					"fileName": "config.ts",
-					"line": 9,
+					"line": 10,
 					"character": 0
 				}
 			]
@@ -164,7 +164,7 @@
 					"sources": [
 						{
 							"fileName": "custom-matchers.ts",
-							"line": 11,
+							"line": 12,
 							"character": 13
 						}
 					],
@@ -189,7 +189,7 @@
 			"sources": [
 				{
 					"fileName": "custom-matchers.ts",
-					"line": 9,
+					"line": 10,
 					"character": 0
 				}
 			]
@@ -210,7 +210,7 @@
 					"sources": [
 						{
 							"fileName": "get-env-var.ts",
-							"line": 9,
+							"line": 10,
 							"character": 13
 						}
 					],
@@ -222,8 +222,8 @@
 							"kindString": "Call signature",
 							"flags": {},
 							"comment": {
-								"shortText": "Copyright 2022 Gravwell, Inc. All rights reserved.\nContact: <legal@gravwell.io>",
-								"text": "This software may be modified and distributed under the terms of the\nMIT license. See the LICENSE file for details.\n"
+								"shortText": "Copyright 2022 Gravwell, Inc. All rights reserved.",
+								"text": "Contact: [legal@gravwell.io](mailto:legal@gravwell.io)\n\nThis software may be modified and distributed under the terms of the MIT\nlicense. See the LICENSE file for details.\n"
 							},
 							"parameters": [
 								{
@@ -267,7 +267,7 @@
 			"sources": [
 				{
 					"fileName": "get-env-var.ts",
-					"line": 9,
+					"line": 10,
 					"character": 0
 				}
 			]
@@ -288,7 +288,7 @@
 					"sources": [
 						{
 							"fileName": "get-env-var.node.ts",
-							"line": 13,
+							"line": 14,
 							"character": 13
 						}
 					],
@@ -341,7 +341,7 @@
 			"sources": [
 				{
 					"fileName": "get-env-var.node.ts",
-					"line": 9,
+					"line": 10,
 					"character": 0
 				}
 			]
@@ -362,7 +362,7 @@
 					"sources": [
 						{
 							"fileName": "get-runner-settings.ts",
-							"line": 22,
+							"line": 23,
 							"character": 13
 						}
 					],
@@ -397,7 +397,7 @@
 					"sources": [
 						{
 							"fileName": "get-runner-settings.ts",
-							"line": 11,
+							"line": 12,
 							"character": 13
 						}
 					],
@@ -426,7 +426,7 @@
 											"sources": [
 												{
 													"fileName": "get-runner-settings.ts",
-													"line": 13,
+													"line": 14,
 													"character": 1
 												}
 											],
@@ -444,7 +444,7 @@
 											"sources": [
 												{
 													"fileName": "get-runner-settings.ts",
-													"line": 12,
+													"line": 13,
 													"character": 1
 												}
 											],
@@ -483,7 +483,7 @@
 			"sources": [
 				{
 					"fileName": "get-runner-settings.ts",
-					"line": 9,
+					"line": 10,
 					"character": 0
 				}
 			]
@@ -504,7 +504,7 @@
 					"sources": [
 						{
 							"fileName": "get-runner-settings.node.ts",
-							"line": 77,
+							"line": 78,
 							"character": 13
 						}
 					],
@@ -539,7 +539,7 @@
 					"sources": [
 						{
 							"fileName": "get-runner-settings.node.ts",
-							"line": 29,
+							"line": 30,
 							"character": 13
 						}
 					],
@@ -568,7 +568,7 @@
 					"sources": [
 						{
 							"fileName": "get-runner-settings.node.ts",
-							"line": 66,
+							"line": 67,
 							"character": 13
 						}
 					],
@@ -597,7 +597,7 @@
 											"sources": [
 												{
 													"fileName": "get-runner-settings.node.ts",
-													"line": 68,
+													"line": 69,
 													"character": 1
 												}
 											],
@@ -615,7 +615,7 @@
 											"sources": [
 												{
 													"fileName": "get-runner-settings.node.ts",
-													"line": 67,
+													"line": 68,
 													"character": 1
 												}
 											],
@@ -655,7 +655,7 @@
 			"sources": [
 				{
 					"fileName": "get-runner-settings.node.ts",
-					"line": 9,
+					"line": 10,
 					"character": 0
 				}
 			]
@@ -769,7 +769,7 @@
 			"sources": [
 				{
 					"fileName": "index.ts",
-					"line": 9,
+					"line": 10,
 					"character": 0
 				}
 			]
@@ -790,13 +790,13 @@
 						"isConst": true
 					},
 					"comment": {
-						"shortText": "Copyright 2022 Gravwell, Inc. All rights reserved.\nContact: <legal@gravwell.io>",
-						"text": "This software may be modified and distributed under the terms of the\nMIT license. See the LICENSE file for details.\n"
+						"shortText": "Copyright 2022 Gravwell, Inc. All rights reserved.",
+						"text": "Contact: [legal@gravwell.io](mailto:legal@gravwell.io)\n\nThis software may be modified and distributed under the terms of the MIT\nlicense. See the LICENSE file for details.\n"
 					},
 					"sources": [
 						{
 							"fileName": "paths.ts",
-							"line": 9,
+							"line": 10,
 							"character": 13
 						}
 					],
@@ -828,7 +828,7 @@
 			"sources": [
 				{
 					"fileName": "paths.ts",
-					"line": 9,
+					"line": 10,
 					"character": 0
 				}
 			]
@@ -851,7 +851,7 @@
 					"sources": [
 						{
 							"fileName": "paths.node.ts",
-							"line": 11,
+							"line": 12,
 							"character": 13
 						}
 					],
@@ -874,7 +874,7 @@
 			"sources": [
 				{
 					"fileName": "paths.node.ts",
-					"line": 9,
+					"line": 10,
 					"character": 0
 				}
 			]
@@ -895,7 +895,7 @@
 					"sources": [
 						{
 							"fileName": "test-types.ts",
-							"line": 24,
+							"line": 25,
 							"character": 13
 						}
 					],
@@ -935,7 +935,7 @@
 					"sources": [
 						{
 							"fileName": "test-types.ts",
-							"line": 47,
+							"line": 48,
 							"character": 13
 						}
 					],
@@ -1013,7 +1013,7 @@
 					"sources": [
 						{
 							"fileName": "test-types.ts",
-							"line": 28,
+							"line": 29,
 							"character": 13
 						}
 					],
@@ -1053,7 +1053,7 @@
 					"sources": [
 						{
 							"fileName": "test-types.ts",
-							"line": 51,
+							"line": 52,
 							"character": 13
 						}
 					],
@@ -1138,7 +1138,7 @@
 			"sources": [
 				{
 					"fileName": "test-types.ts",
-					"line": 9,
+					"line": 10,
 					"character": 0
 				}
 			]
@@ -1150,8 +1150,8 @@
 			"kindString": "Module",
 			"flags": {},
 			"comment": {
-				"shortText": "Copyright 2022 Gravwell, Inc. All rights reserved.\nContact: <legal@gravwell.io>",
-				"text": "This software may be modified and distributed under the terms of the\nMIT license. See the LICENSE file for details.\n"
+				"shortText": "Copyright 2022 Gravwell, Inc. All rights reserved.",
+				"text": "Contact: [legal@gravwell.io](mailto:legal@gravwell.io)\n\nThis software may be modified and distributed under the terms of the MIT\nlicense. See the LICENSE file for details.\n"
 			},
 			"children": [
 				{
@@ -1163,7 +1163,7 @@
 					"sources": [
 						{
 							"fileName": "utils.ts",
-							"line": 19,
+							"line": 20,
 							"character": 13
 						}
 					],
@@ -1222,7 +1222,7 @@
 			"sources": [
 				{
 					"fileName": "utils.ts",
-					"line": 19,
+					"line": 20,
 					"character": 0
 				}
 			]

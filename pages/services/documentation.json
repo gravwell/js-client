@@ -30,7 +30,7 @@
 							"sources": [
 								{
 									"fileName": "actionables/service.ts",
-									"line": 20,
+									"line": 21,
 									"character": 10
 								}
 							],
@@ -54,7 +54,7 @@
 											"sources": [
 												{
 													"fileName": "actionables/service.ts",
-													"line": 21,
+													"line": 22,
 													"character": 11
 												}
 											],
@@ -117,7 +117,7 @@
 							"sources": [
 								{
 									"fileName": "actionables/service.ts",
-									"line": 28,
+									"line": 29,
 									"character": 10
 								}
 							],
@@ -141,7 +141,7 @@
 											"sources": [
 												{
 													"fileName": "actionables/service.ts",
-													"line": 29,
+													"line": 30,
 													"character": 11
 												}
 											],
@@ -204,7 +204,7 @@
 							"sources": [
 								{
 									"fileName": "actionables/service.ts",
-									"line": 12,
+									"line": 13,
 									"character": 10
 								}
 							],
@@ -228,7 +228,7 @@
 											"sources": [
 												{
 													"fileName": "actionables/service.ts",
-													"line": 15,
+													"line": 16,
 													"character": 11
 												}
 											],
@@ -252,7 +252,7 @@
 															"sources": [
 																{
 																	"fileName": "actionables/service.ts",
-																	"line": 16,
+																	"line": 17,
 																	"character": 12
 																}
 															],
@@ -305,7 +305,7 @@
 											"sources": [
 												{
 													"fileName": "actionables/service.ts",
-													"line": 14,
+													"line": 15,
 													"character": 11
 												}
 											],
@@ -345,7 +345,7 @@
 											"sources": [
 												{
 													"fileName": "actionables/service.ts",
-													"line": 13,
+													"line": 14,
 													"character": 11
 												}
 											],
@@ -416,7 +416,7 @@
 							"sources": [
 								{
 									"fileName": "actionables/service.ts",
-									"line": 24,
+									"line": 25,
 									"character": 10
 								}
 							],
@@ -440,7 +440,7 @@
 											"sources": [
 												{
 													"fileName": "actionables/service.ts",
-													"line": 25,
+													"line": 26,
 													"character": 11
 												}
 											],
@@ -508,7 +508,7 @@
 					"sources": [
 						{
 							"fileName": "actionables/service.ts",
-							"line": 11,
+							"line": 12,
 							"character": 17
 						}
 					]
@@ -522,7 +522,7 @@
 					"sources": [
 						{
 							"fileName": "actionables/create-service.ts",
-							"line": 20,
+							"line": 21,
 							"character": 13
 						}
 					],
@@ -574,7 +574,7 @@
 			"sources": [
 				{
 					"fileName": "actionables/index.ts",
-					"line": 9,
+					"line": 10,
 					"character": 0
 				}
 			]
@@ -604,7 +604,7 @@
 							"sources": [
 								{
 									"fileName": "auth/service.ts",
-									"line": 21,
+									"line": 22,
 									"character": 10
 								}
 							],
@@ -628,7 +628,7 @@
 											"sources": [
 												{
 													"fileName": "auth/service.ts",
-													"line": 22,
+													"line": 23,
 													"character": 11
 												}
 											],
@@ -652,7 +652,7 @@
 															"sources": [
 																{
 																	"fileName": "auth/service.ts",
-																	"line": 23,
+																	"line": 24,
 																	"character": 12
 																}
 															],
@@ -688,7 +688,7 @@
 																							"sources": [
 																								{
 																									"fileName": "auth/service.ts",
-																									"line": 23,
+																									"line": 24,
 																									"character": 43
 																								}
 																							],
@@ -763,7 +763,7 @@
 							"sources": [
 								{
 									"fileName": "auth/service.ts",
-									"line": 12,
+									"line": 13,
 									"character": 10
 								}
 							],
@@ -787,7 +787,7 @@
 											"sources": [
 												{
 													"fileName": "auth/service.ts",
-													"line": 13,
+													"line": 14,
 													"character": 11
 												}
 											],
@@ -861,7 +861,7 @@
 							"sources": [
 								{
 									"fileName": "auth/service.ts",
-									"line": 16,
+									"line": 17,
 									"character": 10
 								}
 							],
@@ -885,7 +885,7 @@
 											"sources": [
 												{
 													"fileName": "auth/service.ts",
-													"line": 18,
+													"line": 19,
 													"character": 11
 												}
 											],
@@ -922,7 +922,7 @@
 											"sources": [
 												{
 													"fileName": "auth/service.ts",
-													"line": 17,
+													"line": 18,
 													"character": 11
 												}
 											],
@@ -990,7 +990,7 @@
 					"sources": [
 						{
 							"fileName": "auth/service.ts",
-							"line": 11,
+							"line": 12,
 							"character": 17
 						}
 					]
@@ -1004,7 +1004,7 @@
 					"sources": [
 						{
 							"fileName": "auth/create-service.ts",
-							"line": 18,
+							"line": 19,
 							"character": 13
 						}
 					],
@@ -1056,7 +1056,7 @@
 			"sources": [
 				{
 					"fileName": "auth/index.ts",
-					"line": 9,
+					"line": 10,
 					"character": 0
 				}
 			]
@@ -1086,7 +1086,7 @@
 							"sources": [
 								{
 									"fileName": "auto-extractors/service.ts",
-									"line": 33,
+									"line": 34,
 									"character": 10
 								}
 							],
@@ -1110,7 +1110,7 @@
 											"sources": [
 												{
 													"fileName": "auto-extractors/service.ts",
-													"line": 34,
+													"line": 35,
 													"character": 11
 												}
 											],
@@ -1173,7 +1173,7 @@
 							"sources": [
 								{
 									"fileName": "auto-extractors/service.ts",
-									"line": 41,
+									"line": 42,
 									"character": 10
 								}
 							],
@@ -1197,7 +1197,7 @@
 											"sources": [
 												{
 													"fileName": "auto-extractors/service.ts",
-													"line": 42,
+													"line": 43,
 													"character": 11
 												}
 											],
@@ -1260,7 +1260,7 @@
 							"sources": [
 								{
 									"fileName": "auto-extractors/service.ts",
-									"line": 53,
+									"line": 54,
 									"character": 10
 								}
 							],
@@ -1284,7 +1284,7 @@
 											"sources": [
 												{
 													"fileName": "auto-extractors/service.ts",
-													"line": 54,
+													"line": 55,
 													"character": 11
 												}
 											],
@@ -1347,7 +1347,7 @@
 							"sources": [
 								{
 									"fileName": "auto-extractors/service.ts",
-									"line": 21,
+									"line": 22,
 									"character": 10
 								}
 							],
@@ -1371,7 +1371,7 @@
 											"sources": [
 												{
 													"fileName": "auto-extractors/service.ts",
-													"line": 24,
+													"line": 25,
 													"character": 11
 												}
 											],
@@ -1395,7 +1395,7 @@
 															"sources": [
 																{
 																	"fileName": "auto-extractors/service.ts",
-																	"line": 25,
+																	"line": 26,
 																	"character": 12
 																}
 															],
@@ -1448,7 +1448,7 @@
 											"sources": [
 												{
 													"fileName": "auto-extractors/service.ts",
-													"line": 23,
+													"line": 24,
 													"character": 11
 												}
 											],
@@ -1488,7 +1488,7 @@
 											"sources": [
 												{
 													"fileName": "auto-extractors/service.ts",
-													"line": 22,
+													"line": 23,
 													"character": 11
 												}
 											],
@@ -1598,7 +1598,7 @@
 							"sources": [
 								{
 									"fileName": "auto-extractors/service.ts",
-									"line": 29,
+									"line": 30,
 									"character": 10
 								}
 							],
@@ -1622,7 +1622,7 @@
 											"sources": [
 												{
 													"fileName": "auto-extractors/service.ts",
-													"line": 30,
+													"line": 31,
 													"character": 11
 												}
 											],
@@ -1685,7 +1685,7 @@
 							"sources": [
 								{
 									"fileName": "auto-extractors/service.ts",
-									"line": 45,
+									"line": 46,
 									"character": 10
 								}
 							],
@@ -1709,7 +1709,7 @@
 											"sources": [
 												{
 													"fileName": "auto-extractors/service.ts",
-													"line": 46,
+													"line": 47,
 													"character": 11
 												}
 											],
@@ -1772,7 +1772,7 @@
 							"sources": [
 								{
 									"fileName": "auto-extractors/service.ts",
-									"line": 37,
+									"line": 38,
 									"character": 10
 								}
 							],
@@ -1796,7 +1796,7 @@
 											"sources": [
 												{
 													"fileName": "auto-extractors/service.ts",
-													"line": 38,
+													"line": 39,
 													"character": 11
 												}
 											],
@@ -1859,7 +1859,7 @@
 							"sources": [
 								{
 									"fileName": "auto-extractors/service.ts",
-									"line": 49,
+									"line": 50,
 									"character": 10
 								}
 							],
@@ -1883,7 +1883,7 @@
 											"sources": [
 												{
 													"fileName": "auto-extractors/service.ts",
-													"line": 50,
+													"line": 51,
 													"character": 11
 												}
 											],
@@ -1958,7 +1958,7 @@
 					"sources": [
 						{
 							"fileName": "auto-extractors/service.ts",
-							"line": 20,
+							"line": 21,
 							"character": 17
 						}
 					]
@@ -1972,7 +1972,7 @@
 					"sources": [
 						{
 							"fileName": "auto-extractors/create-service.ts",
-							"line": 24,
+							"line": 25,
 							"character": 13
 						}
 					],
@@ -2024,7 +2024,7 @@
 			"sources": [
 				{
 					"fileName": "auto-extractors/index.ts",
-					"line": 9,
+					"line": 10,
 					"character": 0
 				}
 			]
@@ -2054,7 +2054,7 @@
 							"sources": [
 								{
 									"fileName": "dashboards/service.ts",
-									"line": 22,
+									"line": 23,
 									"character": 10
 								}
 							],
@@ -2078,7 +2078,7 @@
 											"sources": [
 												{
 													"fileName": "dashboards/service.ts",
-													"line": 23,
+													"line": 24,
 													"character": 11
 												}
 											],
@@ -2141,7 +2141,7 @@
 							"sources": [
 								{
 									"fileName": "dashboards/service.ts",
-									"line": 30,
+									"line": 31,
 									"character": 10
 								}
 							],
@@ -2165,7 +2165,7 @@
 											"sources": [
 												{
 													"fileName": "dashboards/service.ts",
-													"line": 31,
+													"line": 32,
 													"character": 11
 												}
 											],
@@ -2228,7 +2228,7 @@
 							"sources": [
 								{
 									"fileName": "dashboards/service.ts",
-									"line": 13,
+									"line": 14,
 									"character": 10
 								}
 							],
@@ -2252,7 +2252,7 @@
 											"sources": [
 												{
 													"fileName": "dashboards/service.ts",
-													"line": 17,
+													"line": 18,
 													"character": 11
 												}
 											],
@@ -2276,7 +2276,7 @@
 															"sources": [
 																{
 																	"fileName": "dashboards/service.ts",
-																	"line": 18,
+																	"line": 19,
 																	"character": 12
 																}
 															],
@@ -2329,7 +2329,7 @@
 											"sources": [
 												{
 													"fileName": "dashboards/service.ts",
-													"line": 16,
+													"line": 17,
 													"character": 11
 												}
 											],
@@ -2369,7 +2369,7 @@
 											"sources": [
 												{
 													"fileName": "dashboards/service.ts",
-													"line": 15,
+													"line": 16,
 													"character": 11
 												}
 											],
@@ -2424,7 +2424,7 @@
 											"sources": [
 												{
 													"fileName": "dashboards/service.ts",
-													"line": 14,
+													"line": 15,
 													"character": 11
 												}
 											],
@@ -2496,7 +2496,7 @@
 							"sources": [
 								{
 									"fileName": "dashboards/service.ts",
-									"line": 26,
+									"line": 27,
 									"character": 10
 								}
 							],
@@ -2520,7 +2520,7 @@
 											"sources": [
 												{
 													"fileName": "dashboards/service.ts",
-													"line": 27,
+													"line": 28,
 													"character": 11
 												}
 											],
@@ -2588,7 +2588,7 @@
 					"sources": [
 						{
 							"fileName": "dashboards/service.ts",
-							"line": 12,
+							"line": 13,
 							"character": 17
 						}
 					]
@@ -2602,7 +2602,7 @@
 					"sources": [
 						{
 							"fileName": "dashboards/create-service.ts",
-							"line": 21,
+							"line": 22,
 							"character": 13
 						}
 					],
@@ -2654,7 +2654,7 @@
 			"sources": [
 				{
 					"fileName": "dashboards/index.ts",
-					"line": 9,
+					"line": 10,
 					"character": 0
 				}
 			]
@@ -2684,7 +2684,7 @@
 							"sources": [
 								{
 									"fileName": "entries/service.ts",
-									"line": 12,
+									"line": 13,
 									"character": 10
 								}
 							],
@@ -2708,7 +2708,7 @@
 											"sources": [
 												{
 													"fileName": "entries/service.ts",
-													"line": 16,
+													"line": 17,
 													"character": 11
 												}
 											],
@@ -2732,7 +2732,7 @@
 															"sources": [
 																{
 																	"fileName": "entries/service.ts",
-																	"line": 17,
+																	"line": 18,
 																	"character": 12
 																}
 															],
@@ -2798,7 +2798,7 @@
 											"sources": [
 												{
 													"fileName": "entries/service.ts",
-													"line": 13,
+													"line": 14,
 													"character": 11
 												}
 											],
@@ -2822,7 +2822,7 @@
 															"sources": [
 																{
 																	"fileName": "entries/service.ts",
-																	"line": 14,
+																	"line": 15,
 																	"character": 12
 																}
 															],
@@ -2885,7 +2885,7 @@
 											"sources": [
 												{
 													"fileName": "entries/service.ts",
-													"line": 19,
+													"line": 20,
 													"character": 11
 												}
 											],
@@ -2958,7 +2958,7 @@
 					"sources": [
 						{
 							"fileName": "entries/service.ts",
-							"line": 11,
+							"line": 12,
 							"character": 17
 						}
 					]
@@ -2972,7 +2972,7 @@
 					"sources": [
 						{
 							"fileName": "entries/create-service.ts",
-							"line": 14,
+							"line": 15,
 							"character": 13
 						}
 					],
@@ -3024,7 +3024,7 @@
 			"sources": [
 				{
 					"fileName": "entries/index.ts",
-					"line": 9,
+					"line": 10,
 					"character": 0
 				}
 			]
@@ -3054,7 +3054,7 @@
 							"sources": [
 								{
 									"fileName": "explorer/service.ts",
-									"line": 13,
+									"line": 14,
 									"character": 10
 								}
 							],
@@ -3078,7 +3078,7 @@
 											"sources": [
 												{
 													"fileName": "explorer/service.ts",
-													"line": 14,
+													"line": 15,
 													"character": 11
 												}
 											],
@@ -3144,7 +3144,7 @@
 							"sources": [
 								{
 									"fileName": "explorer/service.ts",
-									"line": 28,
+									"line": 29,
 									"character": 10
 								}
 							],
@@ -3168,7 +3168,7 @@
 											"sources": [
 												{
 													"fileName": "explorer/service.ts",
-													"line": 29,
+													"line": 30,
 													"character": 11
 												}
 											],
@@ -3217,7 +3217,7 @@
 																			"sources": [
 																				{
 																					"fileName": "explorer/service.ts",
-																					"line": 31,
+																					"line": 32,
 																					"character": 14
 																				}
 																			],
@@ -3291,7 +3291,7 @@
 							"sources": [
 								{
 									"fileName": "explorer/service.ts",
-									"line": 17,
+									"line": 18,
 									"character": 10
 								}
 							],
@@ -3315,7 +3315,7 @@
 											"sources": [
 												{
 													"fileName": "explorer/service.ts",
-													"line": 18,
+													"line": 19,
 													"character": 11
 												}
 											],
@@ -3366,7 +3366,7 @@
 																			"sources": [
 																				{
 																					"fileName": "explorer/service.ts",
-																					"line": 21,
+																					"line": 22,
 																					"character": 4
 																				}
 																			],
@@ -3386,7 +3386,7 @@
 																			"sources": [
 																				{
 																					"fileName": "explorer/service.ts",
-																					"line": 22,
+																					"line": 23,
 																					"character": 4
 																				}
 																			],
@@ -3406,7 +3406,7 @@
 																			"sources": [
 																				{
 																					"fileName": "explorer/service.ts",
-																					"line": 23,
+																					"line": 24,
 																					"character": 4
 																				}
 																			],
@@ -3474,7 +3474,7 @@
 					"sources": [
 						{
 							"fileName": "explorer/service.ts",
-							"line": 12,
+							"line": 13,
 							"character": 17
 						}
 					]
@@ -3488,7 +3488,7 @@
 					"sources": [
 						{
 							"fileName": "explorer/create-service.ts",
-							"line": 14,
+							"line": 15,
 							"character": 13
 						}
 					],
@@ -3540,7 +3540,7 @@
 			"sources": [
 				{
 					"fileName": "explorer/index.ts",
-					"line": 9,
+					"line": 10,
 					"character": 0
 				}
 			]
@@ -3570,7 +3570,7 @@
 							"sources": [
 								{
 									"fileName": "files/service.ts",
-									"line": 19,
+									"line": 20,
 									"character": 10
 								}
 							],
@@ -3594,7 +3594,7 @@
 											"sources": [
 												{
 													"fileName": "files/service.ts",
-													"line": 20,
+													"line": 21,
 													"character": 11
 												}
 											],
@@ -3657,7 +3657,7 @@
 							"sources": [
 								{
 									"fileName": "files/service.ts",
-									"line": 27,
+									"line": 28,
 									"character": 10
 								}
 							],
@@ -3681,7 +3681,7 @@
 											"sources": [
 												{
 													"fileName": "files/service.ts",
-													"line": 28,
+													"line": 29,
 													"character": 11
 												}
 											],
@@ -3744,7 +3744,7 @@
 							"sources": [
 								{
 									"fileName": "files/service.ts",
-									"line": 12,
+									"line": 13,
 									"character": 10
 								}
 							],
@@ -3768,7 +3768,7 @@
 											"sources": [
 												{
 													"fileName": "files/service.ts",
-													"line": 14,
+													"line": 15,
 													"character": 11
 												}
 											],
@@ -3792,7 +3792,7 @@
 															"sources": [
 																{
 																	"fileName": "files/service.ts",
-																	"line": 15,
+																	"line": 16,
 																	"character": 12
 																}
 															],
@@ -3845,7 +3845,7 @@
 											"sources": [
 												{
 													"fileName": "files/service.ts",
-													"line": 13,
+													"line": 14,
 													"character": 11
 												}
 											],
@@ -3905,7 +3905,7 @@
 							"sources": [
 								{
 									"fileName": "files/service.ts",
-									"line": 23,
+									"line": 24,
 									"character": 10
 								}
 							],
@@ -3929,7 +3929,7 @@
 											"sources": [
 												{
 													"fileName": "files/service.ts",
-													"line": 24,
+													"line": 25,
 													"character": 11
 												}
 											],
@@ -3997,7 +3997,7 @@
 					"sources": [
 						{
 							"fileName": "files/service.ts",
-							"line": 11,
+							"line": 12,
 							"character": 17
 						}
 					]
@@ -4011,7 +4011,7 @@
 					"sources": [
 						{
 							"fileName": "files/create-service.ts",
-							"line": 19,
+							"line": 20,
 							"character": 13
 						}
 					],
@@ -4063,7 +4063,7 @@
 			"sources": [
 				{
 					"fileName": "files/index.ts",
-					"line": 9,
+					"line": 10,
 					"character": 0
 				}
 			]
@@ -4093,7 +4093,7 @@
 							"sources": [
 								{
 									"fileName": "groups/service.ts",
-									"line": 31,
+									"line": 32,
 									"character": 10
 								}
 							],
@@ -4117,7 +4117,7 @@
 											"sources": [
 												{
 													"fileName": "groups/service.ts",
-													"line": 33,
+													"line": 34,
 													"character": 11
 												}
 											],
@@ -4181,7 +4181,7 @@
 											"sources": [
 												{
 													"fileName": "groups/service.ts",
-													"line": 32,
+													"line": 33,
 													"character": 11
 												}
 											],
@@ -4256,7 +4256,7 @@
 							"sources": [
 								{
 									"fileName": "groups/service.ts",
-									"line": 13,
+									"line": 14,
 									"character": 10
 								}
 							],
@@ -4280,7 +4280,7 @@
 											"sources": [
 												{
 													"fileName": "groups/service.ts",
-													"line": 14,
+													"line": 15,
 													"character": 11
 												}
 											],
@@ -4343,7 +4343,7 @@
 							"sources": [
 								{
 									"fileName": "groups/service.ts",
-									"line": 17,
+									"line": 18,
 									"character": 10
 								}
 							],
@@ -4367,7 +4367,7 @@
 											"sources": [
 												{
 													"fileName": "groups/service.ts",
-													"line": 18,
+													"line": 19,
 													"character": 11
 												}
 											],
@@ -4430,7 +4430,7 @@
 							"sources": [
 								{
 									"fileName": "groups/service.ts",
-									"line": 21,
+									"line": 22,
 									"character": 10
 								}
 							],
@@ -4454,7 +4454,7 @@
 											"sources": [
 												{
 													"fileName": "groups/service.ts",
-													"line": 24,
+													"line": 25,
 													"character": 11
 												}
 											],
@@ -4494,7 +4494,7 @@
 											"sources": [
 												{
 													"fileName": "groups/service.ts",
-													"line": 23,
+													"line": 24,
 													"character": 11
 												}
 											],
@@ -4534,7 +4534,7 @@
 																			"sources": [
 																				{
 																					"fileName": "groups/service.ts",
-																					"line": 23,
+																					"line": 24,
 																					"character": 34
 																				}
 																			],
@@ -4586,7 +4586,7 @@
 											"sources": [
 												{
 													"fileName": "groups/service.ts",
-													"line": 22,
+													"line": 23,
 													"character": 11
 												}
 											],
@@ -4651,7 +4651,7 @@
 							"sources": [
 								{
 									"fileName": "groups/service.ts",
-									"line": 36,
+									"line": 37,
 									"character": 10
 								}
 							],
@@ -4675,7 +4675,7 @@
 											"sources": [
 												{
 													"fileName": "groups/service.ts",
-													"line": 37,
+													"line": 38,
 													"character": 11
 												}
 											],
@@ -4749,7 +4749,7 @@
 							"sources": [
 								{
 									"fileName": "groups/service.ts",
-									"line": 27,
+									"line": 28,
 									"character": 10
 								}
 							],
@@ -4773,7 +4773,7 @@
 											"sources": [
 												{
 													"fileName": "groups/service.ts",
-													"line": 28,
+													"line": 29,
 													"character": 11
 												}
 											],
@@ -4843,7 +4843,7 @@
 					"sources": [
 						{
 							"fileName": "groups/service.ts",
-							"line": 12,
+							"line": 13,
 							"character": 17
 						}
 					]
@@ -4857,7 +4857,7 @@
 					"sources": [
 						{
 							"fileName": "groups/create-service.ts",
-							"line": 23,
+							"line": 24,
 							"character": 13
 						}
 					],
@@ -4909,7 +4909,7 @@
 			"sources": [
 				{
 					"fileName": "groups/index.ts",
-					"line": 9,
+					"line": 10,
 					"character": 0
 				}
 			]
@@ -4928,8 +4928,8 @@
 					"kindString": "Interface",
 					"flags": {},
 					"comment": {
-						"shortText": "Copyright 2022 Gravwell, Inc. All rights reserved.\nContact: <legal@gravwell.io>",
-						"text": "This software may be modified and distributed under the terms of the\nMIT license. See the LICENSE file for details.\n"
+						"shortText": "Copyright 2022 Gravwell, Inc. All rights reserved.",
+						"text": "Contact: [legal@gravwell.io](mailto:legal@gravwell.io)\n\nThis software may be modified and distributed under the terms of the MIT\nlicense. See the LICENSE file for details.\n"
 					},
 					"children": [
 						{
@@ -4943,7 +4943,7 @@
 							"sources": [
 								{
 									"fileName": "indexers/service.ts",
-									"line": 13,
+									"line": 14,
 									"character": 10
 								}
 							],
@@ -4967,7 +4967,7 @@
 											"sources": [
 												{
 													"fileName": "indexers/service.ts",
-													"line": 14,
+													"line": 15,
 													"character": 11
 												}
 											],
@@ -5020,7 +5020,7 @@
 							"sources": [
 								{
 									"fileName": "indexers/service.ts",
-									"line": 11,
+									"line": 12,
 									"character": 10
 								}
 							],
@@ -5066,7 +5066,7 @@
 					"sources": [
 						{
 							"fileName": "indexers/service.ts",
-							"line": 10,
+							"line": 11,
 							"character": 17
 						}
 					]
@@ -5080,7 +5080,7 @@
 					"sources": [
 						{
 							"fileName": "indexers/create-service.ts",
-							"line": 13,
+							"line": 14,
 							"character": 13
 						}
 					],
@@ -5132,7 +5132,7 @@
 			"sources": [
 				{
 					"fileName": "indexers/index.ts",
-					"line": 9,
+					"line": 10,
 					"character": 0
 				}
 			]
@@ -5162,7 +5162,7 @@
 							"sources": [
 								{
 									"fileName": "kits/service.ts",
-									"line": 53,
+									"line": 54,
 									"character": 10
 								}
 							],
@@ -5186,7 +5186,7 @@
 											"sources": [
 												{
 													"fileName": "kits/service.ts",
-													"line": 57,
+													"line": 58,
 													"character": 11
 												}
 											],
@@ -5210,7 +5210,7 @@
 															"sources": [
 																{
 																	"fileName": "kits/service.ts",
-																	"line": 58,
+																	"line": 59,
 																	"character": 12
 																}
 															],
@@ -5273,7 +5273,7 @@
 											"sources": [
 												{
 													"fileName": "kits/service.ts",
-													"line": 54,
+													"line": 55,
 													"character": 11
 												}
 											],
@@ -5297,7 +5297,7 @@
 															"sources": [
 																{
 																	"fileName": "kits/service.ts",
-																	"line": 55,
+																	"line": 56,
 																	"character": 12
 																}
 															],
@@ -5364,7 +5364,7 @@
 							"sources": [
 								{
 									"fileName": "kits/service.ts",
-									"line": 24,
+									"line": 25,
 									"character": 10
 								}
 							],
@@ -5388,7 +5388,7 @@
 											"sources": [
 												{
 													"fileName": "kits/service.ts",
-													"line": 25,
+													"line": 26,
 													"character": 11
 												}
 											],
@@ -5412,7 +5412,7 @@
 															"sources": [
 																{
 																	"fileName": "kits/service.ts",
-																	"line": 26,
+																	"line": 27,
 																	"character": 12
 																}
 															],
@@ -5488,7 +5488,7 @@
 							"sources": [
 								{
 									"fileName": "kits/service.ts",
-									"line": 37,
+									"line": 38,
 									"character": 10
 								}
 							],
@@ -5512,7 +5512,7 @@
 											"sources": [
 												{
 													"fileName": "kits/service.ts",
-													"line": 38,
+													"line": 39,
 													"character": 11
 												}
 											],
@@ -5536,7 +5536,7 @@
 															"sources": [
 																{
 																	"fileName": "kits/service.ts",
-																	"line": 39,
+																	"line": 40,
 																	"character": 12
 																}
 															],
@@ -5586,7 +5586,7 @@
 															"sources": [
 																{
 																	"fileName": "kits/service.ts",
-																	"line": 40,
+																	"line": 41,
 																	"character": 12
 																}
 															],
@@ -5663,7 +5663,7 @@
 							"sources": [
 								{
 									"fileName": "kits/service.ts",
-									"line": 13,
+									"line": 14,
 									"character": 10
 								}
 							],
@@ -5687,7 +5687,7 @@
 											"sources": [
 												{
 													"fileName": "kits/service.ts",
-													"line": 18,
+													"line": 19,
 													"character": 11
 												}
 											],
@@ -5711,7 +5711,7 @@
 															"sources": [
 																{
 																	"fileName": "kits/service.ts",
-																	"line": 19,
+																	"line": 20,
 																	"character": 12
 																}
 															],
@@ -5751,7 +5751,7 @@
 															"sources": [
 																{
 																	"fileName": "kits/service.ts",
-																	"line": 20,
+																	"line": 21,
 																	"character": 12
 																}
 															],
@@ -5805,7 +5805,7 @@
 											"sources": [
 												{
 													"fileName": "kits/service.ts",
-													"line": 14,
+													"line": 15,
 													"character": 11
 												}
 											],
@@ -5829,7 +5829,7 @@
 															"sources": [
 																{
 																	"fileName": "kits/service.ts",
-																	"line": 15,
+																	"line": 16,
 																	"character": 12
 																}
 															],
@@ -5879,7 +5879,7 @@
 															"sources": [
 																{
 																	"fileName": "kits/service.ts",
-																	"line": 16,
+																	"line": 17,
 																	"character": 12
 																}
 															],
@@ -5957,7 +5957,7 @@
 							"sources": [
 								{
 									"fileName": "kits/service.ts",
-									"line": 44,
+									"line": 45,
 									"character": 10
 								}
 							],
@@ -5981,7 +5981,7 @@
 											"sources": [
 												{
 													"fileName": "kits/service.ts",
-													"line": 45,
+													"line": 46,
 													"character": 11
 												}
 											],
@@ -6054,7 +6054,7 @@
 							"sources": [
 								{
 									"fileName": "kits/service.ts",
-									"line": 48,
+									"line": 49,
 									"character": 10
 								}
 							],
@@ -6078,7 +6078,7 @@
 											"sources": [
 												{
 													"fileName": "kits/service.ts",
-													"line": 50,
+													"line": 51,
 													"character": 11
 												}
 											],
@@ -6115,7 +6115,7 @@
 											"sources": [
 												{
 													"fileName": "kits/service.ts",
-													"line": 49,
+													"line": 50,
 													"character": 11
 												}
 											],
@@ -6179,7 +6179,7 @@
 							"sources": [
 								{
 									"fileName": "kits/service.ts",
-									"line": 30,
+									"line": 31,
 									"character": 10
 								}
 							],
@@ -6203,7 +6203,7 @@
 											"sources": [
 												{
 													"fileName": "kits/service.ts",
-													"line": 31,
+													"line": 32,
 													"character": 11
 												}
 											],
@@ -6227,7 +6227,7 @@
 															"sources": [
 																{
 																	"fileName": "kits/service.ts",
-																	"line": 32,
+																	"line": 33,
 																	"character": 12
 																}
 															],
@@ -6277,7 +6277,7 @@
 															"sources": [
 																{
 																	"fileName": "kits/service.ts",
-																	"line": 33,
+																	"line": 34,
 																	"character": 12
 																}
 															],
@@ -6362,7 +6362,7 @@
 					"sources": [
 						{
 							"fileName": "kits/service.ts",
-							"line": 12,
+							"line": 13,
 							"character": 17
 						}
 					]
@@ -6376,7 +6376,7 @@
 					"sources": [
 						{
 							"fileName": "kits/create-service.ts",
-							"line": 28,
+							"line": 29,
 							"character": 13
 						}
 					],
@@ -6428,7 +6428,7 @@
 			"sources": [
 				{
 					"fileName": "kits/index.ts",
-					"line": 9,
+					"line": 10,
 					"character": 0
 				}
 			]
@@ -6458,7 +6458,7 @@
 							"sources": [
 								{
 									"fileName": "logs/service.ts",
-									"line": 20,
+									"line": 21,
 									"character": 10
 								}
 							],
@@ -6482,7 +6482,7 @@
 											"sources": [
 												{
 													"fileName": "logs/service.ts",
-													"line": 21,
+													"line": 22,
 													"character": 11
 												}
 											],
@@ -6573,7 +6573,7 @@
 							"sources": [
 								{
 									"fileName": "logs/service.ts",
-									"line": 12,
+									"line": 13,
 									"character": 10
 								}
 							],
@@ -6597,7 +6597,7 @@
 											"sources": [
 												{
 													"fileName": "logs/service.ts",
-													"line": 13,
+													"line": 14,
 													"character": 11
 												}
 											],
@@ -6647,7 +6647,7 @@
 							"sources": [
 								{
 									"fileName": "logs/service.ts",
-									"line": 16,
+									"line": 17,
 									"character": 10
 								}
 							],
@@ -6671,7 +6671,7 @@
 											"sources": [
 												{
 													"fileName": "logs/service.ts",
-													"line": 17,
+													"line": 18,
 													"character": 11
 												}
 											],
@@ -6759,7 +6759,7 @@
 					"sources": [
 						{
 							"fileName": "logs/service.ts",
-							"line": 11,
+							"line": 12,
 							"character": 17
 						}
 					]
@@ -6773,7 +6773,7 @@
 					"sources": [
 						{
 							"fileName": "logs/create-service.ts",
-							"line": 13,
+							"line": 14,
 							"character": 13
 						}
 					],
@@ -6825,7 +6825,7 @@
 			"sources": [
 				{
 					"fileName": "logs/index.ts",
-					"line": 9,
+					"line": 10,
 					"character": 0
 				}
 			]
@@ -6855,7 +6855,7 @@
 							"sources": [
 								{
 									"fileName": "macros/service.ts",
-									"line": 22,
+									"line": 23,
 									"character": 10
 								}
 							],
@@ -6879,7 +6879,7 @@
 											"sources": [
 												{
 													"fileName": "macros/service.ts",
-													"line": 23,
+													"line": 24,
 													"character": 11
 												}
 											],
@@ -6942,7 +6942,7 @@
 							"sources": [
 								{
 									"fileName": "macros/service.ts",
-									"line": 30,
+									"line": 31,
 									"character": 10
 								}
 							],
@@ -6966,7 +6966,7 @@
 											"sources": [
 												{
 													"fileName": "macros/service.ts",
-													"line": 31,
+													"line": 32,
 													"character": 11
 												}
 											],
@@ -7029,7 +7029,7 @@
 							"sources": [
 								{
 									"fileName": "macros/service.ts",
-									"line": 13,
+									"line": 14,
 									"character": 10
 								}
 							],
@@ -7053,7 +7053,7 @@
 											"sources": [
 												{
 													"fileName": "macros/service.ts",
-													"line": 17,
+													"line": 18,
 													"character": 11
 												}
 											],
@@ -7077,7 +7077,7 @@
 															"sources": [
 																{
 																	"fileName": "macros/service.ts",
-																	"line": 18,
+																	"line": 19,
 																	"character": 12
 																}
 															],
@@ -7130,7 +7130,7 @@
 											"sources": [
 												{
 													"fileName": "macros/service.ts",
-													"line": 16,
+													"line": 17,
 													"character": 11
 												}
 											],
@@ -7170,7 +7170,7 @@
 											"sources": [
 												{
 													"fileName": "macros/service.ts",
-													"line": 15,
+													"line": 16,
 													"character": 11
 												}
 											],
@@ -7225,7 +7225,7 @@
 											"sources": [
 												{
 													"fileName": "macros/service.ts",
-													"line": 14,
+													"line": 15,
 													"character": 11
 												}
 											],
@@ -7297,7 +7297,7 @@
 							"sources": [
 								{
 									"fileName": "macros/service.ts",
-									"line": 26,
+									"line": 27,
 									"character": 10
 								}
 							],
@@ -7321,7 +7321,7 @@
 											"sources": [
 												{
 													"fileName": "macros/service.ts",
-													"line": 27,
+													"line": 28,
 													"character": 11
 												}
 											],
@@ -7389,7 +7389,7 @@
 					"sources": [
 						{
 							"fileName": "macros/service.ts",
-							"line": 12,
+							"line": 13,
 							"character": 17
 						}
 					]
@@ -7403,7 +7403,7 @@
 					"sources": [
 						{
 							"fileName": "macros/create-service.ts",
-							"line": 21,
+							"line": 22,
 							"character": 13
 						}
 					],
@@ -7455,7 +7455,7 @@
 			"sources": [
 				{
 					"fileName": "macros/index.ts",
-					"line": 9,
+					"line": 10,
 					"character": 0
 				}
 			]
@@ -7483,7 +7483,7 @@
 							"sources": [
 								{
 									"fileName": "mail-server/service.ts",
-									"line": 19,
+									"line": 20,
 									"character": 1
 								}
 							],
@@ -7505,7 +7505,7 @@
 											"sources": [
 												{
 													"fileName": "mail-server/service.ts",
-													"line": 20,
+													"line": 21,
 													"character": 2
 												}
 											],
@@ -7566,7 +7566,7 @@
 							"sources": [
 								{
 									"fileName": "mail-server/service.ts",
-									"line": 13,
+									"line": 14,
 									"character": 1
 								}
 							],
@@ -7588,7 +7588,7 @@
 											"sources": [
 												{
 													"fileName": "mail-server/service.ts",
-													"line": 14,
+													"line": 15,
 													"character": 2
 												}
 											],
@@ -7648,7 +7648,7 @@
 							"sources": [
 								{
 									"fileName": "mail-server/service.ts",
-									"line": 16,
+									"line": 17,
 									"character": 1
 								}
 							],
@@ -7670,7 +7670,7 @@
 											"sources": [
 												{
 													"fileName": "mail-server/service.ts",
-													"line": 17,
+													"line": 18,
 													"character": 2
 												}
 											],
@@ -7737,7 +7737,7 @@
 					"sources": [
 						{
 							"fileName": "mail-server/service.ts",
-							"line": 12,
+							"line": 13,
 							"character": 17
 						}
 					]
@@ -7751,7 +7751,7 @@
 					"sources": [
 						{
 							"fileName": "mail-server/create-service.ts",
-							"line": 12,
+							"line": 13,
 							"character": 13
 						}
 					],
@@ -7803,7 +7803,7 @@
 			"sources": [
 				{
 					"fileName": "mail-server/index.ts",
-					"line": 9,
+					"line": 10,
 					"character": 0
 				}
 			]
@@ -7833,7 +7833,7 @@
 							"sources": [
 								{
 									"fileName": "notifications/service.ts",
-									"line": 20,
+									"line": 21,
 									"character": 10
 								}
 							],
@@ -7857,7 +7857,7 @@
 											"sources": [
 												{
 													"fileName": "notifications/service.ts",
-													"line": 21,
+													"line": 22,
 													"character": 11
 												}
 											],
@@ -7881,7 +7881,7 @@
 															"sources": [
 																{
 																	"fileName": "notifications/service.ts",
-																	"line": 22,
+																	"line": 23,
 																	"character": 12
 																}
 															],
@@ -7931,7 +7931,7 @@
 															"sources": [
 																{
 																	"fileName": "notifications/service.ts",
-																	"line": 23,
+																	"line": 24,
 																	"character": 12
 																}
 															],
@@ -8065,7 +8065,7 @@
 							"sources": [
 								{
 									"fileName": "notifications/service.ts",
-									"line": 44,
+									"line": 45,
 									"character": 10
 								}
 							],
@@ -8089,7 +8089,7 @@
 											"sources": [
 												{
 													"fileName": "notifications/service.ts",
-													"line": 45,
+													"line": 46,
 													"character": 11
 												}
 											],
@@ -8152,7 +8152,7 @@
 							"sources": [
 								{
 									"fileName": "notifications/service.ts",
-									"line": 30,
+									"line": 31,
 									"character": 10
 								}
 							],
@@ -8176,7 +8176,7 @@
 											"sources": [
 												{
 													"fileName": "notifications/service.ts",
-													"line": 31,
+													"line": 32,
 													"character": 11
 												}
 											],
@@ -8229,7 +8229,7 @@
 							"sources": [
 								{
 									"fileName": "notifications/service.ts",
-									"line": 34,
+									"line": 35,
 									"character": 10
 								}
 							],
@@ -8253,7 +8253,7 @@
 											"sources": [
 												{
 													"fileName": "notifications/service.ts",
-													"line": 35,
+													"line": 36,
 													"character": 11
 												}
 											],
@@ -8293,7 +8293,7 @@
 																			"sources": [
 																				{
 																					"fileName": "notifications/service.ts",
-																					"line": 36,
+																					"line": 37,
 																					"character": 3
 																				}
 																			],
@@ -8365,7 +8365,7 @@
 							"sources": [
 								{
 									"fileName": "notifications/service.ts",
-									"line": 40,
+									"line": 41,
 									"character": 10
 								}
 							],
@@ -8389,7 +8389,7 @@
 											"sources": [
 												{
 													"fileName": "notifications/service.ts",
-													"line": 41,
+													"line": 42,
 													"character": 11
 												}
 											],
@@ -8458,7 +8458,7 @@
 					"sources": [
 						{
 							"fileName": "notifications/service.ts",
-							"line": 19,
+							"line": 20,
 							"character": 17
 						}
 					]
@@ -8472,7 +8472,7 @@
 					"sources": [
 						{
 							"fileName": "notifications/create-service.ts",
-							"line": 20,
+							"line": 21,
 							"character": 13
 						}
 					],
@@ -8524,7 +8524,7 @@
 			"sources": [
 				{
 					"fileName": "notifications/index.ts",
-					"line": 9,
+					"line": 10,
 					"character": 0
 				}
 			]
@@ -8554,7 +8554,7 @@
 							"sources": [
 								{
 									"fileName": "playbooks/service.ts",
-									"line": 20,
+									"line": 21,
 									"character": 10
 								}
 							],
@@ -8578,7 +8578,7 @@
 											"sources": [
 												{
 													"fileName": "playbooks/service.ts",
-													"line": 21,
+													"line": 22,
 													"character": 11
 												}
 											],
@@ -8641,7 +8641,7 @@
 							"sources": [
 								{
 									"fileName": "playbooks/service.ts",
-									"line": 28,
+									"line": 29,
 									"character": 10
 								}
 							],
@@ -8665,7 +8665,7 @@
 											"sources": [
 												{
 													"fileName": "playbooks/service.ts",
-													"line": 29,
+													"line": 30,
 													"character": 11
 												}
 											],
@@ -8728,7 +8728,7 @@
 							"sources": [
 								{
 									"fileName": "playbooks/service.ts",
-									"line": 12,
+									"line": 13,
 									"character": 10
 								}
 							],
@@ -8752,7 +8752,7 @@
 											"sources": [
 												{
 													"fileName": "playbooks/service.ts",
-													"line": 15,
+													"line": 16,
 													"character": 11
 												}
 											],
@@ -8776,7 +8776,7 @@
 															"sources": [
 																{
 																	"fileName": "playbooks/service.ts",
-																	"line": 16,
+																	"line": 17,
 																	"character": 12
 																}
 															],
@@ -8841,7 +8841,7 @@
 											"sources": [
 												{
 													"fileName": "playbooks/service.ts",
-													"line": 14,
+													"line": 15,
 													"character": 11
 												}
 											],
@@ -8893,7 +8893,7 @@
 											"sources": [
 												{
 													"fileName": "playbooks/service.ts",
-													"line": 13,
+													"line": 14,
 													"character": 11
 												}
 											],
@@ -8964,7 +8964,7 @@
 							"sources": [
 								{
 									"fileName": "playbooks/service.ts",
-									"line": 24,
+									"line": 25,
 									"character": 10
 								}
 							],
@@ -8988,7 +8988,7 @@
 											"sources": [
 												{
 													"fileName": "playbooks/service.ts",
-													"line": 25,
+													"line": 26,
 													"character": 11
 												}
 											],
@@ -9056,7 +9056,7 @@
 					"sources": [
 						{
 							"fileName": "playbooks/service.ts",
-							"line": 11,
+							"line": 12,
 							"character": 17
 						}
 					]
@@ -9070,7 +9070,7 @@
 					"sources": [
 						{
 							"fileName": "playbooks/create-service.ts",
-							"line": 20,
+							"line": 21,
 							"character": 13
 						}
 					],
@@ -9122,7 +9122,7 @@
 			"sources": [
 				{
 					"fileName": "playbooks/index.ts",
-					"line": 9,
+					"line": 10,
 					"character": 0
 				}
 			]
@@ -9152,7 +9152,7 @@
 							"sources": [
 								{
 									"fileName": "queries/service.ts",
-									"line": 16,
+									"line": 17,
 									"character": 10
 								}
 							],
@@ -9176,7 +9176,7 @@
 											"sources": [
 												{
 													"fileName": "queries/service.ts",
-													"line": 17,
+													"line": 18,
 													"character": 11
 												}
 											],
@@ -9253,7 +9253,7 @@
 							"sources": [
 								{
 									"fileName": "queries/service.ts",
-									"line": 12,
+									"line": 13,
 									"character": 10
 								}
 							],
@@ -9277,7 +9277,7 @@
 											"sources": [
 												{
 													"fileName": "queries/service.ts",
-													"line": 13,
+													"line": 14,
 													"character": 11
 												}
 											],
@@ -9343,7 +9343,7 @@
 					"sources": [
 						{
 							"fileName": "queries/service.ts",
-							"line": 11,
+							"line": 12,
 							"character": 17
 						}
 					]
@@ -9357,7 +9357,7 @@
 					"sources": [
 						{
 							"fileName": "queries/create-service.ts",
-							"line": 13,
+							"line": 14,
 							"character": 13
 						}
 					],
@@ -9409,7 +9409,7 @@
 			"sources": [
 				{
 					"fileName": "queries/index.ts",
-					"line": 9,
+					"line": 10,
 					"character": 0
 				}
 			]
@@ -9439,7 +9439,7 @@
 							"sources": [
 								{
 									"fileName": "render-modules/service.ts",
-									"line": 12,
+									"line": 13,
 									"character": 10
 								}
 							],
@@ -9463,7 +9463,7 @@
 											"sources": [
 												{
 													"fileName": "render-modules/service.ts",
-													"line": 13,
+													"line": 14,
 													"character": 11
 												}
 											],
@@ -9518,7 +9518,7 @@
 					"sources": [
 						{
 							"fileName": "render-modules/service.ts",
-							"line": 11,
+							"line": 12,
 							"character": 17
 						}
 					]
@@ -9532,7 +9532,7 @@
 					"sources": [
 						{
 							"fileName": "render-modules/create-service.ts",
-							"line": 13,
+							"line": 14,
 							"character": 13
 						}
 					],
@@ -9584,7 +9584,7 @@
 			"sources": [
 				{
 					"fileName": "render-modules/index.ts",
-					"line": 9,
+					"line": 10,
 					"character": 0
 				}
 			]
@@ -9614,7 +9614,7 @@
 							"sources": [
 								{
 									"fileName": "resources/service.ts",
-									"line": 29,
+									"line": 30,
 									"character": 10
 								}
 							],
@@ -9638,7 +9638,7 @@
 											"sources": [
 												{
 													"fileName": "resources/service.ts",
-													"line": 30,
+													"line": 31,
 													"character": 11
 												}
 											],
@@ -9701,7 +9701,7 @@
 							"sources": [
 								{
 									"fileName": "resources/service.ts",
-									"line": 37,
+									"line": 38,
 									"character": 10
 								}
 							],
@@ -9725,7 +9725,7 @@
 											"sources": [
 												{
 													"fileName": "resources/service.ts",
-													"line": 38,
+													"line": 39,
 													"character": 11
 												}
 											],
@@ -9788,7 +9788,7 @@
 							"sources": [
 								{
 									"fileName": "resources/service.ts",
-									"line": 12,
+									"line": 13,
 									"character": 10
 								}
 							],
@@ -9812,7 +9812,7 @@
 											"sources": [
 												{
 													"fileName": "resources/service.ts",
-													"line": 15,
+													"line": 16,
 													"character": 11
 												}
 											],
@@ -9836,7 +9836,7 @@
 															"sources": [
 																{
 																	"fileName": "resources/service.ts",
-																	"line": 16,
+																	"line": 17,
 																	"character": 12
 																}
 															],
@@ -9901,7 +9901,7 @@
 											"sources": [
 												{
 													"fileName": "resources/service.ts",
-													"line": 14,
+													"line": 15,
 													"character": 11
 												}
 											],
@@ -9953,7 +9953,7 @@
 											"sources": [
 												{
 													"fileName": "resources/service.ts",
-													"line": 13,
+													"line": 14,
 													"character": 11
 												}
 											],
@@ -10024,7 +10024,7 @@
 							"sources": [
 								{
 									"fileName": "resources/service.ts",
-									"line": 20,
+									"line": 21,
 									"character": 10
 								}
 							],
@@ -10048,7 +10048,7 @@
 											"sources": [
 												{
 													"fileName": "resources/service.ts",
-													"line": 21,
+													"line": 22,
 													"character": 11
 												}
 											],
@@ -10099,7 +10099,7 @@
 																			"sources": [
 																				{
 																					"fileName": "resources/service.ts",
-																					"line": 24,
+																					"line": 25,
 																					"character": 4
 																				}
 																			],
@@ -10161,7 +10161,7 @@
 							"sources": [
 								{
 									"fileName": "resources/service.ts",
-									"line": 33,
+									"line": 34,
 									"character": 10
 								}
 							],
@@ -10185,7 +10185,7 @@
 											"sources": [
 												{
 													"fileName": "resources/service.ts",
-													"line": 34,
+													"line": 35,
 													"character": 11
 												}
 											],
@@ -10254,7 +10254,7 @@
 					"sources": [
 						{
 							"fileName": "resources/service.ts",
-							"line": 11,
+							"line": 12,
 							"character": 17
 						}
 					]
@@ -10268,7 +10268,7 @@
 					"sources": [
 						{
 							"fileName": "resources/create-service.ts",
-							"line": 21,
+							"line": 22,
 							"character": 13
 						}
 					],
@@ -10320,7 +10320,7 @@
 			"sources": [
 				{
 					"fileName": "resources/index.ts",
-					"line": 9,
+					"line": 10,
 					"character": 0
 				}
 			]
@@ -10350,7 +10350,7 @@
 							"sources": [
 								{
 									"fileName": "saved-queries/service.ts",
-									"line": 20,
+									"line": 21,
 									"character": 10
 								}
 							],
@@ -10374,7 +10374,7 @@
 											"sources": [
 												{
 													"fileName": "saved-queries/service.ts",
-													"line": 21,
+													"line": 22,
 													"character": 11
 												}
 											],
@@ -10437,7 +10437,7 @@
 							"sources": [
 								{
 									"fileName": "saved-queries/service.ts",
-									"line": 28,
+									"line": 29,
 									"character": 10
 								}
 							],
@@ -10461,7 +10461,7 @@
 											"sources": [
 												{
 													"fileName": "saved-queries/service.ts",
-													"line": 29,
+													"line": 30,
 													"character": 11
 												}
 											],
@@ -10524,7 +10524,7 @@
 							"sources": [
 								{
 									"fileName": "saved-queries/service.ts",
-									"line": 12,
+									"line": 13,
 									"character": 10
 								}
 							],
@@ -10548,7 +10548,7 @@
 											"sources": [
 												{
 													"fileName": "saved-queries/service.ts",
-													"line": 15,
+													"line": 16,
 													"character": 11
 												}
 											],
@@ -10572,7 +10572,7 @@
 															"sources": [
 																{
 																	"fileName": "saved-queries/service.ts",
-																	"line": 16,
+																	"line": 17,
 																	"character": 12
 																}
 															],
@@ -10625,7 +10625,7 @@
 											"sources": [
 												{
 													"fileName": "saved-queries/service.ts",
-													"line": 14,
+													"line": 15,
 													"character": 11
 												}
 											],
@@ -10665,7 +10665,7 @@
 											"sources": [
 												{
 													"fileName": "saved-queries/service.ts",
-													"line": 13,
+													"line": 14,
 													"character": 11
 												}
 											],
@@ -10736,7 +10736,7 @@
 							"sources": [
 								{
 									"fileName": "saved-queries/service.ts",
-									"line": 24,
+									"line": 25,
 									"character": 10
 								}
 							],
@@ -10760,7 +10760,7 @@
 											"sources": [
 												{
 													"fileName": "saved-queries/service.ts",
-													"line": 25,
+													"line": 26,
 													"character": 11
 												}
 											],
@@ -10828,7 +10828,7 @@
 					"sources": [
 						{
 							"fileName": "saved-queries/service.ts",
-							"line": 11,
+							"line": 12,
 							"character": 17
 						}
 					]
@@ -10842,7 +10842,7 @@
 					"sources": [
 						{
 							"fileName": "saved-queries/create-service.ts",
-							"line": 20,
+							"line": 21,
 							"character": 13
 						}
 					],
@@ -10894,7 +10894,7 @@
 			"sources": [
 				{
 					"fileName": "saved-queries/index.ts",
-					"line": 9,
+					"line": 10,
 					"character": 0
 				}
 			]
@@ -10924,7 +10924,7 @@
 							"sources": [
 								{
 									"fileName": "scheduled-queries/service.ts",
-									"line": 38,
+									"line": 39,
 									"character": 10
 								}
 							],
@@ -10948,7 +10948,7 @@
 											"sources": [
 												{
 													"fileName": "scheduled-queries/service.ts",
-													"line": 39,
+													"line": 40,
 													"character": 11
 												}
 											],
@@ -10998,7 +10998,7 @@
 											"sources": [
 												{
 													"fileName": "scheduled-queries/service.ts",
-													"line": 40,
+													"line": 41,
 													"character": 11
 												}
 											],
@@ -11062,7 +11062,7 @@
 							"sources": [
 								{
 									"fileName": "scheduled-queries/service.ts",
-									"line": 23,
+									"line": 24,
 									"character": 10
 								}
 							],
@@ -11086,7 +11086,7 @@
 											"sources": [
 												{
 													"fileName": "scheduled-queries/service.ts",
-													"line": 25,
+													"line": 26,
 													"character": 11
 												}
 											],
@@ -11142,7 +11142,7 @@
 											"sources": [
 												{
 													"fileName": "scheduled-queries/service.ts",
-													"line": 24,
+													"line": 25,
 													"character": 11
 												}
 											],
@@ -11206,7 +11206,7 @@
 							"sources": [
 								{
 									"fileName": "scheduled-queries/service.ts",
-									"line": 32,
+									"line": 33,
 									"character": 10
 								}
 							],
@@ -11230,7 +11230,7 @@
 											"sources": [
 												{
 													"fileName": "scheduled-queries/service.ts",
-													"line": 35,
+													"line": 36,
 													"character": 11
 												}
 											],
@@ -11267,7 +11267,7 @@
 											"sources": [
 												{
 													"fileName": "scheduled-queries/service.ts",
-													"line": 34,
+													"line": 35,
 													"character": 11
 												}
 											],
@@ -11319,7 +11319,7 @@
 											"sources": [
 												{
 													"fileName": "scheduled-queries/service.ts",
-													"line": 33,
+													"line": 34,
 													"character": 11
 												}
 											],
@@ -11384,7 +11384,7 @@
 							"sources": [
 								{
 									"fileName": "scheduled-queries/service.ts",
-									"line": 14,
+									"line": 15,
 									"character": 10
 								}
 							],
@@ -11408,7 +11408,7 @@
 											"sources": [
 												{
 													"fileName": "scheduled-queries/service.ts",
-													"line": 18,
+													"line": 19,
 													"character": 11
 												}
 											],
@@ -11432,7 +11432,7 @@
 															"sources": [
 																{
 																	"fileName": "scheduled-queries/service.ts",
-																	"line": 19,
+																	"line": 20,
 																	"character": 12
 																}
 															],
@@ -11485,7 +11485,7 @@
 											"sources": [
 												{
 													"fileName": "scheduled-queries/service.ts",
-													"line": 17,
+													"line": 18,
 													"character": 11
 												}
 											],
@@ -11525,7 +11525,7 @@
 											"sources": [
 												{
 													"fileName": "scheduled-queries/service.ts",
-													"line": 16,
+													"line": 17,
 													"character": 11
 												}
 											],
@@ -11580,7 +11580,7 @@
 											"sources": [
 												{
 													"fileName": "scheduled-queries/service.ts",
-													"line": 15,
+													"line": 16,
 													"character": 11
 												}
 											],
@@ -11652,7 +11652,7 @@
 							"sources": [
 								{
 									"fileName": "scheduled-queries/service.ts",
-									"line": 28,
+									"line": 29,
 									"character": 10
 								}
 							],
@@ -11676,7 +11676,7 @@
 											"sources": [
 												{
 													"fileName": "scheduled-queries/service.ts",
-													"line": 29,
+													"line": 30,
 													"character": 11
 												}
 											],
@@ -11745,7 +11745,7 @@
 					"sources": [
 						{
 							"fileName": "scheduled-queries/service.ts",
-							"line": 13,
+							"line": 14,
 							"character": 17
 						}
 					]
@@ -11759,7 +11759,7 @@
 					"sources": [
 						{
 							"fileName": "scheduled-queries/create-service.ts",
-							"line": 26,
+							"line": 27,
 							"character": 13
 						}
 					],
@@ -11811,7 +11811,7 @@
 			"sources": [
 				{
 					"fileName": "scheduled-queries/index.ts",
-					"line": 9,
+					"line": 10,
 					"character": 0
 				}
 			]
@@ -11841,7 +11841,7 @@
 							"sources": [
 								{
 									"fileName": "scheduled-scripts/service.ts",
-									"line": 38,
+									"line": 39,
 									"character": 10
 								}
 							],
@@ -11865,7 +11865,7 @@
 											"sources": [
 												{
 													"fileName": "scheduled-scripts/service.ts",
-													"line": 39,
+													"line": 40,
 													"character": 11
 												}
 											],
@@ -11915,7 +11915,7 @@
 											"sources": [
 												{
 													"fileName": "scheduled-scripts/service.ts",
-													"line": 40,
+													"line": 41,
 													"character": 11
 												}
 											],
@@ -11979,7 +11979,7 @@
 							"sources": [
 								{
 									"fileName": "scheduled-scripts/service.ts",
-									"line": 23,
+									"line": 24,
 									"character": 10
 								}
 							],
@@ -12003,7 +12003,7 @@
 											"sources": [
 												{
 													"fileName": "scheduled-scripts/service.ts",
-													"line": 25,
+													"line": 26,
 													"character": 11
 												}
 											],
@@ -12059,7 +12059,7 @@
 											"sources": [
 												{
 													"fileName": "scheduled-scripts/service.ts",
-													"line": 24,
+													"line": 25,
 													"character": 11
 												}
 											],
@@ -12123,7 +12123,7 @@
 							"sources": [
 								{
 									"fileName": "scheduled-scripts/service.ts",
-									"line": 32,
+									"line": 33,
 									"character": 10
 								}
 							],
@@ -12147,7 +12147,7 @@
 											"sources": [
 												{
 													"fileName": "scheduled-scripts/service.ts",
-													"line": 35,
+													"line": 36,
 													"character": 11
 												}
 											],
@@ -12184,7 +12184,7 @@
 											"sources": [
 												{
 													"fileName": "scheduled-scripts/service.ts",
-													"line": 34,
+													"line": 35,
 													"character": 11
 												}
 											],
@@ -12236,7 +12236,7 @@
 											"sources": [
 												{
 													"fileName": "scheduled-scripts/service.ts",
-													"line": 33,
+													"line": 34,
 													"character": 11
 												}
 											],
@@ -12301,7 +12301,7 @@
 							"sources": [
 								{
 									"fileName": "scheduled-scripts/service.ts",
-									"line": 14,
+									"line": 15,
 									"character": 10
 								}
 							],
@@ -12325,7 +12325,7 @@
 											"sources": [
 												{
 													"fileName": "scheduled-scripts/service.ts",
-													"line": 18,
+													"line": 19,
 													"character": 11
 												}
 											],
@@ -12349,7 +12349,7 @@
 															"sources": [
 																{
 																	"fileName": "scheduled-scripts/service.ts",
-																	"line": 19,
+																	"line": 20,
 																	"character": 12
 																}
 															],
@@ -12402,7 +12402,7 @@
 											"sources": [
 												{
 													"fileName": "scheduled-scripts/service.ts",
-													"line": 17,
+													"line": 18,
 													"character": 11
 												}
 											],
@@ -12442,7 +12442,7 @@
 											"sources": [
 												{
 													"fileName": "scheduled-scripts/service.ts",
-													"line": 16,
+													"line": 17,
 													"character": 11
 												}
 											],
@@ -12497,7 +12497,7 @@
 											"sources": [
 												{
 													"fileName": "scheduled-scripts/service.ts",
-													"line": 15,
+													"line": 16,
 													"character": 11
 												}
 											],
@@ -12569,7 +12569,7 @@
 							"sources": [
 								{
 									"fileName": "scheduled-scripts/service.ts",
-									"line": 28,
+									"line": 29,
 									"character": 10
 								}
 							],
@@ -12593,7 +12593,7 @@
 											"sources": [
 												{
 													"fileName": "scheduled-scripts/service.ts",
-													"line": 29,
+													"line": 30,
 													"character": 11
 												}
 											],
@@ -12662,7 +12662,7 @@
 					"sources": [
 						{
 							"fileName": "scheduled-scripts/service.ts",
-							"line": 13,
+							"line": 14,
 							"character": 17
 						}
 					]
@@ -12676,7 +12676,7 @@
 					"sources": [
 						{
 							"fileName": "scheduled-scripts/create-service.ts",
-							"line": 26,
+							"line": 27,
 							"character": 13
 						}
 					],
@@ -12728,7 +12728,7 @@
 			"sources": [
 				{
 					"fileName": "scheduled-scripts/index.ts",
-					"line": 9,
+					"line": 10,
 					"character": 0
 				}
 			]
@@ -12747,8 +12747,8 @@
 					"kindString": "Interface",
 					"flags": {},
 					"comment": {
-						"shortText": "Copyright 2022 Gravwell, Inc. All rights reserved.\nContact: <legal@gravwell.io>",
-						"text": "This software may be modified and distributed under the terms of the\nMIT license. See the LICENSE file for details.\n"
+						"shortText": "Copyright 2022 Gravwell, Inc. All rights reserved.",
+						"text": "Contact: [legal@gravwell.io](mailto:legal@gravwell.io)\n\nThis software may be modified and distributed under the terms of the MIT\nlicense. See the LICENSE file for details.\n"
 					},
 					"children": [
 						{
@@ -12762,7 +12762,7 @@
 							"sources": [
 								{
 									"fileName": "script-libraries/service.ts",
-									"line": 10,
+									"line": 11,
 									"character": 10
 								}
 							],
@@ -12786,7 +12786,7 @@
 											"sources": [
 												{
 													"fileName": "script-libraries/service.ts",
-													"line": 14,
+													"line": 13,
 													"character": 11
 												}
 											],
@@ -12840,7 +12840,7 @@
 																			"sources": [
 																				{
 																					"fileName": "script-libraries/service.ts",
-																					"line": 18,
+																					"line": 17,
 																					"character": 4
 																				}
 																			],
@@ -12860,7 +12860,7 @@
 																			"sources": [
 																				{
 																					"fileName": "script-libraries/service.ts",
-																					"line": 17,
+																					"line": 16,
 																					"character": 4
 																				}
 																			],
@@ -12923,7 +12923,7 @@
 							"sources": [
 								{
 									"fileName": "script-libraries/service.ts",
-									"line": 23,
+									"line": 22,
 									"character": 10
 								}
 							],
@@ -12947,7 +12947,7 @@
 											"sources": [
 												{
 													"fileName": "script-libraries/service.ts",
-													"line": 29,
+													"line": 28,
 													"character": 11
 												}
 											],
@@ -12959,7 +12959,7 @@
 													"kindString": "Call signature",
 													"flags": {},
 													"comment": {
-														"shortText": "Updates all libraries to their latest versions. The promise resolves\nwhen the command to sync them is successfully received by the\nbackend, not we they're all synced."
+														"shortText": "Updates all libraries to their latest versions. The promise resolves when\nthe command to sync them is successfully received by the backend, not we\nthey're all synced."
 													},
 													"type": {
 														"type": "reference",
@@ -13003,7 +13003,7 @@
 					"sources": [
 						{
 							"fileName": "script-libraries/service.ts",
-							"line": 9,
+							"line": 10,
 							"character": 17
 						}
 					]
@@ -13017,7 +13017,7 @@
 					"sources": [
 						{
 							"fileName": "script-libraries/create-service.ts",
-							"line": 13,
+							"line": 14,
 							"character": 13
 						}
 					],
@@ -13069,7 +13069,7 @@
 			"sources": [
 				{
 					"fileName": "script-libraries/index.ts",
-					"line": 9,
+					"line": 10,
 					"character": 0
 				}
 			]
@@ -13099,7 +13099,7 @@
 							"sources": [
 								{
 									"fileName": "scripts/service.ts",
-									"line": 12,
+									"line": 13,
 									"character": 10
 								}
 							],
@@ -13123,7 +13123,7 @@
 											"sources": [
 												{
 													"fileName": "scripts/service.ts",
-													"line": 13,
+													"line": 14,
 													"character": 11
 												}
 											],
@@ -13188,7 +13188,7 @@
 					"sources": [
 						{
 							"fileName": "scripts/service.ts",
-							"line": 11,
+							"line": 12,
 							"character": 17
 						}
 					]
@@ -13202,7 +13202,7 @@
 					"sources": [
 						{
 							"fileName": "scripts/create-service.ts",
-							"line": 13,
+							"line": 14,
 							"character": 13
 						}
 					],
@@ -13254,7 +13254,7 @@
 			"sources": [
 				{
 					"fileName": "scripts/index.ts",
-					"line": 9,
+					"line": 10,
 					"character": 0
 				}
 			]
@@ -13284,7 +13284,7 @@
 							"sources": [
 								{
 									"fileName": "search-history/service.ts",
-									"line": 12,
+									"line": 13,
 									"character": 10
 								}
 							],
@@ -13308,7 +13308,7 @@
 											"sources": [
 												{
 													"fileName": "search-history/service.ts",
-													"line": 24,
+													"line": 21,
 													"character": 11
 												}
 											],
@@ -13332,7 +13332,7 @@
 															"sources": [
 																{
 																	"fileName": "search-history/service.ts",
-																	"line": 29,
+																	"line": 26,
 																	"character": 12
 																}
 															],
@@ -13401,7 +13401,7 @@
 											"sources": [
 												{
 													"fileName": "search-history/service.ts",
-													"line": 22,
+													"line": 19,
 													"character": 11
 												}
 											],
@@ -13444,7 +13444,7 @@
 											"sources": [
 												{
 													"fileName": "search-history/service.ts",
-													"line": 17,
+													"line": 16,
 													"character": 11
 												}
 											],
@@ -13484,7 +13484,7 @@
 																			"sources": [
 																				{
 																					"fileName": "search-history/service.ts",
-																					"line": 17,
+																					"line": 16,
 																					"character": 46
 																				}
 																			],
@@ -13504,7 +13504,7 @@
 																			"sources": [
 																				{
 																					"fileName": "search-history/service.ts",
-																					"line": 17,
+																					"line": 16,
 																					"character": 29
 																				}
 																			],
@@ -13557,7 +13557,7 @@
 											"sources": [
 												{
 													"fileName": "search-history/service.ts",
-													"line": 16,
+													"line": 15,
 													"character": 11
 												}
 											],
@@ -13624,7 +13624,7 @@
 					"sources": [
 						{
 							"fileName": "search-history/service.ts",
-							"line": 11,
+							"line": 12,
 							"character": 17
 						}
 					]
@@ -13638,7 +13638,7 @@
 					"sources": [
 						{
 							"fileName": "search-history/create-service.ts",
-							"line": 15,
+							"line": 16,
 							"character": 13
 						}
 					],
@@ -13690,7 +13690,7 @@
 			"sources": [
 				{
 					"fileName": "search-history/index.ts",
-					"line": 9,
+					"line": 10,
 					"character": 0
 				}
 			]
@@ -13720,7 +13720,7 @@
 							"sources": [
 								{
 									"fileName": "search-modules/service.ts",
-									"line": 12,
+									"line": 13,
 									"character": 10
 								}
 							],
@@ -13744,7 +13744,7 @@
 											"sources": [
 												{
 													"fileName": "search-modules/service.ts",
-													"line": 13,
+													"line": 14,
 													"character": 11
 												}
 											],
@@ -13799,7 +13799,7 @@
 					"sources": [
 						{
 							"fileName": "search-modules/service.ts",
-							"line": 11,
+							"line": 12,
 							"character": 17
 						}
 					]
@@ -13813,7 +13813,7 @@
 					"sources": [
 						{
 							"fileName": "search-modules/create-service.ts",
-							"line": 13,
+							"line": 14,
 							"character": 13
 						}
 					],
@@ -13865,7 +13865,7 @@
 			"sources": [
 				{
 					"fileName": "search-modules/index.ts",
-					"line": 9,
+					"line": 10,
 					"character": 0
 				}
 			]
@@ -13895,7 +13895,7 @@
 							"sources": [
 								{
 									"fileName": "search-status/service.ts",
-									"line": 12,
+									"line": 13,
 									"character": 10
 								}
 							],
@@ -13919,7 +13919,7 @@
 											"sources": [
 												{
 													"fileName": "search-status/service.ts",
-													"line": 13,
+													"line": 14,
 													"character": 11
 												}
 											],
@@ -13943,7 +13943,7 @@
 															"sources": [
 																{
 																	"fileName": "search-status/service.ts",
-																	"line": 17,
+																	"line": 16,
 																	"character": 12
 																}
 															],
@@ -13999,7 +13999,7 @@
 											"sources": [
 												{
 													"fileName": "search-status/service.ts",
-													"line": 28,
+													"line": 23,
 													"character": 11
 												}
 											],
@@ -14042,7 +14042,7 @@
 											"sources": [
 												{
 													"fileName": "search-status/service.ts",
-													"line": 23,
+													"line": 20,
 													"character": 11
 												}
 											],
@@ -14118,7 +14118,7 @@
 					"sources": [
 						{
 							"fileName": "search-status/service.ts",
-							"line": 11,
+							"line": 12,
 							"character": 17
 						}
 					]
@@ -14132,7 +14132,7 @@
 					"sources": [
 						{
 							"fileName": "search-status/create-service.ts",
-							"line": 17,
+							"line": 18,
 							"character": 13
 						}
 					],
@@ -14184,7 +14184,7 @@
 			"sources": [
 				{
 					"fileName": "search-status/index.ts",
-					"line": 9,
+					"line": 10,
 					"character": 0
 				}
 			]
@@ -14214,7 +14214,7 @@
 							"sources": [
 								{
 									"fileName": "searches/service.ts",
-									"line": 13,
+									"line": 14,
 									"character": 10
 								}
 							],
@@ -14238,7 +14238,7 @@
 											"sources": [
 												{
 													"fileName": "searches/service.ts",
-													"line": 17,
+													"line": 16,
 													"character": 11
 												}
 											],
@@ -14304,7 +14304,7 @@
 							"sources": [
 								{
 									"fileName": "searches/service.ts",
-									"line": 45,
+									"line": 40,
 									"character": 10
 								}
 							],
@@ -14328,7 +14328,7 @@
 											"sources": [
 												{
 													"fileName": "searches/service.ts",
-													"line": 46,
+													"line": 41,
 													"character": 11
 												}
 											],
@@ -14379,7 +14379,7 @@
 																			"sources": [
 																				{
 																					"fileName": "searches/service.ts",
-																					"line": 49,
+																					"line": 44,
 																					"character": 4
 																				}
 																			],
@@ -14399,7 +14399,7 @@
 																			"sources": [
 																				{
 																					"fileName": "searches/service.ts",
-																					"line": 50,
+																					"line": 45,
 																					"character": 4
 																				}
 																			],
@@ -14419,7 +14419,7 @@
 																			"sources": [
 																				{
 																					"fileName": "searches/service.ts",
-																					"line": 51,
+																					"line": 46,
 																					"character": 4
 																				}
 																			],
@@ -14483,7 +14483,7 @@
 							"sources": [
 								{
 									"fileName": "searches/service.ts",
-									"line": 27,
+									"line": 24,
 									"character": 10
 								}
 							],
@@ -14507,7 +14507,7 @@
 											"sources": [
 												{
 													"fileName": "searches/service.ts",
-													"line": 31,
+													"line": 26,
 													"character": 11
 												}
 											],
@@ -14573,7 +14573,7 @@
 							"sources": [
 								{
 									"fileName": "searches/service.ts",
-									"line": 34,
+									"line": 29,
 									"character": 10
 								}
 							],
@@ -14597,7 +14597,7 @@
 											"sources": [
 												{
 													"fileName": "searches/service.ts",
-													"line": 35,
+													"line": 30,
 													"character": 11
 												}
 											],
@@ -14671,7 +14671,7 @@
 							"sources": [
 								{
 									"fileName": "searches/service.ts",
-									"line": 38,
+									"line": 33,
 									"character": 10
 								}
 							],
@@ -14695,7 +14695,7 @@
 											"sources": [
 												{
 													"fileName": "searches/service.ts",
-													"line": 39,
+													"line": 34,
 													"character": 11
 												}
 											],
@@ -14744,7 +14744,7 @@
 																			"sources": [
 																				{
 																					"fileName": "searches/service.ts",
-																					"line": 41,
+																					"line": 36,
 																					"character": 14
 																				}
 																			],
@@ -14818,7 +14818,7 @@
 							"sources": [
 								{
 									"fileName": "searches/service.ts",
-									"line": 20,
+									"line": 19,
 									"character": 10
 								}
 							],
@@ -14842,7 +14842,7 @@
 											"sources": [
 												{
 													"fileName": "searches/service.ts",
-													"line": 24,
+													"line": 21,
 													"character": 11
 												}
 											],
@@ -14908,7 +14908,7 @@
 							"sources": [
 								{
 									"fileName": "searches/service.ts",
-									"line": 56,
+									"line": 51,
 									"character": 10
 								}
 							],
@@ -14932,7 +14932,7 @@
 											"sources": [
 												{
 													"fileName": "searches/service.ts",
-													"line": 57,
+													"line": 52,
 													"character": 11
 												}
 											],
@@ -15003,7 +15003,7 @@
 					"sources": [
 						{
 							"fileName": "searches/service.ts",
-							"line": 12,
+							"line": 13,
 							"character": 17
 						}
 					]
@@ -15017,7 +15017,7 @@
 					"sources": [
 						{
 							"fileName": "searches/create-service.ts",
-							"line": 21,
+							"line": 22,
 							"character": 13
 						}
 					],
@@ -15069,7 +15069,7 @@
 			"sources": [
 				{
 					"fileName": "searches/index.ts",
-					"line": 9,
+					"line": 10,
 					"character": 0
 				}
 			]
@@ -15099,7 +15099,7 @@
 							"sources": [
 								{
 									"fileName": "system/service.ts",
-									"line": 25,
+									"line": 26,
 									"character": 10
 								}
 							],
@@ -15123,7 +15123,7 @@
 											"sources": [
 												{
 													"fileName": "system/service.ts",
-													"line": 27,
+													"line": 28,
 													"character": 11
 												}
 											],
@@ -15160,7 +15160,7 @@
 											"sources": [
 												{
 													"fileName": "system/service.ts",
-													"line": 26,
+													"line": 27,
 													"character": 11
 												}
 											],
@@ -15211,7 +15211,7 @@
 							"sources": [
 								{
 									"fileName": "system/service.ts",
-									"line": 30,
+									"line": 31,
 									"character": 10
 								}
 							],
@@ -15235,7 +15235,7 @@
 											"sources": [
 												{
 													"fileName": "system/service.ts",
-													"line": 31,
+													"line": 32,
 													"character": 11
 												}
 											],
@@ -15285,7 +15285,7 @@
 							"sources": [
 								{
 									"fileName": "system/service.ts",
-									"line": 19,
+									"line": 20,
 									"character": 10
 								}
 							],
@@ -15309,7 +15309,7 @@
 											"sources": [
 												{
 													"fileName": "system/service.ts",
-													"line": 20,
+													"line": 21,
 													"character": 11
 												}
 											],
@@ -15406,7 +15406,7 @@
 							"sources": [
 								{
 									"fileName": "system/service.ts",
-									"line": 34,
+									"line": 35,
 									"character": 10
 								}
 							],
@@ -15458,7 +15458,7 @@
 							"sources": [
 								{
 									"fileName": "system/service.ts",
-									"line": 36,
+									"line": 37,
 									"character": 10
 								}
 							],
@@ -15537,7 +15537,7 @@
 					"sources": [
 						{
 							"fileName": "system/service.ts",
-							"line": 18,
+							"line": 19,
 							"character": 17
 						}
 					]
@@ -15551,7 +15551,7 @@
 					"sources": [
 						{
 							"fileName": "system/create-service.ts",
-							"line": 20,
+							"line": 21,
 							"character": 13
 						}
 					],
@@ -15603,7 +15603,7 @@
 			"sources": [
 				{
 					"fileName": "system/index.ts",
-					"line": 9,
+					"line": 10,
 					"character": 0
 				}
 			]
@@ -15622,8 +15622,8 @@
 					"kindString": "Interface",
 					"flags": {},
 					"comment": {
-						"shortText": "Copyright 2022 Gravwell, Inc. All rights reserved.\nContact: <legal@gravwell.io>",
-						"text": "This software may be modified and distributed under the terms of the\nMIT license. See the LICENSE file for details.\n"
+						"shortText": "Copyright 2022 Gravwell, Inc. All rights reserved.",
+						"text": "Contact: [legal@gravwell.io](mailto:legal@gravwell.io)\n\nThis software may be modified and distributed under the terms of the MIT\nlicense. See the LICENSE file for details.\n"
 					},
 					"children": [
 						{
@@ -15637,7 +15637,7 @@
 							"sources": [
 								{
 									"fileName": "tags/service.ts",
-									"line": 10,
+									"line": 11,
 									"character": 10
 								}
 							],
@@ -15661,7 +15661,7 @@
 											"sources": [
 												{
 													"fileName": "tags/service.ts",
-													"line": 11,
+													"line": 12,
 													"character": 11
 												}
 											],
@@ -15716,7 +15716,7 @@
 					"sources": [
 						{
 							"fileName": "tags/service.ts",
-							"line": 9,
+							"line": 10,
 							"character": 17
 						}
 					]
@@ -15730,7 +15730,7 @@
 					"sources": [
 						{
 							"fileName": "tags/create-service.ts",
-							"line": 13,
+							"line": 14,
 							"character": 13
 						}
 					],
@@ -15782,7 +15782,7 @@
 			"sources": [
 				{
 					"fileName": "tags/index.ts",
-					"line": 9,
+					"line": 10,
 					"character": 0
 				}
 			]
@@ -15812,7 +15812,7 @@
 							"sources": [
 								{
 									"fileName": "templates/service.ts",
-									"line": 20,
+									"line": 21,
 									"character": 10
 								}
 							],
@@ -15836,7 +15836,7 @@
 											"sources": [
 												{
 													"fileName": "templates/service.ts",
-													"line": 21,
+													"line": 22,
 													"character": 11
 												}
 											],
@@ -15899,7 +15899,7 @@
 							"sources": [
 								{
 									"fileName": "templates/service.ts",
-									"line": 28,
+									"line": 29,
 									"character": 10
 								}
 							],
@@ -15923,7 +15923,7 @@
 											"sources": [
 												{
 													"fileName": "templates/service.ts",
-													"line": 29,
+													"line": 30,
 													"character": 11
 												}
 											],
@@ -15986,7 +15986,7 @@
 							"sources": [
 								{
 									"fileName": "templates/service.ts",
-									"line": 12,
+									"line": 13,
 									"character": 10
 								}
 							],
@@ -16010,7 +16010,7 @@
 											"sources": [
 												{
 													"fileName": "templates/service.ts",
-													"line": 15,
+													"line": 16,
 													"character": 11
 												}
 											],
@@ -16034,7 +16034,7 @@
 															"sources": [
 																{
 																	"fileName": "templates/service.ts",
-																	"line": 16,
+																	"line": 17,
 																	"character": 12
 																}
 															],
@@ -16087,7 +16087,7 @@
 											"sources": [
 												{
 													"fileName": "templates/service.ts",
-													"line": 14,
+													"line": 15,
 													"character": 11
 												}
 											],
@@ -16127,7 +16127,7 @@
 											"sources": [
 												{
 													"fileName": "templates/service.ts",
-													"line": 13,
+													"line": 14,
 													"character": 11
 												}
 											],
@@ -16198,7 +16198,7 @@
 							"sources": [
 								{
 									"fileName": "templates/service.ts",
-									"line": 24,
+									"line": 25,
 									"character": 10
 								}
 							],
@@ -16222,7 +16222,7 @@
 											"sources": [
 												{
 													"fileName": "templates/service.ts",
-													"line": 25,
+													"line": 26,
 													"character": 11
 												}
 											],
@@ -16290,7 +16290,7 @@
 					"sources": [
 						{
 							"fileName": "templates/service.ts",
-							"line": 11,
+							"line": 12,
 							"character": 17
 						}
 					]
@@ -16304,7 +16304,7 @@
 					"sources": [
 						{
 							"fileName": "templates/create-service.ts",
-							"line": 20,
+							"line": 21,
 							"character": 13
 						}
 					],
@@ -16356,7 +16356,7 @@
 			"sources": [
 				{
 					"fileName": "templates/index.ts",
-					"line": 9,
+					"line": 10,
 					"character": 0
 				}
 			]
@@ -16386,7 +16386,7 @@
 							"sources": [
 								{
 									"fileName": "tokens/service.ts",
-									"line": 22,
+									"line": 23,
 									"character": 10
 								}
 							],
@@ -16410,7 +16410,7 @@
 											"sources": [
 												{
 													"fileName": "tokens/service.ts",
-													"line": 23,
+													"line": 24,
 													"character": 11
 												}
 											],
@@ -16473,7 +16473,7 @@
 							"sources": [
 								{
 									"fileName": "tokens/service.ts",
-									"line": 30,
+									"line": 31,
 									"character": 10
 								}
 							],
@@ -16497,7 +16497,7 @@
 											"sources": [
 												{
 													"fileName": "tokens/service.ts",
-													"line": 31,
+													"line": 32,
 													"character": 11
 												}
 											],
@@ -16560,7 +16560,7 @@
 							"sources": [
 								{
 									"fileName": "tokens/service.ts",
-									"line": 13,
+									"line": 14,
 									"character": 10
 								}
 							],
@@ -16584,7 +16584,7 @@
 											"sources": [
 												{
 													"fileName": "tokens/service.ts",
-													"line": 16,
+													"line": 17,
 													"character": 11
 												}
 											],
@@ -16608,7 +16608,7 @@
 															"sources": [
 																{
 																	"fileName": "tokens/service.ts",
-																	"line": 17,
+																	"line": 18,
 																	"character": 12
 																}
 															],
@@ -16661,7 +16661,7 @@
 											"sources": [
 												{
 													"fileName": "tokens/service.ts",
-													"line": 15,
+													"line": 16,
 													"character": 11
 												}
 											],
@@ -16701,7 +16701,7 @@
 											"sources": [
 												{
 													"fileName": "tokens/service.ts",
-													"line": 14,
+													"line": 15,
 													"character": 11
 												}
 											],
@@ -16751,7 +16751,7 @@
 											"sources": [
 												{
 													"fileName": "tokens/service.ts",
-													"line": 19,
+													"line": 20,
 													"character": 11
 												}
 											],
@@ -16813,7 +16813,7 @@
 							"sources": [
 								{
 									"fileName": "tokens/service.ts",
-									"line": 26,
+									"line": 27,
 									"character": 10
 								}
 							],
@@ -16837,7 +16837,7 @@
 											"sources": [
 												{
 													"fileName": "tokens/service.ts",
-													"line": 27,
+													"line": 28,
 													"character": 11
 												}
 											],
@@ -16905,7 +16905,7 @@
 					"sources": [
 						{
 							"fileName": "tokens/service.ts",
-							"line": 12,
+							"line": 13,
 							"character": 17
 						}
 					]
@@ -16919,7 +16919,7 @@
 					"sources": [
 						{
 							"fileName": "tokens/create-service.ts",
-							"line": 21,
+							"line": 22,
 							"character": 13
 						}
 					],
@@ -16971,7 +16971,7 @@
 			"sources": [
 				{
 					"fileName": "tokens/index.ts",
-					"line": 9,
+					"line": 10,
 					"character": 0
 				}
 			]
@@ -17001,7 +17001,7 @@
 							"sources": [
 								{
 									"fileName": "user-preferences/service.ts",
-									"line": 22,
+									"line": 23,
 									"character": 10
 								}
 							],
@@ -17025,7 +17025,7 @@
 											"sources": [
 												{
 													"fileName": "user-preferences/service.ts",
-													"line": 23,
+													"line": 24,
 													"character": 11
 												}
 											],
@@ -17088,7 +17088,7 @@
 							"sources": [
 								{
 									"fileName": "user-preferences/service.ts",
-									"line": 13,
+									"line": 14,
 									"character": 10
 								}
 							],
@@ -17112,7 +17112,7 @@
 											"sources": [
 												{
 													"fileName": "user-preferences/service.ts",
-													"line": 15,
+													"line": 16,
 													"character": 11
 												}
 											],
@@ -17152,7 +17152,7 @@
 											"sources": [
 												{
 													"fileName": "user-preferences/service.ts",
-													"line": 14,
+													"line": 15,
 													"character": 11
 												}
 											],
@@ -17216,7 +17216,7 @@
 							"sources": [
 								{
 									"fileName": "user-preferences/service.ts",
-									"line": 18,
+									"line": 19,
 									"character": 10
 								}
 							],
@@ -17240,7 +17240,7 @@
 											"sources": [
 												{
 													"fileName": "user-preferences/service.ts",
-													"line": 19,
+													"line": 20,
 													"character": 11
 												}
 											],
@@ -17318,7 +17318,7 @@
 					"sources": [
 						{
 							"fileName": "user-preferences/service.ts",
-							"line": 12,
+							"line": 13,
 							"character": 17
 						}
 					]
@@ -17332,7 +17332,7 @@
 					"sources": [
 						{
 							"fileName": "user-preferences/create-service.ts",
-							"line": 18,
+							"line": 19,
 							"character": 13
 						}
 					],
@@ -17384,7 +17384,7 @@
 			"sources": [
 				{
 					"fileName": "user-preferences/index.ts",
-					"line": 9,
+					"line": 10,
 					"character": 0
 				}
 			]
@@ -17414,7 +17414,7 @@
 							"sources": [
 								{
 									"fileName": "users/service.ts",
-									"line": 20,
+									"line": 21,
 									"character": 10
 								}
 							],
@@ -17438,7 +17438,7 @@
 											"sources": [
 												{
 													"fileName": "users/service.ts",
-													"line": 21,
+													"line": 22,
 													"character": 11
 												}
 											],
@@ -17501,7 +17501,7 @@
 							"sources": [
 								{
 									"fileName": "users/service.ts",
-									"line": 29,
+									"line": 30,
 									"character": 10
 								}
 							],
@@ -17525,7 +17525,7 @@
 											"sources": [
 												{
 													"fileName": "users/service.ts",
-													"line": 30,
+													"line": 31,
 													"character": 11
 												}
 											],
@@ -17588,7 +17588,7 @@
 							"sources": [
 								{
 									"fileName": "users/service.ts",
-									"line": 13,
+									"line": 14,
 									"character": 10
 								}
 							],
@@ -17612,7 +17612,7 @@
 											"sources": [
 												{
 													"fileName": "users/service.ts",
-													"line": 17,
+													"line": 18,
 													"character": 11
 												}
 											],
@@ -17652,7 +17652,7 @@
 											"sources": [
 												{
 													"fileName": "users/service.ts",
-													"line": 16,
+													"line": 17,
 													"character": 11
 												}
 											],
@@ -17692,7 +17692,7 @@
 																			"sources": [
 																				{
 																					"fileName": "users/service.ts",
-																					"line": 16,
+																					"line": 17,
 																					"character": 29
 																				}
 																			],
@@ -17744,7 +17744,7 @@
 											"sources": [
 												{
 													"fileName": "users/service.ts",
-													"line": 14,
+													"line": 15,
 													"character": 11
 												}
 											],
@@ -17781,7 +17781,7 @@
 											"sources": [
 												{
 													"fileName": "users/service.ts",
-													"line": 15,
+													"line": 16,
 													"character": 11
 												}
 											],
@@ -17847,7 +17847,7 @@
 							"sources": [
 								{
 									"fileName": "users/service.ts",
-									"line": 24,
+									"line": 25,
 									"character": 10
 								}
 							],
@@ -17871,7 +17871,7 @@
 											"sources": [
 												{
 													"fileName": "users/service.ts",
-													"line": 25,
+													"line": 26,
 													"character": 11
 												}
 											],
@@ -17933,7 +17933,7 @@
 											"sources": [
 												{
 													"fileName": "users/service.ts",
-													"line": 26,
+													"line": 27,
 													"character": 11
 												}
 											],
@@ -18002,7 +18002,7 @@
 					"sources": [
 						{
 							"fileName": "users/service.ts",
-							"line": 12,
+							"line": 13,
 							"character": 17
 						}
 					]
@@ -18016,7 +18016,7 @@
 					"sources": [
 						{
 							"fileName": "users/create-service.ts",
-							"line": 22,
+							"line": 23,
 							"character": 13
 						}
 					],
@@ -18068,7 +18068,7 @@
 			"sources": [
 				{
 					"fileName": "users/index.ts",
-					"line": 9,
+					"line": 10,
 					"character": 0
 				}
 			]
@@ -18087,8 +18087,8 @@
 					"kindString": "Interface",
 					"flags": {},
 					"comment": {
-						"shortText": "Copyright 2022 Gravwell, Inc. All rights reserved.\nContact: <legal@gravwell.io>",
-						"text": "This software may be modified and distributed under the terms of the\nMIT license. See the LICENSE file for details.\n"
+						"shortText": "Copyright 2022 Gravwell, Inc. All rights reserved.",
+						"text": "Contact: [legal@gravwell.io](mailto:legal@gravwell.io)\n\nThis software may be modified and distributed under the terms of the MIT\nlicense. See the LICENSE file for details.\n"
 					},
 					"children": [
 						{
@@ -18102,7 +18102,7 @@
 							"sources": [
 								{
 									"fileName": "web-server/service.ts",
-									"line": 12,
+									"line": 13,
 									"character": 10
 								}
 							],
@@ -18126,7 +18126,7 @@
 											"sources": [
 												{
 													"fileName": "web-server/service.ts",
-													"line": 13,
+													"line": 14,
 													"character": 11
 												}
 											],
@@ -18176,7 +18176,7 @@
 							"sources": [
 								{
 									"fileName": "web-server/service.ts",
-									"line": 10,
+									"line": 11,
 									"character": 10
 								}
 							],
@@ -18222,7 +18222,7 @@
 					"sources": [
 						{
 							"fileName": "web-server/service.ts",
-							"line": 9,
+							"line": 10,
 							"character": 17
 						}
 					]
@@ -18236,7 +18236,7 @@
 					"sources": [
 						{
 							"fileName": "web-server/create-service.ts",
-							"line": 13,
+							"line": 14,
 							"character": 13
 						}
 					],
@@ -18288,7 +18288,7 @@
 			"sources": [
 				{
 					"fileName": "web-server/index.ts",
-					"line": 9,
+					"line": 10,
 					"character": 0
 				}
 			]

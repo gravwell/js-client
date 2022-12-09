@@ -21,7 +21,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/actionables/create-one-actionable.ts",
-							"line": 20,
+							"line": 21,
 							"character": 13
 						}
 					],
@@ -102,7 +102,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/actionables/delete-one-actionable.ts",
-							"line": 12,
+							"line": 13,
 							"character": 13
 						}
 					],
@@ -183,7 +183,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/actionables/get-all-actionables.ts",
-							"line": 12,
+							"line": 13,
 							"character": 13
 						}
 					],
@@ -254,7 +254,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/actionables/get-all-actionables-as-admin.ts",
-							"line": 12,
+							"line": 13,
 							"character": 13
 						}
 					],
@@ -325,7 +325,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/actionables/get-one-actionable.ts",
-							"line": 13,
+							"line": 14,
 							"character": 13
 						}
 					],
@@ -406,7 +406,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/actionables/update-one-actionable.ts",
-							"line": 19,
+							"line": 20,
 							"character": 13
 						}
 					],
@@ -496,7 +496,7 @@
 			"sources": [
 				{
 					"fileName": "src/functions/actionables/index.ts",
-					"line": 9,
+					"line": 10,
 					"character": 0
 				}
 			]
@@ -517,7 +517,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/auth/get-one-user-active-sessions.ts",
-							"line": 12,
+							"line": 13,
 							"character": 13
 						}
 					],
@@ -598,7 +598,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/auth/login-one-user.ts",
-							"line": 12,
+							"line": 13,
 							"character": 13
 						}
 					],
@@ -690,7 +690,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/auth/logout-all-users.ts",
-							"line": 11,
+							"line": 12,
 							"character": 13
 						}
 					],
@@ -758,7 +758,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/auth/logout-one-user.ts",
-							"line": 11,
+							"line": 12,
 							"character": 13
 						}
 					],
@@ -846,7 +846,7 @@
 			"sources": [
 				{
 					"fileName": "src/functions/auth/index.ts",
-					"line": 9,
+					"line": 10,
 					"character": 0
 				}
 			]
@@ -874,7 +874,7 @@
 							"sources": [
 								{
 									"fileName": "src/functions/auto-extractors/download-many-auto-extractors.ts",
-									"line": 31,
+									"line": 32,
 									"character": 1
 								}
 							],
@@ -899,7 +899,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/auto-extractors/download-many-auto-extractors.ts",
-							"line": 30,
+							"line": 31,
 							"character": 17
 						}
 					]
@@ -913,7 +913,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/auto-extractors/is-valid-auto-extractor-syntax.ts",
-							"line": 47,
+							"line": 48,
 							"character": 12
 						}
 					],
@@ -938,7 +938,7 @@
 											"sources": [
 												{
 													"fileName": "src/functions/auto-extractors/is-valid-auto-extractor-syntax.ts",
-													"line": 47,
+													"line": 48,
 													"character": 51
 												}
 											],
@@ -960,7 +960,7 @@
 									"sources": [
 										{
 											"fileName": "src/functions/auto-extractors/is-valid-auto-extractor-syntax.ts",
-											"line": 47,
+											"line": 48,
 											"character": 49
 										}
 									]
@@ -987,7 +987,7 @@
 													"sources": [
 														{
 															"fileName": "src/functions/auto-extractors/is-valid-auto-extractor-syntax.ts",
-															"line": 48,
+															"line": 49,
 															"character": 5
 														}
 													],
@@ -1005,7 +1005,7 @@
 													"sources": [
 														{
 															"fileName": "src/functions/auto-extractors/is-valid-auto-extractor-syntax.ts",
-															"line": 48,
+															"line": 49,
 															"character": 26
 														}
 													],
@@ -1028,7 +1028,7 @@
 											"sources": [
 												{
 													"fileName": "src/functions/auto-extractors/is-valid-auto-extractor-syntax.ts",
-													"line": 48,
+													"line": 49,
 													"character": 3
 												}
 											]
@@ -1052,7 +1052,7 @@
 													"sources": [
 														{
 															"fileName": "src/functions/auto-extractors/is-valid-auto-extractor-syntax.ts",
-															"line": 49,
+															"line": 50,
 															"character": 5
 														}
 													],
@@ -1070,7 +1070,7 @@
 													"sources": [
 														{
 															"fileName": "src/functions/auto-extractors/is-valid-auto-extractor-syntax.ts",
-															"line": 49,
+															"line": 50,
 															"character": 27
 														}
 													],
@@ -1093,7 +1093,7 @@
 											"sources": [
 												{
 													"fileName": "src/functions/auto-extractors/is-valid-auto-extractor-syntax.ts",
-													"line": 49,
+													"line": 50,
 													"character": 3
 												}
 											]
@@ -1113,7 +1113,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/auto-extractors/create-one-auto-extractor.ts",
-							"line": 21,
+							"line": 22,
 							"character": 13
 						}
 					],
@@ -1194,7 +1194,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/auto-extractors/delete-one-auto-extractor.ts",
-							"line": 12,
+							"line": 13,
 							"character": 13
 						}
 					],
@@ -1275,7 +1275,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/auto-extractors/download-many-auto-extractors.ts",
-							"line": 12,
+							"line": 13,
 							"character": 13
 						}
 					],
@@ -1357,7 +1357,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/auto-extractors/get-all-auto-extractor-modules.ts",
-							"line": 12,
+							"line": 13,
 							"character": 13
 						}
 					],
@@ -1477,7 +1477,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/auto-extractors/get-all-auto-extractors.ts",
-							"line": 12,
+							"line": 13,
 							"character": 13
 						}
 					],
@@ -1548,7 +1548,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/auto-extractors/get-auto-extractors-authorized-to-me.ts",
-							"line": 12,
+							"line": 13,
 							"character": 13
 						}
 					],
@@ -1619,7 +1619,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/auto-extractors/is-valid-auto-extractor-syntax.ts",
-							"line": 18,
+							"line": 19,
 							"character": 13
 						}
 					],
@@ -1701,7 +1701,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/auto-extractors/update-one-auto-extractor.ts",
-							"line": 26,
+							"line": 27,
 							"character": 13
 						}
 					],
@@ -1782,7 +1782,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/auto-extractors/upload-many-auto-extractors.ts",
-							"line": 24,
+							"line": 25,
 							"character": 13
 						}
 					],
@@ -1892,7 +1892,7 @@
 			"sources": [
 				{
 					"fileName": "src/functions/auto-extractors/index.ts",
-					"line": 9,
+					"line": 10,
 					"character": 0
 				}
 			]
@@ -1922,7 +1922,7 @@
 							"sources": [
 								{
 									"fileName": "src/functions/dashboards/get-many-dashboards.ts",
-									"line": 42,
+									"line": 43,
 									"character": 1
 								}
 							],
@@ -1942,7 +1942,7 @@
 							"sources": [
 								{
 									"fileName": "src/functions/dashboards/get-many-dashboards.ts",
-									"line": 41,
+									"line": 42,
 									"character": 1
 								}
 							],
@@ -1965,7 +1965,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/dashboards/get-many-dashboards.ts",
-							"line": 40,
+							"line": 41,
 							"character": 17
 						}
 					]
@@ -1979,7 +1979,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/dashboards/create-one-dashboard.ts",
-							"line": 20,
+							"line": 21,
 							"character": 13
 						}
 					],
@@ -2060,7 +2060,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/dashboards/delete-one-dashboard.ts",
-							"line": 12,
+							"line": 13,
 							"character": 13
 						}
 					],
@@ -2141,7 +2141,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/dashboards/get-all-dashboards.ts",
-							"line": 12,
+							"line": 13,
 							"character": 13
 						}
 					],
@@ -2212,7 +2212,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/dashboards/get-dashboards-authorized-to-me.ts",
-							"line": 12,
+							"line": 13,
 							"character": 13
 						}
 					],
@@ -2283,7 +2283,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/dashboards/get-many-dashboards.ts",
-							"line": 16,
+							"line": 17,
 							"character": 13
 						}
 					],
@@ -2369,7 +2369,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/dashboards/get-one-dashboard.ts",
-							"line": 13,
+							"line": 14,
 							"character": 13
 						}
 					],
@@ -2450,7 +2450,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/dashboards/update-one-dashboard.ts",
-							"line": 19,
+							"line": 20,
 							"character": 13
 						}
 					],
@@ -2548,7 +2548,7 @@
 			"sources": [
 				{
 					"fileName": "src/functions/dashboards/index.ts",
-					"line": 9,
+					"line": 10,
 					"character": 0
 				}
 			]
@@ -2569,7 +2569,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/files/create-one-file.ts",
-							"line": 22,
+							"line": 23,
 							"character": 13
 						}
 					],
@@ -2650,7 +2650,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/files/delete-one-file.ts",
-							"line": 13,
+							"line": 14,
 							"character": 13
 						}
 					],
@@ -2731,7 +2731,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/files/get-all-files.ts",
-							"line": 12,
+							"line": 13,
 							"character": 13
 						}
 					],
@@ -2802,7 +2802,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/files/get-files-authorized-to-me.ts",
-							"line": 12,
+							"line": 13,
 							"character": 13
 						}
 					],
@@ -2873,7 +2873,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/files/update-one-file.ts",
-							"line": 20,
+							"line": 21,
 							"character": 13
 						}
 					],
@@ -2962,7 +2962,7 @@
 			"sources": [
 				{
 					"fileName": "src/functions/files/index.ts",
-					"line": 9,
+					"line": 10,
 					"character": 0
 				}
 			]
@@ -2983,7 +2983,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/groups/add-one-user-to-many-groups.ts",
-							"line": 18,
+							"line": 19,
 							"character": 13
 						}
 					],
@@ -3078,7 +3078,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/groups/create-one-group.ts",
-							"line": 19,
+							"line": 20,
 							"character": 13
 						}
 					],
@@ -3159,7 +3159,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/groups/delete-one-group.ts",
-							"line": 12,
+							"line": 13,
 							"character": 13
 						}
 					],
@@ -3240,7 +3240,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/groups/get-all-groups.ts",
-							"line": 12,
+							"line": 13,
 							"character": 13
 						}
 					],
@@ -3311,7 +3311,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/groups/get-many-groups.ts",
-							"line": 15,
+							"line": 16,
 							"character": 13
 						}
 					],
@@ -3378,7 +3378,7 @@
 																	"sources": [
 																		{
 																			"fileName": "src/functions/groups/get-many-groups.ts",
-																			"line": 19,
+																			"line": 20,
 																			"character": 30
 																		}
 																	],
@@ -3433,7 +3433,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/groups/get-one-group.ts",
-							"line": 13,
+							"line": 14,
 							"character": 13
 						}
 					],
@@ -3514,7 +3514,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/groups/remove-one-user-from-one-group.ts",
-							"line": 12,
+							"line": 13,
 							"character": 13
 						}
 					],
@@ -3606,7 +3606,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/groups/update-one-group.ts",
-							"line": 19,
+							"line": 20,
 							"character": 13
 						}
 					],
@@ -3698,7 +3698,7 @@
 			"sources": [
 				{
 					"fileName": "src/functions/groups/index.ts",
-					"line": 9,
+					"line": 10,
 					"character": 0
 				}
 			]
@@ -3719,7 +3719,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/indexers/get-all-indexers.ts",
-							"line": 13,
+							"line": 14,
 							"character": 13
 						}
 					],
@@ -3790,7 +3790,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/indexers/restart-indexers.ts",
-							"line": 12,
+							"line": 13,
 							"character": 13
 						}
 					],
@@ -3863,7 +3863,7 @@
 			"sources": [
 				{
 					"fileName": "src/functions/indexers/index.ts",
-					"line": 9,
+					"line": 10,
 					"character": 0
 				}
 			]
@@ -3884,7 +3884,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/ingestors/ingest-json-entries.ts",
-							"line": 18,
+							"line": 19,
 							"character": 13
 						}
 					],
@@ -3968,7 +3968,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/ingestors/ingest-multi-line-entry.ts",
-							"line": 18,
+							"line": 19,
 							"character": 13
 						}
 					],
@@ -4054,7 +4054,7 @@
 			"sources": [
 				{
 					"fileName": "src/functions/ingestors/index.ts",
-					"line": 9,
+					"line": 10,
 					"character": 0
 				}
 			]
@@ -4075,7 +4075,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/kits/build-one-local-kit.ts",
-							"line": 19,
+							"line": 20,
 							"character": 13
 						}
 					],
@@ -4156,7 +4156,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/kits/delete-one-archive.ts",
-							"line": 11,
+							"line": 12,
 							"character": 13
 						}
 					],
@@ -4237,7 +4237,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/kits/download-one-local-kit.ts",
-							"line": 12,
+							"line": 13,
 							"character": 13
 						}
 					],
@@ -4318,7 +4318,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/kits/download-one-remote-kit.ts",
-							"line": 12,
+							"line": 13,
 							"character": 13
 						}
 					],
@@ -4399,7 +4399,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/kits/get-all-local-kits.ts",
-							"line": 12,
+							"line": 13,
 							"character": 13
 						}
 					],
@@ -4470,7 +4470,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/kits/get-all-remote-kits.ts",
-							"line": 12,
+							"line": 13,
 							"character": 13
 						}
 					],
@@ -4541,7 +4541,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/kits/get-all-archives.ts",
-							"line": 14,
+							"line": 15,
 							"character": 13
 						}
 					],
@@ -4612,7 +4612,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/kits/get-one-local-kit.ts",
-							"line": 13,
+							"line": 14,
 							"character": 13
 						}
 					],
@@ -4693,7 +4693,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/kits/get-one-remote-kit.ts",
-							"line": 13,
+							"line": 14,
 							"character": 13
 						}
 					],
@@ -4774,7 +4774,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/kits/install-one-kit.ts",
-							"line": 27,
+							"line": 28,
 							"character": 13
 						}
 					],
@@ -4866,7 +4866,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/kits/uninstall-all-kits.ts",
-							"line": 13,
+							"line": 14,
 							"character": 13
 						}
 					],
@@ -4934,7 +4934,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/kits/uninstall-one-kit.ts",
-							"line": 12,
+							"line": 13,
 							"character": 13
 						}
 					],
@@ -5015,7 +5015,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/kits/upload-one-local-kit.ts",
-							"line": 21,
+							"line": 22,
 							"character": 13
 						}
 					],
@@ -5097,7 +5097,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/kits/upload-one-remote-kit.ts",
-							"line": 19,
+							"line": 20,
 							"character": 13
 						}
 					],
@@ -5195,7 +5195,7 @@
 			"sources": [
 				{
 					"fileName": "src/functions/kits/index.ts",
-					"line": 9,
+					"line": 10,
 					"character": 0
 				}
 			]
@@ -5216,7 +5216,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/logs/create-one-log.ts",
-							"line": 18,
+							"line": 19,
 							"character": 13
 						}
 					],
@@ -5325,7 +5325,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/logs/get-log-levels.ts",
-							"line": 12,
+							"line": 13,
 							"character": 13
 						}
 					],
@@ -5393,7 +5393,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/logs/set-log-level.ts",
-							"line": 18,
+							"line": 19,
 							"character": 13
 						}
 					],
@@ -5501,7 +5501,7 @@
 			"sources": [
 				{
 					"fileName": "src/functions/logs/index.ts",
-					"line": 9,
+					"line": 10,
 					"character": 0
 				}
 			]
@@ -5531,7 +5531,7 @@
 							"sources": [
 								{
 									"fileName": "src/functions/macros/get-many-macros.ts",
-									"line": 42,
+									"line": 43,
 									"character": 1
 								}
 							],
@@ -5551,7 +5551,7 @@
 							"sources": [
 								{
 									"fileName": "src/functions/macros/get-many-macros.ts",
-									"line": 41,
+									"line": 42,
 									"character": 1
 								}
 							],
@@ -5574,7 +5574,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/macros/get-many-macros.ts",
-							"line": 40,
+							"line": 41,
 							"character": 17
 						}
 					]
@@ -5588,7 +5588,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/macros/create-one-macro.ts",
-							"line": 20,
+							"line": 21,
 							"character": 13
 						}
 					],
@@ -5669,7 +5669,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/macros/delete-one-macro.ts",
-							"line": 12,
+							"line": 13,
 							"character": 13
 						}
 					],
@@ -5750,7 +5750,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/macros/get-all-macros.ts",
-							"line": 12,
+							"line": 13,
 							"character": 13
 						}
 					],
@@ -5821,7 +5821,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/macros/get-macros-authorized-to-me.ts",
-							"line": 12,
+							"line": 13,
 							"character": 13
 						}
 					],
@@ -5892,7 +5892,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/macros/get-many-macros.ts",
-							"line": 16,
+							"line": 17,
 							"character": 13
 						}
 					],
@@ -5978,7 +5978,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/macros/get-one-macro.ts",
-							"line": 13,
+							"line": 14,
 							"character": 13
 						}
 					],
@@ -6059,7 +6059,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/macros/update-one-macro.ts",
-							"line": 19,
+							"line": 20,
 							"character": 13
 						}
 					],
@@ -6157,7 +6157,7 @@
 			"sources": [
 				{
 					"fileName": "src/functions/macros/index.ts",
-					"line": 9,
+					"line": 10,
 					"character": 0
 				}
 			]
@@ -6178,7 +6178,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/mail-server/create-server-test.ts",
-							"line": 16,
+							"line": 17,
 							"character": 13
 						}
 					],
@@ -6259,7 +6259,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/mail-server/get-config.ts",
-							"line": 20,
+							"line": 21,
 							"character": 13
 						}
 					],
@@ -6345,7 +6345,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/mail-server/update-config.ts",
-							"line": 14,
+							"line": 15,
 							"character": 13
 						}
 					],
@@ -6432,7 +6432,7 @@
 			"sources": [
 				{
 					"fileName": "src/functions/mail-server/index.ts",
-					"line": 9,
+					"line": 10,
 					"character": 0
 				}
 			]
@@ -6453,7 +6453,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/notifications/subscribe-to-my-notifications.ts",
-							"line": 14,
+							"line": 15,
 							"character": 12
 						}
 					],
@@ -6474,7 +6474,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/notifications/subscribe-to-my-notifications.ts",
-							"line": 16,
+							"line": 17,
 							"character": 12
 						}
 					],
@@ -6492,7 +6492,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/notifications/create-one-broadcasted-notification.ts",
-							"line": 18,
+							"line": 19,
 							"character": 13
 						}
 					],
@@ -6573,7 +6573,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/notifications/create-one-targeted-notification.ts",
-							"line": 25,
+							"line": 26,
 							"character": 13
 						}
 					],
@@ -6711,7 +6711,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/notifications/delete-one-notification.ts",
-							"line": 11,
+							"line": 12,
 							"character": 13
 						}
 					],
@@ -6792,7 +6792,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/notifications/get-my-notifications.ts",
-							"line": 13,
+							"line": 14,
 							"character": 13
 						}
 					],
@@ -6863,7 +6863,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/notifications/subscribe-to-my-notifications.ts",
-							"line": 18,
+							"line": 19,
 							"character": 13
 						}
 					],
@@ -6930,7 +6930,7 @@
 																	"sources": [
 																		{
 																			"fileName": "src/functions/notifications/subscribe-to-my-notifications.ts",
-																			"line": 22,
+																			"line": 23,
 																			"character": 13
 																		}
 																	],
@@ -6994,7 +6994,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/notifications/update-one-notification.ts",
-							"line": 19,
+							"line": 20,
 							"character": 13
 						}
 					],
@@ -7092,7 +7092,7 @@
 			"sources": [
 				{
 					"fileName": "src/functions/notifications/index.ts",
-					"line": 9,
+					"line": 10,
 					"character": 0
 				}
 			]
@@ -7113,7 +7113,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/playbooks/create-one-playbook.ts",
-							"line": 20,
+							"line": 21,
 							"character": 13
 						}
 					],
@@ -7194,7 +7194,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/playbooks/delete-one-playbook.ts",
-							"line": 12,
+							"line": 13,
 							"character": 13
 						}
 					],
@@ -7275,7 +7275,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/playbooks/get-all-playbooks.ts",
-							"line": 12,
+							"line": 13,
 							"character": 13
 						}
 					],
@@ -7358,7 +7358,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/playbooks/get-all-playbooks-related-to-me.ts",
-							"line": 12,
+							"line": 13,
 							"character": 13
 						}
 					],
@@ -7441,7 +7441,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/playbooks/get-one-playbook.ts",
-							"line": 13,
+							"line": 14,
 							"character": 13
 						}
 					],
@@ -7522,7 +7522,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/playbooks/update-one-playbook.ts",
-							"line": 19,
+							"line": 20,
 							"character": 13
 						}
 					],
@@ -7612,7 +7612,7 @@
 			"sources": [
 				{
 					"fileName": "src/functions/playbooks/index.ts",
-					"line": 9,
+					"line": 10,
 					"character": 0
 				}
 			]
@@ -7633,7 +7633,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/render-modules/get-all-render-modules.ts",
-							"line": 12,
+							"line": 13,
 							"character": 13
 						}
 					],
@@ -7708,7 +7708,7 @@
 			"sources": [
 				{
 					"fileName": "src/functions/render-modules/index.ts",
-					"line": 9,
+					"line": 10,
 					"character": 0
 				}
 			]
@@ -7729,7 +7729,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/resources/create-one-resource.ts",
-							"line": 18,
+							"line": 19,
 							"character": 13
 						}
 					],
@@ -7810,7 +7810,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/resources/delete-one-resource.ts",
-							"line": 12,
+							"line": 13,
 							"character": 13
 						}
 					],
@@ -7891,7 +7891,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/resources/get-all-resources.ts",
-							"line": 12,
+							"line": 13,
 							"character": 13
 						}
 					],
@@ -7974,7 +7974,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/resources/get-one-resource.ts",
-							"line": 13,
+							"line": 14,
 							"character": 13
 						}
 					],
@@ -8055,7 +8055,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/resources/get-resources-authorized-to-me.ts",
-							"line": 12,
+							"line": 13,
 							"character": 13
 						}
 					],
@@ -8138,7 +8138,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/resources/preview-one-resource-content.ts",
-							"line": 13,
+							"line": 14,
 							"character": 13
 						}
 					],
@@ -8216,7 +8216,7 @@
 																	"sources": [
 																		{
 																			"fileName": "src/functions/resources/preview-one-resource-content.ts",
-																			"line": 15,
+																			"line": 16,
 																			"character": 37
 																		}
 																	],
@@ -8268,7 +8268,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/resources/update-one-resource.ts",
-							"line": 21,
+							"line": 22,
 							"character": 13
 						}
 					],
@@ -8359,7 +8359,7 @@
 			"sources": [
 				{
 					"fileName": "src/functions/resources/index.ts",
-					"line": 9,
+					"line": 10,
 					"character": 0
 				}
 			]
@@ -8380,7 +8380,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/saved-queries/create-one-saved-query.ts",
-							"line": 18,
+							"line": 19,
 							"character": 13
 						}
 					],
@@ -8461,7 +8461,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/saved-queries/delete-one-saved-query.ts",
-							"line": 12,
+							"line": 13,
 							"character": 13
 						}
 					],
@@ -8542,7 +8542,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/saved-queries/get-all-saved-queries.ts",
-							"line": 12,
+							"line": 13,
 							"character": 13
 						}
 					],
@@ -8613,7 +8613,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/saved-queries/get-one-saved-query.ts",
-							"line": 13,
+							"line": 14,
 							"character": 13
 						}
 					],
@@ -8694,7 +8694,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/saved-queries/get-saved-queries-authorized-to-me.ts",
-							"line": 12,
+							"line": 13,
 							"character": 13
 						}
 					],
@@ -8765,7 +8765,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/saved-queries/update-one-saved-query.ts",
-							"line": 19,
+							"line": 20,
 							"character": 13
 						}
 					],
@@ -8855,7 +8855,7 @@
 			"sources": [
 				{
 					"fileName": "src/functions/saved-queries/index.ts",
-					"line": 9,
+					"line": 10,
 					"character": 0
 				}
 			]
@@ -8885,7 +8885,7 @@
 							"sources": [
 								{
 									"fileName": "src/functions/scheduled-tasks/get-many-scheduled-queries.ts",
-									"line": 26,
+									"line": 27,
 									"character": 1
 								}
 							],
@@ -8907,7 +8907,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/scheduled-tasks/get-many-scheduled-queries.ts",
-							"line": 25,
+							"line": 26,
 							"character": 17
 						}
 					]
@@ -8930,7 +8930,7 @@
 							"sources": [
 								{
 									"fileName": "src/functions/scheduled-tasks/get-many-scheduled-scripts.ts",
-									"line": 26,
+									"line": 27,
 									"character": 1
 								}
 							],
@@ -8952,7 +8952,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/scheduled-tasks/get-many-scheduled-scripts.ts",
-							"line": 25,
+							"line": 26,
 							"character": 17
 						}
 					]
@@ -8966,7 +8966,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/scheduled-tasks/clear-one-scheduled-query-error.ts",
-							"line": 11,
+							"line": 12,
 							"character": 13
 						}
 					],
@@ -9047,7 +9047,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/scheduled-tasks/clear-one-scheduled-query-state.ts",
-							"line": 11,
+							"line": 12,
 							"character": 13
 						}
 					],
@@ -9128,7 +9128,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/scheduled-tasks/clear-one-scheduled-script-error.ts",
-							"line": 11,
+							"line": 12,
 							"character": 13
 						}
 					],
@@ -9209,7 +9209,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/scheduled-tasks/clear-one-scheduled-script-state.ts",
-							"line": 11,
+							"line": 12,
 							"character": 13
 						}
 					],
@@ -9290,7 +9290,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/scheduled-tasks/create-many-scheduled-queries.ts",
-							"line": 13,
+							"line": 14,
 							"character": 13
 						}
 					],
@@ -9377,7 +9377,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/scheduled-tasks/create-many-scheduled-scripts.ts",
-							"line": 13,
+							"line": 14,
 							"character": 13
 						}
 					],
@@ -9464,7 +9464,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/scheduled-tasks/create-one-scheduled-query.ts",
-							"line": 13,
+							"line": 14,
 							"character": 13
 						}
 					],
@@ -9545,7 +9545,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/scheduled-tasks/create-one-scheduled-script.ts",
-							"line": 13,
+							"line": 14,
 							"character": 13
 						}
 					],
@@ -9626,7 +9626,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/scheduled-tasks/delete-all-scheduled-queries.ts",
-							"line": 13,
+							"line": 14,
 							"character": 13
 						}
 					],
@@ -9694,7 +9694,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/scheduled-tasks/delete-all-scheduled-scripts.ts",
-							"line": 13,
+							"line": 14,
 							"character": 13
 						}
 					],
@@ -9762,7 +9762,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/scheduled-tasks/delete-many-scheduled-queries.ts",
-							"line": 15,
+							"line": 16,
 							"character": 13
 						}
 					],
@@ -9844,7 +9844,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/scheduled-tasks/delete-many-scheduled-scripts.ts",
-							"line": 15,
+							"line": 16,
 							"character": 13
 						}
 					],
@@ -9926,7 +9926,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/scheduled-tasks/delete-one-scheduled-query.ts",
-							"line": 11,
+							"line": 12,
 							"character": 13
 						}
 					],
@@ -10007,7 +10007,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/scheduled-tasks/delete-one-scheduled-script.ts",
-							"line": 11,
+							"line": 12,
 							"character": 13
 						}
 					],
@@ -10088,7 +10088,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/scheduled-tasks/get-all-scheduled-queries.ts",
-							"line": 15,
+							"line": 16,
 							"character": 13
 						}
 					],
@@ -10159,7 +10159,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/scheduled-tasks/get-all-scheduled-scripts.ts",
-							"line": 15,
+							"line": 16,
 							"character": 13
 						}
 					],
@@ -10230,7 +10230,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/scheduled-tasks/get-many-scheduled-queries.ts",
-							"line": 16,
+							"line": 17,
 							"character": 13
 						}
 					],
@@ -10316,7 +10316,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/scheduled-tasks/get-many-scheduled-scripts.ts",
-							"line": 16,
+							"line": 17,
 							"character": 13
 						}
 					],
@@ -10402,7 +10402,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/scheduled-tasks/get-one-scheduled-query.ts",
-							"line": 13,
+							"line": 14,
 							"character": 13
 						}
 					],
@@ -10483,7 +10483,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/scheduled-tasks/get-one-scheduled-script.ts",
-							"line": 13,
+							"line": 14,
 							"character": 13
 						}
 					],
@@ -10564,7 +10564,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/scheduled-tasks/get-scheduled-queries-authorized-to-me.ts",
-							"line": 15,
+							"line": 16,
 							"character": 13
 						}
 					],
@@ -10635,7 +10635,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/scheduled-tasks/get-scheduled-scripts-authorized-to-me.ts",
-							"line": 15,
+							"line": 16,
 							"character": 13
 						}
 					],
@@ -10706,7 +10706,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/scheduled-tasks/update-one-scheduled-query.ts",
-							"line": 13,
+							"line": 14,
 							"character": 13
 						}
 					],
@@ -10787,7 +10787,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/scheduled-tasks/update-one-scheduled-script.ts",
-							"line": 13,
+							"line": 14,
 							"character": 13
 						}
 					],
@@ -10903,7 +10903,7 @@
 			"sources": [
 				{
 					"fileName": "src/functions/scheduled-tasks/index.ts",
-					"line": 9,
+					"line": 10,
 					"character": 0
 				}
 			]
@@ -10924,7 +10924,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/scripts/get-one-script-library.ts",
-							"line": 12,
+							"line": 13,
 							"character": 13
 						}
 					],
@@ -11002,7 +11002,7 @@
 																	"sources": [
 																		{
 																			"fileName": "src/functions/scripts/get-one-script-library.ts",
-																			"line": 16,
+																			"line": 17,
 																			"character": 46
 																		}
 																	],
@@ -11022,7 +11022,7 @@
 																	"sources": [
 																		{
 																			"fileName": "src/functions/scripts/get-one-script-library.ts",
-																			"line": 16,
+																			"line": 17,
 																			"character": 13
 																		}
 																	],
@@ -11075,7 +11075,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/scripts/sync-all-script-libraries.ts",
-							"line": 11,
+							"line": 12,
 							"character": 13
 						}
 					],
@@ -11143,7 +11143,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/scripts/validate-one-script.ts",
-							"line": 18,
+							"line": 19,
 							"character": 13
 						}
 					],
@@ -11230,7 +11230,7 @@
 			"sources": [
 				{
 					"fileName": "src/functions/scripts/index.ts",
-					"line": 9,
+					"line": 10,
 					"character": 0
 				}
 			]
@@ -11251,7 +11251,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/search-groups/get-one-user-search-group.ts",
-							"line": 12,
+							"line": 13,
 							"character": 13
 						}
 					],
@@ -11332,7 +11332,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/search-groups/update-one-user-search-group.ts",
-							"line": 19,
+							"line": 20,
 							"character": 13
 						}
 					],
@@ -11438,7 +11438,7 @@
 			"sources": [
 				{
 					"fileName": "src/functions/search-groups/index.ts",
-					"line": 9,
+					"line": 10,
 					"character": 0
 				}
 			]
@@ -11459,7 +11459,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/search-modules/get-all-search-modules.ts",
-							"line": 12,
+							"line": 13,
 							"character": 13
 						}
 					],
@@ -11534,7 +11534,7 @@
 			"sources": [
 				{
 					"fileName": "src/functions/search-modules/index.ts",
-					"line": 9,
+					"line": 10,
 					"character": 0
 				}
 			]
@@ -11555,7 +11555,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/searches/helpers/create-required-search-filter-observable.ts",
-							"line": 15,
+							"line": 16,
 							"character": 12
 						}
 					],
@@ -11580,7 +11580,7 @@
 									"sources": [
 										{
 											"fileName": "src/functions/searches/helpers/create-required-search-filter-observable.ts",
-											"line": 26,
+											"line": 27,
 											"character": 1
 										}
 									],
@@ -11602,7 +11602,7 @@
 													"sources": [
 														{
 															"fileName": "src/functions/searches/helpers/create-required-search-filter-observable.ts",
-															"line": 28,
+															"line": 29,
 															"character": 2
 														}
 													],
@@ -11622,7 +11622,7 @@
 													"sources": [
 														{
 															"fileName": "src/functions/searches/helpers/create-required-search-filter-observable.ts",
-															"line": 27,
+															"line": 28,
 															"character": 2
 														}
 													],
@@ -11647,7 +11647,7 @@
 											"sources": [
 												{
 													"fileName": "src/functions/searches/helpers/create-required-search-filter-observable.ts",
-													"line": 26,
+													"line": 27,
 													"character": 16
 												}
 											]
@@ -11666,7 +11666,7 @@
 									"sources": [
 										{
 											"fileName": "src/functions/searches/helpers/create-required-search-filter-observable.ts",
-											"line": 17,
+											"line": 18,
 											"character": 1
 										}
 									],
@@ -11695,7 +11695,7 @@
 									"sources": [
 										{
 											"fileName": "src/functions/searches/helpers/create-required-search-filter-observable.ts",
-											"line": 20,
+											"line": 21,
 											"character": 1
 										}
 									],
@@ -11716,7 +11716,7 @@
 									"sources": [
 										{
 											"fileName": "src/functions/searches/helpers/create-required-search-filter-observable.ts",
-											"line": 23,
+											"line": 24,
 											"character": 1
 										}
 									],
@@ -11742,7 +11742,7 @@
 							"sources": [
 								{
 									"fileName": "src/functions/searches/helpers/create-required-search-filter-observable.ts",
-									"line": 15,
+									"line": 16,
 									"character": 51
 								}
 							]
@@ -11758,7 +11758,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/searches/helpers/create-required-search-filter-observable.ts",
-							"line": 13,
+							"line": 14,
 							"character": 12
 						}
 					],
@@ -11780,7 +11780,7 @@
 									"sources": [
 										{
 											"fileName": "src/functions/searches/helpers/create-required-search-filter-observable.ts",
-											"line": 13,
+											"line": 14,
 											"character": 39
 										}
 									],
@@ -11800,7 +11800,7 @@
 									"sources": [
 										{
 											"fileName": "src/functions/searches/helpers/create-required-search-filter-observable.ts",
-											"line": 13,
+											"line": 14,
 											"character": 26
 										}
 									],
@@ -11825,7 +11825,7 @@
 							"sources": [
 								{
 									"fileName": "src/functions/searches/helpers/create-required-search-filter-observable.ts",
-									"line": 13,
+									"line": 14,
 									"character": 24
 								}
 							]
@@ -11841,7 +11841,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/searches/download-one-search.ts",
-							"line": 12,
+							"line": 13,
 							"character": 12
 						}
 					],
@@ -11859,7 +11859,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/searches/get-search-history.ts",
-							"line": 48,
+							"line": 49,
 							"character": 12
 						}
 					],
@@ -11884,7 +11884,7 @@
 											"sources": [
 												{
 													"fileName": "src/functions/searches/get-search-history.ts",
-													"line": 49,
+													"line": 50,
 													"character": 5
 												}
 											],
@@ -11906,7 +11906,7 @@
 									"sources": [
 										{
 											"fileName": "src/functions/searches/get-search-history.ts",
-											"line": 49,
+											"line": 50,
 											"character": 3
 										}
 									]
@@ -11930,7 +11930,7 @@
 											"sources": [
 												{
 													"fileName": "src/functions/searches/get-search-history.ts",
-													"line": 50,
+													"line": 51,
 													"character": 5
 												}
 											],
@@ -11952,7 +11952,7 @@
 									"sources": [
 										{
 											"fileName": "src/functions/searches/get-search-history.ts",
-											"line": 50,
+											"line": 51,
 											"character": 3
 										}
 									]
@@ -11976,7 +11976,7 @@
 											"sources": [
 												{
 													"fileName": "src/functions/searches/get-search-history.ts",
-													"line": 51,
+													"line": 52,
 													"character": 5
 												}
 											],
@@ -11994,7 +11994,7 @@
 											"sources": [
 												{
 													"fileName": "src/functions/searches/get-search-history.ts",
-													"line": 51,
+													"line": 52,
 													"character": 21
 												}
 											],
@@ -12017,7 +12017,7 @@
 									"sources": [
 										{
 											"fileName": "src/functions/searches/get-search-history.ts",
-											"line": 51,
+											"line": 52,
 											"character": 3
 										}
 									]
@@ -12041,7 +12041,7 @@
 											"sources": [
 												{
 													"fileName": "src/functions/searches/get-search-history.ts",
-													"line": 52,
+													"line": 53,
 													"character": 22
 												}
 											],
@@ -12059,7 +12059,7 @@
 											"sources": [
 												{
 													"fileName": "src/functions/searches/get-search-history.ts",
-													"line": 52,
+													"line": 53,
 													"character": 5
 												}
 											],
@@ -12082,7 +12082,7 @@
 									"sources": [
 										{
 											"fileName": "src/functions/searches/get-search-history.ts",
-											"line": 52,
+											"line": 53,
 											"character": 3
 										}
 									]
@@ -12106,7 +12106,7 @@
 											"sources": [
 												{
 													"fileName": "src/functions/searches/get-search-history.ts",
-													"line": 53,
+													"line": 54,
 													"character": 5
 												}
 											],
@@ -12124,7 +12124,7 @@
 											"sources": [
 												{
 													"fileName": "src/functions/searches/get-search-history.ts",
-													"line": 53,
+													"line": 54,
 													"character": 29
 												}
 											],
@@ -12147,7 +12147,7 @@
 									"sources": [
 										{
 											"fileName": "src/functions/searches/get-search-history.ts",
-											"line": 53,
+											"line": 54,
 											"character": 3
 										}
 									]
@@ -12165,7 +12165,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/searches/helpers/create-required-search-filter-observable.ts",
-							"line": 37,
+							"line": 38,
 							"character": 13
 						}
 					],
@@ -12237,7 +12237,7 @@
 																	"sources": [
 																		{
 																			"fileName": "src/functions/searches/subscribe-to-one-search/helpers.ts",
-																			"line": 74,
+																			"line": 75,
 																			"character": 37
 																		}
 																	],
@@ -12270,7 +12270,7 @@
 																									"sources": [
 																										{
 																											"fileName": "src/models/search/search-filter.ts",
-																											"line": 41,
+																											"line": 40,
 																											"character": 4
 																										}
 																									],
@@ -12295,7 +12295,7 @@
 																									"sources": [
 																										{
 																											"fileName": "src/models/search/search-filter.ts",
-																											"line": 38,
+																											"line": 37,
 																											"character": 4
 																										}
 																									],
@@ -12367,7 +12367,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/searches/attach-to-one-explorer-search/attach-to-one-explorer-search.ts",
-							"line": 64,
+							"line": 65,
 							"character": 13
 						}
 					],
@@ -12445,7 +12445,7 @@
 																	"sources": [
 																		{
 																			"fileName": "src/functions/searches/attach-to-one-explorer-search/attach-to-one-explorer-search.ts",
-																			"line": 71,
+																			"line": 72,
 																			"character": 13
 																		}
 																	],
@@ -12509,7 +12509,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/searches/attach-to-one-search/attach-to-one-search.ts",
-							"line": 64,
+							"line": 65,
 							"character": 13
 						}
 					],
@@ -12587,7 +12587,7 @@
 																	"sources": [
 																		{
 																			"fileName": "src/functions/searches/attach-to-one-search/attach-to-one-search.ts",
-																			"line": 71,
+																			"line": 72,
 																			"character": 13
 																		}
 																	],
@@ -12651,7 +12651,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/searches/background-one-search.ts",
-							"line": 12,
+							"line": 13,
 							"character": 13
 						}
 					],
@@ -12732,7 +12732,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/searches/delete-one-search.ts",
-							"line": 12,
+							"line": 13,
 							"character": 13
 						}
 					],
@@ -12813,7 +12813,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/searches/download-one-search.ts",
-							"line": 14,
+							"line": 15,
 							"character": 13
 						}
 					],
@@ -12905,7 +12905,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/searches/get-all-persistent-search-status.ts",
-							"line": 12,
+							"line": 13,
 							"character": 13
 						}
 					],
@@ -12976,7 +12976,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/searches/get-one-persistent-search-status.ts",
-							"line": 13,
+							"line": 14,
 							"character": 13
 						}
 					],
@@ -13057,7 +13057,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/searches/get-persistent-search-status-related-to-me.ts",
-							"line": 12,
+							"line": 13,
 							"character": 13
 						}
 					],
@@ -13128,7 +13128,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/searches/get-search-history.ts",
-							"line": 12,
+							"line": 13,
 							"character": 13
 						}
 					],
@@ -13213,7 +13213,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/searches/modify-one-query.ts",
-							"line": 16,
+							"line": 17,
 							"character": 13
 						}
 					],
@@ -13308,7 +13308,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/searches/save-one-search.ts",
-							"line": 12,
+							"line": 13,
 							"character": 13
 						}
 					],
@@ -13389,7 +13389,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/searches/subscribe-to-one-explorer-search/subscribe-to-one-explorer-search.ts",
-							"line": 72,
+							"line": 73,
 							"character": 13
 						}
 					],
@@ -13467,7 +13467,7 @@
 																	"sources": [
 																		{
 																			"fileName": "src/functions/searches/subscribe-to-one-explorer-search/subscribe-to-one-explorer-search.ts",
-																			"line": 81,
+																			"line": 82,
 																			"character": 3
 																		}
 																	],
@@ -13487,7 +13487,7 @@
 																	"sources": [
 																		{
 																			"fileName": "src/functions/searches/subscribe-to-one-explorer-search/subscribe-to-one-explorer-search.ts",
-																			"line": 82,
+																			"line": 83,
 																			"character": 3
 																		}
 																	],
@@ -13507,7 +13507,7 @@
 																	"sources": [
 																		{
 																			"fileName": "src/functions/searches/subscribe-to-one-explorer-search/subscribe-to-one-explorer-search.ts",
-																			"line": 83,
+																			"line": 84,
 																			"character": 3
 																		}
 																	],
@@ -13561,7 +13561,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/searches/subscribe-to-one-search/subscribe-to-one-search.ts",
-							"line": 70,
+							"line": 71,
 							"character": 13
 						}
 					],
@@ -13639,7 +13639,7 @@
 																	"sources": [
 																		{
 																			"fileName": "src/functions/searches/subscribe-to-one-search/subscribe-to-one-search.ts",
-																			"line": 78,
+																			"line": 79,
 																			"character": 13
 																		}
 																	],
@@ -13659,7 +13659,7 @@
 																	"sources": [
 																		{
 																			"fileName": "src/functions/searches/subscribe-to-one-search/subscribe-to-one-search.ts",
-																			"line": 78,
+																			"line": 79,
 																			"character": 48
 																		}
 																	],
@@ -13679,7 +13679,7 @@
 																	"sources": [
 																		{
 																			"fileName": "src/functions/searches/subscribe-to-one-search/subscribe-to-one-search.ts",
-																			"line": 78,
+																			"line": 79,
 																			"character": 80
 																		}
 																	],
@@ -13733,7 +13733,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/searches/validate-one-query.ts",
-							"line": 16,
+							"line": 17,
 							"character": 13
 						}
 					],
@@ -13842,7 +13842,7 @@
 			"sources": [
 				{
 					"fileName": "src/functions/searches/index.ts",
-					"line": 9,
+					"line": 10,
 					"character": 0
 				}
 			]
@@ -13870,7 +13870,7 @@
 							"sources": [
 								{
 									"fileName": "src/functions/system/get-api-version.ts",
-									"line": 26,
+									"line": 27,
 									"character": 1
 								}
 							],
@@ -13888,7 +13888,7 @@
 							"sources": [
 								{
 									"fileName": "src/functions/system/get-api-version.ts",
-									"line": 29,
+									"line": 30,
 									"character": 1
 								}
 							],
@@ -13917,7 +13917,7 @@
 													"sources": [
 														{
 															"fileName": "src/functions/system/get-api-version.ts",
-															"line": 30,
+															"line": 31,
 															"character": 2
 														}
 													],
@@ -13935,7 +13935,7 @@
 													"sources": [
 														{
 															"fileName": "src/functions/system/get-api-version.ts",
-															"line": 31,
+															"line": 32,
 															"character": 2
 														}
 													],
@@ -13971,7 +13971,7 @@
 							"sources": [
 								{
 									"fileName": "src/functions/system/get-api-version.ts",
-									"line": 33,
+									"line": 34,
 									"character": 1
 								}
 							],
@@ -13998,7 +13998,7 @@
 							"sources": [
 								{
 									"fileName": "src/functions/system/get-api-version.ts",
-									"line": 34,
+									"line": 35,
 									"character": 1
 								}
 							],
@@ -14032,7 +14032,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/system/get-api-version.ts",
-							"line": 25,
+							"line": 26,
 							"character": 17
 						}
 					]
@@ -14046,7 +14046,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/system/subscribe-to-many-system-informations.ts",
-							"line": 140,
+							"line": 141,
 							"character": 12
 						}
 					],
@@ -14071,7 +14071,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/system/subscribe-to-many-system-informations.ts",
-							"line": 11,
+							"line": 12,
 							"character": 12
 						}
 					],
@@ -14096,7 +14096,7 @@
 											"sources": [
 												{
 													"fileName": "src/functions/system/subscribe-to-many-system-informations.ts",
-													"line": 12,
+													"line": 13,
 													"character": 5
 												}
 											],
@@ -14118,7 +14118,7 @@
 									"sources": [
 										{
 											"fileName": "src/functions/system/subscribe-to-many-system-informations.ts",
-											"line": 12,
+											"line": 13,
 											"character": 3
 										}
 									]
@@ -14156,7 +14156,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/system/subscribe-to-many-system-informations.ts",
-							"line": 131,
+							"line": 132,
 							"character": 12
 						}
 					],
@@ -14178,7 +14178,7 @@
 									"sources": [
 										{
 											"fileName": "src/functions/system/subscribe-to-many-system-informations.ts",
-											"line": 131,
+											"line": 132,
 											"character": 40
 										}
 									],
@@ -14203,7 +14203,7 @@
 							"sources": [
 								{
 									"fileName": "src/functions/system/subscribe-to-many-system-informations.ts",
-									"line": 131,
+									"line": 132,
 									"character": 38
 								}
 							]
@@ -14219,7 +14219,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/system/backup.ts",
-							"line": 11,
+							"line": 12,
 							"character": 13
 						}
 					],
@@ -14303,7 +14303,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/system/get-api-version.ts",
-							"line": 12,
+							"line": 13,
 							"character": 13
 						}
 					],
@@ -14372,7 +14372,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/system/get-system-settings.ts",
-							"line": 12,
+							"line": 13,
 							"character": 13
 						}
 					],
@@ -14440,7 +14440,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/system/restore.ts",
-							"line": 12,
+							"line": 13,
 							"character": 13
 						}
 					],
@@ -14537,7 +14537,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/system/subscribe-to-many-system-informations.ts",
-							"line": 143,
+							"line": 144,
 							"character": 13
 						}
 					],
@@ -14655,7 +14655,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/system/system-is-connected.ts",
-							"line": 11,
+							"line": 12,
 							"character": 13
 						}
 					],
@@ -14748,7 +14748,7 @@
 			"sources": [
 				{
 					"fileName": "src/functions/system/index.ts",
-					"line": 9,
+					"line": 10,
 					"character": 0
 				}
 			]
@@ -14769,7 +14769,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/tags/get-all-tags.ts",
-							"line": 12,
+							"line": 13,
 							"character": 13
 						}
 					],
@@ -14844,7 +14844,7 @@
 			"sources": [
 				{
 					"fileName": "src/functions/tags/index.ts",
-					"line": 9,
+					"line": 10,
 					"character": 0
 				}
 			]
@@ -14865,7 +14865,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/templates/create-one-template.ts",
-							"line": 18,
+							"line": 19,
 							"character": 13
 						}
 					],
@@ -14946,7 +14946,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/templates/delete-one-template.ts",
-							"line": 12,
+							"line": 13,
 							"character": 13
 						}
 					],
@@ -15027,7 +15027,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/templates/get-all-templates.ts",
-							"line": 12,
+							"line": 13,
 							"character": 13
 						}
 					],
@@ -15098,7 +15098,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/templates/get-all-templates-as-admin.ts",
-							"line": 12,
+							"line": 13,
 							"character": 13
 						}
 					],
@@ -15169,7 +15169,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/templates/get-one-template.ts",
-							"line": 13,
+							"line": 14,
 							"character": 13
 						}
 					],
@@ -15250,7 +15250,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/templates/update-one-template.ts",
-							"line": 19,
+							"line": 20,
 							"character": 13
 						}
 					],
@@ -15340,7 +15340,7 @@
 			"sources": [
 				{
 					"fileName": "src/functions/templates/index.ts",
-					"line": 9,
+					"line": 10,
 					"character": 0
 				}
 			]
@@ -15361,7 +15361,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/tokens/create-one-token.ts",
-							"line": 18,
+							"line": 19,
 							"character": 13
 						}
 					],
@@ -15442,7 +15442,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/tokens/delete-one-token.ts",
-							"line": 12,
+							"line": 13,
 							"character": 13
 						}
 					],
@@ -15523,7 +15523,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/tokens/get-all-tokens.ts",
-							"line": 12,
+							"line": 13,
 							"character": 13
 						}
 					],
@@ -15594,7 +15594,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/tokens/get-one-token.ts",
-							"line": 13,
+							"line": 14,
 							"character": 13
 						}
 					],
@@ -15675,7 +15675,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/tokens/get-tokens-authorized-to-me.ts",
-							"line": 12,
+							"line": 13,
 							"character": 13
 						}
 					],
@@ -15746,7 +15746,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/tokens/list-token-capabilities.ts",
-							"line": 12,
+							"line": 13,
 							"character": 13
 						}
 					],
@@ -15817,7 +15817,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/tokens/update-one-token.ts",
-							"line": 19,
+							"line": 20,
 							"character": 13
 						}
 					],
@@ -15908,7 +15908,7 @@
 			"sources": [
 				{
 					"fileName": "src/functions/tokens/index.ts",
-					"line": 9,
+					"line": 10,
 					"character": 0
 				}
 			]
@@ -15929,7 +15929,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/user-preferences/delete-one-user-preferences.ts",
-							"line": 11,
+							"line": 12,
 							"character": 13
 						}
 					],
@@ -16010,7 +16010,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/user-preferences/get-all-user-preferences.ts",
-							"line": 12,
+							"line": 13,
 							"character": 13
 						}
 					],
@@ -16081,7 +16081,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/user-preferences/get-one-user-preferences.ts",
-							"line": 12,
+							"line": 13,
 							"character": 13
 						}
 					],
@@ -16162,7 +16162,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/user-preferences/update-one-user-preferences.ts",
-							"line": 18,
+							"line": 19,
 							"character": 13
 						}
 					],
@@ -16261,7 +16261,7 @@
 			"sources": [
 				{
 					"fileName": "src/functions/user-preferences/index.ts",
-					"line": 9,
+					"line": 10,
 					"character": 0
 				}
 			]
@@ -16282,7 +16282,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/users/create-one-user.ts",
-							"line": 19,
+							"line": 20,
 							"character": 13
 						}
 					],
@@ -16363,7 +16363,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/users/delete-one-user.ts",
-							"line": 11,
+							"line": 12,
 							"character": 13
 						}
 					],
@@ -16444,7 +16444,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/users/get-all-users.ts",
-							"line": 12,
+							"line": 13,
 							"character": 13
 						}
 					],
@@ -16515,7 +16515,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/users/get-many-users.ts",
-							"line": 15,
+							"line": 16,
 							"character": 13
 						}
 					],
@@ -16582,7 +16582,7 @@
 																	"sources": [
 																		{
 																			"fileName": "src/functions/users/get-many-users.ts",
-																			"line": 19,
+																			"line": 20,
 																			"character": 29
 																		}
 																	],
@@ -16637,7 +16637,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/users/get-my-user.ts",
-							"line": 12,
+							"line": 13,
 							"character": 13
 						}
 					],
@@ -16705,7 +16705,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/users/get-one-user.ts",
-							"line": 12,
+							"line": 13,
 							"character": 13
 						}
 					],
@@ -16786,7 +16786,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/users/update-my-user.ts",
-							"line": 15,
+							"line": 16,
 							"character": 13
 						}
 					],
@@ -16879,7 +16879,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/users/update-one-user.ts",
-							"line": 20,
+							"line": 21,
 							"character": 13
 						}
 					],
@@ -16971,7 +16971,7 @@
 			"sources": [
 				{
 					"fileName": "src/functions/users/index.ts",
-					"line": 9,
+					"line": 10,
 					"character": 0
 				}
 			]
@@ -16999,7 +16999,7 @@
 							"sources": [
 								{
 									"fileName": "src/functions/utils/api-context.ts",
-									"line": 14,
+									"line": 15,
 									"character": 1
 								}
 							],
@@ -17026,7 +17026,7 @@
 							"sources": [
 								{
 									"fileName": "src/functions/utils/api-context.ts",
-									"line": 15,
+									"line": 16,
 									"character": 1
 								}
 							],
@@ -17114,7 +17114,7 @@
 							"sources": [
 								{
 									"fileName": "src/functions/utils/api-context.ts",
-									"line": 12,
+									"line": 13,
 									"character": 1
 								}
 							],
@@ -17132,7 +17132,7 @@
 							"sources": [
 								{
 									"fileName": "src/functions/utils/api-context.ts",
-									"line": 13,
+									"line": 14,
 									"character": 1
 								}
 							],
@@ -17157,7 +17157,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/utils/api-context.ts",
-							"line": 11,
+							"line": 12,
 							"character": 17
 						}
 					]
@@ -17178,7 +17178,7 @@
 							"sources": [
 								{
 									"fileName": "src/functions/utils/api-subscription.ts",
-									"line": 14,
+									"line": 15,
 									"character": 1
 								}
 							],
@@ -17200,7 +17200,7 @@
 							"sources": [
 								{
 									"fileName": "src/functions/utils/api-subscription.ts",
-									"line": 15,
+									"line": 16,
 									"character": 1
 								}
 							],
@@ -17227,7 +17227,7 @@
 							"sources": [
 								{
 									"fileName": "src/functions/utils/api-subscription.ts",
-									"line": 16,
+									"line": 17,
 									"character": 1
 								}
 							],
@@ -17249,7 +17249,7 @@
 							"sources": [
 								{
 									"fileName": "src/functions/utils/api-subscription.ts",
-									"line": 17,
+									"line": 18,
 									"character": 1
 								}
 							],
@@ -17353,7 +17353,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/utils/api-subscription.ts",
-							"line": 11,
+							"line": 12,
 							"character": 17
 						}
 					],
@@ -17381,8 +17381,8 @@
 					"kindString": "Interface",
 					"flags": {},
 					"comment": {
-						"shortText": "Copyright 2022 Gravwell, Inc. All rights reserved.\nContact: <legal@gravwell.io>",
-						"text": "This software may be modified and distributed under the terms of the\nMIT license. See the LICENSE file for details.\n"
+						"shortText": "Copyright 2022 Gravwell, Inc. All rights reserved.",
+						"text": "Contact: [legal@gravwell.io](mailto:legal@gravwell.io)\n\nThis software may be modified and distributed under the terms of the MIT\nlicense. See the LICENSE file for details.\n"
 					},
 					"children": [
 						{
@@ -17396,7 +17396,7 @@
 							"sources": [
 								{
 									"fileName": "src/functions/utils/http-request-options.ts",
-									"line": 13,
+									"line": 14,
 									"character": 1
 								}
 							],
@@ -17416,7 +17416,7 @@
 							"sources": [
 								{
 									"fileName": "src/functions/utils/http-request-options.ts",
-									"line": 11,
+									"line": 12,
 									"character": 1
 								}
 							],
@@ -17474,7 +17474,7 @@
 							"sources": [
 								{
 									"fileName": "src/functions/utils/http-request-options.ts",
-									"line": 10,
+									"line": 11,
 									"character": 1
 								}
 							],
@@ -17495,7 +17495,7 @@
 							"sources": [
 								{
 									"fileName": "src/functions/utils/http-request-options.ts",
-									"line": 12,
+									"line": 13,
 									"character": 1
 								}
 							],
@@ -17521,7 +17521,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/utils/http-request-options.ts",
-							"line": 9,
+							"line": 10,
 							"character": 17
 						}
 					]
@@ -17542,7 +17542,7 @@
 							"sources": [
 								{
 									"fileName": "src/functions/utils/build-url.ts",
-									"line": 21,
+									"line": 22,
 									"character": 1
 								}
 							],
@@ -17562,7 +17562,7 @@
 							"sources": [
 								{
 									"fileName": "src/functions/utils/build-url.ts",
-									"line": 22,
+									"line": 23,
 									"character": 1
 								}
 							],
@@ -17581,7 +17581,7 @@
 							"sources": [
 								{
 									"fileName": "src/functions/utils/build-url.ts",
-									"line": 19,
+									"line": 20,
 									"character": 1
 								}
 							],
@@ -17602,7 +17602,7 @@
 							"sources": [
 								{
 									"fileName": "src/functions/utils/build-url.ts",
-									"line": 23,
+									"line": 24,
 									"character": 1
 								}
 							],
@@ -17621,7 +17621,7 @@
 							"sources": [
 								{
 									"fileName": "src/functions/utils/build-url.ts",
-									"line": 20,
+									"line": 21,
 									"character": 1
 								}
 							],
@@ -17647,7 +17647,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/utils/build-url.ts",
-							"line": 18,
+							"line": 19,
 							"character": 17
 						}
 					]
@@ -17661,7 +17661,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/utils/api-query-function.ts",
-							"line": 9,
+							"line": 10,
 							"character": 12
 						}
 					],
@@ -17685,7 +17685,7 @@
 							"sources": [
 								{
 									"fileName": "src/functions/utils/api-query-function.ts",
-									"line": 9,
+									"line": 10,
 									"character": 34
 								}
 							],
@@ -17697,8 +17697,8 @@
 									"kindString": "Call signature",
 									"flags": {},
 									"comment": {
-										"shortText": "Copyright 2022 Gravwell, Inc. All rights reserved.\nContact: <legal@gravwell.io>",
-										"text": "This software may be modified and distributed under the terms of the\nMIT license. See the LICENSE file for details.\n"
+										"shortText": "Copyright 2022 Gravwell, Inc. All rights reserved.",
+										"text": "Contact: [legal@gravwell.io](mailto:legal@gravwell.io)\n\nThis software may be modified and distributed under the terms of the MIT\nlicense. See the LICENSE file for details.\n"
 									},
 									"parameters": [
 										{
@@ -17765,7 +17765,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/utils/api-subscription-function.ts",
-							"line": 16,
+							"line": 17,
 							"character": 12
 						}
 					],
@@ -17796,7 +17796,7 @@
 							"sources": [
 								{
 									"fileName": "src/functions/utils/api-subscription-function.ts",
-									"line": 16,
+									"line": 17,
 									"character": 44
 								}
 							],
@@ -17923,7 +17923,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/utils/conditional-partial.ts",
-							"line": 12,
+							"line": 13,
 							"character": 12
 						}
 					],
@@ -17982,7 +17982,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/utils/conditional-partial.ts",
-							"line": 10,
+							"line": 11,
 							"character": 12
 						}
 					],
@@ -18044,13 +18044,13 @@
 					"kindString": "Type alias",
 					"flags": {},
 					"comment": {
-						"shortText": "Copyright 2022 Gravwell, Inc. All rights reserved.\nContact: <legal@gravwell.io>",
-						"text": "This software may be modified and distributed under the terms of the\nMIT license. See the LICENSE file for details.\n"
+						"shortText": "Copyright 2022 Gravwell, Inc. All rights reserved.",
+						"text": "Contact: [legal@gravwell.io](mailto:legal@gravwell.io)\n\nThis software may be modified and distributed under the terms of the MIT\nlicense. See the LICENSE file for details.\n"
 					},
 					"sources": [
 						{
 							"fileName": "src/functions/utils/download-from-url.ts",
-							"line": 9,
+							"line": 10,
 							"character": 12
 						}
 					],
@@ -18068,7 +18068,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/utils/lazy-first.ts",
-							"line": 15,
+							"line": 16,
 							"character": 12
 						}
 					],
@@ -18101,7 +18101,7 @@
 								"sources": [
 									{
 										"fileName": "src/functions/utils/lazy-first.ts",
-										"line": 15,
+										"line": 16,
 										"character": 50
 									}
 								],
@@ -18147,7 +18147,7 @@
 								"sources": [
 									{
 										"fileName": "src/functions/utils/lazy-first.ts",
-										"line": 15,
+										"line": 16,
 										"character": 82
 									}
 								],
@@ -18212,7 +18212,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/utils/lazy-last.ts",
-							"line": 15,
+							"line": 16,
 							"character": 12
 						}
 					],
@@ -18551,7 +18551,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/utils/file.ts",
-							"line": 11,
+							"line": 12,
 							"character": 5
 						}
 					],
@@ -18580,13 +18580,13 @@
 					"kindString": "Type alias",
 					"flags": {},
 					"comment": {
-						"shortText": "Copyright 2022 Gravwell, Inc. All rights reserved.\nContact: <legal@gravwell.io>",
-						"text": "This software may be modified and distributed under the terms of the\nMIT license. See the LICENSE file for details.\n"
+						"shortText": "Copyright 2022 Gravwell, Inc. All rights reserved.",
+						"text": "Contact: [legal@gravwell.io](mailto:legal@gravwell.io)\n\nThis software may be modified and distributed under the terms of the MIT\nlicense. See the LICENSE file for details.\n"
 					},
 					"sources": [
 						{
 							"fileName": "src/functions/utils/conditional-partial.ts",
-							"line": 9,
+							"line": 10,
 							"character": 12
 						}
 					],
@@ -18680,7 +18680,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/utils/lazy-first.ts",
-							"line": 19,
+							"line": 20,
 							"character": 12
 						}
 					],
@@ -18722,7 +18722,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/utils/conditional-partial.ts",
-							"line": 11,
+							"line": 12,
 							"character": 12
 						}
 					],
@@ -18806,7 +18806,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/utils/http-request-options.ts",
-							"line": 16,
+							"line": 17,
 							"character": 12
 						}
 					],
@@ -18873,7 +18873,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/utils/response.ts",
-							"line": 13,
+							"line": 14,
 							"character": 12
 						}
 					],
@@ -18909,7 +18909,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/utils/http-request-options.ts",
-							"line": 17,
+							"line": 18,
 							"character": 12
 						}
 					],
@@ -18939,7 +18939,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/utils/build-url.ts",
-							"line": 12,
+							"line": 13,
 							"character": 12
 						}
 					],
@@ -18966,13 +18966,13 @@
 						"isConst": true
 					},
 					"comment": {
-						"shortText": "Copyright 2022 Gravwell, Inc. All rights reserved.\nContact: <legal@gravwell.io>",
-						"text": "This software may be modified and distributed under the terms of the\nMIT license. See the LICENSE file for details.\n"
+						"shortText": "Copyright 2022 Gravwell, Inc. All rights reserved.",
+						"text": "Contact: [legal@gravwell.io](mailto:legal@gravwell.io)\n\nThis software may be modified and distributed under the terms of the MIT\nlicense. See the LICENSE file for details.\n"
 					},
 					"sources": [
 						{
 							"fileName": "src/functions/utils/web-socket.ts",
-							"line": 9,
+							"line": 10,
 							"character": 6
 						}
 					],
@@ -19118,7 +19118,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/utils/api-subscription-from-web-socket.ts",
-							"line": 14,
+							"line": 15,
 							"character": 13
 						}
 					],
@@ -19189,7 +19189,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/utils/build-http-request.ts",
-							"line": 16,
+							"line": 17,
 							"character": 13
 						}
 					],
@@ -19232,7 +19232,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/utils/build-http-request.ts",
-							"line": 27,
+							"line": 28,
 							"character": 13
 						}
 					],
@@ -19287,7 +19287,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/utils/build-http-request.ts",
-							"line": 24,
+							"line": 25,
 							"character": 13
 						}
 					],
@@ -19343,7 +19343,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/utils/build-url.ts",
-							"line": 26,
+							"line": 27,
 							"character": 13
 						}
 					],
@@ -19416,7 +19416,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/utils/create-programmatic-promise.ts",
-							"line": 15,
+							"line": 16,
 							"character": 13
 						}
 					],
@@ -19463,7 +19463,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/utils/debounce-with-backoff-while.ts",
-							"line": 32,
+							"line": 39,
 							"character": 13
 						}
 					],
@@ -19475,9 +19475,9 @@
 							"kindString": "Call signature",
 							"flags": {},
 							"comment": {
-								"shortText": "`debounceWithBackoffWhile` works like `debounceTime`, but uses a backoff strategy to increase the dueTime as the source\nObservable emits notifications.",
-								"text": "That is, `debounceWithBackoffWhile` delays notifications emitted by the source Observable, dropping cached notifications\nand restarting timers as new notifications arrive from the source. The rules for hanging on to cached notifications\nand handling complete/error are the same as `debounceTime`.\n\n`debounceWithBackoffWhile` starts with a dueTime of `initialDueTime` and increments the dueTime by `step`\nto a maximum of `maxDueTime` as long as `predicate(value)` returns true for each `value` emitted by the source.\n\nIf `predicate(value)` returns false for a given `value`, the dueTime is reset to `initialDueTime` for that notification.\n\nIn other words, `debounceWithBackoffWhile({initialDueTime: 1000, step:..., maxDueTime: ..., predicate: () => false})`\nis functionally equivalent to `debounceTime(1000)`.\n",
-								"returns": "A function that returns an Observable that delays the emissions of the source Observable by the\nspecified duration Observable returned by durationSelector, and may drop some values if they occur too frequently.\n"
+								"shortText": "`debounceWithBackoffWhile` works like `debounceTime`, but uses a backoff\nstrategy to increase the dueTime as the source Observable emits\nnotifications.",
+								"text": "That is, `debounceWithBackoffWhile` delays notifications emitted by the\nsource Observable, dropping cached notifications and restarting timers as new\nnotifications arrive from the source. The rules for hanging on to cached\nnotifications and handling complete/error are the same as `debounceTime`.\n\n`debounceWithBackoffWhile` starts with a dueTime of `initialDueTime` and\nincrements the dueTime by `step` to a maximum of `maxDueTime` as long as\n`predicate(value)` returns true for each `value` emitted by the source.\n\nIf `predicate(value)` returns false for a given `value`, the dueTime is reset\nto `initialDueTime` for that notification.\n\nIn other words, `debounceWithBackoffWhile({initialDueTime: 1000, step:...,\nmaxDueTime: ..., predicate: () => false})` is functionally equivalent to\n`debounceTime(1000)`.\n",
+								"returns": "A function that returns an Observable that delays the emissions of\n  the source Observable by the specified duration Observable returned by\n  durationSelector, and may drop some values if they occur too frequently.\n"
 							},
 							"typeParameter": [
 								{
@@ -19513,7 +19513,7 @@
 													"sources": [
 														{
 															"fileName": "src/functions/utils/debounce-with-backoff-while.ts",
-															"line": 38,
+															"line": 45,
 															"character": 1
 														}
 													],
@@ -19531,7 +19531,7 @@
 													"sources": [
 														{
 															"fileName": "src/functions/utils/debounce-with-backoff-while.ts",
-															"line": 40,
+															"line": 47,
 															"character": 1
 														}
 													],
@@ -19549,7 +19549,7 @@
 													"sources": [
 														{
 															"fileName": "src/functions/utils/debounce-with-backoff-while.ts",
-															"line": 39,
+															"line": 46,
 															"character": 1
 														}
 													],
@@ -19567,7 +19567,7 @@
 													"sources": [
 														{
 															"fileName": "src/functions/utils/debounce-with-backoff-while.ts",
-															"line": 41,
+															"line": 48,
 															"character": 1
 														}
 													],
@@ -19647,7 +19647,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/utils/download-from-url.ts",
-							"line": 11,
+							"line": 12,
 							"character": 13
 						}
 					],
@@ -19706,7 +19706,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/utils/fetch.ts",
-							"line": 9,
+							"line": 10,
 							"character": 6
 						}
 					],
@@ -19718,8 +19718,8 @@
 							"kindString": "Call signature",
 							"flags": {},
 							"comment": {
-								"shortText": "Copyright 2022 Gravwell, Inc. All rights reserved.\nContact: <legal@gravwell.io>",
-								"text": "This software may be modified and distributed under the terms of the\nMIT license. See the LICENSE file for details.\n"
+								"shortText": "Copyright 2022 Gravwell, Inc. All rights reserved.",
+								"text": "Contact: [legal@gravwell.io](mailto:legal@gravwell.io)\n\nThis software may be modified and distributed under the terms of the MIT\nlicense. See the LICENSE file for details.\n"
 							},
 							"parameters": [
 								{
@@ -19788,7 +19788,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/utils/lazy-first.ts",
-							"line": 9,
+							"line": 10,
 							"character": 13
 						}
 					],
@@ -19800,8 +19800,8 @@
 							"kindString": "Call signature",
 							"flags": {},
 							"comment": {
-								"shortText": "Copyright 2022 Gravwell, Inc. All rights reserved.\nContact: <legal@gravwell.io>",
-								"text": "This software may be modified and distributed under the terms of the\nMIT license. See the LICENSE file for details.\n"
+								"shortText": "Copyright 2022 Gravwell, Inc. All rights reserved.",
+								"text": "Contact: [legal@gravwell.io](mailto:legal@gravwell.io)\n\nThis software may be modified and distributed under the terms of the MIT\nlicense. See the LICENSE file for details.\n"
 							},
 							"typeParameter": [
 								{
@@ -20015,7 +20015,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/utils/lazy-last.ts",
-							"line": 9,
+							"line": 10,
 							"character": 13
 						}
 					],
@@ -20027,8 +20027,8 @@
 							"kindString": "Call signature",
 							"flags": {},
 							"comment": {
-								"shortText": "Copyright 2022 Gravwell, Inc. All rights reserved.\nContact: <legal@gravwell.io>",
-								"text": "This software may be modified and distributed under the terms of the\nMIT license. See the LICENSE file for details.\n"
+								"shortText": "Copyright 2022 Gravwell, Inc. All rights reserved.",
+								"text": "Contact: [legal@gravwell.io](mailto:legal@gravwell.io)\n\nThis software may be modified and distributed under the terms of the MIT\nlicense. See the LICENSE file for details.\n"
 							},
 							"typeParameter": [
 								{
@@ -20230,7 +20230,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/utils/omit-undefined-shallow.ts",
-							"line": 15,
+							"line": 16,
 							"character": 13
 						}
 					],
@@ -20321,7 +20321,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/utils/parse-json-response.ts",
-							"line": 14,
+							"line": 15,
 							"character": 13
 						}
 					],
@@ -20396,7 +20396,7 @@
 													"sources": [
 														{
 															"fileName": "src/functions/utils/parse-json-response.ts",
-															"line": 16,
+															"line": 17,
 															"character": 12
 														}
 													],
@@ -20417,7 +20417,7 @@
 													"sources": [
 														{
 															"fileName": "src/functions/utils/parse-json-response.ts",
-															"line": 16,
+															"line": 17,
 															"character": 29
 														}
 													],
@@ -20499,7 +20499,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/utils/rxjs-dynamic-duration.ts",
-							"line": 43,
+							"line": 49,
 							"character": 13
 						}
 					],
@@ -20511,12 +20511,12 @@
 							"kindString": "Call signature",
 							"flags": {},
 							"comment": {
-								"shortText": "Returns a function that receives a value and returns that value wrapped in an observable that\nwill emit that value after a certain duration. That duration is calculated by the `mapDuration`\nparameter.",
-								"text": "Useful as an utility for other rxjs operators, such as {@link debounce}, {@link delayWhen},\n{@link concatMap} and so on...\n",
+								"shortText": "Returns a function that receives a value and returns that value wrapped in an\nobservable that will emit that value after a certain duration. That duration\nis calculated by the `mapDuration` parameter.",
+								"text": "Useful as an utility for other rxjs operators, such as {@link debounce},\n{@link delayWhen}, {@link concatMap} and so on...\n",
 								"tags": [
 									{
 										"tag": "example",
-										"text": "\n```ts\nconst init = Date.now()\n\ninterval(0).pipe(\n  take(4),\n  concatMap(rxjsDynamicDuration(lastDuration => lastDuration + 500, 1000)),\n).subscribe(() => {\n  const sinceInit = Date.now() - init\n  console.log(`Milliseconds since init: ${ sinceInit }`)\n})\n\n// Logs:\n// Milliseconds since init: 1000\n// Milliseconds since init: 2500\n// Milliseconds since init: 4500\n// Milliseconds since init: 7000\n```\n"
+										"text": "\n\n```ts\nconst init = Date.now();\n\ninterval(0)\n\t.pipe(\n\t\ttake(4),\n\t\tconcatMap(\n\t\t\trxjsDynamicDuration(lastDuration => lastDuration + 500, 1000),\n\t\t),\n\t)\n\t.subscribe(() => {\n\t\tconst sinceInit = Date.now() - init;\n\t\tconsole.log(`Milliseconds since init: ${sinceInit}`);\n\t});\n\n// Logs:\n// Milliseconds since init: 1000\n// Milliseconds since init: 2500\n// Milliseconds since init: 4500\n// Milliseconds since init: 7000\n```\n"
 									}
 								]
 							},
@@ -20728,7 +20728,7 @@
 			"sources": [
 				{
 					"fileName": "src/functions/utils/index.ts",
-					"line": 9,
+					"line": 10,
 					"character": 0
 				}
 			]
@@ -20749,7 +20749,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/web-server/restart-web-server.ts",
-							"line": 11,
+							"line": 12,
 							"character": 13
 						}
 					],
@@ -20817,7 +20817,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/web-server/web-server-is-distributed.ts",
-							"line": 11,
+							"line": 12,
 							"character": 13
 						}
 					],
@@ -20890,7 +20890,7 @@
 			"sources": [
 				{
 					"fileName": "src/functions/web-server/index.ts",
-					"line": 9,
+					"line": 10,
 					"character": 0
 				}
 			]

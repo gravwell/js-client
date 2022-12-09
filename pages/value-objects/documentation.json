@@ -21,7 +21,7 @@
 					"sources": [
 						{
 							"fileName": "src/value-objects/date.ts",
-							"line": 13,
+							"line": 14,
 							"character": 13
 						}
 					],
@@ -65,7 +65,7 @@
 			"sources": [
 				{
 					"fileName": "src/value-objects/date.ts",
-					"line": 9,
+					"line": 10,
 					"character": 0
 				}
 			]
@@ -86,7 +86,7 @@
 					"sources": [
 						{
 							"fileName": "src/value-objects/id.ts",
-							"line": 12,
+							"line": 13,
 							"character": 12
 						}
 					],
@@ -104,7 +104,7 @@
 					"sources": [
 						{
 							"fileName": "src/value-objects/id.ts",
-							"line": 16,
+							"line": 17,
 							"character": 12
 						}
 					],
@@ -122,7 +122,7 @@
 					"sources": [
 						{
 							"fileName": "src/value-objects/id.ts",
-							"line": 11,
+							"line": 12,
 							"character": 12
 						}
 					],
@@ -140,7 +140,7 @@
 					"sources": [
 						{
 							"fileName": "src/value-objects/id.ts",
-							"line": 17,
+							"line": 18,
 							"character": 12
 						}
 					],
@@ -158,7 +158,7 @@
 					"sources": [
 						{
 							"fileName": "src/value-objects/id.ts",
-							"line": 25,
+							"line": 26,
 							"character": 12
 						}
 					],
@@ -176,7 +176,7 @@
 					"sources": [
 						{
 							"fileName": "src/value-objects/id.ts",
-							"line": 24,
+							"line": 25,
 							"character": 12
 						}
 					],
@@ -194,7 +194,7 @@
 					"sources": [
 						{
 							"fileName": "src/value-objects/id.ts",
-							"line": 14,
+							"line": 15,
 							"character": 13
 						}
 					],
@@ -239,7 +239,7 @@
 					"sources": [
 						{
 							"fileName": "src/value-objects/id.ts",
-							"line": 22,
+							"line": 23,
 							"character": 13
 						}
 					],
@@ -284,7 +284,7 @@
 					"sources": [
 						{
 							"fileName": "src/value-objects/id.ts",
-							"line": 28,
+							"line": 29,
 							"character": 13
 						}
 					],
@@ -329,7 +329,7 @@
 					"sources": [
 						{
 							"fileName": "src/value-objects/id.ts",
-							"line": 18,
+							"line": 19,
 							"character": 13
 						}
 					],
@@ -369,7 +369,7 @@
 					"sources": [
 						{
 							"fileName": "src/value-objects/id.ts",
-							"line": 20,
+							"line": 21,
 							"character": 13
 						}
 					],
@@ -429,7 +429,7 @@
 			"sources": [
 				{
 					"fileName": "src/value-objects/id.ts",
-					"line": 9,
+					"line": 10,
 					"character": 0
 				}
 			]
@@ -669,7 +669,7 @@
 			"sources": [
 				{
 					"fileName": "src/value-objects/index.ts",
-					"line": 9,
+					"line": 10,
 					"character": 0
 				}
 			]
@@ -688,13 +688,13 @@
 					"kindString": "Type alias",
 					"flags": {},
 					"comment": {
-						"shortText": "Copyright 2022 Gravwell, Inc. All rights reserved.\nContact: <legal@gravwell.io>",
-						"text": "This software may be modified and distributed under the terms of the\nMIT license. See the LICENSE file for details.\n"
+						"shortText": "Copyright 2022 Gravwell, Inc. All rights reserved.",
+						"text": "Contact: [legal@gravwell.io](mailto:legal@gravwell.io)\n\nThis software may be modified and distributed under the terms of the MIT\nlicense. See the LICENSE file for details.\n"
 					},
 					"sources": [
 						{
 							"fileName": "src/value-objects/json.ts",
-							"line": 10,
+							"line": 11,
 							"character": 12
 						}
 					],
@@ -728,7 +728,7 @@
 			"sources": [
 				{
 					"fileName": "src/value-objects/json.ts",
-					"line": 10,
+					"line": 11,
 					"character": 0
 				}
 			]
@@ -749,7 +749,7 @@
 					"sources": [
 						{
 							"fileName": "src/value-objects/markdown.ts",
-							"line": 11,
+							"line": 12,
 							"character": 12
 						}
 					],
@@ -767,7 +767,7 @@
 					"sources": [
 						{
 							"fileName": "src/value-objects/markdown.ts",
-							"line": 13,
+							"line": 14,
 							"character": 12
 						}
 					],
@@ -785,7 +785,7 @@
 					"sources": [
 						{
 							"fileName": "src/value-objects/markdown.ts",
-							"line": 15,
+							"line": 16,
 							"character": 13
 						}
 					],
@@ -842,7 +842,7 @@
 			"sources": [
 				{
 					"fileName": "src/value-objects/markdown.ts",
-					"line": 9,
+					"line": 10,
 					"character": 0
 				}
 			]
@@ -873,7 +873,7 @@
 							"sources": [
 								{
 									"fileName": "src/value-objects/percentage.ts",
-									"line": 13,
+									"line": 14,
 									"character": 1
 								}
 							],
@@ -924,7 +924,7 @@
 							"sources": [
 								{
 									"fileName": "src/value-objects/percentage.ts",
-									"line": 21,
+									"line": 22,
 									"character": 17
 								}
 							],
@@ -986,7 +986,7 @@
 							"sources": [
 								{
 									"fileName": "src/value-objects/percentage.ts",
-									"line": 17,
+									"line": 18,
 									"character": 15
 								}
 							],
@@ -1040,7 +1040,7 @@
 					"sources": [
 						{
 							"fileName": "src/value-objects/percentage.ts",
-							"line": 12,
+							"line": 13,
 							"character": 13
 						}
 					],
@@ -1065,7 +1065,7 @@
 					"sources": [
 						{
 							"fileName": "src/value-objects/percentage.ts",
-							"line": 27,
+							"line": 28,
 							"character": 12
 						}
 					],
@@ -1083,7 +1083,7 @@
 					"sources": [
 						{
 							"fileName": "src/value-objects/percentage.ts",
-							"line": 29,
+							"line": 30,
 							"character": 13
 						}
 					],
@@ -1147,7 +1147,7 @@
 			"sources": [
 				{
 					"fileName": "src/value-objects/percentage.ts",
-					"line": 9,
+					"line": 10,
 					"character": 0
 				}
 			]
@@ -1168,7 +1168,7 @@
 					"sources": [
 						{
 							"fileName": "src/value-objects/regex.ts",
-							"line": 13,
+							"line": 14,
 							"character": 12
 						}
 					],
@@ -1186,7 +1186,7 @@
 					"sources": [
 						{
 							"fileName": "src/value-objects/regex.ts",
-							"line": 11,
+							"line": 12,
 							"character": 12
 						}
 					],
@@ -1206,7 +1206,7 @@
 					"sources": [
 						{
 							"fileName": "src/value-objects/regex.ts",
-							"line": 32,
+							"line": 33,
 							"character": 13
 						}
 					],
@@ -1253,7 +1253,7 @@
 					"sources": [
 						{
 							"fileName": "src/value-objects/regex.ts",
-							"line": 27,
+							"line": 28,
 							"character": 13
 						}
 					],
@@ -1295,7 +1295,7 @@
 					"sources": [
 						{
 							"fileName": "src/value-objects/regex.ts",
-							"line": 15,
+							"line": 16,
 							"character": 13
 						}
 					],
@@ -1366,7 +1366,7 @@
 			"sources": [
 				{
 					"fileName": "src/value-objects/regex.ts",
-					"line": 9,
+					"line": 10,
 					"character": 0
 				}
 			]
