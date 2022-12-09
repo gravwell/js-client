@@ -1,17 +1,15 @@
-/*************************************************************************
- * Copyright 2022 Gravwell, Inc. All rights reserved.
- * Contact: <legal@gravwell.io>
+/**
+ * Copyright 2022 Gravwell, Inc. All rights reserved. Contact:
+ * [legal@gravwell.io](mailto:legal@gravwell.io)
  *
- * This software may be modified and distributed under the terms of the
- * MIT license. See the LICENSE file for details.
- **************************************************************************/
+ * This software may be modified and distributed under the terms of the MIT
+ * license. See the LICENSE file for details.
+ */
 
 import { isString } from 'lodash';
 import { ElementFilterOperation, isElementFilterOperation } from './element-filter-operation';
 
-/**
- * Filter to perform an operation on a field.
- */
+/** Filter to perform an operation on a field. */
 export interface OperationFilter {
 	tag: string;
 	module: string;
@@ -30,9 +28,7 @@ export const isOperationFilter = (v: ElementFilter): v is OperationFilter => {
 	}
 };
 
-/**
- * Filter to extract a field.
- */
+/** Filter to extract a field. */
 export interface ExtractionFilter {
 	tag: string | null;
 	module: string;
