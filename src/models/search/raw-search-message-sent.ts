@@ -1,6 +1,7 @@
 /**
- * Copyright 2022 Gravwell, Inc. All rights reserved. Contact:
- * [legal@gravwell.io](mailto:legal@gravwell.io)
+ * Copyright 2022 Gravwell, Inc. All rights reserved.
+ *
+ * Contact: [legal@gravwell.io](mailto:legal@gravwell.io)
  *
  * This software may be modified and distributed under the terms of the MIT
  * license. See the LICENSE file for details.
@@ -37,17 +38,19 @@ export interface RawInitiateSearchMessageSent {
 		Addendum?: RawJSON;
 
 		/**
-		 * Per the Go client docs:> Preview indicates that the renderer should only
-		 * capture enough to show> some usage of data A raw, text, hex renderer will
-		 * grab a few hundred or> thousand entries charts will grab enough to draw something useful
-		 * > everything else will get "enough"
+		 * Per the Go client docs:
+		 *
+		 * Preview indicates that the renderer should only capture enough to show>
+		 * some usage of data A raw, text, hex renderer will grab a few hundred or>
+		 * thousand entries charts will grab enough to draw something useful>
+		 * everything else will get "enough"
 		 */
 		Preview: boolean;
 
 		/**
 		 * Set to `true` to avoid saving the search query in the history.
 		 *
-		 * default false
+		 * @default false
 		 */
 		NoHistory?: boolean;
 	};

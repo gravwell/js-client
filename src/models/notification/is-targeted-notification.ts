@@ -1,14 +1,7 @@
 /**
- * Copyright 2022 Gravwell, Inc. All rights reserved. Contact:
- * [legal@gravwell.io](mailto:legal@gravwell.io)
+ * Copyright 2022 Gravwell, Inc. All rights reserved.
  *
- * This software may be modified and distributed under the terms of the MIT
- * license. See the LICENSE file for details.
- */
-
-/**
- * Copyright 2022 Gravwell, Inc. All rights reserved. Contact:
- * [legal@gravwell.io](mailto:legal@gravwell.io)
+ * Contact: [legal@gravwell.io](mailto:legal@gravwell.io)
  *
  * This software may be modified and distributed under the terms of the MIT
  * license. See the LICENSE file for details.
