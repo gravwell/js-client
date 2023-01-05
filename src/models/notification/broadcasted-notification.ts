@@ -26,4 +26,4 @@ export interface BroadcastedNotification {
 	link: string | null;
 }
 
-export type BroadcastedLevel = 'info' | 'warn' | 'error' | 'critical' | null;
+export type BroadcastedLevel = 'info' | 'warn' | 'error' | 'critical' | 'high' | null;

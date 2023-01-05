@@ -67,12 +67,12 @@ export const toDashboard = (raw: RawDashboard): Dashboard =>
 				rendererOptions: t.rendererOptions ?? null,
 
 				dimensions: {
-					columns: t.span.col,
-					rows: t.span.row,
+					columns: t.span?.col ?? 0,
+					rows: t.span?.row ?? 0,
 				},
 				position: {
-					x: t.span.x ?? null,
-					y: t.span.y ?? null,
+					x: t.span?.x ?? null,
+					y: t.span?.y ?? null,
 				},
 			}),
 		),

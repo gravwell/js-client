@@ -15,7 +15,8 @@ export type RawDashboardTile = {
 	id?: RawNumericID;
 	title: string;
 	renderer: string;
-	span: { col: number; row: number; x?: number; y?: number };
+	/** Legacy support: `span` may be undefined. */
+	span?: { col: number; row: number; x?: number; y?: number };
 	searchesIndex: number;
 	rendererOptions?: DashboardRendererOptions;
 };
