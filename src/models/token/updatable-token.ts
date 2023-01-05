@@ -1,10 +1,11 @@
-/*************************************************************************
+/**
  * Copyright 2022 Gravwell, Inc. All rights reserved.
- * Contact: <legal@gravwell.io>
  *
- * This software may be modified and distributed under the terms of the
- * MIT license. See the LICENSE file for details.
- **************************************************************************/
+ * Contact: [legal@gravwell.io](mailto:legal@gravwell.io)
+ *
+ * This software may be modified and distributed under the terms of the MIT
+ * license. See the LICENSE file for details.
+ */
 
 import { TokenCapability } from '~/index';
 import { ID } from '~/value-objects';
@@ -12,7 +13,9 @@ import { ID } from '~/value-objects';
 /**
  * Updatable token fields, in a friendly format.
  *
- * NOTE: It's ok to update the capabilitites of an existing token because if you have access to update a token, you also have access to create a new one with whatever capabilities you want.
+ * NOTE: It's ok to update the capabilitites of an existing token because if you
+ * have access to update a token, you also have access to create a new one with
+ * whatever capabilities you want.
  */
 export interface UpdatableToken {
 	id: ID;
@@ -20,16 +23,14 @@ export interface UpdatableToken {
 	/**
 	 * The name of the created token
 	 *
-	 * @example
-	 * "My token"
+	 * @example My token
 	 */
 	name?: string;
 
 	/**
 	 * Optional token description.
 	 *
-	 * @example
-	 * "My new description"
+	 * @example My new description
 	 */
 	description?: string | null;
 

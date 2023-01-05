@@ -1,10 +1,11 @@
-/*************************************************************************
+/**
  * Copyright 2022 Gravwell, Inc. All rights reserved.
- * Contact: <legal@gravwell.io>
  *
- * This software may be modified and distributed under the terms of the
- * MIT license. See the LICENSE file for details.
- **************************************************************************/
+ * Contact: [legal@gravwell.io](mailto:legal@gravwell.io)
+ *
+ * This software may be modified and distributed under the terms of the MIT
+ * license. See the LICENSE file for details.
+ */
 
 import { isNull, isString, isUndefined } from 'lodash';
 import { isNumericID } from '~/value-objects';
@@ -27,7 +28,12 @@ export const isBroadcastedNotification = (value: unknown): value is BroadcastedN
 			isTimestamp(ignoreUntilDate) &&
 			isString(origin) &&
 			isNumericID(senderID) &&
-			(level === 'info' || level === 'warn' || level === 'error' || isNull(level)) &&
+			(level === 'info' ||
+				level === 'warn' ||
+				level === 'error' ||
+				level === 'critical' ||
+				level === 'high' ||
+				isNull(level)) &&
 			(isString(link) || link === null)
 		);
 	} catch {

@@ -1,10 +1,11 @@
-/*************************************************************************
+/**
  * Copyright 2022 Gravwell, Inc. All rights reserved.
- * Contact: <legal@gravwell.io>
  *
- * This software may be modified and distributed under the terms of the
- * MIT license. See the LICENSE file for details.
- **************************************************************************/
+ * Contact: [legal@gravwell.io](mailto:legal@gravwell.io)
+ *
+ * This software may be modified and distributed under the terms of the MIT
+ * license. See the LICENSE file for details.
+ */
 
 import { isBoolean, isEqual, isNull, uniqueId } from 'lodash';
 import {
@@ -30,6 +31,7 @@ import {
 	tap,
 } from 'rxjs/operators';
 import {
+	collectSearchObservableErrors,
 	createInitialSearchFilter,
 	makeToSearchStats,
 	makeToStatsZoom,
@@ -51,7 +53,7 @@ import { toDataExplorerEntry } from '~/models/search/to-data-explorer-entry';
 import { ID, Percentage } from '~/value-objects';
 import { APIContext } from '../../utils';
 import { attachSearch } from '../attach-search';
-import { emitError, getPreviewDateRange } from '../helpers/attach-search';
+import { getPreviewDateRange } from '../helpers/attach-search';
 import { createRequiredSearchFilterObservable, DateRange } from '../helpers/create-required-search-filter-observable';
 import { makeSubscribeToOneRawSearch } from '../subscribe-to-one-raw-search';
 import {
@@ -241,7 +243,8 @@ export const makeAttachToOneExplorerSearch = (context: APIContext) => {
 		});
 
 		/**
-		 * When filter is available, immediately apply and re-apply again after two seconds.
+		 * When filter is available, immediately apply and re-apply again after two
+		 * seconds.
 		 * https://github.com/gravwell/js-client/pull/243/files#diff-84ea62a6dd70168a514bb4173174a56cbe5089b2004ac111d42e15a769b3fd7eR421.
 		 */
 		filter$.pipe(takeUntil(close$)).subscribe({
@@ -296,10 +299,7 @@ export const makeAttachToOneExplorerSearch = (context: APIContext) => {
 			takeUntil(close$),
 		);
 
-		const errors$: Observable<Error> = searchMessages$.pipe(
-			// Skip every message and just emit when an error occurs
-			emitError(),
-			// Complete when/if the user calls .close()
+		const errors$ = collectSearchObservableErrors(progress$, entries$, stats$, statsOverview$, statsZoom$).pipe(
 			takeUntil(close$),
 		);
 

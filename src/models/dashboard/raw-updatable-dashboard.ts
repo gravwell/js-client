@@ -1,10 +1,11 @@
-/*************************************************************************
+/**
  * Copyright 2022 Gravwell, Inc. All rights reserved.
- * Contact: <legal@gravwell.io>
  *
- * This software may be modified and distributed under the terms of the
- * MIT license. See the LICENSE file for details.
- **************************************************************************/
+ * Contact: [legal@gravwell.io](mailto:legal@gravwell.io)
+ *
+ * This software may be modified and distributed under the terms of the MIT
+ * license. See the LICENSE file for details.
+ */
 
 import { RawNumericID, RawUUID } from '~/value-objects';
 import { RawTimeframe } from '../timeframe';
@@ -45,11 +46,11 @@ export interface RawUpdatableDashboard {
 			id?: RawNumericID;
 			title: string;
 			renderer: string;
-			/**	Due to the old dashboards we may not have `x` and `y` defined */
+			/** Due to the old dashboards we may not have `x` and `y` defined */
 			span: { col: number; row: number; x?: number; y?: number };
 			/** `string` included for legacy dashboard support. */
 			searchesIndex: number | string;
-			/**	Due to the old dashboards we may not have `.rendererOptions` defined */
+			/** Due to the old dashboards we may not have `.rendererOptions` defined */
 			rendererOptions?: DashboardRendererOptions;
 		}>;
 		/** Legacy support: `timeframe` may be undefined. */

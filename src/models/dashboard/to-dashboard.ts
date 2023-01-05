@@ -1,10 +1,11 @@
-/*************************************************************************
+/**
  * Copyright 2022 Gravwell, Inc. All rights reserved.
- * Contact: <legal@gravwell.io>
  *
- * This software may be modified and distributed under the terms of the
- * MIT license. See the LICENSE file for details.
- **************************************************************************/
+ * Contact: [legal@gravwell.io](mailto:legal@gravwell.io)
+ *
+ * This software may be modified and distributed under the terms of the MIT
+ * license. See the LICENSE file for details.
+ */
 
 import { isNil, isNumber, isString, isUndefined } from 'lodash';
 import { DATA_TYPE } from '~/models';
@@ -66,12 +67,12 @@ export const toDashboard = (raw: RawDashboard): Dashboard =>
 				rendererOptions: t.rendererOptions ?? null,
 
 				dimensions: {
-					columns: t.span.col,
-					rows: t.span.row,
+					columns: t.span?.col ?? 0,
+					rows: t.span?.row ?? 0,
 				},
 				position: {
-					x: t.span.x ?? null,
-					y: t.span.y ?? null,
+					x: t.span?.x ?? null,
+					y: t.span?.y ?? null,
 				},
 			}),
 		),

@@ -1,13 +1,28 @@
-/*************************************************************************
+/**
  * Copyright 2022 Gravwell, Inc. All rights reserved.
- * Contact: <legal@gravwell.io>
  *
- * This software may be modified and distributed under the terms of the
- * MIT license. See the LICENSE file for details.
- **************************************************************************/
+ * Contact: [legal@gravwell.io](mailto:legal@gravwell.io)
+ *
+ * This software may be modified and distributed under the terms of the MIT
+ * license. See the LICENSE file for details.
+ */
 
 import { isAfter } from 'date-fns';
-import { catchError, concatMap, filter, firstValueFrom, NEVER, Observable, of, shareReplay, skipUntil } from 'rxjs';
+import {
+	catchError,
+	concatMap,
+	filter,
+	firstValueFrom,
+	from,
+	merge,
+	mergeMap,
+	NEVER,
+	Observable,
+	of,
+	shareReplay,
+	skipUntil,
+	timeout,
+} from 'rxjs';
 import { DateRange } from '~/functions';
 import { APISubscription, debounceWithBackoffWhile, omitUndefinedShallow } from '~/functions/utils';
 import { SearchFilter } from '~/index';
@@ -233,3 +248,31 @@ export const emitError: () => <T>(source: Observable<T>) => Observable<Error> = 
 
 		shareReplay({ bufferSize: 1, refCount: true }),
 	);
+
+/**
+ * Given a list of search related observables, this function will return an
+ * observable that emits an error when
+ *
+ * 1. Any of the given observable encounter an error.
+ * 2. Ten seconds have pass and any of the given observables have not emitted a
+ *    value. This is to show end users an error message if a transport error has
+ *    occurred. See
+ *    https://github.com/gravwell/frontend-issues/issues/5851#issuecomment-1353720239.
+ */
+export const collectSearchObservableErrors = (...observables: Array<Observable<unknown>>): Observable<Error> => {
+	const TIMEOUT = 10_000;
+	/**
+	 * This will emit an error if any of the given observables don't emit within
+	 * 10 seconds. Not emitting within 10 seconds is indicative of a transport
+	 * failure. E.G. a reverse proxy could have dropped a websocket message we
+	 * expected to receive.
+	 */
+	const timeoutError$ = from(observables).pipe(
+		mergeMap(obs => obs.pipe(timeout({ first: TIMEOUT }))),
+		emitError(),
+	);
+	/** This will emit when any errors occur in the given observables. */
+	const websocketErrors$ = merge(observables).pipe(emitError());
+	/** Transport + observable errors. */
+	return merge(timeoutError$, websocketErrors$).pipe(shareReplay({ bufferSize: 1, refCount: true }));
+};

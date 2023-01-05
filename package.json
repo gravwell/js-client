@@ -89,6 +89,7 @@
 		"karma-webpack": "^5.0.0",
 		"license-check-and-add": "^4.0.1",
 		"prettier": "^2.7.1",
+		"prettier-plugin-jsdoc": "^0.4.2",
 		"rename-cli": "^6.2.1",
 		"rimraf": "^3.0.2",
 		"rxjs": "^7.5.5",

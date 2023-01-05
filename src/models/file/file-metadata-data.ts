@@ -1,10 +1,11 @@
-/*************************************************************************
+/**
  * Copyright 2022 Gravwell, Inc. All rights reserved.
- * Contact: <legal@gravwell.io>
  *
- * This software may be modified and distributed under the terms of the
- * MIT license. See the LICENSE file for details.
- **************************************************************************/
+ * Contact: [legal@gravwell.io](mailto:legal@gravwell.io)
+ *
+ * This software may be modified and distributed under the terms of the MIT
+ * license. See the LICENSE file for details.
+ */
 
 import { NumericID, UUID } from '~/value-objects';
 
@@ -22,9 +23,7 @@ export interface FileMetadataData {
 
 	lastUpdateDate: Date;
 
-	/**
-	 * Root URL to download the resource from the current host.
-	 */
+	/** Root URL to download the resource from the current host. */
 	downloadURL: string;
 	size: number;
 	contentType: string;

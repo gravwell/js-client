@@ -1,10 +1,11 @@
-/*************************************************************************
+/**
  * Copyright 2022 Gravwell, Inc. All rights reserved.
- * Contact: <legal@gravwell.io>
  *
- * This software may be modified and distributed under the terms of the
- * MIT license. See the LICENSE file for details.
- **************************************************************************/
+ * Contact: [legal@gravwell.io](mailto:legal@gravwell.io)
+ *
+ * This software may be modified and distributed under the terms of the MIT
+ * license. See the LICENSE file for details.
+ */
 
 import { isNull, isUndefined } from 'lodash';
 import {
@@ -173,13 +174,14 @@ export const toSearchEntries = (
 	return normalized;
 };
 
-/** Attempts to determine the type of a search entry by inspecting the members of the msg
+/**
+ * Attempts to determine the type of a search entry by inspecting the members of
+ * the msg
  *
- * Warning: Search messages received from the backend are often too similar to differentiate. Use
- * this function with caution.
+ * Warning: Search messages received from the backend are often too similar to
+ * differentiate. Use this function with caution.
  *
  * @param msg : the value to inspect
- *
  * @throws an error if it wasn't possible to determine the SearchEntries type
  */
 export const inferSearchEntries = (

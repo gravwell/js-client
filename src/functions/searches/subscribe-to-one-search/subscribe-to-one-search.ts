@@ -1,10 +1,11 @@
-/*************************************************************************
+/**
  * Copyright 2022 Gravwell, Inc. All rights reserved.
- * Contact: <legal@gravwell.io>
  *
- * This software may be modified and distributed under the terms of the
- * MIT license. See the LICENSE file for details.
- **************************************************************************/
+ * Contact: [legal@gravwell.io](mailto:legal@gravwell.io)
+ *
+ * This software may be modified and distributed under the terms of the MIT
+ * license. See the LICENSE file for details.
+ */
 
 import { isAfter, subHours } from 'date-fns';
 import { cloneDeep, isBoolean, isEqual, isNil, isNull, uniqueId } from 'lodash';
@@ -15,9 +16,7 @@ import {
 	firstValueFrom,
 	from,
 	lastValueFrom,
-	NEVER,
 	Observable,
-	of,
 	Subject,
 	Subscription,
 	timer,
@@ -30,7 +29,6 @@ import {
 	filter as rxjsFilter,
 	map,
 	shareReplay,
-	skipUntil,
 	startWith,
 	switchMap,
 	takeUntil,
@@ -54,6 +52,7 @@ import {
 } from '~/models';
 import { Percentage, RawJSON, toNumericID } from '~/value-objects';
 import { APIContext, debounceWithBackoffWhile, omitUndefinedShallow } from '../../utils';
+import { collectSearchObservableErrors } from '../helpers/attach-search';
 import { createRequiredSearchFilterObservable } from '../helpers/create-required-search-filter-observable';
 import { initiateSearch } from '../initiate-search';
 import { makeModifyOneQuery } from '../modify-one-query';
@@ -443,7 +442,8 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 		};
 
 		/**
-		 * When filter is available, immediately apply and re-apply again after two seconds.
+		 * When filter is available, immediately apply and re-apply again after two
+		 * seconds.
 		 * https://github.com/gravwell/js-client/pull/243/files#diff-84ea62a6dd70168a514bb4173174a56cbe5089b2004ac111d42e15a769b3fd7eR421.
 		 */
 		filter$.pipe(takeUntil(close$)).subscribe({
@@ -599,16 +599,7 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 			takeUntil(close$),
 		);
 
-		const errors$: Observable<Error> = searchMessages$.pipe(
-			// Skip every regular message. We only want to emit when there's an error
-			skipUntil(NEVER),
-
-			// When there's an error, catch it and emit it
-			catchError(err => of(err)),
-
-			shareReplay({ bufferSize: 1, refCount: true }),
-
-			// Complete when/if the user calls .close()
+		const errors$ = collectSearchObservableErrors(progress$, entries$, stats$, statsOverview$, statsZoom$).pipe(
 			takeUntil(close$),
 		);
 

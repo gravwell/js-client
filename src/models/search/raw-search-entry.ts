@@ -1,17 +1,16 @@
-/*************************************************************************
+/**
  * Copyright 2022 Gravwell, Inc. All rights reserved.
- * Contact: <legal@gravwell.io>
  *
- * This software may be modified and distributed under the terms of the
- * MIT license. See the LICENSE file for details.
- **************************************************************************/
+ * Contact: [legal@gravwell.io](mailto:legal@gravwell.io)
+ *
+ * This software may be modified and distributed under the terms of the MIT
+ * license. See the LICENSE file for details.
+ */
 
 import { isArray, isNull, isNumber, isString } from 'lodash';
 
 // Named SearchEntry in Go
-/**
- * The entry that makes it out of the search pipeline
- */
+/** The entry that makes it out of the search pipeline */
 export interface RawSearchEntry {
 	TS: string;
 	Tag: number;
@@ -37,9 +36,7 @@ export const isRawSearchEntry = (v: unknown): v is RawSearchEntry => {
 };
 
 // Named StringTagEntry in Go
-/**
- * Used for scripting and ingesting entries via the webserver
- */
+/** Used for scripting and ingesting entries via the webserver */
 export interface RawStringTagEntry {
 	TS: string;
 	Tag: string;
@@ -65,9 +62,7 @@ export const isRawStringTagEntry = (v: unknown): v is RawStringTagEntry => {
 };
 
 // Named EnumeratedPair in Go
-/**
- * String representation of enumerated values
- */
+/** String representation of enumerated values */
 export interface RawEnumeratedPair {
 	Name: string;
 	ValueStr: string;

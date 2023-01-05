@@ -1,10 +1,11 @@
-/*************************************************************************
+/**
  * Copyright 2022 Gravwell, Inc. All rights reserved.
- * Contact: <legal@gravwell.io>
  *
- * This software may be modified and distributed under the terms of the
- * MIT license. See the LICENSE file for details.
- **************************************************************************/
+ * Contact: [legal@gravwell.io](mailto:legal@gravwell.io)
+ *
+ * This software may be modified and distributed under the terms of the MIT
+ * license. See the LICENSE file for details.
+ */
 
 import { NumericID, UUID } from '~/value-objects';
 
@@ -18,9 +19,7 @@ export interface MyselfTargetedNotification extends BaseTargetedNotification {
 export interface GroupTargetedNotification extends BaseTargetedNotification {
 	targetType: 'group';
 
-	/**
-	 * ID of the group targeted by the notification
-	 */
+	/** ID of the group targeted by the notification */
 	groupID: NumericID;
 }
 

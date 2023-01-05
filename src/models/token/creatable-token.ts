@@ -1,30 +1,27 @@
-/*************************************************************************
+/**
  * Copyright 2022 Gravwell, Inc. All rights reserved.
- * Contact: <legal@gravwell.io>
  *
- * This software may be modified and distributed under the terms of the
- * MIT license. See the LICENSE file for details.
- **************************************************************************/
+ * Contact: [legal@gravwell.io](mailto:legal@gravwell.io)
+ *
+ * This software may be modified and distributed under the terms of the MIT
+ * license. See the LICENSE file for details.
+ */
 
 import { TokenCapability } from './token-capability';
 
-/**
- * Minimum data required to create a token, in a friendly format.
- */
+/** Minimum data required to create a token, in a friendly format. */
 export interface CreatableToken {
 	/**
 	 * A name for the token
 	 *
-	 * @example
-	 * "My token"
+	 * @example My token
 	 */
 	name: string;
 
 	/**
 	 * An optional description for the token
 	 *
-	 * @example
-	 * "My resource read / resource write token"
+	 * @example My resource read / resource write token
 	 */
 	description?: string | null;
 

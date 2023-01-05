@@ -1,10 +1,11 @@
-/*************************************************************************
+/**
  * Copyright 2022 Gravwell, Inc. All rights reserved.
- * Contact: <legal@gravwell.io>
  *
- * This software may be modified and distributed under the terms of the
- * MIT license. See the LICENSE file for details.
- **************************************************************************/
+ * Contact: [legal@gravwell.io](mailto:legal@gravwell.io)
+ *
+ * This software may be modified and distributed under the terms of the MIT
+ * license. See the LICENSE file for details.
+ */
 
 import { NumericID, UUID } from '~/value-objects';
 import { Timeframe } from '../timeframe';
@@ -34,9 +35,7 @@ export interface DashboardData {
 
 	version: Version;
 
-	/**
-	 * Update all tiles when zooming.
-	 */
+	/** Update all tiles when zooming. */
 	updateOnZoom: boolean;
 
 	liveUpdate: DashboardLiveUpdate;

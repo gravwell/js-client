@@ -1,10 +1,11 @@
-/*************************************************************************
+/**
  * Copyright 2022 Gravwell, Inc. All rights reserved.
- * Contact: <legal@gravwell.io>
  *
- * This software may be modified and distributed under the terms of the
- * MIT license. See the LICENSE file for details.
- **************************************************************************/
+ * Contact: [legal@gravwell.io](mailto:legal@gravwell.io)
+ *
+ * This software may be modified and distributed under the terms of the MIT
+ * license. See the LICENSE file for details.
+ */
 
 import { RawUUID } from '~/value-objects';
 import { AutoExtractorModule } from '../auto-extractor';
@@ -99,7 +100,10 @@ export interface RawScheduledScriptKitItem extends RawKitItemBase {
 
 		DefaultDeploymentRules: {
 			Disabled: boolean;
-			/** If RunImmediately is set to true, we set OneShot = true on the script as we install it */
+			/**
+			 * If RunImmediately is set to true, we set OneShot = true on the script
+			 * as we install it
+			 */
 			RunImmediately: boolean;
 		};
 	};
