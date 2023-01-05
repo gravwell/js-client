@@ -32,6 +32,7 @@ import {
 } from 'rxjs/operators';
 import { DateRange } from '~/functions';
 import {
+	collectSearchObservableErrors,
 	createInitialSearchFilter,
 	makeToSearchStats,
 	makeToStatsZoom,
@@ -52,7 +53,7 @@ import {
 import { ID, Percentage } from '~/value-objects';
 import { APIContext } from '../../utils';
 import { attachSearch } from '../attach-search';
-import { emitError, getPreviewDateRange } from '../helpers/attach-search';
+import { getPreviewDateRange } from '../helpers/attach-search';
 import { createRequiredSearchFilterObservable } from '../helpers/create-required-search-filter-observable';
 import { makeSubscribeToOneRawSearch } from '../subscribe-to-one-raw-search';
 import {
@@ -298,10 +299,7 @@ export const makeAttachToOneSearch = (context: APIContext) => {
 			takeUntil(close$),
 		);
 
-		const errors$: Observable<Error> = searchMessages$.pipe(
-			// Skip every message and just emit when an error occurs
-			emitError(),
-			// Complete when/if the user calls .close()
+		const errors$ = collectSearchObservableErrors(progress$, entries$, stats$, statsOverview$, statsZoom$).pipe(
 			takeUntil(close$),
 		);
 

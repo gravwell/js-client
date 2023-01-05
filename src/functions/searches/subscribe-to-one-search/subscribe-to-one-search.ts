@@ -16,9 +16,7 @@ import {
 	firstValueFrom,
 	from,
 	lastValueFrom,
-	NEVER,
 	Observable,
-	of,
 	Subject,
 	Subscription,
 	timer,
@@ -31,7 +29,6 @@ import {
 	filter as rxjsFilter,
 	map,
 	shareReplay,
-	skipUntil,
 	startWith,
 	switchMap,
 	takeUntil,
@@ -55,6 +52,7 @@ import {
 } from '~/models';
 import { Percentage, RawJSON, toNumericID } from '~/value-objects';
 import { APIContext, debounceWithBackoffWhile, omitUndefinedShallow } from '../../utils';
+import { collectSearchObservableErrors } from '../helpers/attach-search';
 import { createRequiredSearchFilterObservable } from '../helpers/create-required-search-filter-observable';
 import { initiateSearch } from '../initiate-search';
 import { makeModifyOneQuery } from '../modify-one-query';
@@ -601,16 +599,7 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 			takeUntil(close$),
 		);
 
-		const errors$: Observable<Error> = searchMessages$.pipe(
-			// Skip every regular message. We only want to emit when there's an error
-			skipUntil(NEVER),
-
-			// When there's an error, catch it and emit it
-			catchError(err => of(err)),
-
-			shareReplay({ bufferSize: 1, refCount: true }),
-
-			// Complete when/if the user calls .close()
+		const errors$ = collectSearchObservableErrors(progress$, entries$, stats$, statsOverview$, statsZoom$).pipe(
 			takeUntil(close$),
 		);
 

@@ -28,7 +28,12 @@ export const isBroadcastedNotification = (value: unknown): value is BroadcastedN
 			isTimestamp(ignoreUntilDate) &&
 			isString(origin) &&
 			isNumericID(senderID) &&
-			(level === 'info' || level === 'warn' || level === 'error' || isNull(level)) &&
+			(level === 'info' ||
+				level === 'warn' ||
+				level === 'error' ||
+				level === 'critical' ||
+				level === 'high' ||
+				isNull(level)) &&
 			(isString(link) || link === null)
 		);
 	} catch {
