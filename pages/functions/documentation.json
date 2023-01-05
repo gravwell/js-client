@@ -12367,7 +12367,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/searches/attach-to-one-explorer-search/attach-to-one-explorer-search.ts",
-							"line": 65,
+							"line": 66,
 							"character": 13
 						}
 					],
@@ -12445,7 +12445,7 @@
 																	"sources": [
 																		{
 																			"fileName": "src/functions/searches/attach-to-one-explorer-search/attach-to-one-explorer-search.ts",
-																			"line": 72,
+																			"line": 73,
 																			"character": 13
 																		}
 																	],
@@ -12509,7 +12509,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/searches/attach-to-one-search/attach-to-one-search.ts",
-							"line": 65,
+							"line": 66,
 							"character": 13
 						}
 					],
@@ -12587,7 +12587,7 @@
 																	"sources": [
 																		{
 																			"fileName": "src/functions/searches/attach-to-one-search/attach-to-one-search.ts",
-																			"line": 72,
+																			"line": 73,
 																			"character": 13
 																		}
 																	],
@@ -13389,7 +13389,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/searches/subscribe-to-one-explorer-search/subscribe-to-one-explorer-search.ts",
-							"line": 73,
+							"line": 71,
 							"character": 13
 						}
 					],
@@ -13467,7 +13467,7 @@
 																	"sources": [
 																		{
 																			"fileName": "src/functions/searches/subscribe-to-one-explorer-search/subscribe-to-one-explorer-search.ts",
-																			"line": 82,
+																			"line": 80,
 																			"character": 3
 																		}
 																	],
@@ -13487,7 +13487,7 @@
 																	"sources": [
 																		{
 																			"fileName": "src/functions/searches/subscribe-to-one-explorer-search/subscribe-to-one-explorer-search.ts",
-																			"line": 83,
+																			"line": 81,
 																			"character": 3
 																		}
 																	],
@@ -13507,7 +13507,7 @@
 																	"sources": [
 																		{
 																			"fileName": "src/functions/searches/subscribe-to-one-explorer-search/subscribe-to-one-explorer-search.ts",
-																			"line": 84,
+																			"line": 82,
 																			"character": 3
 																		}
 																	],
@@ -13561,7 +13561,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/searches/subscribe-to-one-search/subscribe-to-one-search.ts",
-							"line": 71,
+							"line": 69,
 							"character": 13
 						}
 					],
@@ -13639,7 +13639,7 @@
 																	"sources": [
 																		{
 																			"fileName": "src/functions/searches/subscribe-to-one-search/subscribe-to-one-search.ts",
-																			"line": 79,
+																			"line": 77,
 																			"character": 13
 																		}
 																	],
@@ -13659,7 +13659,7 @@
 																	"sources": [
 																		{
 																			"fileName": "src/functions/searches/subscribe-to-one-search/subscribe-to-one-search.ts",
-																			"line": 79,
+																			"line": 77,
 																			"character": 48
 																		}
 																	],
@@ -13679,7 +13679,7 @@
 																	"sources": [
 																		{
 																			"fileName": "src/functions/searches/subscribe-to-one-search/subscribe-to-one-search.ts",
-																			"line": 79,
+																			"line": 77,
 																			"character": 80
 																		}
 																	],
