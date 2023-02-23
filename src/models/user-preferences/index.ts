@@ -9,5 +9,6 @@
 
 export { RawUserPreferencesWithMetadata } from './raw-user-preferences-with-metadata';
 export { toUserPreferencesWithMetadata } from './to-user-preferences-with-metadata';
-export { UserPreferences } from './user-preferences';
+export { UserPreferences, EditorTheme, System, ExplorerPreferences, Theme, FontSize } from './user-preferences';
 export { UserPreferencesWithMetadata } from './user-preferences-with-metadata';
+export * from './user-preferences';

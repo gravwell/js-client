@@ -63,6 +63,7 @@ describe(
 						{
 							title: 'Tile 1',
 							renderer: 'overview',
+							hideZoom: false,
 							dimensions: { columns: 4, rows: 4 },
 							position: { x: 0, y: 0 },
 							searchIndex: 0,

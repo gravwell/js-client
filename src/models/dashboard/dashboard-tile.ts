@@ -13,27 +13,24 @@ import { DashboardRendererOptions } from './dashboard-renderer-options';
 export interface DashboardTile {
 	/** Legacy support: `id` may be undefined. */
 	id?: NumericID;
+
 	title: string;
 
-	/**
-	 * Index for the related search in Dashboard.searches. `string` included for
-	 * legacy dashboard support.
-	 */
-	searchIndex: number | string;
+	hideZoom: boolean;
+
+	searchIndex: number; // -1 indicates that even if a tile existing with the given DashboardTile#id, when updated the tile search will be replaced.
 
 	renderer: string;
 
-	/** Due to the old dashboards we may not have `.rendererOptions` defined */
-	rendererOptions: DashboardRendererOptions | null;
+	rendererOptions: DashboardRendererOptions;
 
 	dimensions: {
 		columns: number;
 		rows: number;
 	};
 
-	/** Due to the old dashboards we may not have `x` and `y` defined */
 	position: {
-		x: number | null;
-		y: number | null;
+		x: number;
+		y: number;
 	};
 }

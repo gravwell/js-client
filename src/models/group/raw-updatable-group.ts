@@ -10,4 +10,5 @@
 export interface RawUpdatableGroup {
 	Name?: string;
 	Desc?: string;
+	Synced?: boolean;
 }

@@ -11,6 +11,7 @@ import { RawUUID } from '~/value-objects';
 import { AutoExtractorModule } from '../auto-extractor';
 
 export interface RawKitItemBase {
+	ID: string | undefined; // Only exists on LocalKit assets
 	Name: string;
 	Hash: Array<number>; // 32 elements
 }
@@ -21,7 +22,6 @@ export interface RawLicenseKitItem extends RawKitItemBase {
 }
 
 export interface RawFileKitItem extends RawKitItemBase {
-	ID: string;
 	Type: 'file';
 	AdditionalInfo: {
 		UUID: RawUUID;
@@ -33,7 +33,6 @@ export interface RawFileKitItem extends RawKitItemBase {
 }
 
 export interface RawDashboardKitItem extends RawKitItemBase {
-	ID: string;
 	Type: 'dashboard';
 	AdditionalInfo: {
 		UUID: RawUUID;
@@ -43,7 +42,6 @@ export interface RawDashboardKitItem extends RawKitItemBase {
 }
 
 export interface RawMacroKitItem extends RawKitItemBase {
-	ID: string;
 	Type: 'macro';
 	AdditionalInfo: {
 		Name: string;
@@ -53,7 +51,6 @@ export interface RawMacroKitItem extends RawKitItemBase {
 }
 
 export interface RawActionableKitItem extends RawKitItemBase {
-	ID: string;
 	Type: 'pivot';
 	AdditionalInfo: {
 		UUID: RawUUID;
@@ -63,7 +60,6 @@ export interface RawActionableKitItem extends RawKitItemBase {
 }
 
 export interface RawPlaybookKitItem extends RawKitItemBase {
-	ID: string;
 	Type: 'playbook';
 	AdditionalInfo: {
 		UUID: RawUUID;
@@ -73,10 +69,9 @@ export interface RawPlaybookKitItem extends RawKitItemBase {
 }
 
 export interface RawResourceKitItem extends RawKitItemBase {
-	ID: string;
 	Type: 'resource';
 	AdditionalInfo: {
-		ResourceName: string;
+		ResourceName?: string;
 		Description: string;
 		Size: number;
 		VersionNumber: number;
@@ -84,7 +79,6 @@ export interface RawResourceKitItem extends RawKitItemBase {
 }
 
 export interface RawScheduledScriptKitItem extends RawKitItemBase {
-	ID: string;
 	Type: 'scheduled search';
 	AdditionalInfo: {
 		Name: string;
@@ -96,7 +90,7 @@ export interface RawScheduledScriptKitItem extends RawKitItemBase {
 
 		// If SearchString and Duration are set, Script will not be set
 		SearchString?: string; // "" is null,
-		Duration?: string; // "" is null,
+		Duration?: number;
 
 		DefaultDeploymentRules: {
 			Disabled: boolean;
@@ -110,7 +104,6 @@ export interface RawScheduledScriptKitItem extends RawKitItemBase {
 }
 
 export interface RawSavedQueryKitItem extends RawKitItemBase {
-	ID: string;
 	Type: 'searchlibrary';
 	AdditionalInfo: {
 		UUID: RawUUID;
@@ -121,7 +114,6 @@ export interface RawSavedQueryKitItem extends RawKitItemBase {
 }
 
 export interface RawTemplateKitItem extends RawKitItemBase {
-	ID: string;
 	Type: 'template';
 	AdditionalInfo: {
 		UUID: RawUUID;
@@ -130,8 +122,15 @@ export interface RawTemplateKitItem extends RawKitItemBase {
 	};
 }
 
+export interface RawFlowKitItem extends RawKitItemBase {
+	Type: 'flow';
+	AdditionalInfo: {
+		Name: string;
+		Description: string; // "" is null,
+	};
+}
+
 export interface RawAutoExtractorKitItem extends RawKitItemBase {
-	ID: string;
 	Type: 'autoextractor';
 	AdditionalInfo: {
 		name: string;
@@ -152,4 +151,5 @@ export type RawKitItem =
 	| RawScheduledScriptKitItem
 	| RawSavedQueryKitItem
 	| RawTemplateKitItem
+	| RawFlowKitItem
 	| RawAutoExtractorKitItem;

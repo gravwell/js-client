@@ -7,12 +7,15 @@
  * license. See the LICENSE file for details.
  */
 
-import { isNumber, isString } from 'lodash';
+import { isNil, isNumber, isString } from 'lodash';
 import { RawVersion } from './raw-version';
 import { RawVersionObject } from './raw-version-object';
 import { Version } from './version';
 
 export const toVersion = (raw: RawVersion | RawVersionObject | number): Version => {
+	if (isNil(raw)) {
+		return { major: 0, minor: 0, patch: 0 };
+	}
 	if (isString(raw) || isNumber(raw)) {
 		const [major, minor, patch] = raw
 			.toString()
@@ -21,6 +24,6 @@ export const toVersion = (raw: RawVersion | RawVersionObject | number): Version 
 			.concat([0, 0, 0]);
 		return { major: major ?? 0, minor: minor ?? 0, patch: patch ?? 0 };
 	} else {
-		return { major: raw.Major, minor: raw.Minor ?? 0, patch: raw.Point ?? 0 };
+		return { major: raw?.Major, minor: raw.Minor ?? 0, patch: raw.Point ?? 0 };
 	}
 };

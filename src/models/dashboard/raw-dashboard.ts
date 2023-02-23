@@ -34,6 +34,9 @@ export interface RawDashboard {
 		grid?: {
 			gutter?: string | number | null; // string is a number
 			margin?: string | number | null; // string is a number
+
+			borderWidth?: number | null;
+			borderRadius?: number | null;
 		};
 
 		/** Legacy support: `searches`, `tiles`, and/or `timeframe` may be undefined. */

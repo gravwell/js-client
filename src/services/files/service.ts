@@ -11,6 +11,7 @@ import { CreatableFile, FileMetadata, UpdatableFile } from '~/models/file';
 
 export interface FilesService {
 	readonly get: {
+		readonly one: (fileID: string) => Promise<FileMetadata>;
 		readonly all: () => Promise<Array<FileMetadata>>;
 		readonly authorizedTo: {
 			readonly me: () => Promise<Array<FileMetadata>>;

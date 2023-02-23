@@ -7,16 +7,21 @@
  * license. See the LICENSE file for details.
  */
 
+import { NumericID } from '../../value-objects/id';
+
 export interface InstallableKit {
+	id: string;
 	labels?: Array<string>;
+
 	isGlobal?: boolean;
+	installationGroup?: NumericID | undefined;
 
 	overwriteExisting?: boolean;
 	allowUnsigned?: boolean;
 	allowExternalResource?: boolean;
 
 	settings?: Array<{
-		type: 'macro value';
+		type: 'macro';
 		name: string;
 		description: string;
 		defaultValue: string;

@@ -16,6 +16,7 @@ import {
 	firstValueFrom,
 	from,
 	lastValueFrom,
+	merge,
 	Observable,
 	Subject,
 	Subscription,
@@ -148,15 +149,9 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 			}),
 		);
 		const searchTypeID = searchInitMsg.data.OutputSearchSubproto;
-		const isResponseError = filterMessageByCommand(SearchMessageCommands.ResponseError);
 		const searchMessages$ = rawSubscription.received$.pipe(
 			filter(msg => msg.type === searchTypeID),
 			tap(msg => {
-				// Throw if the search message command is Error
-				if (isResponseError(msg)) {
-					throw new Error(msg.data.Error);
-				}
-
 				// Listen for close messages and emit on close$
 				const isCloseMsg = filterMessageByCommand(SearchMessageCommands.Close);
 				if (isCloseMsg(msg)) {
@@ -599,9 +594,15 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 			takeUntil(close$),
 		);
 
-		const errors$ = collectSearchObservableErrors(progress$, entries$, stats$, statsOverview$, statsZoom$).pipe(
-			takeUntil(close$),
+		const errorMsg$: Observable<Error> = searchMessages$.pipe(
+			filter(filterMessageByCommand(SearchMessageCommands.ResponseError)),
+			map(msg => new Error(msg.data.Error)),
 		);
+
+		const errors$ = merge(
+			errorMsg$,
+			collectSearchObservableErrors(progress$, entries$, stats$, statsOverview$, statsZoom$),
+		).pipe(takeUntil(close$));
 
 		return {
 			searchID: searchInitMsg.data.SearchID.toString(),

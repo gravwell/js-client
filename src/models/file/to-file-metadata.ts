@@ -30,7 +30,22 @@ export const toFileMetadata = (raw: RawFileMetadata): FileMetadata => ({
 
 	lastUpdateDate: new Date(raw.Updated),
 
-	downloadURL: `/api/files/${raw.GUID}`,
+	downloadURL: url(raw),
 	size: raw.Size,
 	contentType: raw.Type,
 });
+
+const isImage = (file: RawFileMetadata) => file.Type.includes('image/');
+
+/**
+ * Function to avoid a bug with browser caching and keep the image file updated,
+ * only applied on images creating a new url for the file each
+ */
+const url = (raw: RawFileMetadata): string => {
+	const downloadUrl = `/api/files/${raw.GUID}`;
+	if (isImage(raw)) {
+		const updateTimestamp = new Date(raw.Updated);
+		return `${downloadUrl}?${updateTimestamp.getTime()}`;
+	}
+	return downloadUrl;
+};

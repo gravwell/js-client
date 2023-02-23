@@ -13,11 +13,15 @@ import {
 	makeGetPersistentSearchStatusRelatedToMe,
 } from '~/functions/searches';
 import { APIContext } from '~/functions/utils';
+import { makeGetOnePersistentSearchDetails } from '../../functions/searches/get-one-persistent-search-details';
 import { SearchStatusService } from './service';
 
 export const createSearchStatusService = (context: APIContext): SearchStatusService => ({
 	get: {
-		one: makeGetOnePersistentSearchStatus(context),
+		one: {
+			status: makeGetOnePersistentSearchStatus(context),
+			details: makeGetOnePersistentSearchDetails(context),
+		},
 		all: makeGetAllPersistentSearchStatus(context),
 		authorizedTo: {
 			me: makeGetPersistentSearchStatusRelatedToMe(context),

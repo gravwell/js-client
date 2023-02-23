@@ -20,8 +20,8 @@ export interface RawUser {
 	DefaultGID?: number | undefined;
 	Groups: Array<{
 		GID: number;
-		Name: string;
-		Desc: string;
-		Synced: boolean;
+		Name?: string;
+		Desc?: string;
+		Synced?: boolean;
 	}>;
 }

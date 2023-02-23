@@ -14,3 +14,4 @@ export * from './get-dashboards-authorized-to-me';
 export * from './get-many-dashboards';
 export * from './get-one-dashboard';
 export * from './update-one-dashboard';
+export * from './import-one-dashboard';

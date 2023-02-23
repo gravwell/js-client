@@ -7,6 +7,7 @@
  * license. See the LICENSE file for details.
  */
 
+import { RawKitAsset } from '~/main';
 import { RawID, RawNumericID, RawUUID } from '~/value-objects';
 import { RawVersionObject } from '../version';
 import { RawConfigMacro } from './raw-config-macro';
@@ -14,10 +15,10 @@ import { RawKitItem } from './raw-kit-item';
 
 export interface RawLocalKit {
 	ID: RawID; // Neither numeric nor UUID, eg. 'io.gravwell.weather'
-	UUID: RawUUID;
+	UUID: RawUUID; // GlobalID
 
-	UID: RawNumericID;
-	GID: RawNumericID;
+	UID: RawNumericID; // UserID
+	GID?: RawNumericID; // GroupID, undefined or 0 for null
 
 	Name: string;
 	Description: string;
@@ -33,11 +34,42 @@ export interface RawLocalKit {
 	Signed: boolean;
 	AdminRequired: boolean;
 
-	Icon: '';
-	ModifiedItems: null;
-	ConflictingItems: null;
-	RequiredDependencies: null;
+	Readme: string; //null is an empty string
+	Icon: string; // null is an empty string
+	Banner: string; // null is an empty string
+	Cover: string; // null is an empty string
+
+	ModifiedItems: null | Array<RawKitItem>;
+	ConflictingItems: null | Array<RawKitItem>;
+	RequiredDependencies: Array<RawLocalKitDependency> | null; // looks be a RawRemoteKit | null
 
 	Items: Array<RawKitItem>;
 	ConfigMacros: null | Array<RawConfigMacro>;
+}
+
+export type RawLocalKitDependency = {
+	ID: string;
+	UUID: RawUUID;
+
+	Name: string;
+	Version: number;
+	Description: string;
+	Signed: boolean;
+	AdminRequired: boolean;
+	MinVersion: RawVersionObject;
+	MaxVersion: RawVersionObject;
+	Size: number;
+	Created: string;
+	Ingesters: Array<string>;
+	Tags: Array<string>; // tags associated with the kit
+	Assets: Array<RawKitAsset>;
+	Items: Array<RawKitItem>;
+};
+
+export class KitError extends Error {
+	public ModifiedItems: Array<RawKitItem>;
+	constructor(error: { Error: string; ModifiedItems: Array<RawKitItem> }) {
+		super(error.Error);
+		this.ModifiedItems = error.ModifiedItems;
+	}
 }

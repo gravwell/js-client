@@ -9,6 +9,7 @@
 
 import { UUID } from '~/value-objects';
 import { Version } from '../version';
+import { ConfigMacro } from './config-macro';
 import { KitAsset } from './kit-asset';
 import { KitDependency } from './kit-dependency';
 import { KitItem } from './kit-item';
@@ -38,4 +39,5 @@ export interface RemoteKitData {
 	assets: Array<KitAsset>;
 	dependencies: Array<KitDependency>;
 	items: Array<KitItem>;
+	configMacros: Array<ConfigMacro>;
 }

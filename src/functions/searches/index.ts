@@ -22,3 +22,4 @@ export * from './subscribe-to-one-explorer-search';
 export * from './subscribe-to-one-search';
 export * from './validate-one-query';
 export * from './helpers/create-required-search-filter-observable';
+export * from './update-one-search-detail';

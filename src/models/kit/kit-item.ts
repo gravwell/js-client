@@ -13,18 +13,34 @@ import { AutoExtractorModule } from '..';
 import { isVersion, Version } from '../version';
 
 export interface KitItemBase {
+	id: string | null; // Just exist on LocalKit assets
 	name: string;
 	hash: Array<number>;
 }
 
+export enum KIT_ITEM_TYPE {
+	license = 'license',
+	file = 'file',
+	dashboard = 'dashboard',
+	macro = 'macro',
+	actionable = 'actionable',
+	playbook = 'playbook',
+	resource = 'resource',
+	scheduledScript = 'scheduled script',
+	scheduledQuery = 'scheduled query',
+	savedQuery = 'saved query',
+	template = 'template',
+	flow = 'flow',
+	autoExtractor = 'auto extractor',
+}
+
 export interface LicenseKitItem extends KitItemBase {
-	type: 'license';
+	type: KIT_ITEM_TYPE.license;
 	license: string;
 }
 
 export interface FileKitItem extends KitItemBase {
-	id: string;
-	type: 'file';
+	type: KIT_ITEM_TYPE.file;
 	globalID: UUID;
 	description: string | null;
 	size: number;
@@ -32,44 +48,38 @@ export interface FileKitItem extends KitItemBase {
 }
 
 export interface DashboardKitItem extends KitItemBase {
-	id: string;
-	type: 'dashboard';
+	type: KIT_ITEM_TYPE.dashboard;
 	globalID: UUID;
 	description: string | null;
 }
 
 export interface MacroKitItem extends KitItemBase {
-	id: string;
-	type: 'macro';
+	type: KIT_ITEM_TYPE.macro;
 	description: string | null;
 	expansion: string;
 }
 
 export interface ActionableKitItem extends KitItemBase {
-	id: string;
-	type: 'actionable';
+	type: KIT_ITEM_TYPE.actionable;
 	globalID: UUID;
 	description: string | null;
 }
 
 export interface PlaybookKitItem extends KitItemBase {
-	id: string;
-	type: 'playbook';
+	type: KIT_ITEM_TYPE.playbook;
 	globalID: UUID;
 	description: string | null;
 }
 
 export interface ResourceKitItem extends KitItemBase {
-	id: string;
-	type: 'resource';
+	type: KIT_ITEM_TYPE.resource;
 	description: string;
 	size: number;
 	version: Version;
 }
 
 export interface ScheduledScriptKitItem extends KitItemBase {
-	id: string;
-	type: 'scheduled script';
+	type: KIT_ITEM_TYPE.scheduledScript;
 	description: string;
 	schedule: string;
 	script: string;
@@ -78,33 +88,35 @@ export interface ScheduledScriptKitItem extends KitItemBase {
 }
 
 export interface ScheduledQueryKitItem extends KitItemBase {
-	id: string;
-	type: 'scheduled query';
+	type: KIT_ITEM_TYPE.scheduledQuery;
 	description: string;
 	schedule: string;
 	query: string;
+	duration: number | null;
 	oneShot: boolean;
 	isDisabled: boolean;
 }
 
 export interface SavedQueryKitItem extends KitItemBase {
-	id: string;
-	type: 'saved query';
+	type: KIT_ITEM_TYPE.savedQuery;
 	globalID: UUID;
 	description: string | null;
 	query: string;
 }
 
 export interface TemplateKitItem extends KitItemBase {
-	id: string;
-	type: 'template';
+	type: KIT_ITEM_TYPE.template;
 	globalID: UUID;
 	description: string | null;
 }
 
+export interface FlowKitItem extends KitItemBase {
+	type: KIT_ITEM_TYPE.flow;
+	description: string | null;
+}
+
 export interface AutoExtractorKitItem extends KitItemBase {
-	id: string;
-	type: 'auto extractor';
+	type: KIT_ITEM_TYPE.autoExtractor;
 	description: string;
 	module: AutoExtractorModule;
 	tag: string;
@@ -122,68 +134,93 @@ export type KitItem =
 	| ScheduledQueryKitItem
 	| SavedQueryKitItem
 	| TemplateKitItem
+	| FlowKitItem
 	| AutoExtractorKitItem;
 
-export const isKitItem = (v: any): v is KitItem => {
+export const isKitItem = (value: unknown): value is KitItem => {
 	try {
-		const i = v as KitItem;
-		const base = i.hash.every(isNumber) && isString(i.name);
+		const kitItem = value as KitItem;
+		const base = (isNull(kitItem.id) || isString(kitItem.id)) && kitItem.hash.every(isNumber) && isString(kitItem.name);
 		if (base === false) {
 			return false;
 		}
 
-		switch (i.type) {
+		switch (kitItem.type) {
 			case 'license':
-				return isString(i.license);
+				return isString(kitItem.license);
 			case 'file':
 				return (
-					isString(i.id) &&
-					isUUID(i.globalID) &&
-					(isString(i.description) || isNull(i.description)) &&
-					isNumber(i.size) &&
-					isString(i.contentType)
+					isUUID(kitItem.globalID) &&
+					(isString(kitItem.description) || isNull(kitItem.description)) &&
+					isNumber(kitItem.size) &&
+					isString(kitItem.contentType)
 				);
 			case 'dashboard':
-				return isString(i.id) && isUUID(i.globalID) && (isString(i.description) || isNull(i.description));
+				return isUUID(kitItem.globalID) && (isString(kitItem.description) || isNull(kitItem.description));
 			case 'macro':
-				return isString(i.id) && isString(i.expansion) && (isString(i.description) || isNull(i.description));
+				return isString(kitItem.expansion) && (isString(kitItem.description) || isNull(kitItem.description));
 			case 'actionable':
-				return isString(i.id) && isUUID(i.globalID) && (isString(i.description) || isNull(i.description));
+				return isUUID(kitItem.globalID) && (isString(kitItem.description) || isNull(kitItem.description));
 			case 'playbook':
-				return isString(i.id) && isUUID(i.globalID) && (isString(i.description) || isNull(i.description));
+				return isUUID(kitItem.globalID) && (isString(kitItem.description) || isNull(kitItem.description));
 			case 'resource':
-				return isString(i.id) && isString(i.description) && isNumber(i.size) && isVersion(i.version);
+				return isString(kitItem.description) && isNumber(kitItem.size) && isVersion(kitItem.version);
 			case 'scheduled script':
 				return (
-					isString(i.id) &&
-					isString(i.description) &&
-					isString(i.schedule) &&
-					isString(i.script) &&
-					isBoolean(i.oneShot) &&
-					isBoolean(i.isDisabled)
+					isString(kitItem.description) &&
+					isString(kitItem.schedule) &&
+					isString(kitItem.script) &&
+					isBoolean(kitItem.oneShot) &&
+					isBoolean(kitItem.isDisabled)
 				);
 			case 'scheduled query':
 				return (
-					isString(i.id) &&
-					isString(i.description) &&
-					isString(i.schedule) &&
-					isString(i.query) &&
-					isBoolean(i.oneShot) &&
-					isBoolean(i.isDisabled)
+					isString(kitItem.description) &&
+					isString(kitItem.schedule) &&
+					isString(kitItem.query) &&
+					isBoolean(kitItem.oneShot) &&
+					isBoolean(kitItem.isDisabled)
 				);
 			case 'saved query':
 				return (
-					isString(i.id) &&
-					isUUID(i.globalID) &&
-					(isString(i.description) || isNull(i.description)) &&
-					isString(i.query)
+					isUUID(kitItem.globalID) &&
+					(isString(kitItem.description) || isNull(kitItem.description)) &&
+					isString(kitItem.query)
 				);
 			case 'template':
-				return isString(i.id) && isUUID(i.globalID) && (isString(i.description) || isNull(i.description));
+				return isUUID(kitItem.globalID) && (isString(kitItem.description) || isNull(kitItem.description));
+			case 'flow':
+				return isString(kitItem.name);
 			case 'auto extractor':
-				return isString(i.id) && isString(i.description) && isString(i.tag) && isString(i.module);
+				return isString(kitItem.description) && isString(kitItem.tag) && isString(kitItem.module);
 			default:
 				throw Error(`Unexpected KitItem.type`);
+		}
+	} catch {
+		return false;
+	}
+};
+
+export const kitItemHasGlobalID = (value: unknown): value is KitItem & { globalID: string } => {
+	try {
+		const kitItem = value as KitItem;
+		switch (kitItem.type) {
+			case 'file':
+				return isUUID(kitItem.globalID);
+			case 'dashboard':
+				return isUUID(kitItem.globalID);
+			case 'macro':
+				return isString(kitItem.expansion);
+			case 'actionable':
+				return isUUID(kitItem.globalID);
+			case 'playbook':
+				return isUUID(kitItem.globalID);
+			case 'saved query':
+				return isUUID(kitItem.globalID);
+			case 'template':
+				return isUUID(kitItem.globalID);
+			default:
+				return false;
 		}
 	} catch {
 		return false;

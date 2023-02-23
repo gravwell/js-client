@@ -11,7 +11,7 @@ import { RawSearch2, Search2, toSearch2 } from '~/models';
 import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, parseJSONResponse } from '../utils';
 
 export const makeGetAllPersistentSearchStatus = (context: APIContext) => {
-	const templatePath = '/api/searchctrl/all';
+	const templatePath = '/api/searchctrl?admin=true';
 	const url = buildURL(templatePath, { ...context, protocol: 'http' });
 
 	return async (): Promise<Array<Search2>> => {

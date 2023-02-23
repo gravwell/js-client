@@ -12,15 +12,21 @@ import { RawTimeframe } from '../timeframe';
 
 export type RawDashboardSearch = {
 	alias: string | null;
-	timeframe?: {} | RawTimeframe;
-	query?: string;
-	searchID?: RawNumericID;
-	color?: string;
-	reference?: {
-		id: RawUUID;
-		type: 'template' | 'savedQuery' | 'scheduledSearch';
-		extras?: {
-			defaultValue: string | null;
-		};
-	};
+	timeframe?: RawTimeframe | null | undefined;
+	query?: string | null | undefined;
+	searchID?: RawNumericID | null | undefined;
+	color?: string | null | undefined;
+	reference?:
+		| {
+				id: RawUUID;
+				type: 'template' | 'savedQuery' | 'scheduledSearch';
+				extras?:
+					| {
+							defaultValue?: string | null | undefined;
+					  }
+					| null
+					| undefined;
+		  }
+		| null
+		| undefined;
 };

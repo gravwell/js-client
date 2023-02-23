@@ -7,9 +7,10 @@
  * license. See the LICENSE file for details.
  */
 
-import { NumericID, UUID } from '~/value-objects';
+import { NumericID, UUID } from '../../value-objects';
 import { Version } from '../version';
 import { ConfigMacro } from './config-macro';
+import { KitAsset } from './kit-asset';
 import { KitItem } from './kit-item';
 
 export interface LocalKitData {
@@ -17,11 +18,17 @@ export interface LocalKitData {
 	globalID: UUID;
 
 	userID: NumericID;
-	groupIDs: Array<NumericID>;
+	groupID: NumericID | null;
 
 	name: string;
 	description: string;
 	labels: Array<string>;
+
+	/** Metadata */
+	readme: string | null;
+	bannerID: string | null;
+	coverID: string | null;
+	iconID: string | null;
 
 	installationDate: Date;
 
@@ -36,5 +43,36 @@ export interface LocalKitData {
 	requiresAdminPrivilege: boolean;
 
 	items: Array<KitItem>;
+	modifiedItems: Array<KitItem>;
+	conflictingItems: Array<KitItem>;
+
 	configMacros: Array<ConfigMacro>;
+	requiredDependencies: Array<LocalKitDependency>; // create a LocalKitDependency interface
 }
+
+// TODO: This look very similar to the `RemoteKit` but still missing some properties, so we need to check if this interface can be deleted to use the `KitDependency` that just has the ID and fetch the `RemoteKit` when necessary (may we can create something like `BaseRemoteKit` with the common properties)
+/** The Metadata from the Kit that is a dependency of another Kit */
+export type LocalKitDependency = {
+	customID: string;
+	globalID: UUID;
+
+	name: string;
+	description: string;
+	version: Version;
+
+	gravwellCompatibility: {
+		min: Version;
+		max: Version;
+	};
+
+	createdDate: Date;
+	isSigned: boolean;
+	requiresAdminPrivilege: boolean;
+
+	size: number;
+	tags: Array<string>; // tags associated with the kit
+	ingesters: Array<string>;
+
+	assets: Array<KitAsset>;
+	items: Array<KitItem>;
+};

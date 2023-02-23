@@ -10,7 +10,7 @@
 import { UserRole } from './user';
 
 export interface CreatableUser {
-	user: string;
+	username: string;
 	password: string;
 	name: string;
 	email: string;

@@ -11,7 +11,7 @@ import { Dashboard, RawDashboard, toDashboard } from '~/models';
 import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, parseJSONResponse } from '../utils';
 
 export const makeGetAllDashboards = (context: APIContext) => {
-	const path = '/api/dashboards/all';
+	const path = '/api/dashboards?admin=true';
 	const url = buildURL(path, { ...context, protocol: 'http' });
 
 	return async (): Promise<Array<Dashboard>> => {

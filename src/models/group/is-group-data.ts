@@ -7,14 +7,19 @@
  * license. See the LICENSE file for details.
  */
 
-import { isNull, isString } from 'lodash';
+import { isBoolean, isNull, isString } from 'lodash';
 import { isNumericID } from '~/value-objects';
 import { GroupData } from './group-data';
 
 export const isGroupData = (value: unknown): value is GroupData => {
 	try {
 		const g = value as GroupData;
-		return isNumericID(g.id) && isString(g.name) && (isString(g.description) || isNull(g.description));
+		return (
+			isNumericID(g.id) &&
+			isString(g.name) &&
+			(isString(g.description) || isNull(g.description)) &&
+			isBoolean(g.isSynced)
+		);
 	} catch {
 		return false;
 	}

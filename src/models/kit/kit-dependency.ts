@@ -17,7 +17,7 @@ export type KitDependency = {
 	};
 };
 
-export const isKitDependency = (v: any): v is KitDependency => {
+export const isKitDependency = (v: unknown): v is KitDependency => {
 	try {
 		const dep = v as KitDependency;
 		return isID(dep.id) && isVersion(dep.compatibility.min);

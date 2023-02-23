@@ -7,7 +7,7 @@
  * license. See the LICENSE file for details.
  */
 
-import { isNull } from 'lodash';
+import { isNull, isUndefined } from 'lodash';
 import { omitUndefinedShallow } from '~/functions/utils';
 import { RawUpdatableGroup } from './raw-updatable-group';
 import { UpdatableGroup } from './updatable-group';
@@ -17,4 +17,5 @@ export const toRawUpdatableGroup = (data: UpdatableGroup): RawUpdatableGroup =>
 		Name: data.name,
 		// TODO: If we send an empty string, it'll be ignored, that's why we need that space
 		Desc: isNull(data.description) ? ' ' : data.description,
+		Synced: isUndefined(data.isSynced) ? undefined : data.isSynced,
 	});

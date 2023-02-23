@@ -7,7 +7,7 @@
  * license. See the LICENSE file for details.
  */
 
-import { isArray, isBoolean, isDate, isNull, isNumber, isString } from 'lodash';
+import { isArray, isBoolean, isDate, isNull, isNumber, isString, isUndefined } from 'lodash';
 import { DashboardData, isTimeframe, isVersion } from '~/models';
 import { isNumericID, isUUID } from '~/value-objects';
 import { isDashboardLiveUpdate } from './is-dashboard-live-update';
@@ -17,6 +17,7 @@ import { isDashboardTile } from './is-dashboard-tile';
 export const isDashboardData = (value: unknown): value is DashboardData => {
 	try {
 		const d = value as DashboardData;
+
 		return (
 			isNumericID(d.id) &&
 			(isNull(d.globalID) || isUUID(d.globalID)) &&
@@ -33,7 +34,7 @@ export const isDashboardData = (value: unknown): value is DashboardData => {
 			isVersion(d.version) &&
 			isBoolean(d.updateOnZoom) &&
 			isDashboardLiveUpdate(d.liveUpdate) &&
-			isTimeframe(d.timeframe) &&
+			(isUndefined(d.timeframe) || isTimeframe(d.timeframe)) &&
 			isArray(d.searches) &&
 			d.searches.every(isDashboardSearch) &&
 			isArray(d.tiles) &&

@@ -29,6 +29,9 @@ export interface RawCreatableDashboard {
 		grid?: {
 			gutter?: number;
 			margin?: number;
+
+			borderWidth?: number;
+			borderRadius?: number;
 		};
 
 		searches: Array<{
@@ -46,6 +49,7 @@ export interface RawCreatableDashboard {
 		}>;
 		tiles: Array<{
 			id: RawNumericID;
+			hideZoom: boolean | undefined;
 			title: string;
 			renderer: string;
 			span: { col: number; row: number; x: number; y: number };

@@ -7,8 +7,10 @@
  * license. See the LICENSE file for details.
  */
 
+import { RawKitAsset } from '~/models/kit/raw-kit-asset';
 import { RawID, RawUUID } from '~/value-objects';
 import { RawVersionObject } from '../version';
+import { RawConfigMacro } from './raw-config-macro';
 import { RawKitItem } from './raw-kit-item';
 
 export interface RawRemoteKit {
@@ -31,12 +33,7 @@ export interface RawRemoteKit {
 	Signed: boolean;
 	AdminRequired: boolean;
 
-	Assets: Array<{
-		Type: 'image' | 'readme';
-		Source: string;
-		Legend: string;
-		Featured: boolean;
-	}>;
+	Assets: Array<RawKitAsset>;
 
 	Dependencies: Array<{
 		ID: RawID;
@@ -45,5 +42,5 @@ export interface RawRemoteKit {
 
 	Items: Array<RawKitItem>;
 
-	ConfigMacros: null;
+	ConfigMacros: Array<RawConfigMacro> | null;
 }

@@ -75,7 +75,7 @@ describe(
 				email: userSeed + '@example.com',
 				password: 'changeme',
 				role: 'analyst',
-				user: userSeed,
+				username: userSeed,
 			};
 			user = await createOneUser(data);
 

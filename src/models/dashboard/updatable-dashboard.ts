@@ -7,12 +7,12 @@
  * license. See the LICENSE file for details.
  */
 
+import { UpdatableDashboardTile } from '~/main';
 import { NumericID } from '~/value-objects';
 import { CreatableTimeframe } from '../timeframe';
 import { Version } from '../version';
 import { CreatableDashboardSearch } from './creatable-dashboard-search';
 import { DashboardLiveUpdate } from './dashboard-live-update';
-import { DashboardTile } from './dashboard-tile';
 
 export interface UpdatableDashboard {
 	id: NumericID;
@@ -26,7 +26,7 @@ export interface UpdatableDashboard {
 	version?: Version;
 	timeframe?: CreatableTimeframe;
 	searches?: Array<CreatableDashboardSearch>;
-	tiles?: Array<DashboardTile>;
+	tiles?: Array<UpdatableDashboardTile>;
 
 	updateOnZoom?: boolean;
 
@@ -36,4 +36,6 @@ export interface UpdatableDashboard {
 		gutter?: number | null;
 		margin?: number | null;
 	};
+
+	trivial?: boolean;
 }

@@ -20,8 +20,9 @@ import { makeGetOneDashboard } from './get-one-dashboard';
 export const makeUpdateOneDashboard = (context: APIContext) => {
 	const getOneDashboard = makeGetOneDashboard(context);
 
-	return async (data: UpdatableDashboard): Promise<Dashboard> => {
-		const templatePath = '/api/dashboards/{dashboardID}';
+	return async (requestData: UpdatableDashboard): Promise<Dashboard> => {
+		const { trivial, ...data } = requestData;
+		const templatePath = trivial ? `/api/dashboards/{dashboardID}?trivial=true` : '/api/dashboards/{dashboardID}';
 		const url = buildURL(templatePath, { ...context, protocol: 'http', pathParams: { dashboardID: data.id } });
 
 		try {

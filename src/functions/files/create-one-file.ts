@@ -17,12 +17,12 @@ import {
 	HTTPRequestOptions,
 	parseJSONResponse,
 } from '../utils';
-import { makeGetOneFile } from './get-one-file';
+import { makeGetOneFileDetails } from './get-one-file-details';
 import { makeUpdateOneFile } from './update-one-file';
 
 export const makeCreateOneFile = (context: APIContext) => {
 	const updateOneFile = makeUpdateOneFile(context);
-	const getOneFile = makeGetOneFile(context);
+	const getOneFile = makeGetOneFileDetails(context);
 
 	const filesPath = '/api/files';
 	const url = buildURL(filesPath, { ...context, protocol: 'http' });

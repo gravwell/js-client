@@ -50,7 +50,7 @@ describe(
 				email: username + '@example.com',
 				password: 'changeme',
 				role: 'analyst',
-				user: username,
+				username,
 			};
 
 			user = await createOneUser(data);

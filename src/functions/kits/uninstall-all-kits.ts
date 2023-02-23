@@ -15,9 +15,9 @@ export const makeUninstallAllKits = (context: APIContext) => {
 	const getAllLocalKits = makeGetAllLocalKits(context);
 	const uninstallOneKit = makeUninstallOneKit(context);
 
-	return async (): Promise<void> => {
+	return async (force: boolean): Promise<void> => {
 		const kits = await getAllLocalKits();
-		const deletePs = kits.map(k => k.globalID).map(id => uninstallOneKit(id));
+		const deletePs = kits.map(k => k.globalID).map(id => uninstallOneKit(id, force));
 		await Promise.all(deletePs);
 	};
 };
