@@ -11,6 +11,7 @@ import { isArray, isString } from 'lodash';
 import { RawJSON, RawNumericID } from '~/value-objects';
 import { RawQuery } from '../../query';
 import { RawDataExplorerEntry } from '../raw-data-explorer-entry';
+import { RawSearchDetails } from '../raw-search-details';
 import { SearchMessageCommands } from '../search-message-commands';
 import {
 	RawSearchMessageReceivedRequestEntriesWithinRange,
@@ -50,40 +51,7 @@ export interface RawSearchAttachedMessageReceived {
 		Subproto: string;
 		RendererMod: string;
 		RendererCmd: string;
-		Info: {
-			ID: string;
-			UID: RawNumericID;
-
-			UserQuery: RawQuery;
-			EffectiveQuery: RawQuery;
-
-			Preview: boolean;
-			StartRange: string; // timestamp
-			EndRange: string; // timestamp
-
-			Started: string; // timestamp
-			LastUpdate: string; // timestamp
-			Duration: string; // eg. "0s" or "150.21ms"
-
-			CollapsingIndex: number;
-			Descending: boolean;
-			IndexSize: number;
-			ItemCount: number;
-			Metadata?: RawJSON;
-			MinZoomWindow?: number;
-			NoHistory: boolean;
-			RenderDownloadFormats: Array<string>;
-			StoreSize: number; // integer
-			TimeZoomDisabled: boolean;
-			Tags: Array<string>;
-
-			Import: {
-				Imported: boolean;
-				Time: string; // timestamp
-				BatchName: string;
-				BatchInfo: string;
-			};
-		};
+		Info: RawSearchDetails;
 		Error?: string;
 	};
 }

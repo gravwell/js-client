@@ -13,7 +13,7 @@ import { RawCreatableUser } from './raw-creatable-user';
 
 export const toRawCreatableUser = (creatable: CreatableUser): RawCreatableUser =>
 	omitUndefinedShallow({
-		User: creatable.user,
+		User: creatable.username,
 		Pass: creatable.password,
 		Name: creatable.name,
 		Email: creatable.email,

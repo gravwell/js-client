@@ -12,8 +12,8 @@ import { v4 as uuidv4 } from 'uuid';
 import { integrationTestSpecDef, sleep, TEST_BASE_API_CONTEXT } from '~/tests';
 import { makeGetAllTags } from '..';
 import { makeIngestMultiLineEntry } from '../ingestors';
-import { makeSubscribeToOneSearch } from '.';
 import { makeStopOneSearch } from './stop-one-search';
+import { makeSubscribeToOneSearch } from './subscribe-to-one-search';
 
 interface Entry {
 	timestamp: string;

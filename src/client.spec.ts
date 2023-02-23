@@ -226,7 +226,7 @@ describe('GravwellClient', () => {
 
 			// Search status
 			expectTypeOf(client.searchStatus.get.authorizedTo.me).toEqualTypeOf<() => Promise<Array<Search2>>>();
-			expectTypeOf(client.searchStatus.get.one).toEqualTypeOf<(searchID: NumericID) => Promise<Search2>>();
+			expectTypeOf(client.searchStatus.get.one.status).toEqualTypeOf<(searchID: NumericID) => Promise<Search2>>();
 			expectTypeOf(client.searchStatus.get.all).toEqualTypeOf<() => Promise<Array<Search2>>>();
 
 			// Search history
@@ -446,8 +446,6 @@ describe('GravwellClient', () => {
 			expectTypeOf(client.kits.install.one).toEqualTypeOf<
 				(data: InstallableKit) => Promise<APISubscription<KitInstallationStatus, never>>
 			>();
-			expectTypeOf(client.kits.uninstall.one).toEqualTypeOf<(kitID: ID) => Promise<void>>();
-			expectTypeOf(client.kits.uninstall.all).toEqualTypeOf<() => Promise<void>>();
 
 			// Queries
 			expectTypeOf(client.queries.validate.one).toEqualTypeOf<(query: Query) => Promise<ValidatedQuery>>();

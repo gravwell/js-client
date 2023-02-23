@@ -75,6 +75,7 @@ export const toKitArchive = (raw: RawKitArchive, scheduledTasks: Array<Scheduled
 		savedQueries: toStringArray(raw.SearchLibraries ?? []),
 		scheduledSearches: scheduledSearchIDs,
 		scripts: scheduledScriptIDs,
+		flows: toStringArray(raw.Flows ?? []),
 		templates: toStringArray(raw.Templates ?? []),
 	};
 };

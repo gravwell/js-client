@@ -41,6 +41,7 @@ export interface RawKitArchive {
 	SearchLibraries?: Array<RawUUID>;
 	ScheduledSearches?: Array<RawNumericID>;
 	Templates?: Array<RawUUID>;
+	Flows?: Array<RawUUID>;
 }
 
 export interface RawDeployRules {

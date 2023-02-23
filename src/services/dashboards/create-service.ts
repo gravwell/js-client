@@ -14,6 +14,7 @@ import {
 	makeGetDashboardsAuthorizedToMe,
 	makeGetManyDashboards,
 	makeGetOneDashboard,
+	makeImportOneDashboard,
 	makeUpdateOneDashboard,
 } from '~/functions/dashboards';
 import { APIContext } from '~/functions/utils';
@@ -39,5 +40,8 @@ export const createDashboardsService = (context: APIContext): DashboardsService 
 
 	delete: {
 		one: makeDeleteOneDashboard(context),
+	},
+	import: {
+		one: makeImportOneDashboard(context),
 	},
 });

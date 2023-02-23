@@ -13,5 +13,5 @@ import { isUndefined, omitBy } from 'lodash';
 // type Contains<A, B> = B extends Extract<A, B> ? true : false;
 // type PartialAndExcludeProps<T, K extends keyof T, E> = Omit<T, K> & { [P in K]?: Exclude<T[P], E> };
 
-export const omitUndefinedShallow = <O>(o: O): { [P in keyof O]: Exclude<O[P], undefined> } =>
+export const omitUndefinedShallow = <O extends object>(o: O): { [P in keyof O]: Exclude<O[P], undefined> } =>
 	omitBy(o, isUndefined) as any;

@@ -15,8 +15,15 @@ export type RawDashboardTile = {
 	id?: RawNumericID;
 	title: string;
 	renderer: string;
+	hideZoom?: boolean;
 	/** Legacy support: `span` may be undefined. */
-	span?: { col: number; row: number; x?: number; y?: number };
+	span?: {
+		col: number;
+		row: number;
+		/** Legacy support: `x' and 'y` may be undefined. */
+		x?: number | undefined;
+		y?: number | undefined;
+	};
 	searchesIndex: number;
 	rendererOptions?: DashboardRendererOptions;
 };

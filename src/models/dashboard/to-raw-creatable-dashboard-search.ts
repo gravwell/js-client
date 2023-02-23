@@ -33,6 +33,8 @@ export const toRawCreatableDashboardSearch = (data: CreatableDashboardSearch): R
 					return { id: data.savedQueryID, type: 'savedQuery', extras };
 				case 'scheduledSearch':
 					return { id: data.scheduledSearchID, type: 'scheduledSearch', extras };
+				case 'legacy':
+					return undefined;
 			}
 		})(),
 	});

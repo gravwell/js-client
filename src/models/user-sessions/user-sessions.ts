@@ -10,10 +10,12 @@
 export interface UserSessions {
 	userID: string;
 	username: string;
-	sessions: Array<{
-		origin: string;
-		lastHit: string;
-		isTemporary: boolean;
-		isSynced: boolean;
-	}>;
+	sessions: Array<Session>;
+}
+
+export interface Session {
+	origin: string;
+	lastHit: string;
+	isTemporary: boolean;
+	isSynced: boolean;
 }

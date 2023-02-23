@@ -32,3 +32,4 @@ export * from './is-dashboard-tile';
 export * from './from-dashboard-data-to-dashboard';
 export * from './dashboard-data';
 export * from './is-dashboard-data';
+export * from './updatable-dashboard-tile';

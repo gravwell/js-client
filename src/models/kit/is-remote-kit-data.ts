@@ -19,7 +19,7 @@ export const isRemoteKitData = (v: unknown): v is RemoteKitData => {
 	try {
 		const k = v as RemoteKitData;
 		return (
-			isUUID(k.customID) &&
+			isString(k.customID) &&
 			isUUID(k.globalID) &&
 			isString(k.name) &&
 			isString(k.description) &&

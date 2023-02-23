@@ -66,7 +66,7 @@ describe(
 				email: username + '@example.com',
 				password: 'changeme',
 				role: 'analyst',
-				user: username,
+				username,
 			};
 			user = await createOneUser(data);
 		});
@@ -124,16 +124,16 @@ describe(
 			'Should update the user locked state',
 			integrationTest(async () => {
 				expect(isValidUser(user)).toBeTrue();
-				expect(user.locked).toBeFalse();
+				expect(user.isLocked).toBeFalse();
 
-				await updateOneUser({ id: user.id, locked: true });
+				await updateOneUser({ id: user.id, isLocked: true });
 				const lockedUser = await getOneUser(user.id);
-				expect(lockedUser.locked).toBeTrue();
+				expect(lockedUser.isLocked).toBeTrue();
 				expect(isValidUser(lockedUser)).toBeTrue();
 
-				await updateOneUser({ id: user.id, locked: false });
+				await updateOneUser({ id: user.id, isLocked: false });
 				const unlockedUser = await getOneUser(user.id);
-				expect(unlockedUser.locked).toBeFalse();
+				expect(unlockedUser.isLocked).toBeFalse();
 				expect(isValidUser(unlockedUser)).toBeTrue();
 			}),
 		);

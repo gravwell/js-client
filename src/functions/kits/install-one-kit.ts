@@ -25,10 +25,13 @@ import {
 	parseJSONResponse,
 } from '../utils';
 
-export const makeInstallOneKit = (context: APIContext) => {
+export const makeInstallOneKit = (
+	context: APIContext,
+): ((data: InstallableKit) => Promise<APISubscription<KitInstallationStatus, never>>) => {
 	const queueOneKitForInstallation = makeQueueOneKitForInstallation(context);
 	const getOneKitInstallationStatus = makeGetOneKitInstallationStatus(context);
-	const subscribeToOneKitInstallationStatus = (installationID: ID) =>
+
+	const subscribeToOneKitInstallationStatus = (installationID: ID): Observable<KitInstallationStatus> =>
 		new Observable<KitInstallationStatus>(observer => {
 			(async () => {
 				while (observer.closed === false) {
@@ -61,7 +64,7 @@ export const makeInstallOneKit = (context: APIContext) => {
 			_received$.next(status);
 		});
 
-		const close = () => {
+		const close = (): void => {
 			_received$.complete();
 			_sent$.complete();
 			statusSub.unsubscribe();
@@ -97,7 +100,7 @@ const makeQueueOneKitForInstallation =
 	(context: APIContext) =>
 	async (data: InstallableKit): Promise<NumericID> => {
 		const templatePath = '/api/kits/{kitID}';
-		const url = buildURL(templatePath, { ...context, protocol: 'http' });
+		const url = buildURL(templatePath, { ...context, protocol: 'http', pathParams: { kitID: data.id } });
 
 		try {
 			const baseRequestOptions: HTTPRequestOptions = {
@@ -106,7 +109,7 @@ const makeQueueOneKitForInstallation =
 			};
 			const req = buildHTTPRequestWithAuthFromContext(context, baseRequestOptions);
 
-			const raw = await context.fetch(url, { ...req, method: 'POST' });
+			const raw = await context.fetch(url, { ...req, method: 'PUT' });
 			const rawStatusID = await parseJSONResponse<RawNumericID>(raw);
 			return toNumericID(rawStatusID);
 		} catch (err) {

@@ -10,6 +10,7 @@
 import {
 	makeBuildOneLocalKit,
 	makeDeleteOneKitArchive,
+	makeDeleteOneLocalKit,
 	makeDownloadOneLocalKit,
 	makeDownloadRemoteKit,
 	makeGetAllLocalKits,
@@ -18,6 +19,7 @@ import {
 	makeGetOneLocalKit,
 	makeGetOneRemoteKit,
 	makeInstallOneKit,
+	makeStageOneRemoteKit,
 	makeUninstallAllKits,
 	makeUninstallOneKit,
 	makeUploadOneLocalKit,
@@ -58,6 +60,10 @@ export const createKitsService = (context: APIContext): KitsService => ({
 		},
 	},
 
+	stage: {
+		one: makeStageOneRemoteKit(context),
+	},
+
 	install: {
 		one: makeInstallOneKit(context),
 	},
@@ -65,6 +71,10 @@ export const createKitsService = (context: APIContext): KitsService => ({
 	uninstall: {
 		one: makeUninstallOneKit(context),
 		all: makeUninstallAllKits(context),
+	},
+
+	delete: {
+		one: makeDeleteOneLocalKit(context),
 	},
 
 	archives: {

@@ -20,7 +20,7 @@ export interface UpdatableUser {
 	currentPassword?: string;
 
 	role?: UserRole;
-	locked?: boolean;
+	isLocked?: boolean;
 
 	searchGroupID?: NumericID | null;
 }

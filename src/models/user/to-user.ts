@@ -20,7 +20,7 @@ export const toUser = (raw: RawUser): User => ({
 	name: raw.Name,
 	email: raw.Email,
 	role: raw.Admin ? 'admin' : 'analyst',
-	locked: raw.Locked,
+	isLocked: raw.Locked,
 	searchGroupID: isNumber(raw.DefaultGID) ? raw.DefaultGID.toString() : null,
 	lastActivityDate: ((): Date | null => {
 		// !WARNING: If we set the TS to January 01, 0001, it means that there's no last activity date
@@ -29,4 +29,5 @@ export const toUser = (raw: RawUser): User => ({
 		const date = new Date(raw.TS);
 		return date.getTime() <= nullDate.getTime() ? null : date;
 	})(),
+	synced: raw.Synced,
 });

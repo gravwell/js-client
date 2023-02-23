@@ -7,14 +7,19 @@
  * license. See the LICENSE file for details.
  */
 
+import { assertUnreachable } from '../../functions/utils/assert-unreachable';
 import { ScheduledTaskType } from '../scheduled-task/scheduled-task';
 import { getScheduledTaskType } from '../scheduled-task/to-scheduled-task';
 import { toVersion } from '../version';
-import { KitItem, KitItemBase } from './kit-item';
+import { KIT_ITEM_TYPE, KitItem, KitItemBase } from './kit-item';
 import { RawKitItem } from './raw-kit-item';
+
+const isKitItemFlow = (raw: { AdditionalInfo: { ScheduledType: string } }): boolean =>
+	raw.AdditionalInfo.ScheduledType === 'flow';
 
 export const toKitItem = (raw: RawKitItem): KitItem => {
 	const base: KitItemBase = {
+		id: raw.ID ?? null,
 		name: raw.Name,
 		hash: raw.Hash,
 	};
@@ -23,12 +28,15 @@ export const toKitItem = (raw: RawKitItem): KitItem => {
 		return ['', 'undefined'].includes(trim) ? null : trim;
 	};
 
+	if (isKitItemFlow(raw as any)) {
+		raw.Type = 'flow';
+	}
+
 	switch (raw.Type) {
 		case 'file':
 			return {
 				...base,
-				id: raw.ID,
-				type: 'file',
+				type: KIT_ITEM_TYPE.file,
 				globalID: raw.AdditionalInfo.UUID,
 				name: raw.AdditionalInfo.Name,
 				description: cleanDescription(raw.AdditionalInfo.Description),
@@ -38,8 +46,7 @@ export const toKitItem = (raw: RawKitItem): KitItem => {
 		case 'dashboard':
 			return {
 				...base,
-				id: raw.ID,
-				type: 'dashboard',
+				type: KIT_ITEM_TYPE.dashboard,
 				globalID: raw.AdditionalInfo.UUID,
 				name: raw.AdditionalInfo.Name,
 				description: cleanDescription(raw.AdditionalInfo.Description),
@@ -47,14 +54,13 @@ export const toKitItem = (raw: RawKitItem): KitItem => {
 		case 'license':
 			return {
 				...base,
-				type: 'license',
+				type: KIT_ITEM_TYPE.license,
 				license: raw.AdditionalInfo,
 			};
 		case 'macro':
 			return {
 				...base,
-				id: raw.ID,
-				type: 'macro',
+				type: KIT_ITEM_TYPE.macro,
 				name: raw.AdditionalInfo.Name,
 				description: cleanDescription(raw.AdditionalInfo.Description),
 				expansion: raw.AdditionalInfo.Expansion,
@@ -62,8 +68,7 @@ export const toKitItem = (raw: RawKitItem): KitItem => {
 		case 'pivot':
 			return {
 				...base,
-				id: raw.ID,
-				type: 'actionable',
+				type: KIT_ITEM_TYPE.actionable,
 				globalID: raw.AdditionalInfo.UUID,
 				name: raw.AdditionalInfo.Name,
 				description: cleanDescription(raw.AdditionalInfo.Description),
@@ -71,8 +76,7 @@ export const toKitItem = (raw: RawKitItem): KitItem => {
 		case 'playbook':
 			return {
 				...base,
-				id: raw.ID,
-				type: 'playbook',
+				type: KIT_ITEM_TYPE.playbook,
 				globalID: raw.AdditionalInfo.UUID,
 				name: raw.AdditionalInfo.Name,
 				description: cleanDescription(raw.AdditionalInfo.Description),
@@ -80,18 +84,23 @@ export const toKitItem = (raw: RawKitItem): KitItem => {
 		case 'resource':
 			return {
 				...base,
-				id: raw.ID,
-				type: 'resource',
-				name: raw.AdditionalInfo.ResourceName,
+				type: KIT_ITEM_TYPE.resource,
+				name: raw.AdditionalInfo.ResourceName ?? raw.Name,
 				description: raw.AdditionalInfo.Description,
 				size: raw.AdditionalInfo.Size,
 				version: toVersion(raw.AdditionalInfo.VersionNumber),
+			};
+		case 'flow':
+			return {
+				...base,
+				type: KIT_ITEM_TYPE.flow,
+				name: raw.AdditionalInfo.Name,
+				description: cleanDescription(raw.AdditionalInfo.Description),
 			};
 		case 'scheduled search': {
 			const type: ScheduledTaskType = getScheduledTaskType(raw.AdditionalInfo);
 			const scheduledBase = {
 				...base,
-				id: raw.ID,
 				name: raw.AdditionalInfo.Name,
 				description: raw.AdditionalInfo.Description,
 				schedule: raw.AdditionalInfo.Schedule,
@@ -103,24 +112,24 @@ export const toKitItem = (raw: RawKitItem): KitItem => {
 				case 'query':
 					return {
 						...scheduledBase,
-						type: 'scheduled query',
+						type: KIT_ITEM_TYPE.scheduledQuery,
 						query: raw.AdditionalInfo.SearchString ?? '',
+						duration: raw.AdditionalInfo.Duration ?? null,
 					};
 				case 'script':
 					return {
 						...scheduledBase,
-						type: 'scheduled script',
+						type: KIT_ITEM_TYPE.scheduledScript,
 						script: raw.AdditionalInfo.Script ?? '',
 					};
+				default:
+					return assertUnreachable(type);
 			}
-			break;
 		}
-
 		case 'searchlibrary':
 			return {
 				...base,
-				id: raw.ID,
-				type: 'saved query',
+				type: KIT_ITEM_TYPE.savedQuery,
 				globalID: raw.AdditionalInfo.UUID,
 				name: raw.AdditionalInfo.Name,
 				description: cleanDescription(raw.AdditionalInfo.Description),
@@ -129,8 +138,7 @@ export const toKitItem = (raw: RawKitItem): KitItem => {
 		case 'template':
 			return {
 				...base,
-				id: raw.ID,
-				type: 'template',
+				type: KIT_ITEM_TYPE.template,
 				globalID: raw.AdditionalInfo.UUID,
 				name: raw.AdditionalInfo.Name,
 				description: cleanDescription(raw.AdditionalInfo.Description),
@@ -138,8 +146,7 @@ export const toKitItem = (raw: RawKitItem): KitItem => {
 		case 'autoextractor':
 			return {
 				...base,
-				id: raw.ID,
-				type: 'auto extractor',
+				type: KIT_ITEM_TYPE.autoExtractor,
 				name: raw.AdditionalInfo.name,
 				description: raw.AdditionalInfo.desc,
 				tag: raw.AdditionalInfo.tag,

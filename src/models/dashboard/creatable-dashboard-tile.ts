@@ -12,6 +12,8 @@ import { DashboardRendererOptions } from './dashboard-renderer-options';
 export type CreatableDashboardTile = {
 	title: string;
 
+	hideZoom: boolean;
+
 	/** Index for the related search in Dashboard.searches. */
 	searchIndex: number;
 

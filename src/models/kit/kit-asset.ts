@@ -11,20 +11,21 @@ import { isBoolean, isString } from 'lodash';
 
 export type KitAsset = ReadmeKitAsset | ImageKitAsset;
 
-export interface ReadmeKitAsset {
+export type ReadmeKitAsset = {
 	type: 'readme';
 	url: string;
 	isFeatured: boolean;
-}
+};
 
-export interface ImageKitAsset {
+export type ImageKitAsset = {
 	type: 'image';
 	description: string;
 	url: string;
 	isFeatured: boolean;
-}
+	isBanner: boolean;
+};
 
-export const isKitAsset = (v: any): v is KitAsset => {
+export const isKitAsset = (v: unknown): v is KitAsset => {
 	try {
 		const k = v as KitAsset;
 		switch (k.type) {

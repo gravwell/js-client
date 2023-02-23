@@ -16,4 +16,5 @@ export const toGroup = (raw: RawGroup): Group => ({
 	id: raw.GID.toString(),
 	name: raw.Name,
 	description: raw.Desc.trim() === '' ? null : raw.Desc.trim(),
+	isSynced: raw.Synced,
 });
