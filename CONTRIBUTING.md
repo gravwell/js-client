@@ -11,7 +11,7 @@ With an existing issue associated with your work, create a branch for your work 
 Other branch conventions are:
 
 - `dev` for the latest development version
-- `master` for the latest general released version
+- `main` for the latest general released version
 
 Once your work is done and [conforms with our style conventions](#style-conventions):
 
