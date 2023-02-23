@@ -2,7 +2,7 @@ name: Validate Pull Request for Production
 
 on:
   pull_request:
-    branches: [master]
+    branches: [main]
 
 jobs:
   lint:

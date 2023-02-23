@@ -28,6 +28,7 @@ export const toRawBuildableKit = (data: BuildableKit): RawBuildableKit =>
 		Dashboards: data.dashboardIDs.map(toRawNumericID),
 		Extractors: data.autoExtractorIDs,
 		Files: data.fileIDs,
+		Flows: data.flowIDs,
 		Macros: data.macroIDs.map(toRawNumericID),
 		Pivots: data.actionableIDs,
 		Playbooks: data.playbookIDs,

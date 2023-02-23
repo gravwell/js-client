@@ -45,12 +45,14 @@ export interface UpdatableUserInformation {
 	username?: string;
 	name?: string;
 	email?: string;
+	role?: 'admin' | 'analyst';
 }
 
 interface RawUpdatableUserInformation {
 	User?: string;
 	Name?: string;
 	Email?: string;
+	Admin?: boolean;
 }
 
 const toRawUpdatableUserInformation = (updatable: UpdatableUserInformation): RawUpdatableUserInformation =>
@@ -58,4 +60,5 @@ const toRawUpdatableUserInformation = (updatable: UpdatableUserInformation): Raw
 		User: updatable.username,
 		Name: updatable.name,
 		Email: updatable.email,
+		Admin: updatable.role === 'admin',
 	});

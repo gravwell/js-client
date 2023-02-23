@@ -15,6 +15,7 @@ export const toRawCreatableDashboardTile = (data: CreatableDashboardTile): RawCr
 	id: random(0, Number.MAX_SAFE_INTEGER),
 	title: data.title,
 	renderer: data.renderer,
+	hideZoom: data.hideZoom,
 	span: { col: data.dimensions.columns, row: data.dimensions.rows, x: data.position.x, y: data.position.y },
 	searchesIndex: data.searchIndex,
 	rendererOptions: data.rendererOptions ?? {},

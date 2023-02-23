@@ -8,9 +8,9 @@
  */
 
 export interface RawTimeframe {
-	durationString?: string | null;
-	timeframe?: string | null;
-	timezone?: string | null;
-	start?: string | null; // Timestamp
-	end?: string | null; // Timestamp
+	durationString?: string | null | undefined;
+	timeframe?: string | null | undefined;
+	timezone?: string | null | undefined;
+	start?: string | null | undefined; // Timestamp
+	end?: string | null | undefined; // Timestamp
 }

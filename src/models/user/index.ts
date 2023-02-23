@@ -15,6 +15,5 @@ export * from './to-raw-creatable-user';
 export * from './to-user';
 export * from './updatable-user';
 export * from './user';
-export * from './from-user-data-to-user';
 export * from './user-data';
 export * from './is-valid-user-data';

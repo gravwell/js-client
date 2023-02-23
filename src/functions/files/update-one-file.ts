@@ -16,10 +16,10 @@ import {
 	HTTPRequestOptions,
 	parseJSONResponse,
 } from '../utils';
-import { makeGetOneFile } from './get-one-file';
+import { makeGetOneFileDetails } from './get-one-file-details';
 
 export const makeUpdateOneFile = (context: APIContext) => {
-	const getOneFile = makeGetOneFile(context);
+	const getOneFile = makeGetOneFileDetails(context);
 
 	return async (data: UpdatableFile): Promise<FileMetadata> => {
 		const templatePath = '/api/files/{fileID}';
@@ -29,7 +29,26 @@ export const makeUpdateOneFile = (context: APIContext) => {
 			const current = await getOneFile(data.id);
 			const updatedKeys = new Set(Object.keys(data)) as Set<keyof UpdatableFile>;
 
-			const metadataP = (async (): Promise<any> => {
+			const fileUpdate = async (): Promise<any> => {
+				const targettedKeys: Array<keyof Required<UpdatableFile>> = ['file'];
+				const hasTargettedKey = targettedKeys.some(key => updatedKeys.has(key));
+				if (!hasTargettedKey) {
+					return Promise.resolve();
+				}
+
+				const formData = new FormData();
+				formData.append('file', data.file);
+
+				const baseRequestOptions: HTTPRequestOptions = {
+					body: formData as any,
+				};
+				const req = buildHTTPRequestWithAuthFromContext(context, baseRequestOptions);
+
+				const raw = await context.fetch(url, { ...req, method: 'PUT' });
+				await parseJSONResponse<RawBaseFileMetadata>(raw);
+			};
+
+			const metadataUpdate = async (): Promise<any> => {
 				const targettedKeys: Array<keyof Required<UpdatableFile>> = [
 					'name',
 					'description',
@@ -51,28 +70,11 @@ export const makeUpdateOneFile = (context: APIContext) => {
 
 				const raw = await context.fetch(url, { ...req, method: 'PATCH' });
 				await parseJSONResponse<RawBaseFileMetadata>(raw);
-			})();
+			};
 
-			const fileP = (async (): Promise<any> => {
-				const targettedKeys: Array<keyof Required<UpdatableFile>> = ['file'];
-				const hasTargettedKey = targettedKeys.some(key => updatedKeys.has(key));
-				if (!hasTargettedKey) {
-					return Promise.resolve();
-				}
+			await metadataUpdate();
+			await fileUpdate();
 
-				const formData = new FormData();
-				formData.append('file', data.file);
-
-				const baseRequestOptions: HTTPRequestOptions = {
-					body: formData as any,
-				};
-				const req = buildHTTPRequestWithAuthFromContext(context, baseRequestOptions);
-
-				const raw = await context.fetch(url, { ...req, method: 'POST' });
-				await parseJSONResponse<RawBaseFileMetadata>(raw);
-			})();
-
-			await Promise.all([metadataP, fileP]);
 			return getOneFile(data.id);
 		} catch (err) {
 			if (err instanceof Error) {

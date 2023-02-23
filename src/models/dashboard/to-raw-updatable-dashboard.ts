@@ -39,6 +39,7 @@ export const toRawUpdatableDashboard = (updatable: UpdatableDashboard, current: 
 				id: t.id ? toRawNumericID(t.id) : undefined,
 				title: t.title,
 				renderer: t.renderer,
+				hideZoom: t.hideZoom,
 				span: omitUndefinedShallow({
 					col: t.dimensions.columns,
 					row: t.dimensions.rows,
@@ -57,6 +58,9 @@ export const toRawUpdatableDashboard = (updatable: UpdatableDashboard, current: 
 			return omitUndefinedShallow({
 				gutter: gridOptions.gutter ?? undefined,
 				margin: gridOptions.margin ?? undefined,
+
+				borderWidth: gridOptions.borderWidth ?? undefined,
+				borderRadius: gridOptions.borderRadius ?? undefined,
 			});
 		})(),
 		version: updatable.version?.major ?? current.version.major,

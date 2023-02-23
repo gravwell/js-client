@@ -7,8 +7,9 @@
  * license. See the LICENSE file for details.
  */
 
-import { SearchFilter, SearchSubscription } from '~/models/search';
+import { SearchDetails, SearchFilter, SearchSubscription } from '~/models/search';
 import { ID, RawJSON } from '~/value-objects';
+import { UpdatableSearchDetails } from '../../models/search/updatable-search-details';
 
 export interface SearchesService {
 	readonly background: {
@@ -46,6 +47,10 @@ export interface SearchesService {
 				noHistory?: boolean;
 			},
 		) => Promise<SearchSubscription>;
+	};
+
+	readonly update: {
+		readonly one: (data: UpdatableSearchDetails) => Promise<SearchDetails>;
 	};
 
 	readonly stop: {

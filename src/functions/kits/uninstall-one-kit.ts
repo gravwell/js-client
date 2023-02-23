@@ -8,13 +8,16 @@
  */
 
 import { ID } from '~/value-objects';
-import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, parseJSONResponse } from '../utils';
+import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, parseJSONResponse, QueryParams } from '../utils';
 
 export const makeUninstallOneKit =
 	(context: APIContext) =>
-	async (kitID: ID): Promise<void> => {
+	async (kitID: ID, force: boolean): Promise<void> => {
+		// Filter out non-true query params.
+		const queryParams: QueryParams = Object.fromEntries(Object.entries({ force }).filter(([, value]) => value));
+
 		const path = '/api/kits/{kitID}';
-		const url = buildURL(path, { ...context, protocol: 'http', pathParams: { kitID } });
+		const url = buildURL(path, { ...context, protocol: 'http', pathParams: { kitID }, queryParams });
 
 		const req = buildHTTPRequestWithAuthFromContext(context);
 

@@ -42,13 +42,21 @@ export interface KitsService {
 		};
 	};
 
+	readonly stage: {
+		readonly one: (data: File | RemoteKit) => Promise<LocalKit>;
+	};
+
 	readonly install: {
 		readonly one: (data: InstallableKit) => Promise<APISubscription<KitInstallationStatus, never>>;
 	};
 
 	readonly uninstall: {
+		readonly one: (kitID: string, force: boolean) => Promise<void>;
+		readonly all: (force: boolean) => Promise<void>;
+	};
+
+	readonly delete: {
 		readonly one: (kitID: string) => Promise<void>;
-		readonly all: () => Promise<void>;
 	};
 
 	readonly archives: {

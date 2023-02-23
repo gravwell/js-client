@@ -13,4 +13,5 @@ export interface UpdatableGroup {
 	id: NumericID;
 	name?: string;
 	description?: string | null;
+	isSynced?: boolean;
 }

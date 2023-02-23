@@ -11,7 +11,7 @@ import { DATA_TYPE } from '~/models';
 import { isLocalKitData } from './is-local-kit-data';
 import { LocalKit } from './local-kit';
 
-export const isLocalKit = (v: any): v is LocalKit => {
+export const isLocalKit = (v: unknown): v is LocalKit => {
 	try {
 		const k = v as LocalKit;
 		return k._tag === DATA_TYPE.LOCAL_KIT && isLocalKitData(k);

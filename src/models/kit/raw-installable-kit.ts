@@ -7,17 +7,26 @@
  * license. See the LICENSE file for details.
  */
 
+import { RawNumericID } from '../../value-objects/id';
+
 export interface RawInstallableKit {
-	Labels: Array<string>;
+	Labels?: Array<string>;
+
 	Global: boolean;
+
+	InstallationGroup: RawNumericID;
+
 	OverwriteExisting: boolean;
+
 	AllowUnsigned: boolean;
 	AllowExternalResource: boolean;
+
 	ConfigMacros: Array<{
 		DefaultValue: string;
 		Description: string;
 		MacroName: string;
 		Value: string | null;
+		InstalledByID: string;
 		Type: 'TAG' | 'STRING';
 	}>;
 }

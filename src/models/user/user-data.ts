@@ -17,7 +17,8 @@ export interface UserData {
 	name: string;
 	email: string;
 	role: 'admin' | 'analyst';
-	locked: boolean;
+	isLocked: boolean;
 	lastActivityDate: Date | null;
 	searchGroupID: string | null;
+	synced: boolean;
 }

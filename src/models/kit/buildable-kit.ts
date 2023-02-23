@@ -7,7 +7,7 @@
  * license. See the LICENSE file for details.
  */
 
-import { ID } from '~/value-objects';
+import { ID, RawNumericID } from '~/value-objects';
 import { Version } from '../version';
 import { ConfigMacro } from './config-macro';
 
@@ -23,6 +23,7 @@ export interface BuildableKit {
 	autoExtractorIDs: Array<ID>;
 	dashboardIDs: Array<ID>;
 	fileIDs: Array<ID>;
+	flowIDs: Array<RawNumericID>;
 	macroIDs: Array<ID>;
 	playbookIDs: Array<ID>;
 	resourceIDs: Array<ID>;

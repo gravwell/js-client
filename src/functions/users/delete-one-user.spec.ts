@@ -37,7 +37,7 @@ describe('deleteOneUser()', () => {
 				email: username + '@example.com',
 				password: 'changeme',
 				role: 'analyst',
-				user: username,
+				username,
 			};
 
 			const user = await createOneUser(data);

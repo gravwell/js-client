@@ -38,6 +38,9 @@ export const toRawCreatableDashboard = (creatable: CreatableDashboard): RawCreat
 			return omitUndefinedShallow({
 				gutter: creatable.gridOptions?.gutter ?? undefined,
 				margin: creatable.gridOptions?.margin ?? undefined,
+
+				borderWidth: creatable.gridOptions.borderWidth ?? undefined,
+				borderRadius: creatable.gridOptions.borderRadius ?? undefined,
 			});
 		})(),
 		version: 2,

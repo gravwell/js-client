@@ -22,7 +22,7 @@ export const isValidUserData = (value: unknown): value is UserData => {
 			isString(u.name) &&
 			isString(u.email) &&
 			isValidUserRole(u.role) &&
-			isBoolean(u.locked) &&
+			isBoolean(u.isLocked) &&
 			(isString(u.searchGroupID) || isNull(u.searchGroupID)) &&
 			(isDate(u.lastActivityDate) || isNull(u.lastActivityDate))
 		);

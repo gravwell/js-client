@@ -50,5 +50,8 @@ export interface DashboardData {
 	gridOptions: {
 		gutter: number | null;
 		margin: number | null;
+
+		borderRadius: number | null;
+		borderWidth: number | null;
 	};
 }

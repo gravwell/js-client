@@ -7,8 +7,8 @@
  * license. See the LICENSE file for details.
  */
 
-import { isBoolean, isNull, isString, isUndefined, negate } from 'lodash';
-import { isValidUserRole, UpdatableUser, User } from '~/models';
+import { isBoolean, isEmpty, isNull, isString, isUndefined, negate } from 'lodash';
+import { UpdatableUser, User } from '~/models';
 import { isNumericID } from '../../value-objects';
 import { makeUpdateOneUserSearchGroup } from '../search-groups/update-one-user-search-group';
 import { APIContext } from '../utils';
@@ -16,12 +16,10 @@ import { makeGetOneUser } from './get-one-user';
 import { makeUpdateOneUserInformation } from './update-one-user-information';
 import { makeUpdateOneUserLockedState } from './update-one-user-locked-state';
 import { makeUpdateOneUserPassword } from './update-one-user-password';
-import { makeUpdateOneUserRole } from './update-one-user-role';
 
 export const makeUpdateOneUser = (context: APIContext) => {
 	const updateOneUserLockedState = makeUpdateOneUserLockedState(context);
 	const updateOneUserInformation = makeUpdateOneUserInformation(context);
-	const updateOneUserRole = makeUpdateOneUserRole(context);
 	const updateOneUserPassword = makeUpdateOneUserPassword(context);
 	const getOneUser = makeGetOneUser(context);
 	const updateOneUserSearchGroup = makeUpdateOneUserSearchGroup(context);
@@ -31,22 +29,17 @@ export const makeUpdateOneUser = (context: APIContext) => {
 			const promises: Array<Promise<void>> = [];
 
 			// Update .locked
-			if (isBoolean(data.locked)) {
-				promises.push(updateOneUserLockedState(data.id, data.locked));
+			if (isBoolean(data.isLocked)) {
+				promises.push(updateOneUserLockedState(data.id, data.isLocked));
 			}
 
-			// Update .role
-			if (isValidUserRole(data.role)) {
-				promises.push(updateOneUserRole(data.id, data.role));
-			}
-
-			// Update .username .name or .email
-			if ([data.username, data.name, data.email].some(negate(isUndefined))) {
+			// Update .username .name or .email or role
+			if ([data.username, data.name, data.email, data.role].some(negate(isUndefined))) {
 				promises.push(updateOneUserInformation(data));
 			}
 
 			// Update password
-			if (isString(data.password)) {
+			if (isString(data.password) && !isEmpty(data.password)) {
 				promises.push(updateOneUserPassword(data.id, data.password, data.currentPassword));
 			}
 

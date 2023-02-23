@@ -17,6 +17,8 @@ export * from './get-all-archives';
 export * from './get-one-local-kit';
 export * from './get-one-remote-kit';
 export * from './install-one-kit';
+export * from './delete-one-local-kit';
+export * from './stage-one-kit';
 export * from './uninstall-all-kits';
 export * from './uninstall-one-kit';
 export * from './upload-one-local-kit';

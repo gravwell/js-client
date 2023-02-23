@@ -7,6 +7,7 @@
  * license. See the LICENSE file for details.
  */
 
+import { RawDashboardTile } from '~/models/dashboard/raw-dashboard-tile';
 import { RawNumericID, RawUUID } from '~/value-objects';
 import { RawTimeframe } from '../timeframe';
 import { DashboardRendererOptions } from './dashboard-renderer-options';
@@ -24,8 +25,11 @@ export interface RawUpdatableDashboard {
 		linkZooming?: boolean;
 
 		grid?: {
-			gutter?: number; // string is a number
-			margin?: number; // string is a number
+			gutter?: number;
+			margin?: number;
+
+			borderWidth?: number;
+			borderRadius?: number;
 		};
 
 		searches: Array<{
@@ -41,21 +45,26 @@ export interface RawUpdatableDashboard {
 				};
 			};
 		}>;
-		tiles: Array<{
-			/** Legacy support: `id` may be undefined. */
-			id?: RawNumericID;
-			title: string;
-			renderer: string;
-			/** Due to the old dashboards we may not have `x` and `y` defined */
-			span: { col: number; row: number; x?: number; y?: number };
-			/** `string` included for legacy dashboard support. */
-			searchesIndex: number | string;
-			/** Due to the old dashboards we may not have `.rendererOptions` defined */
-			rendererOptions?: DashboardRendererOptions;
-		}>;
+		tiles: Array<RawDashboardTile | RawUpdatableDashboardTile>;
 		/** Legacy support: `timeframe` may be undefined. */
 		timeframe?: RawTimeframe;
-		version?: number;
+		version?: number | undefined;
 		lastDataUpdate?: string; // Timestamp
 	};
 }
+
+export type RawUpdatableDashboardTile = {
+	/** Legacy support: `id` may be undefined. */
+	id?: RawNumericID;
+	title: string;
+	renderer: string;
+
+	hideZoom: boolean | undefined;
+
+	/** Due to the old dashboards we may not have `x` and `y` defined */
+	span: { col: number; row: number; x?: number; y?: number };
+	/** `string` included for legacy dashboard support. */
+	searchesIndex: number | string;
+	/** Due to the old dashboards we may not have `.rendererOptions` defined */
+	rendererOptions?: DashboardRendererOptions;
+};

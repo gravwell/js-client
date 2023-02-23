@@ -7,7 +7,8 @@
  * license. See the LICENSE file for details.
  */
 
-import { isBroadcastedNotification, isTargetNotification } from '.';
+import { isBroadcastedNotification } from './is-broadcasted-notification';
+import { isTargetNotification } from './is-targeted-notification';
 import { NotificationData } from './notification-data';
 
 export const isNotificationData = (value: unknown): value is NotificationData => {

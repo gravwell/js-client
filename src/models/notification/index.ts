@@ -26,5 +26,5 @@ export * from './updatable-notification';
 export * from './to-notification';
 export * from './is-notification';
 export * from './is-notification-data';
-export * from './is-brodcasted-notification';
+export * from './is-broadcasted-notification';
 export * from './is-targeted-notification';

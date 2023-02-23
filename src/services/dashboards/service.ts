@@ -31,4 +31,8 @@ export interface DashboardsService {
 	readonly delete: {
 		readonly one: (dashboardID: string) => Promise<void>;
 	};
+
+	readonly import: {
+		readonly one: (dashboardJSON: string) => Promise<Dashboard>;
+	};
 }

@@ -15,7 +15,7 @@ import { assertIsNotNil } from '../utils/type-guards';
 import { makeCreateOneFile } from './create-one-file';
 import { makeDeleteOneFile } from './delete-one-file';
 import { makeGetAllFiles } from './get-all-files';
-import { makeGetOneFile } from './get-one-file';
+import { makeGetOneFileDetails } from './get-one-file-details';
 
 describe(
 	'deleteOneFile()',
@@ -32,9 +32,9 @@ describe(
 		beforeAll(async () => {
 			getAllFiles = makeGetAllFiles(await TEST_BASE_API_CONTEXT());
 		});
-		let getOneFile: ReturnType<typeof makeGetOneFile>;
+		let getOneFile: ReturnType<typeof makeGetOneFileDetails>;
 		beforeAll(async () => {
-			getOneFile = makeGetOneFile(await TEST_BASE_API_CONTEXT());
+			getOneFile = makeGetOneFileDetails(await TEST_BASE_API_CONTEXT());
 		});
 
 		beforeEach(async () => {

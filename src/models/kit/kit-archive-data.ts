@@ -41,6 +41,8 @@ export interface KitArchiveData {
 	scheduledSearches?: Array<UUID>;
 	scripts?: Array<UUID>;
 	templates?: Array<UUID>;
+	flows?: Array<UUID>;
+
 	// config macros
 	configMacros?: Array<ConfigMacro>;
 }

@@ -15,10 +15,12 @@ import {
 	makeUpdateOneFile,
 } from '~/functions/files';
 import { APIContext } from '~/functions/utils';
+import { makeGetOneFileDetails } from '../../functions/files/get-one-file-details';
 import { FilesService } from './service';
 
 export const createFilesService = (context: APIContext): FilesService => ({
 	get: {
+		one: makeGetOneFileDetails(context),
 		all: makeGetAllFiles(context),
 		authorizedTo: {
 			me: makeGetFilesAuthorizedToMe(context),
