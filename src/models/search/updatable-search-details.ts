@@ -29,7 +29,6 @@ export interface UpdatableSearchDetails {
 		end: Date;
 	};
 	descending: boolean;
-	states: Array<string>;
 	lastUpdate: Date;
 	storeSize: number;
 	indexSize: number;

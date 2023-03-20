@@ -53,5 +53,4 @@ export const toRawUpdatableSearchDetails = (
 	StoreSize: updatable.storeSize ?? current.storeSize,
 	TimeZoomDisabled: updatable.timeZoomDisabled ?? current.timeZoomDisabled,
 	Tags: updatable.tags ?? current.tags,
-	States: updatable.states ?? current.states,
 });

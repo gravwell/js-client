@@ -23,8 +23,6 @@ export interface SearchDetails {
 	};
 	descending: boolean;
 	started: Date;
-	// The possible states of the search is: 'active' | 'dormant' | 'backgrounded' | 'saved' | 'attached' | 'saving'
-	states: Array<string>;
 	lastUpdate: Date;
 	storeSize: number;
 	indexSize: number;
