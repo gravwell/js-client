@@ -12,7 +12,7 @@ import { NumericID } from '~/value-objects';
 export interface PersistentSearchData {
 	id: NumericID;
 	userID: NumericID;
-	groupID?: NumericID;
+	groupID?: NumericID | null;
 	states: Array<'active' | 'dormant' | 'backgrounded' | 'saved' | 'attached' | 'saving'>;
 	attachedClients: number;
 	storedData: number;

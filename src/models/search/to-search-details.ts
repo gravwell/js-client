@@ -28,9 +28,6 @@ export const toSearchDetails = (rawSearchDetails: RawSearchDetails): SearchDetai
 	indexSize: rawSearchDetails.IndexSize,
 	itemCount: rawSearchDetails.ItemCount,
 	timeZoomDisabled: rawSearchDetails.TimeZoomDisabled,
-	states: (rawSearchDetails.States ?? []).map(state => state.toLowerCase()) as Array<
-		'active' | 'dormant' | 'backgrounded' | 'saved' | 'attached' | 'saving'
-	>,
 	name: rawSearchDetails.Metadata?.name ?? null,
 	notes: rawSearchDetails.Metadata?.notes ?? null,
 	renderDownloadFormats: rawSearchDetails.RenderDownloadFormats,

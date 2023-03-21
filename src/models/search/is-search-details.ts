@@ -53,7 +53,6 @@ const searchDetailsDecoder: Decoder<SearchDetails> = object({
 	preview: boolean,
 	duration: string,
 	tags: array(string),
-	states: array(string),
 	range: object({
 		start: date,
 		end: date,

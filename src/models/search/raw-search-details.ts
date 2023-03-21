@@ -53,8 +53,6 @@ export interface RawSearchDetails {
 	TimeZoomDisabled: boolean;
 	Tags: Array<string>;
 
-	States: Array<string>;
-
 	Import: {
 		Imported: boolean;
 		Time: string; // timestamp

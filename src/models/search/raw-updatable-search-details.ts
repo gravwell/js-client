@@ -45,6 +45,4 @@ export interface RawUpdatableSearchDetails {
 	StoreSize: number; // integer
 	TimeZoomDisabled: boolean;
 	Tags: Array<string>;
-
-	States: Array<string>;
 }
