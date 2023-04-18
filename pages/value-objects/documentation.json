@@ -1,19 +1,19 @@
 {
-	"id": 7112,
+	"id": 7110,
 	"name": "gravwell",
 	"kind": 1,
 	"flags": {},
 	"originalName": "",
 	"children": [
 		{
-			"id": 7113,
+			"id": 7111,
 			"name": "date",
 			"kind": 2,
 			"kindString": "Module",
 			"flags": {},
 			"children": [
 				{
-					"id": 7114,
+					"id": 7112,
 					"name": "isTimestamp",
 					"kind": 64,
 					"kindString": "Function",
@@ -27,14 +27,14 @@
 					],
 					"signatures": [
 						{
-							"id": 7115,
+							"id": 7113,
 							"name": "isTimestamp",
 							"kind": 4096,
 							"kindString": "Call signature",
 							"flags": {},
 							"parameters": [
 								{
-									"id": 7116,
+									"id": 7114,
 									"name": "value",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -58,7 +58,7 @@
 					"title": "Functions",
 					"kind": 64,
 					"children": [
-						7114
+						7112
 					]
 				}
 			],
@@ -71,14 +71,14 @@
 			]
 		},
 		{
-			"id": 7117,
+			"id": 7115,
 			"name": "id",
 			"kind": 2,
 			"kindString": "Module",
 			"flags": {},
 			"children": [
 				{
-					"id": 7119,
+					"id": 7117,
 					"name": "ID",
 					"kind": 4194304,
 					"kindString": "Type alias",
@@ -96,7 +96,7 @@
 					}
 				},
 				{
-					"id": 7123,
+					"id": 7121,
 					"name": "NumericID",
 					"kind": 4194304,
 					"kindString": "Type alias",
@@ -114,7 +114,7 @@
 					}
 				},
 				{
-					"id": 7118,
+					"id": 7116,
 					"name": "RawID",
 					"kind": 4194304,
 					"kindString": "Type alias",
@@ -132,7 +132,7 @@
 					}
 				},
 				{
-					"id": 7124,
+					"id": 7122,
 					"name": "RawNumericID",
 					"kind": 4194304,
 					"kindString": "Type alias",
@@ -150,7 +150,7 @@
 					}
 				},
 				{
-					"id": 7135,
+					"id": 7133,
 					"name": "RawUUID",
 					"kind": 4194304,
 					"kindString": "Type alias",
@@ -168,7 +168,7 @@
 					}
 				},
 				{
-					"id": 7134,
+					"id": 7132,
 					"name": "UUID",
 					"kind": 4194304,
 					"kindString": "Type alias",
@@ -186,7 +186,7 @@
 					}
 				},
 				{
-					"id": 7120,
+					"id": 7118,
 					"name": "isID",
 					"kind": 64,
 					"kindString": "Function",
@@ -200,14 +200,14 @@
 					],
 					"signatures": [
 						{
-							"id": 7121,
+							"id": 7119,
 							"name": "isID",
 							"kind": 4096,
 							"kindString": "Call signature",
 							"flags": {},
 							"parameters": [
 								{
-									"id": 7122,
+									"id": 7120,
 									"name": "value",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -231,7 +231,7 @@
 					]
 				},
 				{
-					"id": 7131,
+					"id": 7129,
 					"name": "isNumericID",
 					"kind": 64,
 					"kindString": "Function",
@@ -245,14 +245,14 @@
 					],
 					"signatures": [
 						{
-							"id": 7132,
+							"id": 7130,
 							"name": "isNumericID",
 							"kind": 4096,
 							"kindString": "Call signature",
 							"flags": {},
 							"parameters": [
 								{
-									"id": 7133,
+									"id": 7131,
 									"name": "value",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -276,7 +276,7 @@
 					]
 				},
 				{
-					"id": 7136,
+					"id": 7134,
 					"name": "isUUID",
 					"kind": 64,
 					"kindString": "Function",
@@ -290,14 +290,14 @@
 					],
 					"signatures": [
 						{
-							"id": 7137,
+							"id": 7135,
 							"name": "isUUID",
 							"kind": 4096,
 							"kindString": "Call signature",
 							"flags": {},
 							"parameters": [
 								{
-									"id": 7138,
+									"id": 7136,
 									"name": "value",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -321,7 +321,7 @@
 					]
 				},
 				{
-					"id": 7125,
+					"id": 7123,
 					"name": "toNumericID",
 					"kind": 64,
 					"kindString": "Function",
@@ -335,14 +335,14 @@
 					],
 					"signatures": [
 						{
-							"id": 7126,
+							"id": 7124,
 							"name": "toNumericID",
 							"kind": 4096,
 							"kindString": "Call signature",
 							"flags": {},
 							"parameters": [
 								{
-									"id": 7127,
+									"id": 7125,
 									"name": "raw",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -361,7 +361,7 @@
 					]
 				},
 				{
-					"id": 7128,
+					"id": 7126,
 					"name": "toRawNumericID",
 					"kind": 64,
 					"kindString": "Function",
@@ -375,14 +375,14 @@
 					],
 					"signatures": [
 						{
-							"id": 7129,
+							"id": 7127,
 							"name": "toRawNumericID",
 							"kind": 4096,
 							"kindString": "Call signature",
 							"flags": {},
 							"parameters": [
 								{
-									"id": 7130,
+									"id": 7128,
 									"name": "id",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -406,23 +406,23 @@
 					"title": "Type Aliases",
 					"kind": 4194304,
 					"children": [
-						7119,
-						7123,
-						7118,
-						7124,
-						7135,
-						7134
+						7117,
+						7121,
+						7116,
+						7122,
+						7133,
+						7132
 					]
 				},
 				{
 					"title": "Functions",
 					"kind": 64,
 					"children": [
-						7120,
-						7131,
-						7136,
-						7125,
-						7128
+						7118,
+						7129,
+						7134,
+						7123,
+						7126
 					]
 				}
 			],
@@ -435,203 +435,203 @@
 			]
 		},
 		{
-			"id": 7139,
+			"id": 7137,
 			"name": "index",
 			"kind": 2,
 			"kindString": "Module",
 			"flags": {},
 			"children": [
 				{
-					"id": 7178,
+					"id": 7176,
 					"name": "ID",
 					"kind": 16777216,
 					"kindString": "Reference",
 					"flags": {},
-					"target": 7119
+					"target": 7117
 				},
 				{
-					"id": 7189,
+					"id": 7187,
 					"name": "Markdown",
-					"kind": 16777216,
-					"kindString": "Reference",
-					"flags": {},
-					"target": 7143
-				},
-				{
-					"id": 7180,
-					"name": "NumericID",
-					"kind": 16777216,
-					"kindString": "Reference",
-					"flags": {},
-					"target": 7123
-				},
-				{
-					"id": 7192,
-					"name": "Percentage",
-					"kind": 16777216,
-					"kindString": "Reference",
-					"flags": {},
-					"target": 7149
-				},
-				{
-					"id": 7177,
-					"name": "RawID",
-					"kind": 16777216,
-					"kindString": "Reference",
-					"flags": {},
-					"target": 7118
-				},
-				{
-					"id": 7188,
-					"name": "RawJSON",
 					"kind": 16777216,
 					"kindString": "Reference",
 					"flags": {},
 					"target": 7141
 				},
 				{
+					"id": 7178,
+					"name": "NumericID",
+					"kind": 16777216,
+					"kindString": "Reference",
+					"flags": {},
+					"target": 7121
+				},
+				{
 					"id": 7190,
+					"name": "Percentage",
+					"kind": 16777216,
+					"kindString": "Reference",
+					"flags": {},
+					"target": 7147
+				},
+				{
+					"id": 7175,
+					"name": "RawID",
+					"kind": 16777216,
+					"kindString": "Reference",
+					"flags": {},
+					"target": 7116
+				},
+				{
+					"id": 7186,
+					"name": "RawJSON",
+					"kind": 16777216,
+					"kindString": "Reference",
+					"flags": {},
+					"target": 7139
+				},
+				{
+					"id": 7188,
 					"name": "RawMarkdown",
 					"kind": 16777216,
 					"kindString": "Reference",
 					"flags": {},
-					"target": 7144
+					"target": 7142
 				},
 				{
-					"id": 7181,
+					"id": 7179,
 					"name": "RawNumericID",
 					"kind": 16777216,
 					"kindString": "Reference",
 					"flags": {},
-					"target": 7124
+					"target": 7122
 				},
 				{
-					"id": 7193,
+					"id": 7191,
 					"name": "RawPercentage",
 					"kind": 16777216,
 					"kindString": "Reference",
 					"flags": {},
-					"target": 7160
+					"target": 7158
 				},
 				{
-					"id": 7196,
+					"id": 7194,
 					"name": "RawRegex",
 					"kind": 16777216,
 					"kindString": "Reference",
 					"flags": {},
-					"target": 7166
+					"target": 7164
 				},
 				{
-					"id": 7186,
+					"id": 7184,
 					"name": "RawUUID",
 					"kind": 16777216,
 					"kindString": "Reference",
 					"flags": {},
-					"target": 7135
+					"target": 7133
 				},
 				{
-					"id": 7195,
+					"id": 7193,
 					"name": "Regex",
 					"kind": 16777216,
 					"kindString": "Reference",
 					"flags": {},
-					"target": 7165
+					"target": 7163
+				},
+				{
+					"id": 7183,
+					"name": "UUID",
+					"kind": 16777216,
+					"kindString": "Reference",
+					"flags": {},
+					"target": 7132
+				},
+				{
+					"id": 7177,
+					"name": "isID",
+					"kind": 16777216,
+					"kindString": "Reference",
+					"flags": {},
+					"target": 7118
+				},
+				{
+					"id": 7189,
+					"name": "isMarkdown",
+					"kind": 16777216,
+					"kindString": "Reference",
+					"flags": {},
+					"target": 7143
+				},
+				{
+					"id": 7182,
+					"name": "isNumericID",
+					"kind": 16777216,
+					"kindString": "Reference",
+					"flags": {},
+					"target": 7129
+				},
+				{
+					"id": 7192,
+					"name": "isPercentage",
+					"kind": 16777216,
+					"kindString": "Reference",
+					"flags": {},
+					"target": 7159
+				},
+				{
+					"id": 7197,
+					"name": "isRegex",
+					"kind": 16777216,
+					"kindString": "Reference",
+					"flags": {},
+					"target": 7172
+				},
+				{
+					"id": 7198,
+					"name": "isTimestamp",
+					"kind": 16777216,
+					"kindString": "Reference",
+					"flags": {},
+					"target": 7112
 				},
 				{
 					"id": 7185,
-					"name": "UUID",
+					"name": "isUUID",
 					"kind": 16777216,
 					"kindString": "Reference",
 					"flags": {},
 					"target": 7134
 				},
 				{
-					"id": 7179,
-					"name": "isID",
-					"kind": 16777216,
-					"kindString": "Reference",
-					"flags": {},
-					"target": 7120
-				},
-				{
-					"id": 7191,
-					"name": "isMarkdown",
-					"kind": 16777216,
-					"kindString": "Reference",
-					"flags": {},
-					"target": 7145
-				},
-				{
-					"id": 7184,
-					"name": "isNumericID",
-					"kind": 16777216,
-					"kindString": "Reference",
-					"flags": {},
-					"target": 7131
-				},
-				{
-					"id": 7194,
-					"name": "isPercentage",
-					"kind": 16777216,
-					"kindString": "Reference",
-					"flags": {},
-					"target": 7161
-				},
-				{
-					"id": 7199,
-					"name": "isRegex",
-					"kind": 16777216,
-					"kindString": "Reference",
-					"flags": {},
-					"target": 7174
-				},
-				{
-					"id": 7200,
-					"name": "isTimestamp",
-					"kind": 16777216,
-					"kindString": "Reference",
-					"flags": {},
-					"target": 7114
-				},
-				{
-					"id": 7187,
-					"name": "isUUID",
-					"kind": 16777216,
-					"kindString": "Reference",
-					"flags": {},
-					"target": 7136
-				},
-				{
-					"id": 7182,
+					"id": 7180,
 					"name": "toNumericID",
 					"kind": 16777216,
 					"kindString": "Reference",
 					"flags": {},
-					"target": 7125
+					"target": 7123
 				},
 				{
-					"id": 7183,
+					"id": 7181,
 					"name": "toRawNumericID",
 					"kind": 16777216,
 					"kindString": "Reference",
 					"flags": {},
-					"target": 7128
+					"target": 7126
 				},
 				{
-					"id": 7198,
+					"id": 7196,
 					"name": "toRawRegex",
 					"kind": 16777216,
 					"kindString": "Reference",
 					"flags": {},
-					"target": 7171
+					"target": 7169
 				},
 				{
-					"id": 7197,
+					"id": 7195,
 					"name": "toRegex",
 					"kind": 16777216,
 					"kindString": "Reference",
 					"flags": {},
-					"target": 7167
+					"target": 7165
 				}
 			],
 			"groups": [
@@ -639,30 +639,30 @@
 					"title": "References",
 					"kind": 16777216,
 					"children": [
+						7176,
+						7187,
 						7178,
-						7189,
-						7180,
-						7192,
-						7177,
-						7188,
 						7190,
-						7181,
-						7193,
-						7196,
+						7175,
 						7186,
-						7195,
-						7185,
+						7188,
 						7179,
 						7191,
-						7184,
 						7194,
-						7199,
-						7200,
-						7187,
-						7182,
+						7184,
+						7193,
 						7183,
+						7177,
+						7189,
+						7182,
+						7192,
+						7197,
 						7198,
-						7197
+						7185,
+						7180,
+						7181,
+						7196,
+						7195
 					]
 				}
 			],
@@ -675,14 +675,14 @@
 			]
 		},
 		{
-			"id": 7140,
+			"id": 7138,
 			"name": "json",
 			"kind": 2,
 			"kindString": "Module",
 			"flags": {},
 			"children": [
 				{
-					"id": 7141,
+					"id": 7139,
 					"name": "RawJSON",
 					"kind": 4194304,
 					"kindString": "Type alias",
@@ -721,7 +721,7 @@
 					"title": "Type Aliases",
 					"kind": 4194304,
 					"children": [
-						7141
+						7139
 					]
 				}
 			],
@@ -734,14 +734,14 @@
 			]
 		},
 		{
-			"id": 7142,
+			"id": 7140,
 			"name": "markdown",
 			"kind": 2,
 			"kindString": "Module",
 			"flags": {},
 			"children": [
 				{
-					"id": 7143,
+					"id": 7141,
 					"name": "Markdown",
 					"kind": 4194304,
 					"kindString": "Type alias",
@@ -759,7 +759,7 @@
 					}
 				},
 				{
-					"id": 7144,
+					"id": 7142,
 					"name": "RawMarkdown",
 					"kind": 4194304,
 					"kindString": "Type alias",
@@ -777,7 +777,7 @@
 					}
 				},
 				{
-					"id": 7145,
+					"id": 7143,
 					"name": "isMarkdown",
 					"kind": 64,
 					"kindString": "Function",
@@ -791,14 +791,14 @@
 					],
 					"signatures": [
 						{
-							"id": 7146,
+							"id": 7144,
 							"name": "isMarkdown",
 							"kind": 4096,
 							"kindString": "Call signature",
 							"flags": {},
 							"parameters": [
 								{
-									"id": 7147,
+									"id": 7145,
 									"name": "value",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -827,15 +827,15 @@
 					"title": "Type Aliases",
 					"kind": 4194304,
 					"children": [
-						7143,
-						7144
+						7141,
+						7142
 					]
 				},
 				{
 					"title": "Functions",
 					"kind": 64,
 					"children": [
-						7145
+						7143
 					]
 				}
 			],
@@ -848,14 +848,14 @@
 			]
 		},
 		{
-			"id": 7148,
+			"id": 7146,
 			"name": "percentage",
 			"kind": 2,
 			"kindString": "Module",
 			"flags": {},
 			"children": [
 				{
-					"id": 7149,
+					"id": 7147,
 					"name": "Percentage",
 					"kind": 128,
 					"kindString": "Class",
@@ -865,7 +865,7 @@
 					},
 					"children": [
 						{
-							"id": 7153,
+							"id": 7151,
 							"name": "constructor",
 							"kind": 512,
 							"kindString": "Constructor",
@@ -879,14 +879,14 @@
 							],
 							"signatures": [
 								{
-									"id": 7154,
+									"id": 7152,
 									"name": "new Percentage",
 									"kind": 16384,
 									"kindString": "Constructor signature",
 									"flags": {},
 									"parameters": [
 										{
-											"id": 7155,
+											"id": 7153,
 											"name": "raw",
 											"kind": 32768,
 											"kindString": "Parameter",
@@ -899,7 +899,7 @@
 									],
 									"type": {
 										"type": "reference",
-										"id": 7149,
+										"id": 7147,
 										"name": "Percentage"
 									},
 									"overwrites": {
@@ -914,7 +914,7 @@
 							}
 						},
 						{
-							"id": 7156,
+							"id": 7154,
 							"name": "toString",
 							"kind": 2048,
 							"kindString": "Method",
@@ -930,7 +930,7 @@
 							],
 							"signatures": [
 								{
-									"id": 7157,
+									"id": 7155,
 									"name": "toString",
 									"kind": 4096,
 									"kindString": "Call signature",
@@ -943,7 +943,7 @@
 							]
 						},
 						{
-							"id": 7158,
+							"id": 7156,
 							"name": "valueOf",
 							"kind": 2048,
 							"kindString": "Method",
@@ -952,7 +952,7 @@
 							},
 							"signatures": [
 								{
-									"id": 7159,
+									"id": 7157,
 									"name": "valueOf",
 									"kind": 4096,
 									"kindString": "Call signature",
@@ -975,7 +975,7 @@
 							}
 						},
 						{
-							"id": 7150,
+							"id": 7148,
 							"name": "from",
 							"kind": 2048,
 							"kindString": "Method",
@@ -992,14 +992,14 @@
 							],
 							"signatures": [
 								{
-									"id": 7151,
+									"id": 7149,
 									"name": "from",
 									"kind": 4096,
 									"kindString": "Call signature",
 									"flags": {},
 									"parameters": [
 										{
-											"id": 7152,
+											"id": 7150,
 											"name": "raw",
 											"kind": 32768,
 											"kindString": "Parameter",
@@ -1012,7 +1012,7 @@
 									],
 									"type": {
 										"type": "reference",
-										"id": 7149,
+										"id": 7147,
 										"name": "Percentage"
 									}
 								}
@@ -1024,16 +1024,16 @@
 							"title": "Constructors",
 							"kind": 512,
 							"children": [
-								7153
+								7151
 							]
 						},
 						{
 							"title": "Methods",
 							"kind": 2048,
 							"children": [
+								7154,
 								7156,
-								7158,
-								7150
+								7148
 							]
 						}
 					],
@@ -1054,7 +1054,7 @@
 					]
 				},
 				{
-					"id": 7160,
+					"id": 7158,
 					"name": "RawPercentage",
 					"kind": 4194304,
 					"kindString": "Type alias",
@@ -1075,7 +1075,7 @@
 					}
 				},
 				{
-					"id": 7161,
+					"id": 7159,
 					"name": "isPercentage",
 					"kind": 64,
 					"kindString": "Function",
@@ -1089,14 +1089,14 @@
 					],
 					"signatures": [
 						{
-							"id": 7162,
+							"id": 7160,
 							"name": "isPercentage",
 							"kind": 4096,
 							"kindString": "Call signature",
 							"flags": {},
 							"parameters": [
 								{
-									"id": 7163,
+									"id": 7161,
 									"name": "v",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -1113,7 +1113,7 @@
 								"asserts": false,
 								"targetType": {
 									"type": "reference",
-									"id": 7149,
+									"id": 7147,
 									"name": "Percentage"
 								}
 							}
@@ -1126,21 +1126,21 @@
 					"title": "Classes",
 					"kind": 128,
 					"children": [
-						7149
+						7147
 					]
 				},
 				{
 					"title": "Type Aliases",
 					"kind": 4194304,
 					"children": [
-						7160
+						7158
 					]
 				},
 				{
 					"title": "Functions",
 					"kind": 64,
 					"children": [
-						7161
+						7159
 					]
 				}
 			],
@@ -1153,14 +1153,14 @@
 			]
 		},
 		{
-			"id": 7164,
+			"id": 7162,
 			"name": "regex",
 			"kind": 2,
 			"kindString": "Module",
 			"flags": {},
 			"children": [
 				{
-					"id": 7166,
+					"id": 7164,
 					"name": "RawRegex",
 					"kind": 4194304,
 					"kindString": "Type alias",
@@ -1178,7 +1178,7 @@
 					}
 				},
 				{
-					"id": 7165,
+					"id": 7163,
 					"name": "Regex",
 					"kind": 4194304,
 					"kindString": "Type alias",
@@ -1198,7 +1198,7 @@
 					}
 				},
 				{
-					"id": 7174,
+					"id": 7172,
 					"name": "isRegex",
 					"kind": 64,
 					"kindString": "Function",
@@ -1212,14 +1212,14 @@
 					],
 					"signatures": [
 						{
-							"id": 7175,
+							"id": 7173,
 							"name": "isRegex",
 							"kind": 4096,
 							"kindString": "Call signature",
 							"flags": {},
 							"parameters": [
 								{
-									"id": 7176,
+									"id": 7174,
 									"name": "value",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -1245,7 +1245,7 @@
 					]
 				},
 				{
-					"id": 7171,
+					"id": 7169,
 					"name": "toRawRegex",
 					"kind": 64,
 					"kindString": "Function",
@@ -1259,14 +1259,14 @@
 					],
 					"signatures": [
 						{
-							"id": 7172,
+							"id": 7170,
 							"name": "toRawRegex",
 							"kind": 4096,
 							"kindString": "Call signature",
 							"flags": {},
 							"parameters": [
 								{
-									"id": 7173,
+									"id": 7171,
 									"name": "regex",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -1287,7 +1287,7 @@
 					]
 				},
 				{
-					"id": 7167,
+					"id": 7165,
 					"name": "toRegex",
 					"kind": 64,
 					"kindString": "Function",
@@ -1301,14 +1301,14 @@
 					],
 					"signatures": [
 						{
-							"id": 7168,
+							"id": 7166,
 							"name": "toRegex",
 							"kind": 4096,
 							"kindString": "Call signature",
 							"flags": {},
 							"parameters": [
 								{
-									"id": 7169,
+									"id": 7167,
 									"name": "raw",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -1319,7 +1319,7 @@
 									}
 								},
 								{
-									"id": 7170,
+									"id": 7168,
 									"name": "defaultFlags",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -1349,17 +1349,17 @@
 					"title": "Type Aliases",
 					"kind": 4194304,
 					"children": [
-						7166,
-						7165
+						7164,
+						7163
 					]
 				},
 				{
 					"title": "Functions",
 					"kind": 64,
 					"children": [
-						7174,
-						7171,
-						7167
+						7172,
+						7169,
+						7165
 					]
 				}
 			],
@@ -1377,13 +1377,13 @@
 			"title": "Modules",
 			"kind": 2,
 			"children": [
-				7113,
-				7117,
-				7139,
+				7111,
+				7115,
+				7137,
+				7138,
 				7140,
-				7142,
-				7148,
-				7164
+				7146,
+				7162
 			]
 		}
 	]
