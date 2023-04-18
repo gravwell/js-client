@@ -12,7 +12,7 @@ import { isRawElementFilterOperation, RawElementFilterOperation } from './elemen
 
 /** Filter to perform an operation on a field. */
 export interface RawOperationFilter {
-	Tag: string;
+	Tag?: string | undefined;
 	Module: string;
 	Path: string;
 	Args?: string | undefined;

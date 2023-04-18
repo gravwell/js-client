@@ -18,6 +18,7 @@ export interface Actionable extends ActionableData {
 export interface ActionableTrigger {
 	pattern: RegExp;
 	activatesOn: 'selection' | 'clicks and selection';
+	disabled: boolean;
 }
 
 export interface ActionableAction {

@@ -27,9 +27,6 @@ export interface ExplorerService {
 	};
 
 	readonly get: {
-		readonly one: (
-			searchID: ID,
-			options: { filter?: Omit<SearchFilter, 'elementFilters'> },
-		) => Promise<ExplorerSearchSubscription>;
+		readonly one: (searchID: ID) => Promise<ExplorerSearchSubscription>;
 	};
 }

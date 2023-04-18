@@ -87,7 +87,7 @@ export const makeSubscribeToOneQueryParsing = (context: APIContext) => {
 					rawMsg.data.Filters = msg.filters.map(f => {
 						if (isOperationFilter(f)) {
 							const opFilter: RawOperationFilter = {
-								Tag: f.tag,
+								Tag: f.tag ?? undefined,
 								Module: f.module,
 								Path: f.path,
 								Args: f.arguments ?? undefined,

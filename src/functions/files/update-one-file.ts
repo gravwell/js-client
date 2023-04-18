@@ -22,7 +22,7 @@ export const makeUpdateOneFile = (context: APIContext) => {
 	const getOneFile = makeGetOneFileDetails(context);
 
 	return async (data: UpdatableFile): Promise<FileMetadata> => {
-		const templatePath = '/api/files/{fileID}';
+		const templatePath = '/api/files/{fileID}?admin=true';
 		const url = buildURL(templatePath, { ...context, protocol: 'http', pathParams: { fileID: data.id } });
 
 		try {
@@ -30,9 +30,9 @@ export const makeUpdateOneFile = (context: APIContext) => {
 			const updatedKeys = new Set(Object.keys(data)) as Set<keyof UpdatableFile>;
 
 			const fileUpdate = async (): Promise<any> => {
-				const targettedKeys: Array<keyof Required<UpdatableFile>> = ['file'];
-				const hasTargettedKey = targettedKeys.some(key => updatedKeys.has(key));
-				if (!hasTargettedKey) {
+				const targetedKeys: Array<keyof Required<UpdatableFile>> = ['file'];
+				const hasTargetedKey = targetedKeys.some(key => updatedKeys.has(key));
+				if (!hasTargetedKey) {
 					return Promise.resolve();
 				}
 
@@ -49,16 +49,17 @@ export const makeUpdateOneFile = (context: APIContext) => {
 			};
 
 			const metadataUpdate = async (): Promise<any> => {
-				const targettedKeys: Array<keyof Required<UpdatableFile>> = [
+				const targetedKeys: Array<keyof Required<UpdatableFile>> = [
 					'name',
 					'description',
+					'userID',
 					'labels',
 					'globalID',
 					'groupIDs',
 					'isGlobal',
 				];
-				const hasTargettedKey = targettedKeys.some(key => updatedKeys.has(key));
-				if (!hasTargettedKey) {
+				const hasTargetedKey = targetedKeys.some(key => updatedKeys.has(key));
+				if (!hasTargetedKey) {
 					return Promise.resolve();
 				}
 

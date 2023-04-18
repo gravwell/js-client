@@ -28,4 +28,6 @@ export interface RawCreatableActionable {
 		actions: Array<RawActionableAction>;
 		triggers: Array<RawActionableTrigger>;
 	};
+
+	Disabled: boolean;
 }
