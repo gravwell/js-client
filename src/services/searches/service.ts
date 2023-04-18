@@ -32,10 +32,7 @@ export interface SearchesService {
 	};
 
 	readonly get: {
-		readonly one: (
-			searchID: ID,
-			options: { filter?: Omit<SearchFilter, 'elementFilters'> },
-		) => Promise<SearchSubscription>;
+		readonly one: (searchID: ID) => Promise<SearchSubscription>;
 	};
 
 	readonly create: {

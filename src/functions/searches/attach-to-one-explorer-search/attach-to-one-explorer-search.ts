@@ -64,15 +64,14 @@ import {
 	SEARCH_FILTER_PREFIX,
 } from '../subscribe-to-one-search/helpers';
 
-export const makeAttachToOneExplorerSearch = (context: APIContext) => {
+export const makeAttachToOneExplorerSearch = (
+	context: APIContext,
+): ((searchID: ID) => Promise<ExplorerSearchSubscription>) => {
 	const subscribeToOneRawSearch = makeSubscribeToOneRawSearch(context);
 	let rawSubscriptionP: ReturnType<typeof subscribeToOneRawSearch> | null = null;
 	let closedSub: Subscription | null = null;
 
-	return async (
-		searchID: ID,
-		options: { filter?: Omit<SearchFilter, 'elementFilters'> } = {},
-	): Promise<ExplorerSearchSubscription> => {
+	return async (searchID: ID): Promise<ExplorerSearchSubscription> => {
 		if (isNull(rawSubscriptionP)) {
 			rawSubscriptionP = subscribeToOneRawSearch();
 			if (closedSub?.closed === false) {
@@ -103,7 +102,7 @@ export const makeAttachToOneExplorerSearch = (context: APIContext) => {
 		let closed = false;
 		const close$ = new Subject<void>();
 
-		const initialFilter = createInitialSearchFilter({ defaultStart, defaultEnd }, options);
+		const initialFilter = createInitialSearchFilter({ defaultStart, defaultEnd });
 		const initialFilterID = uniqueId(SEARCH_FILTER_PREFIX);
 
 		const filtersByID: Record<string, SearchFilter | undefined> = {};

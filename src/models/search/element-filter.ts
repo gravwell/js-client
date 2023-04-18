@@ -12,7 +12,7 @@ import { ElementFilterOperation, isElementFilterOperation } from './element-filt
 
 /** Filter to perform an operation on a field. */
 export interface OperationFilter {
-	tag: string;
+	tag: string | null;
 	module: string;
 	path: string;
 	arguments: string | null;

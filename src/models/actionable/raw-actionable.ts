@@ -43,6 +43,7 @@ export type RawActionableTrigger =
 	| {
 			pattern: string;
 			hyperlink: boolean;
+			disabled: boolean;
 	  }
 	| string;
 

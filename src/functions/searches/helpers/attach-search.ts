@@ -54,25 +54,24 @@ export const DEBOUNCE_OPTIONS = {
 	predicate: (isFinished: boolean) => !isFinished, // increase backoff while isFinished is false
 };
 
-export const createInitialSearchFilter: (
-	requiredValues: { defaultStart: Date; defaultEnd: Date },
-	options?: { filter?: Omit<SearchFilter, 'elementFilters'> },
-) => RequiredSearchFilter = ({ defaultStart, defaultEnd }, options = {}) => ({
+export const defaultSearchFilterEntriesOffsetCount = 100;
+
+export const createInitialSearchFilter: (requiredValues: {
+	defaultStart: Date;
+	defaultEnd: Date;
+}) => RequiredSearchFilter = ({ defaultStart, defaultEnd }) => ({
 	entriesOffset: {
-		index: options.filter?.entriesOffset?.index ?? 0,
-		count: options.filter?.entriesOffset?.count ?? 100,
+		index: 0,
+		count: defaultSearchFilterEntriesOffsetCount,
 	},
-	dateRange:
-		options.filter?.dateRange === 'preview'
-			? ('preview' as const)
-			: {
-					start: options.filter?.dateRange?.start ?? defaultStart,
-					end: options.filter?.dateRange?.end ?? defaultEnd,
-			  },
+	dateRange: {
+		start: defaultStart,
+		end: defaultEnd,
+	},
 	// *NOTE: The default granularity is recalculated when we receive the renderer type
-	desiredGranularity: options.filter?.desiredGranularity ?? 100,
-	overviewGranularity: options.filter?.overviewGranularity ?? 90,
-	zoomGranularity: options.filter?.zoomGranularity ?? 90,
+	desiredGranularity: 100,
+	overviewGranularity: 90,
+	zoomGranularity: 90,
 	elementFilters: [],
 });
 

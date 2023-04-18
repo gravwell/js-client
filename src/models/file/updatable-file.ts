@@ -13,6 +13,7 @@ import { NumericID, UUID } from '~/value-objects';
 export interface UpdatableFile {
 	id: UUID;
 	globalID?: UUID;
+	userID?: NumericID | undefined;
 
 	groupIDs?: Array<NumericID>;
 	isGlobal?: boolean;

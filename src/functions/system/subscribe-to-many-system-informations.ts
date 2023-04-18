@@ -75,7 +75,6 @@ type SystemStatusSystemStatusMessage = {
 						Point: number;
 						BuildDate: string;
 						BuildID: string;
-						GUIBuildID: string;
 					};
 				};
 			};

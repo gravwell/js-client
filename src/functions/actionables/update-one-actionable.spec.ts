@@ -45,7 +45,8 @@ xdescribe(
 				description: 'Current description',
 				menuLabel: 'Current label',
 				actions: [{ name: 'Current action', command: { type: 'query', userQuery: 'tag=netflow' } }],
-				triggers: [{ pattern: /abc/g, activatesOn: 'clicks and selection' }],
+				triggers: [{ pattern: /abc/g, activatesOn: 'clicks and selection', disabled: false }],
+				isDisabled: false,
 			};
 			createdActionable = await createOneActionable(data);
 		});
@@ -87,7 +88,7 @@ xdescribe(
 			},
 
 			{ triggers: [] },
-			{ triggers: [{ pattern: /123/g, activatesOn: 'selection' }] },
+			{ triggers: [{ pattern: /123/g, activatesOn: 'selection', disabled: false }] },
 		];
 		updateTests.forEach((_data, testIndex) => {
 			const updatedFields = Object.keys(omit(_data, ['id']));

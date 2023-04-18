@@ -42,6 +42,7 @@ export const toActionableTrigger = (raw: RawActionableTrigger): ActionableTrigge
 	// All actionable triggers use the global flag
 	pattern: isString(raw) ? toRegex(raw, ['g']) : toRegex(raw.pattern, ['g']),
 	activatesOn: isString(raw) ? 'clicks and selection' : raw.hyperlink ? 'clicks and selection' : 'selection',
+	disabled: isString(raw) ? false : raw.disabled,
 });
 
 export const toActionableAction = (raw: RawActionableAction): ActionableAction =>

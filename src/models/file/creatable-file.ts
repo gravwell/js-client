@@ -14,6 +14,7 @@ export interface CreatableFile {
 	globalID?: UUID;
 
 	groupIDs?: Array<NumericID>;
+	userID?: NumericID | undefined;
 	isGlobal?: boolean;
 
 	name: string;

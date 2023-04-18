@@ -40,4 +40,6 @@ export const toRawUpdatableActionable = (
 			.map(toRawActionableAction),
 		triggers: (updatable.triggers ?? current.triggers).map(toRawActionableTrigger),
 	},
+
+	Disabled: updatable.isDisabled ?? current.isDisabled,
 });

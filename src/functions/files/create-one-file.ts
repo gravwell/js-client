@@ -36,16 +36,16 @@ export const makeCreateOneFile = (context: APIContext) => {
 
 			const raw = await context.fetch(url, { ...req, method: 'POST' });
 			const rawRes = await parseJSONResponse<RawBaseFileMetadata>(raw);
-			const globalID = rawRes.GUID;
+			const fileID = rawRes.ThingUUID;
 
 			// !WARNING: Can't set all properties on file creation gravwell/gravwell#2506
-			const updateProps: Array<keyof CreatableFile> = ['globalID', 'groupIDs', 'isGlobal', 'labels'];
+			const updateProps: Array<keyof CreatableFile> = ['globalID', 'groupIDs', 'userID', 'isGlobal', 'labels'];
 			const needsUpdate = Object.keys(data).some(k => updateProps.includes(k as keyof CreatableFile));
 			if (needsUpdate) {
-				return updateOneFile({ ...pick(data, updateProps), id: globalID });
+				return updateOneFile({ ...pick(data, updateProps), id: fileID });
 			}
 
-			return getOneFile(globalID);
+			return getOneFile(fileID);
 		} catch (err) {
 			if (err instanceof Error) {
 				throw err;

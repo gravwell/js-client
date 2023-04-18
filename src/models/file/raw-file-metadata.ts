@@ -10,6 +10,7 @@
 import { RawNumericID, RawUUID } from '~/value-objects';
 
 export interface RawBaseFileMetadata {
+	ThingUUID: string;
 	GUID: RawUUID;
 
 	Name: string;

@@ -55,7 +55,7 @@ describe(
 
 			// Delete all files
 			const currentFiles = await getAllFiles();
-			const currentFileIDs = currentFiles.map(f => f.globalID);
+			const currentFileIDs = currentFiles.map(f => f.id);
 			const deletePromises = currentFileIDs.map(fileID => deleteOneFile(fileID));
 			await Promise.all(deletePromises);
 
@@ -98,8 +98,7 @@ describe(
 					const current = createdFile;
 					expect(isFileMetadata(current)).toBeTrue();
 
-					// !WARNING: Using globalID because gravwell/gravwell#2509
-					const data: UpdatableFile = { ..._data, id: current.globalID };
+					const data: UpdatableFile = { ..._data, id: current.id };
 					const updated = await updateOneFile(data);
 
 					if (data.file) {
