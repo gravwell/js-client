@@ -17,6 +17,7 @@ import { RawActionableCommand } from './raw-actionable-command';
 export const toRawActionableTrigger = (trigger: ActionableTrigger): RawActionableTrigger => ({
 	pattern: toRawRegex(trigger.pattern),
 	hyperlink: trigger.activatesOn === 'clicks and selection',
+	disabled: trigger.disabled,
 });
 
 export const toRawActionableAction = (action: ActionableAction): RawActionableAction =>

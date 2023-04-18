@@ -36,7 +36,8 @@ xdescribe(
 			const data: CreatableActionable = {
 				name: 'Actionable test',
 				actions: [{ name: 'Action test', command: { type: 'query', userQuery: 'tag=netflow' } }],
-				triggers: [{ pattern: /abc/g, activatesOn: 'clicks and selection' }],
+				triggers: [{ pattern: /abc/g, activatesOn: 'clicks and selection', disabled: false }],
+				isDisabled: false,
 			};
 			createdActionableUUID = (await createOneActionable(data)).id;
 		});

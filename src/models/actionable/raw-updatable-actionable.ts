@@ -27,4 +27,6 @@ export interface RawUpdatableActionable {
 		actions: Array<RawActionableAction>;
 		triggers: Array<RawActionableTrigger>;
 	};
+
+	Disabled: boolean;
 }

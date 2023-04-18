@@ -18,7 +18,7 @@ export interface RawAutoExtractor {
 	GIDs: Array<RawNumericID> | null;
 
 	Name: string;
-	Desc: string;
+	Desc?: string | undefined;
 	Labels: Array<string> | null;
 
 	Global: boolean;
@@ -27,7 +27,7 @@ export interface RawAutoExtractor {
 	Tag: string;
 	Module: RawAutoExtractorModule;
 	Params: string;
-	Args?: string;
+	Args?: string | undefined;
 	Accelerated: '';
 }
 

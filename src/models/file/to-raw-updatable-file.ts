@@ -8,18 +8,21 @@
  */
 
 import { isUndefined } from 'lodash';
-import { toRawNumericID } from '~/value-objects';
+import { isNumericID, toRawNumericID } from '~/value-objects';
+import { omitUndefinedShallow } from '../../functions/utils/omit-undefined-shallow';
 import { FileMetadata } from './file-metadata';
 import { RawUpdatableFile } from './raw-updatable-file';
 import { UpdatableFile } from './updatable-file';
 
-export const toRawUpdatableFile = (updatable: UpdatableFile, current: FileMetadata): RawUpdatableFile => ({
-	GUID: updatable.globalID ?? current.globalID,
+export const toRawUpdatableFile = (updatable: UpdatableFile, current: FileMetadata): RawUpdatableFile =>
+	omitUndefinedShallow({
+		GUID: updatable.globalID ?? current.globalID,
+		UID: isNumericID(updatable.userID) ? toRawNumericID(updatable.userID) : undefined,
 
-	GIDs: (updatable.groupIDs ?? current.groupIDs).map(toRawNumericID),
-	Global: updatable.isGlobal ?? current.isGlobal,
+		GIDs: (updatable.groupIDs ?? current.groupIDs).map(toRawNumericID),
+		Global: updatable.isGlobal ?? current.isGlobal,
 
-	Name: updatable.name ?? current.name,
-	Desc: (isUndefined(updatable.description) ? current.description : updatable.description) ?? '',
-	Labels: updatable.labels ?? current.labels,
-});
+		Name: updatable.name ?? current.name,
+		Desc: (isUndefined(updatable.description) ? current.description : updatable.description) ?? '',
+		Labels: updatable.labels ?? current.labels,
+	});

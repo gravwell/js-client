@@ -203,7 +203,7 @@ xdescribe(
 			const filter: SearchFilter = { entriesOffset: { index: 0, count }, dateRange: { start, end } };
 
 			const searchCreated = await subscribeToOneExplorerSearch(query, { filter });
-			const search = await attachToOneExplorerSearch(searchCreated.searchID, { filter });
+			const search = await attachToOneExplorerSearch(searchCreated.searchID);
 
 			const textEntriesP = lastValueFrom(
 				search.entries$.pipe(
@@ -315,7 +315,7 @@ xdescribe(
 				Array.from({ length: SEARCHES_N }).map(() => subscribeToOneExplorerSearch(query, { filter })),
 			);
 			const searches = await Promise.all(
-				searchesCreated.map(searchCreated => attachToOneExplorerSearch(searchCreated.searchID, { filter })),
+				searchesCreated.map(searchCreated => attachToOneExplorerSearch(searchCreated.searchID)),
 			);
 
 			// Concat first because .reverse modifies the array
@@ -541,7 +541,7 @@ xdescribe(
 				const filter: SearchFilter = { entriesOffset: { index: 0, count }, dateRange: { start, end } };
 
 				const searchCreated = await subscribeToOneExplorerSearch(query, { filter });
-				const search = await attachToOneExplorerSearch(searchCreated.searchID, { filter });
+				const search = await attachToOneExplorerSearch(searchCreated.searchID);
 
 				await expectStatsFilter(search.stats$, filter);
 
@@ -599,7 +599,7 @@ xdescribe(
 				const filter: SearchFilter = { entriesOffset: { index: 0, count }, dateRange: { start, end } };
 
 				const searchCreated = await subscribeToOneExplorerSearch(query, { filter });
-				const search = await attachToOneExplorerSearch(searchCreated.searchID, { filter });
+				const search = await attachToOneExplorerSearch(searchCreated.searchID);
 
 				await expectStatsFilter(search.stats$, filter);
 
@@ -658,7 +658,7 @@ xdescribe(
 				const filter1s: SearchFilter = { entriesOffset: { index: 0, count }, dateRange };
 
 				const search1sCreated = await subscribeToOneExplorerSearch(query1s, { filter: filter1s });
-				const search1s = await attachToOneExplorerSearch(search1sCreated.searchID, { filter: filter1s });
+				const search1s = await attachToOneExplorerSearch(search1sCreated.searchID);
 
 				const stats1s = await lastValueFrom(search1s.stats$.pipe(takeWhile(e => !e.finished, true)));
 
@@ -674,7 +674,7 @@ xdescribe(
 				const filter33s = { entriesOffset: { index: 0, count }, dateRange };
 
 				const search33sCreated = await subscribeToOneExplorerSearch(query33s, { filter: filter33s });
-				const search33s = await attachToOneExplorerSearch(search33sCreated.searchID, { filter: filter33s });
+				const search33s = await attachToOneExplorerSearch(search33sCreated.searchID);
 
 				const stats33s = await lastValueFrom(search33s.stats$.pipe(takeWhile(e => !e.finished, true)));
 
@@ -694,7 +694,7 @@ xdescribe(
 				const filter1: SearchFilter = { entriesOffset: { index: 0, count }, dateRange: { start, end } };
 
 				const searchCreated = await subscribeToOneExplorerSearch(query, { filter: filter1 });
-				const search = await attachToOneExplorerSearch(searchCreated.searchID, { filter: filter1 });
+				const search = await attachToOneExplorerSearch(searchCreated.searchID);
 
 				await expectStatsFilter(search.stats$, filter1);
 
@@ -768,7 +768,7 @@ xdescribe(
 				const filter1: SearchFilter = { entriesOffset: { index: 0, count }, dateRange: { start, end } };
 
 				const searchCreated = await subscribeToOneExplorerSearch(query, { filter: filter1 });
-				const search = await attachToOneExplorerSearch(searchCreated.searchID, { filter: filter1 });
+				const search = await attachToOneExplorerSearch(searchCreated.searchID);
 
 				await expectStatsFilter(search.stats$, filter1);
 
@@ -848,7 +848,7 @@ xdescribe(
 				};
 
 				const searchCreated = await subscribeToOneExplorerSearch(query, { filter: filter1 });
-				const search = await attachToOneExplorerSearch(searchCreated.searchID, { filter: filter1 });
+				const search = await attachToOneExplorerSearch(searchCreated.searchID);
 
 				await expectStatsFilter(search.stats$, filter1);
 
@@ -929,7 +929,7 @@ xdescribe(
 				};
 
 				const searchCreated = await subscribeToOneExplorerSearch(query, { filter: filter1 });
-				const search = await attachToOneExplorerSearch(searchCreated.searchID, { filter: filter1 });
+				const search = await attachToOneExplorerSearch(searchCreated.searchID);
 
 				await expectStatsFilter(search.stats$, filter1);
 
@@ -1011,7 +1011,7 @@ xdescribe(
 
 						const query = `tag=*`;
 						const searchCreated = await subscribeToOneExplorerSearch(query, { filter: initialFilter });
-						return await attachToOneExplorerSearch(searchCreated.searchID, { filter: initialFilter });
+						return await attachToOneExplorerSearch(searchCreated.searchID);
 					},
 				}),
 				25000,

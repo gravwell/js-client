@@ -13,7 +13,7 @@ import { isRawOperationFilter, RawElementFilter } from './raw-element-filter';
 export const toElementFilter = (raw: RawElementFilter): ElementFilter => {
 	if (isRawOperationFilter(raw)) {
 		const opFilter: OperationFilter = {
-			tag: raw.Tag,
+			tag: raw.Tag ?? null,
 			module: raw.Module,
 			path: raw.Path,
 			arguments: raw.Args ?? null,

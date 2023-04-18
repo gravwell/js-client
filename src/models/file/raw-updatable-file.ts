@@ -8,10 +8,12 @@
  */
 
 import { RawNumericID } from '~/value-objects';
+import { RawUUID } from '../../value-objects/id';
 
 export interface RawUpdatableFile {
-	GUID?: string;
+	GUID?: RawUUID;
 
+	UID: RawNumericID;
 	GIDs: Array<RawNumericID>;
 	Global: boolean;
 

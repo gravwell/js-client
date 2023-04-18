@@ -20,7 +20,7 @@ export const toAutoExtractor = (raw: RawAutoExtractor): AutoExtractor => ({
 	groupIDs: raw.GIDs?.map(id => id.toString()) ?? [],
 
 	name: raw.Name,
-	description: raw.Desc,
+	description: raw.Desc ?? '',
 	labels: raw.Labels ?? [],
 
 	isGlobal: raw.Global,

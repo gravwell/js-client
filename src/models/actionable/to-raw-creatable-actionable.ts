@@ -38,4 +38,6 @@ export const toRawCreatableActionable = (creatable: CreatableActionable): RawCre
 				.map(toRawActionableAction),
 			triggers: creatable.triggers.map(toRawActionableTrigger),
 		},
+
+		Disabled: creatable.isDisabled,
 	});

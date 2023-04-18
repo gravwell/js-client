@@ -24,4 +24,6 @@ export interface CreatableActionable {
 
 	triggers: Array<ActionableTrigger>;
 	actions: Array<PartialProps<ConditionalPartial<ActionableAction, null>, 'start' | 'end'>>;
+
+	isDisabled: boolean;
 }
