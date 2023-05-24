@@ -10,7 +10,7 @@
 import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, parseJSONResponse } from '../utils';
 
 // TODO: Test this when gravwell/gravwell#2277 gets fixed
-export const makeRestartIndexers = (context: APIContext) => {
+export const makeRestartIndexers = (context: APIContext): (() => Promise<void>) => {
 	const templatePath = '/api/restart/indexers';
 	const url = buildURL(templatePath, { ...context, protocol: 'http' });
 

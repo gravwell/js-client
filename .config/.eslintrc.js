@@ -20,7 +20,7 @@ module.exports = {
 			'./.config/tsconfig.node-spec.json',
 		],
 	},
-	plugins: ['@typescript-eslint', 'simple-import-sort', 'import'],
+	plugins: ['@typescript-eslint', 'simple-import-sort', 'import', 'prefer-arrow'],
 	rules: {
 		'no-extra-semi': 'off',
 		curly: 'off',

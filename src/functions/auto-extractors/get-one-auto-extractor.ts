@@ -13,7 +13,7 @@ import { UUID } from '~/value-objects';
 import { APIContext } from '../utils';
 import { makeGetAllAutoExtractors } from './get-all-auto-extractors';
 
-export const makeGetOneAutoExtractor = (context: APIContext) => {
+export const makeGetOneAutoExtractor = (context: APIContext): ((autoExtractorID: UUID) => Promise<AutoExtractor>) => {
 	const getAllAutoExtractors = makeGetAllAutoExtractors(context);
 
 	return async (autoExtractorID: UUID): Promise<AutoExtractor> => {

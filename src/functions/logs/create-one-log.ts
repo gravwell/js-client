@@ -16,7 +16,7 @@ import {
 	parseJSONResponse,
 } from '../utils';
 
-export const makeCreateOneLog = (context: APIContext) => {
+export const makeCreateOneLog = (context: APIContext): ((level: LogLevel, message: string) => Promise<void>) => {
 	const templatePath = '/api/logging/{lowerCaseRawLogLevel}';
 
 	return async (level: LogLevel, message: string): Promise<void> => {

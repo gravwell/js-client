@@ -12,7 +12,7 @@ import { KitArchive, RawKitArchive, toKitArchive } from '~/models';
 import { makeGetAllScheduledTasks } from '../scheduled-tasks/get-all-scheduled-tasks';
 import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, parseJSONResponse } from '../utils';
 
-export const makeGetKitArchives = (context: APIContext) => {
+export const makeGetKitArchives = (context: APIContext): (() => Promise<Array<KitArchive>>) => {
 	const getAllScheduledTasks = makeGetAllScheduledTasks(context);
 
 	return async (): Promise<Array<KitArchive>> => {

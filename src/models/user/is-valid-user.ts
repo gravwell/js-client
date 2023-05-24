@@ -7,18 +7,25 @@
  * license. See the LICENSE file for details.
  */
 
-import { DATA_TYPE } from '~/models';
-import { isValidUserData } from './is-valid-user-data';
-import { User, UserRole } from './user';
+import { array, boolean, constant, date, Decoder, hardcoded, inexact, nullable, string } from 'decoders';
+import { either } from 'decoders/either';
+import { mkTypeGuard } from '../../functions/utils/type-guards';
+import { isNumericIdDecoder } from '../../value-objects';
+import { DATA_TYPE } from '../data-type';
+import { User } from './user';
 
-export const isValidUserRole = (value: any): value is UserRole =>
-	(['admin', 'analyst'] as Array<UserRole>).includes(value);
+export const isUserDecoder: Decoder<User> = inexact({
+	_tag: hardcoded(DATA_TYPE.USER),
+	id: isNumericIdDecoder,
+	groupIDs: array(isNumericIdDecoder),
+	username: string,
+	name: string,
+	email: string,
+	role: either(constant('admin'), constant('analyst')),
+	isLocked: boolean,
+	lastActivityDate: nullable(date),
+	searchGroupID: nullable(string),
+	synced: boolean,
+});
 
-export const isValidUser = (value: unknown): value is User => {
-	try {
-		const u = value as User;
-		return u._tag === DATA_TYPE.USER && isValidUserData(u);
-	} catch {
-		return false;
-	}
-};
+export const isValidUser: (v: unknown) => v is User = mkTypeGuard(isUserDecoder);

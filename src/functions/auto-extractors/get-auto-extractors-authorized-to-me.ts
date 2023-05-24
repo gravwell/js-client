@@ -10,7 +10,7 @@
 import { AutoExtractor, RawAutoExtractor, toAutoExtractor } from '~/models';
 import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, parseJSONResponse } from '../utils';
 
-export const makeGetAutoExtractorsAuthorizedToMe = (context: APIContext) => {
+export const makeGetAutoExtractorsAuthorizedToMe = (context: APIContext): (() => Promise<Array<AutoExtractor>>) => {
 	const path = '/api/autoextractors';
 	const url = buildURL(path, { ...context, protocol: 'http' });
 

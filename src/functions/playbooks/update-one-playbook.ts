@@ -17,7 +17,7 @@ import {
 } from '../utils';
 import { makeGetOnePlaybook } from './get-one-playbook';
 
-export const makeUpdateOnePlaybook = (context: APIContext) => {
+export const makeUpdateOnePlaybook = (context: APIContext): ((data: UpdatablePlaybook) => Promise<Playbook>) => {
 	const getOnePlaybook = makeGetOnePlaybook(context);
 
 	return async (data: UpdatablePlaybook): Promise<Playbook> => {

@@ -7,7 +7,7 @@
  * license. See the LICENSE file for details.
  */
 
-import { createReadStream } from 'fs';
+import { createReadStream, ReadStream } from 'fs';
 import { join } from 'path';
 import { isAutoExtractor } from '~/models';
 import { integrationTest, integrationTestSpecDef, TEST_ASSETS_PATH, TEST_BASE_API_CONTEXT } from '~/tests';
@@ -45,9 +45,8 @@ describe(
 				const autoExtractors1 = await getAllAutoExtractors();
 				expect(autoExtractors1.length).toBe(0);
 
-				const createFileStream = () => createReadStream(join(TEST_ASSETS_PATH!, 'auto-extractors.config'));
+				const createFileStream = (): ReadStream => createReadStream(join(TEST_ASSETS_PATH!, 'auto-extractors.config'));
 				const fileStream = createFileStream();
-
 				const autoExtractors2 = await uploadManyAutoExtractors({ file: fileStream });
 				expect(autoExtractors2.length).toBe(2);
 				for (const ae of autoExtractors2) {

@@ -10,7 +10,7 @@
 import { JWT } from '~/models';
 import { APIContext, buildHTTPRequest, buildURL, HTTPRequestOptions, parseJSONResponse } from '../utils';
 
-export const makeLoginOneUser = (context: APIContext) => {
+export const makeLoginOneUser = (context: APIContext): ((username: string, password: string) => Promise<JWT>) => {
 	const templatePath = '/api/login';
 	const url = buildURL(templatePath, { ...context, protocol: 'http' });
 

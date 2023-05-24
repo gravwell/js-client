@@ -13,7 +13,7 @@ import { APIContext } from '../utils';
 import { makeGetMyUser } from './get-my-user';
 import { makeUpdateOneUser } from './update-one-user';
 
-export const makeUpdateMyUser = (context: APIContext) => {
+export const makeUpdateMyUser = (context: APIContext): ((data: Omit<UpdatableUser, 'id'>) => Promise<User>) => {
 	const getMyUser = makeGetMyUser(context);
 	const updateOneUser = makeUpdateOneUser(context);
 

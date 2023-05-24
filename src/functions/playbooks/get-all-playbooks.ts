@@ -10,7 +10,7 @@
 import { Playbook, RawPlaybook, toPlaybook } from '~/models';
 import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, parseJSONResponse } from '../utils';
 
-export const makeGetAllPlaybooks = (context: APIContext) => {
+export const makeGetAllPlaybooks = (context: APIContext): (() => Promise<Array<Omit<Playbook, 'body'>>>) => {
 	const playbookPath = '/api/playbooks?admin=true';
 	const url = buildURL(playbookPath, { ...context, protocol: 'http' });
 

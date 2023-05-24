@@ -10,7 +10,7 @@
 import { LogLevels, RawLogLevels, toLogLevels } from '~/models';
 import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, parseJSONResponse } from '../utils';
 
-export const makeGetLogLevels = (context: APIContext) => {
+export const makeGetLogLevels = (context: APIContext): (() => Promise<LogLevels>) => {
 	const templatePath = '/api/logging';
 	const url = buildURL(templatePath, { ...context, protocol: 'http' });
 

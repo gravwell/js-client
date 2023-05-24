@@ -10,7 +10,7 @@
 import { Tag } from '~/models';
 import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, parseJSONResponse } from '../utils';
 
-export const makeGetAllTags = (context: APIContext) => {
+export const makeGetAllTags = (context: APIContext): (() => Promise<Array<Tag>>) => {
 	const templatePath = '/api/tags';
 	const url = buildURL(templatePath, { ...context, protocol: 'http' });
 

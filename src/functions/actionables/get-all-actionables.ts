@@ -10,7 +10,7 @@
 import { Actionable, RawActionable, toActionable } from '~/models';
 import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, parseJSONResponse } from '../utils';
 
-export const makeGetAllActionables = (context: APIContext) => {
+export const makeGetAllActionables = (context: APIContext): (() => Promise<Array<Actionable>>) => {
 	const templatePath = '/api/pivots';
 	const url = buildURL(templatePath, { ...context, protocol: 'http' });
 

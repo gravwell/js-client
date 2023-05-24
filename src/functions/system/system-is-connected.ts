@@ -9,7 +9,7 @@
 
 import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, parseJSONResponse } from '../utils';
 
-export const makeSystemIsConnected = (context: APIContext) => {
+export const makeSystemIsConnected = (context: APIContext): (() => Promise<boolean>) => {
 	const templatePath = '/api/test';
 	const url = buildURL(templatePath, { ...context, protocol: 'http' });
 

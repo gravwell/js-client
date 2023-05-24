@@ -10,7 +10,7 @@
 import { RawUser, toUser, User } from '~/models';
 import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, parseJSONResponse } from '../utils';
 
-export const makeGetMyUser = (context: APIContext) => {
+export const makeGetMyUser = (context: APIContext): (() => Promise<User>) => {
 	const templatePath = '/api/info/whoami';
 	const url = buildURL(templatePath, { ...context, protocol: 'http' });
 

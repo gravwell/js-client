@@ -16,7 +16,7 @@ import {
 	parseJSONResponse,
 } from '../utils';
 
-export const makeCreateOneSavedQuery = (context: APIContext) => {
+export const makeCreateOneSavedQuery = (context: APIContext): ((data: CreatableSavedQuery) => Promise<SavedQuery>) => {
 	const templatePath = '/api/library';
 	const url = buildURL(templatePath, { ...context, protocol: 'http' });
 

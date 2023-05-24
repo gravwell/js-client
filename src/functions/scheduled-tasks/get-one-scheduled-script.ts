@@ -11,7 +11,9 @@ import { ScheduledScript } from '~/models';
 import { APIContext } from '../utils';
 import { makeGetOneScheduledTask } from './get-one-scheduled-task';
 
-export const makeGetOneScheduledScript = (context: APIContext) => {
+export const makeGetOneScheduledScript = (
+	context: APIContext,
+): ((scheduledTaskID: string) => Promise<ScheduledScript>) => {
 	const getOneScheduledTask = makeGetOneScheduledTask(context);
 
 	return (scheduledTaskID: string): Promise<ScheduledScript> => getOneScheduledTask<'script'>(scheduledTaskID);

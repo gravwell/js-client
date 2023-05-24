@@ -16,7 +16,9 @@ import {
 	parseJSONResponse,
 } from '../utils';
 
-export const makeIsValidAutoExtractorSyntax = (context: APIContext) => {
+export const makeIsValidAutoExtractorSyntax = (
+	context: APIContext,
+): ((data: CreatableAutoExtractor) => Promise<IsValidAutoExtractorSyntaxResponse>) => {
 	const templatePath = '/api/autoextractors/test';
 	const url = buildURL(templatePath, { ...context, protocol: 'http' });
 

@@ -10,7 +10,7 @@
 import { FileMetadata, RawFileMetadata, toFileMetadata } from '~/models';
 import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, parseJSONResponse } from '../utils';
 
-export const makeGetFilesAuthorizedToMe = (context: APIContext) => {
+export const makeGetFilesAuthorizedToMe = (context: APIContext): (() => Promise<Array<FileMetadata>>) => {
 	const path = '/api/files';
 	const url = buildURL(path, { ...context, protocol: 'http' });
 

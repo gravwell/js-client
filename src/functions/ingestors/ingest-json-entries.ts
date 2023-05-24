@@ -16,7 +16,9 @@ import {
 	parseJSONResponse,
 } from '../utils';
 
-export const makeIngestJSONEntries = (context: APIContext) => {
+export const makeIngestJSONEntries = (
+	context: APIContext,
+): ((entries: Array<CreatableJSONEntry>) => Promise<number>) => {
 	const templatePath = '/api/ingest/json';
 	const url = buildURL(templatePath, { ...context, protocol: 'http' });
 

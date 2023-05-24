@@ -7,6 +7,7 @@
  * license. See the LICENSE file for details.
  */
 
+import { regex } from 'decoders';
 import { isString } from 'lodash';
 
 export type RawID = string;
@@ -21,6 +22,10 @@ export const toNumericID = (raw: RawNumericID): NumericID => raw.toString();
 export const toRawNumericID = (id: NumericID): RawNumericID => parseInt(id, 10);
 
 export const isNumericID = (value: any): value is NumericID => isID(value) && Number.isInteger(parseInt(value, 10));
+export const isNumericIdDecoder = regex(
+	/^[0-9]+$/,
+	"ID must be a string representation of an integer number, such as the value '1'",
+);
 
 export type UUID = string;
 export type RawUUID = string;

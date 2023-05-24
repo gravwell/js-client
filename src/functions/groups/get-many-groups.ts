@@ -13,7 +13,9 @@ import { APIContext } from '../utils';
 import { makeGetAllGroups } from './get-all-groups';
 import { makeGetGroupsByUser } from './get-groups-by-user';
 
-export const makeGetManyGroups = (context: APIContext) => {
+export const makeGetManyGroups = (
+	context: APIContext,
+): ((groupFilter?: { userID?: NumericID | undefined }) => Promise<Array<Group>>) => {
 	const getGroupsByUser = makeGetGroupsByUser(context);
 	const getAllGroups = makeGetAllGroups(context);
 

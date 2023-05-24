@@ -17,7 +17,7 @@ import {
 	parseJSONResponse,
 } from '../utils';
 
-export const makeBuildOneLocalKit = (context: APIContext) => {
+export const makeBuildOneLocalKit = (context: APIContext): ((data: BuildableKit) => Promise<UUID>) => {
 	const templatePath = '/api/kits/build';
 	const url = buildURL(templatePath, { ...context, protocol: 'http' });
 

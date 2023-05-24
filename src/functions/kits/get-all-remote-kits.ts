@@ -10,7 +10,7 @@
 import { RawRemoteKit, RemoteKit, toRemoteKit } from '~/models';
 import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, parseJSONResponse } from '../utils';
 
-export const makeGetAllRemoteKits = (context: APIContext) => {
+export const makeGetAllRemoteKits = (context: APIContext): (() => Promise<Array<RemoteKit>>) => {
 	const path = '/api/kits/remote/list';
 	const url = buildURL(path, { ...context, protocol: 'http' });
 

@@ -13,7 +13,9 @@ import { makeDeleteOneScheduledScript } from './delete-one-scheduled-script';
 import { makeGetAllScheduledScripts } from './get-all-scheduled-scripts';
 import { ScheduledTasksFilter } from './get-many-scheduled-tasks';
 
-export const makeDeleteManyScheduledScripts = (context: APIContext) => {
+export const makeDeleteManyScheduledScripts = (
+	context: APIContext,
+): ((filter?: ScheduledTasksFilter) => Promise<void>) => {
 	const deleteOneScheduledScript = makeDeleteOneScheduledScript(context);
 	const getAllScheduledScripts = makeGetAllScheduledScripts(context);
 

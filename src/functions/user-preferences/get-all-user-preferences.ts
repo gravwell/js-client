@@ -10,7 +10,7 @@
 import { RawUserPreferencesWithMetadata, toUserPreferencesWithMetadata, UserPreferencesWithMetadata } from '~/models';
 import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, parseJSONResponse } from '../utils';
 
-export const makeGetAllUserPreferences = (context: APIContext) => {
+export const makeGetAllUserPreferences = (context: APIContext): (() => Promise<Array<UserPreferencesWithMetadata>>) => {
 	const templatePath = '/api/users/preferences';
 	const url = buildURL(templatePath, { ...context, protocol: 'http' });
 

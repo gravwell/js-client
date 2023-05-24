@@ -17,7 +17,7 @@ import { makeUpdateOneUserInformation } from './update-one-user-information';
 import { makeUpdateOneUserLockedState } from './update-one-user-locked-state';
 import { makeUpdateOneUserPassword } from './update-one-user-password';
 
-export const makeUpdateOneUser = (context: APIContext) => {
+export const makeUpdateOneUser = (context: APIContext): ((data: UpdatableUser) => Promise<User>) => {
 	const updateOneUserLockedState = makeUpdateOneUserLockedState(context);
 	const updateOneUserInformation = makeUpdateOneUserInformation(context);
 	const updateOneUserPassword = makeUpdateOneUserPassword(context);

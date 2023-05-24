@@ -15,10 +15,9 @@
 export enum TokenCapability {
 	'Search' = 'Search',
 	'Download' = 'Download',
-	'SaveSearch' = 'SaveSearch',
 	'AttachSearch' = 'AttachSearch',
+	'SaveSearch' = 'SaveSearch',
 	'BackgroundSearch' = 'BackgroundSearch',
-	'GetTags' = 'GetTags',
 	'SetSearchGroup' = 'SetSearchGroup',
 	'SearchHistory' = 'SearchHistory',
 	'SearchGroupHistory' = 'SearchGroupHistory',

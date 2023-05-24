@@ -16,7 +16,7 @@ import {
 	parseJSONResponse,
 } from '../utils';
 
-export const makeValidateOneScript = (context: APIContext) => {
+export const makeValidateOneScript = (context: APIContext): ((script: Script) => Promise<ValidatedScript>) => {
 	const templatePath = '/api/scheduledsearches/parse';
 	const url = buildURL(templatePath, { ...context, protocol: 'http' });
 

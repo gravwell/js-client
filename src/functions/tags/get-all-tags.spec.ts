@@ -8,6 +8,7 @@
  */
 
 import { integrationTest, TEST_BASE_API_CONTEXT, unitTest } from '~/tests';
+import { Tag } from '../../main';
 import { makeGetAllTags } from './get-all-tags';
 
 describe('getAllTags()', () => {
@@ -20,7 +21,7 @@ describe('getAllTags()', () => {
 		'Should return a function given a valid host',
 		unitTest(async () => {
 			const context = await TEST_BASE_API_CONTEXT();
-			const fn = () => makeGetAllTags({ ...context, host: 'www.example.com' });
+			const fn = (): (() => Promise<Array<Tag>>) => makeGetAllTags({ ...context, host: 'www.example.com' });
 			expect(fn).not.toThrow();
 			expect(typeof fn()).toBe('function');
 		}),

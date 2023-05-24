@@ -10,7 +10,7 @@
 import { RawRenderModule, RenderModule, toRenderModule } from '~/models';
 import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, parseJSONResponse } from '../utils';
 
-export const makeGetAllRenderModules = (context: APIContext) => {
+export const makeGetAllRenderModules = (context: APIContext): (() => Promise<Array<RenderModule>>) => {
 	const templatePath = '/api/info/rendermodules';
 	const url = buildURL(templatePath, { ...context, protocol: 'http' });
 

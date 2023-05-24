@@ -10,6 +10,6 @@
 export interface RawGroup {
 	GID: number;
 	Name: string;
-	Desc: string; // Empty is null
-	Synced: boolean;
+	Desc?: string; // Empty is null
+	Synced?: boolean;
 }

@@ -85,7 +85,7 @@ xdescribe(
 
 			// Creates two groups
 			const creatableGroups: Array<CreatableGroup> = [{ name: 'Admin' }, { name: 'Analyst' }];
-			const groupCreationPs = creatableGroups.map(data => createOneGroup(data));
+			const groupCreationPs = creatableGroups.map(dataMap => createOneGroup(dataMap));
 			const groups = await Promise.all(groupCreationPs);
 			const [id0, id1] = groups.map(g => g.id);
 			assertIsNotNil(id0);

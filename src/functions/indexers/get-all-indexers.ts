@@ -11,7 +11,7 @@ import { isEmpty } from 'lodash';
 import { IndexerWell, RawIndexerWellResponse, toIndexerWell } from '~/models';
 import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, fetch, parseJSONResponse } from '../utils';
 
-export const makeGetAllIndexers = (context: APIContext) => {
+export const makeGetAllIndexers = (context: APIContext): (() => Promise<Array<IndexerWell>>) => {
 	const templatePath = '/api/stats/wellStats';
 	const url = buildURL(templatePath, { ...context, protocol: 'http' });
 

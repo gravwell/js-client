@@ -35,7 +35,7 @@ export const isAutoExtractorData = (value: unknown): value is AutoExtractorData 
 	}
 };
 
-const makeIsAutoExtractorModule = () => {
+const makeIsAutoExtractorModule = (): ((value: unknown) => value is AutoExtractorModule) => {
 	const autoExtractorModulesSet = new Set(AUTO_EXTRACTOR_MODULES);
 
 	return (value: unknown): value is AutoExtractorModule => {
