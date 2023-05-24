@@ -7,15 +7,18 @@
  * license. See the LICENSE file for details.
  */
 
-import { DATA_TYPE } from '~/models';
+import { boolean, Decoder, hardcoded, inexact, nullable, string } from 'decoders';
+import { mkTypeGuard } from '../../functions/utils/type-guards';
+import { isNumericIdDecoder } from '../../value-objects';
+import { DATA_TYPE } from '../data-type';
 import { Group } from './group';
-import { isGroupData } from './is-group-data';
 
-export const isGroup = (value: unknown): value is Group => {
-	try {
-		const g = value as Group;
-		return g._tag === DATA_TYPE.GROUP && isGroupData(value);
-	} catch {
-		return false;
-	}
-};
+export const isGroupDecoder: Decoder<Group> = inexact({
+	_tag: hardcoded(DATA_TYPE.GROUP),
+	id: isNumericIdDecoder,
+	name: string,
+	description: nullable(string),
+	isSynced: boolean,
+});
+
+export const isGroup: (v: unknown) => v is Group = mkTypeGuard(isGroupDecoder);

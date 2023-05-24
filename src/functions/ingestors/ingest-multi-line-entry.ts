@@ -16,7 +16,9 @@ import {
 	parseJSONResponse,
 } from '../utils';
 
-export const makeIngestMultiLineEntry = (context: APIContext) => {
+export const makeIngestMultiLineEntry = (
+	context: APIContext,
+): ((entry: CreatableMultiLineEntry) => Promise<number>) => {
 	const templatePath = '/api/ingest/lines';
 	const url = buildURL(templatePath, { ...context, protocol: 'http' });
 

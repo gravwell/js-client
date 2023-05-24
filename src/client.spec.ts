@@ -105,13 +105,14 @@ import {
 import { unitTest } from '~/tests';
 import { ID, NumericID, RawJSON, UUID } from '~/value-objects';
 import { GravwellClient } from './client';
+import { Gravwell } from './main';
 import { GeneratableAutoExtractor } from './models/auto-extractor/generatable-auto-extractor';
 
 describe('GravwellClient', () => {
 	it(
 		'Should instantiate given a valid host',
 		unitTest(() => {
-			const fn = () => new GravwellClient('www.example.com');
+			const fn = (): Gravwell => new GravwellClient('www.example.com');
 			expect(fn).not.toThrow();
 		}),
 	);
@@ -135,7 +136,7 @@ describe('GravwellClient', () => {
 
 	xit(
 		'Should update the functions protocol when the client `.useEncryption` is updated',
-		unitTest(() => {}),
+		unitTest((): void => {}),
 	);
 
 	it(

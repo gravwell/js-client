@@ -24,7 +24,13 @@ import {
 } from '../utils';
 import { makeGetOneScheduledTask } from './get-one-scheduled-task';
 
-export const makeCreateOneScheduledTask = (context: APIContext) => {
+export const makeCreateOneScheduledTask = (
+	context: APIContext,
+): (<D extends CreatableScheduledTask>(
+	data: D,
+) => Promise<
+	D['type'] extends 'query' ? ScheduledQuery : D['type'] extends 'script' ? ScheduledScript : ScheduledTask
+>) => {
 	const getOneScheduledTask = makeGetOneScheduledTask(context);
 
 	const templatePath = '/api/scheduledsearches';

@@ -9,7 +9,7 @@
 
 import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, parseJSONResponse } from '../utils';
 
-export const makeWebServerIsDistributed = (context: APIContext) => {
+export const makeWebServerIsDistributed = (context: APIContext): (() => Promise<boolean>) => {
 	const templatePath = '/api/distributed';
 	const url = buildURL(templatePath, { ...context, protocol: 'http' });
 

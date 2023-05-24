@@ -13,7 +13,7 @@ import { makeGetScheduledTasksAuthorizedToMe } from './get-scheduled-tasks-autho
 
 const isScheduledQuery = (s: ScheduledTask): s is ScheduledQuery => s.type === 'query';
 
-export const makeGetScheduledQueriesAuthorizedToMe = (context: APIContext) => {
+export const makeGetScheduledQueriesAuthorizedToMe = (context: APIContext): (() => Promise<Array<ScheduledQuery>>) => {
 	const getScheduledTasksAuthorizedToMe = makeGetScheduledTasksAuthorizedToMe(context);
 
 	return async (): Promise<Array<ScheduledQuery>> => {

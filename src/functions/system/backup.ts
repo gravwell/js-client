@@ -9,7 +9,7 @@
 
 import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL } from '../utils';
 
-export const makeBackup = (context: APIContext) => {
+export const makeBackup = (context: APIContext): ((includeSavedSearches?: boolean) => Promise<File>) => {
 	const templatePath = '/api/backup';
 
 	return async (includeSavedSearches = false): Promise<File> => {

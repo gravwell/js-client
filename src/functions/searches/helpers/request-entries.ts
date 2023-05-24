@@ -42,7 +42,7 @@ export const makeRequestEntries: (props: {
 	rawSubscription: APISubscription<RawSearchMessageReceived, RawSearchMessageSent>;
 	searchMessages$: Observable<any>;
 	searchTypeID: string;
-	getRawRequestEntriesMsg: IGetRequestEntries<
+	getRawRequestEntriesMessage: IGetRequestEntries<
 		RawRequestExplorerSearchEntriesWithinRangeMessageSent | RawRequestSearchEntriesWithinRangeMessageSent
 	>;
 	isClosed: () => boolean;
@@ -57,10 +57,10 @@ export const makeRequestEntries: (props: {
 	rawSubscription,
 	searchMessages$,
 	searchTypeID,
-	getRawRequestEntriesMsg,
+	getRawRequestEntriesMessage,
 	isClosed,
 }) => {
-	const nextDetailsMsg = () =>
+	const nextDetailsMsg = (): Promise<any> =>
 		firstValueFrom(
 			searchMessages$.pipe(
 				filter(filterMessageByCommand(SearchMessageCommands.RequestDetails)),
@@ -71,7 +71,7 @@ export const makeRequestEntries: (props: {
 
 	let pollingSubs: Subscription;
 
-	return async (filter): Promise<void> => {
+	return async (filtered): Promise<void> => {
 		if (isClosed()) {
 			return undefined;
 		}
@@ -82,16 +82,16 @@ export const makeRequestEntries: (props: {
 		pollingSubs = new Subscription();
 
 		const filterID = uniqueId(SEARCH_FILTER_PREFIX);
-		filtersByID[filterID] = filter;
+		filtersByID[filterID] = filtered;
 
-		const first = filter.entriesOffset.index;
-		const last = first + filter.entriesOffset.count;
-		const startDate = filter.dateRange === 'preview' ? previewDateRange.start : filter.dateRange.start;
+		const first = filtered.entriesOffset.index;
+		const last = first + filtered.entriesOffset.count;
+		const startDate = filtered.dateRange === 'preview' ? previewDateRange.start : filtered.dateRange.start;
 		const start = startDate.toISOString();
-		const endDate = filter.dateRange === 'preview' ? previewDateRange.end : filter.dateRange.end;
+		const endDate = filtered.dateRange === 'preview' ? previewDateRange.end : filtered.dateRange.end;
 		const end = endDate.toISOString();
 		// TODO: Filter by .desiredGranularity and .fieldFilters
-		const requestEntriesMsg = getRawRequestEntriesMsg({ end, filterID, first, last, searchTypeID, start });
+		const requestEntriesMsg = getRawRequestEntriesMessage({ end, filterID, first, last, searchTypeID, start });
 
 		// Set up a promise to wait for the next details message
 		const detailsMsgP = nextDetailsMsg();
@@ -121,7 +121,7 @@ export const makeRequestEntries: (props: {
 					catchError(() => EMPTY),
 					takeUntil(close$),
 				)
-				.subscribe(),
+				.subscribe({ error: err => console.warn(err) }),
 		);
 
 		// Keep sending requests for entries until finished is true
@@ -136,7 +136,7 @@ export const makeRequestEntries: (props: {
 					catchError(() => EMPTY),
 					takeUntil(close$),
 				)
-				.subscribe(),
+				.subscribe({ error: err => console.warn(err) }),
 		);
 		const entriesP = rawSubscription.send(requestEntriesMsg);
 
@@ -145,7 +145,7 @@ export const makeRequestEntries: (props: {
 			data: {
 				ID: SearchMessageCommands.RequestAllStats,
 				Addendum: { filterID },
-				Stats: { SetCount: filter.overviewGranularity },
+				Stats: { SetCount: filtered.overviewGranularity },
 			},
 		};
 		// Keep sending requests for stats until finished is true
@@ -160,7 +160,7 @@ export const makeRequestEntries: (props: {
 					catchError(() => EMPTY),
 					takeUntil(close$),
 				)
-				.subscribe(),
+				.subscribe({ error: err => console.warn(err) }),
 		);
 		const statsP = rawSubscription.send(requestStatsMessage);
 
@@ -170,10 +170,10 @@ export const makeRequestEntries: (props: {
 				ID: SearchMessageCommands.RequestStatsInRange,
 				Addendum: { filterID },
 				Stats: {
-					SetCount: filter.zoomGranularity,
+					SetCount: filtered.zoomGranularity,
 					SetEnd: recalculateZoomEnd(
 						detailsMsg ? detailsMsg.data.SearchInfo.MinZoomWindow : 1,
-						filter.zoomGranularity,
+						filtered.zoomGranularity,
 						startDate,
 						endDate,
 					).toISOString(),
@@ -196,7 +196,7 @@ export const makeRequestEntries: (props: {
 					catchError(() => EMPTY),
 					takeUntil(close$),
 				)
-				.subscribe(),
+				.subscribe({ error: err => console.warn(err) }),
 		);
 		const statsRangeP = rawSubscription.send(requestStatsWithinRangeMsg);
 

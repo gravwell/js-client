@@ -10,7 +10,7 @@
 import { FileMetadata, RawFileMetadata, toFileMetadata } from '~/models';
 import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, parseJSONResponse } from '../utils';
 
-export const makeGetAllFiles = (context: APIContext) => {
+export const makeGetAllFiles = (context: APIContext): (() => Promise<Array<FileMetadata>>) => {
 	const path = '/api/files?admin=true';
 	const url = buildURL(path, { ...context, protocol: 'http' });
 

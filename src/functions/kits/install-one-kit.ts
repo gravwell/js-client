@@ -56,12 +56,15 @@ export const makeInstallOneKit = (
 		const received: Array<KitInstallationStatus> = [];
 		const sent = [] as Array<never>;
 
-		_received$.subscribe(receivedMessage => received.push(receivedMessage));
-		_sent$.subscribe(sentMessage => sent.push(sentMessage));
+		_received$.subscribe({ next: receivedMessage => received.push(receivedMessage), error: err => console.warn(err) });
+		_sent$.subscribe({ next: sentMessage => sent.push(sentMessage), error: err => console.warn(err) });
 
 		const installationID = await queueOneKitForInstallation(data);
-		const statusSub = subscribeToOneKitInstallationStatus(installationID).subscribe(status => {
-			_received$.next(status);
+		const statusSub = subscribeToOneKitInstallationStatus(installationID).subscribe({
+			next: status => {
+				_received$.next(status);
+			},
+			error: err => console.warn(err),
 		});
 
 		const close = (): void => {
@@ -81,7 +84,7 @@ export const makeInstallOneKit = (
 	};
 };
 
-const wait = (ms: number) => new Promise<void>(res => setTimeout(res, ms));
+const wait = (ms: number): Promise<void> => new Promise<void>(res => setTimeout(res, ms));
 
 const makeGetOneKitInstallationStatus =
 	(context: APIContext) =>

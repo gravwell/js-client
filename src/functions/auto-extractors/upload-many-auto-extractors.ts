@@ -22,7 +22,9 @@ import {
 import { makeGetAllAutoExtractors } from './get-all-auto-extractors';
 import { makeUpdateOneAutoExtractor } from './update-one-auto-extractor';
 
-export const makeUploadManyAutoExtractors = (context: APIContext) => {
+export const makeUploadManyAutoExtractors = (
+	context: APIContext,
+): ((data: UploadableAutoExtractor) => Promise<Array<AutoExtractor>>) => {
 	const getAllAutoExtractors = makeGetAllAutoExtractors(context);
 	const updateOneAutoExtractor = makeUpdateOneAutoExtractor(context);
 

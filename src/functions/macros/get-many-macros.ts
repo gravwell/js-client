@@ -14,7 +14,7 @@ import { makeGetAllMacros } from './get-all-macros';
 import { makeGetMacrosByGroup } from './get-macros-by-group';
 import { makeGetMacrosByUser } from './get-macros-by-user';
 
-export const makeGetManyMacros = (context: APIContext) => {
+export const makeGetManyMacros = (context: APIContext): ((filter?: MacrosFilter) => Promise<Array<Macro>>) => {
 	const getMacrosByUser = makeGetMacrosByUser(context);
 	const getMacrosByGroup = makeGetMacrosByGroup(context);
 	const getAllMacros = makeGetAllMacros(context);

@@ -11,7 +11,6 @@ export * from './creatable-group';
 export * from './group';
 export * from './group-data';
 export * from './is-group';
-export * from './is-group-data';
 export * from './raw-creatable-group';
 export * from './raw-group';
 export * from './raw-updatable-group';

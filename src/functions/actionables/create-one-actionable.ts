@@ -18,7 +18,7 @@ import {
 } from '../utils';
 import { makeGetOneActionable } from './get-one-actionable';
 
-export const makeCreateOneActionable = (context: APIContext) => {
+export const makeCreateOneActionable = (context: APIContext): ((data: CreatableActionable) => Promise<Actionable>) => {
 	const getOneActionable = makeGetOneActionable(context);
 
 	const templatePath = '/api/pivots';

@@ -17,7 +17,7 @@ import {
 } from '../utils';
 import { makeGetOneToken } from './get-one-token';
 
-export const makeUpdateOneToken = (context: APIContext) => {
+export const makeUpdateOneToken = (context: APIContext): ((data: UpdatableToken) => Promise<Token>) => {
 	const getOneToken = makeGetOneToken(context);
 
 	return async (data: UpdatableToken): Promise<Token> => {

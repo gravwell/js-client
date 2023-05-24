@@ -19,7 +19,9 @@ import {
 	parseJSONResponse,
 } from '../utils';
 
-export const makeGenerateAutoExtractors = (context: APIContext) => {
+export const makeGenerateAutoExtractors = (
+	context: APIContext,
+): ((data: GeneratableAutoExtractor) => Promise<GeneratedAutoExtractors>) => {
 	const templatePath = '/api/explore/generate';
 	const url = buildURL(templatePath, { ...context, protocol: 'http' });
 

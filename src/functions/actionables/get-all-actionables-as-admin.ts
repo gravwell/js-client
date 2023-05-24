@@ -10,7 +10,7 @@
 import { Actionable, RawActionable, toActionable } from '~/models';
 import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, parseJSONResponse } from '../utils';
 
-export const makeGetAllActionablesAsAdmin = (context: APIContext) => {
+export const makeGetAllActionablesAsAdmin = (context: APIContext): (() => Promise<Array<Actionable>>) => {
 	const templatePath = '/api/pivots?admin=true';
 	const url = buildURL(templatePath, { ...context, protocol: 'http' });
 

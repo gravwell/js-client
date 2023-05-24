@@ -18,7 +18,7 @@ import {
 } from '../utils';
 import { makeGetOneDashboard } from './get-one-dashboard';
 
-export const makeCreateOneDashboard = (context: APIContext) => {
+export const makeCreateOneDashboard = (context: APIContext): ((data: CreatableDashboard) => Promise<Dashboard>) => {
 	const getOneDashboard = makeGetOneDashboard(context);
 
 	const templatePath = '/api/dashboards';

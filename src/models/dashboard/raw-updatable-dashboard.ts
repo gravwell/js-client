@@ -34,7 +34,7 @@ export interface RawUpdatableDashboard {
 
 		searches: Array<{
 			alias: string | null;
-			timeframe?: {} | RawTimeframe;
+			timeframe?: object | RawTimeframe;
 			query?: string;
 			searchID?: RawNumericID;
 			reference?: {

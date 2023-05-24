@@ -18,7 +18,7 @@ import {
 } from '../utils';
 import { makeGetOneMacro } from './get-one-macro';
 
-export const makeCreateOneMacro = (context: APIContext) => {
+export const makeCreateOneMacro = (context: APIContext): ((data: CreatableMacro) => Promise<Macro>) => {
 	const getOneMacro = makeGetOneMacro(context);
 
 	const templatePath = '/api/macros';

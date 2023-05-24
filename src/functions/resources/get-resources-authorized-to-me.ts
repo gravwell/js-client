@@ -10,7 +10,7 @@
 import { RawResource, Resource, toResource } from '~/models';
 import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, parseJSONResponse } from '../utils';
 
-export const makeGetResourcesAuthorizedToMe = (context: APIContext) => {
+export const makeGetResourcesAuthorizedToMe = (context: APIContext): (() => Promise<Array<Omit<Resource, 'body'>>>) => {
 	const resourcePath = '/api/resources';
 	const url = buildURL(resourcePath, { ...context, protocol: 'http' });
 

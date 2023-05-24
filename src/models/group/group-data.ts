@@ -13,5 +13,5 @@ export interface GroupData {
 	id: NumericID;
 	name: string;
 	description: string | null;
-	isSynced: boolean;
+	isSynced?: boolean;
 }

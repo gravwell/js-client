@@ -47,13 +47,13 @@ export const debounceWithBackoffWhile = <T>({
 	maxDueTime: number;
 	predicate: (value: T) => boolean;
 }): MonoTypeOperatorFunction<T> => {
-	const nextDueTime = (lastDueTime: number, value: T) => {
+	const nextDueTime = (lastDueTime: number, value: T): number => {
 		if (!predicate(value)) {
 			return initialDueTime;
 		}
 		return Math.min(lastDueTime + step, maxDueTime);
 	};
 
-	return (source: Observable<T>): Observable<T> =>
-		source.pipe(debounce(rxjsDynamicDuration(nextDueTime, initialDueTime)));
+	return (source$: Observable<T>): Observable<T> =>
+		source$.pipe(debounce(rxjsDynamicDuration(nextDueTime, initialDueTime)));
 };

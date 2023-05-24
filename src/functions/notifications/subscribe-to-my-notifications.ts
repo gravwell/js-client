@@ -16,7 +16,11 @@ export type MyNotificationsMessageReceived = Array<Notification>;
 
 export type MyNotificationsMessageSent = never;
 
-export const makeSubscribeToMyNotifications = (context: APIContext) => {
+export const makeSubscribeToMyNotifications = (
+	context: APIContext,
+): ((options?: {
+	pollInterval?: number | undefined;
+}) => Promise<APISubscription<MyNotificationsMessageReceived, MyNotificationsMessageSent>>) => {
 	const getMyNotifications = makeGetMyNotifications(context);
 
 	return async (
@@ -25,7 +29,7 @@ export const makeSubscribeToMyNotifications = (context: APIContext) => {
 		const pollInterval = options.pollInterval ?? 10000;
 
 		let timeoutID: ReturnType<typeof setTimeout>;
-		const setPoll = () => {
+		const setPoll = (): void => {
 			timeoutID = setTimeout(async () => {
 				const notifications = await getMyNotifications();
 				_received$.next(notifications);
@@ -38,7 +42,7 @@ export const makeSubscribeToMyNotifications = (context: APIContext) => {
 
 		const received: Array<MyNotificationsMessageReceived> = [];
 		const _received$ = new BehaviorSubject<MyNotificationsMessageReceived>(firstNotifications);
-		_received$.subscribe(receivedMessage => received.push(receivedMessage));
+		_received$.subscribe({ next: receivedMessage => received.push(receivedMessage), error: err => console.warn(err) });
 
 		return {
 			send: async () => undefined,

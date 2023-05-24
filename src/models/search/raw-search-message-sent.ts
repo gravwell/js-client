@@ -17,7 +17,7 @@ export interface RawInformSubscriptionsMessageSent {
 
 export interface RawPongMessageSent {
 	type: 'PONG';
-	data: {};
+	data: object;
 }
 
 export interface RawAttachSearchMessageSent {

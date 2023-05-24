@@ -16,4 +16,3 @@ export * from './to-user';
 export * from './updatable-user';
 export * from './user';
 export * from './user-data';
-export * from './is-valid-user-data';

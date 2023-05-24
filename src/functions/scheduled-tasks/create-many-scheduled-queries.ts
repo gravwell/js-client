@@ -11,7 +11,9 @@ import { CreatableScheduledQuery, ScheduledQuery } from '~/models';
 import { APIContext } from '../utils';
 import { makeCreateOneScheduledQuery } from './create-one-scheduled-query';
 
-export const makeCreateManyScheduledQueries = (context: APIContext) => {
+export const makeCreateManyScheduledQueries = (
+	context: APIContext,
+): ((data: Array<CreatableScheduledQuery>) => Promise<Array<ScheduledQuery>>) => {
 	const createOneScheduledQuery = makeCreateOneScheduledQuery(context);
 
 	return (data: Array<CreatableScheduledQuery>): Promise<Array<ScheduledQuery>> => {

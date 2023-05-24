@@ -17,7 +17,7 @@ import {
 } from '../utils';
 import { makeGetOneUser } from './get-one-user';
 
-export const makeCreateOneUser = (context: APIContext) => {
+export const makeCreateOneUser = (context: APIContext): ((data: CreatableUser) => Promise<User>) => {
 	const getOneUser = makeGetOneUser(context);
 
 	const templatePath = '/api/users';

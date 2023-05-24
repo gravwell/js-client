@@ -19,7 +19,7 @@ import {
 import { makeGetOneResource } from './get-one-resource';
 import { makeSetOneResourceContent } from './set-one-resource-content';
 
-export const makeUpdateOneResource = (context: APIContext) => {
+export const makeUpdateOneResource = (context: APIContext): ((data: UpdatableResource) => Promise<Resource>) => {
 	const getOneResource = makeGetOneResource(context);
 	const setOneResourceContent = makeSetOneResourceContent(context);
 

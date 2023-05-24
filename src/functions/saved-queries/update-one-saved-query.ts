@@ -17,7 +17,7 @@ import {
 } from '../utils';
 import { makeGetOneSavedQuery } from './get-one-saved-query';
 
-export const makeUpdateOneSavedQuery = (context: APIContext) => {
+export const makeUpdateOneSavedQuery = (context: APIContext): ((data: UpdatableSavedQuery) => Promise<SavedQuery>) => {
 	const getOneSavedQuery = makeGetOneSavedQuery(context);
 
 	return async (data: UpdatableSavedQuery): Promise<SavedQuery> => {

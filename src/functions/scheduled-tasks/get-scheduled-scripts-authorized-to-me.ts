@@ -13,7 +13,7 @@ import { makeGetScheduledTasksAuthorizedToMe } from './get-scheduled-tasks-autho
 
 const isScheduledScript = (s: ScheduledTask): s is ScheduledScript => s.type === 'script';
 
-export const makeGetScheduledScriptsAuthorizedToMe = (context: APIContext) => {
+export const makeGetScheduledScriptsAuthorizedToMe = (context: APIContext): (() => Promise<Array<ScheduledScript>>) => {
 	const getScheduledTasksAuthorizedToMe = makeGetScheduledTasksAuthorizedToMe(context);
 
 	return async (): Promise<Array<ScheduledScript>> => {

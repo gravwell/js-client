@@ -10,7 +10,7 @@
 import { Macro, RawMacro, toMacro } from '~/models';
 import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, parseJSONResponse } from '../utils';
 
-export const makeGetMacrosAuthorizedToMe = (context: APIContext) => {
+export const makeGetMacrosAuthorizedToMe = (context: APIContext): (() => Promise<Array<Macro>>) => {
 	const path = '/api/macros';
 	const url = buildURL(path, { ...context, protocol: 'http' });
 

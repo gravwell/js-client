@@ -17,7 +17,9 @@ import {
 } from '../utils';
 import { makeGetMyNotifications } from './get-my-notifications';
 
-export const makeUpdateOneNotification = (context: APIContext) => {
+export const makeUpdateOneNotification = (
+	context: APIContext,
+): ((updatable: UpdatableNotification) => Promise<void>) => {
 	const getAllNotification = makeGetMyNotifications(context);
 
 	return async (updatable: UpdatableNotification): Promise<void> => {

@@ -25,7 +25,13 @@ import {
 } from '../utils';
 import { makeGetOneScheduledTask } from './get-one-scheduled-task';
 
-export const makeUpdateOneScheduledTask = (context: APIContext) => {
+export const makeUpdateOneScheduledTask = (
+	context: APIContext,
+): (<D extends UpdatableScheduledTask>(
+	data: D,
+) => Promise<
+	D['type'] extends 'query' ? ScheduledQuery : D['type'] extends 'script' ? ScheduledScript : ScheduledTask
+>) => {
 	const getOneScheduledTask = makeGetOneScheduledTask(context);
 
 	return async <D extends UpdatableScheduledTask>(

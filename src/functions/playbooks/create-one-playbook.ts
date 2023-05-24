@@ -18,7 +18,7 @@ import {
 } from '../utils';
 import { makeGetOnePlaybook } from './get-one-playbook';
 
-export const makeCreateOnePlaybook = (context: APIContext) => {
+export const makeCreateOnePlaybook = (context: APIContext): ((data: CreatablePlaybook) => Promise<Playbook>) => {
 	const getOnePlaybook = makeGetOnePlaybook(context);
 
 	const playbookPath = '/api/playbooks';

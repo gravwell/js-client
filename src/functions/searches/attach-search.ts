@@ -44,7 +44,7 @@ const ATTACH_QUEUE = new Subject<{
  *   3. Wait for listener to receive a RawSearchAttachedMessageReceived
  *   4. When the message is received, proceed to the next "request"
  */
-const SEARCH_ATTACH_RESULTS: Observable<{
+const SEARCH_ATTACH_RESULTS$: Observable<{
 	requestID: string;
 	msg: RawSearchAttachedMessageReceived;
 }> = ATTACH_QUEUE.pipe(
@@ -96,7 +96,7 @@ export const attachSearch = (
 	const requestID = uuidv4();
 
 	// Create a promise to receive search initation results
-	const results$ = SEARCH_ATTACH_RESULTS.pipe(
+	const results$ = SEARCH_ATTACH_RESULTS$.pipe(
 		// We only want results relevant to this request
 		filter(({ requestID: msgRequestID }) => msgRequestID === requestID),
 
@@ -105,7 +105,7 @@ export const attachSearch = (
 
 		// If msg.data.Error is nil, the backend is happy  - continue
 		// If msg.data.Error is NON-nil, there's a problem - reject
-		concatMap(({ msg }) => (isNil(msg.data.Error) ? of(msg) : throwError(msg))),
+		concatMap(({ msg }) => (isNil(msg.data.Error) ? of(msg) : throwError(new Error(msg.data.Error)))),
 
 		// It takes the backend a fraction of a second to be ready for requests after we set up the search
 		delay(200),
