@@ -9,7 +9,7 @@
 
 import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, parseJSONResponse } from '../utils';
 
-export const makeRestartWebServer = (context: APIContext) => {
+export const makeRestartWebServer = (context: APIContext): (() => Promise<void>) => {
 	const templatePath = '/api/restart/webserver';
 	const url = buildURL(templatePath, { ...context, protocol: 'http' });
 

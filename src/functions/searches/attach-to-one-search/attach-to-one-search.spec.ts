@@ -85,8 +85,8 @@ xdescribe(
 				search.progress$,
 				search.errors$,
 			];
-			for (const observable of observables) {
-				observable.subscribe({
+			for (const observable$ of observables) {
+				observable$.subscribe({
 					complete: () => complete++,
 				});
 			}
@@ -503,7 +503,7 @@ xdescribe(
 						'The sum of counts from statsOverview should equal the number of minutes -- 90 entries over 90 minutes',
 					)
 					.toEqual(minutes);
-				expect(statsOverview.frequencyStats.every(x => x.count == 1))
+				expect(statsOverview.frequencyStats.every(x => x.count === 1))
 					.withContext('Every statsOverview element should be 1 -- 90 entries over 90 minutes')
 					.toBeTrue();
 				expect(sum(statsZoom.frequencyStats.map(x => x.count)))
@@ -511,7 +511,7 @@ xdescribe(
 						'The sum of counts from statsZoom should equal the number of minutes -- 90 entries over 90 minutes',
 					)
 					.toEqual(minutes);
-				expect(statsZoom.frequencyStats.every(x => x.count == 1))
+				expect(statsZoom.frequencyStats.every(x => x.count === 1))
 					.withContext('Every statsZoom element should be 1 -- 90 entries over 90 minutes')
 					.toBeTrue();
 			}, 25000);

@@ -11,7 +11,7 @@ import { APIContext } from '../utils';
 import { makeDeleteOneScheduledScript } from './delete-one-scheduled-script';
 import { makeGetAllScheduledScripts } from './get-all-scheduled-scripts';
 
-export const makeDeleteAllScheduledScripts = (context: APIContext) => {
+export const makeDeleteAllScheduledScripts = (context: APIContext): (() => Promise<void>) => {
 	const deleteOneScheduledScript = makeDeleteOneScheduledScript(context);
 	const getAllScheduledScripts = makeGetAllScheduledScripts(context);
 

@@ -44,7 +44,7 @@ const QUERY_QUEUE = new Subject<{
  *   3. Wait for listener to receive a RawSearchInitiatedMessageReceived
  *   4. When the message is received, proceed to the next "request"
  */
-const QUERY_INIT_RESULTS: Observable<{
+const QUERY_INIT_RESULTS$: Observable<{
 	requestID: string;
 	msg: RawSearchInitiatedMessageReceived;
 }> = QUERY_QUEUE.pipe(
@@ -113,7 +113,7 @@ export const initiateSearch = (
 	const requestID = uuidv4();
 
 	// Create a promise to receive search initation results
-	const results$ = QUERY_INIT_RESULTS.pipe(
+	const results$ = QUERY_INIT_RESULTS$.pipe(
 		// We only want results relevant to this request
 		filter(({ requestID: msgRequestID }) => msgRequestID === requestID),
 
@@ -122,7 +122,7 @@ export const initiateSearch = (
 
 		// If msg.data.Error is nil, the backend is happy  - continue
 		// If msg.data.Error is NON-nil, there's a problem - reject
-		concatMap(({ msg }) => (isNil(msg.data.Error) ? of(msg) : throwError(msg))),
+		concatMap(({ msg }) => (isNil(msg.data.Error) ? of(msg) : throwError(new Error(msg.data.Error)))),
 
 		// If we didn't throw, everything is fine. Send a RawAcceptSearchMessageSent to continue setting up the search
 		tap(msg =>

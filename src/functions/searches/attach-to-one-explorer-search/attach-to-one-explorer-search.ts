@@ -81,7 +81,7 @@ export const makeAttachToOneExplorerSearch = (
 			// Handles websocket hangups from close or error
 			closedSub = from(rawSubscriptionP)
 				.pipe(
-					concatMap(rawSubscription => rawSubscription.received$),
+					concatMap(rawSubscriptionConcatMap => rawSubscriptionConcatMap.received$),
 					catchError(() => EMPTY),
 				)
 				.subscribe({
@@ -165,8 +165,8 @@ export const makeAttachToOneExplorerSearch = (
 			map((msg): ExplorerSearchEntries => {
 				const base = toSearchEntries(rendererType, msg);
 				const filterID = (msg.data.Addendum?.filterID as string | undefined) ?? null;
-				const filter = filtersByID[filterID ?? ''] ?? undefined;
-				const searchEntries = { ...base, filter } as SearchEntries;
+				const filterByID = filtersByID[filterID ?? ''] ?? undefined;
+				const searchEntries = { ...base, filter: filterByID } as SearchEntries;
 				const explorerEntries = (msg.data.Explore ?? []).map(toDataExplorerEntry);
 
 				return { ...searchEntries, explorerEntries };
@@ -183,11 +183,11 @@ export const makeAttachToOneExplorerSearch = (
 		);
 
 		const _filter$ = new BehaviorSubject<SearchFilter>(initialFilter);
-		const setFilter = (filter: SearchFilter | null): void => {
+		const setFilter = (filterSearch: SearchFilter | null): void => {
 			if (closed) {
 				return undefined;
 			}
-			_filter$.next(filter ?? initialFilter);
+			_filter$.next(filterSearch ?? initialFilter);
 		};
 
 		const filter$ = createRequiredSearchFilterObservable({
@@ -232,7 +232,7 @@ export const makeAttachToOneExplorerSearch = (
 			rawSubscription,
 			searchMessages$,
 			searchTypeID,
-			getRawRequestEntriesMsg: getRawRequestExplorerEntriesMsg,
+			getRawRequestEntriesMessage: getRawRequestExplorerEntriesMsg,
 			isClosed: () => closed,
 		});
 
@@ -242,16 +242,16 @@ export const makeAttachToOneExplorerSearch = (
 		 * https://github.com/gravwell/js-client/pull/243/files#diff-84ea62a6dd70168a514bb4173174a56cbe5089b2004ac111d42e15a769b3fd7eR421.
 		 */
 		filter$.pipe(takeUntil(close$)).subscribe({
-			next: filter => requestEntries(filter),
+			next: filterNext => requestEntries(filterNext),
 			error: err => console.warn('failed to apply filter to search', err),
 		});
 		filter$
 			.pipe(
-				switchMap(filter => timer(2000).pipe(map(() => filter))),
+				switchMap(filterSwitchMap => timer(2000).pipe(map(() => filterSwitchMap))),
 				takeUntil(close$),
 			)
 			.subscribe({
-				next: filter => requestEntries(filter),
+				next: filterNext => requestEntries(filterNext),
 				error: err => console.warn('failed to apply filter to search after two second delay', err),
 			});
 

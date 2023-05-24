@@ -7,7 +7,7 @@
  * license. See the LICENSE file for details.
  */
 
-import { createReadStream } from 'fs';
+import { createReadStream, ReadStream } from 'fs';
 import { omit } from 'lodash';
 import { join } from 'path';
 import { CreatableFile, isFileMetadata } from '~/models';
@@ -57,7 +57,7 @@ describe(
 		it(
 			'Should create a file and return it',
 			integrationTest(async () => {
-				const createFileStream = () => createReadStream(join(TEST_ASSETS_PATH!, 'file-a.txt'));
+				const createFileStream = (): ReadStream => createReadStream(join(TEST_ASSETS_PATH!, 'file-a.txt'));
 				const fileStream = createFileStream();
 
 				const data: CreatableFile = {

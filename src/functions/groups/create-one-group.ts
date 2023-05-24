@@ -17,7 +17,7 @@ import {
 } from '../utils';
 import { makeGetOneGroup } from './get-one-group';
 
-export const makeCreateOneGroup = (context: APIContext) => {
+export const makeCreateOneGroup = (context: APIContext): ((data: CreatableGroup) => Promise<Group>) => {
 	const getOneGroup = makeGetOneGroup(context);
 
 	const templatePath = '/api/groups';

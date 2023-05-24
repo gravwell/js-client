@@ -18,7 +18,7 @@ import {
 } from '../utils';
 import { makeGetOneFileDetails } from './get-one-file-details';
 
-export const makeUpdateOneFile = (context: APIContext) => {
+export const makeUpdateOneFile = (context: APIContext): ((data: UpdatableFile) => Promise<FileMetadata>) => {
 	const getOneFile = makeGetOneFileDetails(context);
 
 	return async (data: UpdatableFile): Promise<FileMetadata> => {

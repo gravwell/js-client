@@ -22,8 +22,8 @@ export const apiSubscriptionFromWebSocket = <MessageReceived, MessageSent>(
 	const received: Array<MessageReceived> = [];
 	const sent: Array<MessageSent> = [];
 
-	_received$.subscribe(receivedMessage => received.push(receivedMessage));
-	_sent$.subscribe(sentMessage => sent.push(sentMessage));
+	_received$.subscribe({ next: receivedMessage => received.push(receivedMessage), error: err => console.warn(err) });
+	_sent$.subscribe({ next: sentMessage => sent.push(sentMessage), error: err => console.warn(err) });
 
 	socket.onmessage = message => {
 		_received$.next(JSON.parse(message.data.toString()));
@@ -49,17 +49,20 @@ export const apiSubscriptionFromWebSocket = <MessageReceived, MessageSent>(
 			// Flatten the arrays of messages, so that the Observer gets one message at a time
 			concatMap(messages => from(messages)),
 		)
-		.subscribe(message => {
-			if (getWebSocketState(socket) !== 'open') {
-				return;
-			}
+		.subscribe({
+			next: message => {
+				if (getWebSocketState(socket) !== 'open') {
+					return;
+				}
 
-			if (message === undefined) {
-				return;
-			}
-			const stringMessage = typeof message === 'string' ? message : JSON.stringify(message);
-			socket.send(stringMessage);
-			_sent$.next(message);
+				if (message === undefined) {
+					return;
+				}
+				const stringMessage = typeof message === 'string' ? message : JSON.stringify(message);
+				socket.send(stringMessage);
+				_sent$.next(message);
+			},
+			error: err => console.warn(err),
 		});
 
 	return {

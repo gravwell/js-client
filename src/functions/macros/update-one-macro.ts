@@ -17,7 +17,7 @@ import {
 } from '../utils';
 import { makeGetOneMacro } from './get-one-macro';
 
-export const makeUpdateOneMacro = (context: APIContext) => {
+export const makeUpdateOneMacro = (context: APIContext): ((data: UpdatableMacro) => Promise<Macro>) => {
 	const getOneMacro = makeGetOneMacro(context);
 
 	return async (data: UpdatableMacro): Promise<Macro> => {

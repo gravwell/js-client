@@ -91,8 +91,8 @@ xdescribe(
 				search.progress$,
 				search.errors$,
 			];
-			for (const observable of observables) {
-				observable.subscribe({
+			for (const observable$ of observables) {
+				observable$.subscribe({
 					complete: () => complete++,
 				});
 			}

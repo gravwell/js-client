@@ -55,7 +55,7 @@ describe(
 			integrationTest(async () => {
 				const originalResourceContent = await getOneResourceContent(createdResource.id);
 
-				const createFileStream = () => createReadStream(join(TEST_ASSETS_PATH!, 'file-a.txt'));
+				const createFileStream = (): ReadStream => createReadStream(join(TEST_ASSETS_PATH!, 'file-a.txt'));
 				const fileStream = createFileStream();
 				const fileContentP = streamToString(createFileStream());
 

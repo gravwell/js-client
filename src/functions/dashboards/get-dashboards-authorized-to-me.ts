@@ -10,7 +10,7 @@
 import { Dashboard, RawDashboard, toDashboard } from '~/models';
 import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, parseJSONResponse } from '../utils';
 
-export const makeGetDashboardsAuthorizedToMe = (context: APIContext) => {
+export const makeGetDashboardsAuthorizedToMe = (context: APIContext): (() => Promise<Array<Dashboard>>) => {
 	const path = '/api/dashboards';
 	const url = buildURL(path, { ...context, protocol: 'http' });
 

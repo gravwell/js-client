@@ -49,7 +49,7 @@ import { first, mapTo } from 'rxjs/operators';
 export const rxjsDynamicDuration = <T>(
 	mapDuration: (lastDuration: number, event: T, index: number) => number,
 	initialDuration = 0,
-) => {
+): ((value: T) => Observable<T>) => {
 	let index = 0;
 	let previousDuration: number | null = null;
 

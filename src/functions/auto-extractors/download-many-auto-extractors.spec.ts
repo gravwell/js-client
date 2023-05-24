@@ -80,7 +80,7 @@ describe(
 		it(
 			'Should download the specified auto extractors',
 			integrationTest(async () => {
-				const sortByName = <T extends { name: string }>(arr: Array<T>) => sortBy(arr, ae => ae.name);
+				const sortByName = <T extends { name: string }>(arr: Array<T>): Array<T> => sortBy(arr, ae => ae.name);
 				const expectedAutoExtractors = sortByName(createdAutoExtractors.slice(0, 2));
 				const ids = expectedAutoExtractors.map(ae => ae.id);
 
@@ -104,9 +104,9 @@ const AUTO_EXTRACTOR_KEY_MAP = {
 const toAutoExtractorInFile = (v: string): AutoExtractorInFile =>
 	v
 		.split('\n')
-		.map(v => v.trim())
-		.filter(v => v !== '')
-		.map(v => v.split(' = ') as [keyof typeof AUTO_EXTRACTOR_KEY_MAP, string])
+		.map(vMap => vMap.trim())
+		.filter(vFilter => vFilter !== '')
+		.map(vMap => vMap.split(' = ') as [keyof typeof AUTO_EXTRACTOR_KEY_MAP, string])
 		.map(([key, value]) => ({ key, value }))
 		.reduce<AutoExtractorInFile>((acc, { key, value }) => {
 			const _key = AUTO_EXTRACTOR_KEY_MAP[key];

@@ -13,7 +13,7 @@ import { makeGetAllScheduledTasks } from './get-all-scheduled-tasks';
 
 const isScheduledScript = (s: ScheduledTask): s is ScheduledScript => s.type === 'script';
 
-export const makeGetAllScheduledScripts = (context: APIContext) => {
+export const makeGetAllScheduledScripts = (context: APIContext): (() => Promise<Array<ScheduledScript>>) => {
 	const getAllScheduledTasks = makeGetAllScheduledTasks(context);
 
 	return async (): Promise<Array<ScheduledScript>> => {

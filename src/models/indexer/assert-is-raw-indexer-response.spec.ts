@@ -54,7 +54,7 @@ describe(assertIsRawIndexerWellResponse.name, () => {
 	});
 });
 
-const validMockData = () => {
+const validMockData = (): { rawIndexerResponse: RawIndexerWellResponse; emptyResponse: object } => {
 	//* Global Values
 	const uuid: UUID = 'unique-id';
 	const firstIndexerName = 'first-indexer';
@@ -116,7 +116,7 @@ const validMockData = () => {
 	return { rawIndexerResponse, emptyResponse };
 };
 
-const invalidMockData = () => {
+const invalidMockData = (): invalidMockDataI => {
 	// Escape hatch for create invalid data
 	const unsafe = (value: unknown): any => value as any;
 
@@ -161,3 +161,9 @@ const invalidMockData = () => {
 
 	return { emptyIndexerData, withInvalidUUIDData, withInvalidProperty };
 };
+
+interface invalidMockDataI {
+	emptyIndexerData: { firstIndexerName: undefined };
+	withInvalidUUIDData: { firstIndexerName: { UUID: number; Wells: Array<never>; Replicated: object } };
+	withInvalidProperty: { firstIndexerName: RawIndexerWell };
+}

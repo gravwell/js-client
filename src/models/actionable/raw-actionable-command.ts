@@ -19,7 +19,7 @@ export type RawActionableCommand =
 export interface RawActionableQueryCommand {
 	type: 'query';
 	reference: string;
-	options?: {};
+	options?: object;
 }
 
 export interface RawActionableTemplateCommand {
@@ -31,7 +31,7 @@ export interface RawActionableTemplateCommand {
 export interface RawActionableSavedQueryCommand {
 	type: 'savedQuery';
 	reference: RawUUID;
-	options?: {};
+	options?: object;
 }
 
 export interface RawActionableDashboardCommand {

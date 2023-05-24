@@ -10,7 +10,7 @@
 import { RawSavedQuery, SavedQuery, toSavedQuery } from '~/models';
 import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, parseJSONResponse } from '../utils';
 
-export const makeGetSavedQueriesAuthorizedToMe = (context: APIContext) => {
+export const makeGetSavedQueriesAuthorizedToMe = (context: APIContext): (() => Promise<Array<SavedQuery>>) => {
 	const path = '/api/library';
 	const url = buildURL(path, { ...context, protocol: 'http' });
 

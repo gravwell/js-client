@@ -13,7 +13,7 @@ import { makeGetAllScheduledTasks } from './get-all-scheduled-tasks';
 
 const isScheduledQuery = (s: ScheduledTask): s is ScheduledQuery => s.type === 'query';
 
-export const makeGetAllScheduledQueries = (context: APIContext) => {
+export const makeGetAllScheduledQueries = (context: APIContext): (() => Promise<Array<ScheduledQuery>>) => {
 	const getAllScheduledTasks = makeGetAllScheduledTasks(context);
 
 	return async (): Promise<Array<ScheduledQuery>> => {

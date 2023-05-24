@@ -10,7 +10,7 @@
 import { Group, RawGroup, toGroup } from '~/models';
 import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, parseJSONResponse } from '../utils';
 
-export const makeGetAllGroups = (context: APIContext) => {
+export const makeGetAllGroups = (context: APIContext): (() => Promise<Array<Group>>) => {
 	const templatePath = '/api/groups';
 	const url = buildURL(templatePath, { ...context, protocol: 'http' });
 

@@ -14,7 +14,9 @@ import { makeGetManyScheduledTasks } from './get-many-scheduled-tasks';
 
 const isScheduledScript = (s: ScheduledTask): s is ScheduledScript => s.type === 'script';
 
-export const makeGetManyScheduledScripts = (context: APIContext) => {
+export const makeGetManyScheduledScripts = (
+	context: APIContext,
+): ((filter?: ScheduledScriptsFilter) => Promise<Array<ScheduledScript>>) => {
 	const getManyScheduledTasks = makeGetManyScheduledTasks(context);
 
 	return async (filter: ScheduledScriptsFilter = {}): Promise<Array<ScheduledScript>> => {

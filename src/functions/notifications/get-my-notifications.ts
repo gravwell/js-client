@@ -11,7 +11,7 @@ import { Notification, RawNotification, toNotification } from '~/models';
 import { RawNumericID } from '~/value-objects';
 import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, parseJSONResponse } from '../utils';
 
-export const makeGetMyNotifications = (context: APIContext) => {
+export const makeGetMyNotifications = (context: APIContext): (() => Promise<Array<Notification>>) => {
 	const templatePath = '/api/notifications';
 	const url = buildURL(templatePath, { ...context, protocol: 'http' });
 

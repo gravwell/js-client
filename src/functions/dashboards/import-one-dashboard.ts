@@ -12,7 +12,7 @@ import { Dashboard } from '~/models';
 import { NumericID, RawNumericID, toNumericID } from '~/value-objects';
 import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, parseJSONResponse } from '../utils';
 
-export const makeImportOneDashboard = (context: APIContext) => {
+export const makeImportOneDashboard = (context: APIContext): ((dashboardJSON: NumericID) => Promise<Dashboard>) => {
 	const getOneDashboard = makeGetOneDashboard(context);
 
 	return async (dashboardJSON: NumericID): Promise<Dashboard> => {

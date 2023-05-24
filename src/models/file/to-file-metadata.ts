@@ -35,7 +35,7 @@ export const toFileMetadata = (raw: RawFileMetadata): FileMetadata => ({
 	contentType: raw.Type,
 });
 
-const isImage = (file: RawFileMetadata) => file.Type.includes('image/');
+const isImage = (file: RawFileMetadata): boolean => file.Type.includes('image/');
 
 /**
  * Function to avoid a bug with browser caching and keep the image file updated,

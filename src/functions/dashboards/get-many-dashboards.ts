@@ -14,7 +14,9 @@ import { makeGetAllDashboards } from './get-all-dashboards';
 import { makeGetDashboardsByGroup } from './get-dashboards-by-group';
 import { makeGetDashboardsByUser } from './get-dashboards-by-user';
 
-export const makeGetManyDashboards = (context: APIContext) => {
+export const makeGetManyDashboards = (
+	context: APIContext,
+): ((filter?: DashboardsFilter) => Promise<Array<Dashboard>>) => {
 	const getDashboardsByUser = makeGetDashboardsByUser(context);
 	const getDashboardsByGroup = makeGetDashboardsByGroup(context);
 	const getAllDashboards = makeGetAllDashboards(context);

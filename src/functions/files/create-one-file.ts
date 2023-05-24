@@ -20,7 +20,7 @@ import {
 import { makeGetOneFileDetails } from './get-one-file-details';
 import { makeUpdateOneFile } from './update-one-file';
 
-export const makeCreateOneFile = (context: APIContext) => {
+export const makeCreateOneFile = (context: APIContext): ((data: CreatableFile) => Promise<FileMetadata>) => {
 	const updateOneFile = makeUpdateOneFile(context);
 	const getOneFile = makeGetOneFileDetails(context);
 

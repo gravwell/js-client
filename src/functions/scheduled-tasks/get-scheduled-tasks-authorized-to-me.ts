@@ -10,7 +10,7 @@
 import { RawScheduledTask, ScheduledTask, toScheduledTask } from '~/models';
 import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, parseJSONResponse } from '../utils';
 
-export const makeGetScheduledTasksAuthorizedToMe = (context: APIContext) => {
+export const makeGetScheduledTasksAuthorizedToMe = (context: APIContext): (() => Promise<Array<ScheduledTask>>) => {
 	const path = '/api/scheduledsearches';
 	const url = buildURL(path, { ...context, protocol: 'http' });
 

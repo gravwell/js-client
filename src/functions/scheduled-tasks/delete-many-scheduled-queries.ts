@@ -13,7 +13,9 @@ import { makeDeleteOneScheduledQuery } from './delete-one-scheduled-query';
 import { makeGetAllScheduledQueries } from './get-all-scheduled-queries';
 import { ScheduledTasksFilter } from './get-many-scheduled-tasks';
 
-export const makeDeleteManyScheduledQueries = (context: APIContext) => {
+export const makeDeleteManyScheduledQueries = (
+	context: APIContext,
+): ((filter?: ScheduledTasksFilter) => Promise<void>) => {
 	const deleteOneScheduledQuery = makeDeleteOneScheduledQuery(context);
 	const getAllScheduledQueries = makeGetAllScheduledQueries(context);
 

@@ -10,7 +10,7 @@
 import { RawSearch2, Search2, toSearch2 } from '~/models';
 import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, parseJSONResponse } from '../utils';
 
-export const makeGetPersistentSearchStatusRelatedToMe = (context: APIContext) => {
+export const makeGetPersistentSearchStatusRelatedToMe = (context: APIContext): (() => Promise<Array<Search2>>) => {
 	const templatePath = '/api/searchctrl';
 	const url = buildURL(templatePath, { ...context, protocol: 'http' });
 

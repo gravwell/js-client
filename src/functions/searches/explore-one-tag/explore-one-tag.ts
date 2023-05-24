@@ -22,7 +22,12 @@ import { APIContext } from '../../utils';
 import { initiateSearch } from '../initiate-search';
 import { makeSubscribeToOneRawSearch } from '../subscribe-to-one-raw-search';
 
-export const makeExploreOneTag = (context: APIContext) => {
+export const makeExploreOneTag = (
+	context: APIContext,
+): ((
+	tag: string,
+	options?: { range?: [Date, Date]; limit?: number; noHistory?: boolean },
+) => Promise<Array<DataExplorerEntry>>) => {
 	const subscribeToOneRawSearch = makeSubscribeToOneRawSearch(context);
 	let rawSubscriptionP: ReturnType<typeof subscribeToOneRawSearch> | null = null;
 	let closedSub: Subscription | null = null;
@@ -39,7 +44,7 @@ export const makeExploreOneTag = (context: APIContext) => {
 
 			// Handles websocket hangups
 			closedSub = from(rawSubscriptionP)
-				.pipe(concatMap(rawSubscription => rawSubscription.received$))
+				.pipe(concatMap(rawSubscriptionConcatMap => rawSubscriptionConcatMap.received$))
 				.subscribe({
 					complete: () => {
 						rawSubscriptionP = null;

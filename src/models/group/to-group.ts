@@ -8,13 +8,17 @@
  */
 
 import { DATA_TYPE } from '~/models';
+import { omitUndefinedShallow } from '../../functions/utils';
 import { Group } from './group';
 import { RawGroup } from './raw-group';
 
-export const toGroup = (raw: RawGroup): Group => ({
-	_tag: DATA_TYPE.GROUP,
-	id: raw.GID.toString(),
-	name: raw.Name,
-	description: raw.Desc.trim() === '' ? null : raw.Desc.trim(),
-	isSynced: raw.Synced,
-});
+export const toGroup = (raw: RawGroup): Group => {
+	const desc = raw.Desc?.trim() ?? '';
+	return omitUndefinedShallow({
+		_tag: DATA_TYPE.GROUP,
+		id: raw.GID.toString(),
+		name: raw.Name,
+		description: desc === '' ? null : desc,
+		isSynced: raw.Synced,
+	});
+};
