@@ -13,7 +13,9 @@ import { APIContext } from '../utils';
 import { makeGetAllScheduledTasks } from './get-all-scheduled-tasks';
 import { makeGetScheduledTasksByUser } from './get-scheduled-tasks-by-user';
 
-export const makeGetManyScheduledTasks = (context: APIContext) => {
+export const makeGetManyScheduledTasks = (
+	context: APIContext,
+): ((filter?: ScheduledTasksFilter) => Promise<Array<ScheduledTask>>) => {
 	const getScheduledTasksByUser = makeGetScheduledTasksByUser(context);
 	const getAllScheduledTasks = makeGetAllScheduledTasks(context);
 

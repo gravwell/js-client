@@ -10,7 +10,7 @@
 import { RawTemplate, Template, toTemplate } from '~/models';
 import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, parseJSONResponse } from '../utils';
 
-export const makeGetAllTemplatesAsAdmin = (context: APIContext) => {
+export const makeGetAllTemplatesAsAdmin = (context: APIContext): (() => Promise<Array<Template>>) => {
 	const templatePath = '/api/templates?admin=true';
 	const url = buildURL(templatePath, { ...context, protocol: 'http' });
 

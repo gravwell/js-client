@@ -9,7 +9,7 @@
 
 import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, parseJSONResponse } from '../utils';
 
-export const makeSyncAllScriptLibraries = (context: APIContext) => {
+export const makeSyncAllScriptLibraries = (context: APIContext): (() => Promise<void>) => {
 	const templatePath = '/api/libs/pull';
 	const url = buildURL(templatePath, { ...context, protocol: 'http' });
 

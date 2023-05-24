@@ -10,7 +10,7 @@
 import { LocalKit, RawLocalKit, toLocalKit } from '~/models';
 import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, parseJSONResponse } from '../utils';
 
-export const makeGetAllLocalKits = (context: APIContext) => {
+export const makeGetAllLocalKits = (context: APIContext): (() => Promise<Array<LocalKit>>) => {
 	const path = '/api/kits';
 	const url = buildURL(path, { ...context, protocol: 'http' });
 

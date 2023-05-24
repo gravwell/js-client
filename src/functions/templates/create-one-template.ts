@@ -16,7 +16,7 @@ import {
 	parseJSONResponse,
 } from '../utils';
 
-export const makeCreateOneTemplate = (context: APIContext) => {
+export const makeCreateOneTemplate = (context: APIContext): ((data: CreatableTemplate) => Promise<Template>) => {
 	const templatePath = '/api/templates';
 	const url = buildURL(templatePath, { ...context, protocol: 'http' });
 

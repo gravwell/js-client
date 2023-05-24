@@ -19,7 +19,9 @@ import {
 } from '../utils';
 import { makeGetAllAutoExtractors } from './get-all-auto-extractors';
 
-export const makeCreateOneAutoExtractor = (context: APIContext) => {
+export const makeCreateOneAutoExtractor = (
+	context: APIContext,
+): ((data: CreatableAutoExtractor) => Promise<AutoExtractor>) => {
 	const getAllAutoExtractors = makeGetAllAutoExtractors(context);
 
 	const templatePath = '/api/autoextractors';

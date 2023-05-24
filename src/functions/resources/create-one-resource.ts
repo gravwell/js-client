@@ -16,7 +16,7 @@ import {
 	parseJSONResponse,
 } from '../utils';
 
-export const makeCreateOneResource = (context: APIContext) => {
+export const makeCreateOneResource = (context: APIContext): ((data: CreatableResource) => Promise<Resource>) => {
 	const resourcePath = '/api/resources';
 	const url = buildURL(resourcePath, { ...context, protocol: 'http' });
 

@@ -14,7 +14,9 @@ import { makeGetManyScheduledTasks } from './get-many-scheduled-tasks';
 
 const isScheduledQuery = (s: ScheduledTask): s is ScheduledQuery => s.type === 'query';
 
-export const makeGetManyScheduledQueries = (context: APIContext) => {
+export const makeGetManyScheduledQueries = (
+	context: APIContext,
+): ((filter?: ScheduledQueriesFilter) => Promise<Array<ScheduledQuery>>) => {
 	const getManyScheduledTasks = makeGetManyScheduledTasks(context);
 
 	return async (filter: ScheduledQueriesFilter = {}): Promise<Array<ScheduledQuery>> => {

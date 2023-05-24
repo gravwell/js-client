@@ -52,8 +52,8 @@ const toQueryString = (params: QueryParams): string => {
 	const values = Object.entries(params)
 		.map(([key, value]) => ({ key, value }))
 		.reduce((acc, { key, value }) => {
-			const values = isArray(value) ? value : [value];
-			const definedValues = values.filter((v): v is NonNullable<typeof v> => !isUndefined(v));
+			const valuesArray = isArray(value) ? value : [value];
+			const definedValues = valuesArray.filter((v): v is NonNullable<typeof v> => !isUndefined(v));
 			const formattedValues = definedValues.map(v => ({ key, value: v }));
 			return acc.concat(formattedValues);
 		}, [] as Array<{ key: string; value: string | boolean | number }>)

@@ -10,7 +10,7 @@
 import { RawTemplate, Template, toTemplate } from '~/models';
 import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, parseJSONResponse } from '../utils';
 
-export const makeGetAllTemplates = (context: APIContext) => {
+export const makeGetAllTemplates = (context: APIContext): (() => Promise<Array<Template>>) => {
 	const templatePath = '/api/templates';
 	const url = buildURL(templatePath, { ...context, protocol: 'http' });
 

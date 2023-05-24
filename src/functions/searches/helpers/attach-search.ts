@@ -118,15 +118,15 @@ export const makeToStatsZoom: MakeToStatsZoom =
 	({ filtersByID, initialFilter, previewDateRange }) =>
 	set => {
 		const filterID = (set.data.Addendum?.filterID as string | undefined) ?? null;
-		const filter = filtersByID[filterID ?? ''] ?? undefined;
+		const filterByID = filtersByID[filterID ?? ''] ?? undefined;
 
-		const filterEnd = filter?.dateRange === 'preview' ? previewDateRange.end : filter?.dateRange?.end;
+		const filterEnd = filterByID?.dateRange === 'preview' ? previewDateRange.end : filterByID?.dateRange?.end;
 		const initialEnd = initialFilter.dateRange === 'preview' ? previewDateRange.end : initialFilter.dateRange.end;
 		const endDate = filterEnd ?? initialEnd;
 
 		return omitUndefinedShallow({
 			frequencyStats: countEntriesFromModules(set).filter(f => !isAfter(f.timestamp, endDate)),
-			filter,
+			filter: filterByID,
 		});
 	};
 
@@ -143,7 +143,7 @@ export const makeToSearchStats: MakeToSearchStats =
 			(rawStats.data.Addendum?.filterID as string | undefined) ??
 			(rawDetails.data.Addendum?.filterID as string | undefined) ??
 			null;
-		const filter = filtersByID[filterID ?? ''] ?? undefined;
+		const filterByID = filtersByID[filterID ?? ''] ?? undefined;
 
 		const pipeline = rawStats.data.Stats.Set.map(s => s.Stats)
 			.reduce<Array<Array<RawResponseForSearchStatsMessageReceived['data']['Stats']['Set'][number]['Stats'][number]>>>(
@@ -190,7 +190,7 @@ export const makeToSearchStats: MakeToSearchStats =
 			id: rawDetails.data.SearchInfo.ID,
 			userID: toNumericID(rawDetails.data.SearchInfo.UID),
 
-			filter,
+			filter: filterByID,
 			finished: rawStats.data.Finished && rawDetails.data.Finished,
 
 			query: searchAttachMsg.data.Info.UserQuery,
@@ -226,8 +226,8 @@ export const debouncedPooling: <MessageReceived, MessageSent>(
 	}>,
 ) => (source: Observable<boolean>) => Observable<void> =
 	({ rawSubscription, message }) =>
-	source =>
-		source.pipe(
+	source$ =>
+		source$.pipe(
 			// Add dynamic debounce after each message
 			debounceWithBackoffWhile(DEBOUNCE_OPTIONS),
 
@@ -237,8 +237,8 @@ export const debouncedPooling: <MessageReceived, MessageSent>(
 			concatMap(() => rawSubscription.send(message)),
 		);
 
-export const emitError: () => <T>(source: Observable<T>) => Observable<Error> = () => source =>
-	source.pipe(
+export const emitError: () => <T>(source: Observable<T>) => Observable<Error> = () => source$ =>
+	source$.pipe(
 		// Skip every regular message. We only want to emit when there's an error
 		skipUntil(NEVER),
 
@@ -267,7 +267,7 @@ export const collectSearchObservableErrors = (...observables: Array<Observable<u
 	 * expected to receive.
 	 */
 	const timeoutError$ = from(observables).pipe(
-		mergeMap(obs => obs.pipe(timeout({ first: TIMEOUT }))),
+		mergeMap(obs$ => obs$.pipe(timeout({ first: TIMEOUT }))),
 		emitError(),
 	);
 	/** This will emit when any errors occur in the given observables. */

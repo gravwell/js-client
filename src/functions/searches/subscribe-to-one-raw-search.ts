@@ -12,7 +12,9 @@ import { catchError, last, mapTo, startWith, takeUntil } from 'rxjs/operators';
 import { RawSearchMessageReceived, RawSearchMessageSent } from '~/models';
 import { APIContext, APISubscription, apiSubscriptionFromWebSocket, buildURL, WebSocket } from '../utils';
 
-export const makeSubscribeToOneRawSearch = (context: APIContext) => {
+export const makeSubscribeToOneRawSearch = (
+	context: APIContext,
+): (() => Promise<APISubscription<RawSearchMessageReceived, RawSearchMessageSent>>) => {
 	const templatePath = '/api/ws/search';
 	const url = buildURL(templatePath, { ...context, protocol: 'ws' });
 
@@ -33,8 +35,11 @@ export const makeSubscribeToOneRawSearch = (context: APIContext) => {
 
 		timer(1000, 5000)
 			.pipe(takeUntil(wsClosed$))
-			.subscribe(() => {
-				rawSubscription.send({ type: 'PONG', data: {} });
+			.subscribe({
+				next: () => {
+					rawSubscription.send({ type: 'PONG', data: {} });
+				},
+				error: err => console.warn(err),
 			});
 
 		return rawSubscription;

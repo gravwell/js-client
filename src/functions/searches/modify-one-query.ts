@@ -14,7 +14,9 @@ import { APIContext } from '~/functions/utils';
 import { ElementFilter, Query, ValidatedQuery } from '~/models';
 import { makeSubscribeToOneQueryParsing } from './subscribe-to-query-parsing';
 
-export const makeModifyOneQuery = (context: APIContext) => {
+export const makeModifyOneQuery = (
+	context: APIContext,
+): ((query: Query, filters: Array<ElementFilter>) => Promise<Query>) => {
 	const subscribeToOneQueryParsing = makeSubscribeToOneQueryParsing(context);
 	let querySubP: ReturnType<typeof subscribeToOneQueryParsing> | null = null;
 

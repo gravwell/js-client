@@ -19,7 +19,7 @@ export const toRawUpdatableAutoExtractor = (
 ): RawUpdatableAutoExtractor => ({
 	UUID: current.id,
 	GIDs: (updatable.groupIDs ?? current.groupIDs).map(toRawNumericID),
-	UID: Number.parseInt(current.userID),
+	UID: Number.parseInt(current.userID, 10),
 
 	Name: updatable.name ?? current.name,
 	Desc: updatable.description ?? current.description,

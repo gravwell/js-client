@@ -24,7 +24,9 @@ import {
 } from '../utils';
 import { makeGetAllAutoExtractors } from './get-all-auto-extractors';
 
-export const makeUpdateOneAutoExtractor = (context: APIContext) => {
+export const makeUpdateOneAutoExtractor = (
+	context: APIContext,
+): ((data: UpdatableAutoExtractor) => Promise<AutoExtractor>) => {
 	const getAllAutoExtractors = makeGetAllAutoExtractors(context);
 
 	return async (data: UpdatableAutoExtractor): Promise<AutoExtractor> => {

@@ -17,7 +17,7 @@ import {
 } from '../utils';
 import { makeGetOneActionable } from './get-one-actionable';
 
-export const makeUpdateOneActionable = (context: APIContext) => {
+export const makeUpdateOneActionable = (context: APIContext): ((data: UpdatableActionable) => Promise<Actionable>) => {
 	const getOneActionable = makeGetOneActionable(context);
 
 	return async (data: UpdatableActionable): Promise<Actionable> => {

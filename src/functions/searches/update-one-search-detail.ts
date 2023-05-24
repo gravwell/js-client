@@ -27,7 +27,9 @@ import {
 } from '../utils';
 import { makeGetOnePersistentSearchDetails } from './get-one-persistent-search-details';
 
-export const makeUpdateOneSearchDetail = (context: APIContext) => {
+export const makeUpdateOneSearchDetail = (
+	context: APIContext,
+): ((requestData: UpdatableSearchDetails) => Promise<SearchDetails>) => {
 	const getOneSearchDetail = makeGetOnePersistentSearchDetails(context);
 	return async (requestData: UpdatableSearchDetails): Promise<SearchDetails> => {
 		const { ...data } = requestData;

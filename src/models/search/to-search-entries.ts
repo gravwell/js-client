@@ -95,11 +95,7 @@ export function normalize(
 	msg: RawSearchMessageReceivedRequestEntriesWithinRange,
 ): ReturnType<typeof normalizeToFDGSearchEntries>;
 export function normalize(
-	renderer: 'gauge',
-	msg: RawSearchMessageReceivedRequestEntriesWithinRange,
-): ReturnType<typeof normalizeToGaugeSearchEntries>;
-export function normalize(
-	renderer: 'numbercard',
+	renderer: 'gauge' | 'numbercard',
 	msg: RawSearchMessageReceivedRequestEntriesWithinRange,
 ): ReturnType<typeof normalizeToGaugeSearchEntries>;
 export function normalize(
@@ -140,6 +136,12 @@ export function normalize(
 	renderer: 'pcap',
 	msg: RawSearchMessageReceivedRequestEntriesWithinRange,
 ): ReturnType<typeof normalizeToPcapSearchEntries>;
+
+/**
+ * Arrow functions won't work with function overloading
+ * https://github.com/microsoft/TypeScript/issues/47669
+ */
+// eslint-disable-next-line prefer-arrow/prefer-arrow-functions
 export function normalize(
 	renderer: SearchEntries['type'],
 	msg: RawSearchMessageReceivedRequestEntriesWithinRange,

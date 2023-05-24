@@ -16,7 +16,7 @@ import {
 	parseJSONResponse,
 } from '../utils';
 
-export const makeSetLogLevel = (context: APIContext) => {
+export const makeSetLogLevel = (context: APIContext): ((level: LogLevel | 'off') => Promise<void>) => {
 	const templatePath = '/api/logging';
 	const url = buildURL(templatePath, { ...context, protocol: 'http' });
 

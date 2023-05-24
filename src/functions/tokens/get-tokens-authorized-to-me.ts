@@ -10,7 +10,7 @@
 import { RawToken, Token, toToken } from '~/models';
 import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, parseJSONResponse } from '../utils';
 
-export const makeGetTokensAuthorizedToMe = (context: APIContext) => {
+export const makeGetTokensAuthorizedToMe = (context: APIContext): (() => Promise<Array<Token>>) => {
 	const path = '/api/tokens';
 	const url = buildURL(path, { ...context, protocol: 'http' });
 

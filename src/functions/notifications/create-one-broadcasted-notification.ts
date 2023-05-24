@@ -16,7 +16,9 @@ import {
 	parseJSONResponse,
 } from '../utils';
 
-export const makeCreateOneBroadcastedNotification = (context: APIContext) => {
+export const makeCreateOneBroadcastedNotification = (
+	context: APIContext,
+): ((creatable: CreatableBroadcastNotification) => Promise<void>) => {
 	const templatePath = '/api/notifications/broadcast';
 	const url = buildURL(templatePath, { ...context, protocol: 'http' });
 

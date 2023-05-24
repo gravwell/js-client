@@ -9,7 +9,7 @@
 
 import { isEqual, isUndefined } from 'lodash';
 import { BehaviorSubject, combineLatest, firstValueFrom, Observable } from 'rxjs';
-import { distinctUntilChanged, first, map, shareReplay } from 'rxjs/operators';
+import { distinctUntilChanged, filter, map, shareReplay } from 'rxjs/operators';
 import { APIContext, fetch } from '~/functions/utils';
 import {
 	ActionablesService,
@@ -87,33 +87,16 @@ export interface GravwellClientOptions {
 }
 
 export class GravwellClient {
-	public set host(value: string) {
-		this._host = value;
-		this._host$.next(value);
-	}
-	public get host(): string {
-		return this._host;
-	}
 	private _host = '';
 	private readonly _host$ = new BehaviorSubject<string>(this._host);
 	public readonly host$ = this._host$.asObservable().pipe(distinctUntilChanged());
 
-	public set useEncryption(value: boolean) {
-		this._useEncryption = value;
-		this._useEncryption$.next(value);
-	}
-	public get useEncryption(): boolean {
-		return this._useEncryption;
-	}
 	private _useEncryption = true;
 	private readonly _useEncryption$ = new BehaviorSubject<boolean>(this._useEncryption);
 	public readonly useEncryption$ = this._useEncryption$.asObservable().pipe(distinctUntilChanged());
 
-	public get authToken(): string | null {
-		return this._authToken;
-	}
 	protected _authToken: string | null = null;
-	protected _authToken$ = new BehaviorSubject<string | null>(this._authToken);
+	private readonly _authToken$ = new BehaviorSubject<string | null>(this._authToken);
 
 	public readonly authToken$ = this._authToken$.asObservable();
 
@@ -134,25 +117,42 @@ export class GravwellClient {
 			fetch: this._initialOptions.fetch ?? fetch,
 		})),
 		distinctUntilChanged((a, b) => isEqual(a, b)),
-		shareReplay(1),
+		shareReplay({ refCount: true, bufferSize: 1 }),
 	);
 
-	public isAuthenticated(): boolean {
-		return this.authToken !== null;
-	}
-
-	public async whenAuthenticated(): Promise<void> {
-		const isAuthenticated$ = this.isAuthenticated$.pipe(first(value => value === true));
-		await firstValueFrom(isAuthenticated$);
-	}
-
-	public authenticate(authToken: string): void {
-		this._authToken$.next(authToken);
-	}
-
-	public unauthenticate(): void {
-		this._authToken$.next(null);
-	}
+	private _tags: TagsService;
+	private _system: SystemService;
+	private _users: UsersService;
+	private _userPreferences: UserPreferencesService;
+	private _auth: AuthService;
+	private _notifications: NotificationsService;
+	private _webServer: WebServerService;
+	private _indexers: IndexersService;
+	private _entries: EntriesService;
+	private _logs: LogsService;
+	private _searchStatus: SearchStatusService;
+	private _searchHistory: SearchHistoryService;
+	private _searches: SearchesService;
+	private _searchModules: SearchModulesService;
+	private _renderModules: RenderModulesService;
+	private _scriptLibraries: ScriptLibrariesService;
+	private _groups: GroupsService;
+	private _actionables: ActionablesService;
+	private _templates: TemplatesService;
+	private _playbooks: PlaybooksService;
+	private _resources: ResourcesService;
+	private _macros: MacrosService;
+	private _dashboards: DashboardsService;
+	private _autoExtractors: AutoExtractorsService;
+	private _files: FilesService;
+	private _savedQueries: SavedQueriesService;
+	private _scheduledScripts: ScheduledScriptsService;
+	private _scheduledQueries: ScheduledQueriesService;
+	private _kits: KitsService;
+	private _queries: QueriesService;
+	private _explorer: ExplorerService;
+	private _mailServer: MailServerService;
+	private _tokens: TokensService;
 
 	constructor(host: string, options: GravwellClientOptions = {}) {
 		this.host = host;
@@ -164,7 +164,7 @@ export class GravwellClient {
 			this.authenticate(options.authToken);
 		}
 
-		this.authToken$.subscribe(authToken => (this._authToken = authToken));
+		this.authToken$.subscribe({ next: authToken => (this._authToken = authToken), error: err => console.warn(err) });
 
 		// I know this is duplicate content... but if we remove it, typescript
 		// doesn't know that we initialize all those properties on creation and
@@ -209,206 +209,213 @@ export class GravwellClient {
 		this._mailServer = createMailServerService(initialContext);
 		this._tokens = createTokensService(initialContext);
 
-		this._context$.subscribe(context => {
-			this._tags = createTagsService(context);
-			this._system = createSystemService(context);
-			this._users = createUsersService(context);
-			this._userPreferences = createUserPreferencesService(context);
-			this._auth = createAuthService(context);
-			this._notifications = createNotificationsService(context);
-			this._webServer = createWebServerService(context);
-			this._indexers = createIndexersService(context);
-			this._entries = createEntriesService(context);
-			this._logs = createLogsService(context);
-			this._searchStatus = createSearchStatusService(context);
-			this._searchHistory = createSearchHistoryService(context);
-			this._searches = createSearchesService(context);
-			this._searchModules = createSearchModulesService(context);
-			this._renderModules = createRenderModulesService(context);
-			this._scriptLibraries = createScriptLibrariesService(context);
-			this._groups = createGroupsService(context);
-			this._actionables = createActionablesService(context);
-			this._templates = createTemplatesService(context);
-			this._playbooks = createPlaybooksService(context);
-			this._resources = createResourcesService(context);
-			this._macros = createMacrosService(context);
-			this._dashboards = createDashboardsService(context);
-			this._autoExtractors = createAutoExtractorsService(context);
-			this._files = createFilesService(context);
-			this._savedQueries = createSavedQueriesService(context);
-			this._scheduledScripts = createScheduledScriptsService(context);
-			this._scheduledQueries = createScheduledQueriesService(context);
-			this._kits = createKitsService(context);
-			this._queries = createQueriesService(context);
-			this._explorer = createExplorerService(context);
-			this._mailServer = createMailServerService(context);
-			this._tokens = createTokensService(context);
+		this._context$.subscribe({
+			next: context => {
+				this._tags = createTagsService(context);
+				this._system = createSystemService(context);
+				this._users = createUsersService(context);
+				this._userPreferences = createUserPreferencesService(context);
+				this._auth = createAuthService(context);
+				this._notifications = createNotificationsService(context);
+				this._webServer = createWebServerService(context);
+				this._indexers = createIndexersService(context);
+				this._entries = createEntriesService(context);
+				this._logs = createLogsService(context);
+				this._searchStatus = createSearchStatusService(context);
+				this._searchHistory = createSearchHistoryService(context);
+				this._searches = createSearchesService(context);
+				this._searchModules = createSearchModulesService(context);
+				this._renderModules = createRenderModulesService(context);
+				this._scriptLibraries = createScriptLibrariesService(context);
+				this._groups = createGroupsService(context);
+				this._actionables = createActionablesService(context);
+				this._templates = createTemplatesService(context);
+				this._playbooks = createPlaybooksService(context);
+				this._resources = createResourcesService(context);
+				this._macros = createMacrosService(context);
+				this._dashboards = createDashboardsService(context);
+				this._autoExtractors = createAutoExtractorsService(context);
+				this._files = createFilesService(context);
+				this._savedQueries = createSavedQueriesService(context);
+				this._scheduledScripts = createScheduledScriptsService(context);
+				this._scheduledQueries = createScheduledQueriesService(context);
+				this._kits = createKitsService(context);
+				this._queries = createQueriesService(context);
+				this._explorer = createExplorerService(context);
+				this._mailServer = createMailServerService(context);
+				this._tokens = createTokensService(context);
+			},
+			error: err => console.warn(err),
 		});
+	}
+
+	public set host(value: string) {
+		this._host = value;
+		this._host$.next(value);
+	}
+	public get host(): string {
+		return this._host;
+	}
+
+	public set useEncryption(value: boolean) {
+		this._useEncryption = value;
+		this._useEncryption$.next(value);
+	}
+	public get useEncryption(): boolean {
+		return this._useEncryption;
+	}
+
+	public get authToken(): string | null {
+		return this._authToken;
+	}
+
+	public isAuthenticated(): boolean {
+		return this.authToken !== null;
+	}
+
+	public async whenAuthenticated(): Promise<void> {
+		const isAuthenticated$ = this.isAuthenticated$.pipe(filter(value => value === true));
+		await firstValueFrom(isAuthenticated$);
+	}
+
+	public authenticate(authToken: string): void {
+		this._authToken$.next(authToken);
+	}
+
+	public unauthenticate(): void {
+		this._authToken$.next(null);
 	}
 
 	// *NOTE: Services
 	public get tags(): TagsService {
 		return this._tags;
 	}
-	private _tags: TagsService;
 
 	public get system(): SystemService {
 		return this._system;
 	}
-	private _system: SystemService;
 
 	public get users(): UsersService {
 		return this._users;
 	}
-	private _users: UsersService;
 
 	public get userPreferences(): UserPreferencesService {
 		return this._userPreferences;
 	}
-	private _userPreferences: UserPreferencesService;
 
 	public get auth(): AuthService {
 		return this._auth;
 	}
-	private _auth: AuthService;
 
 	public get notifications(): NotificationsService {
 		return this._notifications;
 	}
-	private _notifications: NotificationsService;
 
 	public get webServer(): WebServerService {
 		return this._webServer;
 	}
-	private _webServer: WebServerService;
 
 	public get indexers(): IndexersService {
 		return this._indexers;
 	}
-	private _indexers: IndexersService;
 
 	public get entries(): EntriesService {
 		return this._entries;
 	}
-	private _entries: EntriesService;
 
 	public get logs(): LogsService {
 		return this._logs;
 	}
-	private _logs: LogsService;
 
 	public get searchStatus(): SearchStatusService {
 		return this._searchStatus;
 	}
-	private _searchStatus: SearchStatusService;
 
 	public get searchHistory(): SearchHistoryService {
 		return this._searchHistory;
 	}
-	private _searchHistory: SearchHistoryService;
 
 	public get searches(): SearchesService {
 		return this._searches;
 	}
-	private _searches: SearchesService;
 
 	public get searchModules(): SearchModulesService {
 		return this._searchModules;
 	}
-	private _searchModules: SearchModulesService;
 
 	public get renderModules(): RenderModulesService {
 		return this._renderModules;
 	}
-	private _renderModules: RenderModulesService;
 
 	public get scriptLibraries(): ScriptLibrariesService {
 		return this._scriptLibraries;
 	}
-	private _scriptLibraries: ScriptLibrariesService;
 
 	public get groups(): GroupsService {
 		return this._groups;
 	}
-	private _groups: GroupsService;
 
 	public get actionables(): ActionablesService {
 		return this._actionables;
 	}
-	private _actionables: ActionablesService;
 
 	public get templates(): TemplatesService {
 		return this._templates;
 	}
-	private _templates: TemplatesService;
 
 	public get playbooks(): PlaybooksService {
 		return this._playbooks;
 	}
-	private _playbooks: PlaybooksService;
 
 	public get resources(): ResourcesService {
 		return this._resources;
 	}
-	private _resources: ResourcesService;
 
 	public get macros(): MacrosService {
 		return this._macros;
 	}
-	private _macros: MacrosService;
 
 	public get dashboards(): DashboardsService {
 		return this._dashboards;
 	}
-	private _dashboards: DashboardsService;
 
 	public get autoExtractors(): AutoExtractorsService {
 		return this._autoExtractors;
 	}
-	private _autoExtractors: AutoExtractorsService;
 
 	public get files(): FilesService {
 		return this._files;
 	}
-	private _files: FilesService;
 
 	public get savedQueries(): SavedQueriesService {
 		return this._savedQueries;
 	}
-	private _savedQueries: SavedQueriesService;
 
 	public get scheduledScripts(): ScheduledScriptsService {
 		return this._scheduledScripts;
 	}
-	private _scheduledScripts: ScheduledScriptsService;
 
 	public get scheduledQueries(): ScheduledQueriesService {
 		return this._scheduledQueries;
 	}
-	private _scheduledQueries: ScheduledQueriesService;
 
 	public get kits(): KitsService {
 		return this._kits;
 	}
-	private _kits: KitsService;
 
 	public get queries(): QueriesService {
 		return this._queries;
 	}
-	private _queries: QueriesService;
 
 	public get explorer(): ExplorerService {
 		return this._explorer;
 	}
-	private _explorer: ExplorerService;
 
 	public get mailServer(): MailServerService {
 		return this._mailServer;
 	}
-	private _mailServer: MailServerService;
 
 	public get tokens(): TokensService {
 		return this._tokens;
 	}
-	private _tokens: TokensService;
 }

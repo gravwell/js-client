@@ -14,7 +14,7 @@ import { Query, ValidatedQuery } from '~/models';
 import { APIContext } from '../utils';
 import { makeSubscribeToOneQueryParsing } from './subscribe-to-query-parsing';
 
-export const makeValidateOneQuery = (context: APIContext) => {
+export const makeValidateOneQuery = (context: APIContext): ((query: Query) => Promise<ValidatedQuery>) => {
 	const subscribeToOneQueryValidation = makeSubscribeToOneQueryParsing(context);
 	let querySubP: ReturnType<typeof subscribeToOneQueryValidation> | null = null;
 

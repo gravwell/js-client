@@ -10,7 +10,7 @@
 import { RawSystemSettings, SystemSettings, toSystemSettings } from '~/models';
 import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, parseJSONResponse } from '../utils';
 
-export const makeGetSystemSettings = (context: APIContext) => {
+export const makeGetSystemSettings = (context: APIContext): (() => Promise<SystemSettings>) => {
 	const templatePath = '/api/settings';
 	const url = buildURL(templatePath, { ...context, protocol: 'http' });
 

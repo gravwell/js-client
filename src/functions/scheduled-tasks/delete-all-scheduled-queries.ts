@@ -11,7 +11,7 @@ import { APIContext } from '../utils';
 import { makeDeleteOneScheduledQuery } from './delete-one-scheduled-query';
 import { makeGetAllScheduledQueries } from './get-all-scheduled-queries';
 
-export const makeDeleteAllScheduledQueries = (context: APIContext) => {
+export const makeDeleteAllScheduledQueries = (context: APIContext): (() => Promise<void>) => {
 	const deleteOneScheduledQuery = makeDeleteOneScheduledQuery(context);
 	const getAllScheduledQueries = makeGetAllScheduledQueries(context);
 

@@ -17,7 +17,7 @@ import {
 } from '../utils';
 import { makeGetOneTemplate } from './get-one-template';
 
-export const makeUpdateOneTemplate = (context: APIContext) => {
+export const makeUpdateOneTemplate = (context: APIContext): ((data: UpdatableTemplate) => Promise<Template>) => {
 	const getOneTemplate = makeGetOneTemplate(context);
 
 	return async (data: UpdatableTemplate): Promise<Template> => {

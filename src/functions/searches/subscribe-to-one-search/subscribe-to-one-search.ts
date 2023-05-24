@@ -67,16 +67,21 @@ import {
 	SEARCH_FILTER_PREFIX,
 } from './helpers';
 
-export const makeSubscribeToOneSearch = (context: APIContext) => {
+interface Options {
+	filter?: SearchFilter | undefined;
+	metadata?: RawJSON | undefined;
+	noHistory?: boolean;
+}
+
+export const makeSubscribeToOneSearch = (
+	context: APIContext,
+): ((query: Query, options?: Options) => Promise<SearchSubscription>) => {
 	const modifyOneQuery = makeModifyOneQuery(context);
 	const subscribeToOneRawSearch = makeSubscribeToOneRawSearch(context);
 	let rawSubscriptionP: ReturnType<typeof subscribeToOneRawSearch> | null = null;
 	let closedSub: Subscription | null = null;
 
-	return async (
-		query: Query,
-		options: { filter?: SearchFilter | undefined; metadata?: RawJSON | undefined; noHistory?: boolean } = {},
-	): Promise<SearchSubscription> => {
+	return async (query: Query, options: Options = {}): Promise<SearchSubscription> => {
 		if (isNull(rawSubscriptionP)) {
 			rawSubscriptionP = subscribeToOneRawSearch();
 			if (closedSub?.closed === false) {
@@ -86,7 +91,7 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 			// Handles websocket hangups from close or error
 			closedSub = from(rawSubscriptionP)
 				.pipe(
-					concatMap(rawSubscription => rawSubscription.received$),
+					concatMap(rawSubscriptionConcatMap => rawSubscriptionConcatMap.received$),
 					catchError(() => EMPTY),
 				)
 				.subscribe({
@@ -223,8 +228,8 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 			map((msg): SearchEntries => {
 				const base = toSearchEntries(rendererType, msg);
 				const filterID = (msg.data.Addendum?.filterID as string | undefined) ?? null;
-				const filter = filtersByID[filterID ?? ''] ?? undefined;
-				return { ...base, filter } as SearchEntries;
+				const filterMap = filtersByID[filterID ?? ''] ?? undefined;
+				return { ...base, filter: filterMap } as SearchEntries;
 			}),
 			tap(entries => {
 				const defDesiredGranularity = getDefaultGranularityByRendererType(entries.type);
@@ -238,11 +243,11 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 		);
 
 		const _filter$ = new BehaviorSubject<SearchFilter>(initialFilter);
-		const setFilter = (filter: SearchFilter | null): void => {
+		const setFilter = (filterSet: SearchFilter | null): void => {
 			if (closed) {
 				return undefined;
 			}
-			_filter$.next(filter ?? initialFilter);
+			_filter$.next(filterSet ?? initialFilter);
 		};
 
 		const filter$ = createRequiredSearchFilterObservable({
@@ -255,7 +260,7 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 			},
 		});
 
-		const nextDetailsMsg = () =>
+		const nextDetailsMsg = (): Promise<RawResponseForSearchDetailsMessageReceived> =>
 			firstValueFrom(
 				searchMessages$.pipe(
 					filter(filterMessageByCommand(SearchMessageCommands.RequestDetails)),
@@ -266,7 +271,7 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 
 		let pollingSubs: Subscription;
 
-		const requestEntries = async (filter: RequiredSearchFilter): Promise<void> => {
+		const requestEntries = async (filterEntries: RequiredSearchFilter): Promise<void> => {
 			if (closed) {
 				return undefined;
 			}
@@ -277,13 +282,13 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 			pollingSubs = new Subscription();
 
 			const filterID = uniqueId(SEARCH_FILTER_PREFIX);
-			filtersByID[filterID] = filter;
+			filtersByID[filterID] = filterEntries;
 
-			const first = filter.entriesOffset.index;
-			const last = first + filter.entriesOffset.count;
-			const startDate = filter.dateRange === 'preview' ? previewDateRange.start : filter.dateRange.start;
+			const first = filterEntries.entriesOffset.index;
+			const last = first + filterEntries.entriesOffset.count;
+			const startDate = filterEntries.dateRange === 'preview' ? previewDateRange.start : filterEntries.dateRange.start;
 			const start = startDate.toISOString();
-			const endDate = filter.dateRange === 'preview' ? previewDateRange.end : filter.dateRange.end;
+			const endDate = filterEntries.dateRange === 'preview' ? previewDateRange.end : filterEntries.dateRange.end;
 			const end = endDate.toISOString();
 			// TODO: Filter by .desiredGranularity and .fieldFilters
 
@@ -329,7 +334,7 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 						catchError(() => EMPTY),
 						takeUntil(close$),
 					)
-					.subscribe(),
+					.subscribe({ error: err => console.warn(err) }),
 			);
 
 			const requestEntriesMsg: RawRequestSearchEntriesWithinRangeMessageSent = {
@@ -362,7 +367,7 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 						catchError(() => EMPTY),
 						takeUntil(close$),
 					)
-					.subscribe(),
+					.subscribe({ error: err => console.warn(err) }),
 			);
 			const entriesP = rawSubscription.send(requestEntriesMsg);
 
@@ -371,7 +376,7 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 				data: {
 					ID: SearchMessageCommands.RequestAllStats,
 					Addendum: { filterID },
-					Stats: { SetCount: filter.overviewGranularity },
+					Stats: { SetCount: filterEntries.overviewGranularity },
 				},
 			};
 			// Keep sending requests for stats until finished is true
@@ -391,7 +396,7 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 						catchError(() => EMPTY),
 						takeUntil(close$),
 					)
-					.subscribe(),
+					.subscribe({ error: err => console.warn(err) }),
 			);
 			const statsP = rawSubscription.send(requestStatsMessage);
 
@@ -401,10 +406,10 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 					ID: SearchMessageCommands.RequestStatsInRange,
 					Addendum: { filterID },
 					Stats: {
-						SetCount: filter.zoomGranularity,
+						SetCount: filterEntries.zoomGranularity,
 						SetEnd: recalculateZoomEnd(
 							detailsMsg.data.SearchInfo.MinZoomWindow,
-							filter.zoomGranularity,
+							filterEntries.zoomGranularity,
 							startDate,
 							endDate,
 						).toISOString(),
@@ -429,7 +434,7 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 						catchError(() => EMPTY),
 						takeUntil(close$),
 					)
-					.subscribe(),
+					.subscribe({ error: err => console.warn(err) }),
 			);
 			const statsRangeP = rawSubscription.send(requestStatsWithinRangeMsg);
 
@@ -442,16 +447,16 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 		 * https://github.com/gravwell/js-client/pull/243/files#diff-84ea62a6dd70168a514bb4173174a56cbe5089b2004ac111d42e15a769b3fd7eR421.
 		 */
 		filter$.pipe(takeUntil(close$)).subscribe({
-			next: filter => requestEntries(filter),
+			next: filterEntries => requestEntries(filterEntries),
 			error: err => console.warn('failed to apply filter to search', err),
 		});
 		filter$
 			.pipe(
-				switchMap(filter => timer(2000).pipe(map(() => filter))),
+				switchMap(filterEntries => timer(2000).pipe(map(() => filterEntries))),
 				takeUntil(close$),
 			)
 			.subscribe({
-				next: filter => requestEntries(filter),
+				next: filterEntries => requestEntries(filterEntries),
 				error: err => console.warn('failed to apply filter to search after two second delay', err),
 			});
 
@@ -485,7 +490,7 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 					(rawStats.data.Addendum?.filterID as string | undefined) ??
 					(rawDetails.data.Addendum?.filterID as string | undefined) ??
 					null;
-				const filter = filtersByID[filterID ?? ''] ?? undefined;
+				const filterByID = filtersByID[filterID ?? ''] ?? undefined;
 
 				const pipeline = rawStats.data.Stats.Set.map(s => s.Stats)
 					.reduce<
@@ -531,7 +536,7 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 					id: rawDetails.data.SearchInfo.ID,
 					userID: toNumericID(rawDetails.data.SearchInfo.UID),
 
-					filter,
+					filterByID,
 					finished: rawStats.data.Finished && rawDetails.data.Finished,
 
 					query: searchInitMsg.data.RawQuery,
@@ -576,15 +581,15 @@ export const makeSubscribeToOneSearch = (context: APIContext) => {
 		const statsZoom$ = rawStatsZoom$.pipe(
 			map(set => {
 				const filterID = (set.data.Addendum?.filterID as string | undefined) ?? null;
-				const filter = filtersByID[filterID ?? ''] ?? undefined;
+				const filterByID = filtersByID[filterID ?? ''] ?? undefined;
 
-				const filterEnd = filter?.dateRange === 'preview' ? previewDateRange.end : filter?.dateRange?.end;
+				const filterEnd = filterByID?.dateRange === 'preview' ? previewDateRange.end : filterByID?.dateRange?.end;
 				const initialEnd = initialFilter.dateRange === 'preview' ? previewDateRange.end : initialFilter.dateRange.end;
 				const endDate = filterEnd ?? initialEnd;
 
 				return omitUndefinedShallow({
 					frequencyStats: countEntriesFromModules(set).filter(f => !isAfter(f.timestamp, endDate)),
-					filter,
+					filterByID,
 				});
 			}),
 

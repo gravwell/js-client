@@ -9,7 +9,7 @@
 
 import { APIContext, buildHTTPRequestWithAuth, buildURL, parseJSONResponse } from '../utils';
 
-export const makeLogoutOneUser = (context: APIContext) => {
+export const makeLogoutOneUser = (context: APIContext): ((userAuthToken: string) => Promise<void>) => {
 	const templatePath = '/api/logout';
 	const url = buildURL(templatePath, { ...context, protocol: 'http' });
 

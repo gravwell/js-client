@@ -140,7 +140,11 @@ const SYSTEM_STATUS_CATEGORIES = {
 export type SystemStatusCategory = keyof typeof SYSTEM_STATUS_CATEGORIES;
 type SystemStatusCategoryToken = typeof SYSTEM_STATUS_CATEGORIES[SystemStatusCategory];
 
-export const makeSubscribeToManySystemInformations = (context: APIContext) => {
+export const makeSubscribeToManySystemInformations = (
+	context: APIContext,
+): ((
+	statusCategories: Array<SystemStatusCategory>,
+) => Promise<APISubscription<SystemStatusMessageReceived, SystemStatusMessageSent>>) => {
 	const templatePath = '/api/ws/stats';
 	const url = buildURL(templatePath, { ...context, protocol: 'ws' });
 

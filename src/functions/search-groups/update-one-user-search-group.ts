@@ -26,9 +26,9 @@ export const makeUpdateOneUserSearchGroup =
 
 			// To remove the search group ID, we need to send a DELETE request
 			if (isNull(groupID)) {
-				const req = buildHTTPRequestWithAuthFromContext(context);
-				const raw = await context.fetch(url, { ...req, method: 'DELETE' });
-				return parseJSONResponse(raw, { expect: 'void' });
+				const request = buildHTTPRequestWithAuthFromContext(context);
+				const raws = await context.fetch(url, { ...request, method: 'DELETE' });
+				return parseJSONResponse(raws, { expect: 'void' });
 			}
 
 			// To change the search group ID, we need to send a PUT request

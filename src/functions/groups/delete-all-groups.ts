@@ -11,7 +11,7 @@ import { APIContext } from '../utils';
 import { makeDeleteOneGroup } from './delete-one-group';
 import { makeGetAllGroups } from './get-all-groups';
 
-export const makeDeleteAllGroups = (context: APIContext) => {
+export const makeDeleteAllGroups = (context: APIContext): (() => Promise<void>) => {
 	const deleteOneGroup = makeDeleteOneGroup(context);
 	const getAllGroups = makeGetAllGroups(context);
 

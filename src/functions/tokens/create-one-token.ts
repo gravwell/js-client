@@ -16,7 +16,7 @@ import {
 	parseJSONResponse,
 } from '../utils';
 
-export const makeCreateOneToken = (context: APIContext) => {
+export const makeCreateOneToken = (context: APIContext): ((data: CreatableToken) => Promise<TokenWithSecret>) => {
 	const templatePath = '/api/tokens?admin=true';
 	const url = buildURL(templatePath, { ...context, protocol: 'http' });
 

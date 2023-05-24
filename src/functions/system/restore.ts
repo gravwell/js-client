@@ -10,7 +10,7 @@
 import * as FormData from 'form-data';
 import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, File, HTTPRequestOptions } from '../utils';
 
-export const makeRestore = (context: APIContext) => {
+export const makeRestore = (context: APIContext): ((backup: File, signal?: AbortSignal) => Promise<void>) => {
 	const templatePath = '/api/backup';
 	const url = buildURL(templatePath, { ...context, protocol: 'http' });
 

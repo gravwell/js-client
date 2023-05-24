@@ -17,7 +17,9 @@ import {
 } from '../utils';
 import { makeGetOneDashboard } from './get-one-dashboard';
 
-export const makeUpdateOneDashboard = (context: APIContext) => {
+export const makeUpdateOneDashboard = (
+	context: APIContext,
+): ((requestData: UpdatableDashboard) => Promise<Dashboard>) => {
 	const getOneDashboard = makeGetOneDashboard(context);
 
 	return async (requestData: UpdatableDashboard): Promise<Dashboard> => {

@@ -11,7 +11,9 @@ import { ScheduledQuery, UpdatableScheduledQuery } from '~/models';
 import { APIContext } from '../utils';
 import { makeUpdateOneScheduledTask } from './update-one-scheduled-task';
 
-export const makeUpdateOneScheduledQuery = (context: APIContext) => {
+export const makeUpdateOneScheduledQuery = (
+	context: APIContext,
+): ((data: UpdatableScheduledQuery) => Promise<ScheduledQuery>) => {
 	const updateOneScheduleTask = makeUpdateOneScheduledTask(context);
 
 	return (data: UpdatableScheduledQuery): Promise<ScheduledQuery> => updateOneScheduleTask({ ...data, type: 'query' });

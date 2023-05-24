@@ -21,7 +21,11 @@ import {
 } from '~/models/search';
 import { APIContext, APISubscription, apiSubscriptionFromWebSocket, buildURL, WebSocket } from '../utils';
 
-export const makeSubscribeToOneQueryParsing = (context: APIContext) => {
+export const makeSubscribeToOneQueryParsing = (
+	context: APIContext,
+): (() => Promise<
+	APISubscription<ValidatedQuery & { id: number }, { id: number; query: Query; filters: Array<ElementFilter> }>
+>) => {
 	const templatePath = '/api/ws/search';
 	const url = buildURL(templatePath, { ...context, protocol: 'ws' });
 
@@ -37,8 +41,11 @@ export const makeSubscribeToOneQueryParsing = (context: APIContext) => {
 		const wsClosed$: Observable<void> = rawSubscription.sent$.pipe(startWith(undefined), mapTo(undefined), last());
 		timer(1000, 5000)
 			.pipe(takeUntil(wsClosed$))
-			.subscribe(() => {
-				rawSubscription.send({ type: 'PONG', data: {} });
+			.subscribe({
+				next: () => {
+					rawSubscription.send({ type: 'PONG', data: {} });
+				},
+				error: err => console.warn(err),
 			});
 
 		const received$ = rawSubscription.received$.pipe(
@@ -70,8 +77,8 @@ export const makeSubscribeToOneQueryParsing = (context: APIContext) => {
 		const received: Array<ValidatedQuery & { id: number }> = [];
 		const sent: Array<{ id: number; query: Query; filters: Array<ElementFilter> }> = [];
 
-		received$.subscribe(receivedMessage => received.push(receivedMessage));
-		sent$.subscribe(sentMessage => sent.push(sentMessage));
+		received$.subscribe({ next: receivedMessage => received.push(receivedMessage), error: err => console.warn(err) });
+		sent$.subscribe({ next: sentMessage => sent.push(sentMessage), error: err => console.warn(err) });
 
 		return {
 			close: () => rawSubscription.close(),

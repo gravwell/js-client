@@ -44,7 +44,7 @@ export interface RawScheduledTask {
 	 * Search IDs of the most recently performed searches from this scheduled
 	 * search.
 	 */
-	LastSearchIDs: null | Array<Number>;
+	LastSearchIDs: null | Array<number>;
 
 	Timezone: string; //empty string is null
 
@@ -85,5 +85,5 @@ export interface RawScheduledTask {
 	 * ?QUESTION: What is this? Couldn't find it being used in the GUI and the
 	 * docs don't mention what it does.
 	 */
-	PersistentMaps: {};
+	PersistentMaps: object;
 }
