@@ -27,7 +27,7 @@ export const isDataExplorerEntry = (v: unknown): v is DataExplorerEntry => {
 
 /** Item extracted from an entry using the data exploration system. */
 export interface DataExplorerElement {
-	module: string;
+	module?: string | undefined;
 	name: string;
 	path: string;
 	arguments: string | null;

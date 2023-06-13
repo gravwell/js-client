@@ -33,7 +33,7 @@ export const isRawDataExplorerEntry = (v: unknown): v is RawDataExplorerEntry =>
  * exploration system.
  */
 export interface RawDataExplorerElement {
-	Module: string; // Might be an empty string
+	Module?: string | undefined; // Might be an empty string
 	Name: string;
 	Path: string; // Might be an empty string
 	Args?: string | undefined;

@@ -13,7 +13,7 @@ import { isRawElementFilterOperation, RawElementFilterOperation } from './elemen
 /** Filter to perform an operation on a field. */
 export interface RawOperationFilter {
 	Tag?: string | undefined;
-	Module: string;
+	Module?: string | undefined;
 	Path: string;
 	Args?: string | undefined;
 	Op: RawElementFilterOperation;
@@ -32,7 +32,7 @@ export const isRawOperationFilter = (v: RawElementFilter): v is RawOperationFilt
 /** Filter to extract a field. */
 export interface RawExtractionFilter {
 	Tag?: string | undefined;
-	Module: string;
+	Module?: string | undefined;
 	Path: string;
 	Args?: string | undefined;
 }

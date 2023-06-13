@@ -7,7 +7,14 @@
  * license. See the LICENSE file for details.
  */
 
+import { Decoder, object, optional, string } from 'decoders';
+import { mkTypeGuard } from '../../functions/utils/type-guards';
+
 export interface CreatableGroup {
 	name: string;
 	description?: string;
 }
+
+export const creatableGroupDecoder: Decoder<CreatableGroup> = object({ name: string, description: optional(string) });
+
+export const isCreatableGroup: (v: unknown) => v is CreatableGroup = mkTypeGuard(creatableGroupDecoder);

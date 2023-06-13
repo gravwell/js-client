@@ -13,7 +13,7 @@ import { ElementFilterOperation, isElementFilterOperation } from './element-filt
 /** Filter to perform an operation on a field. */
 export interface OperationFilter {
 	tag: string | null;
-	module: string;
+	module?: string | undefined;
 	path: string;
 	arguments: string | null;
 	operation: ElementFilterOperation;
@@ -32,7 +32,7 @@ export const isOperationFilter = (v: ElementFilter): v is OperationFilter => {
 /** Filter to extract a field. */
 export interface ExtractionFilter {
 	tag: string | null;
-	module: string;
+	module?: string | undefined;
 	path: string;
 	arguments: string | null;
 }

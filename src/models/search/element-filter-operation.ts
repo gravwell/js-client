@@ -7,7 +7,7 @@
  * license. See the LICENSE file for details.
  */
 
-const ELEMENT_FILTER_OPERATIONS = new Set(['==', '!=', '>', '>=', '<', '<=', '~', '!~'] as const);
+export const ELEMENT_FILTER_OPERATIONS = new Set(['==', '!=', '>', '>=', '<', '<=', '~', '!~'] as const);
 
 export type RawElementFilterOperation = typeof ELEMENT_FILTER_OPERATIONS extends Set<infer T> ? T : never;
 
