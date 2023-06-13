@@ -14,6 +14,8 @@ import { isNumericIdDecoder } from '../../value-objects';
 import { DATA_TYPE } from '../data-type';
 import { User } from './user';
 
+export const userRoleDecoder = either(constant('admin'), constant('analyst'));
+
 export const isUserDecoder: Decoder<User> = inexact({
 	_tag: hardcoded(DATA_TYPE.USER),
 	id: isNumericIdDecoder,
@@ -21,7 +23,7 @@ export const isUserDecoder: Decoder<User> = inexact({
 	username: string,
 	name: string,
 	email: string,
-	role: either(constant('admin'), constant('analyst')),
+	role: userRoleDecoder,
 	isLocked: boolean,
 	lastActivityDate: nullable(date),
 	searchGroupID: nullable(string),

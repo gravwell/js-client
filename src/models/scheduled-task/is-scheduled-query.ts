@@ -7,15 +7,49 @@
  * license. See the LICENSE file for details.
  */
 
-import { DATA_TYPE } from '~/models';
-import { isScheduledQueryData } from './is-scheduled-query-data';
+import { array, boolean, constant, Decoder, either, instanceOf, null_, number, object, string } from 'decoders';
+import { mkTypeGuard } from '../../functions/utils/type-guards';
+import { DATA_TYPE } from '../data-type';
 import { ScheduledQuery } from './scheduled-query';
 
-export const isScheduledQuery = (value: unknown): value is ScheduledQuery => {
-	try {
-		const sq = value as ScheduledQuery;
-		return sq._tag === DATA_TYPE.SCHEDULED_QUERY && isScheduledQueryData(sq);
-	} catch {
-		return false;
-	}
-};
+const scheduledQueryDecoder: Decoder<ScheduledQuery> = object({
+	_tag: constant(DATA_TYPE.SCHEDULED_QUERY),
+
+	type: constant('query'),
+	query: string,
+	searchSince: object({
+		lastRun: boolean,
+		secondsAgo: number,
+	}),
+
+	id: string,
+	globalID: string,
+
+	userID: string,
+	groupIDs: array(string),
+	isGlobal: boolean,
+
+	name: string,
+	description: string,
+	labels: array(string),
+
+	oneShot: boolean,
+	isDisabled: boolean,
+
+	lastUpdateDate: instanceOf(Date),
+	lastRun: either(
+		null_,
+		object({
+			date: instanceOf(Date),
+			duration: number,
+		}),
+	),
+
+	lastSearchIDs: either(null_, array(string)),
+	lastError: either(null_, string),
+
+	schedule: string,
+	timezone: either(null_, string),
+});
+
+export const isScheduledQuery = mkTypeGuard(scheduledQueryDecoder);
