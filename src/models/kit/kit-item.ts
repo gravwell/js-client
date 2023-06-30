@@ -9,7 +9,6 @@
 
 import { isBoolean, isNull, isNumber, isString } from 'lodash';
 import { isUUID, UUID } from '~/value-objects';
-import { AutoExtractorModule } from '..';
 import { isVersion, Version } from '../version';
 
 export interface KitItemBase {
@@ -118,7 +117,7 @@ export interface FlowKitItem extends KitItemBase {
 export interface AutoExtractorKitItem extends KitItemBase {
 	type: KIT_ITEM_TYPE.autoExtractor;
 	description: string;
-	module: AutoExtractorModule;
+	module: string;
 	tag: string;
 }
 

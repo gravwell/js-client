@@ -7,14 +7,11 @@
  * license. See the LICENSE file for details.
  */
 
-import { isString } from 'lodash';
+import { iso8601 } from 'decoders';
+import { mkTypeGuard } from '../functions/utils/type-guards';
 
-const TIMESTAMP_REGEX = /[0-9]{4}-[0-9]{2}-[0-9]{2}[T][0-9]{2}:[0-9]{2}:[0-9]{2}([.][0-9]{1,9}[Z]|[Z])/;
-
-export const isTimestamp = (value: unknown): boolean => {
-	try {
-		return isString(value) && TIMESTAMP_REGEX.test(value);
-	} catch {
-		return false;
-	}
-};
+/**
+ * Returns true if the value can be parsed as an ISO8601 date string, otherwise
+ * false
+ */
+export const isTimestamp: (value: unknown) => boolean = mkTypeGuard(iso8601);

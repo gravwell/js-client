@@ -8,7 +8,6 @@
  */
 
 import { RawNumericID } from '~/value-objects';
-import { RawAutoExtractorModule } from './raw-auto-extractor';
 
 export interface RawCreatableAutoExtractor {
 	GIDs: Array<RawNumericID>;
@@ -20,7 +19,7 @@ export interface RawCreatableAutoExtractor {
 	Global: boolean;
 
 	Tag: string;
-	Module: RawAutoExtractorModule;
+	Module: string;
 	Params: string;
 	Args: string; // empty string is null
 }

@@ -27,7 +27,6 @@ import { APISubscription, downloadFromURL, DownloadReturn, File } from '~/functi
 import {
 	Actionable,
 	AutoExtractor,
-	AutoExtractorModule,
 	BuildableKit,
 	CreatableActionable,
 	CreatableAutoExtractor,
@@ -345,7 +344,7 @@ describe('GravwellClient', () => {
 			expectTypeOf(client.dashboards.delete.one).toEqualTypeOf<(macroID: ID) => Promise<void>>();
 
 			// Auto extractors
-			expectTypeOf(client.autoExtractors.get.validModules).toEqualTypeOf<() => Promise<Array<AutoExtractorModule>>>();
+			expectTypeOf(client.autoExtractors.get.validModules).toEqualTypeOf<() => Promise<Array<string>>>();
 			expectTypeOf(client.autoExtractors.get.all).toEqualTypeOf<() => Promise<Array<AutoExtractor>>>();
 			expectTypeOf(client.autoExtractors.get.authorizedTo.me).toEqualTypeOf<() => Promise<Array<AutoExtractor>>>();
 			expectTypeOf(client.autoExtractors.guess.many).toEqualTypeOf<

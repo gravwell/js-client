@@ -8,7 +8,6 @@
  */
 
 import { NumericID } from '~/value-objects';
-import { AutoExtractorModule } from './auto-extractor';
 
 export interface UpdatableAutoExtractor {
 	id: NumericID;
@@ -21,7 +20,7 @@ export interface UpdatableAutoExtractor {
 	isGlobal?: boolean;
 
 	tag?: string;
-	module?: AutoExtractorModule;
+	module?: string;
 	parameters?: string;
 	arguments?: string | null;
 }
