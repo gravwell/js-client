@@ -1357,7 +1357,7 @@
 					"sources": [
 						{
 							"fileName": "src/functions/auto-extractors/get-all-auto-extractor-modules.ts",
-							"line": 13,
+							"line": 12,
 							"character": 13
 						}
 					],
@@ -1403,57 +1403,8 @@
 													{
 														"type": "array",
 														"elementType": {
-															"type": "union",
-															"types": [
-																{
-																	"type": "literal",
-																	"value": "slice"
-																},
-																{
-																	"type": "literal",
-																	"value": "json"
-																},
-																{
-																	"type": "literal",
-																	"value": "csv"
-																},
-																{
-																	"type": "literal",
-																	"value": "cef"
-																},
-																{
-																	"type": "literal",
-																	"value": "kv"
-																},
-																{
-																	"type": "literal",
-																	"value": "fields"
-																},
-																{
-																	"type": "literal",
-																	"value": "regex"
-																},
-																{
-																	"type": "literal",
-																	"value": "winlog"
-																},
-																{
-																	"type": "literal",
-																	"value": "syslog"
-																},
-																{
-																	"type": "literal",
-																	"value": "netflow"
-																},
-																{
-																	"type": "literal",
-																	"value": "ipfix"
-																},
-																{
-																	"type": "literal",
-																	"value": "xml"
-																}
-															]
+															"type": "intrinsic",
+															"name": "string"
 														}
 													}
 												],
