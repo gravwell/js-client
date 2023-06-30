@@ -8,7 +8,6 @@
  */
 
 import { NumericID, UUID } from '~/value-objects';
-import { AutoExtractorModule } from './auto-extractor';
 
 export interface AutoExtractorData {
 	id: UUID;
@@ -29,7 +28,7 @@ export interface AutoExtractorData {
 	/** Tag associated with the extraction */
 	tag: string;
 	/** The processing module used for extraction */
-	module: AutoExtractorModule;
+	module: string;
 	/** The extraction definition */
 	parameters: string;
 	/**

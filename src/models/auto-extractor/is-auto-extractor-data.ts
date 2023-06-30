@@ -9,9 +9,7 @@
 
 import { isBoolean, isDate, isNull, isString } from 'lodash';
 import { isNumericID, isUUID } from '~/value-objects';
-import { AutoExtractorModule } from './auto-extractor';
 import { AutoExtractorData } from './auto-extractor-data';
-import { AUTO_EXTRACTOR_MODULES } from './auto-extractor-modules';
 
 export const isAutoExtractorData = (value: unknown): value is AutoExtractorData => {
 	try {
@@ -26,7 +24,7 @@ export const isAutoExtractorData = (value: unknown): value is AutoExtractorData 
 			isBoolean(ae.isGlobal) &&
 			isDate(ae.lastUpdateDate) &&
 			isString(ae.tag) &&
-			isAutoExtractorModule(ae.module) &&
+			isString(ae.module) &&
 			isString(ae.parameters) &&
 			(isString(ae.arguments) || isNull(ae.arguments))
 		);
@@ -34,13 +32,3 @@ export const isAutoExtractorData = (value: unknown): value is AutoExtractorData 
 		return false;
 	}
 };
-
-const makeIsAutoExtractorModule = (): ((value: unknown) => value is AutoExtractorModule) => {
-	const autoExtractorModulesSet = new Set(AUTO_EXTRACTOR_MODULES);
-
-	return (value: unknown): value is AutoExtractorModule => {
-		const m = value as AutoExtractorModule;
-		return isString(m) && autoExtractorModulesSet.has(m);
-	};
-};
-export const isAutoExtractorModule = makeIsAutoExtractorModule();

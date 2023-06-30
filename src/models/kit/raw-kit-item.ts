@@ -8,7 +8,6 @@
  */
 
 import { RawUUID } from '~/value-objects';
-import { AutoExtractorModule } from '../auto-extractor';
 
 export interface RawKitItemBase {
 	ID: string | undefined; // Only exists on LocalKit assets
@@ -135,7 +134,7 @@ export interface RawAutoExtractorKitItem extends RawKitItemBase {
 	AdditionalInfo: {
 		name: string;
 		desc: string;
-		module: AutoExtractorModule;
+		module: string;
 		tag: string;
 	};
 }

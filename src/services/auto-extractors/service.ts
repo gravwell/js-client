@@ -12,7 +12,6 @@ import {
 	AutoExtractor,
 	CreatableAutoExtractor,
 	GeneratedAutoExtractors,
-	RawAutoExtractorModule,
 	UpdatableAutoExtractor,
 	UploadableAutoExtractor,
 } from '~/models/auto-extractor';
@@ -20,7 +19,7 @@ import { GeneratableAutoExtractor } from '~/models/auto-extractor/generatable-au
 
 export interface AutoExtractorsService {
 	readonly get: {
-		readonly validModules: () => Promise<Array<RawAutoExtractorModule>>;
+		readonly validModules: () => Promise<Array<string>>;
 		readonly all: () => Promise<Array<AutoExtractor>>;
 		readonly authorizedTo: {
 			readonly me: () => Promise<Array<AutoExtractor>>;
