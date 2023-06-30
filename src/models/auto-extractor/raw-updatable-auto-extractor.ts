@@ -8,7 +8,6 @@
  */
 
 import { RawNumericID, RawUUID } from '~/value-objects';
-import { RawAutoExtractorModule } from './raw-auto-extractor';
 
 export interface RawUpdatableAutoExtractor {
 	UUID: RawUUID;
@@ -22,7 +21,7 @@ export interface RawUpdatableAutoExtractor {
 	Global: boolean;
 
 	Tag: string;
-	Module: RawAutoExtractorModule;
+	Module: string;
 	Params: string;
 	Args: string; // Empty string is null
 }

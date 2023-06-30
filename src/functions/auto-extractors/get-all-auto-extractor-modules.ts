@@ -7,18 +7,17 @@
  * license. See the LICENSE file for details.
  */
 
-import { AutoExtractorModule, RawAutoExtractorModule } from '~/models';
 import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, parseJSONResponse } from '../utils';
 
-export const makeGetAllAutoExtractorModules = (context: APIContext): (() => Promise<Array<AutoExtractorModule>>) => {
+export const makeGetAllAutoExtractorModules = (context: APIContext): (() => Promise<Array<string>>) => {
 	const path = '/api/autoextractors/engines';
 	const url = buildURL(path, { ...context, protocol: 'http' });
 
-	return async (): Promise<Array<AutoExtractorModule>> => {
+	return async (): Promise<Array<string>> => {
 		const req = buildHTTPRequestWithAuthFromContext(context);
 
 		const raw = await context.fetch(url, { ...req, method: 'GET' });
-		const rawRes = (await parseJSONResponse<Array<RawAutoExtractorModule> | null>(raw)) ?? [];
+		const rawRes = (await parseJSONResponse<Array<string> | null>(raw)) ?? [];
 		return rawRes;
 	};
 };
