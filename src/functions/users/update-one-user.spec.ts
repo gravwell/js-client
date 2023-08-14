@@ -8,7 +8,7 @@
  */
 
 import { random } from 'lodash';
-import { CreatableUser, isValidUser, User } from '~/models';
+import { CreatableUser, User, userDecoder } from '~/models';
 import { integrationTest, integrationTestSpecDef, TEST_BASE_API_CONTEXT } from '~/tests';
 import { makeLoginOneUser } from '../auth';
 import { makeCreateOneUser } from './create-one-user';
@@ -78,7 +78,7 @@ describe(
 		it(
 			"Should update the user's username",
 			integrationTest(async () => {
-				expect(isValidUser(user)).toBeTrue();
+				expect(userDecoder.decode(user).ok).toBeTrue();
 
 				const newUsername = 'new-username-' + random(0, Number.MAX_SAFE_INTEGER);
 				expect(newUsername).not.toBe(user.username);
@@ -86,14 +86,14 @@ describe(
 				await updateOneUser({ id: user.id, username: newUsername });
 				const updatedUser = await getOneUser(user.id);
 				expect(updatedUser.username).toBe(newUsername);
-				expect(isValidUser(updatedUser)).toBeTrue();
+				expect(userDecoder.decode(updatedUser).ok).toBeTrue();
 			}),
 		);
 
 		it(
 			'Should update the user email',
 			integrationTest(async () => {
-				expect(isValidUser(user)).toBeTrue();
+				expect(userDecoder.decode(user).ok).toBeTrue();
 
 				const newEmail = 'new-email-' + random(0, Number.MAX_SAFE_INTEGER) + '@example.com';
 				expect(newEmail).not.toBe(user.email);
@@ -101,14 +101,14 @@ describe(
 				await updateOneUser({ id: user.id, email: newEmail });
 				const updatedUser = await getOneUser(user.id);
 				expect(updatedUser.email).toBe(newEmail);
-				expect(isValidUser(updatedUser)).toBeTrue();
+				expect(userDecoder.decode(updatedUser).ok).toBeTrue();
 			}),
 		);
 
 		it(
 			'Should update the user name',
 			integrationTest(async () => {
-				expect(isValidUser(user)).toBeTrue();
+				expect(userDecoder.decode(user).ok).toBeTrue();
 
 				const newName = 'new-name-' + random(0, Number.MAX_SAFE_INTEGER);
 				expect(newName).not.toBe(user.name);
@@ -116,43 +116,43 @@ describe(
 				await updateOneUser({ id: user.id, name: newName });
 				const updatedUser = await getOneUser(user.id);
 				expect(updatedUser.name).toBe(newName);
-				expect(isValidUser(updatedUser)).toBeTrue();
+				expect(userDecoder.decode(updatedUser).ok).toBeTrue();
 			}),
 		);
 
 		it(
 			'Should update the user locked state',
 			integrationTest(async () => {
-				expect(isValidUser(user)).toBeTrue();
+				expect(userDecoder.decode(user).ok).toBeTrue();
 				expect(user.isLocked).toBeFalse();
 
 				await updateOneUser({ id: user.id, isLocked: true });
 				const lockedUser = await getOneUser(user.id);
 				expect(lockedUser.isLocked).toBeTrue();
-				expect(isValidUser(lockedUser)).toBeTrue();
+				expect(userDecoder.decode(lockedUser).ok).toBeTrue();
 
 				await updateOneUser({ id: user.id, isLocked: false });
 				const unlockedUser = await getOneUser(user.id);
 				expect(unlockedUser.isLocked).toBeFalse();
-				expect(isValidUser(unlockedUser)).toBeTrue();
+				expect(userDecoder.decode(unlockedUser).ok).toBeTrue();
 			}),
 		);
 
 		it(
 			'Should update the user role',
 			integrationTest(async () => {
-				expect(isValidUser(user)).toBeTrue();
+				expect(userDecoder.decode(user).ok).toBeTrue();
 				expect(user.role).toBe('analyst');
 
 				await updateOneUser({ id: user.id, role: 'admin' });
 				const updatedUser1 = await getOneUser(user.id);
 				expect(updatedUser1.role).toBe('admin');
-				expect(isValidUser(updatedUser1)).toBeTrue();
+				expect(userDecoder.decode(updatedUser1).ok).toBeTrue();
 
 				await updateOneUser({ id: user.id, role: 'analyst' });
 				const updatedUser2 = await getOneUser(user.id);
 				expect(updatedUser2.role).toBe('analyst');
-				expect(isValidUser(updatedUser2)).toBeTrue();
+				expect(userDecoder.decode(updatedUser2).ok).toBeTrue();
 			}),
 		);
 
@@ -160,7 +160,7 @@ describe(
 			'Should update my password, requiring the current one',
 			integrationTest(async () => {
 				const myUser = await getMyUser();
-				expect(isValidUser(myUser)).toBeTrue();
+				expect(userDecoder.decode(myUser).ok).toBeTrue();
 
 				const currentPassword = 'changeme';
 				const newPassword = 'changeme2';
@@ -190,7 +190,7 @@ describe(
 		it(
 			'Should update the user password without passing current one',
 			integrationTest(async () => {
-				expect(isValidUser(user)).toBeTrue();
+				expect(userDecoder.decode(user).ok).toBeTrue();
 				expect(user.role).toBe('analyst');
 
 				const currentPassword = 'changeme';
@@ -217,7 +217,7 @@ describe(
 				const updatedUser = await getOneUser(user.id);
 
 				expect(updatedUser.searchGroupID).toEqual(newSearchGroupID);
-				expect(isValidUser(updatedUser)).toBeTrue();
+				expect(userDecoder.decode(updatedUser).ok).toBeTrue();
 			}),
 		);
 
@@ -235,7 +235,7 @@ describe(
 				const updatedUser = await getOneUser(user.id);
 
 				expect(updatedUser.searchGroupID).toEqual(newSearchGroupID);
-				expect(isValidUser(updatedUser)).toBeTrue();
+				expect(userDecoder.decode(updatedUser).ok).toBeTrue();
 			}),
 		);
 	}),

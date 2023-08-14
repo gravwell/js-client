@@ -7,7 +7,7 @@
  * license. See the LICENSE file for details.
  */
 
-import { CreatableScheduledQuery, isScheduledQuery } from '~/models';
+import { CreatableScheduledQuery, scheduledQueryDecoder } from '~/models';
 import { integrationTest, integrationTestSpecDef, myCustomMatchers, TEST_BASE_API_CONTEXT } from '~/tests';
 import { NumericID } from '~/value-objects';
 import { makeCreateOneGroup } from '../groups/create-one-group';
@@ -73,7 +73,7 @@ describe(
 				};
 
 				const scheduledQuery = await createOneScheduledQuery(data);
-				expect(isScheduledQuery(scheduledQuery)).toBeTrue();
+				expect(scheduledQueryDecoder.decode(scheduledQuery).ok).toBeTrue();
 				expect(scheduledQuery).toPartiallyEqual(data);
 			}),
 		);

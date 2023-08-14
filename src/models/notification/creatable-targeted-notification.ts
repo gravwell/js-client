@@ -7,8 +7,7 @@
  * license. See the LICENSE file for details.
  */
 
-import { constant, Decoder, either3, Guard, guard, object, optional, string } from 'decoders';
-import { mkTypeGuard } from '~/functions/utils/type-guards';
+import { constant, Decoder, either, object, optional, string } from 'decoders';
 
 interface CreatableBaseTargetedNotification {
 	message: string;
@@ -68,14 +67,8 @@ export type CreatableTargetedNotification =
 	| CreatableGroupTargetedNotification
 	| CreatableUserTargetedNotification;
 
-export const creatableTargetedNotificationDecoder: Decoder<CreatableTargetedNotification> = either3(
+export const creatableTargetedNotificationDecoder: Decoder<CreatableTargetedNotification> = either(
 	creatableMyselfTargetedNotificationDecoder,
 	creatableGroupTargetedNotificationDecoder,
 	creatableUserTargetedNotificationDecoder,
 );
-
-export const creatableTargetedNotificationGuard: Guard<CreatableTargetedNotification> = guard(
-	creatableTargetedNotificationDecoder,
-);
-
-export const isCreatableTargetedNotification = mkTypeGuard(creatableTargetedNotificationDecoder);

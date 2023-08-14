@@ -7,21 +7,7 @@
  * license. See the LICENSE file for details.
  */
 
-import {
-	array,
-	boolean,
-	date,
-	Decoder,
-	dict,
-	either,
-	either3,
-	hardcoded,
-	null_,
-	number,
-	object,
-	string,
-} from 'decoders';
-import { mkTypeGuard } from '../../functions/utils/type-guards';
+import { array, boolean, date, Decoder, dict, either, hardcoded, null_, number, object, string } from 'decoders';
 import { RawTimeframe } from '../timeframe';
 import { SearchDetails } from './search-details';
 
@@ -33,7 +19,7 @@ export const rawTimeFrameDecoder: Decoder<RawTimeframe> = object({
 	end: either(string, null_),
 });
 
-const searchDetailsDecoder: Decoder<SearchDetails> = object({
+export const searchDetailsDecoder: Decoder<SearchDetails> = object({
 	userID: string,
 	groupID: either(string, null_),
 	userQuery: string,
@@ -57,7 +43,7 @@ const searchDetailsDecoder: Decoder<SearchDetails> = object({
 		start: date,
 		end: date,
 	}),
-	timeframe: either3<RawTimeframe, null, string>(dict(rawTimeFrameDecoder), null_, string),
+	timeframe: either(dict(rawTimeFrameDecoder), null_, string),
 	timeframeUserLabel: null_,
 	isLive: boolean,
 	name: either(string, null_),
@@ -71,5 +57,3 @@ const searchDetailsDecoder: Decoder<SearchDetails> = object({
 		time: date,
 	}),
 });
-
-export const isSearchDetails: (v: unknown) => v is SearchDetails = mkTypeGuard(searchDetailsDecoder);

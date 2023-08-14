@@ -7,9 +7,9 @@
  * license. See the LICENSE file for details.
  */
 
+import { iso8601 } from 'decoders';
 import { isNull, isString, isUndefined } from 'lodash';
 import { isNumericID } from '~/value-objects';
-import { isTimestamp } from '~/value-objects/date';
 import { BroadcastedNotification } from './broadcasted-notification';
 
 export const isBroadcastedNotification = (value: unknown): value is BroadcastedNotification => {
@@ -23,9 +23,9 @@ export const isBroadcastedNotification = (value: unknown): value is BroadcastedN
 			isNumericID(id) &&
 			(isNumericID(customID) || isUndefined(customID)) &&
 			isString(message) &&
-			isTimestamp(sentDate) &&
-			isTimestamp(expirationDate) &&
-			isTimestamp(ignoreUntilDate) &&
+			iso8601.decode(sentDate).ok &&
+			iso8601.decode(expirationDate).ok &&
+			iso8601.decode(ignoreUntilDate).ok &&
 			isString(origin) &&
 			isNumericID(senderID) &&
 			(level === 'info' ||

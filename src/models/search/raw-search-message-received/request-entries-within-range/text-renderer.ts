@@ -7,8 +7,8 @@
  * license. See the LICENSE file for details.
  */
 
+import { dict, number } from 'decoders';
 import { isArray, isUndefined } from 'lodash';
-import { isDictOfNumber } from '~/functions/utils/type-guards';
 import { isRawDataExplorerEntry } from '../../raw-data-explorer-entry';
 import { isRawSearchEntry, RawSearchEntry } from '../../raw-search-entry';
 import { RawSearchMessageReceivedRequestEntriesWithinRangeBaseData } from './base';
@@ -27,7 +27,7 @@ export const isRawSearchMessageReceivedRequestEntriesWithinRangeTextRenderer = (
 		const t = v as RawSearchMessageReceivedRequestEntriesWithinRangeTextRenderer;
 		const entriesOK = isUndefined(t.Entries) || (isArray(t.Entries) && t.Entries.every(isRawSearchEntry));
 		const exploreOK = isUndefined(t.Explore) || (isArray(t.Explore) && t.Explore.every(isRawDataExplorerEntry));
-		return entriesOK && exploreOK && isDictOfNumber(t.Tags);
+		return entriesOK && exploreOK && dict(number).decode(t.Tags).ok;
 	} catch {
 		return false;
 	}

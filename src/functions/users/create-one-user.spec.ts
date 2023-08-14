@@ -8,7 +8,7 @@
  */
 
 import { random } from 'lodash';
-import { CreatableUser, isValidUser, User } from '~/models';
+import { CreatableUser, User, userDecoder } from '~/models';
 import { integrationTest, integrationTestSpecDef, TEST_BASE_API_CONTEXT } from '~/tests';
 import { makeCreateOneUser } from './create-one-user';
 import { makeDeleteOneUser } from './delete-one-user';
@@ -63,7 +63,7 @@ describe(
 		it(
 			"Should create a user and return it's id",
 			integrationTest(async () => {
-				expect(isValidUser(user)).toBeTrue();
+				expect(userDecoder.decode(user).ok).toBeTrue();
 			}),
 		);
 

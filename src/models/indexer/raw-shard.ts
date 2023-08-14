@@ -7,7 +7,7 @@
  * license. See the LICENSE file for details.
  */
 
-import { boolean, Decoder, iso8601, map, number, object, optional, string } from 'decoders';
+import { boolean, Decoder, iso8601, number, object, optional, string } from 'decoders';
 
 type ISO8601String = string;
 
@@ -27,8 +27,8 @@ export type RawShard = {
 
 export const rawShardDecoder: Decoder<RawShard> = object({
 	Name: string,
-	Start: map(iso8601, date => date.toISOString()),
-	End: map(iso8601, date => date.toISOString()),
+	Start: iso8601.transform(date => date.toISOString()),
+	End: iso8601.transform(date => date.toISOString()),
 	Entries: number,
 	Size: number,
 	Cold: boolean,

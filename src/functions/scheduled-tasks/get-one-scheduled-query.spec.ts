@@ -7,7 +7,7 @@
  * license. See the LICENSE file for details.
  */
 
-import { isScheduledQuery, ScheduledQuery } from '~/models';
+import { ScheduledQuery, scheduledQueryDecoder } from '~/models';
 import { integrationTest, integrationTestSpecDef, TEST_BASE_API_CONTEXT } from '~/tests';
 import { makeCreateOneScheduledQuery } from './create-one-scheduled-query';
 import { makeDeleteAllScheduledQueries } from './delete-all-scheduled-queries';
@@ -48,7 +48,7 @@ describe(
 			'Returns a scheduled query',
 			integrationTest(async () => {
 				const scheduledQuery = await getOneScheduledQuery(createdScheduledQuery.id);
-				expect(isScheduledQuery(scheduledQuery)).toBeTrue();
+				expect(scheduledQueryDecoder.decode(scheduledQuery).ok).toBeTrue();
 				expect(scheduledQuery).toEqual(createdScheduledQuery);
 			}),
 		);

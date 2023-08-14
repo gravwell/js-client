@@ -8,7 +8,6 @@
  */
 
 import { Decoder, object, optional, string } from 'decoders';
-import { mkTypeGuard } from '../../functions/utils/type-guards';
 
 export interface CreatableGroup {
 	name: string;
@@ -16,5 +15,3 @@ export interface CreatableGroup {
 }
 
 export const creatableGroupDecoder: Decoder<CreatableGroup> = object({ name: string, description: optional(string) });
-
-export const isCreatableGroup: (v: unknown) => v is CreatableGroup = mkTypeGuard(creatableGroupDecoder);

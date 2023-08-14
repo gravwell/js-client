@@ -7,7 +7,7 @@
  * license. See the LICENSE file for details.
  */
 
-import { CreatableGroup, isGroup } from '~/models';
+import { CreatableGroup, groupDecoder } from '~/models';
 import { integrationTest, integrationTestSpecDef, TEST_BASE_API_CONTEXT } from '~/tests';
 import { makeCreateOneGroup } from './create-one-group';
 import { makeDeleteOneGroup } from './delete-one-group';
@@ -47,7 +47,7 @@ describe(
 
 				const groups = await getAllGroups();
 				expect(groups.length).toBe(2);
-				expect(groups.every(isGroup)).toBeTrue();
+				expect(groups.every(group => groupDecoder.decode(group).ok)).toBeTrue();
 			}),
 		);
 

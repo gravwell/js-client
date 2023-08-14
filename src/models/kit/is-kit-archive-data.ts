@@ -10,7 +10,7 @@
 import { isDate, isNil, isNull, isNumber, isString } from 'lodash';
 import { isNumericID, isUUID } from '~/value-objects';
 import { isVersion } from '../version';
-import { isConfigMacro } from './is-config-macro';
+import { configMacroDecoder } from './is-config-macro';
 import { KitArchiveData } from './kit-archive-data';
 
 export const isKitArchiveData = (v: unknown): v is KitArchiveData => {
@@ -40,7 +40,7 @@ export const isKitArchiveData = (v: unknown): v is KitArchiveData => {
 			(isNil(k.scheduledSearches) || k.scheduledSearches.every(isUUID)) &&
 			(isNil(k.templates) || k.templates.every(isUUID)) &&
 			(isNil(k.flows) || k.flows.every(isNumber)) &&
-			(isNil(k.configMacros) || k.configMacros.every(isConfigMacro))
+			(isNil(k.configMacros) || k.configMacros.every(macro => configMacroDecoder.decode(macro).ok))
 		);
 	} catch (e) {
 		console.error(e);

@@ -9,7 +9,7 @@
 
 import { DATA_TYPE } from '~/models';
 import { ID, NumericID, RawNumericID, RawUUID, toNumericID, UUID } from '~/value-objects';
-import { isScheduledQuery, isScheduledScript, ScheduledTask } from '../scheduled-task';
+import { isScheduledScript, scheduledQueryDecoder, ScheduledTask } from '../scheduled-task';
 import { toVersion } from './../version';
 import { DeployRules, KitArchive } from './kit-archive';
 import { RawDeployRules, RawKitArchive } from './raw-kit-archive';
@@ -32,7 +32,7 @@ export const toKitArchive = (raw: RawKitArchive, scheduledTasks: Array<Scheduled
 		.filter(script => scheduledTaskIDs.has(script.id))
 		.map(script => script.id);
 	const scheduledSearchIDs: Array<ID> = scheduledTasks
-		.filter(isScheduledQuery)
+		.filter(data => scheduledQueryDecoder.decode(data).ok)
 		.filter(search => scheduledTaskIDs.has(search.id))
 		.map(search => search.id);
 

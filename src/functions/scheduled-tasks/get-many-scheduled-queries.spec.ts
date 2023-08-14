@@ -8,7 +8,7 @@
  */
 
 import { random } from 'lodash';
-import { CreatableUser, isScheduledQuery, User } from '~/models';
+import { CreatableUser, scheduledQueryDecoder, User } from '~/models';
 import { integrationTest, integrationTestSpecDef, TEST_BASE_API_CONTEXT } from '~/tests';
 import { makeLoginOneUser } from '../auth/login-one-user';
 import { makeCreateOneUser } from '../users';
@@ -107,7 +107,7 @@ describe(
 					description: 'D5',
 					schedule: '0 1 * * *',
 					query: 'tag=test',
-					searchSince: { lastRun: true },
+					searchSince: { lastRun: true, secondsAgo: 60 },
 				},
 			]);
 		});
@@ -123,7 +123,7 @@ describe(
 
 				const actualAnalystScheduledQueries = await getManyScheduledQueries({ userID: user.id });
 				expect(actualAnalystScheduledQueries.length).toBe(expectedAnalystScheduledQueryIDs.length);
-				expect(actualAnalystScheduledQueries.every(isScheduledQuery)).toBeTrue();
+				expect(actualAnalystScheduledQueries.every(query => scheduledQueryDecoder.decode(query).ok)).toBeTrue();
 				expect(actualAnalystScheduledQueries.map(s => s.id).sort()).toEqual(expectedAnalystScheduledQueryIDs.sort());
 			}),
 		);

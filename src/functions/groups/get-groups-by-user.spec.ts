@@ -7,7 +7,7 @@
  * license. See the LICENSE file for details.
  */
 
-import { CreatableGroup, CreatableUser, isGroup, User } from '~/models';
+import { CreatableGroup, CreatableUser, groupDecoder, User } from '~/models';
 import { integrationTest, integrationTestSpecDef, TEST_BASE_API_CONTEXT } from '~/tests';
 import { NumericID } from '~/value-objects';
 import { makeCreateOneUser, makeDeleteOneUser } from '../users';
@@ -94,7 +94,7 @@ describe(
 
 					const groups = await getGroupsByUser(user.id);
 					expect(groups.length).toBe(addedGroupIDs.length);
-					expect(groups.every(isGroup)).toBeTrue();
+					expect(groups.every(group => groupDecoder.decode(group).ok)).toBeTrue();
 					expect(groups.map(g => g.id).sort()).toEqual(addedGroupIDs.sort());
 
 					// const _user = await getOneUser( user.id);

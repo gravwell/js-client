@@ -8,17 +8,14 @@
  */
 
 import { boolean, Decoder, hardcoded, inexact, nullable, string } from 'decoders';
-import { mkTypeGuard } from '../../functions/utils/type-guards';
-import { isNumericIdDecoder } from '../../value-objects';
+import { numericIdDecoder } from '../../value-objects';
 import { DATA_TYPE } from '../data-type';
 import { Group } from './group';
 
-export const isGroupDecoder: Decoder<Group> = inexact({
+export const groupDecoder: Decoder<Group> = inexact({
 	_tag: hardcoded(DATA_TYPE.GROUP),
-	id: isNumericIdDecoder,
+	id: numericIdDecoder,
 	name: string,
 	description: nullable(string),
 	isSynced: boolean,
 });
-
-export const isGroup: (v: unknown) => v is Group = mkTypeGuard(isGroupDecoder);

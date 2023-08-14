@@ -13,7 +13,7 @@ export type UpdatableScheduledTask = TaggedUpdatableScheduledQuery | TaggedUpdat
 
 export interface UpdatableScheduledQuery extends UpdatableScheduledTaskBase {
 	query?: string;
-	searchSince?: { lastRun?: boolean; secondsAgo?: number };
+	searchSince?: { lastRun?: boolean; secondsAgo: number };
 }
 
 export interface UpdatableScheduledScript extends UpdatableScheduledTaskBase {

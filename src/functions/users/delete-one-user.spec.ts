@@ -8,7 +8,7 @@
  */
 
 import { random } from 'lodash';
-import { CreatableUser, isValidUser } from '~/models';
+import { CreatableUser, userDecoder } from '~/models';
 import { integrationTest, TEST_BASE_API_CONTEXT } from '~/tests';
 import { makeCreateOneUser } from './create-one-user';
 import { makeDeleteOneUser } from './delete-one-user';
@@ -41,7 +41,7 @@ describe('deleteOneUser()', () => {
 			};
 
 			const user = await createOneUser(data);
-			expect(isValidUser(user)).toBeTrue();
+			expect(userDecoder.decode(user).ok).toBeTrue();
 
 			await deleteOneUser(user.id);
 			await expectAsync(getOneUser(user.id)).toBeRejected();

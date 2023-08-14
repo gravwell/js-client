@@ -7,7 +7,7 @@
  * license. See the LICENSE file for details.
  */
 
-import { CreatableGroup, isGroup } from '~/models';
+import { CreatableGroup, groupDecoder } from '~/models';
 import { integrationTest, integrationTestSpecDef, TEST_BASE_API_CONTEXT } from '~/tests';
 import { NumericID } from '~/value-objects';
 import { makeCreateOneGroup } from './create-one-group';
@@ -48,7 +48,7 @@ describe(
 			'Should return a group',
 			integrationTest(async () => {
 				const group = await getOneGroup(groupID);
-				expect(isGroup(group)).toBeTrue();
+				expect(groupDecoder.decode(group).ok).toBeTrue();
 			}),
 		);
 	}),

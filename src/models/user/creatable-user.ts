@@ -8,7 +8,6 @@
  */
 
 import { Decoder, object, string } from 'decoders';
-import { mkTypeGuard } from '../../functions/utils/type-guards';
 import { userRoleDecoder } from './is-valid-user';
 import { UserRole } from './user';
 
@@ -27,5 +26,3 @@ export const creatableUserDecoder: Decoder<CreatableUser> = object({
 	email: string,
 	role: userRoleDecoder,
 });
-
-export const isCreatableUser: (v: unknown) => v is CreatableUser = mkTypeGuard(creatableUserDecoder);

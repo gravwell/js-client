@@ -8,11 +8,10 @@
  */
 
 import { array, boolean, constant, Decoder, either, instanceOf, null_, number, object, string } from 'decoders';
-import { mkTypeGuard } from '../../functions/utils/type-guards';
 import { DATA_TYPE } from '../data-type';
 import { ScheduledQuery } from './scheduled-query';
 
-const scheduledQueryDecoder: Decoder<ScheduledQuery> = object({
+export const scheduledQueryDecoder: Decoder<ScheduledQuery> = object({
 	_tag: constant(DATA_TYPE.SCHEDULED_QUERY),
 
 	type: constant('query'),
@@ -51,5 +50,3 @@ const scheduledQueryDecoder: Decoder<ScheduledQuery> = object({
 	schedule: string,
 	timezone: either(null_, string),
 });
-
-export const isScheduledQuery = mkTypeGuard(scheduledQueryDecoder);
