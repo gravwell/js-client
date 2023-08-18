@@ -75,7 +75,7 @@ describe(
 					const data: UpdatableGroup = { ...test, id: createdGroup.id };
 					await updateOneGroup(data);
 					const group = await getOneGroup(data.id);
-					expect(groupDecoder.decode(group).ok).toBeTrue();
+					expect(groupDecoder.guard(group)).toBeTrue();
 					expect(group).toEqual(jasmine.objectContaining(data));
 				}
 			}),

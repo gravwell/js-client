@@ -123,7 +123,7 @@ describe(
 
 				const actualAnalystScheduledQueries = await getManyScheduledQueries({ userID: user.id });
 				expect(actualAnalystScheduledQueries.length).toBe(expectedAnalystScheduledQueryIDs.length);
-				expect(actualAnalystScheduledQueries.every(query => scheduledQueryDecoder.decode(query).ok)).toBeTrue();
+				expect(actualAnalystScheduledQueries.every(query => scheduledQueryDecoder.guard(query))).toBeTrue();
 				expect(actualAnalystScheduledQueries.map(s => s.id).sort()).toEqual(expectedAnalystScheduledQueryIDs.sort());
 			}),
 		);

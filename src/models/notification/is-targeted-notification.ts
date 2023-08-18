@@ -7,8 +7,8 @@
  * license. See the LICENSE file for details.
  */
 
-import { iso8601 } from 'decoders';
 import { isNil, isString } from 'lodash';
+import { iso8601String } from '~/functions/utils/verifiers';
 import { isNumericID, isUUID } from '~/value-objects';
 import {
 	BaseTargetedNotification,
@@ -57,9 +57,9 @@ const isBaseTargetedNotification = (value: unknown): value is BaseTargetedNotifi
 			isNumericID(userID) &&
 			(isUUID(globalID) || globalID === '0') &&
 			isString(message) &&
-			iso8601.decode(sentDate).ok &&
-			iso8601.decode(expirationDate).ok &&
-			iso8601.decode(ignoreUntilDate).ok &&
+			iso8601String.guard(sentDate) &&
+			iso8601String.guard(expirationDate) &&
+			iso8601String.guard(ignoreUntilDate) &&
 			isString(origin) &&
 			isNumericID(senderID) &&
 			(isString(link) || link === null)

@@ -91,7 +91,7 @@ describe(
 
 				const scheduledQueries = await createManyScheduledQueries(data);
 				for (const q of scheduledQueries) {
-					expect(scheduledQueryDecoder.decode(q).ok).toBeTrue();
+					expect(scheduledQueryDecoder.guard(q)).toBeTrue();
 				}
 				expect(scheduledQueries).toPartiallyEqual(data);
 			}),

@@ -7,11 +7,11 @@
  * license. See the LICENSE file for details.
  */
 
-import { Decoder, object, optional, string } from 'decoders';
+import { object, optional, string, Verifier } from '~/functions/utils/verifiers';
 
 export interface CreatableGroup {
 	name: string;
 	description?: string;
 }
 
-export const creatableGroupDecoder: Decoder<CreatableGroup> = object({ name: string, description: optional(string) });
+export const creatableGroupDecoder: Verifier<CreatableGroup> = object({ name: string, description: optional(string) });

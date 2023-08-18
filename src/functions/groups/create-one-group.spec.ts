@@ -46,7 +46,7 @@ describe(
 				};
 
 				const group = await createOneGroup(data);
-				expect(groupDecoder.decode(group).ok).toBeTrue();
+				expect(groupDecoder.guard(group)).toBeTrue();
 				expect(group).toEqual(jasmine.objectContaining(data));
 
 				const currentGroups = await getAllGroups();
@@ -63,7 +63,7 @@ describe(
 				};
 
 				const group = await createOneGroup(data);
-				expect(groupDecoder.decode(group).ok).toBeTrue();
+				expect(groupDecoder.guard(group)).toBeTrue();
 				expect(group).toEqual(jasmine.objectContaining(data));
 
 				const currentGroups = await getAllGroups();

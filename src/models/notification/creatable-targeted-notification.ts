@@ -7,7 +7,7 @@
  * license. See the LICENSE file for details.
  */
 
-import { constant, Decoder, either, object, optional, string } from 'decoders';
+import { constant, either, object, optional, string, Verifier } from '~/functions/utils/verifiers';
 
 interface CreatableBaseTargetedNotification {
 	message: string;
@@ -31,7 +31,7 @@ export interface CreatableMyselfTargetedNotification extends CreatableBaseTarget
 	targetType: 'myself';
 }
 
-export const creatableMyselfTargetedNotificationDecoder: Decoder<CreatableMyselfTargetedNotification> = object({
+export const creatableMyselfTargetedNotificationDecoder: Verifier<CreatableMyselfTargetedNotification> = object({
 	targetType: constant('myself'),
 	...creatableBaseTargetedNotificationDecoderFields,
 });
@@ -43,7 +43,7 @@ export interface CreatableGroupTargetedNotification extends CreatableBaseTargete
 	groupID: string;
 }
 
-export const creatableGroupTargetedNotificationDecoder: Decoder<CreatableGroupTargetedNotification> = object({
+export const creatableGroupTargetedNotificationDecoder: Verifier<CreatableGroupTargetedNotification> = object({
 	targetType: constant('group'),
 	groupID: string,
 	...creatableBaseTargetedNotificationDecoderFields,
@@ -56,7 +56,7 @@ export interface CreatableUserTargetedNotification extends CreatableBaseTargeted
 	userID: string;
 }
 
-export const creatableUserTargetedNotificationDecoder: Decoder<CreatableUserTargetedNotification> = object({
+export const creatableUserTargetedNotificationDecoder: Verifier<CreatableUserTargetedNotification> = object({
 	targetType: constant('user'),
 	userID: string,
 	...creatableBaseTargetedNotificationDecoderFields,
@@ -67,7 +67,7 @@ export type CreatableTargetedNotification =
 	| CreatableGroupTargetedNotification
 	| CreatableUserTargetedNotification;
 
-export const creatableTargetedNotificationDecoder: Decoder<CreatableTargetedNotification> = either(
+export const creatableTargetedNotificationDecoder: Verifier<CreatableTargetedNotification> = either(
 	creatableMyselfTargetedNotificationDecoder,
 	creatableGroupTargetedNotificationDecoder,
 	creatableUserTargetedNotificationDecoder,

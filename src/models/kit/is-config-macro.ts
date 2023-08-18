@@ -7,10 +7,10 @@
  * license. See the LICENSE file for details.
  */
 
-import { constant, Decoder, either, null_, object, string } from 'decoders';
+import { constant, either, null_, object, string, Verifier } from '~/functions/utils/verifiers';
 import { ConfigMacro } from './config-macro';
 
-export const configMacroDecoder: Decoder<ConfigMacro> = object({
+export const configMacroDecoder: Verifier<ConfigMacro> = object({
 	macroName: string,
 	description: string,
 	defaultValue: string,

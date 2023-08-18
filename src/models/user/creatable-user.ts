@@ -7,7 +7,7 @@
  * license. See the LICENSE file for details.
  */
 
-import { Decoder, object, string } from 'decoders';
+import { object, string, Verifier } from '~/functions/utils/verifiers';
 import { userRoleDecoder } from './is-valid-user';
 import { UserRole } from './user';
 
@@ -19,7 +19,7 @@ export interface CreatableUser {
 	role: UserRole;
 }
 
-export const creatableUserDecoder: Decoder<CreatableUser> = object({
+export const creatableUserDecoder: Verifier<CreatableUser> = object({
 	username: string,
 	password: string,
 	name: string,

@@ -94,7 +94,7 @@ describe(
 
 					const groups = await getGroupsByUser(user.id);
 					expect(groups.length).toBe(addedGroupIDs.length);
-					expect(groups.every(group => groupDecoder.decode(group).ok)).toBeTrue();
+					expect(groups.every(group => groupDecoder.guard(group))).toBeTrue();
 					expect(groups.map(g => g.id).sort()).toEqual(addedGroupIDs.sort());
 
 					// const _user = await getOneUser( user.id);

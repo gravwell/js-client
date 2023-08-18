@@ -73,7 +73,7 @@ describe(
 				};
 
 				const scheduledQuery = await createOneScheduledQuery(data);
-				expect(scheduledQueryDecoder.decode(scheduledQuery).ok).toBeTrue();
+				expect(scheduledQueryDecoder.guard(scheduledQuery)).toBeTrue();
 				expect(scheduledQuery).toPartiallyEqual(data);
 			}),
 		);

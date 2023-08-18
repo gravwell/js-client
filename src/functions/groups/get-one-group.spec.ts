@@ -48,7 +48,7 @@ describe(
 			'Should return a group',
 			integrationTest(async () => {
 				const group = await getOneGroup(groupID);
-				expect(groupDecoder.decode(group).ok).toBeTrue();
+				expect(groupDecoder.guard(group)).toBeTrue();
 			}),
 		);
 	}),

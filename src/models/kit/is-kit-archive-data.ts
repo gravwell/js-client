@@ -40,7 +40,7 @@ export const isKitArchiveData = (v: unknown): v is KitArchiveData => {
 			(isNil(k.scheduledSearches) || k.scheduledSearches.every(isUUID)) &&
 			(isNil(k.templates) || k.templates.every(isUUID)) &&
 			(isNil(k.flows) || k.flows.every(isNumber)) &&
-			(isNil(k.configMacros) || k.configMacros.every(macro => configMacroDecoder.decode(macro).ok))
+			(isNil(k.configMacros) || k.configMacros.every(macro => configMacroDecoder.guard(macro)))
 		);
 	} catch (e) {
 		console.error(e);

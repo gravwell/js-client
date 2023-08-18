@@ -7,8 +7,8 @@
  * license. See the LICENSE file for details.
  */
 
-import { regex } from 'decoders';
 import { isString } from 'lodash';
+import { regex } from '~/functions/utils/verifiers';
 
 export type RawID = string;
 export type ID = string;

@@ -7,13 +7,13 @@
  * license. See the LICENSE file for details.
  */
 
-import { boolean, Decoder, hardcoded, inexact, nullable, string } from 'decoders';
+import { boolean, constant, inexact, nullable, string, Verifier } from '~/functions/utils/verifiers';
 import { numericIdDecoder } from '../../value-objects';
 import { DATA_TYPE } from '../data-type';
 import { Group } from './group';
 
-export const groupDecoder: Decoder<Group> = inexact({
-	_tag: hardcoded(DATA_TYPE.GROUP),
+export const groupDecoder: Verifier<Group> = inexact({
+	_tag: constant(DATA_TYPE.GROUP),
 	id: numericIdDecoder,
 	name: string,
 	description: nullable(string),

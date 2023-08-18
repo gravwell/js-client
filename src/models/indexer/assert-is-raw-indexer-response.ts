@@ -7,12 +7,12 @@
  * license. See the LICENSE file for details.
  */
 
-import { array, Decoder, dict, object, string } from 'decoders';
+import { array, dict, object, string, Verifier } from '~/functions/utils/verifiers';
 import { RawIndexerWell, RawIndexerWellResponse } from './raw-indexer-well';
 import { RawReplicatedState, rawReplicatedStateDecoder } from './raw-replicated-state';
 import { rawWellDecoder } from './raw-well';
 
-const rawIndexerWellDecoder: Decoder<RawIndexerWellResponse> = dict<RawIndexerWell>(
+const rawIndexerWellDecoder: Verifier<RawIndexerWellResponse> = dict<RawIndexerWell>(
 	object({
 		UUID: string,
 		Wells: array(rawWellDecoder),

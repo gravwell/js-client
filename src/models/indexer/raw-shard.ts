@@ -7,7 +7,7 @@
  * license. See the LICENSE file for details.
  */
 
-import { boolean, Decoder, iso8601, number, object, optional, string } from 'decoders';
+import { boolean, iso8601String, number, object, optional, string, Verifier } from '~/functions/utils/verifiers';
 
 type ISO8601String = string;
 
@@ -25,10 +25,10 @@ export type RawShard = {
 	};
 };
 
-export const rawShardDecoder: Decoder<RawShard> = object({
+export const rawShardDecoder: Verifier<RawShard> = object({
 	Name: string,
-	Start: iso8601.transform(date => date.toISOString()),
-	End: iso8601.transform(date => date.toISOString()),
+	Start: iso8601String,
+	End: iso8601String,
 	Entries: number,
 	Size: number,
 	Cold: boolean,

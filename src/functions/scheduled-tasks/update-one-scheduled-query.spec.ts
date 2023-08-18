@@ -85,12 +85,12 @@ describe(
 				`Test ${formatedTestIndex}: Should update a scheduled query ${formatedUpdatedFields} and return itself updated`,
 				integrationTest(async () => {
 					const current = createdScheduledQuery;
-					expect(scheduledQueryDecoder.decode(current).ok).toBeTrue();
+					expect(scheduledQueryDecoder.guard(current)).toBeTrue();
 
 					const data: UpdatableScheduledQuery = { ..._data, id: current.id };
 					const updated = await updateOneScheduledQuery(data);
 
-					expect(scheduledQueryDecoder.decode(updated).ok).toBeTrue();
+					expect(scheduledQueryDecoder.guard(updated)).toBeTrue();
 					expect(updated).toPartiallyEqual(data);
 				}),
 			);

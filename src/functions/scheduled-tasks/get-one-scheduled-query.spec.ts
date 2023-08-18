@@ -48,7 +48,7 @@ describe(
 			'Returns a scheduled query',
 			integrationTest(async () => {
 				const scheduledQuery = await getOneScheduledQuery(createdScheduledQuery.id);
-				expect(scheduledQueryDecoder.decode(scheduledQuery).ok).toBeTrue();
+				expect(scheduledQueryDecoder.guard(scheduledQuery)).toBeTrue();
 				expect(scheduledQuery).toEqual(createdScheduledQuery);
 			}),
 		);

@@ -47,7 +47,7 @@ describe(
 
 				const groups = await getAllGroups();
 				expect(groups.length).toBe(2);
-				expect(groups.every(group => groupDecoder.decode(group).ok)).toBeTrue();
+				expect(groups.every(group => groupDecoder.guard(group))).toBeTrue();
 			}),
 		);
 

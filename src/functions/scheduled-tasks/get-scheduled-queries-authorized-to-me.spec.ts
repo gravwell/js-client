@@ -140,7 +140,7 @@ describe(
 				const actualAdminScheduledQueries = await getScheduledQueriesAuthorizedToMe();
 				expect(sortBy(actualAdminScheduledQueries, s => s.id)).toEqual(sortBy(adminScheduledQueries, s => s.id));
 				for (const scheduledQuery of actualAdminScheduledQueries) {
-					expect(scheduledQueryDecoder.decode(scheduledQuery).ok).toBeTrue();
+					expect(scheduledQueryDecoder.guard(scheduledQuery)).toBeTrue();
 				}
 
 				const getScheduledQueriesAuthorizedToAnalyst = makeGetScheduledQueriesAuthorizedToMe({
@@ -151,7 +151,7 @@ describe(
 				const actualAnalystScheduledQueries = await getScheduledQueriesAuthorizedToAnalyst();
 				expect(sortBy(actualAnalystScheduledQueries, s => s.id)).toEqual(sortBy(analystScheduledQueries, s => s.id));
 				for (const scheduledQuery of actualAnalystScheduledQueries) {
-					expect(scheduledQueryDecoder.decode(scheduledQuery).ok).toBeTrue();
+					expect(scheduledQueryDecoder.guard(scheduledQuery)).toBeTrue();
 				}
 
 				const allScheduledQueries = await getAllScheduledQueries();
@@ -159,7 +159,7 @@ describe(
 					sortBy([...analystScheduledQueries, ...adminScheduledQueries], s => s.id),
 				);
 				for (const scheduledQuery of allScheduledQueries) {
-					expect(scheduledQueryDecoder.decode(scheduledQuery).ok).toBeTrue();
+					expect(scheduledQueryDecoder.guard(scheduledQuery)).toBeTrue();
 				}
 			}),
 		);

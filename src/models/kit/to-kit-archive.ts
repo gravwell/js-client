@@ -32,7 +32,7 @@ export const toKitArchive = (raw: RawKitArchive, scheduledTasks: Array<Scheduled
 		.filter(script => scheduledTaskIDs.has(script.id))
 		.map(script => script.id);
 	const scheduledSearchIDs: Array<ID> = scheduledTasks
-		.filter(data => scheduledQueryDecoder.decode(data).ok)
+		.filter(data => scheduledQueryDecoder.guard(data))
 		.filter(search => scheduledTaskIDs.has(search.id))
 		.map(search => search.id);
 
