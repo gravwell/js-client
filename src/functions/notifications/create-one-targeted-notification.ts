@@ -10,7 +10,7 @@
 import {
 	CreatableTargetedNotification,
 	CreatableTargetedNotificationByTargetType,
-	creatableTargetedNotificationGuard,
+	creatableTargetedNotificationDecoder,
 	TargetedNotificationTargetType,
 	toRawCreatableTargetedNotification,
 } from '~/models';
@@ -32,7 +32,7 @@ export const makeCreateOneTargetedNotification =
 		try {
 			// There may be some trick to make {...creatable, targetType} pass as a CreatableTargetedNotification,
 			// but I couldn't make it work. Until someone figures that out, this guard will work.
-			const _creatable: CreatableTargetedNotification = creatableTargetedNotificationGuard({
+			const _creatable: CreatableTargetedNotification = creatableTargetedNotificationDecoder.verify({
 				...creatable,
 				targetType,
 			});

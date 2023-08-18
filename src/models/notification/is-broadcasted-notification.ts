@@ -8,8 +8,8 @@
  */
 
 import { isNull, isString, isUndefined } from 'lodash';
+import { iso8601String } from '~/functions/utils/verifiers';
 import { isNumericID } from '~/value-objects';
-import { isTimestamp } from '~/value-objects/date';
 import { BroadcastedNotification } from './broadcasted-notification';
 
 export const isBroadcastedNotification = (value: unknown): value is BroadcastedNotification => {
@@ -23,9 +23,9 @@ export const isBroadcastedNotification = (value: unknown): value is BroadcastedN
 			isNumericID(id) &&
 			(isNumericID(customID) || isUndefined(customID)) &&
 			isString(message) &&
-			isTimestamp(sentDate) &&
-			isTimestamp(expirationDate) &&
-			isTimestamp(ignoreUntilDate) &&
+			iso8601String.guard(sentDate) &&
+			iso8601String.guard(expirationDate) &&
+			iso8601String.guard(ignoreUntilDate) &&
 			isString(origin) &&
 			isNumericID(senderID) &&
 			(level === 'info' ||

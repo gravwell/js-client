@@ -107,7 +107,7 @@ describe(
 					description: 'D5',
 					schedule: '0 1 * * *',
 					query: 'tag=test',
-					searchSince: { lastRun: true },
+					searchSince: { lastRun: true, secondsAgo: 60 },
 				},
 			]);
 		});

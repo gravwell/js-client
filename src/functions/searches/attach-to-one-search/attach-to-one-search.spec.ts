@@ -20,8 +20,8 @@ import { integrationTestSpecDef, myCustomMatchers, sleep, TEST_BASE_API_CONTEXT 
 import { makeIngestMultiLineEntry } from '../../ingestors/ingest-multi-line-entry';
 import { makeGetAllTags } from '../../tags/get-all-tags';
 import { assertIsNotNil } from '../../utils/type-guards';
+import { expectStatsFilter, makeKeepDataRangeTest } from '../keep-data-range-test.spec';
 import { makeSubscribeToOneSearch } from '../subscribe-to-one-search';
-import { expectStatsFilter, makeKeepDataRangeTest } from '../tests/keep-data-range-test.spec';
 import { makeAttachToOneSearch } from './attach-to-one-search';
 
 interface Entry {
@@ -123,7 +123,7 @@ xdescribe(
 
 			const progressP = lastValueFrom(
 				search.progress$.pipe(
-					takeWhile(v => v < 100, true),
+					takeWhile(v => v.valueOf() < 100, true),
 					toArray(),
 				),
 			);

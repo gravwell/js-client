@@ -20,7 +20,7 @@ import { integrationTestSpecDef, myCustomMatchers, sleep, TEST_BASE_API_CONTEXT 
 import { makeIngestMultiLineEntry } from '../../ingestors/ingest-multi-line-entry';
 import { makeGetAllTags } from '../../tags/get-all-tags';
 import { assertIsNotNil } from '../../utils/type-guards';
-import { makeKeepDataRangeTest } from '../tests/keep-data-range-test.spec';
+import { makeKeepDataRangeTest } from '../keep-data-range-test.spec';
 import { makeSubscribeToOneExplorerSearch } from './subscribe-to-one-explorer-search';
 
 interface Entry {

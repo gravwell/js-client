@@ -7,27 +7,24 @@
  * license. See the LICENSE file for details.
  */
 
-import { array, boolean, constant, date, Decoder, hardcoded, inexact, nullable, string } from 'decoders';
-import { either } from 'decoders/either';
-import { mkTypeGuard } from '../../functions/utils/type-guards';
-import { isNumericIdDecoder } from '../../value-objects';
+import { date, Decoder, inexact, nullable as nullableDecoder } from 'decoders';
+import { array, boolean, constant, either, nullable, string } from '~/functions/utils/verifiers';
+import { numericIdDecoder } from '../../value-objects';
 import { DATA_TYPE } from '../data-type';
 import { User } from './user';
 
 export const userRoleDecoder = either(constant('admin'), constant('analyst'));
 
-export const isUserDecoder: Decoder<User> = inexact({
-	_tag: hardcoded(DATA_TYPE.USER),
-	id: isNumericIdDecoder,
-	groupIDs: array(isNumericIdDecoder),
+export const userDecoder: Decoder<User> = inexact({
+	_tag: constant(DATA_TYPE.USER),
+	id: numericIdDecoder,
+	groupIDs: array(numericIdDecoder),
 	username: string,
 	name: string,
 	email: string,
 	role: userRoleDecoder,
 	isLocked: boolean,
-	lastActivityDate: nullable(date),
+	lastActivityDate: nullableDecoder(date),
 	searchGroupID: nullable(string),
 	synced: boolean,
 });
-
-export const isValidUser: (v: unknown) => v is User = mkTypeGuard(isUserDecoder);

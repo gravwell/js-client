@@ -52,7 +52,7 @@ describe(
 						schedule: '0 0 * * *',
 
 						query: 'tag=custom-test',
-						searchSince: { lastRun: true },
+						searchSince: { lastRun: true, secondsAgo: 60 },
 					},
 				]);
 
