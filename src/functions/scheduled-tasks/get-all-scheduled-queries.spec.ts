@@ -45,6 +45,8 @@ describe(
 
 						query: 'tag=netflow',
 						searchSince: { secondsAgo: 60 * 60 },
+						timeframeOffset: { days: 0, hours: 0, minutes: 0, seconds: 0 },
+						backfillEnabled: true,
 					},
 					{
 						name: 'Q2',
@@ -53,6 +55,8 @@ describe(
 
 						query: 'tag=custom-test',
 						searchSince: { lastRun: true, secondsAgo: 60 },
+						timeframeOffset: { days: 0, hours: 0, minutes: 0, seconds: 0 },
+						backfillEnabled: true,
 					},
 				]);
 

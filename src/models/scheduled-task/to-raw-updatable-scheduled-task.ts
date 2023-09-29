@@ -8,6 +8,7 @@
  */
 
 import { isUndefined } from 'lodash';
+import { durationToSeconds } from '~/models/scheduled-task/to-raw-creatable-scheduled-task';
 import { toRawNumericID } from '~/value-objects';
 import { RawUpdatableScheduledTask } from './raw-updatable-scheduled-task';
 import { ScheduledQuery } from './scheduled-query';
@@ -52,6 +53,9 @@ export const toRawUpdatableScheduledTask = (
 
 				Script: '',
 				DebugMode: false,
+
+				TimeframeOffset: Math.abs(durationToSeconds(_updatable.timeframeOffset ?? _current.timeframeOffset)) * -1,
+				BackfillEnabled: _updatable.backfillEnabled ?? _current.backfillEnabled,
 			};
 		}
 		case 'script': {

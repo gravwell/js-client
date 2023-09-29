@@ -12,9 +12,18 @@ import { ScheduledTaskBase } from './scheduled-task-base';
 export interface ScheduledQueryData extends ScheduledTaskBase {
 	type: 'query';
 	query: string;
+	timeframeOffset: ScheduledQueryDuration;
+	backfillEnabled: boolean;
 	searchSince: {
 		lastRun: boolean;
 		/** Always negative and in seconds */
 		secondsAgo: number; // It's the same as `raw.Duration`
 	};
 }
+
+export type ScheduledQueryDuration = {
+	days: number;
+	hours: number;
+	minutes: number;
+	seconds: number;
+};

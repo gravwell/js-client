@@ -55,6 +55,8 @@ describe(
 					schedule: '0 1 * * *',
 					query: 'tag=netflow',
 					searchSince: { secondsAgo: 60 * 60 },
+					timeframeOffset: { days: 0, hours: 0, minutes: 0, seconds: 0 },
+					backfillEnabled: true,
 				},
 				{
 					name: 'Q2',
@@ -62,6 +64,8 @@ describe(
 					schedule: '0 1 * * *',
 					query: 'tag=default',
 					searchSince: { lastRun: true, secondsAgo: 90 },
+					timeframeOffset: { days: 0, hours: 0, minutes: 0, seconds: 0 },
+					backfillEnabled: true,
 				},
 			]);
 
@@ -90,6 +94,8 @@ describe(
 					schedule: '0 1 * * *',
 					query: 'tag=netflow',
 					searchSince: { secondsAgo: 60 * 60 },
+					timeframeOffset: { days: 0, hours: 0, minutes: 0, seconds: 0 },
+					backfillEnabled: true,
 				},
 				{
 					name: 'Q4',
@@ -97,6 +103,8 @@ describe(
 					schedule: '0 1 * * *',
 					query: 'tag=default',
 					searchSince: { lastRun: true, secondsAgo: 90 },
+					timeframeOffset: { days: 0, hours: 0, minutes: 0, seconds: 0 },
+					backfillEnabled: true,
 				},
 				{
 					name: 'Q5',
@@ -104,6 +112,8 @@ describe(
 					schedule: '0 1 * * *',
 					query: 'tag=test',
 					searchSince: { lastRun: true, secondsAgo: 60 },
+					timeframeOffset: { days: 0, hours: 0, minutes: 0, seconds: 0 },
+					backfillEnabled: true,
 				},
 			]);
 		});

@@ -7,6 +7,7 @@
  * license. See the LICENSE file for details.
  */
 
+import { ScheduledQueryDuration } from '~/models/scheduled-task/scheduled-query-data';
 import { UpdatableScheduledTaskBase } from './updatable-scheduled-task-base';
 
 export type UpdatableScheduledTask = TaggedUpdatableScheduledQuery | TaggedUpdatableScheduledScript;
@@ -14,6 +15,8 @@ export type UpdatableScheduledTask = TaggedUpdatableScheduledQuery | TaggedUpdat
 export interface UpdatableScheduledQuery extends UpdatableScheduledTaskBase {
 	query?: string;
 	searchSince?: { lastRun?: boolean; secondsAgo: number };
+	timeframeOffset?: ScheduledQueryDuration;
+	backfillEnabled?: boolean;
 }
 
 export interface UpdatableScheduledScript extends UpdatableScheduledTaskBase {

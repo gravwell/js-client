@@ -36,3 +36,8 @@ export interface ScheduledTaskBase {
 	schedule: string;
 	timezone: string | null;
 }
+
+export type ScheduledTaskBaseEditable = Omit<
+	ScheduledTaskBase,
+	'id' | 'globalID' | 'userID' | 'lastUpdateDate' | 'lastRun' | 'lastSearchIDs' | 'lastError'
+>;

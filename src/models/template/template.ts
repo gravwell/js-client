@@ -7,6 +7,7 @@
  * license. See the LICENSE file for details.
  */
 
+import { boolean, Decoder, either, null_, object, optional, string } from 'decoders';
 import { DATA_TYPE } from '../data-type';
 import { TemplateData } from './template-data';
 
@@ -22,3 +23,12 @@ export type TemplateVariable = {
 	defaultValue?: string;
 	previewValue?: string | null;
 };
+
+export const templateVariableDecoder: Decoder<TemplateVariable> = object({
+	name: string,
+	label: string,
+	description: optional(string),
+	required: optional(boolean),
+	defaultValue: optional(string),
+	previewValue: optional(either(string, null_)),
+});
