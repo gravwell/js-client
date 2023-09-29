@@ -86,4 +86,8 @@ export interface RawScheduledTask {
 	 * docs don't mention what it does.
 	 */
 	PersistentMaps: object;
+
+	// NOTE: Required for scheduled searches. Not applicable to scripts.
+	TimeframeOffset?: number;
+	BackfillEnabled?: boolean;
 }

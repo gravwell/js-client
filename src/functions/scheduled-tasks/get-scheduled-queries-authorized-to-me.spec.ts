@@ -8,7 +8,7 @@
  */
 
 import { random, sortBy } from 'lodash';
-import { CreatableUser, isScheduledQuery, ScheduledQuery, User } from '~/models';
+import { CreatableUser, ScheduledQuery, scheduledQueryDecoder, User } from '~/models';
 import { integrationTest, integrationTestSpecDef, TEST_BASE_API_CONTEXT } from '~/tests';
 import { makeLoginOneUser } from '../auth/login-one-user';
 import { makeCreateOneUser, makeDeleteOneUser, makeGetAllUsers, makeGetMyUser } from '../users';
@@ -81,6 +81,8 @@ describe(
 					schedule: '0 1 * * *',
 					query: 'tag=netflow',
 					searchSince: { secondsAgo: 60 * 60 },
+					timeframeOffset: { days: 0, hours: 0, minutes: 0, seconds: 0 },
+					backfillEnabled: true,
 				},
 				{
 					name: 'Q2',
@@ -88,6 +90,8 @@ describe(
 					schedule: '0 1 * * *',
 					query: 'tag=default',
 					searchSince: { lastRun: true, secondsAgo: 90 },
+					timeframeOffset: { days: 0, hours: 0, minutes: 0, seconds: 0 },
+					backfillEnabled: true,
 				},
 			]);
 
@@ -116,6 +120,8 @@ describe(
 					schedule: '0 1 * * *',
 					query: 'tag=netflow',
 					searchSince: { secondsAgo: 60 * 60 },
+					timeframeOffset: { days: 0, hours: 0, minutes: 0, seconds: 0 },
+					backfillEnabled: true,
 				},
 				{
 					name: 'Q4',
@@ -123,13 +129,17 @@ describe(
 					schedule: '0 1 * * *',
 					query: 'tag=default',
 					searchSince: { lastRun: true, secondsAgo: 90 },
+					timeframeOffset: { days: 0, hours: 0, minutes: 0, seconds: 0 },
+					backfillEnabled: true,
 				},
 				{
 					name: 'Q5',
 					description: 'D5',
 					schedule: '0 1 * * *',
 					query: 'tag=test',
-					searchSince: { lastRun: true },
+					searchSince: { lastRun: true, secondsAgo: 90 },
+					timeframeOffset: { days: 0, hours: 0, minutes: 0, seconds: 0 },
+					backfillEnabled: true,
 				},
 			]);
 		});
@@ -140,7 +150,7 @@ describe(
 				const actualAdminScheduledQueries = await getScheduledQueriesAuthorizedToMe();
 				expect(sortBy(actualAdminScheduledQueries, s => s.id)).toEqual(sortBy(adminScheduledQueries, s => s.id));
 				for (const scheduledQuery of actualAdminScheduledQueries) {
-					expect(isScheduledQuery(scheduledQuery)).toBeTrue();
+					expect(scheduledQueryDecoder.guard(scheduledQuery)).toBeTrue();
 				}
 
 				const getScheduledQueriesAuthorizedToAnalyst = makeGetScheduledQueriesAuthorizedToMe({
@@ -151,7 +161,7 @@ describe(
 				const actualAnalystScheduledQueries = await getScheduledQueriesAuthorizedToAnalyst();
 				expect(sortBy(actualAnalystScheduledQueries, s => s.id)).toEqual(sortBy(analystScheduledQueries, s => s.id));
 				for (const scheduledQuery of actualAnalystScheduledQueries) {
-					expect(isScheduledQuery(scheduledQuery)).toBeTrue();
+					expect(scheduledQueryDecoder.guard(scheduledQuery)).toBeTrue();
 				}
 
 				const allScheduledQueries = await getAllScheduledQueries();
@@ -159,7 +169,7 @@ describe(
 					sortBy([...analystScheduledQueries, ...adminScheduledQueries], s => s.id),
 				);
 				for (const scheduledQuery of allScheduledQueries) {
-					expect(isScheduledQuery(scheduledQuery)).toBeTrue();
+					expect(scheduledQueryDecoder.guard(scheduledQuery)).toBeTrue();
 				}
 			}),
 		);

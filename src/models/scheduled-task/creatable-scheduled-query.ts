@@ -7,9 +7,12 @@
  * license. See the LICENSE file for details.
  */
 
+import { ScheduledQueryDuration } from '~/models/scheduled-task/scheduled-query-data';
 import { CreatableScheduledTaskBase } from './creatable-scheduled-task-base';
 
 export interface CreatableScheduledQuery extends CreatableScheduledTaskBase {
 	query: string;
-	searchSince: { lastRun: true; secondsAgo?: number } | { lastRun?: false; secondsAgo: number };
+	searchSince: { lastRun?: boolean; secondsAgo: number };
+	timeframeOffset: ScheduledQueryDuration;
+	backfillEnabled: boolean;
 }

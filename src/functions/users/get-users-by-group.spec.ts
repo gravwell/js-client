@@ -8,7 +8,7 @@
  */
 
 import { random } from 'lodash';
-import { CreatableGroup, CreatableUser, isValidUser } from '~/models';
+import { CreatableGroup, CreatableUser, userDecoder } from '~/models';
 import { integrationTest, integrationTestSpecDef, TEST_BASE_API_CONTEXT } from '~/tests';
 import { NumericID } from '~/value-objects';
 import { makeAddOneUserToManyGroups, makeCreateOneGroup, makeDeleteOneGroup, makeGetAllGroups } from '../groups';
@@ -99,7 +99,7 @@ describe(
 
 					const users = await getUsersByGroup(groupID);
 					expect(users.length).toBe(addedUserIDs.length);
-					expect(users.every(isValidUser)).toBeTrue();
+					expect(users.every(user => userDecoder.decode(user).ok)).toBeTrue();
 					expect(users.map(u => u.id).sort()).toEqual(addedUserIDs.sort());
 				}
 			}),

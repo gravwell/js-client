@@ -7,7 +7,7 @@
  * license. See the LICENSE file for details.
  */
 
-import { isValidUser } from '~/models';
+import { userDecoder } from '~/models';
 import { integrationTest, TEST_BASE_API_CONTEXT } from '~/tests';
 import { makeGetOneUser } from './get-one-user';
 
@@ -21,7 +21,7 @@ describe('getOneUser()', () => {
 		'Should return a user',
 		integrationTest(async () => {
 			const user = await getOneUser('1');
-			expect(isValidUser(user)).toBeTrue();
+			expect(userDecoder.decode(user).ok).toBeTrue();
 		}),
 	);
 });

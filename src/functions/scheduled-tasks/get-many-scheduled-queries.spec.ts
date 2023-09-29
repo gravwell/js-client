@@ -8,7 +8,7 @@
  */
 
 import { random } from 'lodash';
-import { CreatableUser, isScheduledQuery, User } from '~/models';
+import { CreatableUser, scheduledQueryDecoder, User } from '~/models';
 import { integrationTest, integrationTestSpecDef, TEST_BASE_API_CONTEXT } from '~/tests';
 import { makeLoginOneUser } from '../auth/login-one-user';
 import { makeCreateOneUser } from '../users';
@@ -59,6 +59,8 @@ describe(
 					schedule: '0 1 * * *',
 					query: 'tag=netflow',
 					searchSince: { secondsAgo: 60 * 60 },
+					timeframeOffset: { days: 0, hours: 0, minutes: 0, seconds: 0 },
+					backfillEnabled: true,
 				},
 				{
 					name: 'Q2',
@@ -66,6 +68,8 @@ describe(
 					schedule: '0 1 * * *',
 					query: 'tag=default',
 					searchSince: { lastRun: true, secondsAgo: 90 },
+					timeframeOffset: { days: 0, hours: 0, minutes: 0, seconds: 0 },
+					backfillEnabled: true,
 				},
 			]);
 
@@ -94,6 +98,8 @@ describe(
 					schedule: '0 1 * * *',
 					query: 'tag=netflow',
 					searchSince: { secondsAgo: 60 * 60 },
+					timeframeOffset: { days: 0, hours: 0, minutes: 0, seconds: 0 },
+					backfillEnabled: true,
 				},
 				{
 					name: 'Q4',
@@ -101,13 +107,17 @@ describe(
 					schedule: '0 1 * * *',
 					query: 'tag=default',
 					searchSince: { lastRun: true, secondsAgo: 90 },
+					timeframeOffset: { days: 0, hours: 0, minutes: 0, seconds: 0 },
+					backfillEnabled: true,
 				},
 				{
 					name: 'Q5',
 					description: 'D5',
 					schedule: '0 1 * * *',
 					query: 'tag=test',
-					searchSince: { lastRun: true },
+					searchSince: { lastRun: true, secondsAgo: 60 },
+					timeframeOffset: { days: 0, hours: 0, minutes: 0, seconds: 0 },
+					backfillEnabled: true,
 				},
 			]);
 		});
@@ -123,7 +133,7 @@ describe(
 
 				const actualAnalystScheduledQueries = await getManyScheduledQueries({ userID: user.id });
 				expect(actualAnalystScheduledQueries.length).toBe(expectedAnalystScheduledQueryIDs.length);
-				expect(actualAnalystScheduledQueries.every(isScheduledQuery)).toBeTrue();
+				expect(actualAnalystScheduledQueries.every(query => scheduledQueryDecoder.guard(query))).toBeTrue();
 				expect(actualAnalystScheduledQueries.map(s => s.id).sort()).toEqual(expectedAnalystScheduledQueryIDs.sort());
 			}),
 		);

@@ -7,7 +7,7 @@
  * license. See the LICENSE file for details.
  */
 
-import { CreatableGroup, Group, isGroup, UpdatableGroup } from '~/models';
+import { CreatableGroup, Group, groupDecoder, UpdatableGroup } from '~/models';
 import { integrationTest, integrationTestSpecDef, TEST_BASE_API_CONTEXT } from '~/tests';
 import { makeCreateOneGroup } from './create-one-group';
 import { makeDeleteOneGroup } from './delete-one-group';
@@ -75,7 +75,7 @@ describe(
 					const data: UpdatableGroup = { ...test, id: createdGroup.id };
 					await updateOneGroup(data);
 					const group = await getOneGroup(data.id);
-					expect(isGroup(group)).toBeTrue();
+					expect(groupDecoder.guard(group)).toBeTrue();
 					expect(group).toEqual(jasmine.objectContaining(data));
 				}
 			}),

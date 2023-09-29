@@ -8,8 +8,8 @@
  */
 
 import { isNil, isString } from 'lodash';
+import { iso8601String } from '~/functions/utils/verifiers';
 import { isNumericID, isUUID } from '~/value-objects';
-import { isTimestamp } from '~/value-objects/date';
 import {
 	BaseTargetedNotification,
 	GroupTargetedNotification,
@@ -57,9 +57,9 @@ const isBaseTargetedNotification = (value: unknown): value is BaseTargetedNotifi
 			isNumericID(userID) &&
 			(isUUID(globalID) || globalID === '0') &&
 			isString(message) &&
-			isTimestamp(sentDate) &&
-			isTimestamp(expirationDate) &&
-			isTimestamp(ignoreUntilDate) &&
+			iso8601String.guard(sentDate) &&
+			iso8601String.guard(expirationDate) &&
+			iso8601String.guard(ignoreUntilDate) &&
 			isString(origin) &&
 			isNumericID(senderID) &&
 			(isString(link) || link === null)

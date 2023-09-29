@@ -33,4 +33,8 @@ export interface RawCreatableScheduledTask {
 	Script?: string; // empty string is null
 	DebugMode: boolean;
 	// *END - Script search properties
+
+	// NOTE: Required for scheduled searches. Not applicable to scripts.
+	TimeframeOffset?: number;
+	BackfillEnabled?: boolean;
 }

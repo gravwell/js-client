@@ -7,7 +7,7 @@
  * license. See the LICENSE file for details.
  */
 
-import { array, Decoder, object, optional, string } from 'decoders';
+import { array, object, optional, string, Verifier } from '~/functions/utils/verifiers';
 import { RawShard, rawShardDecoder } from './raw-shard';
 
 export type RawWell = {
@@ -19,7 +19,7 @@ export type RawWell = {
 	Shards: Array<RawShard>;
 };
 
-export const rawWellDecoder: Decoder<RawWell> = object({
+export const rawWellDecoder: Verifier<RawWell> = object({
 	Name: string,
 	Accelerator: optional(string),
 	Engine: optional(string),

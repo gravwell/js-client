@@ -10,22 +10,19 @@
 import {
 	array,
 	boolean,
-	date,
-	Decoder,
 	dict,
 	either,
-	either3,
-	hardcoded,
+	instanceOf,
 	null_,
 	number,
 	object,
 	string,
-} from 'decoders';
-import { mkTypeGuard } from '../../functions/utils/type-guards';
+	Verifier,
+} from '~/functions/utils/verifiers';
 import { RawTimeframe } from '../timeframe';
 import { SearchDetails } from './search-details';
 
-export const rawTimeFrameDecoder: Decoder<RawTimeframe> = object({
+export const rawTimeFrameDecoder: Verifier<RawTimeframe> = object({
 	durationString: either(string, null_),
 	timeframe: either(string, null_),
 	timezone: either(string, null_),
@@ -33,16 +30,20 @@ export const rawTimeFrameDecoder: Decoder<RawTimeframe> = object({
 	end: either(string, null_),
 });
 
-const searchDetailsDecoder: Decoder<SearchDetails> = object({
+/**
+ * searchDetailsVerifier is useful for verifying that a value is a
+ * SearchDetails. No transforms or conversions are performed.
+ */
+export const searchDetailsVerifier: Verifier<SearchDetails> = object({
 	userID: string,
 	groupID: either(string, null_),
 	userQuery: string,
 	id: string,
 	effectiveQuery: string,
-	launchDate: date,
+	launchDate: instanceOf(Date),
 	descending: boolean,
-	started: date,
-	lastUpdate: date,
+	started: instanceOf(Date),
+	lastUpdate: instanceOf(Date),
 	storeSize: number,
 	indexSize: number,
 	itemCount: number,
@@ -54,22 +55,20 @@ const searchDetailsDecoder: Decoder<SearchDetails> = object({
 	duration: string,
 	tags: array(string),
 	range: object({
-		start: date,
-		end: date,
+		start: instanceOf(Date),
+		end: instanceOf(Date),
 	}),
-	timeframe: either3<RawTimeframe, null, string>(dict(rawTimeFrameDecoder), null_, string),
+	timeframe: either(dict(rawTimeFrameDecoder), null_, string),
 	timeframeUserLabel: null_,
 	isLive: boolean,
 	name: either(string, null_),
 	notes: either(string, null_),
-	renderDownloadFormats: hardcoded(['json', 'text', 'csv', 'archive']),
+	renderDownloadFormats: array(string),
 
 	import: object({
 		batchInfo: string,
 		batchName: string,
 		imported: boolean,
-		time: date,
+		time: instanceOf(Date),
 	}),
 });
-
-export const isSearchDetails: (v: unknown) => v is SearchDetails = mkTypeGuard(searchDetailsDecoder);

@@ -7,7 +7,7 @@
  * license. See the LICENSE file for details.
  */
 
-import { isValidUser } from '~/models';
+import { userDecoder } from '~/models';
 import { integrationTest, TEST_BASE_API_CONTEXT } from '~/tests';
 import { makeGetAllUsers } from './get-all-users';
 
@@ -21,7 +21,7 @@ describe('getAllUsers()', () => {
 		'Should return users',
 		integrationTest(async () => {
 			const users = await getAllUsers();
-			expect(users.every(isValidUser)).toBeTrue();
+			expect(users.every(user => userDecoder.decode(user).ok)).toBeTrue();
 		}),
 	);
 });

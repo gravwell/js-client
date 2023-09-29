@@ -7,30 +7,7 @@
  * license. See the LICENSE file for details.
  */
 
-import { Decoder, dict, guard, number } from 'decoders';
 import { isNil } from 'lodash';
-
-/**
- * Given a Decoder<T>, returns a type guard that returns true if value v is of
- * type T
- */
-export const mkTypeGuard = <T>(d: Decoder<T>): ((v: unknown) => v is T) => {
-	const g = guard(d);
-	return (v: unknown): v is T => {
-		try {
-			g(v);
-			return true;
-		} catch {
-			return false;
-		}
-	};
-};
-
-/**
- * A type guard that returns true if the input parameter is a {[key: string]:
- * number}
- */
-export const isDictOfNumber = mkTypeGuard(dict(number));
 
 export const assertIsNotNil: <T>(value: T) => asserts value is Exclude<T, null | undefined> = value => {
 	if (isNil(value)) {

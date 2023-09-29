@@ -7,7 +7,7 @@
  * license. See the LICENSE file for details.
  */
 
-import { CreatableScheduledQuery, isScheduledQuery } from '~/models';
+import { CreatableScheduledQuery, scheduledQueryDecoder } from '~/models';
 import { integrationTest, integrationTestSpecDef, myCustomMatchers, TEST_BASE_API_CONTEXT } from '~/tests';
 import { NumericID } from '~/value-objects';
 import { makeCreateOneGroup } from '../groups/create-one-group';
@@ -71,6 +71,9 @@ describe(
 
 						oneShot: true,
 						isDisabled: true,
+
+						timeframeOffset: { days: 0, hours: 0, minutes: 0, seconds: 0 },
+						backfillEnabled: false,
 					},
 					{
 						groupIDs,
@@ -86,12 +89,15 @@ describe(
 
 						oneShot: false,
 						isDisabled: false,
+
+						timeframeOffset: { days: 0, hours: 0, minutes: 0, seconds: 0 },
+						backfillEnabled: false,
 					},
 				];
 
 				const scheduledQueries = await createManyScheduledQueries(data);
 				for (const q of scheduledQueries) {
-					expect(isScheduledQuery(q)).toBeTrue();
+					expect(scheduledQueryDecoder.guard(q)).toBeTrue();
 				}
 				expect(scheduledQueries).toPartiallyEqual(data);
 			}),

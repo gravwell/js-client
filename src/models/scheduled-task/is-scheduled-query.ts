@@ -7,12 +7,22 @@
  * license. See the LICENSE file for details.
  */
 
-import { array, boolean, constant, Decoder, either, instanceOf, null_, number, object, string } from 'decoders';
-import { mkTypeGuard } from '../../functions/utils/type-guards';
+import {
+	array,
+	boolean,
+	constant,
+	either,
+	instanceOf,
+	null_,
+	number,
+	object,
+	string,
+	Verifier,
+} from '~/functions/utils/verifiers';
 import { DATA_TYPE } from '../data-type';
 import { ScheduledQuery } from './scheduled-query';
 
-const scheduledQueryDecoder: Decoder<ScheduledQuery> = object({
+export const scheduledQueryDecoder: Verifier<ScheduledQuery> = object({
 	_tag: constant(DATA_TYPE.SCHEDULED_QUERY),
 
 	type: constant('query'),
@@ -50,6 +60,13 @@ const scheduledQueryDecoder: Decoder<ScheduledQuery> = object({
 
 	schedule: string,
 	timezone: either(null_, string),
-});
 
-export const isScheduledQuery = mkTypeGuard(scheduledQueryDecoder);
+	timeframeOffset: object({
+		days: number,
+		hours: number,
+		minutes: number,
+		seconds: number,
+	}),
+
+	backfillEnabled: boolean,
+});

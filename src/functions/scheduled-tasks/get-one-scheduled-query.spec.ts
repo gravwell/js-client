@@ -7,7 +7,7 @@
  * license. See the LICENSE file for details.
  */
 
-import { isScheduledQuery, ScheduledQuery } from '~/models';
+import { ScheduledQuery, scheduledQueryDecoder } from '~/models';
 import { integrationTest, integrationTestSpecDef, TEST_BASE_API_CONTEXT } from '~/tests';
 import { makeCreateOneScheduledQuery } from './create-one-scheduled-query';
 import { makeDeleteAllScheduledQueries } from './delete-all-scheduled-queries';
@@ -41,6 +41,8 @@ describe(
 				schedule: '0 1 * * *',
 				query: 'tag=netflow',
 				searchSince: { secondsAgo: 60 * 60 },
+				timeframeOffset: { days: 0, hours: 0, minutes: 0, seconds: 0 },
+				backfillEnabled: true,
 			});
 		});
 
@@ -48,7 +50,7 @@ describe(
 			'Returns a scheduled query',
 			integrationTest(async () => {
 				const scheduledQuery = await getOneScheduledQuery(createdScheduledQuery.id);
-				expect(isScheduledQuery(scheduledQuery)).toBeTrue();
+				expect(scheduledQueryDecoder.guard(scheduledQuery)).toBeTrue();
 				expect(scheduledQuery).toEqual(createdScheduledQuery);
 			}),
 		);

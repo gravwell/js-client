@@ -7,7 +7,7 @@
  * license. See the LICENSE file for details.
  */
 
-import { isScheduledQuery, ScheduledQuery, UpdatableScheduledQuery } from '~/models';
+import { ScheduledQuery, scheduledQueryDecoder, UpdatableScheduledQuery } from '~/models';
 import { integrationTest, integrationTestSpecDef, myCustomMatchers, TEST_BASE_API_CONTEXT } from '~/tests';
 import { makeCreateOneScheduledQuery } from './create-one-scheduled-query';
 import { makeDeleteAllScheduledQueries } from './delete-all-scheduled-queries';
@@ -42,6 +42,8 @@ describe(
 
 				query: 'tag=netflow',
 				searchSince: { secondsAgo: 60 * 60 },
+				timeframeOffset: { days: 0, hours: 0, minutes: 0, seconds: 0 },
+				backfillEnabled: true,
 			});
 		});
 
@@ -71,9 +73,8 @@ describe(
 
 			{ query: 'tag=custom' },
 
-			{ searchSince: { lastRun: true } },
-			{ searchSince: { lastRun: false } },
-			{ searchSince: { secondsAgo: 0 } },
+			{ searchSince: { lastRun: true, secondsAgo: 60 } },
+			{ searchSince: { lastRun: false, secondsAgo: 60 } },
 			{ searchSince: { secondsAgo: 60 } },
 			{ searchSince: { lastRun: true, secondsAgo: 15 } },
 		];
@@ -86,12 +87,12 @@ describe(
 				`Test ${formatedTestIndex}: Should update a scheduled query ${formatedUpdatedFields} and return itself updated`,
 				integrationTest(async () => {
 					const current = createdScheduledQuery;
-					expect(isScheduledQuery(current)).toBeTrue();
+					expect(scheduledQueryDecoder.guard(current)).toBeTrue();
 
 					const data: UpdatableScheduledQuery = { ..._data, id: current.id };
 					const updated = await updateOneScheduledQuery(data);
 
-					expect(isScheduledQuery(updated)).toBeTrue();
+					expect(scheduledQueryDecoder.guard(updated)).toBeTrue();
 					expect(updated).toPartiallyEqual(data);
 				}),
 			);
