@@ -1,27 +1,27 @@
 {
-	"id": 6975,
+	"id": 6999,
 	"name": "gravwell",
 	"kind": 1,
 	"flags": {},
 	"originalName": "",
 	"children": [
 		{
-			"id": 6976,
+			"id": 7000,
 			"name": "config",
 			"kind": 2,
 			"kindString": "Module",
 			"flags": {},
 			"children": [
 				{
-					"id": 7039,
+					"id": 7063,
 					"name": "TEST_ASSETS_PATH",
 					"kind": 16777216,
 					"kindString": "Reference",
 					"flags": {},
-					"target": 7013
+					"target": 7037
 				},
 				{
-					"id": 6979,
+					"id": 7003,
 					"name": "TestType",
 					"kind": 4194304,
 					"kindString": "Type alias",
@@ -48,7 +48,7 @@
 					}
 				},
 				{
-					"id": 6980,
+					"id": 7004,
 					"name": "TEST_TYPES",
 					"kind": 32,
 					"kindString": "Variable",
@@ -66,14 +66,14 @@
 						"type": "array",
 						"elementType": {
 							"type": "reference",
-							"id": 6979,
+							"id": 7003,
 							"name": "TestType"
 						}
 					},
 					"defaultValue": "..."
 				},
 				{
-					"id": 6977,
+					"id": 7001,
 					"name": "TEST_BASE_API_CONTEXT",
 					"kind": 64,
 					"kindString": "Function",
@@ -87,7 +87,7 @@
 					],
 					"signatures": [
 						{
-							"id": 6978,
+							"id": 7002,
 							"name": "TEST_BASE_API_CONTEXT",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -113,28 +113,28 @@
 					"title": "References",
 					"kind": 16777216,
 					"children": [
-						7039
+						7063
 					]
 				},
 				{
 					"title": "Type Aliases",
 					"kind": 4194304,
 					"children": [
-						6979
+						7003
 					]
 				},
 				{
 					"title": "Variables",
 					"kind": 32,
 					"children": [
-						6980
+						7004
 					]
 				},
 				{
 					"title": "Functions",
 					"kind": 64,
 					"children": [
-						6977
+						7001
 					]
 				}
 			],
@@ -147,14 +147,14 @@
 			]
 		},
 		{
-			"id": 6981,
+			"id": 7005,
 			"name": "custom-matchers",
 			"kind": 2,
 			"kindString": "Module",
 			"flags": {},
 			"children": [
 				{
-					"id": 6982,
+					"id": 7006,
 					"name": "myCustomMatchers",
 					"kind": 32,
 					"kindString": "Variable",
@@ -182,7 +182,7 @@
 					"title": "Variables",
 					"kind": 32,
 					"children": [
-						6982
+						7006
 					]
 				}
 			],
@@ -195,14 +195,14 @@
 			]
 		},
 		{
-			"id": 6987,
+			"id": 7011,
 			"name": "get-env-var",
 			"kind": 2,
 			"kindString": "Module",
 			"flags": {},
 			"children": [
 				{
-					"id": 6988,
+					"id": 7012,
 					"name": "getEnvVar",
 					"kind": 64,
 					"kindString": "Function",
@@ -216,7 +216,7 @@
 					],
 					"signatures": [
 						{
-							"id": 6989,
+							"id": 7013,
 							"name": "getEnvVar",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -227,7 +227,7 @@
 							},
 							"parameters": [
 								{
-									"id": 6990,
+									"id": 7014,
 									"name": "key",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -260,7 +260,7 @@
 					"title": "Functions",
 					"kind": 64,
 					"children": [
-						6988
+						7012
 					]
 				}
 			],
@@ -273,14 +273,14 @@
 			]
 		},
 		{
-			"id": 6983,
+			"id": 7007,
 			"name": "get-env-var.node",
 			"kind": 2,
 			"kindString": "Module",
 			"flags": {},
 			"children": [
 				{
-					"id": 6984,
+					"id": 7008,
 					"name": "getEnvVar",
 					"kind": 64,
 					"kindString": "Function",
@@ -294,14 +294,14 @@
 					],
 					"signatures": [
 						{
-							"id": 6985,
+							"id": 7009,
 							"name": "getEnvVar",
 							"kind": 4096,
 							"kindString": "Call signature",
 							"flags": {},
 							"parameters": [
 								{
-									"id": 6986,
+									"id": 7010,
 									"name": "key",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -334,7 +334,7 @@
 					"title": "Functions",
 					"kind": 64,
 					"children": [
-						6984
+						7008
 					]
 				}
 			],
@@ -347,14 +347,14 @@
 			]
 		},
 		{
-			"id": 7001,
+			"id": 7025,
 			"name": "get-runner-settings",
 			"kind": 2,
 			"kindString": "Module",
 			"flags": {},
 			"children": [
 				{
-					"id": 7007,
+					"id": 7031,
 					"name": "getTestContext",
 					"kind": 64,
 					"kindString": "Function",
@@ -368,7 +368,7 @@
 					],
 					"signatures": [
 						{
-							"id": 7008,
+							"id": 7032,
 							"name": "getTestContext",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -389,7 +389,7 @@
 					]
 				},
 				{
-					"id": 7002,
+					"id": 7026,
 					"name": "getTestTypes",
 					"kind": 64,
 					"kindString": "Function",
@@ -403,7 +403,7 @@
 					],
 					"signatures": [
 						{
-							"id": 7003,
+							"id": 7027,
 							"name": "getTestTypes",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -411,14 +411,14 @@
 							"type": {
 								"type": "reflection",
 								"declaration": {
-									"id": 7004,
+									"id": 7028,
 									"name": "__type",
 									"kind": 65536,
 									"kindString": "Type literal",
 									"flags": {},
 									"children": [
 										{
-											"id": 7006,
+											"id": 7030,
 											"name": "integrationTests",
 											"kind": 1024,
 											"kindString": "Property",
@@ -436,7 +436,7 @@
 											}
 										},
 										{
-											"id": 7005,
+											"id": 7029,
 											"name": "unitTests",
 											"kind": 1024,
 											"kindString": "Property",
@@ -459,8 +459,8 @@
 											"title": "Properties",
 											"kind": 1024,
 											"children": [
-												7006,
-												7005
+												7030,
+												7029
 											]
 										}
 									]
@@ -475,8 +475,8 @@
 					"title": "Functions",
 					"kind": 64,
 					"children": [
-						7007,
-						7002
+						7031,
+						7026
 					]
 				}
 			],
@@ -489,14 +489,14 @@
 			]
 		},
 		{
-			"id": 6991,
+			"id": 7015,
 			"name": "get-runner-settings.node",
 			"kind": 2,
 			"kindString": "Module",
 			"flags": {},
 			"children": [
 				{
-					"id": 6999,
+					"id": 7023,
 					"name": "getTestContext",
 					"kind": 64,
 					"kindString": "Function",
@@ -510,7 +510,7 @@
 					],
 					"signatures": [
 						{
-							"id": 7000,
+							"id": 7024,
 							"name": "getTestContext",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -531,7 +531,7 @@
 					]
 				},
 				{
-					"id": 6992,
+					"id": 7016,
 					"name": "getTestHostUrl",
 					"kind": 64,
 					"kindString": "Function",
@@ -545,7 +545,7 @@
 					],
 					"signatures": [
 						{
-							"id": 6993,
+							"id": 7017,
 							"name": "getTestHostUrl",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -560,7 +560,7 @@
 					]
 				},
 				{
-					"id": 6994,
+					"id": 7018,
 					"name": "getTestTypes",
 					"kind": 64,
 					"kindString": "Function",
@@ -574,7 +574,7 @@
 					],
 					"signatures": [
 						{
-							"id": 6995,
+							"id": 7019,
 							"name": "getTestTypes",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -582,14 +582,14 @@
 							"type": {
 								"type": "reflection",
 								"declaration": {
-									"id": 6996,
+									"id": 7020,
 									"name": "__type",
 									"kind": 65536,
 									"kindString": "Type literal",
 									"flags": {},
 									"children": [
 										{
-											"id": 6998,
+											"id": 7022,
 											"name": "integrationTests",
 											"kind": 1024,
 											"kindString": "Property",
@@ -607,7 +607,7 @@
 											}
 										},
 										{
-											"id": 6997,
+											"id": 7021,
 											"name": "unitTests",
 											"kind": 1024,
 											"kindString": "Property",
@@ -630,8 +630,8 @@
 											"title": "Properties",
 											"kind": 1024,
 											"children": [
-												6998,
-												6997
+												7022,
+												7021
 											]
 										}
 									]
@@ -646,9 +646,9 @@
 					"title": "Functions",
 					"kind": 64,
 					"children": [
-						6999,
-						6992,
-						6994
+						7023,
+						7016,
+						7018
 					]
 				}
 			],
@@ -661,91 +661,91 @@
 			]
 		},
 		{
-			"id": 7009,
+			"id": 7033,
 			"name": "index",
 			"kind": 2,
 			"kindString": "Module",
 			"flags": {},
 			"children": [
 				{
-					"id": 7043,
+					"id": 7067,
 					"name": "TEST_ASSETS_PATH",
 					"kind": 16777216,
 					"kindString": "Reference",
 					"flags": {},
-					"target": 7013
+					"target": 7037
 				},
 				{
-					"id": 7040,
+					"id": 7064,
 					"name": "TEST_BASE_API_CONTEXT",
 					"kind": 16777216,
 					"kindString": "Reference",
 					"flags": {},
-					"target": 6977
+					"target": 7001
 				},
 				{
-					"id": 7042,
+					"id": 7066,
 					"name": "TEST_TYPES",
 					"kind": 16777216,
 					"kindString": "Reference",
 					"flags": {},
-					"target": 6980
+					"target": 7004
 				},
 				{
-					"id": 7041,
+					"id": 7065,
 					"name": "TestType",
 					"kind": 16777216,
 					"kindString": "Reference",
 					"flags": {},
-					"target": 6979
+					"target": 7003
 				},
 				{
-					"id": 7045,
+					"id": 7069,
 					"name": "integrationTest",
 					"kind": 16777216,
 					"kindString": "Reference",
 					"flags": {},
-					"target": 7015
+					"target": 7039
 				},
 				{
-					"id": 7047,
+					"id": 7071,
 					"name": "integrationTestSpecDef",
 					"kind": 16777216,
 					"kindString": "Reference",
 					"flags": {},
-					"target": 7021
+					"target": 7045
 				},
 				{
-					"id": 7044,
+					"id": 7068,
 					"name": "myCustomMatchers",
 					"kind": 16777216,
 					"kindString": "Reference",
 					"flags": {},
-					"target": 6982
+					"target": 7006
 				},
 				{
-					"id": 7049,
+					"id": 7073,
 					"name": "sleep",
 					"kind": 16777216,
 					"kindString": "Reference",
 					"flags": {},
-					"target": 7036
+					"target": 7060
 				},
 				{
-					"id": 7046,
+					"id": 7070,
 					"name": "unitTest",
 					"kind": 16777216,
 					"kindString": "Reference",
 					"flags": {},
-					"target": 7018
+					"target": 7042
 				},
 				{
-					"id": 7048,
+					"id": 7072,
 					"name": "unitTestSpecDef",
 					"kind": 16777216,
 					"kindString": "Reference",
 					"flags": {},
-					"target": 7028
+					"target": 7052
 				}
 			],
 			"groups": [
@@ -753,16 +753,16 @@
 					"title": "References",
 					"kind": 16777216,
 					"children": [
-						7043,
-						7040,
-						7042,
-						7041,
-						7045,
-						7047,
-						7044,
-						7049,
-						7046,
-						7048
+						7067,
+						7064,
+						7066,
+						7065,
+						7069,
+						7071,
+						7068,
+						7073,
+						7070,
+						7072
 					]
 				}
 			],
@@ -775,14 +775,14 @@
 			]
 		},
 		{
-			"id": 7012,
+			"id": 7036,
 			"name": "paths",
 			"kind": 2,
 			"kindString": "Module",
 			"flags": {},
 			"children": [
 				{
-					"id": 7013,
+					"id": 7037,
 					"name": "TEST_ASSETS_PATH",
 					"kind": 32,
 					"kindString": "Variable",
@@ -821,7 +821,7 @@
 					"title": "Variables",
 					"kind": 32,
 					"children": [
-						7013
+						7037
 					]
 				}
 			],
@@ -834,14 +834,14 @@
 			]
 		},
 		{
-			"id": 7010,
+			"id": 7034,
 			"name": "paths.node",
 			"kind": 2,
 			"kindString": "Module",
 			"flags": {},
 			"children": [
 				{
-					"id": 7011,
+					"id": 7035,
 					"name": "TEST_ASSETS_PATH",
 					"kind": 32,
 					"kindString": "Variable",
@@ -867,7 +867,7 @@
 					"title": "Variables",
 					"kind": 32,
 					"children": [
-						7011
+						7035
 					]
 				}
 			],
@@ -880,14 +880,14 @@
 			]
 		},
 		{
-			"id": 7014,
+			"id": 7038,
 			"name": "test-types",
 			"kind": 2,
 			"kindString": "Module",
 			"flags": {},
 			"children": [
 				{
-					"id": 7015,
+					"id": 7039,
 					"name": "integrationTest",
 					"kind": 64,
 					"kindString": "Function",
@@ -901,14 +901,14 @@
 					],
 					"signatures": [
 						{
-							"id": 7016,
+							"id": 7040,
 							"name": "integrationTest",
 							"kind": 4096,
 							"kindString": "Call signature",
 							"flags": {},
 							"parameters": [
 								{
-									"id": 7017,
+									"id": 7041,
 									"name": "f",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -927,7 +927,7 @@
 					]
 				},
 				{
-					"id": 7021,
+					"id": 7045,
 					"name": "integrationTestSpecDef",
 					"kind": 64,
 					"kindString": "Function",
@@ -941,14 +941,14 @@
 					],
 					"signatures": [
 						{
-							"id": 7022,
+							"id": 7046,
 							"name": "integrationTestSpecDef",
 							"kind": 4096,
 							"kindString": "Call signature",
 							"flags": {},
 							"parameters": [
 								{
-									"id": 7023,
+									"id": 7047,
 									"name": "f",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -956,14 +956,14 @@
 									"type": {
 										"type": "reflection",
 										"declaration": {
-											"id": 7024,
+											"id": 7048,
 											"name": "__type",
 											"kind": 65536,
 											"kindString": "Type literal",
 											"flags": {},
 											"signatures": [
 												{
-													"id": 7025,
+													"id": 7049,
 													"name": "__type",
 													"kind": 4096,
 													"kindString": "Call signature",
@@ -981,14 +981,14 @@
 							"type": {
 								"type": "reflection",
 								"declaration": {
-									"id": 7026,
+									"id": 7050,
 									"name": "__type",
 									"kind": 65536,
 									"kindString": "Type literal",
 									"flags": {},
 									"signatures": [
 										{
-											"id": 7027,
+											"id": 7051,
 											"name": "__type",
 											"kind": 4096,
 											"kindString": "Call signature",
@@ -1005,7 +1005,7 @@
 					]
 				},
 				{
-					"id": 7018,
+					"id": 7042,
 					"name": "unitTest",
 					"kind": 64,
 					"kindString": "Function",
@@ -1019,14 +1019,14 @@
 					],
 					"signatures": [
 						{
-							"id": 7019,
+							"id": 7043,
 							"name": "unitTest",
 							"kind": 4096,
 							"kindString": "Call signature",
 							"flags": {},
 							"parameters": [
 								{
-									"id": 7020,
+									"id": 7044,
 									"name": "f",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -1045,7 +1045,7 @@
 					]
 				},
 				{
-					"id": 7028,
+					"id": 7052,
 					"name": "unitTestSpecDef",
 					"kind": 64,
 					"kindString": "Function",
@@ -1059,14 +1059,14 @@
 					],
 					"signatures": [
 						{
-							"id": 7029,
+							"id": 7053,
 							"name": "unitTestSpecDef",
 							"kind": 4096,
 							"kindString": "Call signature",
 							"flags": {},
 							"parameters": [
 								{
-									"id": 7030,
+									"id": 7054,
 									"name": "f",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -1074,14 +1074,14 @@
 									"type": {
 										"type": "reflection",
 										"declaration": {
-											"id": 7031,
+											"id": 7055,
 											"name": "__type",
 											"kind": 65536,
 											"kindString": "Type literal",
 											"flags": {},
 											"signatures": [
 												{
-													"id": 7032,
+													"id": 7056,
 													"name": "__type",
 													"kind": 4096,
 													"kindString": "Call signature",
@@ -1099,14 +1099,14 @@
 							"type": {
 								"type": "reflection",
 								"declaration": {
-									"id": 7033,
+									"id": 7057,
 									"name": "__type",
 									"kind": 65536,
 									"kindString": "Type literal",
 									"flags": {},
 									"signatures": [
 										{
-											"id": 7034,
+											"id": 7058,
 											"name": "__type",
 											"kind": 4096,
 											"kindString": "Call signature",
@@ -1128,10 +1128,10 @@
 					"title": "Functions",
 					"kind": 64,
 					"children": [
-						7015,
-						7021,
-						7018,
-						7028
+						7039,
+						7045,
+						7042,
+						7052
 					]
 				}
 			],
@@ -1144,7 +1144,7 @@
 			]
 		},
 		{
-			"id": 7035,
+			"id": 7059,
 			"name": "utils",
 			"kind": 2,
 			"kindString": "Module",
@@ -1155,7 +1155,7 @@
 			},
 			"children": [
 				{
-					"id": 7036,
+					"id": 7060,
 					"name": "sleep",
 					"kind": 64,
 					"kindString": "Function",
@@ -1169,7 +1169,7 @@
 					],
 					"signatures": [
 						{
-							"id": 7037,
+							"id": 7061,
 							"name": "sleep",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -1180,7 +1180,7 @@
 							},
 							"parameters": [
 								{
-									"id": 7038,
+									"id": 7062,
 									"name": "ms",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -1215,7 +1215,7 @@
 					"title": "Functions",
 					"kind": 64,
 					"children": [
-						7036
+						7060
 					]
 				}
 			],
@@ -1233,17 +1233,17 @@
 			"title": "Modules",
 			"kind": 2,
 			"children": [
-				6976,
-				6981,
-				6987,
-				6983,
-				7001,
-				6991,
-				7009,
-				7012,
-				7010,
-				7014,
-				7035
+				7000,
+				7005,
+				7011,
+				7007,
+				7025,
+				7015,
+				7033,
+				7036,
+				7034,
+				7038,
+				7059
 			]
 		}
 	]
