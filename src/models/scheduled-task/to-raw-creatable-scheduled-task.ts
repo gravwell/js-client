@@ -7,6 +7,7 @@
  * license. See the LICENSE file for details.
  */
 
+import { ScheduledQueryDuration } from '~/models/scheduled-task/scheduled-query-data';
 import { toRawNumericID } from '~/value-objects';
 import { CreatableScheduledTask } from './creatable-scheduled-task';
 import { RawCreatableScheduledTask } from './raw-creatable-scheduled-task';
@@ -35,6 +36,8 @@ export const toRawCreatableScheduledTask = (data: CreatableScheduledTask): RawCr
 				Duration: -Math.abs(data.searchSince.secondsAgo ?? 0),
 				SearchSinceLastRun: data.searchSince.lastRun ?? false,
 				DebugMode: false,
+				TimeframeOffset: Math.abs(durationToSeconds(data.timeframeOffset)) * -1,
+				BackfillEnabled: data.backfillEnabled,
 			};
 		case 'script':
 			return {
@@ -44,3 +47,7 @@ export const toRawCreatableScheduledTask = (data: CreatableScheduledTask): RawCr
 			};
 	}
 };
+
+export const durationToSeconds = (value: ScheduledQueryDuration): number =>
+	// TODO: year, months, weeks
+	(value.days ?? 0) * 24 * 60 * 60 + (value.hours ?? 0) * 60 * 60 + (value.minutes ?? 0) * 60 + (value.seconds ?? 0);

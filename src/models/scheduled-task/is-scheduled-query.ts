@@ -60,4 +60,13 @@ export const scheduledQueryDecoder: Verifier<ScheduledQuery> = object({
 
 	schedule: string,
 	timezone: either(null_, string),
+
+	timeframeOffset: object({
+		days: number,
+		hours: number,
+		minutes: number,
+		seconds: number,
+	}),
+
+	backfillEnabled: boolean,
 });

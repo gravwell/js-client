@@ -17,6 +17,9 @@ export const toRawGeneratableAutoExtractor = (data: GeneratableAutoExtractor): R
 		Tag: e.tag,
 		SRC: e.source,
 		Data: e.data,
-		Enumerated: [],
+		Enumerated: e.values.map(ev => ({
+			Name: ev.name,
+			ValueStr: ev.value,
+		})),
 	})),
 });

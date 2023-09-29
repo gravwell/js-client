@@ -71,6 +71,9 @@ describe(
 
 						oneShot: true,
 						isDisabled: true,
+
+						timeframeOffset: { days: 0, hours: 0, minutes: 0, seconds: 0 },
+						backfillEnabled: false,
 					},
 					{
 						groupIDs,
@@ -86,6 +89,9 @@ describe(
 
 						oneShot: false,
 						isDisabled: false,
+
+						timeframeOffset: { days: 0, hours: 0, minutes: 0, seconds: 0 },
+						backfillEnabled: false,
 					},
 				];
 
