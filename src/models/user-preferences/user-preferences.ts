@@ -51,7 +51,21 @@ export interface UserPreferences {
 		  }
 		| undefined;
 
-	monacoEditorSettings?: { theme?: MonacoEditorTheme; fontSize?: number } | undefined;
+	monacoEditorSettings?:
+		| {
+				/** https://microsoft.github.io/monaco-editor/docs.html#interfaces/editor.IStandaloneDiffEditorConstructionOptions.html#theme */
+				theme?: MonacoEditorTheme;
+
+				/** https://microsoft.github.io/monaco-editor/docs.html#interfaces/editor.IStandaloneDiffEditorConstructionOptions.html#fontSize */
+				fontSize?: number;
+
+				/** https://microsoft.github.io/monaco-editor/docs.html#interfaces/editor.IStandaloneDiffEditorConstructionOptions.html#wordWrap */
+				wordWrap?: 'bounded' | 'off' | 'on' | 'wordWrapColumn';
+
+				/** https://microsoft.github.io/monaco-editor/docs.html#interfaces/editor.IStandaloneDiffEditorConstructionOptions.html#wordWrapColumn */
+				wordWrapColumn?: number;
+		  }
+		| undefined;
 }
 
 export type TreeViewDepth = number | 'all';

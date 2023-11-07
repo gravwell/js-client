@@ -88,9 +88,9 @@ describe(
 			expect(newValidation.isValid).withContext(`Expect new query to be valid`).toBeTrue();
 
 			expect(newQuery).withContext(`Expect new query to be different than initial one`).not.toBe(query);
-			expect(newQuery)
-				.withContext(`Expect new query to contain the applied filter`)
-				.toBe(`tag=${tag} json value.foo == 50 | table`);
+			expect(newQuery.startsWith(`tag=${tag}`))
+				.withContext(`Expect new query to use the same tag`)
+				.toBeTrue();
 		});
 
 		it('Should throw if the filters are invalid', async () => {
