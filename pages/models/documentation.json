@@ -9528,7 +9528,7 @@
 							],
 							"type": {
 								"type": "reference",
-								"id": 5990,
+								"id": 5992,
 								"name": "Version"
 							},
 							"inheritedFrom": {
@@ -10087,7 +10087,7 @@
 							],
 							"type": {
 								"type": "reference",
-								"id": 5990,
+								"id": 5992,
 								"name": "Version"
 							}
 						}
@@ -13493,7 +13493,7 @@
 							],
 							"type": {
 								"type": "reference",
-								"id": 5990,
+								"id": 5992,
 								"name": "Version"
 							}
 						}
@@ -23017,7 +23017,7 @@
 									},
 									{
 										"type": "reference",
-										"id": 5990,
+										"id": 5992,
 										"name": "Version"
 									}
 								]
@@ -23045,7 +23045,7 @@
 									},
 									{
 										"type": "reference",
-										"id": 5990,
+										"id": 5992,
 										"name": "Version"
 									}
 								]
@@ -24869,7 +24869,7 @@
 							],
 							"type": {
 								"type": "reference",
-								"id": 5990,
+								"id": 5992,
 								"name": "Version"
 							},
 							"inheritedFrom": {
@@ -24893,7 +24893,7 @@
 							],
 							"type": {
 								"type": "reference",
-								"id": 5990,
+								"id": 5992,
 								"name": "Version"
 							},
 							"inheritedFrom": {
@@ -25647,7 +25647,7 @@
 							],
 							"type": {
 								"type": "reference",
-								"id": 5990,
+								"id": 5992,
 								"name": "Version"
 							}
 						},
@@ -25666,7 +25666,7 @@
 							],
 							"type": {
 								"type": "reference",
-								"id": 5990,
+								"id": 5992,
 								"name": "Version"
 							}
 						},
@@ -26696,7 +26696,7 @@
 											],
 											"type": {
 												"type": "reference",
-												"id": 5990,
+												"id": 5992,
 												"name": "Version"
 											}
 										},
@@ -26715,7 +26715,7 @@
 											],
 											"type": {
 												"type": "reference",
-												"id": 5990,
+												"id": 5992,
 												"name": "Version"
 											}
 										}
@@ -27108,7 +27108,7 @@
 							],
 							"type": {
 								"type": "reference",
-								"id": 5990,
+								"id": 5992,
 								"name": "Version"
 							},
 							"inheritedFrom": {
@@ -27360,7 +27360,7 @@
 											],
 											"type": {
 												"type": "reference",
-												"id": 5990,
+												"id": 5992,
 												"name": "Version"
 											}
 										},
@@ -27379,7 +27379,7 @@
 											],
 											"type": {
 												"type": "reference",
-												"id": 5990,
+												"id": 5992,
 												"name": "Version"
 											}
 										}
@@ -27702,7 +27702,7 @@
 							],
 							"type": {
 								"type": "reference",
-								"id": 5990,
+								"id": 5992,
 								"name": "Version"
 							}
 						}
@@ -28377,7 +28377,7 @@
 									},
 									{
 										"type": "reference",
-										"id": 5979,
+										"id": 5981,
 										"name": "RawVersionObject"
 									}
 								]
@@ -28405,7 +28405,7 @@
 									},
 									{
 										"type": "reference",
-										"id": 5979,
+										"id": 5981,
 										"name": "RawVersionObject"
 									}
 								]
@@ -29440,7 +29440,7 @@
 							],
 							"type": {
 								"type": "reference",
-								"id": 5979,
+								"id": 5981,
 								"name": "RawVersionObject"
 							}
 						},
@@ -29459,7 +29459,7 @@
 							],
 							"type": {
 								"type": "reference",
-								"id": 5979,
+								"id": 5981,
 								"name": "RawVersionObject"
 							}
 						},
@@ -30221,7 +30221,7 @@
 							],
 							"type": {
 								"type": "reference",
-								"id": 5979,
+								"id": 5981,
 								"name": "RawVersionObject"
 							}
 						},
@@ -30240,7 +30240,7 @@
 							],
 							"type": {
 								"type": "reference",
-								"id": 5979,
+								"id": 5981,
 								"name": "RawVersionObject"
 							}
 						},
@@ -30735,7 +30735,7 @@
 							],
 							"type": {
 								"type": "reference",
-								"id": 5979,
+								"id": 5981,
 								"name": "RawVersionObject"
 							}
 						},
@@ -30754,7 +30754,7 @@
 							],
 							"type": {
 								"type": "reference",
-								"id": 5979,
+								"id": 5981,
 								"name": "RawVersionObject"
 							}
 						},
@@ -31148,7 +31148,7 @@
 											],
 											"type": {
 												"type": "reference",
-												"id": 5990,
+												"id": 5992,
 												"name": "Version"
 											}
 										},
@@ -31167,7 +31167,7 @@
 											],
 											"type": {
 												"type": "reference",
-												"id": 5990,
+												"id": 5992,
 												"name": "Version"
 											}
 										}
@@ -31376,7 +31376,7 @@
 							],
 							"type": {
 								"type": "reference",
-								"id": 5990,
+								"id": 5992,
 								"name": "Version"
 							},
 							"inheritedFrom": {
@@ -31609,7 +31609,7 @@
 											],
 											"type": {
 												"type": "reference",
-												"id": 5990,
+												"id": 5992,
 												"name": "Version"
 											}
 										},
@@ -31628,7 +31628,7 @@
 											],
 											"type": {
 												"type": "reference",
-												"id": 5990,
+												"id": 5992,
 												"name": "Version"
 											}
 										}
@@ -31797,7 +31797,7 @@
 							],
 							"type": {
 								"type": "reference",
-								"id": 5990,
+								"id": 5992,
 								"name": "Version"
 							}
 						}
@@ -31999,7 +31999,7 @@
 							],
 							"type": {
 								"type": "reference",
-								"id": 5990,
+								"id": 5992,
 								"name": "Version"
 							}
 						}
@@ -33312,7 +33312,7 @@
 													],
 													"type": {
 														"type": "reference",
-														"id": 5990,
+														"id": 5992,
 														"name": "Version"
 													}
 												},
@@ -33331,7 +33331,7 @@
 													],
 													"type": {
 														"type": "reference",
-														"id": 5990,
+														"id": 5992,
 														"name": "Version"
 													}
 												}
@@ -33507,7 +33507,7 @@
 									],
 									"type": {
 										"type": "reference",
-										"id": 5990,
+										"id": 5992,
 										"name": "Version"
 									}
 								}
@@ -33866,7 +33866,7 @@
 									],
 									"type": {
 										"type": "reference",
-										"id": 5979,
+										"id": 5981,
 										"name": "RawVersionObject"
 									}
 								},
@@ -33885,7 +33885,7 @@
 									],
 									"type": {
 										"type": "reference",
-										"id": 5979,
+										"id": 5981,
 										"name": "RawVersionObject"
 									}
 								},
@@ -97714,14 +97714,14 @@
 			"flags": {},
 			"children": [
 				{
-					"id": 5900,
+					"id": 5902,
 					"name": "DisplayOption",
 					"kind": 8,
 					"kindString": "Enumeration",
 					"flags": {},
 					"children": [
 						{
-							"id": 5902,
+							"id": 5904,
 							"name": "Disks",
 							"kind": 16,
 							"kindString": "Enumeration Member",
@@ -97729,7 +97729,7 @@
 							"sources": [
 								{
 									"fileName": "src/models/user-preferences/user-preferences.ts",
-									"line": 61,
+									"line": 75,
 									"character": 1
 								}
 							],
@@ -97740,7 +97740,7 @@
 							"defaultValue": "1"
 						},
 						{
-							"id": 5905,
+							"id": 5907,
 							"name": "FederatorsIngesters",
 							"kind": 16,
 							"kindString": "Enumeration Member",
@@ -97748,7 +97748,7 @@
 							"sources": [
 								{
 									"fileName": "src/models/user-preferences/user-preferences.ts",
-									"line": 64,
+									"line": 78,
 									"character": 1
 								}
 							],
@@ -97759,7 +97759,7 @@
 							"defaultValue": "4"
 						},
 						{
-							"id": 5901,
+							"id": 5903,
 							"name": "Hardware",
 							"kind": 16,
 							"kindString": "Enumeration Member",
@@ -97767,7 +97767,7 @@
 							"sources": [
 								{
 									"fileName": "src/models/user-preferences/user-preferences.ts",
-									"line": 60,
+									"line": 74,
 									"character": 1
 								}
 							],
@@ -97778,7 +97778,7 @@
 							"defaultValue": "0"
 						},
 						{
-							"id": 5903,
+							"id": 5905,
 							"name": "Indexers",
 							"kind": 16,
 							"kindString": "Enumeration Member",
@@ -97786,7 +97786,7 @@
 							"sources": [
 								{
 									"fileName": "src/models/user-preferences/user-preferences.ts",
-									"line": 62,
+									"line": 76,
 									"character": 1
 								}
 							],
@@ -97797,7 +97797,7 @@
 							"defaultValue": "2"
 						},
 						{
-							"id": 5906,
+							"id": 5908,
 							"name": "Listeners",
 							"kind": 16,
 							"kindString": "Enumeration Member",
@@ -97805,7 +97805,7 @@
 							"sources": [
 								{
 									"fileName": "src/models/user-preferences/user-preferences.ts",
-									"line": 65,
+									"line": 79,
 									"character": 1
 								}
 							],
@@ -97816,7 +97816,7 @@
 							"defaultValue": "5"
 						},
 						{
-							"id": 5904,
+							"id": 5906,
 							"name": "Wells",
 							"kind": 16,
 							"kindString": "Enumeration Member",
@@ -97824,7 +97824,7 @@
 							"sources": [
 								{
 									"fileName": "src/models/user-preferences/user-preferences.ts",
-									"line": 63,
+									"line": 77,
 									"character": 1
 								}
 							],
@@ -97840,32 +97840,32 @@
 							"title": "Enumeration Members",
 							"kind": 16,
 							"children": [
-								5902,
-								5905,
-								5901,
+								5904,
+								5907,
 								5903,
-								5906,
-								5904
+								5905,
+								5908,
+								5906
 							]
 						}
 					],
 					"sources": [
 						{
 							"fileName": "src/models/user-preferences/user-preferences.ts",
-							"line": 59,
+							"line": 73,
 							"character": 12
 						}
 					]
 				},
 				{
-					"id": 5912,
+					"id": 5914,
 					"name": "ListLayout",
 					"kind": 8,
 					"kindString": "Enumeration",
 					"flags": {},
 					"children": [
 						{
-							"id": 5913,
+							"id": 5915,
 							"name": "cards",
 							"kind": 16,
 							"kindString": "Enumeration Member",
@@ -97873,7 +97873,7 @@
 							"sources": [
 								{
 									"fileName": "src/models/user-preferences/user-preferences.ts",
-									"line": 72,
+									"line": 86,
 									"character": 1
 								}
 							],
@@ -97884,7 +97884,7 @@
 							"defaultValue": "\"cards\""
 						},
 						{
-							"id": 5914,
+							"id": 5916,
 							"name": "rows",
 							"kind": 16,
 							"kindString": "Enumeration Member",
@@ -97892,7 +97892,7 @@
 							"sources": [
 								{
 									"fileName": "src/models/user-preferences/user-preferences.ts",
-									"line": 73,
+									"line": 87,
 									"character": 1
 								}
 							],
@@ -97908,28 +97908,28 @@
 							"title": "Enumeration Members",
 							"kind": 16,
 							"children": [
-								5913,
-								5914
+								5915,
+								5916
 							]
 						}
 					],
 					"sources": [
 						{
 							"fileName": "src/models/user-preferences/user-preferences.ts",
-							"line": 71,
+							"line": 85,
 							"character": 12
 						}
 					]
 				},
 				{
-					"id": 5871,
+					"id": 5873,
 					"name": "EditorTheme",
 					"kind": 256,
 					"kindString": "Interface",
 					"flags": {},
 					"children": [
 						{
-							"id": 5872,
+							"id": 5874,
 							"name": "fontSize",
 							"kind": 1024,
 							"kindString": "Property",
@@ -97939,7 +97939,7 @@
 							"sources": [
 								{
 									"fileName": "src/models/user-preferences/user-preferences.ts",
-									"line": 118,
+									"line": 132,
 									"character": 1
 								}
 							],
@@ -97949,7 +97949,7 @@
 							}
 						},
 						{
-							"id": 5874,
+							"id": 5876,
 							"name": "mode",
 							"kind": 1024,
 							"kindString": "Property",
@@ -97959,7 +97959,7 @@
 							"sources": [
 								{
 									"fileName": "src/models/user-preferences/user-preferences.ts",
-									"line": 120,
+									"line": 134,
 									"character": 1
 								}
 							],
@@ -97969,321 +97969,8 @@
 							}
 						},
 						{
-							"id": 5873,
+							"id": 5875,
 							"name": "theme",
-							"kind": 1024,
-							"kindString": "Property",
-							"flags": {
-								"isOptional": true
-							},
-							"sources": [
-								{
-									"fileName": "src/models/user-preferences/user-preferences.ts",
-									"line": 119,
-									"character": 1
-								}
-							],
-							"type": {
-								"type": "reference",
-								"id": 5889,
-								"name": "Theme"
-							}
-						}
-					],
-					"groups": [
-						{
-							"title": "Properties",
-							"kind": 1024,
-							"children": [
-								5872,
-								5874,
-								5873
-							]
-						}
-					],
-					"sources": [
-						{
-							"fileName": "src/models/user-preferences/user-preferences.ts",
-							"line": 117,
-							"character": 17
-						}
-					]
-				},
-				{
-					"id": 5887,
-					"name": "ExplorerPreferences",
-					"kind": 256,
-					"kindString": "Interface",
-					"flags": {},
-					"children": [
-						{
-							"id": 5888,
-							"name": "layout",
-							"kind": 1024,
-							"kindString": "Property",
-							"flags": {},
-							"sources": [
-								{
-									"fileName": "src/models/user-preferences/user-preferences.ts",
-									"line": 77,
-									"character": 1
-								}
-							],
-							"type": {
-								"type": "reference",
-								"id": 5915,
-								"name": "SlimLayout"
-							}
-						}
-					],
-					"groups": [
-						{
-							"title": "Properties",
-							"kind": 1024,
-							"children": [
-								5888
-							]
-						}
-					],
-					"sources": [
-						{
-							"fileName": "src/models/user-preferences/user-preferences.ts",
-							"line": 76,
-							"character": 17
-						}
-					]
-				},
-				{
-					"id": 5921,
-					"name": "PaneSettings",
-					"kind": 256,
-					"kindString": "Interface",
-					"flags": {},
-					"comment": {
-						"shortText": "Pane settings",
-						"text": "Pane can be a as-split or as-split-area component/directive\n"
-					},
-					"children": [
-						{
-							"id": 5926,
-							"name": "children",
-							"kind": 1024,
-							"kindString": "Property",
-							"flags": {
-								"isOptional": true
-							},
-							"sources": [
-								{
-									"fileName": "src/models/user-preferences/user-preferences.ts",
-									"line": 99,
-									"character": 1
-								}
-							],
-							"type": {
-								"type": "array",
-								"elementType": {
-									"type": "reference",
-									"id": 5927,
-									"name": "ExplorerPaneID"
-								}
-							}
-						},
-						{
-							"id": 5923,
-							"name": "direction",
-							"kind": 1024,
-							"kindString": "Property",
-							"flags": {
-								"isOptional": true
-							},
-							"sources": [
-								{
-									"fileName": "src/models/user-preferences/user-preferences.ts",
-									"line": 96,
-									"character": 1
-								}
-							],
-							"type": {
-								"type": "reference",
-								"id": 5928,
-								"name": "PaneDirection"
-							}
-						},
-						{
-							"id": 5922,
-							"name": "id",
-							"kind": 1024,
-							"kindString": "Property",
-							"flags": {},
-							"sources": [
-								{
-									"fileName": "src/models/user-preferences/user-preferences.ts",
-									"line": 95,
-									"character": 1
-								}
-							],
-							"type": {
-								"type": "reference",
-								"id": 5927,
-								"name": "ExplorerPaneID"
-							}
-						},
-						{
-							"id": 5924,
-							"name": "order",
-							"kind": 1024,
-							"kindString": "Property",
-							"flags": {
-								"isOptional": true
-							},
-							"sources": [
-								{
-									"fileName": "src/models/user-preferences/user-preferences.ts",
-									"line": 97,
-									"character": 1
-								}
-							],
-							"type": {
-								"type": "intrinsic",
-								"name": "number"
-							}
-						},
-						{
-							"id": 5925,
-							"name": "size",
-							"kind": 1024,
-							"kindString": "Property",
-							"flags": {
-								"isOptional": true
-							},
-							"sources": [
-								{
-									"fileName": "src/models/user-preferences/user-preferences.ts",
-									"line": 98,
-									"character": 1
-								}
-							],
-							"type": {
-								"type": "intrinsic",
-								"name": "number"
-							}
-						}
-					],
-					"groups": [
-						{
-							"title": "Properties",
-							"kind": 1024,
-							"children": [
-								5926,
-								5923,
-								5922,
-								5924,
-								5925
-							]
-						}
-					],
-					"sources": [
-						{
-							"fileName": "src/models/user-preferences/user-preferences.ts",
-							"line": 94,
-							"character": 17
-						}
-					]
-				},
-				{
-					"id": 5943,
-					"name": "PreferencesCustomTimeframe",
-					"kind": 256,
-					"kindString": "Interface",
-					"flags": {},
-					"children": [
-						{
-							"id": 5946,
-							"name": "hidden",
-							"kind": 1024,
-							"kindString": "Property",
-							"flags": {
-								"isOptional": true
-							},
-							"sources": [
-								{
-									"fileName": "src/models/user-preferences/user-preferences.ts",
-									"line": 156,
-									"character": 1
-								}
-							],
-							"type": {
-								"type": "intrinsic",
-								"name": "boolean"
-							}
-						},
-						{
-							"id": 5944,
-							"name": "label",
-							"kind": 1024,
-							"kindString": "Property",
-							"flags": {},
-							"sources": [
-								{
-									"fileName": "src/models/user-preferences/user-preferences.ts",
-									"line": 154,
-									"character": 1
-								}
-							],
-							"type": {
-								"type": "intrinsic",
-								"name": "string"
-							}
-						},
-						{
-							"id": 5945,
-							"name": "timeframe",
-							"kind": 1024,
-							"kindString": "Property",
-							"flags": {},
-							"sources": [
-								{
-									"fileName": "src/models/user-preferences/user-preferences.ts",
-									"line": 155,
-									"character": 1
-								}
-							],
-							"type": {
-								"type": "reference",
-								"id": 5942,
-								"name": "PreferencesTimeframe"
-							}
-						}
-					],
-					"groups": [
-						{
-							"title": "Properties",
-							"kind": 1024,
-							"children": [
-								5946,
-								5944,
-								5945
-							]
-						}
-					],
-					"sources": [
-						{
-							"fileName": "src/models/user-preferences/user-preferences.ts",
-							"line": 153,
-							"character": 17
-						}
-					]
-				},
-				{
-					"id": 5930,
-					"name": "PreferencesSystemTimeframe",
-					"kind": 256,
-					"kindString": "Interface",
-					"flags": {},
-					"children": [
-						{
-							"id": 5932,
-							"name": "hidden",
 							"kind": 1024,
 							"kindString": "Property",
 							"flags": {
@@ -98297,12 +97984,325 @@
 								}
 							],
 							"type": {
+								"type": "reference",
+								"id": 5891,
+								"name": "Theme"
+							}
+						}
+					],
+					"groups": [
+						{
+							"title": "Properties",
+							"kind": 1024,
+							"children": [
+								5874,
+								5876,
+								5875
+							]
+						}
+					],
+					"sources": [
+						{
+							"fileName": "src/models/user-preferences/user-preferences.ts",
+							"line": 131,
+							"character": 17
+						}
+					]
+				},
+				{
+					"id": 5889,
+					"name": "ExplorerPreferences",
+					"kind": 256,
+					"kindString": "Interface",
+					"flags": {},
+					"children": [
+						{
+							"id": 5890,
+							"name": "layout",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {},
+							"sources": [
+								{
+									"fileName": "src/models/user-preferences/user-preferences.ts",
+									"line": 91,
+									"character": 1
+								}
+							],
+							"type": {
+								"type": "reference",
+								"id": 5917,
+								"name": "SlimLayout"
+							}
+						}
+					],
+					"groups": [
+						{
+							"title": "Properties",
+							"kind": 1024,
+							"children": [
+								5890
+							]
+						}
+					],
+					"sources": [
+						{
+							"fileName": "src/models/user-preferences/user-preferences.ts",
+							"line": 90,
+							"character": 17
+						}
+					]
+				},
+				{
+					"id": 5923,
+					"name": "PaneSettings",
+					"kind": 256,
+					"kindString": "Interface",
+					"flags": {},
+					"comment": {
+						"shortText": "Pane settings",
+						"text": "Pane can be a as-split or as-split-area component/directive\n"
+					},
+					"children": [
+						{
+							"id": 5928,
+							"name": "children",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {
+								"isOptional": true
+							},
+							"sources": [
+								{
+									"fileName": "src/models/user-preferences/user-preferences.ts",
+									"line": 113,
+									"character": 1
+								}
+							],
+							"type": {
+								"type": "array",
+								"elementType": {
+									"type": "reference",
+									"id": 5929,
+									"name": "ExplorerPaneID"
+								}
+							}
+						},
+						{
+							"id": 5925,
+							"name": "direction",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {
+								"isOptional": true
+							},
+							"sources": [
+								{
+									"fileName": "src/models/user-preferences/user-preferences.ts",
+									"line": 110,
+									"character": 1
+								}
+							],
+							"type": {
+								"type": "reference",
+								"id": 5930,
+								"name": "PaneDirection"
+							}
+						},
+						{
+							"id": 5924,
+							"name": "id",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {},
+							"sources": [
+								{
+									"fileName": "src/models/user-preferences/user-preferences.ts",
+									"line": 109,
+									"character": 1
+								}
+							],
+							"type": {
+								"type": "reference",
+								"id": 5929,
+								"name": "ExplorerPaneID"
+							}
+						},
+						{
+							"id": 5926,
+							"name": "order",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {
+								"isOptional": true
+							},
+							"sources": [
+								{
+									"fileName": "src/models/user-preferences/user-preferences.ts",
+									"line": 111,
+									"character": 1
+								}
+							],
+							"type": {
+								"type": "intrinsic",
+								"name": "number"
+							}
+						},
+						{
+							"id": 5927,
+							"name": "size",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {
+								"isOptional": true
+							},
+							"sources": [
+								{
+									"fileName": "src/models/user-preferences/user-preferences.ts",
+									"line": 112,
+									"character": 1
+								}
+							],
+							"type": {
+								"type": "intrinsic",
+								"name": "number"
+							}
+						}
+					],
+					"groups": [
+						{
+							"title": "Properties",
+							"kind": 1024,
+							"children": [
+								5928,
+								5925,
+								5924,
+								5926,
+								5927
+							]
+						}
+					],
+					"sources": [
+						{
+							"fileName": "src/models/user-preferences/user-preferences.ts",
+							"line": 108,
+							"character": 17
+						}
+					]
+				},
+				{
+					"id": 5945,
+					"name": "PreferencesCustomTimeframe",
+					"kind": 256,
+					"kindString": "Interface",
+					"flags": {},
+					"children": [
+						{
+							"id": 5948,
+							"name": "hidden",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {
+								"isOptional": true
+							},
+							"sources": [
+								{
+									"fileName": "src/models/user-preferences/user-preferences.ts",
+									"line": 170,
+									"character": 1
+								}
+							],
+							"type": {
 								"type": "intrinsic",
 								"name": "boolean"
 							}
 						},
 						{
-							"id": 5931,
+							"id": 5946,
+							"name": "label",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {},
+							"sources": [
+								{
+									"fileName": "src/models/user-preferences/user-preferences.ts",
+									"line": 168,
+									"character": 1
+								}
+							],
+							"type": {
+								"type": "intrinsic",
+								"name": "string"
+							}
+						},
+						{
+							"id": 5947,
+							"name": "timeframe",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {},
+							"sources": [
+								{
+									"fileName": "src/models/user-preferences/user-preferences.ts",
+									"line": 169,
+									"character": 1
+								}
+							],
+							"type": {
+								"type": "reference",
+								"id": 5944,
+								"name": "PreferencesTimeframe"
+							}
+						}
+					],
+					"groups": [
+						{
+							"title": "Properties",
+							"kind": 1024,
+							"children": [
+								5948,
+								5946,
+								5947
+							]
+						}
+					],
+					"sources": [
+						{
+							"fileName": "src/models/user-preferences/user-preferences.ts",
+							"line": 167,
+							"character": 17
+						}
+					]
+				},
+				{
+					"id": 5932,
+					"name": "PreferencesSystemTimeframe",
+					"kind": 256,
+					"kindString": "Interface",
+					"flags": {},
+					"children": [
+						{
+							"id": 5934,
+							"name": "hidden",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {
+								"isOptional": true
+							},
+							"sources": [
+								{
+									"fileName": "src/models/user-preferences/user-preferences.ts",
+									"line": 147,
+									"character": 1
+								}
+							],
+							"type": {
+								"type": "intrinsic",
+								"name": "boolean"
+							}
+						},
+						{
+							"id": 5933,
 							"name": "type",
 							"kind": 1024,
 							"kindString": "Property",
@@ -98310,7 +98310,7 @@
 							"sources": [
 								{
 									"fileName": "src/models/user-preferences/user-preferences.ts",
-									"line": 132,
+									"line": 146,
 									"character": 1
 								}
 							],
@@ -98325,15 +98325,15 @@
 							"title": "Properties",
 							"kind": 1024,
 							"children": [
-								5932,
-								5931
+								5934,
+								5933
 							]
 						}
 					],
 					"sources": [
 						{
 							"fileName": "src/models/user-preferences/user-preferences.ts",
-							"line": 131,
+							"line": 145,
 							"character": 17
 						}
 					]
@@ -98471,14 +98471,14 @@
 					]
 				},
 				{
-					"id": 5875,
+					"id": 5877,
 					"name": "System",
 					"kind": 256,
 					"kindString": "Interface",
 					"flags": {},
 					"children": [
 						{
-							"id": 5876,
+							"id": 5878,
 							"name": "dismiss",
 							"kind": 1024,
 							"kindString": "Property",
@@ -98488,30 +98488,7 @@
 							"sources": [
 								{
 									"fileName": "src/models/user-preferences/user-preferences.ts",
-									"line": 107,
-									"character": 1
-								}
-							],
-							"type": {
-								"type": "array",
-								"elementType": {
-									"type": "intrinsic",
-									"name": "string"
-								}
-							}
-						},
-						{
-							"id": 5881,
-							"name": "favs",
-							"kind": 1024,
-							"kindString": "Property",
-							"flags": {
-								"isOptional": true
-							},
-							"sources": [
-								{
-									"fileName": "src/models/user-preferences/user-preferences.ts",
-									"line": 109,
+									"line": 121,
 									"character": 1
 								}
 							],
@@ -98525,6 +98502,29 @@
 						},
 						{
 							"id": 5883,
+							"name": "favs",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {
+								"isOptional": true
+							},
+							"sources": [
+								{
+									"fileName": "src/models/user-preferences/user-preferences.ts",
+									"line": 123,
+									"character": 1
+								}
+							],
+							"type": {
+								"type": "array",
+								"elementType": {
+									"type": "intrinsic",
+									"name": "string"
+								}
+							}
+						},
+						{
+							"id": 5885,
 							"name": "onboarding",
 							"kind": 1024,
 							"kindString": "Property",
@@ -98534,21 +98534,21 @@
 							"sources": [
 								{
 									"fileName": "src/models/user-preferences/user-preferences.ts",
-									"line": 111,
+									"line": 125,
 									"character": 1
 								}
 							],
 							"type": {
 								"type": "reflection",
 								"declaration": {
-									"id": 5884,
+									"id": 5886,
 									"name": "__type",
 									"kind": 65536,
 									"kindString": "Type literal",
 									"flags": {},
 									"children": [
 										{
-											"id": 5886,
+											"id": 5888,
 											"name": "completed",
 											"kind": 1024,
 											"kindString": "Property",
@@ -98558,7 +98558,7 @@
 											"sources": [
 												{
 													"fileName": "src/models/user-preferences/user-preferences.ts",
-													"line": 113,
+													"line": 127,
 													"character": 2
 												}
 											],
@@ -98571,7 +98571,7 @@
 											}
 										},
 										{
-											"id": 5885,
+											"id": 5887,
 											"name": "percentage",
 											"kind": 1024,
 											"kindString": "Property",
@@ -98581,7 +98581,7 @@
 											"sources": [
 												{
 													"fileName": "src/models/user-preferences/user-preferences.ts",
-													"line": 112,
+													"line": 126,
 													"character": 2
 												}
 											],
@@ -98596,8 +98596,8 @@
 											"title": "Properties",
 											"kind": 1024,
 											"children": [
-												5886,
-												5885
+												5888,
+												5887
 											]
 										}
 									]
@@ -98605,7 +98605,7 @@
 							}
 						},
 						{
-							"id": 5877,
+							"id": 5879,
 							"name": "views",
 							"kind": 1024,
 							"kindString": "Property",
@@ -98615,27 +98615,27 @@
 							"sources": [
 								{
 									"fileName": "src/models/user-preferences/user-preferences.ts",
-									"line": 108,
+									"line": 122,
 									"character": 1
 								}
 							],
 							"type": {
 								"type": "reflection",
 								"declaration": {
-									"id": 5878,
+									"id": 5880,
 									"name": "__type",
 									"kind": 65536,
 									"kindString": "Type literal",
 									"flags": {},
 									"indexSignature": {
-										"id": 5879,
+										"id": 5881,
 										"name": "__index",
 										"kind": 8192,
 										"kindString": "Index signature",
 										"flags": {},
 										"parameters": [
 											{
-												"id": 5880,
+												"id": 5882,
 												"name": "key",
 												"kind": 32768,
 												"flags": {},
@@ -98654,7 +98654,7 @@
 							}
 						},
 						{
-							"id": 5882,
+							"id": 5884,
 							"name": "welcome",
 							"kind": 1024,
 							"kindString": "Property",
@@ -98664,7 +98664,7 @@
 							"sources": [
 								{
 									"fileName": "src/models/user-preferences/user-preferences.ts",
-									"line": 110,
+									"line": 124,
 									"character": 1
 								}
 							],
@@ -98679,18 +98679,18 @@
 							"title": "Properties",
 							"kind": 1024,
 							"children": [
-								5876,
-								5881,
+								5878,
 								5883,
-								5877,
-								5882
+								5885,
+								5879,
+								5884
 							]
 						}
 					],
 					"sources": [
 						{
 							"fileName": "src/models/user-preferences/user-preferences.ts",
-							"line": 106,
+							"line": 120,
 							"character": 17
 						}
 					]
@@ -98779,7 +98779,7 @@
 							],
 							"type": {
 								"type": "reference",
-								"id": 5871,
+								"id": 5873,
 								"name": "EditorTheme"
 							}
 						},
@@ -98820,7 +98820,7 @@
 							],
 							"type": {
 								"type": "reference",
-								"id": 5887,
+								"id": 5889,
 								"name": "ExplorerPreferences"
 							}
 						},
@@ -98890,7 +98890,7 @@
 							],
 							"type": {
 								"type": "reference",
-								"id": 5907,
+								"id": 5909,
 								"name": "AllListPreferences"
 							}
 						},
@@ -99091,11 +99091,14 @@
 											"flags": {
 												"isOptional": true
 											},
+											"comment": {
+												"shortText": "https://microsoft.github.io/monaco-editor/docs.html#interfaces/editor.IStandaloneDiffEditorConstructionOptions.html#fontSize"
+											},
 											"sources": [
 												{
 													"fileName": "src/models/user-preferences/user-preferences.ts",
-													"line": 54,
-													"character": 53
+													"line": 60,
+													"character": 4
 												}
 											],
 											"type": {
@@ -99111,11 +99114,14 @@
 											"flags": {
 												"isOptional": true
 											},
+											"comment": {
+												"shortText": "https://microsoft.github.io/monaco-editor/docs.html#interfaces/editor.IStandaloneDiffEditorConstructionOptions.html#theme"
+											},
 											"sources": [
 												{
 													"fileName": "src/models/user-preferences/user-preferences.ts",
-													"line": 54,
-													"character": 26
+													"line": 57,
+													"character": 4
 												}
 											],
 											"type": {
@@ -99139,6 +99145,69 @@
 													}
 												]
 											}
+										},
+										{
+											"id": 5871,
+											"name": "wordWrap",
+											"kind": 1024,
+											"kindString": "Property",
+											"flags": {
+												"isOptional": true
+											},
+											"comment": {
+												"shortText": "https://microsoft.github.io/monaco-editor/docs.html#interfaces/editor.IStandaloneDiffEditorConstructionOptions.html#wordWrap"
+											},
+											"sources": [
+												{
+													"fileName": "src/models/user-preferences/user-preferences.ts",
+													"line": 63,
+													"character": 4
+												}
+											],
+											"type": {
+												"type": "union",
+												"types": [
+													{
+														"type": "literal",
+														"value": "off"
+													},
+													{
+														"type": "literal",
+														"value": "bounded"
+													},
+													{
+														"type": "literal",
+														"value": "on"
+													},
+													{
+														"type": "literal",
+														"value": "wordWrapColumn"
+													}
+												]
+											}
+										},
+										{
+											"id": 5872,
+											"name": "wordWrapColumn",
+											"kind": 1024,
+											"kindString": "Property",
+											"flags": {
+												"isOptional": true
+											},
+											"comment": {
+												"shortText": "https://microsoft.github.io/monaco-editor/docs.html#interfaces/editor.IStandaloneDiffEditorConstructionOptions.html#wordWrapColumn"
+											},
+											"sources": [
+												{
+													"fileName": "src/models/user-preferences/user-preferences.ts",
+													"line": 66,
+													"character": 4
+												}
+											],
+											"type": {
+												"type": "intrinsic",
+												"name": "number"
+											}
 										}
 									],
 									"groups": [
@@ -99147,7 +99216,9 @@
 											"kind": 1024,
 											"children": [
 												5870,
-												5869
+												5869,
+												5871,
+												5872
 											]
 										}
 									]
@@ -99461,7 +99532,7 @@
 							],
 							"type": {
 								"type": "reference",
-								"id": 5875,
+								"id": 5877,
 								"name": "System"
 							}
 						},
@@ -99530,7 +99601,7 @@
 																"type": "array",
 																"elementType": {
 																	"type": "reference",
-																	"id": 5900,
+																	"id": 5902,
 																	"name": "DisplayOption"
 																}
 															}
@@ -99580,7 +99651,7 @@
 								"type": "array",
 								"elementType": {
 									"type": "reference",
-									"id": 5929,
+									"id": 5931,
 									"name": "PreferencesTimeframeEntry"
 								}
 							}
@@ -99602,7 +99673,7 @@
 							],
 							"type": {
 								"type": "reference",
-								"id": 5899,
+								"id": 5901,
 								"name": "TreeViewDepth"
 							}
 						},
@@ -99702,14 +99773,14 @@
 					]
 				},
 				{
-					"id": 5891,
+					"id": 5893,
 					"name": "UserPreferencesWithMetadata",
 					"kind": 256,
 					"kindString": "Interface",
 					"flags": {},
 					"children": [
 						{
-							"id": 5893,
+							"id": 5895,
 							"name": "lastUpdateDate",
 							"kind": 1024,
 							"kindString": "Property",
@@ -99732,7 +99803,7 @@
 							}
 						},
 						{
-							"id": 5894,
+							"id": 5896,
 							"name": "preferences",
 							"kind": 1024,
 							"kindString": "Property",
@@ -99754,7 +99825,7 @@
 							}
 						},
 						{
-							"id": 5892,
+							"id": 5894,
 							"name": "userID",
 							"kind": 1024,
 							"kindString": "Property",
@@ -99780,9 +99851,9 @@
 							"title": "Properties",
 							"kind": 1024,
 							"children": [
-								5893,
-								5894,
-								5892
+								5895,
+								5896,
+								5894
 							]
 						}
 					],
@@ -99795,7 +99866,7 @@
 					]
 				},
 				{
-					"id": 5907,
+					"id": 5909,
 					"name": "AllListPreferences",
 					"kind": 4194304,
 					"kindString": "Type alias",
@@ -99803,7 +99874,7 @@
 					"sources": [
 						{
 							"fileName": "src/models/user-preferences/user-preferences.ts",
-							"line": 68,
+							"line": 82,
 							"character": 12
 						}
 					],
@@ -99816,7 +99887,7 @@
 							},
 							{
 								"type": "reference",
-								"id": 5908,
+								"id": 5910,
 								"name": "ListPreferences"
 							}
 						],
@@ -99826,7 +99897,7 @@
 					}
 				},
 				{
-					"id": 5927,
+					"id": 5929,
 					"name": "ExplorerPaneID",
 					"kind": 4194304,
 					"kindString": "Type alias",
@@ -99834,7 +99905,7 @@
 					"sources": [
 						{
 							"fileName": "src/models/user-preferences/user-preferences.ts",
-							"line": 102,
+							"line": 116,
 							"character": 12
 						}
 					],
@@ -99865,7 +99936,7 @@
 					}
 				},
 				{
-					"id": 5890,
+					"id": 5892,
 					"name": "FontSize",
 					"kind": 4194304,
 					"kindString": "Type alias",
@@ -99873,7 +99944,7 @@
 					"sources": [
 						{
 							"fileName": "src/models/user-preferences/user-preferences.ts",
-							"line": 123,
+							"line": 137,
 							"character": 12
 						}
 					],
@@ -99883,7 +99954,7 @@
 					}
 				},
 				{
-					"id": 5919,
+					"id": 5921,
 					"name": "LayoutID",
 					"kind": 4194304,
 					"kindString": "Type alias",
@@ -99891,7 +99962,7 @@
 					"sources": [
 						{
 							"fileName": "src/models/user-preferences/user-preferences.ts",
-							"line": 85,
+							"line": 99,
 							"character": 12
 						}
 					],
@@ -99918,7 +99989,7 @@
 					}
 				},
 				{
-					"id": 5908,
+					"id": 5910,
 					"name": "ListPreferences",
 					"kind": 4194304,
 					"kindString": "Type alias",
@@ -99926,21 +99997,21 @@
 					"sources": [
 						{
 							"fileName": "src/models/user-preferences/user-preferences.ts",
-							"line": 69,
+							"line": 83,
 							"character": 12
 						}
 					],
 					"type": {
 						"type": "reflection",
 						"declaration": {
-							"id": 5909,
+							"id": 5911,
 							"name": "__type",
 							"kind": 65536,
 							"kindString": "Type literal",
 							"flags": {},
 							"children": [
 								{
-									"id": 5911,
+									"id": 5913,
 									"name": "layout",
 									"kind": 1024,
 									"kindString": "Property",
@@ -99948,18 +100019,18 @@
 									"sources": [
 										{
 											"fileName": "src/models/user-preferences/user-preferences.ts",
-											"line": 69,
+											"line": 83,
 											"character": 54
 										}
 									],
 									"type": {
 										"type": "reference",
-										"id": 5912,
+										"id": 5914,
 										"name": "ListLayout"
 									}
 								},
 								{
-									"id": 5910,
+									"id": 5912,
 									"name": "showFilters",
 									"kind": 1024,
 									"kindString": "Property",
@@ -99967,7 +100038,7 @@
 									"sources": [
 										{
 											"fileName": "src/models/user-preferences/user-preferences.ts",
-											"line": 69,
+											"line": 83,
 											"character": 32
 										}
 									],
@@ -99982,15 +100053,15 @@
 									"title": "Properties",
 									"kind": 1024,
 									"children": [
-										5911,
-										5910
+										5913,
+										5912
 									]
 								}
 							],
 							"sources": [
 								{
 									"fileName": "src/models/user-preferences/user-preferences.ts",
-									"line": 69,
+									"line": 83,
 									"character": 30
 								}
 							]
@@ -99998,7 +100069,7 @@
 					}
 				},
 				{
-					"id": 5898,
+					"id": 5900,
 					"name": "MenuAppearance",
 					"kind": 4194304,
 					"kindString": "Type alias",
@@ -100020,14 +100091,14 @@
 							"type": "query",
 							"queryType": {
 								"type": "reference",
-								"id": 5897,
+								"id": 5899,
 								"name": "MENU_APPEARANCE_OPTIONS"
 							}
 						}
 					}
 				},
 				{
-					"id": 5896,
+					"id": 5898,
 					"name": "MonacoEditorTheme",
 					"kind": 4194304,
 					"kindString": "Type alias",
@@ -100049,14 +100120,14 @@
 							"type": "query",
 							"queryType": {
 								"type": "reference",
-								"id": 5895,
+								"id": 5897,
 								"name": "ALL_MONACO_EDITOR_THEMES"
 							}
 						}
 					}
 				},
 				{
-					"id": 5928,
+					"id": 5930,
 					"name": "PaneDirection",
 					"kind": 4194304,
 					"kindString": "Type alias",
@@ -100064,7 +100135,7 @@
 					"sources": [
 						{
 							"fileName": "src/models/user-preferences/user-preferences.ts",
-							"line": 104,
+							"line": 118,
 							"character": 12
 						}
 					],
@@ -100083,7 +100154,7 @@
 					}
 				},
 				{
-					"id": 5933,
+					"id": 5935,
 					"name": "PreferencesDurationTimeframe",
 					"kind": 4194304,
 					"kindString": "Type alias",
@@ -100091,7 +100162,7 @@
 					"sources": [
 						{
 							"fileName": "src/models/user-preferences/user-preferences.ts",
-							"line": 136,
+							"line": 150,
 							"character": 12
 						}
 					],
@@ -100113,7 +100184,7 @@
 					}
 				},
 				{
-					"id": 5941,
+					"id": 5943,
 					"name": "PreferencesPredefinedTimeframe",
 					"kind": 4194304,
 					"kindString": "Type alias",
@@ -100121,7 +100192,7 @@
 					"sources": [
 						{
 							"fileName": "src/models/user-preferences/user-preferences.ts",
-							"line": 147,
+							"line": 161,
 							"character": 12
 						}
 					],
@@ -100143,7 +100214,7 @@
 					}
 				},
 				{
-					"id": 5934,
+					"id": 5936,
 					"name": "PreferencesRangeTimeframe",
 					"kind": 4194304,
 					"kindString": "Type alias",
@@ -100151,21 +100222,21 @@
 					"sources": [
 						{
 							"fileName": "src/models/user-preferences/user-preferences.ts",
-							"line": 137,
+							"line": 151,
 							"character": 12
 						}
 					],
 					"type": {
 						"type": "reflection",
 						"declaration": {
-							"id": 5935,
+							"id": 5937,
 							"name": "__type",
 							"kind": 65536,
 							"kindString": "Type literal",
 							"flags": {},
 							"children": [
 								{
-									"id": 5938,
+									"id": 5940,
 									"name": "end",
 									"kind": 1024,
 									"kindString": "Property",
@@ -100173,25 +100244,7 @@
 									"sources": [
 										{
 											"fileName": "src/models/user-preferences/user-preferences.ts",
-											"line": 141,
-											"character": 1
-										}
-									],
-									"type": {
-										"type": "intrinsic",
-										"name": "string"
-									}
-								},
-								{
-									"id": 5937,
-									"name": "start",
-									"kind": 1024,
-									"kindString": "Property",
-									"flags": {},
-									"sources": [
-										{
-											"fileName": "src/models/user-preferences/user-preferences.ts",
-											"line": 140,
+											"line": 155,
 											"character": 1
 										}
 									],
@@ -100202,16 +100255,14 @@
 								},
 								{
 									"id": 5939,
-									"name": "timezone",
+									"name": "start",
 									"kind": 1024,
 									"kindString": "Property",
-									"flags": {
-										"isOptional": true
-									},
+									"flags": {},
 									"sources": [
 										{
 											"fileName": "src/models/user-preferences/user-preferences.ts",
-											"line": 143,
+											"line": 154,
 											"character": 1
 										}
 									],
@@ -100221,7 +100272,27 @@
 									}
 								},
 								{
-									"id": 5936,
+									"id": 5941,
+									"name": "timezone",
+									"kind": 1024,
+									"kindString": "Property",
+									"flags": {
+										"isOptional": true
+									},
+									"sources": [
+										{
+											"fileName": "src/models/user-preferences/user-preferences.ts",
+											"line": 157,
+											"character": 1
+										}
+									],
+									"type": {
+										"type": "intrinsic",
+										"name": "string"
+									}
+								},
+								{
+									"id": 5938,
 									"name": "type",
 									"kind": 1024,
 									"kindString": "Property",
@@ -100229,7 +100300,7 @@
 									"sources": [
 										{
 											"fileName": "src/models/user-preferences/user-preferences.ts",
-											"line": 138,
+											"line": 152,
 											"character": 1
 										}
 									],
@@ -100239,7 +100310,7 @@
 									}
 								},
 								{
-									"id": 5940,
+									"id": 5942,
 									"name": "userLabel",
 									"kind": 1024,
 									"kindString": "Property",
@@ -100249,7 +100320,7 @@
 									"sources": [
 										{
 											"fileName": "src/models/user-preferences/user-preferences.ts",
-											"line": 144,
+											"line": 158,
 											"character": 1
 										}
 									],
@@ -100264,18 +100335,18 @@
 									"title": "Properties",
 									"kind": 1024,
 									"children": [
-										5938,
-										5937,
+										5940,
 										5939,
-										5936,
-										5940
+										5941,
+										5938,
+										5942
 									]
 								}
 							],
 							"sources": [
 								{
 									"fileName": "src/models/user-preferences/user-preferences.ts",
-									"line": 137,
+									"line": 151,
 									"character": 40
 								}
 							]
@@ -100283,7 +100354,7 @@
 					}
 				},
 				{
-					"id": 5942,
+					"id": 5944,
 					"name": "PreferencesTimeframe",
 					"kind": 4194304,
 					"kindString": "Type alias",
@@ -100291,7 +100362,7 @@
 					"sources": [
 						{
 							"fileName": "src/models/user-preferences/user-preferences.ts",
-							"line": 148,
+							"line": 162,
 							"character": 12
 						}
 					],
@@ -100300,24 +100371,24 @@
 						"types": [
 							{
 								"type": "reference",
-								"id": 5933,
+								"id": 5935,
 								"name": "PreferencesDurationTimeframe"
 							},
 							{
 								"type": "reference",
-								"id": 5934,
+								"id": 5936,
 								"name": "PreferencesRangeTimeframe"
 							},
 							{
 								"type": "reference",
-								"id": 5941,
+								"id": 5943,
 								"name": "PreferencesPredefinedTimeframe"
 							}
 						]
 					}
 				},
 				{
-					"id": 5929,
+					"id": 5931,
 					"name": "PreferencesTimeframeEntry",
 					"kind": 4194304,
 					"kindString": "Type alias",
@@ -100325,7 +100396,7 @@
 					"sources": [
 						{
 							"fileName": "src/models/user-preferences/user-preferences.ts",
-							"line": 129,
+							"line": 143,
 							"character": 12
 						}
 					],
@@ -100334,19 +100405,19 @@
 						"types": [
 							{
 								"type": "reference",
-								"id": 5930,
+								"id": 5932,
 								"name": "PreferencesSystemTimeframe"
 							},
 							{
 								"type": "reference",
-								"id": 5943,
+								"id": 5945,
 								"name": "PreferencesCustomTimeframe"
 							}
 						]
 					}
 				},
 				{
-					"id": 5915,
+					"id": 5917,
 					"name": "SlimLayout",
 					"kind": 4194304,
 					"kindString": "Type alias",
@@ -100354,21 +100425,21 @@
 					"sources": [
 						{
 							"fileName": "src/models/user-preferences/user-preferences.ts",
-							"line": 80,
+							"line": 94,
 							"character": 12
 						}
 					],
 					"type": {
 						"type": "reflection",
 						"declaration": {
-							"id": 5916,
+							"id": 5918,
 							"name": "__type",
 							"kind": 65536,
 							"kindString": "Type literal",
 							"flags": {},
 							"children": [
 								{
-									"id": 5917,
+									"id": 5919,
 									"name": "id",
 									"kind": 1024,
 									"kindString": "Property",
@@ -100376,18 +100447,18 @@
 									"sources": [
 										{
 											"fileName": "src/models/user-preferences/user-preferences.ts",
-											"line": 81,
+											"line": 95,
 											"character": 1
 										}
 									],
 									"type": {
 										"type": "reference",
-										"id": 5919,
+										"id": 5921,
 										"name": "LayoutID"
 									}
 								},
 								{
-									"id": 5918,
+									"id": 5920,
 									"name": "panes",
 									"kind": 1024,
 									"kindString": "Property",
@@ -100395,7 +100466,7 @@
 									"sources": [
 										{
 											"fileName": "src/models/user-preferences/user-preferences.ts",
-											"line": 82,
+											"line": 96,
 											"character": 1
 										}
 									],
@@ -100403,7 +100474,7 @@
 										"type": "array",
 										"elementType": {
 											"type": "reference",
-											"id": 5920,
+											"id": 5922,
 											"name": "SlimPaneSettings"
 										}
 									}
@@ -100414,15 +100485,15 @@
 									"title": "Properties",
 									"kind": 1024,
 									"children": [
-										5917,
-										5918
+										5919,
+										5920
 									]
 								}
 							],
 							"sources": [
 								{
 									"fileName": "src/models/user-preferences/user-preferences.ts",
-									"line": 80,
+									"line": 94,
 									"character": 25
 								}
 							]
@@ -100430,7 +100501,7 @@
 					}
 				},
 				{
-					"id": 5920,
+					"id": 5922,
 					"name": "SlimPaneSettings",
 					"kind": 4194304,
 					"kindString": "Type alias",
@@ -100438,7 +100509,7 @@
 					"sources": [
 						{
 							"fileName": "src/models/user-preferences/user-preferences.ts",
-							"line": 87,
+							"line": 101,
 							"character": 12
 						}
 					],
@@ -100447,7 +100518,7 @@
 						"typeArguments": [
 							{
 								"type": "reference",
-								"id": 5921,
+								"id": 5923,
 								"name": "PaneSettings"
 							},
 							{
@@ -100461,7 +100532,7 @@
 					}
 				},
 				{
-					"id": 5889,
+					"id": 5891,
 					"name": "Theme",
 					"kind": 4194304,
 					"kindString": "Type alias",
@@ -100469,7 +100540,7 @@
 					"sources": [
 						{
 							"fileName": "src/models/user-preferences/user-preferences.ts",
-							"line": 125,
+							"line": 139,
 							"character": 12
 						}
 					],
@@ -100500,7 +100571,7 @@
 					}
 				},
 				{
-					"id": 5899,
+					"id": 5901,
 					"name": "TreeViewDepth",
 					"kind": 4194304,
 					"kindString": "Type alias",
@@ -100508,7 +100579,7 @@
 					"sources": [
 						{
 							"fileName": "src/models/user-preferences/user-preferences.ts",
-							"line": 57,
+							"line": 71,
 							"character": 12
 						}
 					],
@@ -100527,7 +100598,7 @@
 					}
 				},
 				{
-					"id": 5895,
+					"id": 5897,
 					"name": "ALL_MONACO_EDITOR_THEMES",
 					"kind": 32,
 					"kindString": "Variable",
@@ -100573,7 +100644,7 @@
 					"defaultValue": "..."
 				},
 				{
-					"id": 5897,
+					"id": 5899,
 					"name": "MENU_APPEARANCE_OPTIONS",
 					"kind": 32,
 					"kindString": "Variable",
@@ -100607,7 +100678,7 @@
 					"defaultValue": "..."
 				},
 				{
-					"id": 5947,
+					"id": 5949,
 					"name": "isPreferencesRangeTimeframe",
 					"kind": 64,
 					"kindString": "Function",
@@ -100615,20 +100686,20 @@
 					"sources": [
 						{
 							"fileName": "src/models/user-preferences/user-preferences.ts",
-							"line": 208,
+							"line": 222,
 							"character": 13
 						}
 					],
 					"signatures": [
 						{
-							"id": 5948,
+							"id": 5950,
 							"name": "isPreferencesRangeTimeframe",
 							"kind": 4096,
 							"kindString": "Call signature",
 							"flags": {},
 							"parameters": [
 								{
-									"id": 5949,
+									"id": 5951,
 									"name": "value",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -100645,7 +100716,7 @@
 								"asserts": false,
 								"targetType": {
 									"type": "reference",
-									"id": 5934,
+									"id": 5936,
 									"name": "PreferencesRangeTimeframe"
 								}
 							}
@@ -100688,7 +100759,7 @@
 							],
 							"type": {
 								"type": "reference",
-								"id": 5891,
+								"id": 5893,
 								"name": "UserPreferencesWithMetadata"
 							}
 						}
@@ -100700,61 +100771,61 @@
 					"title": "Enumerations",
 					"kind": 8,
 					"children": [
-						5900,
-						5912
+						5902,
+						5914
 					]
 				},
 				{
 					"title": "Interfaces",
 					"kind": 256,
 					"children": [
-						5871,
-						5887,
-						5921,
-						5943,
-						5930,
+						5873,
+						5889,
+						5923,
+						5945,
+						5932,
 						5815,
-						5875,
+						5877,
 						5824,
-						5891
+						5893
 					]
 				},
 				{
 					"title": "Type Aliases",
 					"kind": 4194304,
 					"children": [
-						5907,
-						5927,
-						5890,
-						5919,
-						5908,
-						5898,
-						5896,
-						5928,
-						5933,
-						5941,
-						5934,
-						5942,
+						5909,
 						5929,
-						5915,
-						5920,
-						5889,
-						5899
+						5892,
+						5921,
+						5910,
+						5900,
+						5898,
+						5930,
+						5935,
+						5943,
+						5936,
+						5944,
+						5931,
+						5917,
+						5922,
+						5891,
+						5901
 					]
 				},
 				{
 					"title": "Variables",
 					"kind": 32,
 					"children": [
-						5895,
-						5897
+						5897,
+						5899
 					]
 				},
 				{
 					"title": "Functions",
 					"kind": 64,
 					"children": [
-						5947,
+						5949,
 						5821
 					]
 				}
@@ -100775,7 +100846,7 @@
 			"flags": {},
 			"children": [
 				{
-					"id": 5950,
+					"id": 5952,
 					"name": "RawUserSessions",
 					"kind": 256,
 					"kindString": "Interface",
@@ -100786,7 +100857,7 @@
 					},
 					"children": [
 						{
-							"id": 5953,
+							"id": 5955,
 							"name": "Sessions",
 							"kind": 1024,
 							"kindString": "Property",
@@ -100803,14 +100874,14 @@
 								"elementType": {
 									"type": "reflection",
 									"declaration": {
-										"id": 5954,
+										"id": 5956,
 										"name": "__type",
 										"kind": 65536,
 										"kindString": "Type literal",
 										"flags": {},
 										"children": [
 											{
-												"id": 5956,
+												"id": 5958,
 												"name": "LastHit",
 												"kind": 1024,
 												"kindString": "Property",
@@ -100828,7 +100899,7 @@
 												}
 											},
 											{
-												"id": 5955,
+												"id": 5957,
 												"name": "Origin",
 												"kind": 1024,
 												"kindString": "Property",
@@ -100846,7 +100917,7 @@
 												}
 											},
 											{
-												"id": 5958,
+												"id": 5960,
 												"name": "Synced",
 												"kind": 1024,
 												"kindString": "Property",
@@ -100864,7 +100935,7 @@
 												}
 											},
 											{
-												"id": 5957,
+												"id": 5959,
 												"name": "TempSession",
 												"kind": 1024,
 												"kindString": "Property",
@@ -100887,10 +100958,10 @@
 												"title": "Properties",
 												"kind": 1024,
 												"children": [
-													5956,
-													5955,
 													5958,
-													5957
+													5957,
+													5960,
+													5959
 												]
 											}
 										]
@@ -100899,7 +100970,7 @@
 							}
 						},
 						{
-							"id": 5951,
+							"id": 5953,
 							"name": "UID",
 							"kind": 1024,
 							"kindString": "Property",
@@ -100917,7 +100988,7 @@
 							}
 						},
 						{
-							"id": 5952,
+							"id": 5954,
 							"name": "User",
 							"kind": 1024,
 							"kindString": "Property",
@@ -100940,9 +101011,9 @@
 							"title": "Properties",
 							"kind": 1024,
 							"children": [
+								5955,
 								5953,
-								5951,
-								5952
+								5954
 							]
 						}
 					],
@@ -100955,14 +101026,14 @@
 					]
 				},
 				{
-					"id": 5966,
+					"id": 5968,
 					"name": "Session",
 					"kind": 256,
 					"kindString": "Interface",
 					"flags": {},
 					"children": [
 						{
-							"id": 5970,
+							"id": 5972,
 							"name": "isSynced",
 							"kind": 1024,
 							"kindString": "Property",
@@ -100980,7 +101051,7 @@
 							}
 						},
 						{
-							"id": 5969,
+							"id": 5971,
 							"name": "isTemporary",
 							"kind": 1024,
 							"kindString": "Property",
@@ -100998,7 +101069,7 @@
 							}
 						},
 						{
-							"id": 5968,
+							"id": 5970,
 							"name": "lastHit",
 							"kind": 1024,
 							"kindString": "Property",
@@ -101016,7 +101087,7 @@
 							}
 						},
 						{
-							"id": 5967,
+							"id": 5969,
 							"name": "origin",
 							"kind": 1024,
 							"kindString": "Property",
@@ -101039,10 +101110,10 @@
 							"title": "Properties",
 							"kind": 1024,
 							"children": [
+								5972,
+								5971,
 								5970,
-								5969,
-								5968,
-								5967
+								5969
 							]
 						}
 					],
@@ -101055,7 +101126,7 @@
 					]
 				},
 				{
-					"id": 5962,
+					"id": 5964,
 					"name": "UserSessions",
 					"kind": 256,
 					"kindString": "Interface",
@@ -101066,7 +101137,7 @@
 					},
 					"children": [
 						{
-							"id": 5965,
+							"id": 5967,
 							"name": "sessions",
 							"kind": 1024,
 							"kindString": "Property",
@@ -101082,13 +101153,13 @@
 								"type": "array",
 								"elementType": {
 									"type": "reference",
-									"id": 5966,
+									"id": 5968,
 									"name": "Session"
 								}
 							}
 						},
 						{
-							"id": 5963,
+							"id": 5965,
 							"name": "userID",
 							"kind": 1024,
 							"kindString": "Property",
@@ -101106,7 +101177,7 @@
 							}
 						},
 						{
-							"id": 5964,
+							"id": 5966,
 							"name": "username",
 							"kind": 1024,
 							"kindString": "Property",
@@ -101129,9 +101200,9 @@
 							"title": "Properties",
 							"kind": 1024,
 							"children": [
+								5967,
 								5965,
-								5963,
-								5964
+								5966
 							]
 						}
 					],
@@ -101144,7 +101215,7 @@
 					]
 				},
 				{
-					"id": 5959,
+					"id": 5961,
 					"name": "toUserSessions",
 					"kind": 64,
 					"kindString": "Function",
@@ -101158,28 +101229,28 @@
 					],
 					"signatures": [
 						{
-							"id": 5960,
+							"id": 5962,
 							"name": "toUserSessions",
 							"kind": 4096,
 							"kindString": "Call signature",
 							"flags": {},
 							"parameters": [
 								{
-									"id": 5961,
+									"id": 5963,
 									"name": "raw",
 									"kind": 32768,
 									"kindString": "Parameter",
 									"flags": {},
 									"type": {
 										"type": "reference",
-										"id": 5950,
+										"id": 5952,
 										"name": "RawUserSessions"
 									}
 								}
 							],
 							"type": {
 								"type": "reference",
-								"id": 5962,
+								"id": 5964,
 								"name": "UserSessions"
 							}
 						}
@@ -101191,16 +101262,16 @@
 					"title": "Interfaces",
 					"kind": 256,
 					"children": [
-						5950,
-						5966,
-						5962
+						5952,
+						5968,
+						5964
 					]
 				},
 				{
 					"title": "Functions",
 					"kind": 64,
 					"children": [
-						5959
+						5961
 					]
 				}
 			],
@@ -101220,7 +101291,7 @@
 			"flags": {},
 			"children": [
 				{
-					"id": 5990,
+					"id": 5992,
 					"name": "Version",
 					"kind": 256,
 					"kindString": "Interface",
@@ -101231,7 +101302,7 @@
 					},
 					"children": [
 						{
-							"id": 5991,
+							"id": 5993,
 							"name": "major",
 							"kind": 1024,
 							"kindString": "Property",
@@ -101249,7 +101320,7 @@
 							}
 						},
 						{
-							"id": 5992,
+							"id": 5994,
 							"name": "minor",
 							"kind": 1024,
 							"kindString": "Property",
@@ -101267,7 +101338,7 @@
 							}
 						},
 						{
-							"id": 5993,
+							"id": 5995,
 							"name": "patch",
 							"kind": 1024,
 							"kindString": "Property",
@@ -101290,9 +101361,9 @@
 							"title": "Properties",
 							"kind": 1024,
 							"children": [
-								5991,
-								5992,
-								5993
+								5993,
+								5994,
+								5995
 							]
 						}
 					],
@@ -101305,7 +101376,7 @@
 					]
 				},
 				{
-					"id": 5978,
+					"id": 5980,
 					"name": "RawVersion",
 					"kind": 4194304,
 					"kindString": "Type alias",
@@ -101331,7 +101402,7 @@
 					}
 				},
 				{
-					"id": 5979,
+					"id": 5981,
 					"name": "RawVersionObject",
 					"kind": 4194304,
 					"kindString": "Type alias",
@@ -101350,14 +101421,14 @@
 					"type": {
 						"type": "reflection",
 						"declaration": {
-							"id": 5980,
+							"id": 5982,
 							"name": "__type",
 							"kind": 65536,
 							"kindString": "Type literal",
 							"flags": {},
 							"children": [
 								{
-									"id": 5981,
+									"id": 5983,
 									"name": "Major",
 									"kind": 1024,
 									"kindString": "Property",
@@ -101375,7 +101446,7 @@
 									}
 								},
 								{
-									"id": 5982,
+									"id": 5984,
 									"name": "Minor",
 									"kind": 1024,
 									"kindString": "Property",
@@ -101395,7 +101466,7 @@
 									}
 								},
 								{
-									"id": 5983,
+									"id": 5985,
 									"name": "Point",
 									"kind": 1024,
 									"kindString": "Property",
@@ -101420,9 +101491,9 @@
 									"title": "Properties",
 									"kind": 1024,
 									"children": [
-										5981,
-										5982,
-										5983
+										5983,
+										5984,
+										5985
 									]
 								}
 							],
@@ -101437,7 +101508,7 @@
 					}
 				},
 				{
-					"id": 5971,
+					"id": 5973,
 					"name": "isVersion",
 					"kind": 64,
 					"kindString": "Function",
@@ -101451,14 +101522,14 @@
 					],
 					"signatures": [
 						{
-							"id": 5972,
+							"id": 5974,
 							"name": "isVersion",
 							"kind": 4096,
 							"kindString": "Call signature",
 							"flags": {},
 							"parameters": [
 								{
-									"id": 5973,
+									"id": 5975,
 									"name": "value",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -101475,7 +101546,7 @@
 								"asserts": false,
 								"targetType": {
 									"type": "reference",
-									"id": 5990,
+									"id": 5992,
 									"name": "Version"
 								}
 							}
@@ -101483,7 +101554,7 @@
 					]
 				},
 				{
-					"id": 5974,
+					"id": 5976,
 					"name": "isVersionGreatThan",
 					"kind": 64,
 					"kindString": "Function",
@@ -101497,7 +101568,7 @@
 					],
 					"signatures": [
 						{
-							"id": 5975,
+							"id": 5977,
 							"name": "isVersionGreatThan",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -101507,26 +101578,26 @@
 							},
 							"parameters": [
 								{
-									"id": 5976,
+									"id": 5978,
 									"name": "version_1",
 									"kind": 32768,
 									"kindString": "Parameter",
 									"flags": {},
 									"type": {
 										"type": "reference",
-										"id": 5990,
+										"id": 5992,
 										"name": "Version"
 									}
 								},
 								{
-									"id": 5977,
+									"id": 5979,
 									"name": "version_2",
 									"kind": 32768,
 									"kindString": "Parameter",
 									"flags": {},
 									"type": {
 										"type": "reference",
-										"id": 5990,
+										"id": 5992,
 										"name": "Version"
 									}
 								}
@@ -101539,7 +101610,7 @@
 					]
 				},
 				{
-					"id": 5984,
+					"id": 5986,
 					"name": "toRawVersionObject",
 					"kind": 64,
 					"kindString": "Function",
@@ -101553,35 +101624,35 @@
 					],
 					"signatures": [
 						{
-							"id": 5985,
+							"id": 5987,
 							"name": "toRawVersionObject",
 							"kind": 4096,
 							"kindString": "Call signature",
 							"flags": {},
 							"parameters": [
 								{
-									"id": 5986,
+									"id": 5988,
 									"name": "version",
 									"kind": 32768,
 									"kindString": "Parameter",
 									"flags": {},
 									"type": {
 										"type": "reference",
-										"id": 5990,
+										"id": 5992,
 										"name": "Version"
 									}
 								}
 							],
 							"type": {
 								"type": "reference",
-								"id": 5979,
+								"id": 5981,
 								"name": "RawVersionObject"
 							}
 						}
 					]
 				},
 				{
-					"id": 5987,
+					"id": 5989,
 					"name": "toVersion",
 					"kind": 64,
 					"kindString": "Function",
@@ -101595,14 +101666,14 @@
 					],
 					"signatures": [
 						{
-							"id": 5988,
+							"id": 5990,
 							"name": "toVersion",
 							"kind": 4096,
 							"kindString": "Call signature",
 							"flags": {},
 							"parameters": [
 								{
-									"id": 5989,
+									"id": 5991,
 									"name": "raw",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -101620,7 +101691,7 @@
 											},
 											{
 												"type": "reference",
-												"id": 5979,
+												"id": 5981,
 												"name": "RawVersionObject"
 											}
 										]
@@ -101629,7 +101700,7 @@
 							],
 							"type": {
 								"type": "reference",
-								"id": 5990,
+								"id": 5992,
 								"name": "Version"
 							}
 						}
@@ -101641,25 +101712,25 @@
 					"title": "Interfaces",
 					"kind": 256,
 					"children": [
-						5990
+						5992
 					]
 				},
 				{
 					"title": "Type Aliases",
 					"kind": 4194304,
 					"children": [
-						5978,
-						5979
+						5980,
+						5981
 					]
 				},
 				{
 					"title": "Functions",
 					"kind": 64,
 					"children": [
-						5971,
-						5974,
-						5984,
-						5987
+						5973,
+						5976,
+						5986,
+						5989
 					]
 				}
 			],
