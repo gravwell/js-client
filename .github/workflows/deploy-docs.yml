@@ -3,7 +3,8 @@ name: Deploy Docs to GitHub Pages
 on:
   push:
     # Every push on dev will run this action
-    branches: [dev]
+    branches:
+      - dev
 
 jobs:
   build:
@@ -11,10 +12,10 @@ jobs:
     concurrency: ci-${{github.ref}}
     steps:
       - name: checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Setup Node
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v4
         with:
           node-version: '16'
 
