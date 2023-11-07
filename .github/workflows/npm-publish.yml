@@ -1,22 +1,23 @@
-# This workflow will run tests using node and then publish a package to NPM when a release is created
+# This workflow will run tests using node and then publish a package to NPM when a release is released
 
 name: Publish Package to NPM
 
 on:
   release:
-    types: [created]
+    types:
+      - released
 
 jobs:
   publish-npm:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
 
       - name: Use Node.js 16.14.0
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v4
         with:
           node-version: '16.14.0'
-          registry-url: https://registry.npmjs.org/
+
       - name: Use NPM 8.5.3
         run: npm i -g npm@8.5.3
 
