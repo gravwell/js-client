@@ -7,13 +7,13 @@
  * license. See the LICENSE file for details.
  */
 
+import { GetAPIVersionResponse } from '~/functions/system/get-api-version';
 import {
-	GetAPIVersionResponse,
 	SystemStatusCategory,
 	SystemStatusMessageReceived,
 	SystemStatusMessageSent,
-} from '~/functions/system';
-import { APISubscription } from '~/functions/utils';
+} from '~/functions/system/subscribe-to-many-system-informations';
+import { APISubscription } from '~/functions/utils/api-subscription';
 import { SystemSettings } from '~/models/system-settings';
 
 export interface SystemService {

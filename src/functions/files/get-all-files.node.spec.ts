@@ -9,7 +9,8 @@
 
 import { createReadStream } from 'fs';
 import { join } from 'path';
-import { CreatableFile, isFileMetadata } from '~/models';
+import { CreatableFile } from '~/models/file/creatable-file';
+import { isFileMetadata } from '~/models/file/is-file-metadata';
 import { integrationTest, integrationTestSpecDef, TEST_ASSETS_PATH, TEST_BASE_API_CONTEXT } from '~/tests';
 import { makeCreateOneFile } from './create-one-file';
 import { makeDeleteOneFile } from './delete-one-file';

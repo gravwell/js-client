@@ -8,7 +8,10 @@
  */
 
 import { RawSearchModule, SearchModule, toSearchModule } from '~/models';
-import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, parseJSONResponse } from '../utils';
+import { APIContext } from '../utils/api-context';
+import { buildHTTPRequestWithAuthFromContext } from '../utils/build-http-request';
+import { buildURL } from '../utils/build-url';
+import { parseJSONResponse } from '../utils/parse-json-response';
 
 export const makeGetAllSearchModules = (context: APIContext): (() => Promise<Array<SearchModule>>) => {
 	const templatePath = '/api/info/searchmodules';

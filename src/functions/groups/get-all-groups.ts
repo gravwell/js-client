@@ -7,8 +7,13 @@
  * license. See the LICENSE file for details.
  */
 
-import { Group, RawGroup, toGroup } from '~/models';
-import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, parseJSONResponse } from '../utils';
+import { Group } from '~/models/group/group';
+import { RawGroup } from '~/models/group/raw-group';
+import { toGroup } from '~/models/group/to-group';
+import { APIContext } from '../utils/api-context';
+import { buildHTTPRequestWithAuthFromContext } from '../utils/build-http-request';
+import { buildURL } from '../utils/build-url';
+import { parseJSONResponse } from '../utils/parse-json-response';
 
 export const makeGetAllGroups = (context: APIContext): (() => Promise<Array<Group>>) => {
 	const templatePath = '/api/groups';

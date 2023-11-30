@@ -7,15 +7,13 @@
  * license. See the LICENSE file for details.
  */
 
-import {
-	makeCreateOneSavedQuery,
-	makeDeleteOneSavedQuery,
-	makeGetAllSavedQueries,
-	makeGetOneSavedQuery,
-	makeGetSavedQueriesAuthorizedToMe,
-	makeUpdateOneSavedQuery,
-} from '~/functions/saved-queries';
-import { APIContext } from '~/functions/utils';
+import { makeCreateOneSavedQuery } from '~/functions/saved-queries/create-one-saved-query';
+import { makeDeleteOneSavedQuery } from '~/functions/saved-queries/delete-one-saved-query';
+import { makeGetAllSavedQueries } from '~/functions/saved-queries/get-all-saved-queries';
+import { makeGetOneSavedQuery } from '~/functions/saved-queries/get-one-saved-query';
+import { makeGetSavedQueriesAuthorizedToMe } from '~/functions/saved-queries/get-saved-queries-authorized-to-me';
+import { makeUpdateOneSavedQuery } from '~/functions/saved-queries/update-one-saved-query';
+import { APIContext } from '~/functions/utils/api-context';
 import { SavedQueriesService } from './service';
 
 export const createSavedQueriesService = (context: APIContext): SavedQueriesService => ({

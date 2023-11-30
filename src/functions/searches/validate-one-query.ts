@@ -11,7 +11,7 @@ import { isNull, pick } from 'lodash';
 import { firstValueFrom } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
 import { Query, ValidatedQuery } from '~/models';
-import { APIContext } from '../utils';
+import { APIContext } from '../utils/api-context';
 import { makeSubscribeToOneQueryParsing } from './subscribe-to-query-parsing';
 
 export const makeValidateOneQuery = (context: APIContext): ((query: Query) => Promise<ValidatedQuery>) => {

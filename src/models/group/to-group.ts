@@ -8,7 +8,7 @@
  */
 
 import { DATA_TYPE } from '~/models';
-import { omitUndefinedShallow } from '../../functions/utils';
+import { omitUndefinedShallow } from '../../functions/utils/omit-undefined-shallow';
 import { Group } from './group';
 import { RawGroup } from './raw-group';
 

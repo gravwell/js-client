@@ -7,8 +7,13 @@
  * license. See the LICENSE file for details.
  */
 
-import { FileMetadata, RawFileMetadata, toFileMetadata } from '~/models';
-import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, parseJSONResponse } from '../utils';
+import { FileMetadata } from '~/models/file/file-metadata';
+import { RawFileMetadata } from '~/models/file/raw-file-metadata';
+import { toFileMetadata } from '~/models/file/to-file-metadata';
+import { APIContext } from '../utils/api-context';
+import { buildHTTPRequestWithAuthFromContext } from '../utils/build-http-request';
+import { buildURL } from '../utils/build-url';
+import { parseJSONResponse } from '../utils/parse-json-response';
 
 export const makeGetFilesAuthorizedToMe = (context: APIContext): (() => Promise<Array<FileMetadata>>) => {
 	const path = '/api/files';

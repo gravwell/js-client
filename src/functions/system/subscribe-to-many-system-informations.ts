@@ -7,7 +7,11 @@
  * license. See the LICENSE file for details.
  */
 
-import { APIContext, APISubscription, apiSubscriptionFromWebSocket, buildURL, WebSocket } from '../utils';
+import { APIContext } from '../utils/api-context';
+import { APISubscription } from '../utils/api-subscription';
+import { apiSubscriptionFromWebSocket } from '../utils/api-subscription-from-web-socket';
+import { buildURL } from '../utils/build-url';
+import { WebSocket } from '../utils/web-socket';
 
 export type SystemStatusMessageReceived =
 	| { Resp: 'ACK' }

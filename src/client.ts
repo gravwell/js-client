@@ -10,7 +10,8 @@
 import { isEqual, isUndefined } from 'lodash';
 import { BehaviorSubject, combineLatest, firstValueFrom, Observable } from 'rxjs';
 import { distinctUntilChanged, filter, map, shareReplay } from 'rxjs/operators';
-import { APIContext, fetch } from '~/functions/utils';
+import { APIContext } from '~/functions/utils/api-context';
+import { fetch } from '~/functions/utils/fetch';
 import {
 	ActionablesService,
 	AuthService,

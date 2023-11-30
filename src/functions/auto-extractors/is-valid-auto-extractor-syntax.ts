@@ -7,14 +7,13 @@
  * license. See the LICENSE file for details.
  */
 
-import { CreatableAutoExtractor, toRawCreatableAutoExtractor } from '~/models';
-import {
-	APIContext,
-	buildHTTPRequestWithAuthFromContext,
-	buildURL,
-	HTTPRequestOptions,
-	parseJSONResponse,
-} from '../utils';
+import { CreatableAutoExtractor } from '~/models/auto-extractor/creatable-auto-extractor';
+import { toRawCreatableAutoExtractor } from '~/models/auto-extractor/to-raw-creatable-auto-extractor';
+import { APIContext } from '../utils/api-context';
+import { buildHTTPRequestWithAuthFromContext } from '../utils/build-http-request';
+import { buildURL } from '../utils/build-url';
+import { HTTPRequestOptions } from '../utils/http-request-options';
+import { parseJSONResponse } from '../utils/parse-json-response';
 
 export const makeIsValidAutoExtractorSyntax = (
 	context: APIContext,

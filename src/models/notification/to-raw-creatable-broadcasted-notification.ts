@@ -7,7 +7,7 @@
  * license. See the LICENSE file for details.
  */
 
-import { omitUndefinedShallow } from '~/functions/utils';
+import { omitUndefinedShallow } from '~/functions/utils/omit-undefined-shallow';
 import { toRawNumericID } from '~/value-objects';
 import { CreatableBroadcastNotification } from './creatable-broadcasted-notification';
 import { RawCreatableBroadcastedNotification } from './raw-creatable-broadcasted-notification';

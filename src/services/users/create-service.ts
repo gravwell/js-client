@@ -7,17 +7,15 @@
  * license. See the LICENSE file for details.
  */
 
-import {
-	makeCreateOneUser,
-	makeDeleteOneUser,
-	makeGetAllUsers,
-	makeGetManyUsers,
-	makeGetMyUser,
-	makeGetOneUser,
-	makeUpdateMyUser,
-	makeUpdateOneUser,
-} from '~/functions/users';
-import { APIContext } from '~/functions/utils';
+import { makeCreateOneUser } from '~/functions/users/create-one-user';
+import { makeDeleteOneUser } from '~/functions/users/delete-one-user';
+import { makeGetAllUsers } from '~/functions/users/get-all-users';
+import { makeGetManyUsers } from '~/functions/users/get-many-users';
+import { makeGetMyUser } from '~/functions/users/get-my-user';
+import { makeGetOneUser } from '~/functions/users/get-one-user';
+import { makeUpdateMyUser } from '~/functions/users/update-my-user';
+import { makeUpdateOneUser } from '~/functions/users/update-one-user';
+import { APIContext } from '~/functions/utils/api-context';
 import { UsersService } from './service';
 
 export const createUsersService = (context: APIContext): UsersService => ({

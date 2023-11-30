@@ -9,7 +9,7 @@
 
 import { Macro } from '~/models';
 import { isNumericID, NumericID } from '~/value-objects';
-import { APIContext } from '../utils';
+import { APIContext } from '../utils/api-context';
 import { makeGetAllMacros } from './get-all-macros';
 import { makeGetMacrosByGroup } from './get-macros-by-group';
 import { makeGetMacrosByUser } from './get-macros-by-user';

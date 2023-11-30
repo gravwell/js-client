@@ -7,7 +7,8 @@
  * license. See the LICENSE file for details.
  */
 
-import { isLogLevel, LogLevel } from '~/models';
+import { isLogLevel } from '~/models/log-level/is-log-level';
+import { LogLevel } from '~/models/log-level/log-level';
 import { integrationTest, TEST_BASE_API_CONTEXT } from '~/tests';
 import { makeGetLogLevels } from './get-log-levels';
 

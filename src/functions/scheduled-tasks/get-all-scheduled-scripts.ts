@@ -8,7 +8,7 @@
  */
 
 import { ScheduledScript, ScheduledTask } from '~/models';
-import { APIContext } from '../utils';
+import { APIContext } from '../utils/api-context';
 import { makeGetAllScheduledTasks } from './get-all-scheduled-tasks';
 
 const isScheduledScript = (s: ScheduledTask): s is ScheduledScript => s.type === 'script';

@@ -7,7 +7,7 @@
  * license. See the LICENSE file for details.
  */
 
-import { APIContext } from '../utils';
+import { APIContext } from '../utils/api-context';
 import { makeDeleteOneGroup } from './delete-one-group';
 import { makeGetAllGroups } from './get-all-groups';
 

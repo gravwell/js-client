@@ -7,14 +7,14 @@
  * license. See the LICENSE file for details.
  */
 
-import { CreatableGroup, Group, toRawCreatableGroup } from '~/models';
-import {
-	APIContext,
-	buildHTTPRequestWithAuthFromContext,
-	buildURL,
-	HTTPRequestOptions,
-	parseJSONResponse,
-} from '../utils';
+import { CreatableGroup } from '~/models/group/creatable-group';
+import { Group } from '~/models/group/group';
+import { toRawCreatableGroup } from '~/models/group/to-raw-creatable-group';
+import { APIContext } from '../utils/api-context';
+import { buildHTTPRequestWithAuthFromContext } from '../utils/build-http-request';
+import { buildURL } from '../utils/build-url';
+import { HTTPRequestOptions } from '../utils/http-request-options';
+import { parseJSONResponse } from '../utils/parse-json-response';
 import { makeGetOneGroup } from './get-one-group';
 
 export const makeCreateOneGroup = (context: APIContext): ((data: CreatableGroup) => Promise<Group>) => {

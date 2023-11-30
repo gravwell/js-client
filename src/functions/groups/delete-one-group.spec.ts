@@ -7,7 +7,7 @@
  * license. See the LICENSE file for details.
  */
 
-import { CreatableGroup } from '~/models';
+import { CreatableGroup } from '~/models/group/creatable-group';
 import { integrationTest, integrationTestSpecDef, TEST_BASE_API_CONTEXT } from '~/tests';
 import { assertIsNotNil } from '../utils/type-guards';
 import { makeCreateOneGroup } from './create-one-group';

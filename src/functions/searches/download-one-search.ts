@@ -8,7 +8,9 @@
  */
 
 import { ID } from '~/value-objects';
-import { APIContext, buildURL, downloadFromURL, DownloadReturn } from '../utils';
+import { APIContext } from '../utils/api-context';
+import { buildURL } from '../utils/build-url';
+import { downloadFromURL, DownloadReturn } from '../utils/download-from-url';
 
 export type SearchDownloadFormat = string;
 

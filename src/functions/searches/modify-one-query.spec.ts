@@ -9,7 +9,7 @@
 
 import { addMinutes } from 'date-fns';
 import { v4 as uuidv4 } from 'uuid';
-import { makeCreateOneAutoExtractor } from '~/functions/auto-extractors';
+import { makeCreateOneAutoExtractor } from '~/functions/auto-extractors/create-one-auto-extractor';
 import { ElementFilter } from '~/models';
 import { integrationTestSpecDef, sleep, TEST_BASE_API_CONTEXT } from '~/tests';
 import { makeIngestMultiLineEntry } from '../ingestors/ingest-multi-line-entry';

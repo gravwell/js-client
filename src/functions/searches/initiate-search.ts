@@ -19,7 +19,7 @@ import {
 	RawSearchMessageSent,
 } from '~/models';
 import { RawJSON } from '~/value-objects';
-import { APISubscription } from '../utils';
+import { APISubscription } from '../utils/api-subscription';
 
 /*
  * A queue of "requests" to initiate searches.

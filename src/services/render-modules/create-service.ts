@@ -7,8 +7,8 @@
  * license. See the LICENSE file for details.
  */
 
-import { makeGetAllRenderModules } from '~/functions/render-modules';
-import { APIContext } from '~/functions/utils';
+import { makeGetAllRenderModules } from '~/functions/render-modules/get-all-render-modules';
+import { APIContext } from '~/functions/utils/api-context';
 import { RenderModulesService } from './service';
 
 export const createRenderModulesService = (context: APIContext): RenderModulesService => ({

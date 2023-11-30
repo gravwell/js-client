@@ -8,8 +8,14 @@
  */
 
 import { isEmpty } from 'lodash';
-import { IndexerWell, RawIndexerWellResponse, toIndexerWell } from '~/models';
-import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, fetch, parseJSONResponse } from '../utils';
+import { IndexerWell } from '~/models/indexer/indexer-well';
+import { RawIndexerWellResponse } from '~/models/indexer/raw-indexer-well';
+import { toIndexerWell } from '~/models/indexer/to-indexer-well';
+import { APIContext } from '../utils/api-context';
+import { buildHTTPRequestWithAuthFromContext } from '../utils/build-http-request';
+import { buildURL } from '../utils/build-url';
+import { fetch } from '../utils/fetch';
+import { parseJSONResponse } from '../utils/parse-json-response';
 
 export const makeGetAllIndexers = (context: APIContext): (() => Promise<Array<IndexerWell>>) => {
 	const templatePath = '/api/stats/wellStats';

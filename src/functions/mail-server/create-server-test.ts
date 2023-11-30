@@ -10,7 +10,10 @@
 import { MailServerTestData } from '~/models';
 import { isMailServerTestResult } from '~/models/mail-server/is-mail-server-test-result';
 import { MailServerTestResult } from '~/models/mail-server/mail-server-test-result';
-import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, parseJSONResponse } from '../utils';
+import { APIContext } from '../utils/api-context';
+import { buildHTTPRequestWithAuthFromContext } from '../utils/build-http-request';
+import { buildURL } from '../utils/build-url';
+import { parseJSONResponse } from '../utils/parse-json-response';
 import { toRawMailServerTestData } from './conversion';
 import { MAIL_PATH } from './paths';
 

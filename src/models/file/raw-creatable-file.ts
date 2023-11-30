@@ -7,7 +7,7 @@
  * license. See the LICENSE file for details.
  */
 
-import { File } from '~/functions/utils';
+import { File } from '~/functions/utils/file';
 import { RawUUID } from '~/value-objects';
 
 export interface RawCreatableFile {

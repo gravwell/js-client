@@ -7,7 +7,7 @@
  * license. See the LICENSE file for details.
  */
 
-import { APIContext } from '../functions/utils';
+import { APIContext } from '../functions/utils/api-context';
 
 export const getTestTypes = (): {
 	unitTests: boolean;

@@ -8,7 +8,7 @@
  */
 
 import { CreatableScheduledQuery, ScheduledQuery } from '~/models';
-import { APIContext } from '../utils';
+import { APIContext } from '../utils/api-context';
 import { makeCreateOneScheduledQuery } from './create-one-scheduled-query';
 
 export const makeCreateManyScheduledQueries = (

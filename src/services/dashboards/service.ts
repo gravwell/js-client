@@ -7,8 +7,10 @@
  * license. See the LICENSE file for details.
  */
 
-import { DashboardsFilter } from '~/functions/dashboards';
-import { CreatableDashboard, Dashboard, UpdatableDashboard } from '~/models/dashboard';
+import { DashboardsFilter } from '~/functions/dashboards/get-many-dashboards';
+import { CreatableDashboard } from '~/models/dashboard/creatable-dashboard';
+import { Dashboard } from '~/models/dashboard/dashboard';
+import { UpdatableDashboard } from '~/models/dashboard/updatable-dashboard';
 
 export interface DashboardsService {
 	readonly get: {

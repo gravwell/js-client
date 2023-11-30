@@ -7,16 +7,14 @@
  * license. See the LICENSE file for details.
  */
 
-import {
-	makeCreateOneResource,
-	makeDeleteOneResource,
-	makeGetAllResources,
-	makeGetOneResource,
-	makeGetResourcesAuthorizedToMe,
-	makePreviewOneResourceContent,
-	makeUpdateOneResource,
-} from '~/functions/resources';
-import { APIContext } from '~/functions/utils';
+import { makeCreateOneResource } from '~/functions/resources/create-one-resource';
+import { makeDeleteOneResource } from '~/functions/resources/delete-one-resource';
+import { makeGetAllResources } from '~/functions/resources/get-all-resources';
+import { makeGetOneResource } from '~/functions/resources/get-one-resource';
+import { makeGetResourcesAuthorizedToMe } from '~/functions/resources/get-resources-authorized-to-me';
+import { makePreviewOneResourceContent } from '~/functions/resources/preview-one-resource-content';
+import { makeUpdateOneResource } from '~/functions/resources/update-one-resource';
+import { APIContext } from '~/functions/utils/api-context';
 import { ResourcesService } from './service';
 
 export const createResourcesService = (context: APIContext): ResourcesService => ({

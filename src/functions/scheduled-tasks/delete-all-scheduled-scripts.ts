@@ -7,7 +7,7 @@
  * license. See the LICENSE file for details.
  */
 
-import { APIContext } from '../utils';
+import { APIContext } from '../utils/api-context';
 import { makeDeleteOneScheduledScript } from './delete-one-scheduled-script';
 import { makeGetAllScheduledScripts } from './get-all-scheduled-scripts';
 

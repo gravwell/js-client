@@ -7,7 +7,7 @@
  * license. See the LICENSE file for details.
  */
 
-import { File } from '~/functions/utils';
+import { File } from '~/functions/utils/file';
 import { NumericID } from '~/value-objects';
 
 export interface UploadableAutoExtractor {

@@ -7,8 +7,14 @@
  * license. See the LICENSE file for details.
  */
 
-import { APISubscription, File } from '~/functions/utils';
-import { BuildableKit, InstallableKit, KitArchive, KitInstallationStatus, LocalKit, RemoteKit } from '~/models/kit';
+import { APISubscription } from '~/functions/utils/api-subscription';
+import { File } from '~/functions/utils/file';
+import { BuildableKit } from '~/models/kit/buildable-kit';
+import { InstallableKit } from '~/models/kit/installable-kit';
+import { KitArchive } from '~/models/kit/kit-archive';
+import { KitInstallationStatus } from '~/models/kit/kit-installation-status';
+import { LocalKit } from '~/models/kit/local-kit';
+import { RemoteKit } from '~/models/kit/remote-kit';
 
 export interface KitsService {
 	readonly get: {

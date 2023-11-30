@@ -7,7 +7,7 @@
  * license. See the LICENSE file for details.
  */
 
-import { ConditionalPartial, PartialProps } from '~/functions/utils';
+import { ConditionalPartial, PartialProps } from '~/functions/utils/conditional-partial';
 import { NumericID } from '~/value-objects';
 import { ActionableAction, ActionableTrigger } from './actionable';
 

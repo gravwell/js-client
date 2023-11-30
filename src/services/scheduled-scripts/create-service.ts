@@ -7,21 +7,19 @@
  * license. See the LICENSE file for details.
  */
 
-import {
-	makeClearOneScheduledScriptError,
-	makeClearOneScheduledScriptState,
-	makeCreateManyScheduledScripts,
-	makeCreateOneScheduledScript,
-	makeDeleteAllScheduledScripts,
-	makeDeleteManyScheduledScripts,
-	makeDeleteOneScheduledScript,
-	makeGetAllScheduledScripts,
-	makeGetManyScheduledScripts,
-	makeGetOneScheduledScript,
-	makeGetScheduledScriptsAuthorizedToMe,
-	makeUpdateOneScheduledScript,
-} from '~/functions/scheduled-tasks';
-import { APIContext } from '~/functions/utils';
+import { makeClearOneScheduledScriptError } from '~/functions/scheduled-tasks/clear-one-scheduled-script-error';
+import { makeClearOneScheduledScriptState } from '~/functions/scheduled-tasks/clear-one-scheduled-script-state';
+import { makeCreateManyScheduledScripts } from '~/functions/scheduled-tasks/create-many-scheduled-scripts';
+import { makeCreateOneScheduledScript } from '~/functions/scheduled-tasks/create-one-scheduled-script';
+import { makeDeleteAllScheduledScripts } from '~/functions/scheduled-tasks/delete-all-scheduled-scripts';
+import { makeDeleteManyScheduledScripts } from '~/functions/scheduled-tasks/delete-many-scheduled-scripts';
+import { makeDeleteOneScheduledScript } from '~/functions/scheduled-tasks/delete-one-scheduled-script';
+import { makeGetAllScheduledScripts } from '~/functions/scheduled-tasks/get-all-scheduled-scripts';
+import { makeGetManyScheduledScripts } from '~/functions/scheduled-tasks/get-many-scheduled-scripts';
+import { makeGetOneScheduledScript } from '~/functions/scheduled-tasks/get-one-scheduled-script';
+import { makeGetScheduledScriptsAuthorizedToMe } from '~/functions/scheduled-tasks/get-scheduled-scripts-authorized-to-me';
+import { makeUpdateOneScheduledScript } from '~/functions/scheduled-tasks/update-one-scheduled-script';
+import { APIContext } from '~/functions/utils/api-context';
 import { ScheduledScriptsService } from './service';
 
 export const createScheduledScriptsService = (context: APIContext): ScheduledScriptsService => ({

@@ -7,17 +7,16 @@
  * license. See the LICENSE file for details.
  */
 
-import { GeneratedAutoExtractors, RawGeneratedAutoExtractors } from '~/models';
 import { GeneratableAutoExtractor } from '~/models/auto-extractor/generatable-auto-extractor';
+import { GeneratedAutoExtractors } from '~/models/auto-extractor/generated-auto-extractors';
+import { RawGeneratedAutoExtractors } from '~/models/auto-extractor/raw-generated-auto-extrators';
 import { toGeneratedAutoExtractors } from '~/models/auto-extractor/to-generated-auto-extractor';
 import { toRawGeneratableAutoExtractor } from '~/models/auto-extractor/to-raw-generatable-auto-extractor';
-import {
-	APIContext,
-	buildHTTPRequestWithAuthFromContext,
-	buildURL,
-	HTTPRequestOptions,
-	parseJSONResponse,
-} from '../utils';
+import { APIContext } from '../utils/api-context';
+import { buildHTTPRequestWithAuthFromContext } from '../utils/build-http-request';
+import { buildURL } from '../utils/build-url';
+import { HTTPRequestOptions } from '../utils/http-request-options';
+import { parseJSONResponse } from '../utils/parse-json-response';
 
 export const makeGenerateAutoExtractors = (
 	context: APIContext,

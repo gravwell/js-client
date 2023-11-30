@@ -10,7 +10,11 @@
 import { Observable, of, timer } from 'rxjs';
 import { catchError, last, mapTo, startWith, takeUntil } from 'rxjs/operators';
 import { RawSearchMessageReceived, RawSearchMessageSent } from '~/models';
-import { APIContext, APISubscription, apiSubscriptionFromWebSocket, buildURL, WebSocket } from '../utils';
+import { APIContext } from '../utils/api-context';
+import { APISubscription } from '../utils/api-subscription';
+import { apiSubscriptionFromWebSocket } from '../utils/api-subscription-from-web-socket';
+import { buildURL } from '../utils/build-url';
+import { WebSocket } from '../utils/web-socket';
 
 export const makeSubscribeToOneRawSearch = (
 	context: APIContext,

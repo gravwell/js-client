@@ -23,8 +23,10 @@ import {
 	skipUntil,
 	timeout,
 } from 'rxjs';
-import { DateRange } from '~/functions';
-import { APISubscription, debounceWithBackoffWhile, omitUndefinedShallow } from '~/functions/utils';
+import { DateRange } from '~/functions/searches/helpers/create-required-search-filter-observable';
+import { APISubscription } from '~/functions/utils/api-subscription';
+import { debounceWithBackoffWhile } from '~/functions/utils/debounce-with-backoff-while';
+import { omitUndefinedShallow } from '~/functions/utils/omit-undefined-shallow';
 import { SearchFilter } from '~/index';
 import {
 	RawRequestSearchDetailsMessageSent,

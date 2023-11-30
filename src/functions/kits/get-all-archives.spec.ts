@@ -7,7 +7,7 @@
  * license. See the LICENSE file for details.
  */
 
-import { isKitArchive } from '~/models';
+import { isKitArchive } from '~/models/kit/is-kit-archive';
 import { integrationTest, TEST_BASE_API_CONTEXT } from '~/tests';
 import { makeGetKitArchives } from './get-all-archives';
 

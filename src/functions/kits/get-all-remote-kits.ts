@@ -7,8 +7,13 @@
  * license. See the LICENSE file for details.
  */
 
-import { RawRemoteKit, RemoteKit, toRemoteKit } from '~/models';
-import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, parseJSONResponse } from '../utils';
+import { RawRemoteKit } from '~/models/kit/raw-remote-kit';
+import { RemoteKit } from '~/models/kit/remote-kit';
+import { toRemoteKit } from '~/models/kit/to-remote-kit';
+import { APIContext } from '../utils/api-context';
+import { buildHTTPRequestWithAuthFromContext } from '../utils/build-http-request';
+import { buildURL } from '../utils/build-url';
+import { parseJSONResponse } from '../utils/parse-json-response';
 
 export const makeGetAllRemoteKits = (context: APIContext): (() => Promise<Array<RemoteKit>>) => {
 	const path = '/api/kits/remote/list';

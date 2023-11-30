@@ -7,13 +7,11 @@
  * license. See the LICENSE file for details.
  */
 
-import {
-	makeGetOneUserActiveSessions,
-	makeLoginOneUser,
-	makeLogoutAllUsers,
-	makeLogoutOneUser,
-} from '~/functions/auth';
-import { APIContext } from '~/functions/utils';
+import { makeGetOneUserActiveSessions } from '~/functions/auth/get-one-user-active-sessions';
+import { makeLoginOneUser } from '~/functions/auth/login-one-user';
+import { makeLogoutAllUsers } from '~/functions/auth/logout-all-users';
+import { makeLogoutOneUser } from '~/functions/auth/logout-one-user';
+import { APIContext } from '~/functions/utils/api-context';
 import { AuthService } from './service';
 
 export const createAuthService = (context: APIContext): AuthService => ({

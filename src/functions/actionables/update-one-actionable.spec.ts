@@ -8,9 +8,12 @@
  */
 
 import { omit } from 'lodash';
-import { Actionable, ActionableAction, CreatableActionable, isActionable, UpdatableActionable } from '~/models';
+import { Actionable, ActionableAction } from '~/models/actionable/actionable';
+import { CreatableActionable } from '~/models/actionable/creatable-actionable';
+import { isActionable } from '~/models/actionable/is-actionable';
+import { UpdatableActionable } from '~/models/actionable/updatable-actionable';
 import { integrationTest, integrationTestSpecDef, TEST_BASE_API_CONTEXT } from '~/tests';
-import { omitUndefinedShallow } from '../utils';
+import { omitUndefinedShallow } from '../utils/omit-undefined-shallow';
 import { makeCreateOneActionable } from './create-one-actionable';
 import { makeDeleteOneActionable } from './delete-one-actionable';
 import { makeGetOneActionable } from './get-one-actionable';

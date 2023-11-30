@@ -7,9 +7,14 @@
  * license. See the LICENSE file for details.
  */
 
-import { LocalKit, RawLocalKit, toLocalKit } from '~/models';
+import { LocalKit } from '~/models/kit/local-kit';
+import { RawLocalKit } from '~/models/kit/raw-local-kit';
+import { toLocalKit } from '~/models/kit/to-local-kit';
 import { NumericID } from '~/value-objects';
-import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, parseJSONResponse } from '../utils';
+import { APIContext } from '../utils/api-context';
+import { buildHTTPRequestWithAuthFromContext } from '../utils/build-http-request';
+import { buildURL } from '../utils/build-url';
+import { parseJSONResponse } from '../utils/parse-json-response';
 
 export const makeGetOneLocalKit =
 	(context: APIContext) =>

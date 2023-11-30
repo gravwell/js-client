@@ -7,7 +7,7 @@
  * license. See the LICENSE file for details.
  */
 
-import { PartialProps } from '~/functions/utils';
+import { PartialProps } from '~/functions/utils/conditional-partial';
 import { Timeframe } from './timeframe';
 
 export type CreatableTimeframe = PartialProps<Timeframe, 'start' | 'end'>;

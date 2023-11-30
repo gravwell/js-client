@@ -19,7 +19,10 @@ import { NumericID } from '~/value-objects';
 import { RawSearchDetails } from '../../models/search/raw-search-details';
 import { SearchDetails } from '../../models/search/search-details';
 import { toSearchDetails } from '../../models/search/to-search-details';
-import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, parseJSONResponse } from '../utils';
+import { APIContext } from '../utils/api-context';
+import { buildHTTPRequestWithAuthFromContext } from '../utils/build-http-request';
+import { buildURL } from '../utils/build-url';
+import { parseJSONResponse } from '../utils/parse-json-response';
 
 export const makeGetOnePersistentSearchDetails =
 	(context: APIContext) =>

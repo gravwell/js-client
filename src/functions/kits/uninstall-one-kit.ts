@@ -8,7 +8,11 @@
  */
 
 import { ID } from '~/value-objects';
-import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, parseJSONResponse, QueryParams } from '../utils';
+import { APIContext } from '../utils/api-context';
+import { buildHTTPRequestWithAuthFromContext } from '../utils/build-http-request';
+import { buildURL } from '../utils/build-url';
+import { QueryParams } from '../utils/http-request-options';
+import { parseJSONResponse } from '../utils/parse-json-response';
 
 export const makeUninstallOneKit =
 	(context: APIContext) =>

@@ -7,7 +7,7 @@
  * license. See the LICENSE file for details.
  */
 
-import { UpdatableDashboardTile } from '~/main';
+import { UpdatableDashboardTile } from '~/models/dashboard/updatable-dashboard-tile';
 import { NumericID } from '~/value-objects';
 import { CreatableTimeframe } from '../timeframe';
 import { Version } from '../version';

@@ -7,9 +7,14 @@
  * license. See the LICENSE file for details.
  */
 
-import { Group, RawGroup, toGroup } from '~/models';
+import { Group } from '~/models/group/group';
+import { RawGroup } from '~/models/group/raw-group';
+import { toGroup } from '~/models/group/to-group';
 import { NumericID } from '~/value-objects';
-import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, parseJSONResponse } from '../utils';
+import { APIContext } from '../utils/api-context';
+import { buildHTTPRequestWithAuthFromContext } from '../utils/build-http-request';
+import { buildURL } from '../utils/build-url';
+import { parseJSONResponse } from '../utils/parse-json-response';
 
 export const makeGetOneGroup =
 	(context: APIContext) =>

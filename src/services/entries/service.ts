@@ -7,7 +7,8 @@
  * license. See the LICENSE file for details.
  */
 
-import { CreatableJSONEntry, CreatableMultiLineEntry } from '~/models/entry';
+import { CreatableJSONEntry } from '~/models/entry/creatable-json-entry';
+import { CreatableMultiLineEntry } from '~/models/entry/creatable-multi-line-entry';
 
 export interface EntriesService {
 	readonly ingest: {

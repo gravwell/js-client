@@ -31,13 +31,13 @@ import {
 	takeUntil,
 	tap,
 } from 'rxjs/operators';
-import { DateRange } from '~/functions';
 import {
 	collectSearchObservableErrors,
 	createInitialSearchFilter,
 	makeToSearchStats,
 	makeToStatsZoom,
 } from '~/functions/searches/helpers/attach-search';
+import { DateRange } from '~/functions/searches/helpers/create-required-search-filter-observable';
 import { getRawRequestEntriesMsg, makeRequestEntries } from '~/functions/searches/helpers/request-entries';
 import {
 	RawRequestSearchCloseMessageSent,
@@ -52,7 +52,7 @@ import {
 	toSearchEntries,
 } from '~/models';
 import { ID, Percentage } from '~/value-objects';
-import { APIContext } from '../../utils';
+import { APIContext } from '../../utils/api-context';
 import { attachSearch } from '../attach-search';
 import { getPreviewDateRange } from '../helpers/attach-search';
 import { createRequiredSearchFilterObservable } from '../helpers/create-required-search-filter-observable';

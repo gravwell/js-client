@@ -7,8 +7,9 @@
  * license. See the LICENSE file for details.
  */
 
-import { APIContext } from '~/functions/utils';
-import { makeRestartWebServer, makeWebServerIsDistributed } from '~/functions/web-server';
+import { APIContext } from '~/functions/utils/api-context';
+import { makeRestartWebServer } from '~/functions/web-server/restart-web-server';
+import { makeWebServerIsDistributed } from '~/functions/web-server/web-server-is-distributed';
 import { WebServerService } from './service';
 
 export const createWebServerService = (context: APIContext): WebServerService => ({

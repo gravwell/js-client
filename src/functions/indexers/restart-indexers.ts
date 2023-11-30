@@ -7,7 +7,10 @@
  * license. See the LICENSE file for details.
  */
 
-import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, parseJSONResponse } from '../utils';
+import { APIContext } from '../utils/api-context';
+import { buildHTTPRequestWithAuthFromContext } from '../utils/build-http-request';
+import { buildURL } from '../utils/build-url';
+import { parseJSONResponse } from '../utils/parse-json-response';
 
 // TODO: Test this when gravwell/gravwell#2277 gets fixed
 export const makeRestartIndexers = (context: APIContext): (() => Promise<void>) => {

@@ -7,14 +7,13 @@
  * license. See the LICENSE file for details.
  */
 
-import { LogLevel, toRawLogLevel } from '~/models';
-import {
-	APIContext,
-	buildHTTPRequestWithAuthFromContext,
-	buildURL,
-	HTTPRequestOptions,
-	parseJSONResponse,
-} from '../utils';
+import { LogLevel } from '~/models/log-level/log-level';
+import { toRawLogLevel } from '~/models/log-level/to-raw-log-level';
+import { APIContext } from '../utils/api-context';
+import { buildHTTPRequestWithAuthFromContext } from '../utils/build-http-request';
+import { buildURL } from '../utils/build-url';
+import { HTTPRequestOptions } from '../utils/http-request-options';
+import { parseJSONResponse } from '../utils/parse-json-response';
 
 export const makeCreateOneLog = (context: APIContext): ((level: LogLevel, message: string) => Promise<void>) => {
 	const templatePath = '/api/logging/{lowerCaseRawLogLevel}';

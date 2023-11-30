@@ -7,7 +7,7 @@
  * license. See the LICENSE file for details.
  */
 
-import { omitUndefinedShallow } from '~/functions/utils';
+import { omitUndefinedShallow } from '~/functions/utils/omit-undefined-shallow';
 import { toRawNumericID } from '~/value-objects';
 import { CreatableTemplate } from './creatable-template';
 import { RawCreatableTemplate } from './raw-creatable-template';

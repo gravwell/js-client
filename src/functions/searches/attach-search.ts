@@ -20,7 +20,7 @@ import {
 	RawSearchMessageSent,
 } from '~/models';
 import { NumericID } from '~/value-objects';
-import { APISubscription } from '../utils';
+import { APISubscription } from '../utils/api-subscription';
 
 /*
  * A queue of "requests" to attach to searches.

@@ -8,7 +8,7 @@
  */
 
 import { CreatableScheduledScript, ScheduledScript } from '~/models';
-import { APIContext } from '../utils';
+import { APIContext } from '../utils/api-context';
 import { makeCreateOneScheduledTask } from './create-one-scheduled-task';
 
 export const makeCreateOneScheduledScript = (

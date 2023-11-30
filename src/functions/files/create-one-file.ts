@@ -9,14 +9,15 @@
 
 import * as FormData from 'form-data';
 import { isString, pick } from 'lodash';
-import { CreatableFile, FileMetadata, RawBaseFileMetadata, toRawCreatableFile } from '~/models';
-import {
-	APIContext,
-	buildHTTPRequestWithAuthFromContext,
-	buildURL,
-	HTTPRequestOptions,
-	parseJSONResponse,
-} from '../utils';
+import { CreatableFile } from '~/models/file/creatable-file';
+import { FileMetadata } from '~/models/file/file-metadata';
+import { RawBaseFileMetadata } from '~/models/file/raw-file-metadata';
+import { toRawCreatableFile } from '~/models/file/to-raw-creatable-file';
+import { APIContext } from '../utils/api-context';
+import { buildHTTPRequestWithAuthFromContext } from '../utils/build-http-request';
+import { buildURL } from '../utils/build-url';
+import { HTTPRequestOptions } from '../utils/http-request-options';
+import { parseJSONResponse } from '../utils/parse-json-response';
 import { makeGetOneFileDetails } from './get-one-file-details';
 import { makeUpdateOneFile } from './update-one-file';
 

@@ -13,9 +13,10 @@ import { isUndefined, last as lastElt, range as rangeLeft, sum, zip } from 'loda
 import { firstValueFrom, lastValueFrom, Observable } from 'rxjs';
 import { map, takeWhile, toArray } from 'rxjs/operators';
 import { v4 as uuidv4 } from 'uuid';
-import { makeCreateOneMacro, makeDeleteOneMacro } from '~/functions/macros';
+import { makeCreateOneMacro } from '~/functions/macros/create-one-macro';
+import { makeDeleteOneMacro } from '~/functions/macros/delete-one-macro';
 import { makeAttachToOneExplorerSearch } from '~/functions/searches/attach-to-one-explorer-search/attach-to-one-explorer-search';
-import { makeSubscribeToOneExplorerSearch } from '~/functions/searches/subscribe-to-one-explorer-search';
+import { makeSubscribeToOneExplorerSearch } from '~/functions/searches/subscribe-to-one-explorer-search/subscribe-to-one-explorer-search';
 import { DataExplorerEntry, ExplorerSearchSubscription, SearchFilter } from '~/models';
 import { RawSearchEntries, TextSearchEntries } from '~/models/search/search-entries';
 import { integrationTestSpecDef, myCustomMatchers, sleep, TEST_BASE_API_CONTEXT } from '~/tests';

@@ -7,7 +7,7 @@
  * license. See the LICENSE file for details.
  */
 
-import { omitUndefinedShallow } from '~/functions/utils';
+import { omitUndefinedShallow } from '~/functions/utils/omit-undefined-shallow';
 import { DATA_TYPE } from '~/models';
 import { PersistentSearchDataState } from './persistent-search-data';
 import { RawSearch2, RawSearch2State } from './raw-search2';

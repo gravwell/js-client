@@ -8,10 +8,14 @@
  */
 
 import { random } from 'lodash';
-import { CreatableGroup, CreatableUser, userDecoder } from '~/models';
+import { CreatableUser, userDecoder } from '~/models';
+import { CreatableGroup } from '~/models/group/creatable-group';
 import { integrationTest, integrationTestSpecDef, TEST_BASE_API_CONTEXT } from '~/tests';
 import { NumericID } from '~/value-objects';
-import { makeAddOneUserToManyGroups, makeCreateOneGroup, makeDeleteOneGroup, makeGetAllGroups } from '../groups';
+import { makeAddOneUserToManyGroups } from '../groups/add-one-user-to-many-groups';
+import { makeCreateOneGroup } from '../groups/create-one-group';
+import { makeDeleteOneGroup } from '../groups/delete-one-group';
+import { makeGetAllGroups } from '../groups/get-all-groups';
 import { assertIsNotNil } from '../utils/type-guards';
 import { makeCreateOneUser } from './create-one-user';
 import { makeDeleteOneUser } from './delete-one-user';

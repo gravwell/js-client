@@ -8,7 +8,7 @@
  */
 
 import { isUndefined } from 'lodash';
-import { omitUndefinedShallow } from '~/functions/utils';
+import { omitUndefinedShallow } from '~/functions/utils/omit-undefined-shallow';
 import { toRawNumericID } from '~/value-objects';
 import { toRawTimeframe } from '../timeframe';
 import { Dashboard } from './dashboard';
