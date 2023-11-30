@@ -5,8 +5,8 @@ FROM gravwell/gravwell:latest AS gravwell-stable
 FROM base AS gravwell
 
 RUN apt-get update && apt-get --yes install curl gnupg2 wget
-RUN wget -O /usr/share/keyrings/gravwell.asc https://gin.gravwell.io/debianalphaXYZZY/gin.gravwell.io.gpg.key
-RUN echo 'deb [ arch=amd64 signed-by=/usr/share/keyrings/gravwell.asc ] https://gin.gravwell.io/debianalphaXYZZY community main' > /etc/apt/sources.list.d/gravwell.list
+RUN wget -O /usr/share/keyrings/gravwell.asc https://update.gravwell.io/debian/update.gravwell.io.gpg.key
+RUN echo 'deb [ arch=amd64 signed-by=/usr/share/keyrings/gravwell.asc ] https://update.gravwell.io/debianalphaXYZZY community main' > /etc/apt/sources.list.d/gravwell.list
 RUN apt-get update && apt-get --yes install \
   apt-transport-https gravwell
 
