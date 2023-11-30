@@ -7,8 +7,9 @@
  * license. See the LICENSE file for details.
  */
 
-import { makeModifyOneQuery, makeValidateOneQuery } from '~/functions/searches';
-import { APIContext } from '~/functions/utils';
+import { makeModifyOneQuery } from '~/functions/searches/modify-one-query';
+import { makeValidateOneQuery } from '~/functions/searches/validate-one-query';
+import { APIContext } from '~/functions/utils/api-context';
 import { QueriesService } from './service';
 
 export const createQueriesService = (context: APIContext): QueriesService => ({

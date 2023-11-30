@@ -11,7 +11,7 @@ import { random } from 'lodash';
 import { CreatableMacro, CreatableUser, isMacro, User } from '~/models';
 import { integrationTest, integrationTestSpecDef, TEST_BASE_API_CONTEXT } from '~/tests';
 import { makeLoginOneUser } from '../auth/login-one-user';
-import { makeCreateOneUser } from '../users';
+import { makeCreateOneUser } from '../users/create-one-user';
 import { assertIsNotNil } from '../utils/type-guards';
 import { makeCreateOneMacro } from './create-one-macro';
 import { makeDeleteOneMacro } from './delete-one-macro';

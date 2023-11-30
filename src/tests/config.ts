@@ -8,7 +8,7 @@
  */
 
 import { firstValueFrom, from, ReplaySubject } from 'rxjs';
-import { APIContext } from '~/functions/utils';
+import { APIContext } from '~/functions/utils/api-context';
 import { getTestContext, getTestTypes } from './get-runner-settings';
 
 export * from './paths';

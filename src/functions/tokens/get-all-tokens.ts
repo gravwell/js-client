@@ -8,7 +8,10 @@
  */
 
 import { RawToken, Token, toToken } from '~/models';
-import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, parseJSONResponse } from '../utils';
+import { APIContext } from '../utils/api-context';
+import { buildHTTPRequestWithAuthFromContext } from '../utils/build-http-request';
+import { buildURL } from '../utils/build-url';
+import { parseJSONResponse } from '../utils/parse-json-response';
 
 export const makeGetAllTokens = (context: APIContext): (() => Promise<Array<Token>>) => {
 	const path = '/api/tokens?admin=true';

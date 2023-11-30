@@ -8,7 +8,7 @@
  */
 
 import { mapValues } from 'lodash';
-import { omitUndefinedShallow } from '../../functions/utils';
+import { omitUndefinedShallow } from '../../functions/utils/omit-undefined-shallow';
 import { toDataExplorerEntry } from '../search/to-data-explorer-entry';
 import { toSearchEntry } from '../search/to-search-entry';
 import { GeneratedAutoExtractor, GeneratedAutoExtractors } from './generated-auto-extractors';

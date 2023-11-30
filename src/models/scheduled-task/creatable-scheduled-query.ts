@@ -15,4 +15,5 @@ export interface CreatableScheduledQuery extends CreatableScheduledTaskBase {
 	searchSince: { lastRun?: boolean; secondsAgo: number };
 	timeframeOffset: ScheduledQueryDuration;
 	backfillEnabled: boolean;
+	searchReference?: string | undefined; // UUID of query library item.
 }

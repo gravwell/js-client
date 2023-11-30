@@ -9,8 +9,10 @@
 
 import { isString } from 'lodash';
 import { integrationTest, integrationTestSpecDef, TEST_BASE_API_CONTEXT } from '~/tests';
-import { makeUpdateOneUserPreferences } from '..';
-import { makeDeleteOneUser, makeGetAllUsers, makeGetMyUser } from '../users';
+import { makeUpdateOneUserPreferences } from '../user-preferences/update-one-user-preferences';
+import { makeDeleteOneUser } from '../users/delete-one-user';
+import { makeGetAllUsers } from '../users/get-all-users';
+import { makeGetMyUser } from '../users/get-my-user';
 import { makeGetAllUserPreferences } from './get-all-user-preferences';
 
 describe(

@@ -7,7 +7,9 @@
  * license. See the LICENSE file for details.
  */
 
-import { CreatableFile, FileMetadata, UpdatableFile } from '~/models/file';
+import { CreatableFile } from '~/models/file/creatable-file';
+import { FileMetadata } from '~/models/file/file-metadata';
+import { UpdatableFile } from '~/models/file/updatable-file';
 
 export interface FilesService {
 	readonly get: {

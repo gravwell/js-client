@@ -56,6 +56,7 @@ export const toRawUpdatableScheduledTask = (
 
 				TimeframeOffset: Math.abs(durationToSeconds(_updatable.timeframeOffset ?? _current.timeframeOffset)) * -1,
 				BackfillEnabled: _updatable.backfillEnabled ?? _current.backfillEnabled,
+				SearchReference: _updatable.searchReference,
 			};
 		}
 		case 'script': {

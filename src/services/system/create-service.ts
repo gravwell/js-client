@@ -7,15 +7,13 @@
  * license. See the LICENSE file for details.
  */
 
-import {
-	makeBackup,
-	makeGetAPIVersion,
-	makeGetSystemSettings,
-	makeRestore,
-	makeSubscribeToManySystemInformations,
-	makeSystemIsConnected,
-} from '~/functions/system';
-import { APIContext } from '~/functions/utils';
+import { makeBackup } from '~/functions/system/backup';
+import { makeGetAPIVersion } from '~/functions/system/get-api-version';
+import { makeGetSystemSettings } from '~/functions/system/get-system-settings';
+import { makeRestore } from '~/functions/system/restore';
+import { makeSubscribeToManySystemInformations } from '~/functions/system/subscribe-to-many-system-informations';
+import { makeSystemIsConnected } from '~/functions/system/system-is-connected';
+import { APIContext } from '~/functions/utils/api-context';
 import { SystemService } from './service';
 
 export const createSystemService = (context: APIContext): SystemService => ({

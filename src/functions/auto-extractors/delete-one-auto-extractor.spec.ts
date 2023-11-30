@@ -7,7 +7,7 @@
  * license. See the LICENSE file for details.
  */
 
-import { CreatableAutoExtractor } from '~/models';
+import { CreatableAutoExtractor } from '~/models/auto-extractor/creatable-auto-extractor';
 import { integrationTest, integrationTestSpecDef, TEST_BASE_API_CONTEXT } from '~/tests';
 import { assertIsNotNil } from '../utils/type-guards';
 import { makeCreateOneAutoExtractor } from './create-one-auto-extractor';

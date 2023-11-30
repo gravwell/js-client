@@ -8,20 +8,16 @@
  */
 
 import { isString } from 'lodash';
-import {
-	AutoExtractor,
-	RawAutoExtractor,
-	toAutoExtractor,
-	toRawUpdatableAutoExtractor,
-	UpdatableAutoExtractor,
-} from '~/models';
-import {
-	APIContext,
-	buildHTTPRequestWithAuthFromContext,
-	buildURL,
-	HTTPRequestOptions,
-	parseJSONResponse,
-} from '../utils';
+import { AutoExtractor } from '~/models/auto-extractor/auto-extractor';
+import { RawAutoExtractor } from '~/models/auto-extractor/raw-auto-extractor';
+import { toAutoExtractor } from '~/models/auto-extractor/to-auto-extractor';
+import { toRawUpdatableAutoExtractor } from '~/models/auto-extractor/to-raw-updatable-auto-extractor';
+import { UpdatableAutoExtractor } from '~/models/auto-extractor/updatable-auto-extractor';
+import { APIContext } from '../utils/api-context';
+import { buildHTTPRequestWithAuthFromContext } from '../utils/build-http-request';
+import { buildURL } from '../utils/build-url';
+import { HTTPRequestOptions } from '../utils/http-request-options';
+import { parseJSONResponse } from '../utils/parse-json-response';
 import { makeGetAllAutoExtractors } from './get-all-auto-extractors';
 
 export const makeUpdateOneAutoExtractor = (

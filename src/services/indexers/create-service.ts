@@ -7,8 +7,9 @@
  * license. See the LICENSE file for details.
  */
 
-import { makeGetAllIndexers, makeRestartIndexers } from '~/functions';
-import { APIContext } from '~/functions/utils';
+import { makeGetAllIndexers } from '~/functions/indexers/get-all-indexers';
+import { makeRestartIndexers } from '~/functions/indexers/restart-indexers';
+import { APIContext } from '~/functions/utils/api-context';
 import { IndexersService } from './service';
 
 export const createIndexersService = (context: APIContext): IndexersService => ({

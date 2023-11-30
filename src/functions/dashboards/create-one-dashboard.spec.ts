@@ -7,7 +7,8 @@
  * license. See the LICENSE file for details.
  */
 
-import { CreatableDashboard, isDashboard } from '~/models';
+import { CreatableDashboard } from '~/models/dashboard/creatable-dashboard';
+import { isDashboard } from '~/models/dashboard/is-dashboard';
 import { integrationTest, integrationTestSpecDef, myCustomMatchers, TEST_BASE_API_CONTEXT } from '~/tests';
 import { makeCreateOneGroup } from '../groups/create-one-group';
 import { makeDeleteAllGroups } from '../groups/delete-all-groups';

@@ -8,7 +8,7 @@
  */
 
 import { ScheduledQuery, UpdatableScheduledQuery } from '~/models';
-import { APIContext } from '../utils';
+import { APIContext } from '../utils/api-context';
 import { makeUpdateOneScheduledTask } from './update-one-scheduled-task';
 
 export const makeUpdateOneScheduledQuery = (

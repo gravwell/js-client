@@ -10,7 +10,7 @@
 import { isString } from 'lodash';
 import { DATA_TYPE } from '~/models';
 import { toRegex } from '~/value-objects';
-import { omitUndefinedShallow } from '../../functions/utils';
+import { omitUndefinedShallow } from '../../functions/utils/omit-undefined-shallow';
 import { Actionable, ActionableAction, ActionableTimeVariable, ActionableTrigger } from './actionable';
 import { ActionableCommand } from './actionable-command';
 import { RawActionable, RawActionableAction, RawActionableTimeVariable, RawActionableTrigger } from './raw-actionable';

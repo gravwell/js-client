@@ -8,13 +8,11 @@
  */
 
 import { Playbook, RawPlaybook, toPlaybook, toRawUpdatablePlaybook, UpdatablePlaybook } from '~/models';
-import {
-	APIContext,
-	buildHTTPRequestWithAuthFromContext,
-	buildURL,
-	HTTPRequestOptions,
-	parseJSONResponse,
-} from '../utils';
+import { APIContext } from '../utils/api-context';
+import { buildHTTPRequestWithAuthFromContext } from '../utils/build-http-request';
+import { buildURL } from '../utils/build-url';
+import { HTTPRequestOptions } from '../utils/http-request-options';
+import { parseJSONResponse } from '../utils/parse-json-response';
 import { makeGetOnePlaybook } from './get-one-playbook';
 
 export const makeUpdateOnePlaybook = (context: APIContext): ((data: UpdatablePlaybook) => Promise<Playbook>) => {

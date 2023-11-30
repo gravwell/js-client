@@ -7,8 +7,8 @@
  * license. See the LICENSE file for details.
  */
 
-import { makeGetSearchHistory } from '~/functions/searches';
-import { APIContext } from '~/functions/utils';
+import { makeGetSearchHistory } from '~/functions/searches/get-search-history';
+import { APIContext } from '~/functions/utils/api-context';
 import { Search } from '~/models/search';
 import { isNumericID } from '~/value-objects';
 import { SearchHistoryService } from './service';

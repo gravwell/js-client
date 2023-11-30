@@ -9,7 +9,7 @@
 
 import { createReadStream } from 'fs';
 import { join } from 'path';
-import { CreatableFile } from '~/models';
+import { CreatableFile } from '~/models/file/creatable-file';
 import { integrationTest, integrationTestSpecDef, TEST_ASSETS_PATH, TEST_BASE_API_CONTEXT } from '~/tests';
 import { assertIsNotNil } from '../utils/type-guards';
 import { makeCreateOneFile } from './create-one-file';

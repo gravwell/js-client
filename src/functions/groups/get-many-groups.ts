@@ -7,9 +7,9 @@
  * license. See the LICENSE file for details.
  */
 
-import { Group } from '~/models';
+import { Group } from '~/models/group/group';
 import { isNumericID, NumericID } from '~/value-objects';
-import { APIContext } from '../utils';
+import { APIContext } from '../utils/api-context';
 import { makeGetAllGroups } from './get-all-groups';
 import { makeGetGroupsByUser } from './get-groups-by-user';
 

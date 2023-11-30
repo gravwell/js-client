@@ -9,15 +9,15 @@
 
 import * as FormData from 'form-data';
 import { isString } from 'lodash';
-import { LocalKit, RawLocalKit, toLocalKit } from '~/models';
-import {
-	APIContext,
-	buildHTTPRequestWithAuthFromContext,
-	buildURL,
-	File,
-	HTTPRequestOptions,
-	parseJSONResponse,
-} from '../utils';
+import { LocalKit } from '~/models/kit/local-kit';
+import { RawLocalKit } from '~/models/kit/raw-local-kit';
+import { toLocalKit } from '~/models/kit/to-local-kit';
+import { APIContext } from '../utils/api-context';
+import { buildHTTPRequestWithAuthFromContext } from '../utils/build-http-request';
+import { buildURL } from '../utils/build-url';
+import { File } from '../utils/file';
+import { HTTPRequestOptions } from '../utils/http-request-options';
+import { parseJSONResponse } from '../utils/parse-json-response';
 
 export const makeUploadOneLocalKit =
 	(context: APIContext) =>

@@ -7,15 +7,14 @@
  * license. See the LICENSE file for details.
  */
 
-import { BuildableKit, toRawBuildableKit } from '~/models';
+import { BuildableKit } from '~/models/kit/buildable-kit';
+import { toRawBuildableKit } from '~/models/kit/to-raw-buildable-kit';
 import { RawNumericID, RawUUID, UUID } from '~/value-objects';
-import {
-	APIContext,
-	buildHTTPRequestWithAuthFromContext,
-	buildURL,
-	HTTPRequestOptions,
-	parseJSONResponse,
-} from '../utils';
+import { APIContext } from '../utils/api-context';
+import { buildHTTPRequestWithAuthFromContext } from '../utils/build-http-request';
+import { buildURL } from '../utils/build-url';
+import { HTTPRequestOptions } from '../utils/http-request-options';
+import { parseJSONResponse } from '../utils/parse-json-response';
 
 export const makeBuildOneLocalKit = (context: APIContext): ((data: BuildableKit) => Promise<UUID>) => {
 	const templatePath = '/api/kits/build';

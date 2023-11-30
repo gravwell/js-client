@@ -8,35 +8,29 @@
  */
 
 import { expectTypeOf } from 'expect-type';
+import { AutoExtractorsFilter } from '~/functions/auto-extractors/download-many-auto-extractors';
+import { IsValidAutoExtractorSyntaxResponse } from '~/functions/auto-extractors/is-valid-auto-extractor-syntax';
+import { DashboardsFilter } from '~/functions/dashboards/get-many-dashboards';
+import { MacrosFilter } from '~/functions/macros/get-many-macros';
 import {
-	AutoExtractorsFilter,
-	DashboardsFilter,
-	GetAPIVersionResponse,
-	IsValidAutoExtractorSyntaxResponse,
-	MacrosFilter,
 	MyNotificationsMessageReceived,
 	MyNotificationsMessageSent,
-	ScheduledQueriesFilter,
-	ScheduledScriptsFilter,
-	SearchDownloadFormat,
+} from '~/functions/notifications/subscribe-to-my-notifications';
+import { ScheduledQueriesFilter } from '~/functions/scheduled-tasks/get-many-scheduled-queries';
+import { ScheduledScriptsFilter } from '~/functions/scheduled-tasks/get-many-scheduled-scripts';
+import { SearchDownloadFormat } from '~/functions/searches/download-one-search';
+import { GetAPIVersionResponse } from '~/functions/system/get-api-version';
+import {
 	SystemStatusCategory,
 	SystemStatusMessageReceived,
 	SystemStatusMessageSent,
-} from '~/functions';
-import { APISubscription, downloadFromURL, DownloadReturn, File } from '~/functions/utils';
+} from '~/functions/system/subscribe-to-many-system-informations';
+import { APISubscription } from '~/functions/utils/api-subscription';
+import { downloadFromURL, DownloadReturn } from '~/functions/utils/download-from-url';
+import { File } from '~/functions/utils/file';
 import {
-	Actionable,
-	AutoExtractor,
-	BuildableKit,
-	CreatableActionable,
-	CreatableAutoExtractor,
 	CreatableBroadcastNotification,
-	CreatableDashboard,
-	CreatableFile,
-	CreatableGroup,
-	CreatableJSONEntry,
 	CreatableMacro,
-	CreatableMultiLineEntry,
 	CreatablePlaybook,
 	CreatableResource,
 	CreatableSavedQuery,
@@ -46,22 +40,13 @@ import {
 	CreatableTemplate,
 	CreatableToken,
 	CreatableUser,
-	Dashboard,
 	DataExplorerEntry,
 	ElementFilter,
 	ExplorerSearchSubscription,
-	FileMetadata,
-	GeneratedAutoExtractors,
-	Group,
-	InstallableKit,
-	KitInstallationStatus,
-	LocalKit,
-	LogLevel,
 	Macro,
 	Notification,
 	Playbook,
 	Query,
-	RemoteKit,
 	RenderModule,
 	Resource,
 	ResourceContentPreview,
@@ -80,11 +65,6 @@ import {
 	Token,
 	TokenCapability,
 	TokenWithSecret,
-	UpdatableActionable,
-	UpdatableAutoExtractor,
-	UpdatableDashboard,
-	UpdatableFile,
-	UpdatableGroup,
 	UpdatableMacro,
 	UpdatableNotification,
 	UpdatablePlaybook,
@@ -95,12 +75,36 @@ import {
 	UpdatableTemplate,
 	UpdatableToken,
 	UpdatableUser,
-	UploadableAutoExtractor,
 	User,
 	UserPreferences,
 	UserSessions,
 	ValidatedQuery,
 } from '~/models';
+import { Actionable } from '~/models/actionable/actionable';
+import { CreatableActionable } from '~/models/actionable/creatable-actionable';
+import { UpdatableActionable } from '~/models/actionable/updatable-actionable';
+import { AutoExtractor } from '~/models/auto-extractor/auto-extractor';
+import { CreatableAutoExtractor } from '~/models/auto-extractor/creatable-auto-extractor';
+import { GeneratedAutoExtractors } from '~/models/auto-extractor/generated-auto-extractors';
+import { UpdatableAutoExtractor } from '~/models/auto-extractor/updatable-auto-extractor';
+import { UploadableAutoExtractor } from '~/models/auto-extractor/uploadable-auto-extractor';
+import { CreatableDashboard } from '~/models/dashboard/creatable-dashboard';
+import { Dashboard } from '~/models/dashboard/dashboard';
+import { UpdatableDashboard } from '~/models/dashboard/updatable-dashboard';
+import { CreatableJSONEntry } from '~/models/entry/creatable-json-entry';
+import { CreatableMultiLineEntry } from '~/models/entry/creatable-multi-line-entry';
+import { CreatableFile } from '~/models/file/creatable-file';
+import { FileMetadata } from '~/models/file/file-metadata';
+import { UpdatableFile } from '~/models/file/updatable-file';
+import { CreatableGroup } from '~/models/group/creatable-group';
+import { Group } from '~/models/group/group';
+import { UpdatableGroup } from '~/models/group/updatable-group';
+import { BuildableKit } from '~/models/kit/buildable-kit';
+import { InstallableKit } from '~/models/kit/installable-kit';
+import { KitInstallationStatus } from '~/models/kit/kit-installation-status';
+import { LocalKit } from '~/models/kit/local-kit';
+import { RemoteKit } from '~/models/kit/remote-kit';
+import { LogLevel } from '~/models/log-level/log-level';
 import { unitTest } from '~/tests';
 import { ID, NumericID, RawJSON, UUID } from '~/value-objects';
 import { GravwellClient } from './client';

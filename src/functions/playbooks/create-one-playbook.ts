@@ -9,13 +9,11 @@
 
 import { CreatablePlaybook, Playbook, toRawCreatablePlaybook } from '~/models';
 import { UUID } from '~/value-objects';
-import {
-	APIContext,
-	buildHTTPRequestWithAuthFromContext,
-	buildURL,
-	HTTPRequestOptions,
-	parseJSONResponse,
-} from '../utils';
+import { APIContext } from '../utils/api-context';
+import { buildHTTPRequestWithAuthFromContext } from '../utils/build-http-request';
+import { buildURL } from '../utils/build-url';
+import { HTTPRequestOptions } from '../utils/http-request-options';
+import { parseJSONResponse } from '../utils/parse-json-response';
 import { makeGetOnePlaybook } from './get-one-playbook';
 
 export const makeCreateOnePlaybook = (context: APIContext): ((data: CreatablePlaybook) => Promise<Playbook>) => {

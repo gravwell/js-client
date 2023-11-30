@@ -9,7 +9,7 @@
 
 import { User } from '~/models';
 import { isNumericID, NumericID } from '~/value-objects';
-import { APIContext } from '../utils';
+import { APIContext } from '../utils/api-context';
 import { makeGetAllUsers } from './get-all-users';
 import { makeGetUsersByGroup } from './get-users-by-group';
 

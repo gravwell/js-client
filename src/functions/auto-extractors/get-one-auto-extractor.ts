@@ -8,9 +8,9 @@
  */
 
 import { isUndefined } from 'lodash';
-import { AutoExtractor } from '~/models';
+import { AutoExtractor } from '~/models/auto-extractor/auto-extractor';
 import { UUID } from '~/value-objects';
-import { APIContext } from '../utils';
+import { APIContext } from '../utils/api-context';
 import { makeGetAllAutoExtractors } from './get-all-auto-extractors';
 
 export const makeGetOneAutoExtractor = (context: APIContext): ((autoExtractorID: UUID) => Promise<AutoExtractor>) => {

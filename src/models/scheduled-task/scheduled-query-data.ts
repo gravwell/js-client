@@ -19,6 +19,7 @@ export interface ScheduledQueryData extends ScheduledTaskBase {
 		/** Always negative and in seconds */
 		secondsAgo: number; // It's the same as `raw.Duration`
 	};
+	searchReference?: string | undefined; // UUID of query library item.
 }
 
 export type ScheduledQueryDuration = {

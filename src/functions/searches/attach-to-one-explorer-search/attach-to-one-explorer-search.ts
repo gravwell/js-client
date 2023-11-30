@@ -52,7 +52,7 @@ import {
 } from '~/models';
 import { toDataExplorerEntry } from '~/models/search/to-data-explorer-entry';
 import { ID, Percentage } from '~/value-objects';
-import { APIContext } from '../../utils';
+import { APIContext } from '../../utils/api-context';
 import { attachSearch } from '../attach-search';
 import { getPreviewDateRange } from '../helpers/attach-search';
 import { createRequiredSearchFilterObservable, DateRange } from '../helpers/create-required-search-filter-observable';

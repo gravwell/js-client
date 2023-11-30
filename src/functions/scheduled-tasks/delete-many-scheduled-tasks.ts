@@ -7,7 +7,7 @@
  * license. See the LICENSE file for details.
  */
 
-import { APIContext } from '../utils';
+import { APIContext } from '../utils/api-context';
 import { makeDeleteScheduledTasksByUser } from './delete-scheduled-tasks-by-user';
 import { ScheduledTasksFilter } from './get-many-scheduled-tasks';
 

@@ -7,9 +7,10 @@
  * license. See the LICENSE file for details.
  */
 
-import { makeIngestJSONEntries, makeIngestMultiLineEntry } from '~/functions/ingestors';
-import { APIContext } from '~/functions/utils';
-import { CreatableJSONEntry } from '~/models';
+import { makeIngestJSONEntries } from '~/functions/ingestors/ingest-json-entries';
+import { makeIngestMultiLineEntry } from '~/functions/ingestors/ingest-multi-line-entry';
+import { APIContext } from '~/functions/utils/api-context';
+import { CreatableJSONEntry } from '~/models/entry/creatable-json-entry';
 import { EntriesService } from './service';
 
 export const createEntriesService = (context: APIContext): EntriesService => ({

@@ -8,22 +8,18 @@
  */
 
 import { Observable, Subject } from 'rxjs';
-import {
-	InstallableKit,
-	KitInstallationStatus,
-	RawKitInstallationStatus,
-	toKitInstallationStatus,
-	toRawInstallableKit,
-} from '~/models';
+import { InstallableKit } from '~/models/kit/installable-kit';
+import { KitInstallationStatus } from '~/models/kit/kit-installation-status';
+import { RawKitInstallationStatus } from '~/models/kit/raw-kit-installation-status';
+import { toKitInstallationStatus } from '~/models/kit/to-kit-installation-status';
+import { toRawInstallableKit } from '~/models/kit/to-raw-installable-kit';
 import { ID, NumericID, RawNumericID, toNumericID } from '~/value-objects';
-import {
-	APIContext,
-	APISubscription,
-	buildHTTPRequestWithAuthFromContext,
-	buildURL,
-	HTTPRequestOptions,
-	parseJSONResponse,
-} from '../utils';
+import { APIContext } from '../utils/api-context';
+import { APISubscription } from '../utils/api-subscription';
+import { buildHTTPRequestWithAuthFromContext } from '../utils/build-http-request';
+import { buildURL } from '../utils/build-url';
+import { HTTPRequestOptions } from '../utils/http-request-options';
+import { parseJSONResponse } from '../utils/parse-json-response';
 
 export const makeInstallOneKit = (
 	context: APIContext,

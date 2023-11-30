@@ -7,7 +7,8 @@
  * license. See the LICENSE file for details.
  */
 
-import { CreatableActionable, isActionable } from '~/models';
+import { CreatableActionable } from '~/models/actionable/creatable-actionable';
+import { isActionable } from '~/models/actionable/is-actionable';
 import { integrationTest, TEST_BASE_API_CONTEXT } from '~/tests';
 import { makeCreateOneActionable } from './create-one-actionable';
 import { makeDeleteOneActionable } from './delete-one-actionable';

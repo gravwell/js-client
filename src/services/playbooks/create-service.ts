@@ -7,15 +7,13 @@
  * license. See the LICENSE file for details.
  */
 
-import {
-	makeCreateOnePlaybook,
-	makeDeleteOnePlaybook,
-	makeGetAllPlaybooks,
-	makeGetAllPlaybooksRelatedToMe,
-	makeGetOnePlaybook,
-	makeUpdateOnePlaybook,
-} from '~/functions/playbooks';
-import { APIContext } from '~/functions/utils';
+import { makeCreateOnePlaybook } from '~/functions/playbooks/create-one-playbook';
+import { makeDeleteOnePlaybook } from '~/functions/playbooks/delete-one-playbook';
+import { makeGetAllPlaybooks } from '~/functions/playbooks/get-all-playbooks';
+import { makeGetAllPlaybooksRelatedToMe } from '~/functions/playbooks/get-all-playbooks-related-to-me';
+import { makeGetOnePlaybook } from '~/functions/playbooks/get-one-playbook';
+import { makeUpdateOnePlaybook } from '~/functions/playbooks/update-one-playbook';
+import { APIContext } from '~/functions/utils/api-context';
 import { PlaybooksService } from './service';
 
 export const createPlaybooksService = (context: APIContext): PlaybooksService => ({

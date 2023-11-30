@@ -8,7 +8,7 @@
  */
 
 import { integrationTest, TEST_BASE_API_CONTEXT, unitTest } from '~/tests';
-import { APISubscription } from '../utils';
+import { APISubscription } from '../utils/api-subscription';
 import {
 	makeSubscribeToManySystemInformations,
 	SystemStatusCategory,

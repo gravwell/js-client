@@ -13,7 +13,7 @@ import { isArray, isUndefined, sum, zip } from 'lodash';
 import { firstValueFrom, lastValueFrom, Observable } from 'rxjs';
 import { last, map, takeWhile, toArray } from 'rxjs/operators';
 import { v4 as uuidv4 } from 'uuid';
-import { makeCreateOneAutoExtractor } from '~/functions/auto-extractors';
+import { makeCreateOneAutoExtractor } from '~/functions/auto-extractors/create-one-auto-extractor';
 import { DataExplorerEntry, ElementFilter, isDataExplorerEntry, SearchFilter, SearchSubscription } from '~/models';
 import { RawSearchEntries } from '~/models/search/search-entries';
 import { integrationTestSpecDef, myCustomMatchers, sleep, TEST_BASE_API_CONTEXT } from '~/tests';

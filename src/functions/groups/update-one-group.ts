@@ -7,14 +7,14 @@
  * license. See the LICENSE file for details.
  */
 
-import { Group, toRawUpdatableGroup, UpdatableGroup } from '~/models';
-import {
-	APIContext,
-	buildHTTPRequestWithAuthFromContext,
-	buildURL,
-	HTTPRequestOptions,
-	parseJSONResponse,
-} from '../utils';
+import { Group } from '~/models/group/group';
+import { toRawUpdatableGroup } from '~/models/group/to-raw-updatable-group';
+import { UpdatableGroup } from '~/models/group/updatable-group';
+import { APIContext } from '../utils/api-context';
+import { buildHTTPRequestWithAuthFromContext } from '../utils/build-http-request';
+import { buildURL } from '../utils/build-url';
+import { HTTPRequestOptions } from '../utils/http-request-options';
+import { parseJSONResponse } from '../utils/parse-json-response';
 import { makeGetOneGroup } from './get-one-group';
 
 export const makeUpdateOneGroup =

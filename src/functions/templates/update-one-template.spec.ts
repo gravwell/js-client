@@ -10,7 +10,7 @@
 import { omit } from 'lodash';
 import { CreatableTemplate, isTemplate, Template, TemplateVariable, UpdatableTemplate } from '~/models';
 import { integrationTest, integrationTestSpecDef, TEST_BASE_API_CONTEXT } from '~/tests';
-import { omitUndefinedShallow } from '../utils';
+import { omitUndefinedShallow } from '../utils/omit-undefined-shallow';
 import { makeCreateOneTemplate } from './create-one-template';
 import { makeDeleteOneTemplate } from './delete-one-template';
 import { makeUpdateOneTemplate } from './update-one-template';

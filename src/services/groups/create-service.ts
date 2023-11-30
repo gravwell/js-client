@@ -7,17 +7,15 @@
  * license. See the LICENSE file for details.
  */
 
-import {
-	makeAddOneUserToManyGroups,
-	makeCreateOneGroup,
-	makeDeleteOneGroup,
-	makeGetAllGroups,
-	makeGetManyGroups,
-	makeGetOneGroup,
-	makeRemoveOneUserFromOneGroup,
-	makeUpdateOneGroup,
-} from '~/functions/groups';
-import { APIContext } from '~/functions/utils';
+import { makeAddOneUserToManyGroups } from '~/functions/groups/add-one-user-to-many-groups';
+import { makeCreateOneGroup } from '~/functions/groups/create-one-group';
+import { makeDeleteOneGroup } from '~/functions/groups/delete-one-group';
+import { makeGetAllGroups } from '~/functions/groups/get-all-groups';
+import { makeGetManyGroups } from '~/functions/groups/get-many-groups';
+import { makeGetOneGroup } from '~/functions/groups/get-one-group';
+import { makeRemoveOneUserFromOneGroup } from '~/functions/groups/remove-one-user-from-one-group';
+import { makeUpdateOneGroup } from '~/functions/groups/update-one-group';
+import { APIContext } from '~/functions/utils/api-context';
 import { NumericID } from '~/value-objects';
 import { GroupsService } from './service';
 

@@ -7,7 +7,7 @@
  * license. See the LICENSE file for details.
  */
 
-import { MacrosFilter } from '~/functions/macros';
+import { MacrosFilter } from '~/functions/macros/get-many-macros';
 import { CreatableMacro, Macro, UpdatableMacro } from '~/models/macro';
 
 export interface MacrosService {

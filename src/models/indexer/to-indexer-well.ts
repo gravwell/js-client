@@ -7,7 +7,7 @@
  * license. See the LICENSE file for details.
  */
 
-import { omitUndefinedShallow } from '../../functions/utils';
+import { omitUndefinedShallow } from '../../functions/utils/omit-undefined-shallow';
 import { assertIsRawIndexerWellResponse } from './assert-is-raw-indexer-response';
 import { IndexerWell } from './indexer-well';
 import { RawIndexerWellResponse } from './raw-indexer-well';

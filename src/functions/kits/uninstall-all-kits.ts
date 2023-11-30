@@ -7,7 +7,7 @@
  * license. See the LICENSE file for details.
  */
 
-import { APIContext } from '../utils';
+import { APIContext } from '../utils/api-context';
 import { makeGetAllLocalKits } from './get-all-local-kits';
 import { makeUninstallOneKit } from './uninstall-one-kit';
 

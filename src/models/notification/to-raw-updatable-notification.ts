@@ -8,7 +8,7 @@
  */
 
 import { isNull } from 'lodash';
-import { omitUndefinedShallow } from '~/functions/utils';
+import { omitUndefinedShallow } from '~/functions/utils/omit-undefined-shallow';
 import { isNumericID, NumericID, RawNumericID, toRawNumericID } from '~/value-objects';
 import { Notification } from './notification';
 import { RawUpdatableNotification } from './raw-updatable-notification';

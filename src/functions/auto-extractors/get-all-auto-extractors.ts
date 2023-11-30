@@ -7,8 +7,13 @@
  * license. See the LICENSE file for details.
  */
 
-import { AutoExtractor, RawAutoExtractor, toAutoExtractor } from '~/models';
-import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, parseJSONResponse } from '../utils';
+import { AutoExtractor } from '~/models/auto-extractor/auto-extractor';
+import { RawAutoExtractor } from '~/models/auto-extractor/raw-auto-extractor';
+import { toAutoExtractor } from '~/models/auto-extractor/to-auto-extractor';
+import { APIContext } from '../utils/api-context';
+import { buildHTTPRequestWithAuthFromContext } from '../utils/build-http-request';
+import { buildURL } from '../utils/build-url';
+import { parseJSONResponse } from '../utils/parse-json-response';
 
 export const makeGetAllAutoExtractors = (context: APIContext): (() => Promise<Array<AutoExtractor>>) => {
 	const path = '/api/autoextractors?admin=true';

@@ -7,9 +7,9 @@
  * license. See the LICENSE file for details.
  */
 
-import { Dashboard } from '~/models';
+import { Dashboard } from '~/models/dashboard/dashboard';
 import { isNumericID, NumericID } from '~/value-objects';
-import { APIContext } from '../utils';
+import { APIContext } from '../utils/api-context';
 import { makeGetAllDashboards } from './get-all-dashboards';
 import { makeGetDashboardsByGroup } from './get-dashboards-by-group';
 import { makeGetDashboardsByUser } from './get-dashboards-by-user';

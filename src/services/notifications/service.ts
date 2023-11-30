@@ -7,8 +7,8 @@
  * license. See the LICENSE file for details.
  */
 
-import { MyNotificationsMessageReceived } from '~/functions/notifications';
-import { APISubscription } from '~/functions/utils';
+import { MyNotificationsMessageReceived } from '~/functions/notifications/subscribe-to-my-notifications';
+import { APISubscription } from '~/functions/utils/api-subscription';
 import {
 	CreatableBroadcastNotification,
 	CreatableTargetedNotificationByTargetType,

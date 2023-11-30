@@ -7,15 +7,15 @@
  * license. See the LICENSE file for details.
  */
 
-import { CreatableDashboard, Dashboard, toRawCreatableDashboard } from '~/models';
+import { CreatableDashboard } from '~/models/dashboard/creatable-dashboard';
+import { Dashboard } from '~/models/dashboard/dashboard';
+import { toRawCreatableDashboard } from '~/models/dashboard/to-raw-creatable-dashboard';
 import { RawNumericID, toNumericID } from '~/value-objects';
-import {
-	APIContext,
-	buildHTTPRequestWithAuthFromContext,
-	buildURL,
-	HTTPRequestOptions,
-	parseJSONResponse,
-} from '../utils';
+import { APIContext } from '../utils/api-context';
+import { buildHTTPRequestWithAuthFromContext } from '../utils/build-http-request';
+import { buildURL } from '../utils/build-url';
+import { HTTPRequestOptions } from '../utils/http-request-options';
+import { parseJSONResponse } from '../utils/parse-json-response';
 import { makeGetOneDashboard } from './get-one-dashboard';
 
 export const makeCreateOneDashboard = (context: APIContext): ((data: CreatableDashboard) => Promise<Dashboard>) => {

@@ -8,7 +8,7 @@
  */
 
 import { isNil } from 'lodash';
-import { APIContext } from '../utils';
+import { APIContext } from '../utils/api-context';
 import { makeDeleteOneScheduledQuery } from './delete-one-scheduled-query';
 import { makeGetAllScheduledQueries } from './get-all-scheduled-queries';
 import { ScheduledTasksFilter } from './get-many-scheduled-tasks';

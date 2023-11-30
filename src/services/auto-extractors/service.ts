@@ -7,15 +7,14 @@
  * license. See the LICENSE file for details.
  */
 
-import { AutoExtractorsFilter, IsValidAutoExtractorSyntaxResponse } from '~/functions/auto-extractors';
-import {
-	AutoExtractor,
-	CreatableAutoExtractor,
-	GeneratedAutoExtractors,
-	UpdatableAutoExtractor,
-	UploadableAutoExtractor,
-} from '~/models/auto-extractor';
+import { AutoExtractorsFilter } from '~/functions/auto-extractors/download-many-auto-extractors';
+import { IsValidAutoExtractorSyntaxResponse } from '~/functions/auto-extractors/is-valid-auto-extractor-syntax';
+import { AutoExtractor } from '~/models/auto-extractor/auto-extractor';
+import { CreatableAutoExtractor } from '~/models/auto-extractor/creatable-auto-extractor';
 import { GeneratableAutoExtractor } from '~/models/auto-extractor/generatable-auto-extractor';
+import { GeneratedAutoExtractors } from '~/models/auto-extractor/generated-auto-extractors';
+import { UpdatableAutoExtractor } from '~/models/auto-extractor/updatable-auto-extractor';
+import { UploadableAutoExtractor } from '~/models/auto-extractor/uploadable-auto-extractor';
 
 export interface AutoExtractorsService {
 	readonly get: {

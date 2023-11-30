@@ -8,7 +8,9 @@
  */
 
 import { MailServerConfig } from '../../models/mail-server';
-import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL } from '../utils';
+import { APIContext } from '../utils/api-context';
+import { buildHTTPRequestWithAuthFromContext } from '../utils/build-http-request';
+import { buildURL } from '../utils/build-url';
 import { toRawMailServerConfig } from './conversion';
 import { MAIL_CONFIG_PATH } from './paths';
 

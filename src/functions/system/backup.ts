@@ -7,7 +7,9 @@
  * license. See the LICENSE file for details.
  */
 
-import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL } from '../utils';
+import { APIContext } from '../utils/api-context';
+import { buildHTTPRequestWithAuthFromContext } from '../utils/build-http-request';
+import { buildURL } from '../utils/build-url';
 
 export const makeBackup = (context: APIContext): ((includeSavedSearches?: boolean) => Promise<File>) => {
 	const templatePath = '/api/backup';

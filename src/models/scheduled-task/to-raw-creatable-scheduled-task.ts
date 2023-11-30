@@ -38,6 +38,7 @@ export const toRawCreatableScheduledTask = (data: CreatableScheduledTask): RawCr
 				DebugMode: false,
 				TimeframeOffset: Math.abs(durationToSeconds(data.timeframeOffset)) * -1,
 				BackfillEnabled: data.backfillEnabled,
+				SearchReference: data.searchReference,
 			};
 		case 'script':
 			return {

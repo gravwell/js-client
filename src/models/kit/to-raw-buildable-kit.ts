@@ -10,7 +10,7 @@
 import { encode as base64Encode } from 'base-64';
 import { encode as utf8Encode } from 'utf8';
 import { toRawNumericID } from '~/value-objects';
-import { omitUndefinedShallow } from '../../functions/utils';
+import { omitUndefinedShallow } from '../../functions/utils/omit-undefined-shallow';
 import { toRawVersionObject } from './../version/to-raw-version-object';
 import { BuildableKit } from './buildable-kit';
 import { RawBuildableKit } from './raw-buildable-kit';

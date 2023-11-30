@@ -9,7 +9,10 @@
 
 import { RawSavedQuery, SavedQuery, toSavedQuery } from '~/models';
 import { NumericID } from '~/value-objects';
-import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, parseJSONResponse } from '../utils';
+import { APIContext } from '../utils/api-context';
+import { buildHTTPRequestWithAuthFromContext } from '../utils/build-http-request';
+import { buildURL } from '../utils/build-url';
+import { parseJSONResponse } from '../utils/parse-json-response';
 
 export const makeGetOneSavedQuery =
 	(context: APIContext) =>

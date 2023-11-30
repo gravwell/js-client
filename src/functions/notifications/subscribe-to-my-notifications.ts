@@ -9,7 +9,8 @@
 
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Notification } from '~/models';
-import { APIContext, APISubscription } from '../utils';
+import { APIContext } from '../utils/api-context';
+import { APISubscription } from '../utils/api-subscription';
 import { makeGetMyNotifications } from './get-my-notifications';
 
 export type MyNotificationsMessageReceived = Array<Notification>;

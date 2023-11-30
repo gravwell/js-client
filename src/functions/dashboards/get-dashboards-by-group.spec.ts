@@ -8,12 +8,16 @@
  */
 
 import { random } from 'lodash';
-import { CreatableDashboard, CreatableGroup, CreatableUser, isDashboard, User } from '~/models';
+import { CreatableUser, User } from '~/models';
+import { CreatableDashboard } from '~/models/dashboard/creatable-dashboard';
+import { isDashboard } from '~/models/dashboard/is-dashboard';
+import { CreatableGroup } from '~/models/group/creatable-group';
 import { integrationTest, integrationTestSpecDef, TEST_BASE_API_CONTEXT } from '~/tests';
 import { makeLoginOneUser } from '../auth/login-one-user';
 import { makeAddOneUserToManyGroups } from '../groups/add-one-user-to-many-groups';
 import { makeCreateOneGroup } from '../groups/create-one-group';
-import { makeCreateOneUser, makeGetMyUser } from '../users';
+import { makeCreateOneUser } from '../users/create-one-user';
+import { makeGetMyUser } from '../users/get-my-user';
 import { assertIsNotNil } from '../utils/type-guards';
 import { makeCreateOneDashboard } from './create-one-dashboard';
 import { makeDeleteOneDashboard } from './delete-one-dashboard';

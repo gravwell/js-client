@@ -7,7 +7,7 @@
  * license. See the LICENSE file for details.
  */
 
-import { ScheduledQueriesFilter } from '~/functions/scheduled-tasks';
+import { ScheduledQueriesFilter } from '~/functions/scheduled-tasks/get-many-scheduled-queries';
 import { ScheduledTasksFilter } from '~/functions/scheduled-tasks/get-many-scheduled-tasks';
 import { CreatableScheduledQuery, ScheduledQuery, UpdatableScheduledQuery } from '~/models/scheduled-task';
 

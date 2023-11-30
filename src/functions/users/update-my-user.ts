@@ -9,7 +9,7 @@
 
 import { isString, isUndefined } from 'lodash';
 import { UpdatableUser, User } from '~/models';
-import { APIContext } from '../utils';
+import { APIContext } from '../utils/api-context';
 import { makeGetMyUser } from './get-my-user';
 import { makeUpdateOneUser } from './update-one-user';
 
