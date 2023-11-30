@@ -7,7 +7,10 @@
  * license. See the LICENSE file for details.
  */
 
-import { CreatableGroup, Group, groupDecoder, UpdatableGroup } from '~/models';
+import { CreatableGroup } from '~/models/group/creatable-group';
+import { Group } from '~/models/group/group';
+import { groupDecoder } from '~/models/group/is-group';
+import { UpdatableGroup } from '~/models/group/updatable-group';
 import { integrationTest, integrationTestSpecDef, TEST_BASE_API_CONTEXT } from '~/tests';
 import { makeCreateOneGroup } from './create-one-group';
 import { makeDeleteOneGroup } from './delete-one-group';

@@ -7,7 +7,10 @@
  * license. See the LICENSE file for details.
  */
 
-import { APIContext, buildHTTPRequestWithAuth, buildURL, parseJSONResponse } from '../utils';
+import { APIContext } from '../utils/api-context';
+import { buildHTTPRequestWithAuth } from '../utils/build-http-request';
+import { buildURL } from '../utils/build-url';
+import { parseJSONResponse } from '../utils/parse-json-response';
 
 export const makeLogoutOneUser = (context: APIContext): ((userAuthToken: string) => Promise<void>) => {
 	const templatePath = '/api/logout';

@@ -11,7 +11,7 @@ import { isBoolean, isEmpty, isNull, isString, isUndefined, negate } from 'lodas
 import { UpdatableUser, User } from '~/models';
 import { isNumericID } from '../../value-objects';
 import { makeUpdateOneUserSearchGroup } from '../search-groups/update-one-user-search-group';
-import { APIContext } from '../utils';
+import { APIContext } from '../utils/api-context';
 import { makeGetOneUser } from './get-one-user';
 import { makeUpdateOneUserInformation } from './update-one-user-information';
 import { makeUpdateOneUserLockedState } from './update-one-user-locked-state';

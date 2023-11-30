@@ -7,7 +7,9 @@
  * license. See the LICENSE file for details.
  */
 
-import { CreatableGroup, Group, UpdatableGroup } from '~/models/group';
+import { CreatableGroup } from '~/models/group/creatable-group';
+import { Group } from '~/models/group/group';
+import { UpdatableGroup } from '~/models/group/updatable-group';
 import { NumericID } from '~/value-objects';
 
 export interface GroupsService {

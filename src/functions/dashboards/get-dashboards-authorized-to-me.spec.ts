@@ -8,10 +8,13 @@
  */
 
 import { random, sortBy } from 'lodash';
-import { CreatableDashboard, CreatableUser, Dashboard, isDashboard, User } from '~/models';
+import { CreatableUser, User } from '~/models';
+import { CreatableDashboard } from '~/models/dashboard/creatable-dashboard';
+import { Dashboard } from '~/models/dashboard/dashboard';
+import { isDashboard } from '~/models/dashboard/is-dashboard';
 import { integrationTest, integrationTestSpecDef, TEST_BASE_API_CONTEXT } from '~/tests';
 import { makeLoginOneUser } from '../auth/login-one-user';
-import { makeCreateOneUser } from '../users';
+import { makeCreateOneUser } from '../users/create-one-user';
 import { makeCreateOneDashboard } from './create-one-dashboard';
 import { makeDeleteOneDashboard } from './delete-one-dashboard';
 import { makeGetAllDashboards } from './get-all-dashboards';

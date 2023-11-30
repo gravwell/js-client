@@ -7,11 +7,12 @@
  * license. See the LICENSE file for details.
  */
 
+import { DashboardLiveUpdate } from '~/models/dashboard/dashboard-live-update';
+import { DashboardTile } from '~/models/dashboard/dashboard-tile';
 import { NumericID, UUID } from '~/value-objects';
 import { Timeframe } from '../timeframe';
 import { Version } from '../version';
 import { DashboardSearch } from './dashboard-search';
-import { DashboardLiveUpdate, DashboardTile } from './index';
 
 export interface DashboardData {
 	id: NumericID;

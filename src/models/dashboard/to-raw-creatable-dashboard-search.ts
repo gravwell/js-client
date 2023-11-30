@@ -7,7 +7,7 @@
  * license. See the LICENSE file for details.
  */
 
-import { omitUndefinedShallow } from '~/functions/utils';
+import { omitUndefinedShallow } from '~/functions/utils/omit-undefined-shallow';
 import { isNumericID, toRawNumericID } from '~/value-objects';
 import { toRawTimeframe } from '../timeframe';
 import { CreatableDashboardSearch } from './creatable-dashboard-search';

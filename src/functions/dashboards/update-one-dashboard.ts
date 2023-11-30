@@ -7,14 +7,16 @@
  * license. See the LICENSE file for details.
  */
 
-import { Dashboard, RawDashboard, toDashboard, toRawUpdatableDashboard, UpdatableDashboard } from '~/models';
-import {
-	APIContext,
-	buildHTTPRequestWithAuthFromContext,
-	buildURL,
-	HTTPRequestOptions,
-	parseJSONResponse,
-} from '../utils';
+import { Dashboard } from '~/models/dashboard/dashboard';
+import { RawDashboard } from '~/models/dashboard/raw-dashboard';
+import { toDashboard } from '~/models/dashboard/to-dashboard';
+import { toRawUpdatableDashboard } from '~/models/dashboard/to-raw-updatable-dashboard';
+import { UpdatableDashboard } from '~/models/dashboard/updatable-dashboard';
+import { APIContext } from '../utils/api-context';
+import { buildHTTPRequestWithAuthFromContext } from '../utils/build-http-request';
+import { buildURL } from '../utils/build-url';
+import { HTTPRequestOptions } from '../utils/http-request-options';
+import { parseJSONResponse } from '../utils/parse-json-response';
 import { makeGetOneDashboard } from './get-one-dashboard';
 
 export const makeUpdateOneDashboard = (

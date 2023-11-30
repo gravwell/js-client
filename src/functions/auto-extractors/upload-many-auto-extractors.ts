@@ -9,16 +9,16 @@
 
 import * as FormData from 'form-data';
 import { isString } from 'lodash';
-import { AutoExtractor, UpdatableAutoExtractor, UploadableAutoExtractor } from '~/models';
+import { AutoExtractor } from '~/models/auto-extractor/auto-extractor';
+import { UpdatableAutoExtractor } from '~/models/auto-extractor/updatable-auto-extractor';
+import { UploadableAutoExtractor } from '~/models/auto-extractor/uploadable-auto-extractor';
 import { RawUUID } from '~/value-objects';
-import {
-	APIContext,
-	buildHTTPRequestWithAuthFromContext,
-	buildURL,
-	File,
-	HTTPRequestOptions,
-	parseJSONResponse,
-} from '../utils';
+import { APIContext } from '../utils/api-context';
+import { buildHTTPRequestWithAuthFromContext } from '../utils/build-http-request';
+import { buildURL } from '../utils/build-url';
+import { File } from '../utils/file';
+import { HTTPRequestOptions } from '../utils/http-request-options';
+import { parseJSONResponse } from '../utils/parse-json-response';
 import { makeGetAllAutoExtractors } from './get-all-auto-extractors';
 import { makeUpdateOneAutoExtractor } from './update-one-auto-extractor';
 

@@ -8,7 +8,11 @@
  */
 
 import * as FormData from 'form-data';
-import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, File, HTTPRequestOptions } from '../utils';
+import { APIContext } from '../utils/api-context';
+import { buildHTTPRequestWithAuthFromContext } from '../utils/build-http-request';
+import { buildURL } from '../utils/build-url';
+import { File } from '../utils/file';
+import { HTTPRequestOptions } from '../utils/http-request-options';
 
 export const makeRestore = (context: APIContext): ((backup: File, signal?: AbortSignal) => Promise<void>) => {
 	const templatePath = '/api/backup';

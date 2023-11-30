@@ -54,7 +54,9 @@ import {
 } from '~/models';
 import { toDataExplorerEntry } from '~/models/search/to-data-explorer-entry';
 import { Percentage, RawJSON, toNumericID } from '~/value-objects';
-import { APIContext, debounceWithBackoffWhile, omitUndefinedShallow } from '../../utils';
+import { APIContext } from '../../utils/api-context';
+import { debounceWithBackoffWhile } from '../../utils/debounce-with-backoff-while';
+import { omitUndefinedShallow } from '../../utils/omit-undefined-shallow';
 import { collectSearchObservableErrors } from '../helpers/attach-search';
 import { createRequiredSearchFilterObservable } from '../helpers/create-required-search-filter-observable';
 import { initiateSearch } from '../initiate-search';

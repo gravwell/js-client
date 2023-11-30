@@ -10,7 +10,10 @@
 import { createReadStream, ReadStream } from 'fs';
 import { omit } from 'lodash';
 import { join } from 'path';
-import { CreatableFile, FileMetadata, isFileMetadata, UpdatableFile } from '~/models';
+import { CreatableFile } from '~/models/file/creatable-file';
+import { FileMetadata } from '~/models/file/file-metadata';
+import { isFileMetadata } from '~/models/file/is-file-metadata';
+import { UpdatableFile } from '~/models/file/updatable-file';
 import {
 	integrationTest,
 	integrationTestSpecDef,

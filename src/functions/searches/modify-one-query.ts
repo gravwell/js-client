@@ -10,7 +10,7 @@
 import { isNull, pick } from 'lodash';
 import { firstValueFrom } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
-import { APIContext } from '~/functions/utils';
+import { APIContext } from '~/functions/utils/api-context';
 import { ElementFilter, Query, ValidatedQuery } from '~/models';
 import { makeSubscribeToOneQueryParsing } from './subscribe-to-query-parsing';
 

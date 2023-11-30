@@ -20,9 +20,9 @@ import {
 	StackGraphSearchEntries,
 } from '~/models';
 import { integrationTestSpecDef, myCustomMatchers, sleep, TEST_BASE_API_CONTEXT } from '~/tests';
-import { makeIngestMultiLineEntry } from '../ingestors';
-import { makeGetAllTags } from '../tags';
-import { makeSubscribeToOneSearch } from './subscribe-to-one-search';
+import { makeIngestMultiLineEntry } from '../ingestors/ingest-multi-line-entry';
+import { makeGetAllTags } from '../tags/get-all-tags';
+import { makeSubscribeToOneSearch } from './subscribe-to-one-search/subscribe-to-one-search';
 
 interface Coordinate {
 	lon: number;

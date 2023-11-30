@@ -11,7 +11,7 @@ import { random, sortBy } from 'lodash';
 import { CreatableUser, isScheduledScript, ScheduledScript, User } from '~/models';
 import { integrationTest, integrationTestSpecDef, TEST_BASE_API_CONTEXT } from '~/tests';
 import { makeLoginOneUser } from '../auth/login-one-user';
-import { makeCreateOneUser } from '../users';
+import { makeCreateOneUser } from '../users/create-one-user';
 import { makeCreateManyScheduledScripts } from './create-many-scheduled-scripts';
 import { makeDeleteAllScheduledScripts } from './delete-all-scheduled-scripts';
 import { makeGetAllScheduledScripts } from './get-all-scheduled-scripts';

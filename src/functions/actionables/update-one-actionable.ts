@@ -7,14 +7,16 @@
  * license. See the LICENSE file for details.
  */
 
-import { Actionable, RawActionable, toActionable, toRawUpdatableActionable, UpdatableActionable } from '~/models';
-import {
-	APIContext,
-	buildHTTPRequestWithAuthFromContext,
-	buildURL,
-	HTTPRequestOptions,
-	parseJSONResponse,
-} from '../utils';
+import { Actionable } from '~/models/actionable/actionable';
+import { RawActionable } from '~/models/actionable/raw-actionable';
+import { toActionable } from '~/models/actionable/to-actionable';
+import { toRawUpdatableActionable } from '~/models/actionable/to-raw-updatable-actionable';
+import { UpdatableActionable } from '~/models/actionable/updatable-actionable';
+import { APIContext } from '../utils/api-context';
+import { buildHTTPRequestWithAuthFromContext } from '../utils/build-http-request';
+import { buildURL } from '../utils/build-url';
+import { HTTPRequestOptions } from '../utils/http-request-options';
+import { parseJSONResponse } from '../utils/parse-json-response';
 import { makeGetOneActionable } from './get-one-actionable';
 
 export const makeUpdateOneActionable = (context: APIContext): ((data: UpdatableActionable) => Promise<Actionable>) => {

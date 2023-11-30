@@ -9,7 +9,7 @@
 
 import { encode as base64Encode } from 'base-64';
 import * as utf8 from 'utf8';
-import { omitUndefinedShallow } from '~/functions/utils';
+import { omitUndefinedShallow } from '~/functions/utils/omit-undefined-shallow';
 import { isUUID, toRawNumericID } from '~/value-objects';
 import { CreatablePlaybook } from './creatable-playbook';
 import { RawCreatablePlaybook } from './raw-creatable-playbook';

@@ -18,7 +18,7 @@ import {
 } from '~/models';
 import { DataExplorerEntry } from '~/models/search/data-explorer-entry';
 import { toDataExplorerEntry } from '~/models/search/to-data-explorer-entry';
-import { APIContext } from '../../utils';
+import { APIContext } from '../../utils/api-context';
 import { initiateSearch } from '../initiate-search';
 import { makeSubscribeToOneRawSearch } from '../subscribe-to-one-raw-search';
 

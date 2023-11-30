@@ -37,4 +37,7 @@ export interface RawCreatableScheduledTask {
 	// NOTE: Required for scheduled searches. Not applicable to scripts.
 	TimeframeOffset?: number;
 	BackfillEnabled?: boolean;
+
+	// Scheduled searches only.
+	SearchReference?: string | undefined;
 }

@@ -13,7 +13,8 @@ import { isUndefined, last as lastElt, range as rangeLeft, sum, zip } from 'loda
 import { firstValueFrom, lastValueFrom, Observable } from 'rxjs';
 import { map, takeWhile, toArray } from 'rxjs/operators';
 import { v4 as uuidv4 } from 'uuid';
-import { makeCreateOneMacro, makeDeleteOneMacro } from '~/functions/macros';
+import { makeCreateOneMacro } from '~/functions/macros/create-one-macro';
+import { makeDeleteOneMacro } from '~/functions/macros/delete-one-macro';
 import { SearchFilter, SearchSubscription } from '~/models';
 import { RawSearchEntries, TextSearchEntries } from '~/models/search/search-entries';
 import { integrationTestSpecDef, myCustomMatchers, sleep, TEST_BASE_API_CONTEXT } from '~/tests';
@@ -21,7 +22,7 @@ import { makeIngestMultiLineEntry } from '../../ingestors/ingest-multi-line-entr
 import { makeGetAllTags } from '../../tags/get-all-tags';
 import { assertIsNotNil } from '../../utils/type-guards';
 import { expectStatsFilter, makeKeepDataRangeTest } from '../keep-data-range-test.spec';
-import { makeSubscribeToOneSearch } from '../subscribe-to-one-search';
+import { makeSubscribeToOneSearch } from '../subscribe-to-one-search/subscribe-to-one-search';
 import { makeAttachToOneSearch } from './attach-to-one-search';
 
 interface Entry {

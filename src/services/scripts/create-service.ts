@@ -7,8 +7,8 @@
  * license. See the LICENSE file for details.
  */
 
-import { makeValidateOneScript } from '~/functions/scripts';
-import { APIContext } from '~/functions/utils';
+import { makeValidateOneScript } from '~/functions/scripts/validate-one-script';
+import { APIContext } from '~/functions/utils/api-context';
 import { ScriptsService } from './service';
 
 export const createScriptsService = (context: APIContext): ScriptsService => ({

@@ -9,7 +9,7 @@
 
 import { ScheduledTask } from '~/models';
 import { isNumericID, NumericID } from '~/value-objects';
-import { APIContext } from '../utils';
+import { APIContext } from '../utils/api-context';
 import { makeGetAllScheduledTasks } from './get-all-scheduled-tasks';
 import { makeGetScheduledTasksByUser } from './get-scheduled-tasks-by-user';
 

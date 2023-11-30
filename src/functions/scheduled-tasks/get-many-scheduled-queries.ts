@@ -9,7 +9,7 @@
 
 import { ScheduledQuery, ScheduledTask } from '~/models';
 import { NumericID } from '~/value-objects';
-import { APIContext } from '../utils';
+import { APIContext } from '../utils/api-context';
 import { makeGetManyScheduledTasks } from './get-many-scheduled-tasks';
 
 const isScheduledQuery = (s: ScheduledTask): s is ScheduledQuery => s.type === 'query';

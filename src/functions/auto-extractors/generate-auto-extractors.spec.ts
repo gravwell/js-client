@@ -12,11 +12,12 @@ import { range } from 'lodash';
 import { lastValueFrom } from 'rxjs';
 import { map, takeWhile } from 'rxjs/operators';
 import { v4 as uuidv4 } from 'uuid';
-import { CreatableJSONEntry, RawSearchEntries } from '~/models';
+import { RawSearchEntries } from '~/models';
+import { CreatableJSONEntry } from '~/models/entry/creatable-json-entry';
 import { integrationTestSpecDef, sleep, TEST_BASE_API_CONTEXT } from '~/tests';
-import { makeIngestJSONEntries } from '../ingestors';
-import { makeSubscribeToOneSearch } from '../searches';
-import { makeGetAllTags } from '../tags';
+import { makeIngestJSONEntries } from '../ingestors/ingest-json-entries';
+import { makeSubscribeToOneSearch } from '../searches/subscribe-to-one-search/subscribe-to-one-search';
+import { makeGetAllTags } from '../tags/get-all-tags';
 import { assertIsNotNil } from '../utils/type-guards';
 import { makeGenerateAutoExtractors } from './generate-auto-extractors';
 

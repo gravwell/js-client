@@ -17,6 +17,7 @@ export interface UpdatableScheduledQuery extends UpdatableScheduledTaskBase {
 	searchSince?: { lastRun?: boolean; secondsAgo: number };
 	timeframeOffset?: ScheduledQueryDuration;
 	backfillEnabled?: boolean;
+	searchReference?: string | undefined; // UUID of query library item.
 }
 
 export interface UpdatableScheduledScript extends UpdatableScheduledTaskBase {

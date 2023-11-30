@@ -7,16 +7,14 @@
  * license. See the LICENSE file for details.
  */
 
-import {
-	makeCreateOneMacro,
-	makeDeleteOneMacro,
-	makeGetAllMacros,
-	makeGetMacrosAuthorizedToMe,
-	makeGetManyMacros,
-	makeGetOneMacro,
-	makeUpdateOneMacro,
-} from '~/functions/macros';
-import { APIContext } from '~/functions/utils';
+import { makeCreateOneMacro } from '~/functions/macros/create-one-macro';
+import { makeDeleteOneMacro } from '~/functions/macros/delete-one-macro';
+import { makeGetAllMacros } from '~/functions/macros/get-all-macros';
+import { makeGetMacrosAuthorizedToMe } from '~/functions/macros/get-macros-authorized-to-me';
+import { makeGetManyMacros } from '~/functions/macros/get-many-macros';
+import { makeGetOneMacro } from '~/functions/macros/get-one-macro';
+import { makeUpdateOneMacro } from '~/functions/macros/update-one-macro';
+import { APIContext } from '~/functions/utils/api-context';
 import { MacrosService } from './service';
 
 export const createMacrosService = (context: APIContext): MacrosService => ({

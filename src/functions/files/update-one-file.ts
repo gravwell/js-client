@@ -8,14 +8,15 @@
  */
 
 import * as FormData from 'form-data';
-import { FileMetadata, RawBaseFileMetadata, toRawUpdatableFile, UpdatableFile } from '~/models';
-import {
-	APIContext,
-	buildHTTPRequestWithAuthFromContext,
-	buildURL,
-	HTTPRequestOptions,
-	parseJSONResponse,
-} from '../utils';
+import { FileMetadata } from '~/models/file/file-metadata';
+import { RawBaseFileMetadata } from '~/models/file/raw-file-metadata';
+import { toRawUpdatableFile } from '~/models/file/to-raw-updatable-file';
+import { UpdatableFile } from '~/models/file/updatable-file';
+import { APIContext } from '../utils/api-context';
+import { buildHTTPRequestWithAuthFromContext } from '../utils/build-http-request';
+import { buildURL } from '../utils/build-url';
+import { HTTPRequestOptions } from '../utils/http-request-options';
+import { parseJSONResponse } from '../utils/parse-json-response';
 import { makeGetOneFileDetails } from './get-one-file-details';
 
 export const makeUpdateOneFile = (context: APIContext): ((data: UpdatableFile) => Promise<FileMetadata>) => {

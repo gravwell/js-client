@@ -31,6 +31,7 @@ export const toScheduledTask = (raw: RawScheduledTask): ScheduledTask => {
 				},
 				timeframeOffset: secondsToDuration(Math.abs(raw.TimeframeOffset ?? 0)),
 				backfillEnabled: raw.BackfillEnabled ?? false,
+				searchReference: raw.SearchReference,
 			};
 		case 'script':
 			return {

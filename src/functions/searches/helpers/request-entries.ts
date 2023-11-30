@@ -11,7 +11,7 @@ import { isNil, uniqueId } from 'lodash';
 import { EMPTY, firstValueFrom, Observable, Subscription } from 'rxjs';
 import { catchError, filter, map, shareReplay, startWith, takeUntil } from 'rxjs/operators';
 import { debouncedPooling } from '~/functions/searches/helpers/attach-search';
-import { APISubscription } from '~/functions/utils';
+import { APISubscription } from '~/functions/utils/api-subscription';
 import {
 	RawRequestExplorerSearchEntriesWithinRangeMessageSent,
 	RawRequestSearchDetailsMessageSent,

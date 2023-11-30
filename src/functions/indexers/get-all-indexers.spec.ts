@@ -7,7 +7,7 @@
  * license. See the LICENSE file for details.
  */
 
-import { isIndexerWell } from '~/models';
+import { isIndexerWell } from '~/models/indexer/indexer-well';
 import { integrationTest, TEST_BASE_API_CONTEXT } from '~/tests';
 import { makeGetAllIndexers } from './get-all-indexers';
 

@@ -8,13 +8,11 @@
  */
 
 import { RawValidatedScript, Script, toValidatedScript, ValidatedScript } from '~/models';
-import {
-	APIContext,
-	buildHTTPRequestWithAuthFromContext,
-	buildURL,
-	HTTPRequestOptions,
-	parseJSONResponse,
-} from '../utils';
+import { APIContext } from '../utils/api-context';
+import { buildHTTPRequestWithAuthFromContext } from '../utils/build-http-request';
+import { buildURL } from '../utils/build-url';
+import { HTTPRequestOptions } from '../utils/http-request-options';
+import { parseJSONResponse } from '../utils/parse-json-response';
 
 export const makeValidateOneScript = (context: APIContext): ((script: Script) => Promise<ValidatedScript>) => {
 	const templatePath = '/api/scheduledsearches/parse';

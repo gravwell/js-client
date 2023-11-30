@@ -10,7 +10,7 @@
 import { omit } from 'lodash';
 import { CreatablePlaybook, isPlaybook, Playbook, UpdatablePlaybook } from '~/models';
 import { integrationTest, integrationTestSpecDef, TEST_BASE_API_CONTEXT } from '~/tests';
-import { omitUndefinedShallow } from '../utils';
+import { omitUndefinedShallow } from '../utils/omit-undefined-shallow';
 import { makeCreateOnePlaybook } from './create-one-playbook';
 import { makeDeleteOnePlaybook } from './delete-one-playbook';
 import { makeUpdateOnePlaybook } from './update-one-playbook';

@@ -8,9 +8,14 @@
  */
 
 import { isArray } from 'lodash';
-import { KitArchive, RawKitArchive, toKitArchive } from '~/models';
+import { KitArchive } from '~/models/kit/kit-archive';
+import { RawKitArchive } from '~/models/kit/raw-kit-archive';
+import { toKitArchive } from '~/models/kit/to-kit-archive';
 import { makeGetAllScheduledTasks } from '../scheduled-tasks/get-all-scheduled-tasks';
-import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, parseJSONResponse } from '../utils';
+import { APIContext } from '../utils/api-context';
+import { buildHTTPRequestWithAuthFromContext } from '../utils/build-http-request';
+import { buildURL } from '../utils/build-url';
+import { parseJSONResponse } from '../utils/parse-json-response';
 
 export const makeGetKitArchives = (context: APIContext): (() => Promise<Array<KitArchive>>) => {
 	const getAllScheduledTasks = makeGetAllScheduledTasks(context);

@@ -7,7 +7,7 @@
  * license. See the LICENSE file for details.
  */
 
-import { omitUndefinedShallow } from '~/functions/utils';
+import { omitUndefinedShallow } from '~/functions/utils/omit-undefined-shallow';
 import { toRawRegex } from '~/value-objects';
 import { ActionableAction, ActionableTimeVariable, ActionableTrigger } from './actionable';
 import { ActionableCommand } from './actionable-command';

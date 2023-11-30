@@ -10,7 +10,7 @@
 import { isNil, isNumber, isString } from 'lodash';
 import { DATA_TYPE } from '~/models';
 import { toNumericID } from '~/value-objects';
-import { omitUndefinedShallow } from '../../functions/utils';
+import { omitUndefinedShallow } from '../../functions/utils/omit-undefined-shallow';
 import { RawTimeframe, toTimeframe } from '../timeframe';
 import { toVersion } from '../version';
 import { Dashboard } from './dashboard';

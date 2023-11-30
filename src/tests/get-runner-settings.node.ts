@@ -10,7 +10,7 @@
 import * as dotenv from 'dotenv';
 import { isNil, isString } from 'lodash';
 import { URL } from 'node:url';
-import { APIContext } from '../functions/utils';
+import { APIContext } from '../functions/utils/api-context';
 import { fetch } from '../functions/utils/fetch';
 
 dotenv.config();

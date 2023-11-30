@@ -7,8 +7,10 @@
  * license. See the LICENSE file for details.
  */
 
-import { makeCreateOneLog, makeGetLogLevels, makeSetLogLevel } from '~/functions/logs';
-import { APIContext } from '~/functions/utils';
+import { makeCreateOneLog } from '~/functions/logs/create-one-log';
+import { makeGetLogLevels } from '~/functions/logs/get-log-levels';
+import { makeSetLogLevel } from '~/functions/logs/set-log-level';
+import { APIContext } from '~/functions/utils/api-context';
 import { LogsService } from './service';
 
 export const createLogsService = (context: APIContext): LogsService => ({

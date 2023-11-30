@@ -7,7 +7,7 @@
  * license. See the LICENSE file for details.
  */
 
-import { isRemoteKit } from '~/models';
+import { isRemoteKit } from '~/models/kit/is-remote-kit';
 import { integrationTest, TEST_BASE_API_CONTEXT } from '~/tests';
 import { makeGetAllRemoteKits } from './get-all-remote-kits';
 

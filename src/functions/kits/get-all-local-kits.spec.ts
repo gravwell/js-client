@@ -7,7 +7,7 @@
  * license. See the LICENSE file for details.
  */
 
-import { isLocalKit } from '~/models';
+import { isLocalKit } from '~/models/kit/is-local-kit';
 import { integrationTest, TEST_BASE_API_CONTEXT } from '~/tests';
 import { makeGetAllLocalKits } from './get-all-local-kits';
 

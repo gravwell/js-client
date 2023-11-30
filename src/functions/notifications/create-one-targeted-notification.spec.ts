@@ -8,7 +8,7 @@
  */
 
 import { integrationTest, TEST_BASE_API_CONTEXT } from '~/tests';
-import { makeCreateOneGroup } from '../groups';
+import { makeCreateOneGroup } from '../groups/create-one-group';
 import { makeCreateOneTargetedNotification } from './create-one-targeted-notification';
 
 describe('createOneTargetedNotification', () => {

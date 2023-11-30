@@ -7,9 +7,10 @@
  * license. See the LICENSE file for details.
  */
 
-import { makeAttachToOneExplorerSearch, makeSubscribeToOneExplorerSearch } from '~/functions/searches';
-import { makeExploreOneTag } from '~/functions/searches/explore-one-tag';
-import { APIContext } from '~/functions/utils';
+import { makeAttachToOneExplorerSearch } from '~/functions/searches/attach-to-one-explorer-search/attach-to-one-explorer-search';
+import { makeExploreOneTag } from '~/functions/searches/explore-one-tag/explore-one-tag';
+import { makeSubscribeToOneExplorerSearch } from '~/functions/searches/subscribe-to-one-explorer-search/subscribe-to-one-explorer-search';
+import { APIContext } from '~/functions/utils/api-context';
 import { ExplorerService } from './service';
 
 export const createExplorerService = (context: APIContext): ExplorerService => ({

@@ -18,13 +18,11 @@
 import { RawSearchDetails, SearchDetails, toSearchDetails } from '~/models';
 import { toRawUpdatableSearchDetails } from '../../models/search/to-raw-updatable-search-details';
 import { UpdatableSearchDetails } from '../../models/search/updatable-search-details';
-import {
-	APIContext,
-	buildHTTPRequestWithAuthFromContext,
-	buildURL,
-	HTTPRequestOptions,
-	parseJSONResponse,
-} from '../utils';
+import { APIContext } from '../utils/api-context';
+import { buildHTTPRequestWithAuthFromContext } from '../utils/build-http-request';
+import { buildURL } from '../utils/build-url';
+import { HTTPRequestOptions } from '../utils/http-request-options';
+import { parseJSONResponse } from '../utils/parse-json-response';
 import { makeGetOnePersistentSearchDetails } from './get-one-persistent-search-details';
 
 export const makeUpdateOneSearchDetail = (

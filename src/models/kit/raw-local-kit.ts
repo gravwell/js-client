@@ -7,7 +7,7 @@
  * license. See the LICENSE file for details.
  */
 
-import { RawKitAsset } from '~/main';
+import { RawKitAsset } from '~/models/kit/raw-kit-asset';
 import { RawID, RawNumericID, RawUUID } from '~/value-objects';
 import { RawVersionObject } from '../version';
 import { RawConfigMacro } from './raw-config-macro';

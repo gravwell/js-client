@@ -8,7 +8,7 @@
  */
 
 import { ScheduledQuery, ScheduledTask } from '~/models';
-import { APIContext } from '../utils';
+import { APIContext } from '../utils/api-context';
 import { makeGetAllScheduledTasks } from './get-all-scheduled-tasks';
 
 const isScheduledQuery = (s: ScheduledTask): s is ScheduledQuery => s.type === 'query';

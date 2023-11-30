@@ -7,12 +7,10 @@
  * license. See the LICENSE file for details.
  */
 
-import {
-	makeGetAllPersistentSearchStatus,
-	makeGetOnePersistentSearchStatus,
-	makeGetPersistentSearchStatusRelatedToMe,
-} from '~/functions/searches';
-import { APIContext } from '~/functions/utils';
+import { makeGetAllPersistentSearchStatus } from '~/functions/searches/get-all-persistent-search-status';
+import { makeGetOnePersistentSearchStatus } from '~/functions/searches/get-one-persistent-search-status';
+import { makeGetPersistentSearchStatusRelatedToMe } from '~/functions/searches/get-persistent-search-status-related-to-me';
+import { APIContext } from '~/functions/utils/api-context';
 import { makeGetOnePersistentSearchDetails } from '../../functions/searches/get-one-persistent-search-details';
 import { SearchStatusService } from './service';
 

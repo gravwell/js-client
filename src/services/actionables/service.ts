@@ -7,7 +7,9 @@
  * license. See the LICENSE file for details.
  */
 
-import { Actionable, CreatableActionable, UpdatableActionable } from '~/models/actionable';
+import { Actionable } from '~/models/actionable/actionable';
+import { CreatableActionable } from '~/models/actionable/creatable-actionable';
+import { UpdatableActionable } from '~/models/actionable/updatable-actionable';
 
 export interface ActionablesService {
 	readonly get: {

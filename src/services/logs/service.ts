@@ -7,7 +7,8 @@
  * license. See the LICENSE file for details.
  */
 
-import { LogLevel, LogLevels } from '~/models/log-level';
+import { LogLevel } from '~/models/log-level/log-level';
+import { LogLevels } from '~/models/log-level/log-levels';
 
 export interface LogsService {
 	readonly get: {

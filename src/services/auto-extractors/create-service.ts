@@ -7,19 +7,17 @@
  * license. See the LICENSE file for details.
  */
 
-import {
-	makeCreateOneAutoExtractor,
-	makeDeleteOneAutoExtractor,
-	makeDownloadManyAutoExtractors,
-	makeGetAllAutoExtractorModules,
-	makeGetAllAutoExtractors,
-	makeGetAutoExtractorsAuthorizedToMe,
-	makeIsValidAutoExtractorSyntax,
-	makeUpdateOneAutoExtractor,
-	makeUploadManyAutoExtractors,
-} from '~/functions/auto-extractors';
+import { makeCreateOneAutoExtractor } from '~/functions/auto-extractors/create-one-auto-extractor';
+import { makeDeleteOneAutoExtractor } from '~/functions/auto-extractors/delete-one-auto-extractor';
+import { makeDownloadManyAutoExtractors } from '~/functions/auto-extractors/download-many-auto-extractors';
 import { makeGenerateAutoExtractors } from '~/functions/auto-extractors/generate-auto-extractors';
-import { APIContext } from '~/functions/utils';
+import { makeGetAllAutoExtractorModules } from '~/functions/auto-extractors/get-all-auto-extractor-modules';
+import { makeGetAllAutoExtractors } from '~/functions/auto-extractors/get-all-auto-extractors';
+import { makeGetAutoExtractorsAuthorizedToMe } from '~/functions/auto-extractors/get-auto-extractors-authorized-to-me';
+import { makeIsValidAutoExtractorSyntax } from '~/functions/auto-extractors/is-valid-auto-extractor-syntax';
+import { makeUpdateOneAutoExtractor } from '~/functions/auto-extractors/update-one-auto-extractor';
+import { makeUploadManyAutoExtractors } from '~/functions/auto-extractors/upload-many-auto-extractors';
+import { APIContext } from '~/functions/utils/api-context';
 import { AutoExtractorsService } from './service';
 
 export const createAutoExtractorsService = (context: APIContext): AutoExtractorsService => ({

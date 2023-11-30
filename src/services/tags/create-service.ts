@@ -7,8 +7,8 @@
  * license. See the LICENSE file for details.
  */
 
-import { makeGetAllTags } from '~/functions/tags';
-import { APIContext } from '~/functions/utils';
+import { makeGetAllTags } from '~/functions/tags/get-all-tags';
+import { APIContext } from '~/functions/utils/api-context';
 import { TagsService } from './service';
 
 export const createTagsService = (context: APIContext): TagsService => ({

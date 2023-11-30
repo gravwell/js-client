@@ -7,15 +7,15 @@
  * license. See the LICENSE file for details.
  */
 
-import { Actionable, CreatableActionable, toRawCreatableActionable } from '~/models';
+import { Actionable } from '~/models/actionable/actionable';
+import { CreatableActionable } from '~/models/actionable/creatable-actionable';
+import { toRawCreatableActionable } from '~/models/actionable/to-raw-creatable-actionable';
 import { UUID } from '~/value-objects';
-import {
-	APIContext,
-	buildHTTPRequestWithAuthFromContext,
-	buildURL,
-	HTTPRequestOptions,
-	parseJSONResponse,
-} from '../utils';
+import { APIContext } from '../utils/api-context';
+import { buildHTTPRequestWithAuthFromContext } from '../utils/build-http-request';
+import { buildURL } from '../utils/build-url';
+import { HTTPRequestOptions } from '../utils/http-request-options';
+import { parseJSONResponse } from '../utils/parse-json-response';
 import { makeGetOneActionable } from './get-one-actionable';
 
 export const makeCreateOneActionable = (context: APIContext): ((data: CreatableActionable) => Promise<Actionable>) => {

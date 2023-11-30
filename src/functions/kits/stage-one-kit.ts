@@ -8,16 +8,17 @@
  */
 
 import * as FormData from 'form-data';
-import { LocalKit, RawLocalKit, RemoteKit, toLocalKit } from '~/models';
+import { LocalKit } from '~/models/kit/local-kit';
+import { RawLocalKit } from '~/models/kit/raw-local-kit';
+import { RemoteKit } from '~/models/kit/remote-kit';
+import { toLocalKit } from '~/models/kit/to-local-kit';
 import { isRemoteKit } from '../../models/kit/is-remote-kit';
-import {
-	APIContext,
-	buildHTTPRequestWithAuthFromContext,
-	buildURL,
-	File,
-	HTTPRequestOptions,
-	parseJSONResponse,
-} from '../utils';
+import { APIContext } from '../utils/api-context';
+import { buildHTTPRequestWithAuthFromContext } from '../utils/build-http-request';
+import { buildURL } from '../utils/build-url';
+import { File } from '../utils/file';
+import { HTTPRequestOptions } from '../utils/http-request-options';
+import { parseJSONResponse } from '../utils/parse-json-response';
 
 export const makeStageOneRemoteKit =
 	(context: APIContext) =>

@@ -7,8 +7,8 @@
  * license. See the LICENSE file for details.
  */
 
-import { makeGetAllSearchModules } from '~/functions/search-modules';
-import { APIContext } from '~/functions/utils';
+import { makeGetAllSearchModules } from '~/functions/search-modules/get-all-search-modules';
+import { APIContext } from '~/functions/utils/api-context';
 import { SearchModulesService } from './service';
 
 export const createSearchModulesService = (context: APIContext): SearchModulesService => ({

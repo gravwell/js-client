@@ -11,14 +11,12 @@ import * as FormData from 'form-data';
 import { isString } from 'lodash';
 import { RawResource, Resource, toResource } from '~/models';
 import { UUID } from '~/value-objects';
-import {
-	APIContext,
-	buildHTTPRequestWithAuthFromContext,
-	buildURL,
-	File,
-	HTTPRequestOptions,
-	parseJSONResponse,
-} from '../utils';
+import { APIContext } from '../utils/api-context';
+import { buildHTTPRequestWithAuthFromContext } from '../utils/build-http-request';
+import { buildURL } from '../utils/build-url';
+import { File } from '../utils/file';
+import { HTTPRequestOptions } from '../utils/http-request-options';
+import { parseJSONResponse } from '../utils/parse-json-response';
 
 export const makeSetOneResourceContent =
 	(context: APIContext) =>

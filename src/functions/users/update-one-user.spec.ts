@@ -10,7 +10,7 @@
 import { random } from 'lodash';
 import { CreatableUser, User, userDecoder } from '~/models';
 import { integrationTest, integrationTestSpecDef, TEST_BASE_API_CONTEXT } from '~/tests';
-import { makeLoginOneUser } from '../auth';
+import { makeLoginOneUser } from '../auth/login-one-user';
 import { makeCreateOneUser } from './create-one-user';
 import { makeDeleteOneUser } from './delete-one-user';
 import { makeGetAllUsers } from './get-all-users';

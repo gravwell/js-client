@@ -7,14 +7,13 @@
  * license. See the LICENSE file for details.
  */
 
-import { CreatableJSONEntry, toRawCreatableJSONEntry } from '~/models';
-import {
-	APIContext,
-	buildHTTPRequestWithAuthFromContext,
-	buildURL,
-	HTTPRequestOptions,
-	parseJSONResponse,
-} from '../utils';
+import { CreatableJSONEntry } from '~/models/entry/creatable-json-entry';
+import { toRawCreatableJSONEntry } from '~/models/entry/to-raw-creatable-json-entry';
+import { APIContext } from '../utils/api-context';
+import { buildHTTPRequestWithAuthFromContext } from '../utils/build-http-request';
+import { buildURL } from '../utils/build-url';
+import { HTTPRequestOptions } from '../utils/http-request-options';
+import { parseJSONResponse } from '../utils/parse-json-response';
 
 export const makeIngestJSONEntries = (
 	context: APIContext,

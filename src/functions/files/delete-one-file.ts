@@ -8,7 +8,10 @@
  */
 
 import { UUID } from '~/value-objects';
-import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, parseJSONResponse } from '../utils';
+import { APIContext } from '../utils/api-context';
+import { buildHTTPRequestWithAuthFromContext } from '../utils/build-http-request';
+import { buildURL } from '../utils/build-url';
+import { parseJSONResponse } from '../utils/parse-json-response';
 
 // !WARNING gravwell/gravwell#2505 can't use ThingUUID
 export const makeDeleteOneFile =

@@ -8,7 +8,8 @@
  */
 
 import { sortBy } from 'lodash';
-import { AutoExtractor, CreatableAutoExtractor } from '~/models';
+import { AutoExtractor } from '~/models/auto-extractor/auto-extractor';
+import { CreatableAutoExtractor } from '~/models/auto-extractor/creatable-auto-extractor';
 import { integrationTest, integrationTestSpecDef, myCustomMatchers, TEST_BASE_API_CONTEXT } from '~/tests';
 import { makeCreateOneAutoExtractor } from './create-one-auto-extractor';
 import { makeDeleteOneAutoExtractor } from './delete-one-auto-extractor';

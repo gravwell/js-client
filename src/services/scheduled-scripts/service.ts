@@ -7,7 +7,7 @@
  * license. See the LICENSE file for details.
  */
 
-import { ScheduledScriptsFilter } from '~/functions/scheduled-tasks';
+import { ScheduledScriptsFilter } from '~/functions/scheduled-tasks/get-many-scheduled-scripts';
 import { ScheduledTasksFilter } from '~/functions/scheduled-tasks/get-many-scheduled-tasks';
 import { CreatableScheduledScript, ScheduledScript, UpdatableScheduledScript } from '~/models/scheduled-task';
 

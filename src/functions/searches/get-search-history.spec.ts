@@ -11,7 +11,8 @@ import { random } from 'lodash';
 import { CreatableUser, isValidSearch, User } from '~/models';
 import { integrationTest, integrationTestSpecDef, TEST_BASE_API_CONTEXT } from '~/tests';
 import { makeLoginOneUser } from '../auth/login-one-user';
-import { makeCreateOneUser, makeGetMyUser } from '../users';
+import { makeCreateOneUser } from '../users/create-one-user';
+import { makeGetMyUser } from '../users/get-my-user';
 import { makeGetSearchHistory } from './get-search-history';
 
 describe(

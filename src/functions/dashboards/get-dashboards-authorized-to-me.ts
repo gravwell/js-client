@@ -7,8 +7,13 @@
  * license. See the LICENSE file for details.
  */
 
-import { Dashboard, RawDashboard, toDashboard } from '~/models';
-import { APIContext, buildHTTPRequestWithAuthFromContext, buildURL, parseJSONResponse } from '../utils';
+import { Dashboard } from '~/models/dashboard/dashboard';
+import { RawDashboard } from '~/models/dashboard/raw-dashboard';
+import { toDashboard } from '~/models/dashboard/to-dashboard';
+import { APIContext } from '../utils/api-context';
+import { buildHTTPRequestWithAuthFromContext } from '../utils/build-http-request';
+import { buildURL } from '../utils/build-url';
+import { parseJSONResponse } from '../utils/parse-json-response';
 
 export const makeGetDashboardsAuthorizedToMe = (context: APIContext): (() => Promise<Array<Dashboard>>) => {
 	const path = '/api/dashboards';
