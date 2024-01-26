@@ -8,7 +8,7 @@
  */
 
 import { isUndefined } from 'lodash';
-import { toRawNumericID } from '~/value-objects';
+import { toRawNumericID } from '~/value-objects/id';
 import { Actionable, ActionableAction } from './actionable';
 import { RawUpdatableActionable } from './raw-updatable-actionable';
 import { toRawActionableAction, toRawActionableTrigger } from './to-raw-actionable';

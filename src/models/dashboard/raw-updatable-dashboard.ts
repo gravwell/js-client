@@ -8,8 +8,8 @@
  */
 
 import { RawDashboardTile } from '~/models/dashboard/raw-dashboard-tile';
-import { RawNumericID, RawUUID } from '~/value-objects';
-import { RawTimeframe } from '../timeframe';
+import { RawNumericID, RawUUID } from '~/value-objects/id';
+import { RawTimeframe } from '../timeframe/raw-timeframe';
 import { DashboardRendererOptions } from './dashboard-renderer-options';
 
 export interface RawUpdatableDashboard {

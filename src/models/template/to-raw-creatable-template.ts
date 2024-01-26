@@ -8,7 +8,7 @@
  */
 
 import { omitUndefinedShallow } from '~/functions/utils/omit-undefined-shallow';
-import { toRawNumericID } from '~/value-objects';
+import { toRawNumericID } from '~/value-objects/id';
 import { CreatableTemplate } from './creatable-template';
 import { RawCreatableTemplate } from './raw-creatable-template';
 

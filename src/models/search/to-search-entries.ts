@@ -8,33 +8,51 @@
  */
 
 import { isNull, isUndefined } from 'lodash';
+import { RawSearchMessageReceivedRequestExplorerEntriesWithinRange } from './raw-search-message-received';
+import { RawSearchMessageReceivedRequestEntriesWithinRange } from './raw-search-message-received/request-entries-within-range';
 import {
 	isRawSearchMessageReceivedRequestEntriesWithinRangeChartRenderer,
-	isRawSearchMessageReceivedRequestEntriesWithinRangeFDGRenderer,
-	isRawSearchMessageReceivedRequestEntriesWithinRangeGaugeRenderer,
-	isRawSearchMessageReceivedRequestEntriesWithinRangeHeatmapRenderer,
-	isRawSearchMessageReceivedRequestEntriesWithinRangePointmapRenderer,
-	isRawSearchMessageReceivedRequestEntriesWithinRangePointToPointRenderer,
-	isRawSearchMessageReceivedRequestEntriesWithinRangeRawRenderer,
-	isRawSearchMessageReceivedRequestEntriesWithinRangeStackGraphRenderer,
-	isRawSearchMessageReceivedRequestEntriesWithinRangeTableRenderer,
-	isRawSearchMessageReceivedRequestEntriesWithinRangeTextRenderer,
-	RawSearchMessageReceivedRequestEntriesWithinRange,
 	RawSearchMessageReceivedRequestEntriesWithinRangeChartRenderer,
+} from './raw-search-message-received/request-entries-within-range/chart-renderer';
+import {
+	isRawSearchMessageReceivedRequestEntriesWithinRangeFDGRenderer,
 	RawSearchMessageReceivedRequestEntriesWithinRangeFDGRenderer,
+} from './raw-search-message-received/request-entries-within-range/fdg-renderer';
+import {
+	isRawSearchMessageReceivedRequestEntriesWithinRangeGaugeRenderer,
 	RawSearchMessageReceivedRequestEntriesWithinRangeGaugeRenderer,
+} from './raw-search-message-received/request-entries-within-range/gauge-renderer';
+import {
+	isRawSearchMessageReceivedRequestEntriesWithinRangeHeatmapRenderer,
 	RawSearchMessageReceivedRequestEntriesWithinRangeHeatmapRenderer,
-	RawSearchMessageReceivedRequestEntriesWithinRangeHexRenderer,
-	RawSearchMessageReceivedRequestEntriesWithinRangePcapRenderer,
-	RawSearchMessageReceivedRequestEntriesWithinRangePointmapRenderer,
+} from './raw-search-message-received/request-entries-within-range/heatmap-renderer';
+import { RawSearchMessageReceivedRequestEntriesWithinRangeHexRenderer } from './raw-search-message-received/request-entries-within-range/hex-renderer';
+import { RawSearchMessageReceivedRequestEntriesWithinRangePcapRenderer } from './raw-search-message-received/request-entries-within-range/pcap-renderer';
+import {
+	isRawSearchMessageReceivedRequestEntriesWithinRangePointToPointRenderer,
 	RawSearchMessageReceivedRequestEntriesWithinRangePointToPointRenderer,
+} from './raw-search-message-received/request-entries-within-range/point-to-point-renderer';
+import {
+	isRawSearchMessageReceivedRequestEntriesWithinRangePointmapRenderer,
+	RawSearchMessageReceivedRequestEntriesWithinRangePointmapRenderer,
+} from './raw-search-message-received/request-entries-within-range/pointmap-renderer';
+import {
+	isRawSearchMessageReceivedRequestEntriesWithinRangeRawRenderer,
 	RawSearchMessageReceivedRequestEntriesWithinRangeRawRenderer,
+} from './raw-search-message-received/request-entries-within-range/raw-renderer';
+import {
+	isRawSearchMessageReceivedRequestEntriesWithinRangeStackGraphRenderer,
 	RawSearchMessageReceivedRequestEntriesWithinRangeStackGraphRenderer,
+} from './raw-search-message-received/request-entries-within-range/stack-graph-renderer';
+import {
+	isRawSearchMessageReceivedRequestEntriesWithinRangeTableRenderer,
 	RawSearchMessageReceivedRequestEntriesWithinRangeTableRenderer,
+} from './raw-search-message-received/request-entries-within-range/table-renderer';
+import {
+	isRawSearchMessageReceivedRequestEntriesWithinRangeTextRenderer,
 	RawSearchMessageReceivedRequestEntriesWithinRangeTextRenderer,
-	RawSearchMessageReceivedRequestEntriesWithinRangeWordcloudRenderer,
-	RawSearchMessageReceivedRequestExplorerEntriesWithinRange,
-} from './raw-search-message-received';
+} from './raw-search-message-received/request-entries-within-range/text-renderer';
+import { RawSearchMessageReceivedRequestEntriesWithinRangeWordcloudRenderer } from './raw-search-message-received/request-entries-within-range/wordcloud-renderer';
 import {
 	normalizeToChartSearchEntries,
 	normalizeToFDGSearchEntries,

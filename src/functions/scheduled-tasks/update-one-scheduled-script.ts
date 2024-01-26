@@ -7,7 +7,8 @@
  * license. See the LICENSE file for details.
  */
 
-import { ScheduledScript, UpdatableScheduledQuery } from '~/models';
+import { ScheduledScript } from '~/models/scheduled-task/scheduled-script';
+import { UpdatableScheduledQuery } from '~/models/scheduled-task/updatable-scheduled-task';
 import { APIContext } from '../utils/api-context';
 import { makeUpdateOneScheduledTask } from './update-one-scheduled-task';
 

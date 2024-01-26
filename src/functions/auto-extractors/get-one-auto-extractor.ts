@@ -9,7 +9,7 @@
 
 import { isUndefined } from 'lodash';
 import { AutoExtractor } from '~/models/auto-extractor/auto-extractor';
-import { UUID } from '~/value-objects';
+import { UUID } from '~/value-objects/id';
 import { APIContext } from '../utils/api-context';
 import { makeGetAllAutoExtractors } from './get-all-auto-extractors';
 

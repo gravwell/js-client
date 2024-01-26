@@ -16,7 +16,7 @@ import { makeGetOneGroup } from '~/functions/groups/get-one-group';
 import { makeRemoveOneUserFromOneGroup } from '~/functions/groups/remove-one-user-from-one-group';
 import { makeUpdateOneGroup } from '~/functions/groups/update-one-group';
 import { APIContext } from '~/functions/utils/api-context';
-import { NumericID } from '~/value-objects';
+import { NumericID } from '~/value-objects/id';
 import { GroupsService } from './service';
 
 export const createGroupsService = (context: APIContext): GroupsService => ({

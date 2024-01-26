@@ -15,7 +15,9 @@
  * license. See the LICENSE file for details.
  */
 
-import { RawSearchDetails, SearchDetails, toSearchDetails } from '~/models';
+import { RawSearchDetails } from '~/models/search/raw-search-details';
+import { SearchDetails } from '~/models/search/search-details';
+import { toSearchDetails } from '~/models/search/to-search-details';
 import { toRawUpdatableSearchDetails } from '../../models/search/to-raw-updatable-search-details';
 import { UpdatableSearchDetails } from '../../models/search/updatable-search-details';
 import { APIContext } from '../utils/api-context';

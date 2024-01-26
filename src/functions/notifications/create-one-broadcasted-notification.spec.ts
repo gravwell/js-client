@@ -7,8 +7,9 @@
  * license. See the LICENSE file for details.
  */
 
-import { CreatableBroadcastNotification } from '~/models';
-import { integrationTest, TEST_BASE_API_CONTEXT } from '~/tests';
+import { CreatableBroadcastNotification } from '~/models/notification/creatable-broadcasted-notification';
+import { TEST_BASE_API_CONTEXT } from '~/tests/config';
+import { integrationTest } from '~/tests/test-types';
 import { makeCreateOneBroadcastedNotification } from './create-one-broadcasted-notification';
 
 describe('createOneBroadcastedNotification', () => {

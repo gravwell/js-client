@@ -7,8 +7,8 @@
  * license. See the LICENSE file for details.
  */
 
-import { TokenCapability } from '~/index';
-import { RawUUID } from '~/value-objects';
+import { TokenCapability } from '~/models/token/token-capability';
+import { RawUUID } from '~/value-objects/id';
 
 /**
  * Updatable token fields.

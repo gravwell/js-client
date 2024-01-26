@@ -7,15 +7,13 @@
  * license. See the LICENSE file for details.
  */
 
-import {
-	RawScheduledTask,
-	ScheduledQuery,
-	ScheduledScript,
-	ScheduledTask,
-	toRawUpdatableScheduledTask,
-	toScheduledTask,
-	UpdatableScheduledTask,
-} from '~/models';
+import { RawScheduledTask } from '~/models/scheduled-task/raw-scheduled-task';
+import { ScheduledQuery } from '~/models/scheduled-task/scheduled-query';
+import { ScheduledScript } from '~/models/scheduled-task/scheduled-script';
+import { ScheduledTask } from '~/models/scheduled-task/scheduled-task';
+import { toRawUpdatableScheduledTask } from '~/models/scheduled-task/to-raw-updatable-scheduled-task';
+import { toScheduledTask } from '~/models/scheduled-task/to-scheduled-task';
+import { UpdatableScheduledTask } from '~/models/scheduled-task/updatable-scheduled-task';
 import { APIContext } from '../utils/api-context';
 import { buildHTTPRequestWithAuthFromContext } from '../utils/build-http-request';
 import { buildURL } from '../utils/build-url';

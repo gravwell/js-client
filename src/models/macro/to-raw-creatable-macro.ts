@@ -7,7 +7,7 @@
  * license. See the LICENSE file for details.
  */
 
-import { toRawNumericID } from '~/value-objects';
+import { toRawNumericID } from '~/value-objects/id';
 import { CreatableMacro } from './creatable-macro';
 import { RawCreatableMacro } from './raw-creatable-macro';
 

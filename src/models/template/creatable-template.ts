@@ -7,7 +7,7 @@
  * license. See the LICENSE file for details.
  */
 
-import { NumericID } from '~/value-objects';
+import { NumericID } from '~/value-objects/id';
 import { TemplateVariable } from './template';
 
 export interface CreatableTemplate {

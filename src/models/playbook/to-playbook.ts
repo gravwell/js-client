@@ -10,7 +10,7 @@
 import { decode as base64Decode } from 'base-64';
 import { isString } from 'lodash';
 import * as utf8 from 'utf8';
-import { DATA_TYPE } from '~/models';
+import { DATA_TYPE } from '~/models/data-type';
 import { Playbook } from './playbook';
 import { RawPlaybook } from './raw-playbook';
 import { RawPlaybookDecodedMetadata } from './raw-playbook-decoded-metadata';

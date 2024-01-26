@@ -7,7 +7,11 @@
  * license. See the LICENSE file for details.
  */
 
-import { CreatableTemplate, RawTemplate, Template, toRawCreatableTemplate, toTemplate } from '~/models';
+import { CreatableTemplate } from '~/models/template/creatable-template';
+import { RawTemplate } from '~/models/template/raw-template';
+import { Template } from '~/models/template/template';
+import { toRawCreatableTemplate } from '~/models/template/to-raw-creatable-template';
+import { toTemplate } from '~/models/template/to-template';
 import { APIContext } from '../utils/api-context';
 import { buildHTTPRequestWithAuthFromContext } from '../utils/build-http-request';
 import { buildURL } from '../utils/build-url';

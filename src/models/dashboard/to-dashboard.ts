@@ -8,11 +8,12 @@
  */
 
 import { isNil, isNumber, isString } from 'lodash';
-import { DATA_TYPE } from '~/models';
-import { toNumericID } from '~/value-objects';
+import { DATA_TYPE } from '~/models/data-type';
+import { toVersion } from '~/models/version/to-version';
+import { toNumericID } from '~/value-objects/id';
 import { omitUndefinedShallow } from '../../functions/utils/omit-undefined-shallow';
-import { RawTimeframe, toTimeframe } from '../timeframe';
-import { toVersion } from '../version';
+import { RawTimeframe } from '../timeframe/raw-timeframe';
+import { toTimeframe } from '../timeframe/to-timeframe';
 import { Dashboard } from './dashboard';
 import { BaseDashboardSearch, DashboardSearch } from './dashboard-search';
 import { DashboardTile } from './dashboard-tile';

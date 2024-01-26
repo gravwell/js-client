@@ -7,7 +7,7 @@
  * license. See the LICENSE file for details.
  */
 
-import { DATA_TYPE } from '~/models';
+import { DATA_TYPE } from '~/models/data-type';
 import { Dashboard } from './dashboard';
 import { DashboardData } from './dashboard-data';
 

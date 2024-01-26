@@ -7,7 +7,7 @@
  * license. See the LICENSE file for details.
  */
 
-import { Tag } from '~/models';
+import { Tag } from '~/models/tag';
 import { APIContext } from '../utils/api-context';
 import { buildHTTPRequestWithAuthFromContext } from '../utils/build-http-request';
 import { buildURL } from '../utils/build-url';

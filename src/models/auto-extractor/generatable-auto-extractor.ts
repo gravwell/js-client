@@ -7,7 +7,7 @@
  * license. See the LICENSE file for details.
  */
 
-import { RawSearchEntries } from '../search';
+import { RawSearchEntries } from '../search/search-entries';
 
 export interface GeneratableAutoExtractor {
 	tag: string;

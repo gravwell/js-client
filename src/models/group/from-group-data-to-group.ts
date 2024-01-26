@@ -7,7 +7,7 @@
  * license. See the LICENSE file for details.
  */
 
-import { DATA_TYPE } from '~/models';
+import { DATA_TYPE } from '~/models/data-type';
 import { Group } from './group';
 import { GroupData } from './group-data';
 

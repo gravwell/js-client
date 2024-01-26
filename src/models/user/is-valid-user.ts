@@ -9,7 +9,7 @@
 
 import { date, Decoder, inexact, nullable as nullableDecoder } from 'decoders';
 import { array, boolean, constant, either, nullable, string } from '~/functions/utils/verifiers';
-import { numericIdDecoder } from '../../value-objects';
+import { numericIdDecoder } from '../../value-objects/id';
 import { DATA_TYPE } from '../data-type';
 import { User } from './user';
 

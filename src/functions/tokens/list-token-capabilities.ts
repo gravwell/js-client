@@ -7,7 +7,7 @@
  * license. See the LICENSE file for details.
  */
 
-import { TokenCapability } from '~/models';
+import { TokenCapability } from '~/models/token/token-capability';
 import { APIContext } from '../utils/api-context';
 import { buildHTTPRequestWithAuthFromContext } from '../utils/build-http-request';
 import { buildURL } from '../utils/build-url';

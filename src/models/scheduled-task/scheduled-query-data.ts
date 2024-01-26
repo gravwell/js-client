@@ -7,6 +7,7 @@
  * license. See the LICENSE file for details.
  */
 
+import { number, object, Verifier } from '~/functions/utils/verifiers';
 import { ScheduledTaskBase } from './scheduled-task-base';
 
 export interface ScheduledQueryData extends ScheduledTaskBase {
@@ -28,3 +29,12 @@ export type ScheduledQueryDuration = {
 	minutes: number;
 	seconds: number;
 };
+
+export const scheduledQueryDurationDecoder: Verifier<ScheduledQueryDuration> = object({
+	days: number,
+	hours: number,
+	minutes: number,
+	seconds: number,
+});
+
+export const isScheduledQueryDuration = scheduledQueryDurationDecoder.guard;

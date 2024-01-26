@@ -7,7 +7,7 @@
  * license. See the LICENSE file for details.
  */
 
-import { DATA_TYPE } from '~/models';
+import { DATA_TYPE } from '~/models/data-type';
 import { isLocalKitData } from './is-local-kit-data';
 import { LocalKit } from './local-kit';
 

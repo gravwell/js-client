@@ -7,8 +7,8 @@
  * license. See the LICENSE file for details.
  */
 
-import { DATA_TYPE } from '~/models';
-import { toNumericID } from '~/value-objects';
+import { DATA_TYPE } from '~/models/data-type';
+import { toNumericID } from '~/value-objects/id';
 import { FileMetadata } from './file-metadata';
 import { RawFileMetadata } from './raw-file-metadata';
 

@@ -10,7 +10,7 @@
 import { LocalKit } from '~/models/kit/local-kit';
 import { RawLocalKit } from '~/models/kit/raw-local-kit';
 import { toLocalKit } from '~/models/kit/to-local-kit';
-import { NumericID } from '~/value-objects';
+import { NumericID } from '~/value-objects/id';
 import { APIContext } from '../utils/api-context';
 import { buildHTTPRequestWithAuthFromContext } from '../utils/build-http-request';
 import { buildURL } from '../utils/build-url';

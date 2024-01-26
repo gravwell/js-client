@@ -7,7 +7,7 @@
  * license. See the LICENSE file for details.
  */
 
-import { Version } from '~/models';
+import { Version } from '~/models/version/version';
 import { APIContext } from '../utils/api-context';
 import { buildHTTPRequestWithAuthFromContext } from '../utils/build-http-request';
 import { buildURL } from '../utils/build-url';

@@ -8,7 +8,9 @@
  */
 
 import { MacrosFilter } from '~/functions/macros/get-many-macros';
-import { CreatableMacro, Macro, UpdatableMacro } from '~/models/macro';
+import { CreatableMacro } from '~/models/macro/creatable-macro';
+import { Macro } from '~/models/macro/macro';
+import { UpdatableMacro } from '~/models/macro/updatable-macro';
 
 export interface MacrosService {
 	readonly get: {

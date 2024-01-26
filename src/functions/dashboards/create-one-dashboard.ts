@@ -10,7 +10,7 @@
 import { CreatableDashboard } from '~/models/dashboard/creatable-dashboard';
 import { Dashboard } from '~/models/dashboard/dashboard';
 import { toRawCreatableDashboard } from '~/models/dashboard/to-raw-creatable-dashboard';
-import { RawNumericID, toNumericID } from '~/value-objects';
+import { RawNumericID, toNumericID } from '~/value-objects/id';
 import { APIContext } from '../utils/api-context';
 import { buildHTTPRequestWithAuthFromContext } from '../utils/build-http-request';
 import { buildURL } from '../utils/build-url';

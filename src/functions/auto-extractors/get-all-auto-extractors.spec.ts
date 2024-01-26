@@ -9,7 +9,8 @@
 
 import { CreatableAutoExtractor } from '~/models/auto-extractor/creatable-auto-extractor';
 import { isAutoExtractor } from '~/models/auto-extractor/is-auto-extractor';
-import { integrationTest, integrationTestSpecDef, TEST_BASE_API_CONTEXT } from '~/tests';
+import { TEST_BASE_API_CONTEXT } from '~/tests/config';
+import { integrationTest, integrationTestSpecDef } from '~/tests/test-types';
 import { makeCreateOneAutoExtractor } from './create-one-auto-extractor';
 import { makeDeleteOneAutoExtractor } from './delete-one-auto-extractor';
 import { makeGetAllAutoExtractors } from './get-all-auto-extractors';

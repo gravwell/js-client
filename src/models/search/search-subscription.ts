@@ -8,7 +8,8 @@
  */
 
 import { Observable } from 'rxjs';
-import { NumericID, Percentage } from '~/value-objects';
+import { NumericID } from '~/value-objects/id';
+import { Percentage } from '~/value-objects/percentage';
 import { SearchEntries } from './search-entries';
 import { SearchFilter } from './search-filter';
 import { SearchFrequencyStats, SearchStats } from './search-stats';

@@ -8,8 +8,8 @@
  */
 
 import { RawKitAsset } from '~/models/kit/raw-kit-asset';
-import { RawID, RawNumericID, RawUUID } from '~/value-objects';
-import { RawVersionObject } from '../version';
+import { RawVersionObject } from '~/models/version/raw-version-object';
+import { RawID, RawNumericID, RawUUID } from '~/value-objects/id';
 import { RawConfigMacro } from './raw-config-macro';
 import { RawKitItem } from './raw-kit-item';
 

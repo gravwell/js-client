@@ -15,7 +15,7 @@
  * license. See the LICENSE file for details.
  */
 
-import { Search2 } from '~/models/search';
+import { Search2 } from '~/models/search/search2';
 import { SearchDetails } from '../../models/search/search-details';
 
 export interface SearchStatusService {

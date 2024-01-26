@@ -7,7 +7,7 @@
  * license. See the LICENSE file for details.
  */
 
-import { RawUUID } from '~/value-objects';
+import { RawUUID } from '~/value-objects/id';
 
 export interface RawKitItemBase {
 	ID: string | undefined; // Only exists on LocalKit assets
@@ -139,6 +139,14 @@ export interface RawAutoExtractorKitItem extends RawKitItemBase {
 	};
 }
 
+export interface RawAlertKitItem extends RawKitItemBase {
+	Type: 'alert';
+	AdditionalInfo: {
+		Name: string;
+		Description: string;
+	};
+}
+
 export type RawKitItem =
 	| RawFileKitItem
 	| RawDashboardKitItem
@@ -151,4 +159,5 @@ export type RawKitItem =
 	| RawSavedQueryKitItem
 	| RawTemplateKitItem
 	| RawFlowKitItem
-	| RawAutoExtractorKitItem;
+	| RawAutoExtractorKitItem
+	| RawAlertKitItem;

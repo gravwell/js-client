@@ -15,8 +15,8 @@
  * license. See the LICENSE file for details.
  */
 
-import { NumericID } from '~/value-objects';
-import { RawTimeframe } from '../timeframe';
+import { NumericID } from '~/value-objects/id';
+import { RawTimeframe } from '../timeframe/raw-timeframe';
 
 export interface UpdatableSearchDetails {
 	groupID?: NumericID | null;

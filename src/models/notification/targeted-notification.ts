@@ -7,7 +7,7 @@
  * license. See the LICENSE file for details.
  */
 
-import { NumericID, UUID } from '~/value-objects';
+import { NumericID, UUID } from '~/value-objects/id';
 
 export type TargetedNotificationTargetType = TargetedNotification['targetType'];
 export type TargetedNotification = MyselfTargetedNotification | GroupTargetedNotification | UserTargetedNotification;

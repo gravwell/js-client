@@ -7,7 +7,7 @@
  * license. See the LICENSE file for details.
  */
 
-import { RawSearchEntry } from '~/models/search';
+import { RawSearchEntry } from '~/models/search/raw-search-entry';
 
 // GenerateAXRequest in Go
 export interface RawGeneratableAutoExtractor {

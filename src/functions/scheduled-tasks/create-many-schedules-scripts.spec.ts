@@ -7,9 +7,12 @@
  * license. See the LICENSE file for details.
  */
 
-import { CreatableScheduledScript, isScheduledScript } from '~/models';
-import { integrationTest, integrationTestSpecDef, myCustomMatchers, TEST_BASE_API_CONTEXT } from '~/tests';
-import { NumericID } from '~/value-objects';
+import { CreatableScheduledScript } from '~/models/scheduled-task/creatable-scheduled-scripts';
+import { isScheduledScript } from '~/models/scheduled-task/is-scheduled-script';
+import { TEST_BASE_API_CONTEXT } from '~/tests/config';
+import { myCustomMatchers } from '~/tests/custom-matchers';
+import { integrationTest, integrationTestSpecDef } from '~/tests/test-types';
+import { NumericID } from '~/value-objects/id';
 import { makeCreateOneGroup } from '../groups/create-one-group';
 import { makeDeleteAllGroups } from '../groups/delete-all-groups';
 import { makeCreateManyScheduledScripts } from './create-many-scheduled-scripts';

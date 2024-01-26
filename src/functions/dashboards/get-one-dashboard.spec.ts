@@ -10,7 +10,8 @@
 import { CreatableDashboard } from '~/models/dashboard/creatable-dashboard';
 import { Dashboard } from '~/models/dashboard/dashboard';
 import { isDashboard } from '~/models/dashboard/is-dashboard';
-import { integrationTest, integrationTestSpecDef, TEST_BASE_API_CONTEXT } from '~/tests';
+import { TEST_BASE_API_CONTEXT } from '~/tests/config';
+import { integrationTest, integrationTestSpecDef } from '~/tests/test-types';
 import { makeCreateOneDashboard } from './create-one-dashboard';
 import { makeDeleteOneDashboard } from './delete-one-dashboard';
 import { makeGetAllDashboards } from './get-all-dashboards';

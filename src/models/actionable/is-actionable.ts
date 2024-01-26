@@ -7,12 +7,36 @@
  * license. See the LICENSE file for details.
  */
 
-import { isBoolean, isInteger, isNull, isString } from 'lodash';
-import { DATA_TYPE } from '~/models';
-import { isRegex, isUUID } from '~/value-objects';
+import { isBoolean, isDate, isInteger, isNull, isString } from 'lodash';
+import { DATA_TYPE } from '~/models/data-type';
+import { isNumericID, isUUID } from '~/value-objects/id';
+import { isRegex } from '~/value-objects/regex';
 import { Actionable, ActionableAction, ActionableTimeVariable, ActionableTrigger } from './actionable';
 import { ActionableCommand } from './actionable-command';
-import { isActionableData } from './is-actionable-data';
+import { ActionableData } from './actionable-data';
+
+export const isActionableData = (value: unknown): value is ActionableData => {
+	try {
+		const a = value as ActionableData;
+		return (
+			isUUID(a.globalID) &&
+			isUUID(a.id) &&
+			isNumericID(a.userID) &&
+			a.groupIDs.every(isNumericID) &&
+			isString(a.name) &&
+			(isString(a.description) || isNull(a.description)) &&
+			(isString(a.menuLabel) || isNull(a.menuLabel)) &&
+			a.labels.every(isString) &&
+			isBoolean(a.isGlobal) &&
+			isBoolean(a.isDisabled) &&
+			isDate(a.lastUpdateDate) &&
+			a.triggers.every(isActionableTrigger) &&
+			a.actions.every(isActionableAction)
+		);
+	} catch {
+		return false;
+	}
+};
 
 export const isActionable = (value: unknown): value is Actionable => {
 	try {

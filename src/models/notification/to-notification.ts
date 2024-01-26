@@ -8,17 +8,14 @@
  */
 
 import { omitUndefinedShallow } from '~/functions/utils/omit-undefined-shallow';
-import {
-	BaseTargetedNotification,
-	BroadcastedNotification,
-	DATA_TYPE,
-	Notification,
-	RawBroadcastedNotification,
-	RawNotification,
-	RawTargetedNotification,
-	TargetedNotification,
-} from '~/models';
-import { NumericID } from '~/value-objects';
+import { DATA_TYPE } from '~/models/data-type';
+import { BroadcastedNotification } from '~/models/notification/broadcasted-notification';
+import { Notification } from '~/models/notification/notification';
+import { RawBroadcastedNotification } from '~/models/notification/raw-broadcasted-notification';
+import { RawNotification } from '~/models/notification/raw-notification';
+import { RawTargetedNotification } from '~/models/notification/raw-targeted-notification';
+import { BaseTargetedNotification, TargetedNotification } from '~/models/notification/targeted-notification';
+import { NumericID } from '~/value-objects/id';
 
 export const toNotification = (raw: RawNotification, id: NumericID): Notification => {
 	const notification = raw.Broadcast ? toBroadcastedNotification(raw, id) : toTargetedNotification(raw, id);

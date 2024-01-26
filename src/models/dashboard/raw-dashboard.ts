@@ -7,8 +7,8 @@
  * license. See the LICENSE file for details.
  */
 
-import { RawNumericID, RawUUID } from '~/value-objects';
-import { RawTimeframe } from '../timeframe';
+import { RawNumericID, RawUUID } from '~/value-objects/id';
+import { RawTimeframe } from '../timeframe/raw-timeframe';
 import { RawDashboardSearch } from './raw-dashboard-search';
 import { RawDashboardTile } from './raw-dashboard-tile';
 

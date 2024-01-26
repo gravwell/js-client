@@ -7,8 +7,8 @@
  * license. See the LICENSE file for details.
  */
 
-import { UserRole } from '~/models';
-import { NumericID } from '~/value-objects';
+import { UserRole } from '~/models/user/user';
+import { NumericID } from '~/value-objects/id';
 import { APIContext } from '../utils/api-context';
 import { buildHTTPRequestWithAuthFromContext } from '../utils/build-http-request';
 import { buildURL } from '../utils/build-url';

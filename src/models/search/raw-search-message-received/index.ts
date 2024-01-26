@@ -8,7 +8,8 @@
  */
 
 import { isArray, isString } from 'lodash';
-import { RawJSON, RawNumericID } from '~/value-objects';
+import { RawNumericID } from '~/value-objects/id';
+import { RawJSON } from '~/value-objects/json';
 import { RawQuery } from '../../query';
 import { RawDataExplorerEntry } from '../raw-data-explorer-entry';
 import { RawSearchDetails } from '../raw-search-details';
@@ -309,5 +310,3 @@ export type RawSearchMessageReceived =
 	| RawSearchMessageReceivedRequestExplorerEntries
 	| RawSearchMessageReceivedRequestExplorerEntriesWithinRange
 	| RawSearchErrorResponseReceived;
-
-export * from './request-entries-within-range';

@@ -7,8 +7,10 @@
  * license. See the LICENSE file for details.
  */
 
-import { CreatableMacro } from '~/models';
-import { integrationTest, integrationTestSpecDef, sleep, TEST_BASE_API_CONTEXT } from '~/tests';
+import { CreatableMacro } from '~/models/macro/creatable-macro';
+import { TEST_BASE_API_CONTEXT } from '~/tests/config';
+import { integrationTest, integrationTestSpecDef } from '~/tests/test-types';
+import { sleep } from '~/tests/utils';
 import { assertIsNotNil } from '../utils/type-guards';
 import { makeCreateOneMacro } from './create-one-macro';
 import { makeDeleteOneMacro } from './delete-one-macro';

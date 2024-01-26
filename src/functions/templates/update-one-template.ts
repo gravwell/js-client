@@ -7,7 +7,11 @@
  * license. See the LICENSE file for details.
  */
 
-import { RawTemplate, Template, toRawUpdatableTemplate, toTemplate, UpdatableTemplate } from '~/models';
+import { RawTemplate } from '~/models/template/raw-template';
+import { Template } from '~/models/template/template';
+import { toRawUpdatableTemplate } from '~/models/template/to-raw-updatable-template';
+import { toTemplate } from '~/models/template/to-template';
+import { UpdatableTemplate } from '~/models/template/updatable-template';
 import { APIContext } from '../utils/api-context';
 import { buildHTTPRequestWithAuthFromContext } from '../utils/build-http-request';
 import { buildURL } from '../utils/build-url';

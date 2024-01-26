@@ -19,7 +19,7 @@ import {
 	string,
 	Verifier,
 } from '~/functions/utils/verifiers';
-import { RawTimeframe } from '../timeframe';
+import { RawTimeframe } from '../timeframe/raw-timeframe';
 import { SearchDetails } from './search-details';
 
 export const rawTimeFrameDecoder: Verifier<RawTimeframe> = object({

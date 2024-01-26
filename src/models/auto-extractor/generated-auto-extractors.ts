@@ -7,7 +7,7 @@
  * license. See the LICENSE file for details.
  */
 
-import { DataExplorerEntry } from '../search';
+import { DataExplorerEntry } from '../search/data-explorer-entry';
 import { SearchEntry } from '../search/search-entry';
 import { AutoExtractor } from './auto-extractor';
 

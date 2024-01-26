@@ -8,7 +8,7 @@
  */
 
 import { isString, isUndefined } from 'lodash';
-import { isUUID } from '~/value-objects';
+import { isUUID } from '~/value-objects/id';
 import { isReplicatedState, ReplicatedState } from './replicated-state';
 import { isWell, Well } from './well';
 

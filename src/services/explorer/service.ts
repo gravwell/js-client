@@ -7,8 +7,11 @@
  * license. See the LICENSE file for details.
  */
 
-import { DataExplorerEntry, ExplorerSearchSubscription, SearchFilter } from '~/models/search';
-import { ID, RawJSON } from '~/value-objects';
+import { DataExplorerEntry } from '~/models/search/data-explorer-entry';
+import { ExplorerSearchSubscription } from '~/models/search/explorer-search-subscription';
+import { SearchFilter } from '~/models/search/search-filter';
+import { ID } from '~/value-objects/id';
+import { RawJSON } from '~/value-objects/json';
 
 export interface ExplorerService {
 	readonly explore: {

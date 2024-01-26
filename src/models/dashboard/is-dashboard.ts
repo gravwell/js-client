@@ -7,8 +7,8 @@
  * license. See the LICENSE file for details.
  */
 
-import { DATA_TYPE } from '~/models';
 import { Dashboard } from '~/models/dashboard/dashboard';
+import { DATA_TYPE } from '~/models/data-type';
 import { isDashboardData } from './is-dashboard-data';
 
 export const isDashboard = (value: unknown): value is Dashboard => {

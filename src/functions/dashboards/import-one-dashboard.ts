@@ -9,7 +9,7 @@
 
 import { makeGetOneDashboard } from '~/functions/dashboards/get-one-dashboard';
 import { Dashboard } from '~/models/dashboard/dashboard';
-import { NumericID, RawNumericID, toNumericID } from '~/value-objects';
+import { NumericID, RawNumericID, toNumericID } from '~/value-objects/id';
 import { APIContext } from '../utils/api-context';
 import { buildHTTPRequestWithAuthFromContext } from '../utils/build-http-request';
 import { buildURL } from '../utils/build-url';

@@ -38,20 +38,20 @@ import {
 	makeToStatsZoom,
 } from '~/functions/searches/helpers/attach-search';
 import { getRawRequestExplorerEntriesMsg, makeRequestEntries } from '~/functions/searches/helpers/request-entries';
+import { ExplorerSearchSubscription } from '~/models/search/explorer-search-subscription';
 import {
-	ExplorerSearchEntries,
-	ExplorerSearchSubscription,
-	RawRequestSearchCloseMessageSent,
 	RawResponseForSearchDetailsMessageReceived,
 	RawResponseForSearchStatsMessageReceived,
-	SearchEntries,
-	SearchFilter,
-	SearchMessageCommands,
-	SearchStats,
-	toSearchEntries,
-} from '~/models';
+} from '~/models/search/raw-search-message-received';
+import { RawRequestSearchCloseMessageSent } from '~/models/search/raw-search-message-sent';
+import { ExplorerSearchEntries, SearchEntries } from '~/models/search/search-entries';
+import { SearchFilter } from '~/models/search/search-filter';
+import { SearchMessageCommands } from '~/models/search/search-message-commands';
+import { SearchStats } from '~/models/search/search-stats';
 import { toDataExplorerEntry } from '~/models/search/to-data-explorer-entry';
-import { ID, Percentage } from '~/value-objects';
+import { toSearchEntries } from '~/models/search/to-search-entries';
+import { ID } from '~/value-objects/id';
+import { Percentage } from '~/value-objects/percentage';
 import { APIContext } from '../../utils/api-context';
 import { attachSearch } from '../attach-search';
 import { getPreviewDateRange } from '../helpers/attach-search';

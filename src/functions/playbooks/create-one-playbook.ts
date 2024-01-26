@@ -7,8 +7,10 @@
  * license. See the LICENSE file for details.
  */
 
-import { CreatablePlaybook, Playbook, toRawCreatablePlaybook } from '~/models';
-import { UUID } from '~/value-objects';
+import { CreatablePlaybook } from '~/models/playbook/creatable-playbook';
+import { Playbook } from '~/models/playbook/playbook';
+import { toRawCreatablePlaybook } from '~/models/playbook/to-raw-creatable-playbook';
+import { UUID } from '~/value-objects/id';
 import { APIContext } from '../utils/api-context';
 import { buildHTTPRequestWithAuthFromContext } from '../utils/build-http-request';
 import { buildURL } from '../utils/build-url';

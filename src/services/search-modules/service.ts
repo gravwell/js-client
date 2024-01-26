@@ -7,7 +7,7 @@
  * license. See the LICENSE file for details.
  */
 
-import { SearchModule } from '~/models/search-module';
+import { SearchModule } from '~/models/search-module/search-module';
 
 export interface SearchModulesService {
 	readonly get: {

@@ -7,8 +7,10 @@
  * license. See the LICENSE file for details.
  */
 
-import { Notification, RawNotification, toNotification } from '~/models';
-import { RawNumericID } from '~/value-objects';
+import { Notification } from '~/models/notification/notification';
+import { RawNotification } from '~/models/notification/raw-notification';
+import { toNotification } from '~/models/notification/to-notification';
+import { RawNumericID } from '~/value-objects/id';
 import { APIContext } from '../utils/api-context';
 import { buildHTTPRequestWithAuthFromContext } from '../utils/build-http-request';
 import { buildURL } from '../utils/build-url';

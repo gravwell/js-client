@@ -7,7 +7,7 @@
  * license. See the LICENSE file for details.
  */
 
-import { DATA_TYPE } from '~/models';
+import { DATA_TYPE } from '~/models/data-type';
 import { FileMetadata } from './file-metadata';
 import { isFileMetadataData } from './is-file-metadata-data';
 

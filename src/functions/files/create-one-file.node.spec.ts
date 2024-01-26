@@ -12,14 +12,10 @@ import { omit } from 'lodash';
 import { join } from 'path';
 import { CreatableFile } from '~/models/file/creatable-file';
 import { isFileMetadata } from '~/models/file/is-file-metadata';
-import {
-	integrationTest,
-	integrationTestSpecDef,
-	myCustomMatchers,
-	TEST_ASSETS_PATH,
-	TEST_BASE_API_CONTEXT,
-} from '~/tests';
-import { NumericID } from '~/value-objects';
+import { TEST_ASSETS_PATH, TEST_BASE_API_CONTEXT } from '~/tests/config';
+import { myCustomMatchers } from '~/tests/custom-matchers';
+import { integrationTest, integrationTestSpecDef } from '~/tests/test-types';
+import { NumericID } from '~/value-objects/id';
 import { makeCreateOneGroup } from '../groups/create-one-group';
 import { makeDeleteAllGroups } from '../groups/delete-all-groups';
 import { makeCreateOneFile } from './create-one-file';

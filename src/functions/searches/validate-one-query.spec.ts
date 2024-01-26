@@ -7,7 +7,8 @@
  * license. See the LICENSE file for details.
  */
 
-import { integrationTest, TEST_BASE_API_CONTEXT } from '~/tests';
+import { TEST_BASE_API_CONTEXT } from '~/tests/config';
+import { integrationTest } from '~/tests/test-types';
 import { makeValidateOneQuery } from './validate-one-query';
 
 describe('validateOneQuery()', () => {

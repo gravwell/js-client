@@ -9,7 +9,7 @@
 
 import { isNil, isString } from 'lodash';
 import { iso8601String } from '~/functions/utils/verifiers';
-import { isNumericID, isUUID } from '~/value-objects';
+import { isNumericID, isUUID } from '~/value-objects/id';
 import {
 	BaseTargetedNotification,
 	GroupTargetedNotification,

@@ -7,7 +7,10 @@
  * license. See the LICENSE file for details.
  */
 
-import { RawValidatedScript, Script, toValidatedScript, ValidatedScript } from '~/models';
+import { RawValidatedScript } from '~/models/script/raw-validated-script';
+import { Script } from '~/models/script/script';
+import { toValidatedScript } from '~/models/script/to-validated-script';
+import { ValidatedScript } from '~/models/script/validated-script';
 import { APIContext } from '../utils/api-context';
 import { buildHTTPRequestWithAuthFromContext } from '../utils/build-http-request';
 import { buildURL } from '../utils/build-url';

@@ -7,8 +7,10 @@
  * license. See the LICENSE file for details.
  */
 
-import { RawSavedQuery, SavedQuery, toSavedQuery } from '~/models';
-import { NumericID } from '~/value-objects';
+import { RawSavedQuery } from '~/models/saved-query/raw-saved-query';
+import { SavedQuery } from '~/models/saved-query/saved-query';
+import { toSavedQuery } from '~/models/saved-query/to-saved-query';
+import { NumericID } from '~/value-objects/id';
 import { APIContext } from '../utils/api-context';
 import { buildHTTPRequestWithAuthFromContext } from '../utils/build-http-request';
 import { buildURL } from '../utils/build-url';

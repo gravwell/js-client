@@ -9,8 +9,11 @@
 
 import { createReadStream, ReadStream } from 'fs';
 import { join } from 'path';
-import { CreatableResource, isResource, Resource } from '~/models';
-import { integrationTest, integrationTestSpecDef, TEST_ASSETS_PATH, TEST_BASE_API_CONTEXT } from '~/tests';
+import { CreatableResource } from '~/models/resource/creatable-resource';
+import { isResource } from '~/models/resource/is-resource';
+import { Resource } from '~/models/resource/resource';
+import { TEST_ASSETS_PATH, TEST_BASE_API_CONTEXT } from '~/tests/config';
+import { integrationTest, integrationTestSpecDef } from '~/tests/test-types';
 import { makeCreateOneResource } from './create-one-resource';
 import { makeDeleteOneResource } from './delete-one-resource';
 import { makeGetOneResourceContent } from './get-one-resource-content';

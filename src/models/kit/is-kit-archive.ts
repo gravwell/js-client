@@ -7,7 +7,7 @@
  * license. See the LICENSE file for details.
  */
 
-import { DATA_TYPE } from '~/models';
+import { DATA_TYPE } from '~/models/data-type';
 import { isKitArchiveData } from './is-kit-archive-data';
 import { KitArchive } from './kit-archive';
 

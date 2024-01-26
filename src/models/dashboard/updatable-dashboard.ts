@@ -8,9 +8,9 @@
  */
 
 import { UpdatableDashboardTile } from '~/models/dashboard/updatable-dashboard-tile';
-import { NumericID } from '~/value-objects';
-import { CreatableTimeframe } from '../timeframe';
-import { Version } from '../version';
+import { Version } from '~/models/version/version';
+import { NumericID } from '~/value-objects/id';
+import { CreatableTimeframe } from '../timeframe/creatable-timeframe';
 import { CreatableDashboardSearch } from './creatable-dashboard-search';
 import { DashboardLiveUpdate } from './dashboard-live-update';
 

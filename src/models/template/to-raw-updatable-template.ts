@@ -8,7 +8,7 @@
  */
 
 import { isUndefined } from 'lodash';
-import { toRawNumericID } from '~/value-objects';
+import { toRawNumericID } from '~/value-objects/id';
 import { RawUpdatableTemplate } from './raw-updatable-template';
 import { Template } from './template';
 import { UpdatableTemplate } from './updatable-template';

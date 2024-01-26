@@ -9,7 +9,7 @@
 
 import { encode as base64Encode } from 'base-64';
 import { encode as utf8Encode } from 'utf8';
-import { toRawNumericID } from '~/value-objects';
+import { toRawNumericID } from '~/value-objects/id';
 import { omitUndefinedShallow } from '../../functions/utils/omit-undefined-shallow';
 import { toRawVersionObject } from './../version/to-raw-version-object';
 import { BuildableKit } from './buildable-kit';
@@ -25,6 +25,7 @@ export const toRawBuildableKit = (data: BuildableKit): RawBuildableKit =>
 		MinVersion: data.minVersion ? toRawVersionObject(data.minVersion) : null,
 		MaxVersion: data.maxVersion ? toRawVersionObject(data.maxVersion) : null,
 		Readme: data.readme,
+		Alerts: data.alertIDs,
 		Dashboards: data.dashboardIDs.map(toRawNumericID),
 		Extractors: data.autoExtractorIDs,
 		Files: data.fileIDs,

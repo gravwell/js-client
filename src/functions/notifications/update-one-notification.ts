@@ -7,7 +7,8 @@
  * license. See the LICENSE file for details.
  */
 
-import { toRawUpdatableNotification, UpdatableNotification } from '~/models/notification';
+import { toRawUpdatableNotification } from '~/models/notification/to-raw-updatable-notification';
+import { UpdatableNotification } from '~/models/notification/updatable-notification';
 import { APIContext } from '../utils/api-context';
 import { buildHTTPRequestWithAuthFromContext } from '../utils/build-http-request';
 import { buildURL } from '../utils/build-url';

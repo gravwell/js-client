@@ -7,8 +7,9 @@
  * license. See the LICENSE file for details.
  */
 
-import { isSearch2 } from '~/models';
-import { integrationTest, TEST_BASE_API_CONTEXT } from '~/tests';
+import { isSearch2 } from '~/models/search/is-search2';
+import { TEST_BASE_API_CONTEXT } from '~/tests/config';
+import { integrationTest } from '~/tests/test-types';
 import { assertIsNotNil } from '../utils/type-guards';
 import { makeBackgroundOneSearch } from './background-one-search';
 import { makeGetOnePersistentSearchStatus } from './get-one-persistent-search-status';

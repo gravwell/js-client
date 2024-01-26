@@ -7,8 +7,9 @@
  * license. See the LICENSE file for details.
  */
 
-import { CreatableSavedQuery } from '~/models';
-import { integrationTest, integrationTestSpecDef, TEST_BASE_API_CONTEXT } from '~/tests';
+import { CreatableSavedQuery } from '~/models/saved-query/creatable-saved-query';
+import { TEST_BASE_API_CONTEXT } from '~/tests/config';
+import { integrationTest, integrationTestSpecDef } from '~/tests/test-types';
 import { assertIsNotNil } from '../utils/type-guards';
 import { makeCreateOneSavedQuery } from './create-one-saved-query';
 import { makeDeleteOneSavedQuery } from './delete-one-saved-query';

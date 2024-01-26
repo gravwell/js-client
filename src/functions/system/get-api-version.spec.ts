@@ -7,8 +7,9 @@
  * license. See the LICENSE file for details.
  */
 
-import { isVersion } from '~/models';
-import { integrationTest, TEST_BASE_API_CONTEXT } from '~/tests';
+import { isVersion } from '~/models/version/is-version';
+import { TEST_BASE_API_CONTEXT } from '~/tests/config';
+import { integrationTest } from '~/tests/test-types';
 import { makeGetAPIVersion } from './get-api-version';
 
 describe('getAPIVersion()', () => {

@@ -7,9 +7,11 @@
  * license. See the LICENSE file for details.
  */
 
-import { CreatableResource, isResource } from '~/models';
-import { integrationTest, integrationTestSpecDef, TEST_BASE_API_CONTEXT } from '~/tests';
-import { UUID } from '~/value-objects';
+import { CreatableResource } from '~/models/resource/creatable-resource';
+import { isResource } from '~/models/resource/is-resource';
+import { TEST_BASE_API_CONTEXT } from '~/tests/config';
+import { integrationTest, integrationTestSpecDef } from '~/tests/test-types';
+import { UUID } from '~/value-objects/id';
 import { makeCreateOneResource } from './create-one-resource';
 import { makeDeleteOneResource } from './delete-one-resource';
 import { makeGetOneResource } from './get-one-resource';

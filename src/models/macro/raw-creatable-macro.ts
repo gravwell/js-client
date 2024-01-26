@@ -7,7 +7,7 @@
  * license. See the LICENSE file for details.
  */
 
-import { RawNumericID } from '~/value-objects';
+import { RawNumericID } from '~/value-objects/id';
 
 export interface RawCreatableMacro {
 	GIDs: Array<RawNumericID>;

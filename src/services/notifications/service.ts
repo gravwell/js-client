@@ -9,13 +9,11 @@
 
 import { MyNotificationsMessageReceived } from '~/functions/notifications/subscribe-to-my-notifications';
 import { APISubscription } from '~/functions/utils/api-subscription';
-import {
-	CreatableBroadcastNotification,
-	CreatableTargetedNotificationByTargetType,
-	Notification,
-	TargetedNotificationTargetType,
-	UpdatableNotification,
-} from '~/models/notification';
+import { CreatableBroadcastNotification } from '~/models/notification/creatable-broadcasted-notification';
+import { CreatableTargetedNotificationByTargetType } from '~/models/notification/creatable-targeted-notification-by-target-type';
+import { Notification } from '~/models/notification/notification';
+import { TargetedNotificationTargetType } from '~/models/notification/targeted-notification';
+import { UpdatableNotification } from '~/models/notification/updatable-notification';
 
 export interface NotificationsService {
 	readonly create: {

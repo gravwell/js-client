@@ -7,8 +7,8 @@
  * license. See the LICENSE file for details.
  */
 
-import { TokenCapability } from '~/index';
-import { ID } from '~/value-objects';
+import { TokenCapability } from '~/models/token/token-capability';
+import { ID } from '~/value-objects/id';
 
 /**
  * Updatable token fields, in a friendly format.

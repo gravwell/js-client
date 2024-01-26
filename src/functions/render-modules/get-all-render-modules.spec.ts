@@ -7,8 +7,9 @@
  * license. See the LICENSE file for details.
  */
 
-import { isRenderModule } from '~/models';
-import { integrationTest, TEST_BASE_API_CONTEXT } from '~/tests';
+import { isRenderModule } from '~/models/render-module/is-render-module';
+import { TEST_BASE_API_CONTEXT } from '~/tests/config';
+import { integrationTest } from '~/tests/test-types';
 import { makeGetAllRenderModules } from './get-all-render-modules';
 
 describe('getAllRenderModules()', () => {

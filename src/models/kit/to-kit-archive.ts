@@ -7,10 +7,12 @@
  * license. See the LICENSE file for details.
  */
 
-import { DATA_TYPE } from '~/models';
-import { ID, NumericID, RawNumericID, RawUUID, toNumericID, UUID } from '~/value-objects';
-import { isScheduledScript, scheduledQueryDecoder, ScheduledTask } from '../scheduled-task';
-import { toVersion } from './../version';
+import { DATA_TYPE } from '~/models/data-type';
+import { scheduledQueryDecoder } from '~/models/scheduled-task/is-scheduled-query';
+import { isScheduledScript } from '~/models/scheduled-task/is-scheduled-script';
+import { ScheduledTask } from '~/models/scheduled-task/scheduled-task';
+import { toVersion } from '~/models/version/to-version';
+import { ID, NumericID, RawNumericID, RawUUID, toNumericID, UUID } from '~/value-objects/id';
 import { DeployRules, KitArchive } from './kit-archive';
 import { RawDeployRules, RawKitArchive } from './raw-kit-archive';
 import { toConfigMacros } from './to-config-macro';
@@ -77,6 +79,7 @@ export const toKitArchive = (raw: RawKitArchive, scheduledTasks: Array<Scheduled
 		scripts: scheduledScriptIDs,
 		flows: toStringArray(raw.Flows ?? []),
 		templates: toStringArray(raw.Templates ?? []),
+		alerts: toStringArray(raw.Alerts ?? []),
 	};
 };
 

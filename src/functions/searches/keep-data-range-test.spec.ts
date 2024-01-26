@@ -10,7 +10,9 @@
 import { addMinutes } from 'date-fns';
 import { matches } from 'lodash';
 import { firstValueFrom, Observable, skipWhile } from 'rxjs';
-import { SearchFilter, SearchStats, SearchSubscription } from '~/models';
+import { SearchFilter } from '~/models/search/search-filter';
+import { SearchStats } from '~/models/search/search-stats';
+import { SearchSubscription } from '~/models/search/search-subscription';
 
 export type CreateSearchFn = (initialFilter: SearchFilter) => Promise<SearchSubscription>;
 

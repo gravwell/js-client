@@ -8,8 +8,12 @@
  */
 
 import { omit } from 'lodash';
-import { CreatablePlaybook, isPlaybook, Playbook, UpdatablePlaybook } from '~/models';
-import { integrationTest, integrationTestSpecDef, TEST_BASE_API_CONTEXT } from '~/tests';
+import { CreatablePlaybook } from '~/models/playbook/creatable-playbook';
+import { isPlaybook } from '~/models/playbook/is-playbook';
+import { Playbook } from '~/models/playbook/playbook';
+import { UpdatablePlaybook } from '~/models/playbook/updatable-playbook';
+import { TEST_BASE_API_CONTEXT } from '~/tests/config';
+import { integrationTest, integrationTestSpecDef } from '~/tests/test-types';
 import { omitUndefinedShallow } from '../utils/omit-undefined-shallow';
 import { makeCreateOnePlaybook } from './create-one-playbook';
 import { makeDeleteOnePlaybook } from './delete-one-playbook';

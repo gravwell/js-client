@@ -9,9 +9,9 @@
 
 import { DashboardLiveUpdate } from '~/models/dashboard/dashboard-live-update';
 import { DashboardTile } from '~/models/dashboard/dashboard-tile';
-import { NumericID, UUID } from '~/value-objects';
-import { Timeframe } from '../timeframe';
-import { Version } from '../version';
+import { Version } from '~/models/version/version';
+import { NumericID, UUID } from '~/value-objects/id';
+import { Timeframe } from '../timeframe/timeframe';
 import { DashboardSearch } from './dashboard-search';
 
 export interface DashboardData {

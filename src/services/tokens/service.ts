@@ -7,8 +7,12 @@
  * license. See the LICENSE file for details.
  */
 
-import { CreatableToken, Token, TokenCapability, TokenWithSecret, UpdatableToken } from '~/models';
-import { ID } from '~/value-objects';
+import { CreatableToken } from '~/models/token/creatable-token';
+import { Token } from '~/models/token/token';
+import { TokenCapability } from '~/models/token/token-capability';
+import { TokenWithSecret } from '~/models/token/token-with-secret';
+import { UpdatableToken } from '~/models/token/updatable-token';
+import { ID } from '~/value-objects/id';
 
 export interface TokensService {
 	readonly get: {

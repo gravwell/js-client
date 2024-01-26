@@ -7,7 +7,8 @@
  * license. See the LICENSE file for details.
  */
 
-import { integrationTest, TEST_BASE_API_CONTEXT, unitTest } from '~/tests';
+import { TEST_BASE_API_CONTEXT } from '~/tests/config';
+import { integrationTest, unitTest } from '~/tests/test-types';
 import { APISubscription } from '../utils/api-subscription';
 import {
 	makeSubscribeToManySystemInformations,

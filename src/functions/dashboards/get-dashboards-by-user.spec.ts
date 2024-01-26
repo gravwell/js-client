@@ -8,10 +8,12 @@
  */
 
 import { random } from 'lodash';
-import { CreatableUser, User } from '~/models';
 import { CreatableDashboard } from '~/models/dashboard/creatable-dashboard';
 import { isDashboard } from '~/models/dashboard/is-dashboard';
-import { integrationTest, integrationTestSpecDef, TEST_BASE_API_CONTEXT } from '~/tests';
+import { CreatableUser } from '~/models/user/creatable-user';
+import { User } from '~/models/user/user';
+import { TEST_BASE_API_CONTEXT } from '~/tests/config';
+import { integrationTest, integrationTestSpecDef } from '~/tests/test-types';
 import { makeLoginOneUser } from '../auth/login-one-user';
 import { makeCreateOneUser } from '../users/create-one-user';
 import { assertIsNotNil } from '../utils/type-guards';

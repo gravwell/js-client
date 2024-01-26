@@ -9,7 +9,8 @@
 
 import { Observable, of, timer } from 'rxjs';
 import { catchError, last, mapTo, startWith, takeUntil } from 'rxjs/operators';
-import { RawSearchMessageReceived, RawSearchMessageSent } from '~/models';
+import { RawSearchMessageReceived } from '~/models/search/raw-search-message-received';
+import { RawSearchMessageSent } from '~/models/search/raw-search-message-sent';
 import { APIContext } from '../utils/api-context';
 import { APISubscription } from '../utils/api-subscription';
 import { apiSubscriptionFromWebSocket } from '../utils/api-subscription-from-web-socket';

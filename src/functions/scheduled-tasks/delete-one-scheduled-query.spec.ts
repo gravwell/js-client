@@ -7,7 +7,9 @@
  * license. See the LICENSE file for details.
  */
 
-import { integrationTest, integrationTestSpecDef, sleep, TEST_BASE_API_CONTEXT } from '~/tests';
+import { TEST_BASE_API_CONTEXT } from '~/tests/config';
+import { integrationTest, integrationTestSpecDef } from '~/tests/test-types';
+import { sleep } from '~/tests/utils';
 import { assertIsNotNil } from '../utils/type-guards';
 import { makeCreateManyScheduledQueries } from './create-many-scheduled-queries';
 import { makeDeleteAllScheduledQueries } from './delete-all-scheduled-queries';

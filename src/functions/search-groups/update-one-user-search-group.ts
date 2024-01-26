@@ -8,7 +8,7 @@
  */
 
 import { isNull, isNumber } from 'lodash';
-import { NumericID } from '~/value-objects';
+import { NumericID } from '~/value-objects/id';
 import { APIContext } from '../utils/api-context';
 import { buildHTTPRequestWithAuthFromContext } from '../utils/build-http-request';
 import { buildURL } from '../utils/build-url';

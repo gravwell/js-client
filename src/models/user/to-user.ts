@@ -8,7 +8,7 @@
  */
 
 import { isNumber } from 'lodash';
-import { DATA_TYPE } from '~/models';
+import { DATA_TYPE } from '~/models/data-type';
 import { RawUser } from './raw-user';
 import { User } from './user';
 

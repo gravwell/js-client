@@ -7,8 +7,8 @@
  * license. See the LICENSE file for details.
  */
 
-import { NumericID, UUID } from '~/value-objects';
-import { Timeframe } from '../timeframe';
+import { NumericID, UUID } from '~/value-objects/id';
+import { Timeframe } from '../timeframe/timeframe';
 
 export interface SavedQueryData {
 	id: UUID;

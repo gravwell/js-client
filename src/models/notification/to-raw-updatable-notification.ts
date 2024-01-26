@@ -9,7 +9,7 @@
 
 import { isNull } from 'lodash';
 import { omitUndefinedShallow } from '~/functions/utils/omit-undefined-shallow';
-import { isNumericID, NumericID, RawNumericID, toRawNumericID } from '~/value-objects';
+import { isNumericID, NumericID, RawNumericID, toRawNumericID } from '~/value-objects/id';
 import { Notification } from './notification';
 import { RawUpdatableNotification } from './raw-updatable-notification';
 import { UpdatableNotification } from './updatable-notification';
@@ -23,7 +23,7 @@ export const toRawUpdatableNotification = (
 		Type: getType(current.customID, updatable.customID),
 		UID: toRawNumericID(current.userID),
 		GID: 0,
-		Broadcast: true,
+		Broadcast: current.type === 'broadcasted',
 
 		Sent: updatable.sentDate ?? current.sentDate,
 		Expires: updatable.expirationDate ?? current.expirationDate,

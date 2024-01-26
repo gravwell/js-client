@@ -8,7 +8,7 @@
  */
 
 import { omitUndefinedShallow } from '~/functions/utils/omit-undefined-shallow';
-import { DATA_TYPE } from '~/models';
+import { DATA_TYPE } from '~/models/data-type';
 import { PersistentSearchDataState } from './persistent-search-data';
 import { RawSearch2, RawSearch2State } from './raw-search2';
 import { Search2 } from './search2';

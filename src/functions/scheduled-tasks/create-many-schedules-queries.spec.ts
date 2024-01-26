@@ -7,9 +7,12 @@
  * license. See the LICENSE file for details.
  */
 
-import { CreatableScheduledQuery, scheduledQueryDecoder } from '~/models';
-import { integrationTest, integrationTestSpecDef, myCustomMatchers, TEST_BASE_API_CONTEXT } from '~/tests';
-import { NumericID } from '~/value-objects';
+import { CreatableScheduledQuery } from '~/models/scheduled-task/creatable-scheduled-query';
+import { scheduledQueryDecoder } from '~/models/scheduled-task/is-scheduled-query';
+import { TEST_BASE_API_CONTEXT } from '~/tests/config';
+import { myCustomMatchers } from '~/tests/custom-matchers';
+import { integrationTest, integrationTestSpecDef } from '~/tests/test-types';
+import { NumericID } from '~/value-objects/id';
 import { makeCreateOneGroup } from '../groups/create-one-group';
 import { makeDeleteAllGroups } from '../groups/delete-all-groups';
 import { makeCreateManyScheduledQueries } from './create-many-scheduled-queries';
