@@ -7,8 +7,9 @@
  * license. See the LICENSE file for details.
  */
 
-import { userDecoder } from '~/models';
-import { integrationTest, TEST_BASE_API_CONTEXT } from '~/tests';
+import { userDecoder } from '~/models/user/is-valid-user';
+import { TEST_BASE_API_CONTEXT } from '~/tests/config';
+import { integrationTest } from '~/tests/test-types';
 import { makeGetMyUser } from './get-my-user';
 
 describe('getMyUser()', () => {

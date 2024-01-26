@@ -7,8 +7,8 @@
  * license. See the LICENSE file for details.
  */
 
-import { RawNumericID, RawUUID } from '~/value-objects';
-import { RawVersionObject } from './../version';
+import { RawVersionObject } from '~/models/version/raw-version-object';
+import { RawNumericID, RawUUID } from '~/value-objects/id';
 import { RawConfigMacro } from './raw-config-macro';
 import { RawKitEmbeddedItem } from './raw-kit-embedded-item';
 
@@ -42,6 +42,7 @@ export interface RawKitArchive {
 	ScheduledSearches?: Array<RawNumericID>;
 	Templates?: Array<RawUUID>;
 	Flows?: Array<RawUUID>;
+	Alerts?: Array<RawUUID>;
 }
 
 export interface RawDeployRules {

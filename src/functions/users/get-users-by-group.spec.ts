@@ -8,10 +8,12 @@
  */
 
 import { random } from 'lodash';
-import { CreatableUser, userDecoder } from '~/models';
 import { CreatableGroup } from '~/models/group/creatable-group';
-import { integrationTest, integrationTestSpecDef, TEST_BASE_API_CONTEXT } from '~/tests';
-import { NumericID } from '~/value-objects';
+import { CreatableUser } from '~/models/user/creatable-user';
+import { userDecoder } from '~/models/user/is-valid-user';
+import { TEST_BASE_API_CONTEXT } from '~/tests/config';
+import { integrationTest, integrationTestSpecDef } from '~/tests/test-types';
+import { NumericID } from '~/value-objects/id';
 import { makeAddOneUserToManyGroups } from '../groups/add-one-user-to-many-groups';
 import { makeCreateOneGroup } from '../groups/create-one-group';
 import { makeDeleteOneGroup } from '../groups/delete-one-group';

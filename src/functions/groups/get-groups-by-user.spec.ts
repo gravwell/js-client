@@ -7,11 +7,13 @@
  * license. See the LICENSE file for details.
  */
 
-import { CreatableUser, User } from '~/models';
 import { CreatableGroup } from '~/models/group/creatable-group';
 import { groupDecoder } from '~/models/group/is-group';
-import { integrationTest, integrationTestSpecDef, TEST_BASE_API_CONTEXT } from '~/tests';
-import { NumericID } from '~/value-objects';
+import { CreatableUser } from '~/models/user/creatable-user';
+import { User } from '~/models/user/user';
+import { TEST_BASE_API_CONTEXT } from '~/tests/config';
+import { integrationTest, integrationTestSpecDef } from '~/tests/test-types';
+import { NumericID } from '~/value-objects/id';
 import { makeCreateOneUser } from '../users/create-one-user';
 import { makeDeleteOneUser } from '../users/delete-one-user';
 import { makeAddOneUserToManyGroups } from './add-one-user-to-many-groups';

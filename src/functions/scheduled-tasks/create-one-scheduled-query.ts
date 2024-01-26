@@ -7,7 +7,8 @@
  * license. See the LICENSE file for details.
  */
 
-import { CreatableScheduledQuery, ScheduledQuery } from '~/models';
+import { CreatableScheduledQuery } from '~/models/scheduled-task/creatable-scheduled-query';
+import { ScheduledQuery } from '~/models/scheduled-task/scheduled-query';
 import { APIContext } from '../utils/api-context';
 import { makeCreateOneScheduledTask } from './create-one-scheduled-task';
 

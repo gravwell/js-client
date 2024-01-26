@@ -8,8 +8,8 @@
  */
 
 import { isNull, isUndefined } from 'lodash';
-import { toRawNumericID } from '~/value-objects';
-import { toRawTimeframe } from '../timeframe';
+import { toRawNumericID } from '~/value-objects/id';
+import { toRawTimeframe } from '../timeframe/to-raw-timeframe';
 import { RawUpdatableSavedQuery } from './raw-updatable-saved-query';
 import { SavedQuery } from './saved-query';
 import { UpdatableSavedQuery } from './updatable-saved-query';

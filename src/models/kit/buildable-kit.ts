@@ -7,8 +7,8 @@
  * license. See the LICENSE file for details.
  */
 
-import { ID, RawNumericID } from '~/value-objects';
-import { Version } from '../version';
+import { Version } from '~/models/version/version';
+import { ID, RawNumericID } from '~/value-objects/id';
 import { ConfigMacro } from './config-macro';
 
 export interface BuildableKit {
@@ -31,6 +31,7 @@ export interface BuildableKit {
 	scheduledQueryIDs: Array<ID>;
 	scheduledScriptIDs: Array<ID>;
 	templateIDs: Array<ID>;
+	alertIDs: Array<ID>;
 	banner?: string;
 	cover?: string;
 	icon?: string;

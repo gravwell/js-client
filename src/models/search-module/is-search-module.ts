@@ -7,7 +7,8 @@
  * license. See the LICENSE file for details.
  */
 
-import { DATA_TYPE, isSearchModuleData } from '~/models';
+import { DATA_TYPE } from '~/models/data-type';
+import { isSearchModuleData } from '~/models/search-module/is-search-module-data';
 import { SearchModule } from './search-module';
 
 export const isSearchModule = (value: unknown): value is SearchModule => {

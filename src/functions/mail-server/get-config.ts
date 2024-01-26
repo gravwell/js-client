@@ -8,7 +8,8 @@
  */
 
 import { omit } from 'lodash';
-import { MailServerConfig, RawMailServerConfig } from '../../models/mail-server';
+import { MailServerConfig } from '~/models/mail-server/mail-server-config';
+import { RawMailServerConfig } from '~/models/mail-server/raw-mail-server-config';
 import { APIContext } from '../utils/api-context';
 import { buildHTTPRequestWithAuthFromContext } from '../utils/build-http-request';
 import { buildURL } from '../utils/build-url';

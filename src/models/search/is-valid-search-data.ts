@@ -8,7 +8,7 @@
  */
 
 import { isDate, isString, isUndefined } from 'lodash';
-import { isNumericID } from '~/value-objects';
+import { isNumericID } from '~/value-objects/id';
 import { SearchData } from './search-data';
 
 export const isValidSearchData = (value: unknown): value is SearchData => {

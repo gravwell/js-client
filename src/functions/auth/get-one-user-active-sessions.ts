@@ -7,7 +7,9 @@
  * license. See the LICENSE file for details.
  */
 
-import { RawUserSessions, toUserSessions, UserSessions } from '~/models';
+import { RawUserSessions } from '~/models/user-sessions/raw-user-sessions';
+import { toUserSessions } from '~/models/user-sessions/to-user-sessions';
+import { UserSessions } from '~/models/user-sessions/user-sessions';
 import { APIContext } from '../utils/api-context';
 import { buildHTTPRequestWithAuthFromContext } from '../utils/build-http-request';
 import { buildURL } from '../utils/build-url';

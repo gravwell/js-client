@@ -7,7 +7,8 @@
  * license. See the LICENSE file for details.
  */
 
-import { ElementFilter, ValidatedQuery } from '~/models/search';
+import { ElementFilter } from '~/models/search/element-filter';
+import { ValidatedQuery } from '~/models/search/validated-query';
 
 export interface QueriesService {
 	readonly validate: {

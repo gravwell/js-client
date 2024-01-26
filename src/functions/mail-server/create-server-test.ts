@@ -7,8 +7,8 @@
  * license. See the LICENSE file for details.
  */
 
-import { MailServerTestData } from '~/models';
 import { isMailServerTestResult } from '~/models/mail-server/is-mail-server-test-result';
+import { MailServerTestData } from '~/models/mail-server/mail-server-test-data';
 import { MailServerTestResult } from '~/models/mail-server/mail-server-test-result';
 import { APIContext } from '../utils/api-context';
 import { buildHTTPRequestWithAuthFromContext } from '../utils/build-http-request';

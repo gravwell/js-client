@@ -40,18 +40,18 @@ import {
 import { DateRange } from '~/functions/searches/helpers/create-required-search-filter-observable';
 import { getRawRequestEntriesMsg, makeRequestEntries } from '~/functions/searches/helpers/request-entries';
 import {
-	RawRequestSearchCloseMessageSent,
 	RawResponseForSearchDetailsMessageReceived,
 	RawResponseForSearchStatsMessageReceived,
-	SearchEntries,
-	SearchFilter,
-	SearchFrequencyStats,
-	SearchMessageCommands,
-	SearchStats,
-	SearchSubscription,
-	toSearchEntries,
-} from '~/models';
-import { ID, Percentage } from '~/value-objects';
+} from '~/models/search/raw-search-message-received';
+import { RawRequestSearchCloseMessageSent } from '~/models/search/raw-search-message-sent';
+import { SearchEntries } from '~/models/search/search-entries';
+import { SearchFilter } from '~/models/search/search-filter';
+import { SearchMessageCommands } from '~/models/search/search-message-commands';
+import { SearchFrequencyStats, SearchStats } from '~/models/search/search-stats';
+import { SearchSubscription } from '~/models/search/search-subscription';
+import { toSearchEntries } from '~/models/search/to-search-entries';
+import { ID } from '~/value-objects/id';
+import { Percentage } from '~/value-objects/percentage';
 import { APIContext } from '../../utils/api-context';
 import { attachSearch } from '../attach-search';
 import { getPreviewDateRange } from '../helpers/attach-search';

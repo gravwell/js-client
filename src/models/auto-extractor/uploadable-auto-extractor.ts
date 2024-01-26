@@ -8,7 +8,7 @@
  */
 
 import { File } from '~/functions/utils/file';
-import { NumericID } from '~/value-objects';
+import { NumericID } from '~/value-objects/id';
 
 export interface UploadableAutoExtractor {
 	file: File;

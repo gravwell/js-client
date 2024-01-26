@@ -7,8 +7,10 @@
  * license. See the LICENSE file for details.
  */
 
-import { CreatableTemplate, isTemplate } from '~/models';
-import { integrationTest, TEST_BASE_API_CONTEXT } from '~/tests';
+import { CreatableTemplate } from '~/models/template/creatable-template';
+import { isTemplate } from '~/models/template/is-template';
+import { TEST_BASE_API_CONTEXT } from '~/tests/config';
+import { integrationTest } from '~/tests/test-types';
 import { makeCreateOneTemplate } from './create-one-template';
 import { makeDeleteOneTemplate } from './delete-one-template';
 import { makeGetOneTemplate } from './get-one-template';

@@ -8,7 +8,7 @@
  */
 
 import { isUndefined } from 'lodash';
-import { isNumericID, toRawNumericID } from '~/value-objects';
+import { isNumericID, toRawNumericID } from '~/value-objects/id';
 import { omitUndefinedShallow } from '../../functions/utils/omit-undefined-shallow';
 import { FileMetadata } from './file-metadata';
 import { RawUpdatableFile } from './raw-updatable-file';

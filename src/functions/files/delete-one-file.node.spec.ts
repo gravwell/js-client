@@ -10,7 +10,8 @@
 import { createReadStream } from 'fs';
 import { join } from 'path';
 import { CreatableFile } from '~/models/file/creatable-file';
-import { integrationTest, integrationTestSpecDef, TEST_ASSETS_PATH, TEST_BASE_API_CONTEXT } from '~/tests';
+import { TEST_ASSETS_PATH, TEST_BASE_API_CONTEXT } from '~/tests/config';
+import { integrationTest, integrationTestSpecDef } from '~/tests/test-types';
 import { assertIsNotNil } from '../utils/type-guards';
 import { makeCreateOneFile } from './create-one-file';
 import { makeDeleteOneFile } from './delete-one-file';

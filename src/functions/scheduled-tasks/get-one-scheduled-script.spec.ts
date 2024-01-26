@@ -7,8 +7,10 @@
  * license. See the LICENSE file for details.
  */
 
-import { isScheduledScript, ScheduledScript } from '~/models';
-import { integrationTest, integrationTestSpecDef, TEST_BASE_API_CONTEXT } from '~/tests';
+import { isScheduledScript } from '~/models/scheduled-task/is-scheduled-script';
+import { ScheduledScript } from '~/models/scheduled-task/scheduled-script';
+import { TEST_BASE_API_CONTEXT } from '~/tests/config';
+import { integrationTest, integrationTestSpecDef } from '~/tests/test-types';
 import { makeCreateOneScheduledScript } from './create-one-scheduled-script';
 import { makeDeleteAllScheduledScripts } from './delete-all-scheduled-scripts';
 import { makeGetOneScheduledScript } from './get-one-scheduled-script';

@@ -7,8 +7,10 @@
  * license. See the LICENSE file for details.
  */
 
-import { RawToken, Token, toToken } from '~/models';
-import { UUID } from '~/value-objects';
+import { RawToken } from '~/models/token/raw-token';
+import { toToken } from '~/models/token/to-token';
+import { Token } from '~/models/token/token';
+import { UUID } from '~/value-objects/id';
 import { APIContext } from '../utils/api-context';
 import { buildHTTPRequestWithAuthFromContext } from '../utils/build-http-request';
 import { buildURL } from '../utils/build-url';

@@ -7,7 +7,9 @@
  * license. See the LICENSE file for details.
  */
 
-import { CreatableTemplate, Template, UpdatableTemplate } from '~/models/template';
+import { CreatableTemplate } from '~/models/template/creatable-template';
+import { Template } from '~/models/template/template';
+import { UpdatableTemplate } from '~/models/template/updatable-template';
 
 export interface TemplatesService {
 	readonly get: {

@@ -7,7 +7,7 @@
  * license. See the LICENSE file for details.
  */
 
-import { MailServerConfig } from '../../models/mail-server';
+import { MailServerConfig } from '../../models/mail-server/mail-server-config';
 import { APIContext } from '../utils/api-context';
 import { buildHTTPRequestWithAuthFromContext } from '../utils/build-http-request';
 import { buildURL } from '../utils/build-url';

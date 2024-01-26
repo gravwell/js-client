@@ -8,7 +8,7 @@
  */
 
 import { omitUndefinedShallow } from '~/functions/utils/omit-undefined-shallow';
-import { toRawNumericID } from '~/value-objects';
+import { toRawNumericID } from '~/value-objects/id';
 import { toRawActionableAction, toRawActionableTrigger } from '../actionable/to-raw-actionable';
 import { ActionableAction } from './actionable';
 import { CreatableActionable } from './creatable-actionable';

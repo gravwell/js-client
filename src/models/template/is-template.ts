@@ -7,10 +7,11 @@
  * license. See the LICENSE file for details.
  */
 
-import { isBoolean, isNull, isString, isUndefined } from 'lodash';
-import { DATA_TYPE } from '~/models';
-import { isTemplateData } from './is-template-data';
+import { isBoolean, isDate, isNull, isString, isUndefined } from 'lodash';
+import { DATA_TYPE } from '~/models/data-type';
+import { isNumericID, isUUID } from '~/value-objects/id';
 import { Template, TemplateVariable } from './template';
+import { TemplateData } from './template-data';
 
 export const isTemplate = (value: unknown): value is Template => {
 	try {
@@ -20,6 +21,7 @@ export const isTemplate = (value: unknown): value is Template => {
 		return false;
 	}
 };
+
 export const isTemplateVariable = (value: unknown): value is TemplateVariable => {
 	try {
 		const v = value as TemplateVariable;
@@ -30,6 +32,27 @@ export const isTemplateVariable = (value: unknown): value is TemplateVariable =>
 			(isBoolean(v.required) || isUndefined(v.required)) &&
 			(isString(v.defaultValue) || isUndefined(v.defaultValue)) &&
 			(isString(v.previewValue) || isUndefined(v.previewValue) || isNull(v.previewValue))
+		);
+	} catch {
+		return false;
+	}
+};
+
+export const isTemplateData = (value: unknown): value is TemplateData => {
+	try {
+		const t = value as TemplateData;
+		return (
+			isUUID(t.globalID) &&
+			isUUID(t.id) &&
+			isNumericID(t.userID) &&
+			t.groupIDs.every(isNumericID) &&
+			isString(t.name) &&
+			(isString(t.description) || isNull(t.description)) &&
+			t.labels.every(isString) &&
+			isBoolean(t.isGlobal) &&
+			isDate(t.lastUpdateDate) &&
+			isString(t.query) &&
+			t.variables.every(isTemplateVariable)
 		);
 	} catch {
 		return false;

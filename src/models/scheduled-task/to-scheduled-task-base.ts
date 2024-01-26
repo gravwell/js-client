@@ -8,7 +8,7 @@
  */
 
 import { isArray } from 'lodash';
-import { toNumericID } from '~/value-objects';
+import { toNumericID } from '~/value-objects/id';
 import { RawScheduledTask } from './raw-scheduled-task';
 import { ScheduledTaskBase } from './scheduled-task-base';
 

@@ -7,7 +7,7 @@
  * license. See the LICENSE file for details.
  */
 
-import { JWT } from '~/models';
+import { JWT } from '~/models/jwt';
 import { APIContext } from '../utils/api-context';
 import { buildHTTPRequest } from '../utils/build-http-request';
 import { buildURL } from '../utils/build-url';

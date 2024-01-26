@@ -7,7 +7,9 @@
  * license. See the LICENSE file for details.
  */
 
-import { RawSearch, Search, toSearch } from '~/models';
+import { RawSearch } from '~/models/search/raw-search';
+import { Search } from '~/models/search/search';
+import { toSearch } from '~/models/search/to-search';
 import { APIContext } from '../utils/api-context';
 import { buildHTTPRequestWithAuthFromContext } from '../utils/build-http-request';
 import { buildURL } from '../utils/build-url';

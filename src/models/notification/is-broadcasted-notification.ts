@@ -9,7 +9,7 @@
 
 import { isNull, isString, isUndefined } from 'lodash';
 import { iso8601String } from '~/functions/utils/verifiers';
-import { isNumericID } from '~/value-objects';
+import { isNumericID } from '~/value-objects/id';
 import { BroadcastedNotification } from './broadcasted-notification';
 
 export const isBroadcastedNotification = (value: unknown): value is BroadcastedNotification => {

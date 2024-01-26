@@ -8,8 +8,11 @@
  */
 
 import { random } from 'lodash';
-import { CreatableUser, User, userDecoder } from '~/models';
-import { integrationTest, integrationTestSpecDef, TEST_BASE_API_CONTEXT } from '~/tests';
+import { CreatableUser } from '~/models/user/creatable-user';
+import { userDecoder } from '~/models/user/is-valid-user';
+import { User } from '~/models/user/user';
+import { TEST_BASE_API_CONTEXT } from '~/tests/config';
+import { integrationTest, integrationTestSpecDef } from '~/tests/test-types';
 import { makeCreateOneUser } from './create-one-user';
 import { makeDeleteOneUser } from './delete-one-user';
 import { makeGetAllUsers } from './get-all-users';

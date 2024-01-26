@@ -8,8 +8,12 @@
  */
 
 import { omit } from 'lodash';
-import { CreatableTemplate, isTemplate, Template, TemplateVariable, UpdatableTemplate } from '~/models';
-import { integrationTest, integrationTestSpecDef, TEST_BASE_API_CONTEXT } from '~/tests';
+import { CreatableTemplate } from '~/models/template/creatable-template';
+import { isTemplate } from '~/models/template/is-template';
+import { Template, TemplateVariable } from '~/models/template/template';
+import { UpdatableTemplate } from '~/models/template/updatable-template';
+import { TEST_BASE_API_CONTEXT } from '~/tests/config';
+import { integrationTest, integrationTestSpecDef } from '~/tests/test-types';
 import { omitUndefinedShallow } from '../utils/omit-undefined-shallow';
 import { makeCreateOneTemplate } from './create-one-template';
 import { makeDeleteOneTemplate } from './delete-one-template';

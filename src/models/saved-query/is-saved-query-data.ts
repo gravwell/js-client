@@ -8,8 +8,8 @@
  */
 
 import { isBoolean, isNull, isString } from 'lodash';
-import { isNumericID, isUUID } from '~/value-objects';
-import { isTimeframe } from '../timeframe';
+import { isNumericID, isUUID } from '~/value-objects/id';
+import { isTimeframe } from '../timeframe/is-timeframe';
 import { SavedQueryData } from './saved-query-data';
 
 export const isSavedQueryData = (value: unknown): value is SavedQueryData => {

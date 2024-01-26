@@ -11,7 +11,7 @@ import { isString } from 'lodash';
 import { AutoExtractor } from '~/models/auto-extractor/auto-extractor';
 import { CreatableAutoExtractor } from '~/models/auto-extractor/creatable-auto-extractor';
 import { toRawCreatableAutoExtractor } from '~/models/auto-extractor/to-raw-creatable-auto-extractor';
-import { RawNumericID, toNumericID } from '~/value-objects';
+import { RawNumericID, toNumericID } from '~/value-objects/id';
 import { APIContext } from '../utils/api-context';
 import { buildHTTPRequestWithAuthFromContext } from '../utils/build-http-request';
 import { buildURL } from '../utils/build-url';

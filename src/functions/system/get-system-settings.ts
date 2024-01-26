@@ -7,7 +7,9 @@
  * license. See the LICENSE file for details.
  */
 
-import { RawSystemSettings, SystemSettings, toSystemSettings } from '~/models';
+import { RawSystemSettings } from '~/models/system-settings/raw-system-settings';
+import { SystemSettings } from '~/models/system-settings/system-settings';
+import { toSystemSettings } from '~/models/system-settings/to-system-settings';
 import { APIContext } from '../utils/api-context';
 import { buildHTTPRequestWithAuthFromContext } from '../utils/build-http-request';
 import { buildURL } from '../utils/build-url';

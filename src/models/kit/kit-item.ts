@@ -8,8 +8,9 @@
  */
 
 import { isBoolean, isNull, isNumber, isString } from 'lodash';
-import { isUUID, UUID } from '~/value-objects';
-import { isVersion, Version } from '../version';
+import { isVersion } from '~/models/version/is-version';
+import { Version } from '~/models/version/version';
+import { isUUID, UUID } from '~/value-objects/id';
 
 export interface KitItemBase {
 	id: string | null; // Just exist on LocalKit assets
@@ -31,6 +32,7 @@ export enum KIT_ITEM_TYPE {
 	template = 'template',
 	flow = 'flow',
 	autoExtractor = 'auto extractor',
+	alert = 'alert',
 }
 
 export interface LicenseKitItem extends KitItemBase {
@@ -121,6 +123,11 @@ export interface AutoExtractorKitItem extends KitItemBase {
 	tag: string;
 }
 
+export interface AlertKitItem extends KitItemBase {
+	type: KIT_ITEM_TYPE.alert;
+	description: string;
+}
+
 export type KitItem =
 	| LicenseKitItem
 	| FileKitItem
@@ -134,7 +141,8 @@ export type KitItem =
 	| SavedQueryKitItem
 	| TemplateKitItem
 	| FlowKitItem
-	| AutoExtractorKitItem;
+	| AutoExtractorKitItem
+	| AlertKitItem;
 
 export const isKitItem = (value: unknown): value is KitItem => {
 	try {
@@ -192,6 +200,8 @@ export const isKitItem = (value: unknown): value is KitItem => {
 				return isString(kitItem.name);
 			case 'auto extractor':
 				return isString(kitItem.description) && isString(kitItem.tag) && isString(kitItem.module);
+			case 'alert':
+				return isString(kitItem.name);
 			default:
 				throw Error(`Unexpected KitItem.type`);
 		}

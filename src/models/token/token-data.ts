@@ -7,7 +7,7 @@
  * license. See the LICENSE file for details.
  */
 
-import { ID } from '~/value-objects';
+import { ID } from '~/value-objects/id';
 import { TokenCapability } from './token-capability';
 
 /**

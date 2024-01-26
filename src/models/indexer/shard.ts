@@ -8,7 +8,7 @@
  */
 
 import { isBoolean, isDate, isNumber, isString, isUndefined } from 'lodash';
-import { isUUID } from '~/value-objects';
+import { isUUID } from '~/value-objects/id';
 
 export type Shard = {
 	name: string;

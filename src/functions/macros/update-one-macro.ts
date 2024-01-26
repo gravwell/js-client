@@ -7,7 +7,11 @@
  * license. See the LICENSE file for details.
  */
 
-import { Macro, RawMacro, toMacro, toRawUpdatableMacro, UpdatableMacro } from '~/models';
+import { Macro } from '~/models/macro/macro';
+import { RawMacro } from '~/models/macro/raw-macro';
+import { toMacro } from '~/models/macro/to-macro';
+import { toRawUpdatableMacro } from '~/models/macro/to-raw-updatable-macro';
+import { UpdatableMacro } from '~/models/macro/updatable-macro';
 import { APIContext } from '../utils/api-context';
 import { buildHTTPRequestWithAuthFromContext } from '../utils/build-http-request';
 import { buildURL } from '../utils/build-url';

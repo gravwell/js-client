@@ -7,7 +7,9 @@
  * license. See the LICENSE file for details.
  */
 
-import { RawScheduledTask, ScheduledTask, toScheduledTask } from '~/models';
+import { RawScheduledTask } from '~/models/scheduled-task/raw-scheduled-task';
+import { ScheduledTask } from '~/models/scheduled-task/scheduled-task';
+import { toScheduledTask } from '~/models/scheduled-task/to-scheduled-task';
 import { APIContext } from '../utils/api-context';
 import { buildHTTPRequestWithAuthFromContext } from '../utils/build-http-request';
 import { buildURL } from '../utils/build-url';

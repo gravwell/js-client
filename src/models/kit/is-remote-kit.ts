@@ -7,7 +7,7 @@
  * license. See the LICENSE file for details.
  */
 
-import { DATA_TYPE } from '~/models';
+import { DATA_TYPE } from '~/models/data-type';
 import { isRemoteKitData } from './is-remote-kit-data';
 import { RemoteKit } from './remote-kit';
 

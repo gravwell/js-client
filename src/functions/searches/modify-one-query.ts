@@ -11,7 +11,9 @@ import { isNull, pick } from 'lodash';
 import { firstValueFrom } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
 import { APIContext } from '~/functions/utils/api-context';
-import { ElementFilter, Query, ValidatedQuery } from '~/models';
+import { Query } from '~/models/query';
+import { ElementFilter } from '~/models/search/element-filter';
+import { ValidatedQuery } from '~/models/search/validated-query';
 import { makeSubscribeToOneQueryParsing } from './subscribe-to-query-parsing';
 
 export const makeModifyOneQuery = (

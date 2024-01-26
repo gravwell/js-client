@@ -9,7 +9,9 @@
 
 import { ScheduledQueriesFilter } from '~/functions/scheduled-tasks/get-many-scheduled-queries';
 import { ScheduledTasksFilter } from '~/functions/scheduled-tasks/get-many-scheduled-tasks';
-import { CreatableScheduledQuery, ScheduledQuery, UpdatableScheduledQuery } from '~/models/scheduled-task';
+import { CreatableScheduledQuery } from '~/models/scheduled-task/creatable-scheduled-query';
+import { ScheduledQuery } from '~/models/scheduled-task/scheduled-query';
+import { UpdatableScheduledQuery } from '~/models/scheduled-task/updatable-scheduled-task';
 
 export interface ScheduledQueriesService {
 	readonly get: {

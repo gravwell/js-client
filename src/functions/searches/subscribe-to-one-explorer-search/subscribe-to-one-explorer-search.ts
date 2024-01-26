@@ -35,25 +35,28 @@ import {
 	takeUntil,
 	tap,
 } from 'rxjs/operators';
+import { Query } from '~/models/query';
+import { ExplorerSearchSubscription } from '~/models/search/explorer-search-subscription';
 import {
-	ExplorerSearchEntries,
-	ExplorerSearchSubscription,
-	Query,
+	RawResponseForSearchDetailsMessageReceived,
+	RawResponseForSearchStatsMessageReceived,
+} from '~/models/search/raw-search-message-received';
+import {
 	RawRequestExplorerSearchEntriesWithinRangeMessageSent,
 	RawRequestSearchCloseMessageSent,
 	RawRequestSearchDetailsMessageSent,
 	RawRequestSearchStatsMessageSent,
 	RawRequestSearchStatsWithinRangeMessageSent,
-	RawResponseForSearchDetailsMessageReceived,
-	RawResponseForSearchStatsMessageReceived,
-	SearchEntries,
-	SearchFilter,
-	SearchMessageCommands,
-	SearchStats,
-	toSearchEntries,
-} from '~/models';
+} from '~/models/search/raw-search-message-sent';
+import { ExplorerSearchEntries, SearchEntries } from '~/models/search/search-entries';
+import { SearchFilter } from '~/models/search/search-filter';
+import { SearchMessageCommands } from '~/models/search/search-message-commands';
+import { SearchStats } from '~/models/search/search-stats';
 import { toDataExplorerEntry } from '~/models/search/to-data-explorer-entry';
-import { Percentage, RawJSON, toNumericID } from '~/value-objects';
+import { toSearchEntries } from '~/models/search/to-search-entries';
+import { toNumericID } from '~/value-objects/id';
+import { RawJSON } from '~/value-objects/json';
+import { Percentage } from '~/value-objects/percentage';
 import { APIContext } from '../../utils/api-context';
 import { debounceWithBackoffWhile } from '../../utils/debounce-with-backoff-while';
 import { omitUndefinedShallow } from '../../utils/omit-undefined-shallow';

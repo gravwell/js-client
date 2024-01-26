@@ -8,9 +8,9 @@
  */
 
 import { isEmpty } from 'lodash';
-import { toNumericID } from '../../value-objects';
+import { toVersion } from '~/models/version/to-version';
+import { toNumericID } from '../../value-objects/id';
 import { DATA_TYPE } from '../data-type';
-import { toVersion } from '../version';
 import { KitItem } from './kit-item';
 import { LocalKit } from './local-kit';
 import { LocalKitDependency } from './local-kit-data';

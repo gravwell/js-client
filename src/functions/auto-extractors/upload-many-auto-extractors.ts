@@ -12,7 +12,7 @@ import { isString } from 'lodash';
 import { AutoExtractor } from '~/models/auto-extractor/auto-extractor';
 import { UpdatableAutoExtractor } from '~/models/auto-extractor/updatable-auto-extractor';
 import { UploadableAutoExtractor } from '~/models/auto-extractor/uploadable-auto-extractor';
-import { RawUUID } from '~/value-objects';
+import { RawUUID } from '~/value-objects/id';
 import { APIContext } from '../utils/api-context';
 import { buildHTTPRequestWithAuthFromContext } from '../utils/build-http-request';
 import { buildURL } from '../utils/build-url';

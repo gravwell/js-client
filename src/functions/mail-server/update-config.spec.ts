@@ -7,8 +7,9 @@
  * license. See the LICENSE file for details.
  */
 
-import { MailServerConfig } from '~/models';
-import { integrationTest, TEST_BASE_API_CONTEXT } from '~/tests';
+import { MailServerConfig } from '~/models/mail-server/mail-server-config';
+import { TEST_BASE_API_CONTEXT } from '~/tests/config';
+import { integrationTest } from '~/tests/test-types';
 import { makeUpdateConfig } from './update-config';
 
 describe('makeUpdateConfig()', () => {

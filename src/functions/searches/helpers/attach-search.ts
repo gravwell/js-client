@@ -27,20 +27,18 @@ import { DateRange } from '~/functions/searches/helpers/create-required-search-f
 import { APISubscription } from '~/functions/utils/api-subscription';
 import { debounceWithBackoffWhile } from '~/functions/utils/debounce-with-backoff-while';
 import { omitUndefinedShallow } from '~/functions/utils/omit-undefined-shallow';
-import { SearchFilter } from '~/index';
 import {
-	RawRequestSearchDetailsMessageSent,
 	RawResponseForSearchDetailsMessageReceived,
 	RawResponseForSearchStatsMessageReceived,
 	RawResponseForSearchStatsWithinRangeMessageReceived,
 	RawSearchAttachedMessageReceived,
 	RawSearchMessageReceived,
-	RawSearchMessageSent,
-	SearchFrequencyStats,
-	SearchMessageCommands,
-	SearchStats,
-} from '~/models';
-import { toNumericID } from '~/value-objects';
+} from '~/models/search/raw-search-message-received';
+import { RawRequestSearchDetailsMessageSent, RawSearchMessageSent } from '~/models/search/raw-search-message-sent';
+import { SearchFilter } from '~/models/search/search-filter';
+import { SearchMessageCommands } from '~/models/search/search-message-commands';
+import { SearchFrequencyStats, SearchStats } from '~/models/search/search-stats';
+import { toNumericID } from '~/value-objects/id';
 import {
 	countEntriesFromModules,
 	filterMessageByCommand,

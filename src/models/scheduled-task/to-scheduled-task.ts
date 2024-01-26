@@ -8,7 +8,7 @@
  */
 
 import { isNil } from 'lodash';
-import { DATA_TYPE } from '~/models';
+import { DATA_TYPE } from '~/models/data-type';
 import { ScheduledQueryDuration } from '~/models/scheduled-task/scheduled-query-data';
 import { RawScheduledTask } from './raw-scheduled-task';
 import { ScheduledTask, ScheduledTaskType } from './scheduled-task';

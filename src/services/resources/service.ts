@@ -7,7 +7,10 @@
  * license. See the LICENSE file for details.
  */
 
-import { CreatableResource, Resource, ResourceContentPreview, UpdatableResource } from '~/models/resource';
+import { CreatableResource } from '~/models/resource/creatable-resource';
+import { Resource } from '~/models/resource/resource';
+import { ResourceContentPreview } from '~/models/resource/resource-content-preview';
+import { UpdatableResource } from '~/models/resource/updatable-resource';
 
 export interface ResourcesService {
 	readonly get: {

@@ -7,7 +7,9 @@
  * license. See the LICENSE file for details.
  */
 
-import { CreatablePlaybook, Playbook, UpdatablePlaybook } from '~/models/playbook';
+import { CreatablePlaybook } from '~/models/playbook/creatable-playbook';
+import { Playbook } from '~/models/playbook/playbook';
+import { UpdatablePlaybook } from '~/models/playbook/updatable-playbook';
 
 export interface PlaybooksService {
 	readonly get: {

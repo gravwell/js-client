@@ -7,7 +7,8 @@
  * license. See the LICENSE file for details.
  */
 
-import { RawNumericID, RawPercentage } from '~/value-objects';
+import { RawNumericID } from '~/value-objects/id';
+import { RawPercentage } from '~/value-objects/percentage';
 
 export interface RawKitInstallationStatus {
 	CurrentStep: string; // The last line in .Log

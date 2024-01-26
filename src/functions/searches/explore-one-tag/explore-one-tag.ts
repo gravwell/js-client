@@ -11,12 +11,10 @@ import { subDays } from 'date-fns';
 import { isNull } from 'lodash';
 import { from, lastValueFrom, Subscription } from 'rxjs';
 import { concatMap, filter, map, takeWhile } from 'rxjs/operators';
-import {
-	RawRequestExplorerSearchEntriesWithinRangeMessageSent,
-	RawSearchMessageReceivedRequestExplorerEntriesWithinRange,
-	SearchMessageCommands,
-} from '~/models';
 import { DataExplorerEntry } from '~/models/search/data-explorer-entry';
+import { RawSearchMessageReceivedRequestExplorerEntriesWithinRange } from '~/models/search/raw-search-message-received';
+import { RawRequestExplorerSearchEntriesWithinRangeMessageSent } from '~/models/search/raw-search-message-sent';
+import { SearchMessageCommands } from '~/models/search/search-message-commands';
 import { toDataExplorerEntry } from '~/models/search/to-data-explorer-entry';
 import { APIContext } from '../../utils/api-context';
 import { initiateSearch } from '../initiate-search';

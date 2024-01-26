@@ -7,8 +7,10 @@
  * license. See the LICENSE file for details.
  */
 
-import { CreatableUser, UpdatableUser, User } from '~/models';
-import { NumericID } from '~/value-objects';
+import { CreatableUser } from '~/models/user/creatable-user';
+import { UpdatableUser } from '~/models/user/updatable-user';
+import { User } from '~/models/user/user';
+import { NumericID } from '~/value-objects/id';
 
 export interface UsersService {
 	readonly get: {

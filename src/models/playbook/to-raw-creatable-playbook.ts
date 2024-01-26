@@ -10,7 +10,7 @@
 import { encode as base64Encode } from 'base-64';
 import * as utf8 from 'utf8';
 import { omitUndefinedShallow } from '~/functions/utils/omit-undefined-shallow';
-import { isUUID, toRawNumericID } from '~/value-objects';
+import { isUUID, toRawNumericID } from '~/value-objects/id';
 import { CreatablePlaybook } from './creatable-playbook';
 import { RawCreatablePlaybook } from './raw-creatable-playbook';
 import { RawPlaybookDecodedMetadata } from './raw-playbook-decoded-metadata';

@@ -7,8 +7,9 @@
  * license. See the LICENSE file for details.
  */
 
-import { ID, isID } from '~/value-objects';
-import { isVersion, Version } from '../version';
+import { isVersion } from '~/models/version/is-version';
+import { Version } from '~/models/version/version';
+import { ID, isID } from '~/value-objects/id';
 
 export type KitDependency = {
 	id: ID;

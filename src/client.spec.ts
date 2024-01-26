@@ -28,58 +28,6 @@ import {
 import { APISubscription } from '~/functions/utils/api-subscription';
 import { downloadFromURL, DownloadReturn } from '~/functions/utils/download-from-url';
 import { File } from '~/functions/utils/file';
-import {
-	CreatableBroadcastNotification,
-	CreatableMacro,
-	CreatablePlaybook,
-	CreatableResource,
-	CreatableSavedQuery,
-	CreatableScheduledQuery,
-	CreatableScheduledScript,
-	CreatableTargetedNotification,
-	CreatableTemplate,
-	CreatableToken,
-	CreatableUser,
-	DataExplorerEntry,
-	ElementFilter,
-	ExplorerSearchSubscription,
-	Macro,
-	Notification,
-	Playbook,
-	Query,
-	RenderModule,
-	Resource,
-	ResourceContentPreview,
-	SavedQuery,
-	ScheduledQuery,
-	ScheduledScript,
-	Script,
-	Search,
-	Search2,
-	SearchFilter,
-	SearchModule,
-	SearchSubscription,
-	SystemSettings,
-	TargetedNotificationTargetType,
-	Template,
-	Token,
-	TokenCapability,
-	TokenWithSecret,
-	UpdatableMacro,
-	UpdatableNotification,
-	UpdatablePlaybook,
-	UpdatableResource,
-	UpdatableSavedQuery,
-	UpdatableScheduledQuery,
-	UpdatableScheduledScript,
-	UpdatableTemplate,
-	UpdatableToken,
-	UpdatableUser,
-	User,
-	UserPreferences,
-	UserSessions,
-	ValidatedQuery,
-} from '~/models';
 import { Actionable } from '~/models/actionable/actionable';
 import { CreatableActionable } from '~/models/actionable/creatable-actionable';
 import { UpdatableActionable } from '~/models/actionable/updatable-actionable';
@@ -105,10 +53,59 @@ import { KitInstallationStatus } from '~/models/kit/kit-installation-status';
 import { LocalKit } from '~/models/kit/local-kit';
 import { RemoteKit } from '~/models/kit/remote-kit';
 import { LogLevel } from '~/models/log-level/log-level';
-import { unitTest } from '~/tests';
-import { ID, NumericID, RawJSON, UUID } from '~/value-objects';
-import { GravwellClient } from './client';
-import { Gravwell } from './main';
+import { CreatableMacro } from '~/models/macro/creatable-macro';
+import { Macro } from '~/models/macro/macro';
+import { UpdatableMacro } from '~/models/macro/updatable-macro';
+import { CreatableBroadcastNotification } from '~/models/notification/creatable-broadcasted-notification';
+import { CreatableTargetedNotification } from '~/models/notification/creatable-targeted-notification';
+import { Notification } from '~/models/notification/notification';
+import { TargetedNotificationTargetType } from '~/models/notification/targeted-notification';
+import { UpdatableNotification } from '~/models/notification/updatable-notification';
+import { CreatablePlaybook } from '~/models/playbook/creatable-playbook';
+import { Playbook } from '~/models/playbook/playbook';
+import { UpdatablePlaybook } from '~/models/playbook/updatable-playbook';
+import { Query } from '~/models/query';
+import { RenderModule } from '~/models/render-module/render-module';
+import { CreatableResource } from '~/models/resource/creatable-resource';
+import { Resource } from '~/models/resource/resource';
+import { ResourceContentPreview } from '~/models/resource/resource-content-preview';
+import { UpdatableResource } from '~/models/resource/updatable-resource';
+import { CreatableSavedQuery } from '~/models/saved-query/creatable-saved-query';
+import { SavedQuery } from '~/models/saved-query/saved-query';
+import { UpdatableSavedQuery } from '~/models/saved-query/updatable-saved-query';
+import { CreatableScheduledQuery } from '~/models/scheduled-task/creatable-scheduled-query';
+import { CreatableScheduledScript } from '~/models/scheduled-task/creatable-scheduled-scripts';
+import { ScheduledQuery } from '~/models/scheduled-task/scheduled-query';
+import { ScheduledScript } from '~/models/scheduled-task/scheduled-script';
+import { UpdatableScheduledQuery, UpdatableScheduledScript } from '~/models/scheduled-task/updatable-scheduled-task';
+import { Script } from '~/models/script/script';
+import { DataExplorerEntry } from '~/models/search/data-explorer-entry';
+import { ElementFilter } from '~/models/search/element-filter';
+import { ExplorerSearchSubscription } from '~/models/search/explorer-search-subscription';
+import { Search } from '~/models/search/search';
+import { SearchFilter } from '~/models/search/search-filter';
+import { SearchSubscription } from '~/models/search/search-subscription';
+import { Search2 } from '~/models/search/search2';
+import { ValidatedQuery } from '~/models/search/validated-query';
+import { SearchModule } from '~/models/search-module/search-module';
+import { SystemSettings } from '~/models/system-settings/system-settings';
+import { CreatableTemplate } from '~/models/template/creatable-template';
+import { Template } from '~/models/template/template';
+import { UpdatableTemplate } from '~/models/template/updatable-template';
+import { CreatableToken } from '~/models/token/creatable-token';
+import { Token } from '~/models/token/token';
+import { TokenCapability } from '~/models/token/token-capability';
+import { TokenWithSecret } from '~/models/token/token-with-secret';
+import { UpdatableToken } from '~/models/token/updatable-token';
+import { CreatableUser } from '~/models/user/creatable-user';
+import { UpdatableUser } from '~/models/user/updatable-user';
+import { User } from '~/models/user/user';
+import { UserPreferences } from '~/models/user-preferences/user-preferences';
+import { UserSessions } from '~/models/user-sessions/user-sessions';
+import { unitTest } from '~/tests/test-types';
+import { ID, NumericID, UUID } from '~/value-objects/id';
+import { RawJSON } from '~/value-objects/json';
+import { GravwellClient as Gravwell, GravwellClient } from './client';
 import { GeneratableAutoExtractor } from './models/auto-extractor/generatable-auto-extractor';
 
 describe('GravwellClient', () => {

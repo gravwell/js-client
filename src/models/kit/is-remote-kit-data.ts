@@ -8,8 +8,8 @@
  */
 
 import { isBoolean, isDate, isNumber, isString } from 'lodash';
-import { isUUID } from '~/value-objects';
-import { isVersion } from '../version';
+import { isVersion } from '~/models/version/is-version';
+import { isUUID } from '~/value-objects/id';
 import { isKitAsset } from './kit-asset';
 import { isKitDependency } from './kit-dependency';
 import { isKitItem } from './kit-item';

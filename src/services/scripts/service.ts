@@ -7,7 +7,7 @@
  * license. See the LICENSE file for details.
  */
 
-import { ValidatedScript } from '~/models/script';
+import { ValidatedScript } from '~/models/script/validated-script';
 
 export interface ScriptsService {
 	readonly validate: {

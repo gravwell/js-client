@@ -8,8 +8,8 @@
  */
 
 import { omitUndefinedShallow } from '~/functions/utils/omit-undefined-shallow';
-import { isNumericID, toRawNumericID } from '~/value-objects';
-import { toRawTimeframe } from '../timeframe';
+import { isNumericID, toRawNumericID } from '~/value-objects/id';
+import { toRawTimeframe } from '../timeframe/to-raw-timeframe';
 import { CreatableDashboardSearch } from './creatable-dashboard-search';
 import { RawCreatableDashboardSearch } from './raw-creatable-dashboard';
 

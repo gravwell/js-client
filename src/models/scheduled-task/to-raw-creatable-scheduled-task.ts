@@ -8,7 +8,7 @@
  */
 
 import { ScheduledQueryDuration } from '~/models/scheduled-task/scheduled-query-data';
-import { toRawNumericID } from '~/value-objects';
+import { toRawNumericID } from '~/value-objects/id';
 import { CreatableScheduledTask } from './creatable-scheduled-task';
 import { RawCreatableScheduledTask } from './raw-creatable-scheduled-task';
 

@@ -7,10 +7,10 @@
  * license. See the LICENSE file for details.
  */
 
+import { toVersion } from '~/models/version/to-version';
 import { assertUnreachable } from '../../functions/utils/assert-unreachable';
 import { ScheduledTaskType } from '../scheduled-task/scheduled-task';
 import { getScheduledTaskType } from '../scheduled-task/to-scheduled-task';
-import { toVersion } from '../version';
 import { KIT_ITEM_TYPE, KitItem, KitItemBase } from './kit-item';
 import { RawKitItem } from './raw-kit-item';
 
@@ -151,6 +151,13 @@ export const toKitItem = (raw: RawKitItem): KitItem => {
 				description: raw.AdditionalInfo.desc,
 				tag: raw.AdditionalInfo.tag,
 				module: raw.AdditionalInfo.module,
+			};
+		case 'alert':
+			return {
+				...base,
+				type: KIT_ITEM_TYPE.alert,
+				name: raw.AdditionalInfo.Name,
+				description: raw.AdditionalInfo.Description,
 			};
 	}
 };

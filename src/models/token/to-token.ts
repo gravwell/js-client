@@ -8,8 +8,9 @@
  */
 
 import { isEmpty, isNil } from 'lodash';
-import { RawToken, Token } from '~/index';
-import { DATA_TYPE } from '~/models';
+import { DATA_TYPE } from '~/models/data-type';
+import { RawToken } from '~/models/token/raw-token';
+import { Token } from '~/models/token/token';
 
 export const toToken = (raw: RawToken): Token => ({
 	_tag: DATA_TYPE.TOKEN,

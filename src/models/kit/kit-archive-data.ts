@@ -7,8 +7,8 @@
  * license. See the LICENSE file for details.
  */
 
-import { NumericID, UUID } from '~/value-objects';
-import { Version } from './../version';
+import { Version } from '~/models/version/version';
+import { NumericID, UUID } from '~/value-objects/id';
 import { ConfigMacro } from './config-macro';
 import { DeployRules } from './kit-archive';
 
@@ -42,6 +42,7 @@ export interface KitArchiveData {
 	scripts?: Array<UUID>;
 	templates?: Array<UUID>;
 	flows?: Array<UUID>;
+	alerts?: Array<UUID>;
 
 	// config macros
 	configMacros?: Array<ConfigMacro>;

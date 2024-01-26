@@ -9,11 +9,11 @@
 
 import {
 	CreatableTargetedNotification,
-	CreatableTargetedNotificationByTargetType,
 	creatableTargetedNotificationDecoder,
-	TargetedNotificationTargetType,
-	toRawCreatableTargetedNotification,
-} from '~/models';
+} from '~/models/notification/creatable-targeted-notification';
+import { CreatableTargetedNotificationByTargetType } from '~/models/notification/creatable-targeted-notification-by-target-type';
+import { TargetedNotificationTargetType } from '~/models/notification/targeted-notification';
+import { toRawCreatableTargetedNotification } from '~/models/notification/to-raw-creatable-targeted-notification';
 import { APIContext } from '../utils/api-context';
 import { buildHTTPRequestWithAuthFromContext } from '../utils/build-http-request';
 import { buildURL, URLOptions } from '../utils/build-url';

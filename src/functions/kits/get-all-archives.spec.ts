@@ -8,7 +8,8 @@
  */
 
 import { isKitArchive } from '~/models/kit/is-kit-archive';
-import { integrationTest, TEST_BASE_API_CONTEXT } from '~/tests';
+import { TEST_BASE_API_CONTEXT } from '~/tests/config';
+import { integrationTest } from '~/tests/test-types';
 import { makeGetKitArchives } from './get-all-archives';
 
 describe('getAllArchives()', () => {

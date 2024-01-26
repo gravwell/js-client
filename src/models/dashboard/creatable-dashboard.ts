@@ -7,8 +7,8 @@
  * license. See the LICENSE file for details.
  */
 
-import { NumericID } from '~/value-objects';
-import { CreatableTimeframe } from '../timeframe';
+import { NumericID } from '~/value-objects/id';
+import { CreatableTimeframe } from '../timeframe/creatable-timeframe';
 import { CreatableDashboardSearch } from './creatable-dashboard-search';
 import { CreatableDashboardTile } from './creatable-dashboard-tile';
 import { DashboardLiveUpdate } from './dashboard-live-update';

@@ -7,7 +7,8 @@
  * license. See the LICENSE file for details.
  */
 
-import { RawDataExplorerEntry, RawSearchEntry } from '../search';
+import { RawDataExplorerEntry } from '../search/raw-data-explorer-entry';
+import { RawSearchEntry } from '../search/raw-search-entry';
 import { RawAutoExtractor } from './raw-auto-extractor';
 
 /** Maps extractor module names to arrays of guesses */

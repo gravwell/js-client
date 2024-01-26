@@ -7,7 +7,7 @@
  * license. See the LICENSE file for details.
  */
 
-import { DATA_TYPE } from '~/models';
+import { DATA_TYPE } from '~/models/data-type';
 import { isScheduledScriptData } from './is-scheduled-script-data';
 import { ScheduledScript } from './scheduled-script';
 

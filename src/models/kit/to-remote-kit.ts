@@ -7,10 +7,11 @@
  * license. See the LICENSE file for details.
  */
 
-import { DATA_TYPE } from '~/models';
+import { DATA_TYPE } from '~/models/data-type';
 import { toConfigMacro } from '~/models/kit/to-config-macro';
 import { toRawConfigMacro } from '~/models/kit/to-raw-config-macro';
-import { toRawVersionObject, toVersion } from '../version';
+import { toRawVersionObject } from '~/models/version/to-raw-version-object';
+import { toVersion } from '~/models/version/to-version';
 import { KitAsset } from './kit-asset';
 import { RawRemoteKit } from './raw-remote-kit';
 import { RemoteKit } from './remote-kit';

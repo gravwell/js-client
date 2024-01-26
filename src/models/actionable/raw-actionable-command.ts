@@ -7,7 +7,7 @@
  * license. See the LICENSE file for details.
  */
 
-import { RawUUID } from '~/value-objects';
+import { RawUUID } from '~/value-objects/id';
 
 export type RawActionableCommand =
 	| RawActionableQueryCommand

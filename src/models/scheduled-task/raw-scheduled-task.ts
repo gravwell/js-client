@@ -7,7 +7,7 @@
  * license. See the LICENSE file for details.
  */
 
-import { RawNumericID, RawUUID } from '~/value-objects';
+import { RawNumericID, RawUUID } from '~/value-objects/id';
 
 export interface RawScheduledTask {
 	ID: RawNumericID;

@@ -10,7 +10,7 @@
 import { Group } from '~/models/group/group';
 import { RawGroup } from '~/models/group/raw-group';
 import { toGroup } from '~/models/group/to-group';
-import { NumericID } from '~/value-objects';
+import { NumericID } from '~/value-objects/id';
 import { APIContext } from '../utils/api-context';
 import { buildHTTPRequestWithAuthFromContext } from '../utils/build-http-request';
 import { buildURL } from '../utils/build-url';

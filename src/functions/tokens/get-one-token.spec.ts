@@ -8,8 +8,12 @@
  */
 
 import { omit } from 'lodash';
-import { CreatableToken, isToken, TokenCapability, TokenWithSecret } from '~/models';
-import { integrationTest, integrationTestSpecDef, TEST_BASE_API_CONTEXT } from '~/tests';
+import { CreatableToken } from '~/models/token/creatable-token';
+import { isToken } from '~/models/token/is-token';
+import { TokenCapability } from '~/models/token/token-capability';
+import { TokenWithSecret } from '~/models/token/token-with-secret';
+import { TEST_BASE_API_CONTEXT } from '~/tests/config';
+import { integrationTest, integrationTestSpecDef } from '~/tests/test-types';
 import { makeCreateOneToken } from './create-one-token';
 import { makeDeleteOneToken } from './delete-one-token';
 import { makeGetAllTokens } from './get-all-tokens';

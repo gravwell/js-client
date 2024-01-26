@@ -8,7 +8,7 @@
  */
 
 import { ConditionalPartial, PartialProps } from '~/functions/utils/conditional-partial';
-import { NumericID } from '~/value-objects';
+import { NumericID } from '~/value-objects/id';
 import { ActionableAction, ActionableTrigger } from './actionable';
 
 export interface CreatableActionable {

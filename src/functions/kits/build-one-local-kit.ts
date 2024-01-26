@@ -9,7 +9,7 @@
 
 import { BuildableKit } from '~/models/kit/buildable-kit';
 import { toRawBuildableKit } from '~/models/kit/to-raw-buildable-kit';
-import { RawNumericID, RawUUID, UUID } from '~/value-objects';
+import { RawNumericID, RawUUID, UUID } from '~/value-objects/id';
 import { APIContext } from '../utils/api-context';
 import { buildHTTPRequestWithAuthFromContext } from '../utils/build-http-request';
 import { buildURL } from '../utils/build-url';

@@ -7,8 +7,10 @@
  * license. See the LICENSE file for details.
  */
 
-import { RawResourceContentPreview, ResourceContentPreview, toResourceContentPreview } from '~/models';
-import { UUID } from '~/value-objects';
+import { RawResourceContentPreview } from '~/models/resource/raw-resource-content-preview';
+import { ResourceContentPreview } from '~/models/resource/resource-content-preview';
+import { toResourceContentPreview } from '~/models/resource/to-resource-content-preview';
+import { UUID } from '~/value-objects/id';
 import { APIContext } from '../utils/api-context';
 import { buildHTTPRequestWithAuthFromContext } from '../utils/build-http-request';
 import { buildURL } from '../utils/build-url';

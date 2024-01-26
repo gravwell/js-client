@@ -10,7 +10,7 @@
 import { CreatableGroup } from '~/models/group/creatable-group';
 import { Group } from '~/models/group/group';
 import { UpdatableGroup } from '~/models/group/updatable-group';
-import { NumericID } from '~/value-objects';
+import { NumericID } from '~/value-objects/id';
 
 export interface GroupsService {
 	readonly create: {

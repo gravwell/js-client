@@ -9,8 +9,8 @@
 
 import { isNil } from 'lodash';
 import { omitUndefinedShallow } from '~/functions/utils/omit-undefined-shallow';
-import { toRawNumericID } from '~/value-objects';
-import { toRawTimeframe } from '../timeframe';
+import { toRawNumericID } from '~/value-objects/id';
+import { toRawTimeframe } from '../timeframe/to-raw-timeframe';
 import { CreatableSavedQuery } from './creatable-saved-query';
 import { RawCreatableSavedQuery } from './raw-creatable-saved-query';
 

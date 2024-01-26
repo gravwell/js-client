@@ -8,8 +8,8 @@
  */
 
 import { isNull, isString } from 'lodash';
-import { isTimeframe } from '~/models';
-import { isNumericID } from '~/value-objects';
+import { isTimeframe } from '~/models/timeframe/is-timeframe';
+import { isNumericID } from '~/value-objects/id';
 import { DashboardSearch } from './dashboard-search';
 
 export const isDashboardSearch = (value: unknown): value is DashboardSearch => {

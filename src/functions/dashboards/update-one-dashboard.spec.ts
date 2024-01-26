@@ -7,12 +7,14 @@
  * license. See the LICENSE file for details.
  */
 
-import { toVersion } from '~/models';
 import { CreatableDashboard } from '~/models/dashboard/creatable-dashboard';
 import { Dashboard } from '~/models/dashboard/dashboard';
 import { isDashboard } from '~/models/dashboard/is-dashboard';
 import { UpdatableDashboard } from '~/models/dashboard/updatable-dashboard';
-import { integrationTest, integrationTestSpecDef, myCustomMatchers, TEST_BASE_API_CONTEXT } from '~/tests';
+import { toVersion } from '~/models/version/to-version';
+import { TEST_BASE_API_CONTEXT } from '~/tests/config';
+import { myCustomMatchers } from '~/tests/custom-matchers';
+import { integrationTest, integrationTestSpecDef } from '~/tests/test-types';
 import { makeCreateOneDashboard } from './create-one-dashboard';
 import { makeDeleteOneDashboard } from './delete-one-dashboard';
 import { makeGetAllDashboards } from './get-all-dashboards';

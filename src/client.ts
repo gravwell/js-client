@@ -12,74 +12,72 @@ import { BehaviorSubject, combineLatest, firstValueFrom, Observable } from 'rxjs
 import { distinctUntilChanged, filter, map, shareReplay } from 'rxjs/operators';
 import { APIContext } from '~/functions/utils/api-context';
 import { fetch } from '~/functions/utils/fetch';
-import {
-	ActionablesService,
-	AuthService,
-	AutoExtractorsService,
-	createActionablesService,
-	createAuthService,
-	createAutoExtractorsService,
-	createDashboardsService,
-	createEntriesService,
-	createExplorerService,
-	createFilesService,
-	createGroupsService,
-	createIndexersService,
-	createKitsService,
-	createLogsService,
-	createMacrosService,
-	createMailServerService,
-	createNotificationsService,
-	createPlaybooksService,
-	createQueriesService,
-	createRenderModulesService,
-	createResourcesService,
-	createSavedQueriesService,
-	createScheduledQueriesService,
-	createScheduledScriptsService,
-	createScriptLibrariesService,
-	createSearchesService,
-	createSearchHistoryService,
-	createSearchModulesService,
-	createSearchStatusService,
-	createSystemService,
-	createTagsService,
-	createTemplatesService,
-	createTokensService,
-	createUserPreferencesService,
-	createUsersService,
-	createWebServerService,
-	DashboardsService,
-	EntriesService,
-	ExplorerService,
-	FilesService,
-	GroupsService,
-	IndexersService,
-	KitsService,
-	LogsService,
-	MacrosService,
-	MailServerService,
-	NotificationsService,
-	PlaybooksService,
-	QueriesService,
-	RenderModulesService,
-	ResourcesService,
-	SavedQueriesService,
-	ScheduledQueriesService,
-	ScheduledScriptsService,
-	ScriptLibrariesService,
-	SearchesService,
-	SearchHistoryService,
-	SearchModulesService,
-	SearchStatusService,
-	SystemService,
-	TagsService,
-	TemplatesService,
-	TokensService,
-	UserPreferencesService,
-	UsersService,
-	WebServerService,
-} from '~/services';
+import { createActionablesService } from '~/services/actionables/create-service';
+import { ActionablesService } from '~/services/actionables/service';
+import { createAuthService } from '~/services/auth/create-service';
+import { AuthService } from '~/services/auth/service';
+import { createAutoExtractorsService } from '~/services/auto-extractors/create-service';
+import { AutoExtractorsService } from '~/services/auto-extractors/service';
+import { createDashboardsService } from '~/services/dashboards/create-service';
+import { DashboardsService } from '~/services/dashboards/service';
+import { createEntriesService } from '~/services/entries/create-service';
+import { EntriesService } from '~/services/entries/service';
+import { createExplorerService } from '~/services/explorer/create-service';
+import { ExplorerService } from '~/services/explorer/service';
+import { createFilesService } from '~/services/files/create-service';
+import { FilesService } from '~/services/files/service';
+import { createGroupsService } from '~/services/groups/create-service';
+import { GroupsService } from '~/services/groups/service';
+import { createIndexersService } from '~/services/indexers/create-service';
+import { IndexersService } from '~/services/indexers/service';
+import { createKitsService } from '~/services/kits/create-service';
+import { KitsService } from '~/services/kits/service';
+import { createLogsService } from '~/services/logs/create-service';
+import { LogsService } from '~/services/logs/service';
+import { createMacrosService } from '~/services/macros/create-service';
+import { MacrosService } from '~/services/macros/service';
+import { createMailServerService } from '~/services/mail-server/create-service';
+import { MailServerService } from '~/services/mail-server/service';
+import { createNotificationsService } from '~/services/notifications/create-service';
+import { NotificationsService } from '~/services/notifications/service';
+import { createPlaybooksService } from '~/services/playbooks/create-service';
+import { PlaybooksService } from '~/services/playbooks/service';
+import { createQueriesService } from '~/services/queries/create-service';
+import { QueriesService } from '~/services/queries/service';
+import { createRenderModulesService } from '~/services/render-modules/create-service';
+import { RenderModulesService } from '~/services/render-modules/service';
+import { createResourcesService } from '~/services/resources/create-service';
+import { ResourcesService } from '~/services/resources/service';
+import { createSavedQueriesService } from '~/services/saved-queries/create-service';
+import { SavedQueriesService } from '~/services/saved-queries/service';
+import { createScheduledQueriesService } from '~/services/scheduled-queries/create-service';
+import { ScheduledQueriesService } from '~/services/scheduled-queries/service';
+import { createScheduledScriptsService } from '~/services/scheduled-scripts/create-service';
+import { ScheduledScriptsService } from '~/services/scheduled-scripts/service';
+import { createScriptLibrariesService } from '~/services/script-libraries/create-service';
+import { ScriptLibrariesService } from '~/services/script-libraries/service';
+import { createSearchHistoryService } from '~/services/search-history/create-service';
+import { SearchHistoryService } from '~/services/search-history/service';
+import { createSearchModulesService } from '~/services/search-modules/create-service';
+import { SearchModulesService } from '~/services/search-modules/service';
+import { createSearchStatusService } from '~/services/search-status/create-service';
+import { SearchStatusService } from '~/services/search-status/service';
+import { createSearchesService } from '~/services/searches/create-service';
+import { SearchesService } from '~/services/searches/service';
+import { createSystemService } from '~/services/system/create-service';
+import { SystemService } from '~/services/system/service';
+import { createTagsService } from '~/services/tags/create-service';
+import { TagsService } from '~/services/tags/service';
+import { createTemplatesService } from '~/services/templates/create-service';
+import { TemplatesService } from '~/services/templates/service';
+import { createTokensService } from '~/services/tokens/create-service';
+import { TokensService } from '~/services/tokens/service';
+import { createUserPreferencesService } from '~/services/user-preferences/create-service';
+import { UserPreferencesService } from '~/services/user-preferences/service';
+import { createUsersService } from '~/services/users/create-service';
+import { UsersService } from '~/services/users/service';
+import { createWebServerService } from '~/services/web-server/create-service';
+import { WebServerService } from '~/services/web-server/service';
 
 export interface GravwellClientOptions {
 	useEncryption?: boolean;

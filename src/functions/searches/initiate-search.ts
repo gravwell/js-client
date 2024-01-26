@@ -12,13 +12,15 @@ import { defer, lastValueFrom, Observable, of, Subject, throwError } from 'rxjs'
 import { concatMap, delay, filter, first, map, share, tap, withLatestFrom } from 'rxjs/operators';
 import { v4 as uuidv4 } from 'uuid';
 import {
-	RawAcceptSearchMessageSent,
-	RawInitiateSearchMessageSent,
 	RawSearchInitiatedMessageReceived,
 	RawSearchMessageReceived,
+} from '~/models/search/raw-search-message-received';
+import {
+	RawAcceptSearchMessageSent,
+	RawInitiateSearchMessageSent,
 	RawSearchMessageSent,
-} from '~/models';
-import { RawJSON } from '~/value-objects';
+} from '~/models/search/raw-search-message-sent';
+import { RawJSON } from '~/value-objects/json';
 import { APISubscription } from '../utils/api-subscription';
 
 /*

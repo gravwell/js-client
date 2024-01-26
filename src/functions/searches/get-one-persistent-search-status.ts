@@ -7,8 +7,10 @@
  * license. See the LICENSE file for details.
  */
 
-import { RawSearch2, Search2, toSearch2 } from '~/models';
-import { NumericID } from '~/value-objects';
+import { RawSearch2 } from '~/models/search/raw-search2';
+import { Search2 } from '~/models/search/search2';
+import { toSearch2 } from '~/models/search/to-search2';
+import { NumericID } from '~/value-objects/id';
 import { APIContext } from '../utils/api-context';
 import { buildHTTPRequestWithAuthFromContext } from '../utils/build-http-request';
 import { buildURL } from '../utils/build-url';

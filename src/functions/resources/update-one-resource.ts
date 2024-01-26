@@ -8,7 +8,11 @@
  */
 
 import { isNil, isUndefined } from 'lodash';
-import { RawResource, Resource, toRawUpdatableResourceMetadata, toResource, UpdatableResource } from '~/models';
+import { RawResource } from '~/models/resource/raw-resource';
+import { Resource } from '~/models/resource/resource';
+import { toRawUpdatableResourceMetadata } from '~/models/resource/to-raw-updatable-resource-metadata';
+import { toResource } from '~/models/resource/to-resource';
+import { UpdatableResource } from '~/models/resource/updatable-resource';
 import { APIContext } from '../utils/api-context';
 import { buildHTTPRequestWithAuthFromContext } from '../utils/build-http-request';
 import { buildURL } from '../utils/build-url';
