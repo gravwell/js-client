@@ -8,7 +8,8 @@
  */
 
 import { isIndexerWell } from '~/models/indexer/indexer-well';
-import { integrationTest, TEST_BASE_API_CONTEXT } from '~/tests';
+import { TEST_BASE_API_CONTEXT } from '~/tests/config';
+import { integrationTest } from '~/tests/test-types';
 import { makeGetAllIndexers } from './get-all-indexers';
 
 describe('getAllIndexers()', () => {

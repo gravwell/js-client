@@ -7,7 +7,7 @@
  * license. See the LICENSE file for details.
  */
 
-import { RawNumericID, RawUUID } from '~/value-objects';
+import { RawNumericID, RawUUID } from '~/value-objects/id';
 import { RawActionableCommand } from './raw-actionable-command';
 
 export interface RawActionable {

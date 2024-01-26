@@ -7,7 +7,9 @@
  * license. See the LICENSE file for details.
  */
 
-import { CreatableSavedQuery, SavedQuery, UpdatableSavedQuery } from '~/models/saved-query';
+import { CreatableSavedQuery } from '~/models/saved-query/creatable-saved-query';
+import { SavedQuery } from '~/models/saved-query/saved-query';
+import { UpdatableSavedQuery } from '~/models/saved-query/updatable-saved-query';
 
 export interface SavedQueriesService {
 	readonly get: {

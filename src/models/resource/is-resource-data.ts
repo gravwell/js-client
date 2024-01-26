@@ -8,7 +8,7 @@
  */
 
 import { isBoolean, isDate, isInteger, isString } from 'lodash';
-import { isNumericID, isUUID } from '~/value-objects';
+import { isNumericID, isUUID } from '~/value-objects/id';
 import { ResourceData } from './resource-data';
 
 export const isResourceData = (value: unknown): value is ResourceData => {

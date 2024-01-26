@@ -7,7 +7,9 @@
  * license. See the LICENSE file for details.
  */
 
-import { RawRenderModule, RenderModule, toRenderModule } from '~/models';
+import { RawRenderModule } from '~/models/render-module/raw-render-module';
+import { RenderModule } from '~/models/render-module/render-module';
+import { toRenderModule } from '~/models/render-module/to-render-module';
 import { APIContext } from '../utils/api-context';
 import { buildHTTPRequestWithAuthFromContext } from '../utils/build-http-request';
 import { buildURL } from '../utils/build-url';

@@ -8,7 +8,7 @@
  */
 
 import { BehaviorSubject, Observable } from 'rxjs';
-import { Notification } from '~/models';
+import { Notification } from '~/models/notification/notification';
 import { APIContext } from '../utils/api-context';
 import { APISubscription } from '../utils/api-subscription';
 import { makeGetMyNotifications } from './get-my-notifications';

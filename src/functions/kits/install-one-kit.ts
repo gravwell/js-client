@@ -13,7 +13,7 @@ import { KitInstallationStatus } from '~/models/kit/kit-installation-status';
 import { RawKitInstallationStatus } from '~/models/kit/raw-kit-installation-status';
 import { toKitInstallationStatus } from '~/models/kit/to-kit-installation-status';
 import { toRawInstallableKit } from '~/models/kit/to-raw-installable-kit';
-import { ID, NumericID, RawNumericID, toNumericID } from '~/value-objects';
+import { ID, NumericID, RawNumericID, toNumericID } from '~/value-objects/id';
 import { APIContext } from '../utils/api-context';
 import { APISubscription } from '../utils/api-subscription';
 import { buildHTTPRequestWithAuthFromContext } from '../utils/build-http-request';

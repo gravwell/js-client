@@ -7,9 +7,11 @@
  * license. See the LICENSE file for details.
  */
 
-import { CreatablePlaybook, isPlaybook } from '~/models';
-import { integrationTest, integrationTestSpecDef, TEST_BASE_API_CONTEXT } from '~/tests';
-import { UUID } from '~/value-objects';
+import { CreatablePlaybook } from '~/models/playbook/creatable-playbook';
+import { isPlaybook } from '~/models/playbook/is-playbook';
+import { TEST_BASE_API_CONTEXT } from '~/tests/config';
+import { integrationTest, integrationTestSpecDef } from '~/tests/test-types';
+import { UUID } from '~/value-objects/id';
 import { makeCreateOnePlaybook } from './create-one-playbook';
 import { makeDeleteOnePlaybook } from './delete-one-playbook';
 import { makeGetOnePlaybook } from './get-one-playbook';

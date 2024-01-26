@@ -7,8 +7,11 @@
  * license. See the LICENSE file for details.
  */
 
-import { SearchDetails, SearchFilter, SearchSubscription } from '~/models/search';
-import { ID, RawJSON } from '~/value-objects';
+import { SearchDetails } from '~/models/search/search-details';
+import { SearchFilter } from '~/models/search/search-filter';
+import { SearchSubscription } from '~/models/search/search-subscription';
+import { ID } from '~/value-objects/id';
+import { RawJSON } from '~/value-objects/json';
 import { UpdatableSearchDetails } from '../../models/search/updatable-search-details';
 
 export interface SearchesService {

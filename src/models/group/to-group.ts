@@ -7,7 +7,7 @@
  * license. See the LICENSE file for details.
  */
 
-import { DATA_TYPE } from '~/models';
+import { DATA_TYPE } from '~/models/data-type';
 import { omitUndefinedShallow } from '../../functions/utils/omit-undefined-shallow';
 import { Group } from './group';
 import { RawGroup } from './raw-group';

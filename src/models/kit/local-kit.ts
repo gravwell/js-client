@@ -7,7 +7,7 @@
  * license. See the LICENSE file for details.
  */
 
-import { DATA_TYPE } from '~/index';
+import { DATA_TYPE } from '~/models/data-type';
 import { LocalKitData } from './local-kit-data';
 
 export interface LocalKit extends LocalKitData {

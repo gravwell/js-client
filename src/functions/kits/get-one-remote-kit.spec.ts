@@ -8,7 +8,8 @@
  */
 
 import { isRemoteKit } from '~/models/kit/is-remote-kit';
-import { integrationTest, TEST_BASE_API_CONTEXT } from '~/tests';
+import { TEST_BASE_API_CONTEXT } from '~/tests/config';
+import { integrationTest } from '~/tests/test-types';
 import { makeGetAllRemoteKits } from './get-all-remote-kits';
 import { makeGetOneRemoteKit } from './get-one-remote-kit';
 

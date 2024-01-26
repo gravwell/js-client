@@ -10,7 +10,9 @@
 import { sortBy } from 'lodash';
 import { AutoExtractor } from '~/models/auto-extractor/auto-extractor';
 import { CreatableAutoExtractor } from '~/models/auto-extractor/creatable-auto-extractor';
-import { integrationTest, integrationTestSpecDef, myCustomMatchers, TEST_BASE_API_CONTEXT } from '~/tests';
+import { TEST_BASE_API_CONTEXT } from '~/tests/config';
+import { myCustomMatchers } from '~/tests/custom-matchers';
+import { integrationTest, integrationTestSpecDef } from '~/tests/test-types';
 import { makeCreateOneAutoExtractor } from './create-one-auto-extractor';
 import { makeDeleteOneAutoExtractor } from './delete-one-auto-extractor';
 import { makeDownloadManyAutoExtractors } from './download-many-auto-extractors';

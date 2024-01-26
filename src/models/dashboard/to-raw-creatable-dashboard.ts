@@ -9,8 +9,8 @@
 
 import { isUndefined } from 'lodash';
 import { omitUndefinedShallow } from '~/functions/utils/omit-undefined-shallow';
-import { toRawNumericID } from '~/value-objects';
-import { toRawTimeframe } from '../timeframe';
+import { toRawNumericID } from '~/value-objects/id';
+import { toRawTimeframe } from '../timeframe/to-raw-timeframe';
 import { CreatableDashboard } from './creatable-dashboard';
 import { RawCreatableDashboard } from './raw-creatable-dashboard';
 import { toRawCreatableDashboardSearch } from './to-raw-creatable-dashboard-search';

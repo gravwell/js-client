@@ -8,7 +8,7 @@
  */
 
 import { omitUndefinedShallow } from '~/functions/utils/omit-undefined-shallow';
-import { DATA_TYPE } from '~/models';
+import { DATA_TYPE } from '~/models/data-type';
 import { RawSearch } from './raw-search';
 import { Search } from './search';
 

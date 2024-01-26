@@ -8,7 +8,7 @@
  */
 
 import { isNull, isNumber, isString } from 'lodash';
-import { isNumericID } from '~/value-objects';
+import { isNumericID } from '~/value-objects/id';
 import { DashboardTile } from './dashboard-tile';
 import { isDashboardRendererOptions } from './is-dashboard-renderer-options';
 

@@ -7,7 +7,8 @@
  * license. See the LICENSE file for details.
  */
 
-import { ID, RawJSON } from '~/value-objects';
+import { ID } from '~/value-objects/id';
+import { RawJSON } from '~/value-objects/json';
 import { Query } from '../query';
 import { SearchFilter } from './search-filter';
 

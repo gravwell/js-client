@@ -11,7 +11,7 @@ import { encode as base64Encode } from 'base-64';
 import { isNull, isUndefined } from 'lodash';
 import * as utf8 from 'utf8';
 import { omitUndefinedShallow } from '~/functions/utils/omit-undefined-shallow';
-import { isUUID, toRawNumericID } from '~/value-objects';
+import { isUUID, toRawNumericID } from '~/value-objects/id';
 import { Playbook } from './playbook';
 import { RawPlaybookDecodedMetadata } from './raw-playbook-decoded-metadata';
 import { RawUpdatablePlaybook } from './raw-updatable-playbook';

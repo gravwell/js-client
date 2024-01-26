@@ -8,7 +8,7 @@
  */
 
 import { Observable, scan } from 'rxjs';
-import { SearchFilter } from '~/index';
+import { SearchFilter } from '~/models/search/search-filter';
 import { RequiredSearchFilter } from '../subscribe-to-one-search/helpers';
 
 export type DateRange = { start: Date; end: Date };

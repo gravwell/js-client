@@ -8,7 +8,7 @@
  */
 
 import { File } from '~/functions/utils/file';
-import { RawUUID } from '~/value-objects';
+import { RawUUID } from '~/value-objects/id';
 
 export interface RawCreatableFile {
 	/** Optional global ID for this file. If not set, one will be generated. */

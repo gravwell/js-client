@@ -8,9 +8,10 @@
  */
 
 import { isArray, isBoolean, isDate, isNull, isNumber, isString, isUndefined } from 'lodash';
-import { isTimeframe, isVersion } from '~/models';
 import { DashboardData } from '~/models/dashboard/dashboard-data';
-import { isNumericID, isUUID } from '~/value-objects';
+import { isTimeframe } from '~/models/timeframe/is-timeframe';
+import { isVersion } from '~/models/version/is-version';
+import { isNumericID, isUUID } from '~/value-objects/id';
 import { isDashboardLiveUpdate } from './is-dashboard-live-update';
 import { isDashboardSearch } from './is-dashboard-search';
 import { isDashboardTile } from './is-dashboard-tile';

@@ -8,7 +8,8 @@
  */
 
 import { CreatableAutoExtractor } from '~/models/auto-extractor/creatable-auto-extractor';
-import { integrationTest, TEST_BASE_API_CONTEXT } from '~/tests';
+import { TEST_BASE_API_CONTEXT } from '~/tests/config';
+import { integrationTest } from '~/tests/test-types';
 import { makeIsValidAutoExtractorSyntax } from './is-valid-auto-extractor-syntax';
 
 describe('isValidAutoExtractorSyntax()', () => {

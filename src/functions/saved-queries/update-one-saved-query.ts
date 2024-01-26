@@ -7,7 +7,11 @@
  * license. See the LICENSE file for details.
  */
 
-import { RawSavedQuery, SavedQuery, toRawUpdatableSavedQuery, toSavedQuery, UpdatableSavedQuery } from '~/models';
+import { RawSavedQuery } from '~/models/saved-query/raw-saved-query';
+import { SavedQuery } from '~/models/saved-query/saved-query';
+import { toRawUpdatableSavedQuery } from '~/models/saved-query/to-raw-updatable-saved-query';
+import { toSavedQuery } from '~/models/saved-query/to-saved-query';
+import { UpdatableSavedQuery } from '~/models/saved-query/updatable-saved-query';
 import { APIContext } from '../utils/api-context';
 import { buildHTTPRequestWithAuthFromContext } from '../utils/build-http-request';
 import { buildURL } from '../utils/build-url';

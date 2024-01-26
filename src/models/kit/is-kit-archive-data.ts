@@ -8,8 +8,8 @@
  */
 
 import { isDate, isNil, isNull, isNumber, isString } from 'lodash';
-import { isNumericID, isUUID } from '~/value-objects';
-import { isVersion } from '../version';
+import { isVersion } from '~/models/version/is-version';
+import { isNumericID, isUUID } from '~/value-objects/id';
 import { configMacroDecoder } from './is-config-macro';
 import { KitArchiveData } from './kit-archive-data';
 
@@ -40,6 +40,7 @@ export const isKitArchiveData = (v: unknown): v is KitArchiveData => {
 			(isNil(k.scheduledSearches) || k.scheduledSearches.every(isUUID)) &&
 			(isNil(k.templates) || k.templates.every(isUUID)) &&
 			(isNil(k.flows) || k.flows.every(isNumber)) &&
+			(isNil(k.alerts) || k.alerts.every(isUUID)) &&
 			(isNil(k.configMacros) || k.configMacros.every(macro => configMacroDecoder.guard(macro)))
 		);
 	} catch (e) {

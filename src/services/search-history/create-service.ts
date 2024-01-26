@@ -9,8 +9,8 @@
 
 import { makeGetSearchHistory } from '~/functions/searches/get-search-history';
 import { APIContext } from '~/functions/utils/api-context';
-import { Search } from '~/models/search';
-import { isNumericID } from '~/value-objects';
+import { Search } from '~/models/search/search';
+import { isNumericID } from '~/value-objects/id';
 import { SearchHistoryService } from './service';
 
 export const createSearchHistoryService = (context: APIContext): SearchHistoryService => ({

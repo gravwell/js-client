@@ -35,23 +35,27 @@ import {
 	takeUntil,
 	tap,
 } from 'rxjs/operators';
+import { Query } from '~/models/query';
 import {
-	Query,
+	RawResponseForSearchDetailsMessageReceived,
+	RawResponseForSearchStatsMessageReceived,
+} from '~/models/search/raw-search-message-received';
+import {
 	RawRequestSearchCloseMessageSent,
 	RawRequestSearchDetailsMessageSent,
 	RawRequestSearchEntriesWithinRangeMessageSent,
 	RawRequestSearchStatsMessageSent,
 	RawRequestSearchStatsWithinRangeMessageSent,
-	RawResponseForSearchDetailsMessageReceived,
-	RawResponseForSearchStatsMessageReceived,
-	SearchEntries,
-	SearchFilter,
-	SearchMessageCommands,
-	SearchStats,
-	SearchSubscription,
-	toSearchEntries,
-} from '~/models';
-import { Percentage, RawJSON, toNumericID } from '~/value-objects';
+} from '~/models/search/raw-search-message-sent';
+import { SearchEntries } from '~/models/search/search-entries';
+import { SearchFilter } from '~/models/search/search-filter';
+import { SearchMessageCommands } from '~/models/search/search-message-commands';
+import { SearchStats } from '~/models/search/search-stats';
+import { SearchSubscription } from '~/models/search/search-subscription';
+import { toSearchEntries } from '~/models/search/to-search-entries';
+import { toNumericID } from '~/value-objects/id';
+import { RawJSON } from '~/value-objects/json';
+import { Percentage } from '~/value-objects/percentage';
 import { APIContext } from '../../utils/api-context';
 import { debounceWithBackoffWhile } from '../../utils/debounce-with-backoff-while';
 import { omitUndefinedShallow } from '../../utils/omit-undefined-shallow';

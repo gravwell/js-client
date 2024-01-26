@@ -8,9 +8,10 @@
  */
 
 import { isNull } from 'lodash';
-import { CreatableResource } from '~/models';
-import { integrationTest, integrationTestSpecDef, TEST_BASE_API_CONTEXT } from '~/tests';
-import { UUID } from '~/value-objects';
+import { CreatableResource } from '~/models/resource/creatable-resource';
+import { TEST_BASE_API_CONTEXT } from '~/tests/config';
+import { integrationTest, integrationTestSpecDef } from '~/tests/test-types';
+import { UUID } from '~/value-objects/id';
 import { makeCreateOneResource } from './create-one-resource';
 import { makeDeleteOneResource } from './delete-one-resource';
 import { makeGetOneResourceContent } from './get-one-resource-content';

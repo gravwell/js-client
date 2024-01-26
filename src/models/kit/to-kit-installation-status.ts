@@ -7,7 +7,8 @@
  * license. See the LICENSE file for details.
  */
 
-import { Percentage, toNumericID } from '~/value-objects';
+import { toNumericID } from '~/value-objects/id';
+import { Percentage } from '~/value-objects/percentage';
 import { KitInstallationStatus } from './kit-installation-status';
 import { RawKitInstallationStatus } from './raw-kit-installation-status';
 

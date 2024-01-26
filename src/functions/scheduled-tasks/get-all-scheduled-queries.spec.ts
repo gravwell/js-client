@@ -7,8 +7,9 @@
  * license. See the LICENSE file for details.
  */
 
-import { isScheduledTaskBase } from '~/models';
-import { integrationTest, integrationTestSpecDef, TEST_BASE_API_CONTEXT } from '~/tests';
+import { isScheduledTaskBase } from '~/models/scheduled-task/is-scheduled-task-base';
+import { TEST_BASE_API_CONTEXT } from '~/tests/config';
+import { integrationTest, integrationTestSpecDef } from '~/tests/test-types';
 import { makeCreateManyScheduledQueries } from './create-many-scheduled-queries';
 import { makeDeleteAllScheduledQueries } from './delete-all-scheduled-queries';
 import { makeGetAllScheduledQueries } from './get-all-scheduled-queries';

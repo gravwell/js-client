@@ -9,8 +9,10 @@
 
 import * as FormData from 'form-data';
 import { isString } from 'lodash';
-import { RawResource, Resource, toResource } from '~/models';
-import { UUID } from '~/value-objects';
+import { RawResource } from '~/models/resource/raw-resource';
+import { Resource } from '~/models/resource/resource';
+import { toResource } from '~/models/resource/to-resource';
+import { UUID } from '~/value-objects/id';
 import { APIContext } from '../utils/api-context';
 import { buildHTTPRequestWithAuthFromContext } from '../utils/build-http-request';
 import { buildURL } from '../utils/build-url';

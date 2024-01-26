@@ -8,8 +8,11 @@
  */
 
 import { random } from 'lodash';
-import { CreatableUser, scheduledQueryDecoder, User } from '~/models';
-import { integrationTest, integrationTestSpecDef, TEST_BASE_API_CONTEXT } from '~/tests';
+import { scheduledQueryDecoder } from '~/models/scheduled-task/is-scheduled-query';
+import { CreatableUser } from '~/models/user/creatable-user';
+import { User } from '~/models/user/user';
+import { TEST_BASE_API_CONTEXT } from '~/tests/config';
+import { integrationTest, integrationTestSpecDef } from '~/tests/test-types';
 import { makeLoginOneUser } from '../auth/login-one-user';
 import { makeCreateOneUser } from '../users/create-one-user';
 import { makeCreateManyScheduledQueries } from './create-many-scheduled-queries';

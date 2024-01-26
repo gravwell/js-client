@@ -7,8 +7,10 @@
  * license. See the LICENSE file for details.
  */
 
-import { CreatableMacro, Macro, toRawCreatableMacro } from '~/models';
-import { RawNumericID, toNumericID } from '~/value-objects';
+import { CreatableMacro } from '~/models/macro/creatable-macro';
+import { Macro } from '~/models/macro/macro';
+import { toRawCreatableMacro } from '~/models/macro/to-raw-creatable-macro';
+import { RawNumericID, toNumericID } from '~/value-objects/id';
 import { APIContext } from '../utils/api-context';
 import { buildHTTPRequestWithAuthFromContext } from '../utils/build-http-request';
 import { buildURL } from '../utils/build-url';

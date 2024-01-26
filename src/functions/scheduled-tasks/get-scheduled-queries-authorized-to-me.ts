@@ -7,7 +7,8 @@
  * license. See the LICENSE file for details.
  */
 
-import { ScheduledQuery, ScheduledTask } from '~/models';
+import { ScheduledQuery } from '~/models/scheduled-task/scheduled-query';
+import { ScheduledTask } from '~/models/scheduled-task/scheduled-task';
 import { APIContext } from '../utils/api-context';
 import { makeGetScheduledTasksAuthorizedToMe } from './get-scheduled-tasks-authorized-to-me';
 

@@ -8,7 +8,7 @@
  */
 
 import { isInteger, isUndefined } from 'lodash';
-import { isNumericID } from '~/value-objects';
+import { isNumericID } from '~/value-objects/id';
 import { PersistentSearchDataState } from './persistent-search-data';
 import { Search2 } from './search2';
 

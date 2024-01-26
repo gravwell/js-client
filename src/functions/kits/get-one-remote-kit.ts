@@ -10,7 +10,7 @@
 import { RawRemoteKit } from '~/models/kit/raw-remote-kit';
 import { RemoteKit } from '~/models/kit/remote-kit';
 import { toRemoteKit } from '~/models/kit/to-remote-kit';
-import { NumericID } from '~/value-objects';
+import { NumericID } from '~/value-objects/id';
 import { APIContext } from '../utils/api-context';
 import { buildHTTPRequestWithAuthFromContext } from '../utils/build-http-request';
 import { buildURL } from '../utils/build-url';

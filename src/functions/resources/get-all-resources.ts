@@ -7,7 +7,9 @@
  * license. See the LICENSE file for details.
  */
 
-import { RawResource, Resource, toResource } from '~/models';
+import { RawResource } from '~/models/resource/raw-resource';
+import { Resource } from '~/models/resource/resource';
+import { toResource } from '~/models/resource/to-resource';
 import { APIContext } from '../utils/api-context';
 import { buildHTTPRequestWithAuthFromContext } from '../utils/build-http-request';
 import { buildURL } from '../utils/build-url';

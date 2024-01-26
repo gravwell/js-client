@@ -7,7 +7,9 @@
  * license. See the LICENSE file for details.
  */
 
-import { RawToken, Token, toToken } from '~/models';
+import { RawToken } from '~/models/token/raw-token';
+import { toToken } from '~/models/token/to-token';
+import { Token } from '~/models/token/token';
 import { APIContext } from '../utils/api-context';
 import { buildHTTPRequestWithAuthFromContext } from '../utils/build-http-request';
 import { buildURL } from '../utils/build-url';

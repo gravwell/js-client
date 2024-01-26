@@ -7,8 +7,11 @@
  * license. See the LICENSE file for details.
  */
 
-import { isBlankRawResource, RawResource, Resource, toResource } from '~/models';
-import { UUID } from '~/value-objects';
+import { isBlankRawResource } from '~/models/resource/is-blank-raw-resource';
+import { RawResource } from '~/models/resource/raw-resource';
+import { Resource } from '~/models/resource/resource';
+import { toResource } from '~/models/resource/to-resource';
+import { UUID } from '~/value-objects/id';
 import { APIContext } from '../utils/api-context';
 import { buildHTTPRequestWithAuthFromContext } from '../utils/build-http-request';
 import { buildURL } from '../utils/build-url';

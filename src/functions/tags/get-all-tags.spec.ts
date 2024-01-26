@@ -7,8 +7,9 @@
  * license. See the LICENSE file for details.
  */
 
-import { integrationTest, TEST_BASE_API_CONTEXT, unitTest } from '~/tests';
-import { Tag } from '../../main';
+import { Tag } from '~/models/tag';
+import { TEST_BASE_API_CONTEXT } from '~/tests/config';
+import { integrationTest, unitTest } from '~/tests/test-types';
 import { makeGetAllTags } from './get-all-tags';
 
 describe('getAllTags()', () => {

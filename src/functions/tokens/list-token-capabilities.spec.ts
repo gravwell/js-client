@@ -7,8 +7,9 @@
  * license. See the LICENSE file for details.
  */
 
-import { isTokenCapability } from '~/models';
-import { integrationTest, TEST_BASE_API_CONTEXT } from '~/tests';
+import { isTokenCapability } from '~/models/token/is-token-capability';
+import { TEST_BASE_API_CONTEXT } from '~/tests/config';
+import { integrationTest } from '~/tests/test-types';
 import { makeListTokenCapabilities } from './list-token-capabilities';
 
 describe('listTokenCapabilities()', () => {

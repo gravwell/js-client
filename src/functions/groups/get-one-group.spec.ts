@@ -9,8 +9,9 @@
 
 import { CreatableGroup } from '~/models/group/creatable-group';
 import { groupDecoder } from '~/models/group/is-group';
-import { integrationTest, integrationTestSpecDef, TEST_BASE_API_CONTEXT } from '~/tests';
-import { NumericID } from '~/value-objects';
+import { TEST_BASE_API_CONTEXT } from '~/tests/config';
+import { integrationTest, integrationTestSpecDef } from '~/tests/test-types';
+import { NumericID } from '~/value-objects/id';
 import { makeCreateOneGroup } from './create-one-group';
 import { makeDeleteOneGroup } from './delete-one-group';
 import { makeGetOneGroup } from './get-one-group';

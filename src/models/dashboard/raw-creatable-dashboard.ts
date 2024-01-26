@@ -7,8 +7,8 @@
  * license. See the LICENSE file for details.
  */
 
-import { RawNumericID, RawUUID } from '~/value-objects';
-import { RawTimeframe } from '../timeframe';
+import { RawNumericID, RawUUID } from '~/value-objects/id';
+import { RawTimeframe } from '../timeframe/raw-timeframe';
 import { DashboardRendererOptions } from './dashboard-renderer-options';
 
 export type RawCreatableDashboardSearch = RawCreatableDashboard['Data']['searches'][number];

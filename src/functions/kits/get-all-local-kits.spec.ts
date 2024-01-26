@@ -8,7 +8,8 @@
  */
 
 import { isLocalKit } from '~/models/kit/is-local-kit';
-import { integrationTest, TEST_BASE_API_CONTEXT } from '~/tests';
+import { TEST_BASE_API_CONTEXT } from '~/tests/config';
+import { integrationTest } from '~/tests/test-types';
 import { makeGetAllLocalKits } from './get-all-local-kits';
 
 describe('getAllLocalKits()', () => {

@@ -7,7 +7,8 @@
  * license. See the LICENSE file for details.
  */
 
-import { Markdown, NumericID, UUID } from '~/value-objects';
+import { NumericID, UUID } from '~/value-objects/id';
+import { Markdown } from '~/value-objects/markdown';
 
 export interface PlaybookData {
 	/** Unique identifier for the playbook, set at installation time. */

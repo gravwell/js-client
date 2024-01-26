@@ -7,7 +7,8 @@
  * license. See the LICENSE file for details.
  */
 
-import { ScheduledScript, ScheduledTask } from '~/models';
+import { ScheduledScript } from '~/models/scheduled-task/scheduled-script';
+import { ScheduledTask } from '~/models/scheduled-task/scheduled-task';
 import { APIContext } from '../utils/api-context';
 import { makeGetAllScheduledTasks } from './get-all-scheduled-tasks';
 

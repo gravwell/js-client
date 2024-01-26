@@ -7,8 +7,9 @@
  * license. See the LICENSE file for details.
  */
 
-import { UserPreferences, UserPreferencesWithMetadata } from '~/models';
-import { NumericID } from '../../value-objects';
+import { UserPreferences } from '~/models/user-preferences/user-preferences';
+import { UserPreferencesWithMetadata } from '~/models/user-preferences/user-preferences-with-metadata';
+import { NumericID } from '../../value-objects/id';
 
 export interface UserPreferencesService {
 	readonly get: {

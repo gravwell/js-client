@@ -8,8 +8,9 @@
  */
 
 import { isBoolean, isEmpty, isNull, isString, isUndefined, negate } from 'lodash';
-import { UpdatableUser, User } from '~/models';
-import { isNumericID } from '../../value-objects';
+import { UpdatableUser } from '~/models/user/updatable-user';
+import { User } from '~/models/user/user';
+import { isNumericID } from '../../value-objects/id';
 import { makeUpdateOneUserSearchGroup } from '../search-groups/update-one-user-search-group';
 import { APIContext } from '../utils/api-context';
 import { makeGetOneUser } from './get-one-user';

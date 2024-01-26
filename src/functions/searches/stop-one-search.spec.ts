@@ -9,7 +9,9 @@
 
 import { addMinutes } from 'date-fns';
 import { v4 as uuidv4 } from 'uuid';
-import { integrationTestSpecDef, sleep, TEST_BASE_API_CONTEXT } from '~/tests';
+import { TEST_BASE_API_CONTEXT } from '~/tests/config';
+import { integrationTestSpecDef } from '~/tests/test-types';
+import { sleep } from '~/tests/utils';
 import { makeIngestMultiLineEntry } from '../ingestors/ingest-multi-line-entry';
 import { makeGetAllTags } from '../tags/get-all-tags';
 import { makeStopOneSearch } from './stop-one-search';

@@ -8,7 +8,7 @@
  */
 
 import { isArray, isDate, isNull, isString } from 'lodash';
-import { isID, isUUID } from '~/value-objects';
+import { isID, isUUID } from '~/value-objects/id';
 import { isTokenCapability } from './is-token-capability';
 import { TokenData } from './token-data';
 

@@ -9,7 +9,8 @@
 
 import { isLogLevel } from '~/models/log-level/is-log-level';
 import { LogLevel } from '~/models/log-level/log-level';
-import { integrationTest, TEST_BASE_API_CONTEXT } from '~/tests';
+import { TEST_BASE_API_CONTEXT } from '~/tests/config';
+import { integrationTest } from '~/tests/test-types';
 import { makeGetLogLevels } from './get-log-levels';
 
 describe('getLogLevels()', () => {

@@ -7,15 +7,12 @@
  * license. See the LICENSE file for details.
  */
 
-import {
-	RawScheduledTask,
-	ScheduledQuery,
-	ScheduledScript,
-	ScheduledTask,
-	ScheduledTaskType,
-	toScheduledTask,
-} from '~/models';
-import { NumericID } from '~/value-objects';
+import { RawScheduledTask } from '~/models/scheduled-task/raw-scheduled-task';
+import { ScheduledQuery } from '~/models/scheduled-task/scheduled-query';
+import { ScheduledScript } from '~/models/scheduled-task/scheduled-script';
+import { ScheduledTask, ScheduledTaskType } from '~/models/scheduled-task/scheduled-task';
+import { toScheduledTask } from '~/models/scheduled-task/to-scheduled-task';
+import { NumericID } from '~/value-objects/id';
 import { APIContext } from '../utils/api-context';
 import { buildHTTPRequestWithAuthFromContext } from '../utils/build-http-request';
 import { buildURL } from '../utils/build-url';

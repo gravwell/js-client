@@ -8,7 +8,8 @@
  */
 
 import { CreatableAutoExtractor } from '~/models/auto-extractor/creatable-auto-extractor';
-import { integrationTest, integrationTestSpecDef, TEST_BASE_API_CONTEXT } from '~/tests';
+import { TEST_BASE_API_CONTEXT } from '~/tests/config';
+import { integrationTest, integrationTestSpecDef } from '~/tests/test-types';
 import { assertIsNotNil } from '../utils/type-guards';
 import { makeCreateOneAutoExtractor } from './create-one-auto-extractor';
 import { makeDeleteOneAutoExtractor } from './delete-one-auto-extractor';

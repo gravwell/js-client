@@ -10,7 +10,7 @@
 import { getTestScheduler, initTestScheduler } from 'jasmine-marbles';
 import { debounceTime } from 'rxjs/operators';
 import { TestScheduler } from 'rxjs/testing';
-import { unitTest } from '~/tests';
+import { unitTest } from '~/tests/test-types';
 import { debounceWithBackoffWhile } from './debounce-with-backoff-while';
 
 describe(debounceWithBackoffWhile.name, () => {

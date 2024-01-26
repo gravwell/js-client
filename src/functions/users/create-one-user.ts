@@ -7,7 +7,9 @@
  * license. See the LICENSE file for details.
  */
 
-import { CreatableUser, toRawCreatableUser, User } from '~/models';
+import { CreatableUser } from '~/models/user/creatable-user';
+import { toRawCreatableUser } from '~/models/user/to-raw-creatable-user';
+import { User } from '~/models/user/user';
 import { APIContext } from '../utils/api-context';
 import { buildHTTPRequestWithAuthFromContext } from '../utils/build-http-request';
 import { buildURL } from '../utils/build-url';

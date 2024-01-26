@@ -7,7 +7,7 @@
  * license. See the LICENSE file for details.
  */
 
-import { RawSearchEntry } from '../search';
+import { RawSearchEntry } from '../search/raw-search-entry';
 
 // Named as GenerateAXRequest in the Go source
 /**

@@ -7,8 +7,9 @@
  * license. See the LICENSE file for details.
  */
 
-import { isSystemSettings } from '~/models';
-import { integrationTest, TEST_BASE_API_CONTEXT } from '~/tests';
+import { isSystemSettings } from '~/models/system-settings/is-system-settings';
+import { TEST_BASE_API_CONTEXT } from '~/tests/config';
+import { integrationTest } from '~/tests/test-types';
 import { makeGetSystemSettings } from './get-system-settings';
 
 describe('getSystemSettings()', () => {

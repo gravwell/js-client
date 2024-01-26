@@ -8,12 +8,10 @@
  */
 
 import { isString } from 'lodash';
-import {
-	MailServerConfig,
-	MailServerTestData,
-	RawMailServerConfig,
-	RawMailServerTestData,
-} from '../../models/mail-server';
+import { MailServerConfig } from '~/models/mail-server/mail-server-config';
+import { MailServerTestData } from '~/models/mail-server/mail-server-test-data';
+import { RawMailServerConfig } from '~/models/mail-server/raw-mail-server-config';
+import { RawMailServerTestData } from '~/models/mail-server/raw-mail-server-test-data';
 
 export const toMailServerConfig = (raw: RawMailServerConfig): MailServerConfig => ({
 	insecureSkipVerify: raw.InsecureSkipVerify,

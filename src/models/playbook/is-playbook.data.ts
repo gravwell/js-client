@@ -8,7 +8,8 @@
  */
 
 import { isBoolean, isDate, isNull, isString } from 'lodash';
-import { isMarkdown, isNumericID, isUUID } from '~/value-objects';
+import { isNumericID, isUUID } from '~/value-objects/id';
+import { isMarkdown } from '~/value-objects/markdown';
 import { PlaybookData } from './playbook-data';
 
 export const isPlaybookData = (value: unknown): value is PlaybookData => {

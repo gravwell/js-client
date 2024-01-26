@@ -12,17 +12,17 @@ import { EMPTY, firstValueFrom, Observable, Subscription } from 'rxjs';
 import { catchError, filter, map, shareReplay, startWith, takeUntil } from 'rxjs/operators';
 import { debouncedPooling } from '~/functions/searches/helpers/attach-search';
 import { APISubscription } from '~/functions/utils/api-subscription';
+import { RawSearchMessageReceived } from '~/models/search/raw-search-message-received';
 import {
 	RawRequestExplorerSearchEntriesWithinRangeMessageSent,
 	RawRequestSearchDetailsMessageSent,
 	RawRequestSearchEntriesWithinRangeMessageSent,
 	RawRequestSearchStatsMessageSent,
 	RawRequestSearchStatsWithinRangeMessageSent,
-	RawSearchMessageReceived,
 	RawSearchMessageSent,
-	SearchFilter,
-	SearchMessageCommands,
-} from '~/models';
+} from '~/models/search/raw-search-message-sent';
+import { SearchFilter } from '~/models/search/search-filter';
+import { SearchMessageCommands } from '~/models/search/search-message-commands';
 import {
 	filterMessageByCommand,
 	recalculateZoomEnd,

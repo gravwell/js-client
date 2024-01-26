@@ -7,8 +7,8 @@
  * license. See the LICENSE file for details.
  */
 
-import { Macro } from '~/models';
-import { isNumericID, NumericID } from '~/value-objects';
+import { Macro } from '~/models/macro/macro';
+import { isNumericID, NumericID } from '~/value-objects/id';
 import { APIContext } from '../utils/api-context';
 import { makeGetAllMacros } from './get-all-macros';
 import { makeGetMacrosByGroup } from './get-macros-by-group';

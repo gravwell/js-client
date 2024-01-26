@@ -9,7 +9,7 @@
 
 import { isUndefined } from 'lodash';
 import { durationToSeconds } from '~/models/scheduled-task/to-raw-creatable-scheduled-task';
-import { toRawNumericID } from '~/value-objects';
+import { toRawNumericID } from '~/value-objects/id';
 import { RawUpdatableScheduledTask } from './raw-updatable-scheduled-task';
 import { ScheduledQuery } from './scheduled-query';
 import { ScheduledScript } from './scheduled-script';

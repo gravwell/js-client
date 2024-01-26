@@ -7,7 +7,9 @@
  * license. See the LICENSE file for details.
  */
 
-import { RawUserPreferencesWithMetadata, toUserPreferencesWithMetadata, UserPreferencesWithMetadata } from '~/models';
+import { RawUserPreferencesWithMetadata } from '~/models/user-preferences/raw-user-preferences-with-metadata';
+import { toUserPreferencesWithMetadata } from '~/models/user-preferences/to-user-preferences-with-metadata';
+import { UserPreferencesWithMetadata } from '~/models/user-preferences/user-preferences-with-metadata';
 import { APIContext } from '../utils/api-context';
 import { buildHTTPRequestWithAuthFromContext } from '../utils/build-http-request';
 import { buildURL } from '../utils/build-url';

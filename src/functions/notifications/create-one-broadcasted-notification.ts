@@ -7,7 +7,8 @@
  * license. See the LICENSE file for details.
  */
 
-import { CreatableBroadcastNotification, toRawCreatableBroadcastedNotification } from '~/models';
+import { CreatableBroadcastNotification } from '~/models/notification/creatable-broadcasted-notification';
+import { toRawCreatableBroadcastedNotification } from '~/models/notification/to-raw-creatable-broadcasted-notification';
 import { APIContext } from '../utils/api-context';
 import { buildHTTPRequestWithAuthFromContext } from '../utils/build-http-request';
 import { buildURL } from '../utils/build-url';

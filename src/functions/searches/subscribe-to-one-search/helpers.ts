@@ -15,11 +15,11 @@ import {
 	RawSearchAttachedMessageReceived,
 	RawSearchInitiatedMessageReceived,
 	RawSearchMessageReceived,
-	SearchEntries,
-	SearchFilter,
-	SearchFrequencyStats,
-	SearchMessageCommands,
-} from '~/models';
+} from '~/models/search/raw-search-message-received';
+import { SearchEntries } from '~/models/search/search-entries';
+import { SearchFilter } from '~/models/search/search-filter';
+import { SearchMessageCommands } from '~/models/search/search-message-commands';
+import { SearchFrequencyStats } from '~/models/search/search-stats';
 
 const DEFAULT_GRANULARITY_MAP: Record<SearchEntries['type'], number> = {
 	chart: 160,

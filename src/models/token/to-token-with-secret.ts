@@ -7,7 +7,8 @@
  * license. See the LICENSE file for details.
  */
 
-import { RawTokenWithSecret, TokenWithSecret } from '~/index';
+import { RawTokenWithSecret } from '~/models/token/raw-token-with-secret';
+import { TokenWithSecret } from '~/models/token/token-with-secret';
 import { toToken } from './to-token';
 
 export const toTokenWithSecret = (raw: RawTokenWithSecret): TokenWithSecret => ({

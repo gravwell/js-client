@@ -8,9 +8,13 @@
  */
 
 import { random } from 'lodash';
-import { CreatableMacro, CreatableUser, isMacro, User } from '~/models';
 import { CreatableGroup } from '~/models/group/creatable-group';
-import { integrationTest, integrationTestSpecDef, TEST_BASE_API_CONTEXT } from '~/tests';
+import { CreatableMacro } from '~/models/macro/creatable-macro';
+import { isMacro } from '~/models/macro/is-macro';
+import { CreatableUser } from '~/models/user/creatable-user';
+import { User } from '~/models/user/user';
+import { TEST_BASE_API_CONTEXT } from '~/tests/config';
+import { integrationTest, integrationTestSpecDef } from '~/tests/test-types';
 import { makeLoginOneUser } from '../auth/login-one-user';
 import { makeAddOneUserToManyGroups } from '../groups/add-one-user-to-many-groups';
 import { makeCreateOneGroup } from '../groups/create-one-group';

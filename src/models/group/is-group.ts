@@ -8,7 +8,7 @@
  */
 
 import { boolean, constant, inexact, nullable, string, Verifier } from '~/functions/utils/verifiers';
-import { numericIdDecoder } from '../../value-objects';
+import { numericIdDecoder } from '../../value-objects/id';
 import { DATA_TYPE } from '../data-type';
 import { Group } from './group';
 

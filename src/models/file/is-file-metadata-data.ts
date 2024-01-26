@@ -8,7 +8,7 @@
  */
 
 import { isBoolean, isDate, isNull, isNumber, isString } from 'lodash';
-import { isNumericID, isUUID } from '~/value-objects';
+import { isNumericID, isUUID } from '~/value-objects/id';
 import { FileMetadataData } from './file-metadata-data';
 
 export const isFileMetadataData = (value: unknown): value is FileMetadataData => {

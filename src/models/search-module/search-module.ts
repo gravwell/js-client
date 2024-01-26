@@ -7,7 +7,7 @@
  * license. See the LICENSE file for details.
  */
 
-import { DATA_TYPE } from '~/models';
+import { DATA_TYPE } from '~/models/data-type';
 import { SearchModuleData } from './search-module-data';
 
 export interface SearchModule extends SearchModuleData {

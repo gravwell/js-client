@@ -10,7 +10,7 @@
 import { FileMetadata } from '~/models/file/file-metadata';
 import { RawFileMetadata } from '~/models/file/raw-file-metadata';
 import { toFileMetadata } from '~/models/file/to-file-metadata';
-import { NumericID } from '../../value-objects';
+import { NumericID } from '../../value-objects/id';
 import { APIContext } from '../utils/api-context';
 import { buildHTTPRequestWithAuthFromContext } from '../utils/build-http-request';
 import { buildURL } from '../utils/build-url';

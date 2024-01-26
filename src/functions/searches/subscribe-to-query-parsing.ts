@@ -9,16 +9,12 @@
 
 import { Observable, timer } from 'rxjs';
 import { filter, last, map, mapTo, startWith, takeUntil } from 'rxjs/operators';
-import { ElementFilter, Query, RawQuery } from '~/models';
-import {
-	isOperationFilter,
-	RawElementFilter,
-	RawExtractionFilter,
-	RawOperationFilter,
-	RawPongMessageSent,
-	toElementFilter,
-	ValidatedQuery,
-} from '~/models/search';
+import { Query, RawQuery } from '~/models/query';
+import { ElementFilter, isOperationFilter } from '~/models/search/element-filter';
+import { RawElementFilter, RawExtractionFilter, RawOperationFilter } from '~/models/search/raw-element-filter';
+import { RawPongMessageSent } from '~/models/search/raw-search-message-sent';
+import { toElementFilter } from '~/models/search/to-element-filter';
+import { ValidatedQuery } from '~/models/search/validated-query';
 import { APIContext } from '../utils/api-context';
 import { APISubscription } from '../utils/api-subscription';
 import { apiSubscriptionFromWebSocket } from '../utils/api-subscription-from-web-socket';

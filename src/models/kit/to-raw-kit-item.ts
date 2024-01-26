@@ -162,5 +162,15 @@ export const toRawKitItem = (kitItem: KitItem): RawKitItem => {
 					tag: kitItem.tag,
 				},
 			};
+		case KIT_ITEM_TYPE.alert:
+			return {
+				...base,
+				Type: 'alert',
+				Name: kitItem.name,
+				AdditionalInfo: {
+					Description: kitItem.description,
+					Name: kitItem.name,
+				},
+			};
 	}
 };

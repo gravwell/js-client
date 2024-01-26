@@ -8,7 +8,8 @@
  */
 
 import { isString } from 'lodash';
-import { integrationTest, integrationTestSpecDef, TEST_BASE_API_CONTEXT } from '~/tests';
+import { TEST_BASE_API_CONTEXT } from '~/tests/config';
+import { integrationTest, integrationTestSpecDef } from '~/tests/test-types';
 import { makeUpdateOneUserPreferences } from '../user-preferences/update-one-user-preferences';
 import { makeDeleteOneUser } from '../users/delete-one-user';
 import { makeGetAllUsers } from '../users/get-all-users';

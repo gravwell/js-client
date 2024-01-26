@@ -7,7 +7,7 @@
  * license. See the LICENSE file for details.
  */
 
-import { DATA_TYPE } from '~/models';
+import { DATA_TYPE } from '~/models/data-type';
 import { SavedQueryData } from './saved-query-data';
 
 export interface SavedQuery extends SavedQueryData {

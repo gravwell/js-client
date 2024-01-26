@@ -8,11 +8,13 @@
  */
 
 import { random, sortBy } from 'lodash';
-import { CreatableUser, User } from '~/models';
 import { AutoExtractor } from '~/models/auto-extractor/auto-extractor';
 import { CreatableAutoExtractor } from '~/models/auto-extractor/creatable-auto-extractor';
 import { isAutoExtractor } from '~/models/auto-extractor/is-auto-extractor';
-import { integrationTest, integrationTestSpecDef, TEST_BASE_API_CONTEXT } from '~/tests';
+import { CreatableUser } from '~/models/user/creatable-user';
+import { User } from '~/models/user/user';
+import { TEST_BASE_API_CONTEXT } from '~/tests/config';
+import { integrationTest, integrationTestSpecDef } from '~/tests/test-types';
 import { makeLoginOneUser } from '../auth/login-one-user';
 import { makeCreateOneUser } from '../users/create-one-user';
 import { makeCreateOneAutoExtractor } from './create-one-auto-extractor';

@@ -7,8 +7,8 @@
  * license. See the LICENSE file for details.
  */
 
-import { RawID, RawNumericID, RawUUID } from '~/value-objects';
-import { RawVersionObject } from '../version';
+import { RawVersionObject } from '~/models/version/raw-version-object';
+import { RawID, RawNumericID, RawUUID } from '~/value-objects/id';
 import { RawConfigMacro } from './raw-config-macro';
 import { RawKitEmbeddedItem } from './raw-kit-embedded-item';
 

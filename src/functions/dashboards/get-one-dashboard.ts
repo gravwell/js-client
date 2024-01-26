@@ -10,7 +10,7 @@
 import { Dashboard } from '~/models/dashboard/dashboard';
 import { RawDashboard } from '~/models/dashboard/raw-dashboard';
 import { toDashboard } from '~/models/dashboard/to-dashboard';
-import { NumericID } from '~/value-objects';
+import { NumericID } from '~/value-objects/id';
 import { APIContext } from '../utils/api-context';
 import { buildHTTPRequestWithAuthFromContext } from '../utils/build-http-request';
 import { buildURL } from '../utils/build-url';

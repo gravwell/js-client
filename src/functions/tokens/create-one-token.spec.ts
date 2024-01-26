@@ -7,8 +7,12 @@
  * license. See the LICENSE file for details.
  */
 
-import { CreatableToken, isTokenWithSecret, TokenCapability } from '~/models';
-import { integrationTest, integrationTestSpecDef, myCustomMatchers, TEST_BASE_API_CONTEXT } from '~/tests';
+import { CreatableToken } from '~/models/token/creatable-token';
+import { isTokenWithSecret } from '~/models/token/is-token-with-secret';
+import { TokenCapability } from '~/models/token/token-capability';
+import { TEST_BASE_API_CONTEXT } from '~/tests/config';
+import { myCustomMatchers } from '~/tests/custom-matchers';
+import { integrationTest, integrationTestSpecDef } from '~/tests/test-types';
 import { makeCreateOneToken } from './create-one-token';
 
 describe(

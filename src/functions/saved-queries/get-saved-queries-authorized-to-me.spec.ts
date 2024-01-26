@@ -8,8 +8,13 @@
  */
 
 import { random, sortBy } from 'lodash';
-import { CreatableSavedQuery, CreatableUser, isSavedQuery, SavedQuery, User } from '~/models';
-import { integrationTest, integrationTestSpecDef, TEST_BASE_API_CONTEXT } from '~/tests';
+import { CreatableSavedQuery } from '~/models/saved-query/creatable-saved-query';
+import { isSavedQuery } from '~/models/saved-query/is-saved-query';
+import { SavedQuery } from '~/models/saved-query/saved-query';
+import { CreatableUser } from '~/models/user/creatable-user';
+import { User } from '~/models/user/user';
+import { TEST_BASE_API_CONTEXT } from '~/tests/config';
+import { integrationTest, integrationTestSpecDef } from '~/tests/test-types';
 import { makeLoginOneUser } from '../auth/login-one-user';
 import { makeCreateOneUser } from '../users/create-one-user';
 import { makeCreateOneSavedQuery } from './create-one-saved-query';

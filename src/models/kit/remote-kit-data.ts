@@ -7,8 +7,8 @@
  * license. See the LICENSE file for details.
  */
 
-import { UUID } from '~/value-objects';
-import { Version } from '../version';
+import { Version } from '~/models/version/version';
+import { UUID } from '~/value-objects/id';
 import { ConfigMacro } from './config-macro';
 import { KitAsset } from './kit-asset';
 import { KitDependency } from './kit-dependency';

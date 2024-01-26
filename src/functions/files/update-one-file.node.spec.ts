@@ -14,13 +14,9 @@ import { CreatableFile } from '~/models/file/creatable-file';
 import { FileMetadata } from '~/models/file/file-metadata';
 import { isFileMetadata } from '~/models/file/is-file-metadata';
 import { UpdatableFile } from '~/models/file/updatable-file';
-import {
-	integrationTest,
-	integrationTestSpecDef,
-	myCustomMatchers,
-	TEST_ASSETS_PATH,
-	TEST_BASE_API_CONTEXT,
-} from '~/tests';
+import { TEST_ASSETS_PATH, TEST_BASE_API_CONTEXT } from '~/tests/config';
+import { myCustomMatchers } from '~/tests/custom-matchers';
+import { integrationTest, integrationTestSpecDef } from '~/tests/test-types';
 import { makeCreateOneFile } from './create-one-file';
 import { makeDeleteOneFile } from './delete-one-file';
 import { makeGetAllFiles } from './get-all-files';

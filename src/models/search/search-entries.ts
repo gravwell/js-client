@@ -8,21 +8,19 @@
  */
 
 import { DataExplorerEntry } from './data-explorer-entry';
-import {
-	RawSearchMessageReceivedRequestEntriesWithinRangeChartRenderer,
-	RawSearchMessageReceivedRequestEntriesWithinRangeFDGRenderer,
-	RawSearchMessageReceivedRequestEntriesWithinRangeGaugeRenderer,
-	RawSearchMessageReceivedRequestEntriesWithinRangeHeatmapRenderer,
-	RawSearchMessageReceivedRequestEntriesWithinRangeHexRenderer,
-	RawSearchMessageReceivedRequestEntriesWithinRangePcapRenderer,
-	RawSearchMessageReceivedRequestEntriesWithinRangePointmapRenderer,
-	RawSearchMessageReceivedRequestEntriesWithinRangePointToPointRenderer,
-	RawSearchMessageReceivedRequestEntriesWithinRangeRawRenderer,
-	RawSearchMessageReceivedRequestEntriesWithinRangeStackGraphRenderer,
-	RawSearchMessageReceivedRequestEntriesWithinRangeTableRenderer,
-	RawSearchMessageReceivedRequestEntriesWithinRangeTextRenderer,
-	RawSearchMessageReceivedRequestEntriesWithinRangeWordcloudRenderer,
-} from './raw-search-message-received';
+import { RawSearchMessageReceivedRequestEntriesWithinRangeChartRenderer } from './raw-search-message-received/request-entries-within-range/chart-renderer';
+import { RawSearchMessageReceivedRequestEntriesWithinRangeFDGRenderer } from './raw-search-message-received/request-entries-within-range/fdg-renderer';
+import { RawSearchMessageReceivedRequestEntriesWithinRangeGaugeRenderer } from './raw-search-message-received/request-entries-within-range/gauge-renderer';
+import { RawSearchMessageReceivedRequestEntriesWithinRangeHeatmapRenderer } from './raw-search-message-received/request-entries-within-range/heatmap-renderer';
+import { RawSearchMessageReceivedRequestEntriesWithinRangeHexRenderer } from './raw-search-message-received/request-entries-within-range/hex-renderer';
+import { RawSearchMessageReceivedRequestEntriesWithinRangePcapRenderer } from './raw-search-message-received/request-entries-within-range/pcap-renderer';
+import { RawSearchMessageReceivedRequestEntriesWithinRangePointToPointRenderer } from './raw-search-message-received/request-entries-within-range/point-to-point-renderer';
+import { RawSearchMessageReceivedRequestEntriesWithinRangePointmapRenderer } from './raw-search-message-received/request-entries-within-range/pointmap-renderer';
+import { RawSearchMessageReceivedRequestEntriesWithinRangeRawRenderer } from './raw-search-message-received/request-entries-within-range/raw-renderer';
+import { RawSearchMessageReceivedRequestEntriesWithinRangeStackGraphRenderer } from './raw-search-message-received/request-entries-within-range/stack-graph-renderer';
+import { RawSearchMessageReceivedRequestEntriesWithinRangeTableRenderer } from './raw-search-message-received/request-entries-within-range/table-renderer';
+import { RawSearchMessageReceivedRequestEntriesWithinRangeTextRenderer } from './raw-search-message-received/request-entries-within-range/text-renderer';
+import { RawSearchMessageReceivedRequestEntriesWithinRangeWordcloudRenderer } from './raw-search-message-received/request-entries-within-range/wordcloud-renderer';
 import { SearchEntry } from './search-entry';
 import { SearchFilter } from './search-filter';
 import { toSearchEntry } from './to-search-entry';

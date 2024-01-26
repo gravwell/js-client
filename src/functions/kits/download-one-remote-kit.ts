@@ -7,7 +7,7 @@
  * license. See the LICENSE file for details.
  */
 
-import { ID } from '~/value-objects';
+import { ID } from '~/value-objects/id';
 import { APIContext } from '../utils/api-context';
 import { buildURL } from '../utils/build-url';
 import { downloadFromURL, DownloadReturn } from '../utils/download-from-url';

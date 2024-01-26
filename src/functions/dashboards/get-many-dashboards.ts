@@ -8,7 +8,7 @@
  */
 
 import { Dashboard } from '~/models/dashboard/dashboard';
-import { isNumericID, NumericID } from '~/value-objects';
+import { isNumericID, NumericID } from '~/value-objects/id';
 import { APIContext } from '../utils/api-context';
 import { makeGetAllDashboards } from './get-all-dashboards';
 import { makeGetDashboardsByGroup } from './get-dashboards-by-group';

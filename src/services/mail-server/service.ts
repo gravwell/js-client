@@ -7,8 +7,9 @@
  * license. See the LICENSE file for details.
  */
 
+import { MailServerConfig } from '~/models/mail-server/mail-server-config';
+import { MailServerTestData } from '~/models/mail-server/mail-server-test-data';
 import { MailServerTestResult } from '~/models/mail-server/mail-server-test-result';
-import { MailServerConfig, MailServerTestData } from '../../models';
 
 export interface MailServerService {
 	get: {

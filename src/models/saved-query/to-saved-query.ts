@@ -8,9 +8,9 @@
  */
 
 import { isNull } from 'lodash';
-import { DATA_TYPE } from '~/models';
-import { toNumericID } from '~/value-objects';
-import { toTimeframe } from '../timeframe';
+import { DATA_TYPE } from '~/models/data-type';
+import { toNumericID } from '~/value-objects/id';
+import { toTimeframe } from '../timeframe/to-timeframe';
 import { RawSavedQuery } from './raw-saved-query';
 import { SavedQuery } from './saved-query';
 

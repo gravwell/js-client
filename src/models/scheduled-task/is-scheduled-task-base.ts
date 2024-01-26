@@ -8,7 +8,7 @@
  */
 
 import { isBoolean, isDate, isNull, isNumber, isString } from 'lodash';
-import { isNumericID, isUUID } from '~/value-objects';
+import { isNumericID, isUUID } from '~/value-objects/id';
 import { ScheduledTaskBase } from './scheduled-task-base';
 
 export const isScheduledTaskBase = (value: unknown): value is ScheduledTaskBase => {

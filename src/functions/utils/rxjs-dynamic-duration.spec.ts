@@ -10,7 +10,7 @@
 import { getTestScheduler, initTestScheduler } from 'jasmine-marbles';
 import { concatMap } from 'rxjs/operators';
 import { TestScheduler } from 'rxjs/testing';
-import { unitTest } from '~/tests';
+import { unitTest } from '~/tests/test-types';
 import { rxjsDynamicDuration } from './rxjs-dynamic-duration';
 
 describe(rxjsDynamicDuration.name, () => {

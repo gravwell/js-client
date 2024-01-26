@@ -8,8 +8,14 @@
  */
 
 import { omit, random, sortBy } from 'lodash';
-import { CreatableToken, CreatableUser, isToken, Token, TokenCapability, User } from '~/models';
-import { integrationTest, integrationTestSpecDef, TEST_BASE_API_CONTEXT } from '~/tests';
+import { CreatableToken } from '~/models/token/creatable-token';
+import { isToken } from '~/models/token/is-token';
+import { Token } from '~/models/token/token';
+import { TokenCapability } from '~/models/token/token-capability';
+import { CreatableUser } from '~/models/user/creatable-user';
+import { User } from '~/models/user/user';
+import { TEST_BASE_API_CONTEXT } from '~/tests/config';
+import { integrationTest, integrationTestSpecDef } from '~/tests/test-types';
 import { makeLoginOneUser } from '../auth/login-one-user';
 import { makeCreateOneUser } from '../users/create-one-user';
 import { makeDeleteOneUser } from '../users/delete-one-user';

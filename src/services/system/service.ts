@@ -14,7 +14,7 @@ import {
 	SystemStatusMessageSent,
 } from '~/functions/system/subscribe-to-many-system-informations';
 import { APISubscription } from '~/functions/utils/api-subscription';
-import { SystemSettings } from '~/models/system-settings';
+import { SystemSettings } from '~/models/system-settings/system-settings';
 
 export interface SystemService {
 	readonly subscribeTo: {

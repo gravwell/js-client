@@ -8,7 +8,8 @@
  */
 
 import { CreatableGroup } from '~/models/group/creatable-group';
-import { integrationTest, integrationTestSpecDef, TEST_BASE_API_CONTEXT } from '~/tests';
+import { TEST_BASE_API_CONTEXT } from '~/tests/config';
+import { integrationTest, integrationTestSpecDef } from '~/tests/test-types';
 import { makeCreateOneGroup } from './create-one-group';
 import { makeDeleteAllGroups } from './delete-all-groups';
 import { makeDeleteOneGroup } from './delete-one-group';

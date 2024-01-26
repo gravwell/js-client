@@ -16,10 +16,13 @@ import {
 	HexSearchEntries,
 	PcapSearchEntries,
 	PointToPointSearchEntries,
-	SearchFilter,
 	StackGraphSearchEntries,
-} from '~/models';
-import { integrationTestSpecDef, myCustomMatchers, sleep, TEST_BASE_API_CONTEXT } from '~/tests';
+} from '~/models/search/search-entries';
+import { SearchFilter } from '~/models/search/search-filter';
+import { TEST_BASE_API_CONTEXT } from '~/tests/config';
+import { myCustomMatchers } from '~/tests/custom-matchers';
+import { integrationTestSpecDef } from '~/tests/test-types';
+import { sleep } from '~/tests/utils';
 import { makeIngestMultiLineEntry } from '../ingestors/ingest-multi-line-entry';
 import { makeGetAllTags } from '../tags/get-all-tags';
 import { makeSubscribeToOneSearch } from './subscribe-to-one-search/subscribe-to-one-search';

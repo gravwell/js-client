@@ -7,7 +7,7 @@
  * license. See the LICENSE file for details.
  */
 
-import { RawNumericID } from '~/value-objects';
+import { RawNumericID } from '~/value-objects/id';
 import { BroadcastedLevel } from './broadcasted-notification';
 
 export interface RawBroadcastedNotification {

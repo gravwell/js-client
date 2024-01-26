@@ -15,9 +15,9 @@
  * license. See the LICENSE file for details.
  */
 
-import { RawNumericID } from '../../value-objects';
+import { RawNumericID } from '../../value-objects/id';
 import { RawQuery } from '../query';
-import { RawTimeframe } from '../timeframe';
+import { RawTimeframe } from '../timeframe/raw-timeframe';
 
 export interface RawUpdatableSearchDetails {
 	GID?: RawNumericID | null;

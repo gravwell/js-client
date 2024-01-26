@@ -7,7 +7,7 @@
  * license. See the LICENSE file for details.
  */
 
-import { RawJSON } from '~/value-objects';
+import { RawJSON } from '~/value-objects/json';
 import { RawQuery } from '../query';
 import { SearchMessageCommands } from './search-message-commands';
 

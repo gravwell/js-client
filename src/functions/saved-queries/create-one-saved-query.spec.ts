@@ -7,9 +7,12 @@
  * license. See the LICENSE file for details.
  */
 
-import { CreatableSavedQuery, isSavedQuery } from '~/models';
-import { integrationTest, integrationTestSpecDef, myCustomMatchers, TEST_BASE_API_CONTEXT } from '~/tests';
-import { NumericID } from '~/value-objects';
+import { CreatableSavedQuery } from '~/models/saved-query/creatable-saved-query';
+import { isSavedQuery } from '~/models/saved-query/is-saved-query';
+import { TEST_BASE_API_CONTEXT } from '~/tests/config';
+import { myCustomMatchers } from '~/tests/custom-matchers';
+import { integrationTest, integrationTestSpecDef } from '~/tests/test-types';
+import { NumericID } from '~/value-objects/id';
 import { makeCreateOneGroup } from '../groups/create-one-group';
 import { makeDeleteAllGroups } from '../groups/delete-all-groups';
 import { makeCreateOneSavedQuery } from './create-one-saved-query';

@@ -8,7 +8,7 @@
  */
 
 import { isUndefined } from 'lodash';
-import { RawUpdatableToken } from '~/index';
+import { RawUpdatableToken } from '~/models/token/raw-updatable-token';
 import { Token } from './token';
 import { UpdatableToken } from './updatable-token';
 

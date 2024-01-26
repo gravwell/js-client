@@ -7,7 +7,7 @@
  * license. See the LICENSE file for details.
  */
 
-import { RawCreatableToken } from '~/index';
+import { RawCreatableToken } from '~/models/token/raw-creatable-token';
 import { CreatableToken } from './creatable-token';
 
 export const toRawCreatableToken = (creatable: CreatableToken): RawCreatableToken => ({

@@ -9,7 +9,9 @@
 
 import { ScheduledScriptsFilter } from '~/functions/scheduled-tasks/get-many-scheduled-scripts';
 import { ScheduledTasksFilter } from '~/functions/scheduled-tasks/get-many-scheduled-tasks';
-import { CreatableScheduledScript, ScheduledScript, UpdatableScheduledScript } from '~/models/scheduled-task';
+import { CreatableScheduledScript } from '~/models/scheduled-task/creatable-scheduled-scripts';
+import { ScheduledScript } from '~/models/scheduled-task/scheduled-script';
+import { UpdatableScheduledScript } from '~/models/scheduled-task/updatable-scheduled-task';
 
 export interface ScheduledScriptsService {
 	readonly get: {

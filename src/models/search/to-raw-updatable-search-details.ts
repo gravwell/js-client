@@ -16,7 +16,7 @@
  */
 
 import { isNull, isUndefined } from 'lodash';
-import { toRawNumericID } from '../../value-objects';
+import { toRawNumericID } from '../../value-objects/id';
 import { RawUpdatableSearchDetails } from './raw-updatable-search-details';
 import { SearchDetails } from './search-details';
 import { UpdatableSearchDetails } from './updatable-search-details';

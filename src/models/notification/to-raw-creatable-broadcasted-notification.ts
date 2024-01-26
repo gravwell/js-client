@@ -8,7 +8,7 @@
  */
 
 import { omitUndefinedShallow } from '~/functions/utils/omit-undefined-shallow';
-import { toRawNumericID } from '~/value-objects';
+import { toRawNumericID } from '~/value-objects/id';
 import { CreatableBroadcastNotification } from './creatable-broadcasted-notification';
 import { RawCreatableBroadcastedNotification } from './raw-creatable-broadcasted-notification';
 

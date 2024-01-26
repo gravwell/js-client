@@ -8,7 +8,7 @@
  */
 
 import { isDate, isNull, isString } from 'lodash';
-import { isNumericID } from '~/value-objects';
+import { isNumericID } from '~/value-objects/id';
 import { MacroData } from './macro-data';
 
 export const isMacroData = (value: unknown): value is MacroData => {
