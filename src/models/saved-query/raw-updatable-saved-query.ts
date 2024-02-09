@@ -18,6 +18,11 @@ export interface RawUpdatableSavedQuery {
 	GIDs: Array<RawNumericID>;
 	Global: boolean;
 
+	WriteAccess: {
+		Global: boolean;
+		GIDs?: Array<RawNumericID> | null;
+	};
+
 	Name: string;
 	Description: string; // Empty is null
 	Labels: Array<string>;

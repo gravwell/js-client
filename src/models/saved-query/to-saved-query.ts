@@ -24,8 +24,23 @@ export const toSavedQuery = (raw: RawSavedQuery): SavedQuery => {
 		globalID: raw.GUID,
 
 		userID: toNumericID(raw.UID),
-		groupIDs: raw.GIDs?.map(toNumericID) ?? [],
-		isGlobal: raw.Global ?? false,
+
+		can: {
+			delete: raw.Can?.Delete,
+			modify: raw.Can?.Modify,
+			share: raw.Can?.Share,
+		},
+
+		access: {
+			read: {
+				global: raw.Global,
+				groups: raw.GIDs?.map(toNumericID) ?? [],
+			},
+			write: {
+				global: raw.WriteAccess.Global,
+				groups: raw.WriteAccess.GIDs?.map(toNumericID) ?? [],
+			},
+		},
 
 		name: raw.Name,
 		description: raw.Description.trim() === '' ? null : raw.Description,

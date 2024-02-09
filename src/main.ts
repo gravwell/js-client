@@ -313,7 +313,6 @@ export * from './models/dashboard/dashboard-renderer-options';
 export * from './models/dashboard/raw-dashboard';
 export * from './models/dashboard/updatable-dashboard-tile';
 export * from './models/dashboard/creatable-dashboard-tile';
-export * from './models/saved-query/is-saved-query-data';
 export * from './models/saved-query/updatable-saved-query';
 export * from './models/saved-query/raw-updatable-saved-query';
 export * from './models/saved-query/saved-query';

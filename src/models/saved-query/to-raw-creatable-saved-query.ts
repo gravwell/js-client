@@ -18,8 +18,13 @@ export const toRawCreatableSavedQuery = (data: CreatableSavedQuery): RawCreatabl
 	omitUndefinedShallow({
 		GUID: data.globalID,
 
-		GIDs: (data.groupIDs ?? []).map(toRawNumericID),
-		Global: data.isGlobal ?? false,
+		GIDs: (data.access.read.groups ?? []).map(toRawNumericID),
+		Global: data.access.read.global ?? false,
+
+		WriteAccess: {
+			Global: data.access.write.global,
+			GIDs: (data.access.write.groups ?? []).map(toRawNumericID),
+		},
 
 		Name: data.name,
 		Description: data.description ?? '',

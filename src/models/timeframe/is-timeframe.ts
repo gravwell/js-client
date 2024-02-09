@@ -7,20 +7,15 @@
  * license. See the LICENSE file for details.
  */
 
-import { isDate, isNull, isString } from 'lodash';
+import { either, instanceOf, null_, object, string, Verifier } from '~/functions/utils/verifiers';
 import { Timeframe } from './timeframe';
 
-export const isTimeframe = (value: any): value is Timeframe => {
-	try {
-		const tf = value as Timeframe;
-		return (
-			(isString(tf.durationString) || isNull(tf.durationString)) &&
-			(isString(tf.timeframe) || isNull(tf.timeframe)) &&
-			(isString(tf.timezone) || isNull(tf.timezone)) &&
-			(isDate(tf.start) || isNull(tf.start)) &&
-			(isDate(tf.end) || isNull(tf.end))
-		);
-	} catch {
-		return false;
-	}
-};
+export const timeframeVerifier: Verifier<Timeframe> = object({
+	durationString: either(string, null_),
+	timeframe: either(string, null_),
+	timezone: either(string, null_),
+	start: either(instanceOf(Date), null_),
+	end: either(instanceOf(Date), null_),
+});
+
+export const isTimeframe = timeframeVerifier.guard;
