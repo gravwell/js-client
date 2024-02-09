@@ -54,6 +54,16 @@ describe(
 			const data: CreatableSavedQuery = {
 				name: 'Current name',
 				query: 'tag=netflow',
+				access: {
+					read: {
+						global: false,
+						groups: [],
+					},
+					write: {
+						global: false,
+						groups: [],
+					},
+				},
 			};
 			createdSavedQuery = await createOneSavedQuery(data);
 		});
@@ -64,16 +74,71 @@ describe(
 			{ description: 'New description' },
 			{ description: null },
 
-			{ groupIDs: ['1'] },
-			{ groupIDs: ['1', '2'] },
-			{ groupIDs: [] },
+			{
+				access: {
+					read: {
+						global: false,
+						groups: ['1'],
+					},
+					write: {
+						global: false,
+						groups: [],
+					},
+				},
+			},
+			{
+				access: {
+					read: {
+						global: false,
+						groups: ['1', '2'],
+					},
+					write: {
+						global: false,
+						groups: [],
+					},
+				},
+			},
+			{
+				access: {
+					read: {
+						global: false,
+						groups: [],
+					},
+					write: {
+						global: false,
+						groups: [],
+					},
+				},
+			},
 
 			{ labels: ['Label 1'] },
 			{ labels: ['Label 1', 'Label 2'] },
 			{ labels: [] },
 
-			{ isGlobal: true },
-			{ isGlobal: false },
+			{
+				access: {
+					read: {
+						global: true,
+						groups: [],
+					},
+					write: {
+						global: false,
+						groups: [],
+					},
+				},
+			},
+			{
+				access: {
+					read: {
+						global: false,
+						groups: [],
+					},
+					write: {
+						global: false,
+						groups: [],
+					},
+				},
+			},
 
 			{ query: 'tag=custom' },
 
