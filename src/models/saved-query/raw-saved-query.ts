@@ -15,8 +15,19 @@ export interface RawSavedQuery {
 	GUID: RawUUID;
 
 	UID: RawNumericID;
-	GIDs?: Array<RawNumericID> | null;
 	Global: boolean;
+	GIDs?: Array<RawNumericID> | null;
+
+	Can: {
+		Delete: boolean;
+		Modify: boolean;
+		Share: boolean;
+	};
+
+	WriteAccess: {
+		Global: boolean;
+		GIDs: Array<RawNumericID> | null;
+	};
 
 	Name: string;
 	Description: string; // Empty is null

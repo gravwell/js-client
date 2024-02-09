@@ -68,10 +68,30 @@ describe(
 				{
 					name: 'Q1',
 					query: 'tag=netflow',
+					access: {
+						read: {
+							global: false,
+							groups: [],
+						},
+						write: {
+							global: false,
+							groups: [],
+						},
+					},
 				},
 				{
 					name: 'Q2',
 					query: 'tag=custom-test',
+					access: {
+						read: {
+							global: false,
+							groups: [],
+						},
+						write: {
+							global: false,
+							groups: [],
+						},
+					},
 				},
 			];
 			const createPromises = creatableSavedQueries.map(creatable => createOneSavedQuery(creatable));
@@ -94,14 +114,44 @@ describe(
 				{
 					name: 'Q3',
 					query: 'tag=idk',
+					access: {
+						read: {
+							global: false,
+							groups: [],
+						},
+						write: {
+							global: false,
+							groups: [],
+						},
+					},
 				},
 				{
 					name: 'Q4',
 					query: 'tag=test',
+					access: {
+						read: {
+							global: false,
+							groups: [],
+						},
+						write: {
+							global: false,
+							groups: [],
+						},
+					},
 				},
 				{
 					name: 'Q5',
 					query: 'tag=default',
+					access: {
+						read: {
+							global: false,
+							groups: [],
+						},
+						write: {
+							global: false,
+							groups: [],
+						},
+					},
 				},
 			];
 

@@ -48,10 +48,30 @@ describe(
 				{
 					name: 'Q1',
 					query: 'tag=netflow',
+					access: {
+						read: {
+							global: false,
+							groups: [],
+						},
+						write: {
+							global: false,
+							groups: [],
+						},
+					},
 				},
 				{
 					name: 'Q2',
 					query: 'tag=custom-test',
+					access: {
+						read: {
+							global: false,
+							groups: [],
+						},
+						write: {
+							global: false,
+							groups: [],
+						},
+					},
 				},
 			];
 			const createPromises = creatableSavedQueries.map(creatable => createOneSavedQuery(creatable));

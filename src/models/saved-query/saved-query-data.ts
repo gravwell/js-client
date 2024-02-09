@@ -7,6 +7,7 @@
  * license. See the LICENSE file for details.
  */
 
+import { Access } from '~/models/saved-query/access';
 import { NumericID, UUID } from '~/value-objects/id';
 import { Timeframe } from '../timeframe/timeframe';
 
@@ -15,8 +16,14 @@ export interface SavedQueryData {
 	globalID: UUID;
 
 	userID: NumericID;
-	groupIDs: Array<NumericID>;
-	isGlobal: boolean;
+
+	can: {
+		delete: boolean;
+		modify: boolean;
+		share: boolean;
+	};
+
+	access: Access;
 
 	name: string;
 	description: string | null;
