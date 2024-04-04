@@ -48,29 +48,21 @@ describe(
 				{
 					name: 'Q1',
 					query: 'tag=netflow',
-					access: {
-						read: {
-							global: false,
-							groups: [],
-						},
-						write: {
-							global: false,
-							groups: [],
-						},
+					groupIDs: [],
+					isGlobal: false,
+					WriteAccess: {
+						Global: false,
+						GIDs: [],
 					},
 				},
 				{
 					name: 'Q2',
 					query: 'tag=custom-test',
-					access: {
-						read: {
-							global: false,
-							groups: [],
-						},
-						write: {
-							global: false,
-							groups: [],
-						},
+					groupIDs: [],
+					isGlobal: false,
+					WriteAccess: {
+						Global: false,
+						GIDs: [],
 					},
 				},
 			];

@@ -8,8 +8,8 @@
  */
 
 import { isNull, pick } from 'lodash';
-import { firstValueFrom } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
+import { EMPTY, firstValueFrom, from, Subscription } from 'rxjs';
+import { catchError, concatMap, filter, map } from 'rxjs/operators';
 import { APIContext } from '~/functions/utils/api-context';
 import { Query } from '~/models/query';
 import { ElementFilter } from '~/models/search/element-filter';
@@ -21,10 +21,26 @@ export const makeModifyOneQuery = (
 ): ((query: Query, filters: Array<ElementFilter>) => Promise<Query>) => {
 	const subscribeToOneQueryParsing = makeSubscribeToOneQueryParsing(context);
 	let querySubP: ReturnType<typeof subscribeToOneQueryParsing> | null = null;
+	let closedSub: Subscription | null = null;
 
 	return async (query: Query, filters: Array<ElementFilter>): Promise<Query> => {
 		if (isNull(querySubP)) {
 			querySubP = subscribeToOneQueryParsing();
+			if (closedSub?.closed === false) {
+				closedSub.unsubscribe();
+			}
+
+			// Handles websocket hangups from close or error
+			closedSub = from(querySubP)
+				.pipe(
+					concatMap(rawSubscriptionConcatMap => rawSubscriptionConcatMap.received$),
+					catchError(() => EMPTY),
+				)
+				.subscribe({
+					complete: () => {
+						querySubP = null;
+					},
+				});
 		}
 		const querySub = await querySubP;
 		const id = SEARCH_SOCKET_ID_GENERATOR.generate();

@@ -54,6 +54,9 @@ export const toLocalKit = (raw: RawLocalKit): LocalKit => ({
 
 	requiredDependencies: (raw.RequiredDependencies ?? []).map(toLocalKitDependency),
 	configMacros: toConfigMacros(raw.ConfigMacros ?? []),
+
+	groupIDs: (raw.GIDs ?? []).map(toNumericID),
+	isGlobal: raw.Global ?? false,
 });
 
 export const toLocalKitDependency = (raw: RawLocalKitDependency): LocalKitDependency => ({
@@ -79,4 +82,7 @@ export const toLocalKitDependency = (raw: RawLocalKitDependency): LocalKitDepend
 
 	items: (raw.Items ?? []).map(toKitItem),
 	assets: (raw.Assets ?? []).map(asset => toKitAsset(asset, raw.UUID)),
+
+	groupIDs: (raw.GIDs ?? []).map(toNumericID),
+	isGlobal: raw.Global ?? false,
 });

@@ -45,6 +45,10 @@ describe(
 				searchSince: { secondsAgo: 60 * 60 },
 				timeframeOffset: { days: 0, hours: 0, minutes: 0, seconds: 0 },
 				backfillEnabled: true,
+				WriteAccess: {
+					Global: false,
+					GIDs: [],
+				},
 			});
 		});
 

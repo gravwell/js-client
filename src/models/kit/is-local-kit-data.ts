@@ -24,6 +24,8 @@ export const isLocalKitData = (v: unknown): v is LocalKitData => {
 				(isNull(k.groupID) || isNumericID(k.groupID)) &&
 				isString(k.name) &&
 				isString(k.description) &&
+				k.groupIDs.every(isNumericID) &&
+				isBoolean(k.isGlobal) &&
 				k.labels.every(isString) &&
 				(isNull(k.readme) || isString(k.readme)) &&
 				(isNull(k.bannerID) || isString(k.bannerID)) &&
@@ -63,6 +65,8 @@ export const isLocalKitDependency = (value: unknown): value is LocalKitDependenc
 			isString(k.name) &&
 			isString(k.description) &&
 			isVersion(k.version) &&
+			k.groupIDs.every(isNumericID) &&
+			isBoolean(k.isGlobal) &&
 			isVersion(k.gravwellCompatibility.min) &&
 			isVersion(k.gravwellCompatibility.max) &&
 			isDate(k.createdDate) &&

@@ -10,6 +10,7 @@
 import { isNil } from 'lodash';
 import { DATA_TYPE } from '~/models/data-type';
 import { ScheduledQueryDuration } from '~/models/scheduled-task/scheduled-query-data';
+import { toNumericID } from '~/value-objects/id';
 import { RawScheduledTask } from './raw-scheduled-task';
 import { ScheduledTask, ScheduledTaskType } from './scheduled-task';
 import { toScheduledTaskBase } from './to-scheduled-task-base';
@@ -32,6 +33,17 @@ export const toScheduledTask = (raw: RawScheduledTask): ScheduledTask => {
 				timeframeOffset: secondsToDuration(Math.abs(raw.TimeframeOffset ?? 0)),
 				backfillEnabled: raw.BackfillEnabled ?? false,
 				searchReference: raw.SearchReference,
+				can: {
+					delete: raw.Can?.Delete ?? false,
+					modify: raw.Can?.Modify ?? false,
+					share: raw.Can?.Share ?? false,
+				},
+				isGlobal: raw.Global ?? false,
+				groupIDs: raw.Groups?.map(toNumericID) ?? [],
+				WriteAccess: {
+					Global: raw.WriteAccess?.Global ?? false,
+					GIDs: raw.WriteAccess?.GIDs?.map(toNumericID) ?? [],
+				},
 			};
 		case 'script':
 			return {

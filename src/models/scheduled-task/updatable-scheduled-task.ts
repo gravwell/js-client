@@ -8,16 +8,31 @@
  */
 
 import { ScheduledQueryDuration } from '~/models/scheduled-task/scheduled-query-data';
+import { NumericID } from '~/value-objects/id';
 import { UpdatableScheduledTaskBase } from './updatable-scheduled-task-base';
 
 export type UpdatableScheduledTask = TaggedUpdatableScheduledQuery | TaggedUpdatableScheduledScript;
 
-export interface UpdatableScheduledQuery extends UpdatableScheduledTaskBase {
+export interface UpdatableScheduledQuery {
+	id: NumericID;
+	groupIDs?: Array<NumericID>;
+	isGlobal?: boolean;
+	name?: string;
+	description?: string;
+	labels?: Array<string>;
+	oneShot?: boolean;
+	isDisabled?: boolean;
+	schedule?: string;
+	timezone?: string | null;
 	query?: string;
 	searchSince?: { lastRun?: boolean; secondsAgo: number };
 	timeframeOffset?: ScheduledQueryDuration;
 	backfillEnabled?: boolean;
 	searchReference?: string | undefined; // UUID of query library item.
+	WriteAccess?: {
+		Global: boolean;
+		GIDs: Array<NumericID>;
+	};
 }
 
 export interface UpdatableScheduledScript extends UpdatableScheduledTaskBase {

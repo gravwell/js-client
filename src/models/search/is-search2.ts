@@ -7,15 +7,6 @@
  * license. See the LICENSE file for details.
  */
 
-import { DATA_TYPE } from '~/models/data-type';
-import { isPersistentSearchData } from './is-persistent-search-data';
-import { Search2 } from './search2';
+import { search2Verifier } from './search2';
 
-export const isSearch2 = (value: unknown): value is Search2 => {
-	try {
-		const s = value as Search2;
-		return s._tag === DATA_TYPE.PERSISTENT_SEARCH && isPersistentSearchData(s);
-	} catch {
-		return false;
-	}
-};
+export const isSearch2 = search2Verifier.guard;

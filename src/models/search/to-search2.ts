@@ -18,10 +18,21 @@ export const toSearch2 = (raw: RawSearch2): Search2 =>
 		_tag: DATA_TYPE.PERSISTENT_SEARCH,
 		id: raw.ID,
 		userID: raw.UID.toString(),
-		groupID: raw.GID === 0 ? undefined : raw.GID.toString(),
+		groupID: raw.GID === 0 ? null : raw.GID.toString(),
 		states: (raw.State.split('/') as Array<RawSearch2State>).map(toSearch2State),
 		attachedClients: raw.AttachedClients,
 		storedData: raw.StoredData,
+
+		userQuery: raw.UserQuery,
+		effectiveQuery: raw.EffectiveQuery,
+		noHistory: raw.NoHistory,
+		import: {
+			batchInfo: raw.Import.BatchInfo,
+			batchName: raw.Import.BatchName,
+			imported: raw.Import.Imported,
+			time: new Date(raw.Import.Time),
+		},
+		started: new Date(raw.LaunchInfo.started),
 	});
 
 const toSearch2State = (raw: RawSearch2State): PersistentSearchDataState => {

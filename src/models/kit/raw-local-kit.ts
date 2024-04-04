@@ -45,6 +45,9 @@ export interface RawLocalKit {
 
 	Items: Array<RawKitItem>;
 	ConfigMacros: null | Array<RawConfigMacro>;
+
+	GIDs: Array<RawNumericID> | null;
+	Global: boolean | null;
 }
 
 export type RawLocalKitDependency = {
@@ -64,6 +67,8 @@ export type RawLocalKitDependency = {
 	Tags: Array<string>; // tags associated with the kit
 	Assets: Array<RawKitAsset>;
 	Items: Array<RawKitItem>;
+	GIDs: Array<RawNumericID> | null;
+	Global: boolean | null;
 };
 
 export class KitError extends Error {
