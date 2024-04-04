@@ -26,20 +26,17 @@ export const toSavedQuery = (raw: RawSavedQuery): SavedQuery => {
 		userID: toNumericID(raw.UID),
 
 		can: {
-			delete: raw.Can?.Delete,
-			modify: raw.Can?.Modify,
-			share: raw.Can?.Share,
+			delete: raw.Can.Delete,
+			modify: raw.Can.Modify,
+			share: raw.Can.Share,
 		},
 
-		access: {
-			read: {
-				global: raw.Global,
-				groups: raw.GIDs?.map(toNumericID) ?? [],
-			},
-			write: {
-				global: raw.WriteAccess.Global,
-				groups: raw.WriteAccess.GIDs?.map(toNumericID) ?? [],
-			},
+		groupIDs: (raw.GIDs ?? []).map(toNumericID),
+		isGlobal: raw.Global,
+
+		WriteAccess: {
+			GIDs: raw.WriteAccess.GIDs.map(toNumericID),
+			Global: raw.WriteAccess.Global,
 		},
 
 		name: raw.Name,

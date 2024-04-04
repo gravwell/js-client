@@ -8,12 +8,25 @@
  */
 
 import { ScheduledQueryDuration } from '~/models/scheduled-task/scheduled-query-data';
-import { CreatableScheduledTaskBase } from './creatable-scheduled-task-base';
+import { NumericID } from '~/value-objects/id';
 
-export interface CreatableScheduledQuery extends CreatableScheduledTaskBase {
-	query: string;
+export interface CreatableScheduledQuery {
+	groupIDs?: Array<NumericID>;
+	isGlobal?: boolean;
+	name: string;
+	description: string;
+	labels?: Array<string>;
+	oneShot?: boolean;
+	isDisabled?: boolean;
+	schedule: string;
+	timezone?: string | null;
+	query?: string | undefined;
 	searchSince: { lastRun?: boolean; secondsAgo: number };
 	timeframeOffset: ScheduledQueryDuration;
 	backfillEnabled: boolean;
 	searchReference?: string | undefined; // UUID of query library item.
+	WriteAccess: {
+		Global: boolean;
+		GIDs: Array<NumericID>;
+	};
 }

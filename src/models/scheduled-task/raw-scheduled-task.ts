@@ -93,4 +93,21 @@ export interface RawScheduledTask {
 
 	// Scheduled searches only.
 	SearchReference?: string | undefined;
+
+	// Scheduled searches only.
+	Can?:
+		| undefined
+		| {
+				Delete: boolean;
+				Modify: boolean;
+				Share: boolean;
+		  };
+
+	// Scheduled searches only.
+	WriteAccess?:
+		| undefined
+		| {
+				Global: boolean;
+				GIDs: Array<RawNumericID> | null;
+		  };
 }

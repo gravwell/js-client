@@ -24,15 +24,12 @@ export const savedQueryVerifier: Verifier<SavedQuery> = object({
 		share: boolean,
 	}),
 
-	access: object({
-		read: object({
-			global: boolean,
-			groups: array(string),
-		}),
-		write: object({
-			global: boolean,
-			groups: array(string),
-		}),
+	isGlobal: boolean,
+	groupIDs: array(string),
+
+	WriteAccess: object({
+		Global: boolean,
+		GIDs: array(string),
 	}),
 
 	name: string,
@@ -43,4 +40,4 @@ export const savedQueryVerifier: Verifier<SavedQuery> = object({
 	defaultTimeframe: either(timeframeVerifier, null_),
 });
 
-export const isSavedQuery = (value: unknown): value is SavedQuery => savedQueryVerifier.guard(value);
+export const isSavedQuery = savedQueryVerifier.guard;

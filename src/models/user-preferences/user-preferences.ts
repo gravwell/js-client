@@ -53,16 +53,19 @@ export interface UserPreferences {
 
 	monacoEditorSettings?:
 		| {
-				/** https://microsoft.github.io/monaco-editor/docs.html#interfaces/editor.IStandaloneDiffEditorConstructionOptions.html#theme */
+				/** https://microsoft.github.io/monaco-editor/docs.html#interfaces/editor.IStandaloneEditorConstructionOptions.html#theme */
 				theme?: MonacoEditorTheme;
 
-				/** https://microsoft.github.io/monaco-editor/docs.html#interfaces/editor.IStandaloneDiffEditorConstructionOptions.html#fontSize */
+				/** https://microsoft.github.io/monaco-editor/docs.html#interfaces/editor.IStandaloneEditorConstructionOptions.html#fontSize */
 				fontSize?: number;
 
-				/** https://microsoft.github.io/monaco-editor/docs.html#interfaces/editor.IStandaloneDiffEditorConstructionOptions.html#wordWrap */
+				/** https://microsoft.github.io/monaco-editor/docs.html#interfaces/editor.IStandaloneEditorConstructionOptions.html#fontFamily */
+				fontFamily?: string;
+
+				/** https://microsoft.github.io/monaco-editor/docs.html#interfaces/editor.IStandaloneEditorConstructionOptions.html#wordWrap */
 				wordWrap?: 'bounded' | 'off' | 'on' | 'wordWrapColumn';
 
-				/** https://microsoft.github.io/monaco-editor/docs.html#interfaces/editor.IStandaloneDiffEditorConstructionOptions.html#wordWrapColumn */
+				/** https://microsoft.github.io/monaco-editor/docs.html#interfaces/editor.IStandaloneEditorConstructionOptions.html#wordWrapColumn */
 				wordWrapColumn?: number;
 		  }
 		| undefined;

@@ -8,9 +8,35 @@
  */
 
 import { number, object, Verifier } from '~/functions/utils/verifiers';
-import { ScheduledTaskBase } from './scheduled-task-base';
+import { NumericID, UUID } from '~/value-objects/id';
 
-export interface ScheduledQueryData extends ScheduledTaskBase {
+export interface ScheduledQueryData {
+	id: NumericID;
+	globalID: UUID;
+
+	userID: NumericID;
+	groupIDs: Array<NumericID>;
+	isGlobal: boolean;
+
+	name: string;
+	description: string;
+	labels: Array<string>;
+
+	oneShot: boolean;
+	isDisabled: boolean;
+
+	lastUpdateDate: Date;
+	lastRun: null | {
+		date: Date;
+		duration: number;
+	};
+
+	lastSearchIDs: null | Array<NumericID>;
+	lastError: string | null;
+
+	schedule: string;
+	timezone: string | null;
+
 	type: 'query';
 	query: string;
 	timeframeOffset: ScheduledQueryDuration;
@@ -21,6 +47,17 @@ export interface ScheduledQueryData extends ScheduledTaskBase {
 		secondsAgo: number; // It's the same as `raw.Duration`
 	};
 	searchReference?: string | undefined; // UUID of query library item.
+
+	can: {
+		delete: boolean;
+		modify: boolean;
+		share: boolean;
+	};
+
+	WriteAccess: {
+		Global: boolean;
+		GIDs: Array<NumericID>;
+	};
 }
 
 export type ScheduledQueryDuration = {

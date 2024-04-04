@@ -24,7 +24,7 @@ export interface RawCreatableScheduledTask {
 	Timezone: string; // empty string is null
 
 	// *START - Standard search properties
-	SearchString?: string; //empty string is null
+	SearchString?: string | undefined; //empty string is null
 	Duration?: number; // In seconds, displayed in the GUI as a human friendly "Timeframe"
 	SearchSinceLastRun?: boolean;
 	// *END - Standard search properties
@@ -40,4 +40,10 @@ export interface RawCreatableScheduledTask {
 
 	// Scheduled searches only.
 	SearchReference?: string | undefined;
+
+	// Scheduled searches only.
+	WriteAccess: {
+		Global: boolean;
+		GIDs?: Array<RawNumericID> | null;
+	};
 }

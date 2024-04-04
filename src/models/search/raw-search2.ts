@@ -14,6 +14,24 @@ export interface RawSearch2 {
 	State: string; // RawSearch2State or RawSearch2State/RawSearch2State eg. 'ACTIVE' or 'SAVED/BACKGROUNDED'
 	AttachedClients: number;
 	StoredData: number;
+
+	UserQuery: string;
+	EffectiveQuery: string;
+	StartRange: string;
+	EndRange: string;
+	NoHistory: boolean;
+	Import: {
+		Imported: boolean;
+		Time: string; // timestamp
+		BatchName: string;
+		BatchInfo: string;
+	};
+	LaunchInfo: {
+		expires: string;
+		method: string;
+		reference: string;
+		started: string;
+	};
 }
 
 export type RawSearch2State = 'ACTIVE' | 'DORMANT' | 'SAVED' | 'BACKGROUNDED' | 'ATTACHED' | 'SAVING';

@@ -75,6 +75,10 @@ describe(
 					isDisabled: true,
 
 					timeframeOffset: { days: 0, hours: 0, minutes: 0, seconds: 0 },
+					WriteAccess: {
+						Global: false,
+						GIDs: [],
+					},
 					backfillEnabled: false,
 				};
 

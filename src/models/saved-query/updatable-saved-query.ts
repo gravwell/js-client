@@ -7,15 +7,20 @@
  * license. See the LICENSE file for details.
  */
 
-import { Access } from '~/models/saved-query/access';
-import { UUID } from '~/value-objects/id';
+import { NumericID, UUID } from '~/value-objects/id';
 import { CreatableTimeframe } from '../timeframe/creatable-timeframe';
 
 export interface UpdatableSavedQuery {
 	id: UUID;
 	globalID?: UUID;
 
-	access?: Access;
+	groupIDs?: Array<NumericID>;
+	isGlobal?: boolean;
+
+	WriteAccess?: {
+		Global: boolean;
+		GIDs: Array<NumericID>;
+	};
 
 	name?: string;
 	description?: string | null;

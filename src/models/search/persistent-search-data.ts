@@ -12,10 +12,21 @@ import { NumericID } from '~/value-objects/id';
 export interface PersistentSearchData {
 	id: NumericID;
 	userID: NumericID;
-	groupID?: NumericID | null;
+	groupID: NumericID | null;
 	states: Array<'active' | 'dormant' | 'backgrounded' | 'saved' | 'attached' | 'saving'>;
 	attachedClients: number;
 	storedData: number;
+
+	userQuery: string;
+	effectiveQuery: string;
+	noHistory: boolean;
+	import: {
+		imported: boolean;
+		time: Date;
+		batchName: string;
+		batchInfo: string;
+	};
+	started: Date;
 }
 
 export type PersistentSearchDataState = PersistentSearchData['states'][number];

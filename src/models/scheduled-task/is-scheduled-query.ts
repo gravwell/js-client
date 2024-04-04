@@ -69,4 +69,15 @@ export const scheduledQueryDecoder: Verifier<ScheduledQuery> = object({
 	}),
 
 	backfillEnabled: boolean,
+
+	can: object({
+		delete: boolean,
+		modify: boolean,
+		share: boolean,
+	}),
+
+	WriteAccess: object({
+		Global: boolean,
+		GIDs: array(string),
+	}),
 });
