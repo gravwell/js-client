@@ -48,6 +48,9 @@ export interface LocalKitData {
 
 	configMacros: Array<ConfigMacro>;
 	requiredDependencies: Array<LocalKitDependency>; // create a LocalKitDependency interface
+
+	groupIDs: Array<NumericID>;
+	isGlobal: boolean;
 }
 
 // TODO: This look very similar to the `RemoteKit` but still missing some properties, so we need to check if this interface can be deleted to use the `KitDependency` that just has the ID and fetch the `RemoteKit` when necessary (may we can create something like `BaseRemoteKit` with the common properties)
@@ -75,4 +78,7 @@ export type LocalKitDependency = {
 
 	assets: Array<KitAsset>;
 	items: Array<KitItem>;
+
+	groupIDs: Array<NumericID>;
+	isGlobal: boolean;
 };

@@ -35,11 +35,11 @@ export const toRawUpdatableSearchDetails = (
 	EffectiveQuery: updatable.effectiveQuery ?? current.effectiveQuery,
 
 	Preview: updatable.preview ?? current.preview,
-	StartRange: updatable.range.start ?? current.range.start,
-	EndRange: updatable.range.end ?? current.range.end,
+	StartRange: updatable.range?.start ?? current.range.start,
+	EndRange: updatable.range?.end ?? current.range.end,
 
-	LastUpdate: updatable.range.end ?? current.range.end,
-	Duration: updatable.range.end ?? current.range.end,
+	LastUpdate: updatable.range?.end ?? current.range.end,
+	Duration: updatable.range?.end ?? current.range.end,
 
 	Descending: updatable.descending ?? current.descending,
 	IndexSize: updatable.indexSize ?? current.indexSize,

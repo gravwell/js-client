@@ -68,29 +68,21 @@ describe(
 				{
 					name: 'Q1',
 					query: 'tag=netflow',
-					access: {
-						read: {
-							global: false,
-							groups: [],
-						},
-						write: {
-							global: false,
-							groups: [],
-						},
+					groupIDs: [],
+					isGlobal: false,
+					WriteAccess: {
+						Global: false,
+						GIDs: [],
 					},
 				},
 				{
 					name: 'Q2',
 					query: 'tag=custom-test',
-					access: {
-						read: {
-							global: false,
-							groups: [],
-						},
-						write: {
-							global: false,
-							groups: [],
-						},
+					groupIDs: [],
+					isGlobal: false,
+					WriteAccess: {
+						Global: false,
+						GIDs: [],
 					},
 				},
 			];
@@ -114,43 +106,31 @@ describe(
 				{
 					name: 'Q3',
 					query: 'tag=idk',
-					access: {
-						read: {
-							global: false,
-							groups: [],
-						},
-						write: {
-							global: false,
-							groups: [],
-						},
+					groupIDs: [],
+					isGlobal: false,
+					WriteAccess: {
+						Global: false,
+						GIDs: [],
 					},
 				},
 				{
 					name: 'Q4',
 					query: 'tag=test',
-					access: {
-						read: {
-							global: false,
-							groups: [],
-						},
-						write: {
-							global: false,
-							groups: [],
-						},
+					groupIDs: [],
+					isGlobal: false,
+					WriteAccess: {
+						Global: false,
+						GIDs: [],
 					},
 				},
 				{
 					name: 'Q5',
 					query: 'tag=default',
-					access: {
-						read: {
-							global: false,
-							groups: [],
-						},
-						write: {
-							global: false,
-							groups: [],
-						},
+					groupIDs: [],
+					isGlobal: false,
+					WriteAccess: {
+						Global: false,
+						GIDs: [],
 					},
 				},
 			];

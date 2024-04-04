@@ -28,12 +28,12 @@ export const toRawUpdatableSavedQuery = (
 		UID: toRawNumericID(current.userID),
 		GUID: updatable.globalID ?? current.globalID,
 
-		GIDs: (updatable.access?.read.groups ?? current.access.read.groups).map(toRawNumericID),
-		Global: updatable.access?.read.global ?? current.access.read.global,
+		GIDs: (updatable.groupIDs ?? current.groupIDs).map(toRawNumericID),
+		Global: updatable.isGlobal ?? current.isGlobal,
 
 		WriteAccess: {
-			GIDs: (updatable.access?.write.groups ?? current.access.write.groups).map(toRawNumericID),
-			Global: updatable.access?.write.global ?? current.access.write.global,
+			GIDs: (updatable.WriteAccess?.GIDs ?? current.WriteAccess.GIDs).map(toRawNumericID),
+			Global: updatable.WriteAccess?.Global ?? current.WriteAccess.Global,
 		},
 
 		Name: updatable.name ?? current.name,

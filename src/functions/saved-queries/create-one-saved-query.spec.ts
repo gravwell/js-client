@@ -53,15 +53,11 @@ describe(
 			'Should create a saved query and return it',
 			integrationTest(async () => {
 				const data: CreatableSavedQuery = {
-					access: {
-						read: {
-							global: true,
-							groups: groupIDs,
-						},
-						write: {
-							global: false,
-							groups: [],
-						},
+					groupIDs,
+					isGlobal: true,
+					WriteAccess: {
+						Global: false,
+						GIDs: [],
 					},
 
 					name: 'name',

@@ -26,7 +26,7 @@ export interface RawSavedQuery {
 
 	WriteAccess: {
 		Global: boolean;
-		GIDs: Array<RawNumericID> | null;
+		GIDs: Array<RawNumericID>;
 	};
 
 	Name: string;

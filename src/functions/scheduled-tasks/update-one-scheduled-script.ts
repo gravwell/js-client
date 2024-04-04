@@ -8,15 +8,15 @@
  */
 
 import { ScheduledScript } from '~/models/scheduled-task/scheduled-script';
-import { UpdatableScheduledQuery } from '~/models/scheduled-task/updatable-scheduled-task';
+import { UpdatableScheduledScript } from '~/models/scheduled-task/updatable-scheduled-task';
 import { APIContext } from '../utils/api-context';
 import { makeUpdateOneScheduledTask } from './update-one-scheduled-task';
 
 export const makeUpdateOneScheduledScript = (
 	context: APIContext,
-): ((data: UpdatableScheduledQuery) => Promise<ScheduledScript>) => {
+): ((data: UpdatableScheduledScript) => Promise<ScheduledScript>) => {
 	const updateOneScheduleTask = makeUpdateOneScheduledTask(context);
 
-	return (data: UpdatableScheduledQuery): Promise<ScheduledScript> =>
+	return (data: UpdatableScheduledScript): Promise<ScheduledScript> =>
 		updateOneScheduleTask({ ...data, type: 'script' });
 };

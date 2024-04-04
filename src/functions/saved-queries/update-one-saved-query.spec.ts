@@ -54,15 +54,11 @@ describe(
 			const data: CreatableSavedQuery = {
 				name: 'Current name',
 				query: 'tag=netflow',
-				access: {
-					read: {
-						global: false,
-						groups: [],
-					},
-					write: {
-						global: false,
-						groups: [],
-					},
+				groupIDs: [],
+				isGlobal: false,
+				WriteAccess: {
+					Global: false,
+					GIDs: [],
 				},
 			};
 			createdSavedQuery = await createOneSavedQuery(data);
@@ -75,39 +71,27 @@ describe(
 			{ description: null },
 
 			{
-				access: {
-					read: {
-						global: false,
-						groups: ['1'],
-					},
-					write: {
-						global: false,
-						groups: [],
-					},
+				groupIDs: ['1'],
+				isGlobal: false,
+				WriteAccess: {
+					Global: false,
+					GIDs: [],
 				},
 			},
 			{
-				access: {
-					read: {
-						global: false,
-						groups: ['1', '2'],
-					},
-					write: {
-						global: false,
-						groups: [],
-					},
+				groupIDs: ['1', '2'],
+				isGlobal: false,
+				WriteAccess: {
+					Global: false,
+					GIDs: [],
 				},
 			},
 			{
-				access: {
-					read: {
-						global: false,
-						groups: [],
-					},
-					write: {
-						global: false,
-						groups: [],
-					},
+				groupIDs: [],
+				isGlobal: false,
+				WriteAccess: {
+					Global: false,
+					GIDs: [],
 				},
 			},
 
@@ -116,27 +100,19 @@ describe(
 			{ labels: [] },
 
 			{
-				access: {
-					read: {
-						global: true,
-						groups: [],
-					},
-					write: {
-						global: false,
-						groups: [],
-					},
+				groupIDs: [],
+				isGlobal: true,
+				WriteAccess: {
+					Global: false,
+					GIDs: [],
 				},
 			},
 			{
-				access: {
-					read: {
-						global: false,
-						groups: [],
-					},
-					write: {
-						global: false,
-						groups: [],
-					},
+				groupIDs: [],
+				isGlobal: false,
+				WriteAccess: {
+					Global: false,
+					GIDs: [],
 				},
 			},
 

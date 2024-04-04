@@ -7,16 +7,14 @@
  * license. See the LICENSE file for details.
  */
 
+import { omitUndefinedShallow } from '~/functions/utils/omit-undefined-shallow';
 import { ScheduledQueryDuration } from '~/models/scheduled-task/scheduled-query-data';
 import { toRawNumericID } from '~/value-objects/id';
 import { CreatableScheduledTask } from './creatable-scheduled-task';
 import { RawCreatableScheduledTask } from './raw-creatable-scheduled-task';
 
 export const toRawCreatableScheduledTask = (data: CreatableScheduledTask): RawCreatableScheduledTask => {
-	const base: Omit<RawCreatableScheduledTask, 'DebugMode'> = {
-		Groups: (data.groupIDs ?? []).map(toRawNumericID),
-		Global: data.isGlobal ?? false,
-
+	const base = {
 		Name: data.name,
 		Description: data.description,
 		Labels: data.labels ?? [],
@@ -30,7 +28,7 @@ export const toRawCreatableScheduledTask = (data: CreatableScheduledTask): RawCr
 
 	switch (data.type) {
 		case 'query':
-			return {
+			return omitUndefinedShallow({
 				...base,
 				SearchString: data.query,
 				Duration: -Math.abs(data.searchSince.secondsAgo ?? 0),
@@ -39,12 +37,24 @@ export const toRawCreatableScheduledTask = (data: CreatableScheduledTask): RawCr
 				TimeframeOffset: Math.abs(durationToSeconds(data.timeframeOffset)) * -1,
 				BackfillEnabled: data.backfillEnabled,
 				SearchReference: data.searchReference,
-			};
+				Global: data.isGlobal ?? false,
+				Groups: (data.groupIDs ?? []).map(toRawNumericID),
+				WriteAccess: {
+					Global: data.WriteAccess.Global,
+					GIDs: data.WriteAccess.GIDs.map(toRawNumericID),
+				},
+			});
 		case 'script':
 			return {
 				...base,
+				Groups: (data.groupIDs ?? []).map(toRawNumericID),
+				Global: data.isGlobal ?? false,
 				Script: data.script,
 				DebugMode: data.isDebugging ?? false,
+				WriteAccess: {
+					Global: false,
+					GIDs: [],
+				},
 			};
 	}
 };

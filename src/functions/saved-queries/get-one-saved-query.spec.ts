@@ -50,15 +50,11 @@ describe(
 			const data: CreatableSavedQuery = {
 				name: 'Q1',
 				query: 'tag=netflow',
-				access: {
-					read: {
-						global: false,
-						groups: [],
-					},
-					write: {
-						global: false,
-						groups: [],
-					},
+				groupIDs: [],
+				isGlobal: false,
+				WriteAccess: {
+					Global: false,
+					GIDs: [],
 				},
 			};
 			createdSavedQuery = await createOneSavedQuery(data);

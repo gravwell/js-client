@@ -20,30 +20,32 @@ import { RawTimeframe } from '../timeframe/raw-timeframe';
 
 export interface UpdatableSearchDetails {
 	groupID?: NumericID | null;
-	userQuery: string;
-	effectiveQuery: string;
-	launchDate: Date;
+	userQuery?: string | undefined;
+	effectiveQuery?: string | undefined;
+	launchDate?: Date | undefined;
 	id: NumericID;
-	range: {
-		start: Date;
-		end: Date;
-	};
-	descending: boolean;
-	lastUpdate: Date;
-	storeSize: number;
-	indexSize: number;
-	itemCount: number;
-	timeZoomDisabled: boolean;
+	range?:
+		| {
+				start: Date;
+				end: Date;
+		  }
+		| undefined;
+	descending?: boolean | undefined;
+	lastUpdate?: Date | undefined;
+	storeSize?: number | undefined | undefined;
+	indexSize?: number | undefined;
+	itemCount?: number | undefined;
+	timeZoomDisabled?: boolean | undefined;
 	// When the timeframe is predefined the back-end return a string
-	timeframe: RawTimeframe | null | string;
-	isLive: boolean;
-	timeframeUserLabel: null;
-	name: string | null;
-	notes: string | null;
+	timeframe?: RawTimeframe | null | string | undefined;
+	isLive?: boolean | undefined;
+	timeframeUserLabel?: null | undefined;
+	name?: string | null | undefined;
+	notes?: string | null | undefined;
 
-	collapsingIndex: number;
-	minZoomWindow: number;
-	tags: Array<string>;
-	preview: boolean;
-	duration: string;
+	collapsingIndex?: number | undefined;
+	minZoomWindow?: number | undefined;
+	tags?: Array<string> | undefined;
+	preview?: boolean | undefined;
+	duration?: string | undefined;
 }

@@ -40,4 +40,10 @@ export interface RawUpdatableScheduledTask {
 
 	// Scheduled searches only.
 	SearchReference?: string | undefined;
+
+	// Scheduled searches only.
+	WriteAccess: {
+		Global: boolean;
+		GIDs?: Array<RawNumericID> | null;
+	};
 }
