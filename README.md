@@ -1,26 +1,5 @@
 # Gravwell JavaScript Client
 
-Wrapper for the [Gravwell Web API](https://docs.gravwell.io/#!api/api.md).
+The Gravwell JavaScript Client is being retired. The latest version (Version 4.0.0) is compatible with Gravwell v5.4.7. The JS Client will not receive future updates and may not be compatible with future releases of Gravwell.
 
-- Exported in ES5
-- Works on Node and browsers
-- Full TypeScript coverage
-
-Install it with NPM
-
-```sh
-npm install gravwell
-```
-
-## Contributing
-
-Make sure you understand our [contributing guide](./CONTRIBUTING.md) before doing any work.
-
-## Generating docs
-
-1. First run `npm clean-install`, to install all dependencies;
-2. Then run `npm run start:docs`;
-3. Then the docs from this project will be generated and served on port 8080;
-4. Go to `http://localhost:8080` to see the docs.
-
-> TIP: For a better experience, disable the Browser cache using the network developer tools. Otherwise it will have a delay every time you update the docs.
+Please consult our API documentation for an up-to-date description of the Gravwell API  https://api.docs.gravwell.io/
